@@ -1,0 +1,169 @@
+  Theme : Hueman
+Version : 2.0.8
+ Author : Alexander "Alx" Agnarson - http://alxmedia.se
+
+December 27 2013 - 2.0.8
+===========================================================
+- Added missing "says:" language string for tabs widget
+- Added direct links and search IDs to CC0 images used in screenshot.png to readme.txt
+
+December 24 2013 - 2.0.7
+===========================================================
+- Updated screenshot.png to larger size for WP 3.8 - all images are now CC0 (GPL-compatible)
+- Added new content-featured.php
+
+December 20 2013 - 2.0.6
+===========================================================
+- Moved load_theme_textdomain from alx_setup to alx_load function
+- Added nofollow to social links and footer credit links
+- Fixed footer widget boxes to only show in admin if enabled
+- Fixed blockquote icon position
+- Fixed standard gallery captions being slightly visible even if not hovered over
+- Fixed text caption boxes top padding
+- Added icon for Twitter embeds
+- Optimized font css
+- WordPress 3.8 fixes:
+-- Fixed topbar spacing with admin bar enabled from 28px to 32px
+-- Improved admin styling for all custom widgets
+-- Fixed OptionTree admin panel styling issues
+-- Updated to the new fluid-layout and fixed-layout WordPress css tags
+
+December 8 2013 - 2.0.5
+===========================================================
+- Updated screenshot.png, added links to all images used to readme.txt
+- Removed unused css
+- Fixed typo on 404 pages
+- Changed footer credit text
+- Added better compatibility for plugins modifying site title
+- Fixed minor css bugs
+- Updated language files
+
+December 7 2013 - 2.0.4
+===========================================================
+- Optimized and rewrote layout class and sidebar code
+- Simplified some admin panel descriptions
+- Updated language files
+
+December 6 2013 - 2.0.3
+===========================================================
+- Made all additional function files pluggable for child themes
+- Moved layout class to body_class
+- Moved main and main-inner divs from templates to header and footer
+- Added auto disable for custom wp_title if SEO by Yoast plugin is installed
+- Added basic WooCommerce support
+- Added option to disable category and/or date for AlxTabs and AlxPosts widgets
+- Added forced lowercase letters on custom sidebar IDs
+- Markup polish
+- Updated language files
+
+December 4 2013 - 2.0.2
+===========================================================
+- Updated help dropdown
+- Fixed bug with hidden sidebar-2 when specific page or post layout is set to 2 sidebars, when global is 1 or 0
+- Added child theme info to style.css warning and dynamic css notice
+- Added download link to sample child theme in help dropdown
+
+December 3 2013 - 2.0.1
+===========================================================
+- Moved add_action and add_filter outside of function_exists
+- Added function_exists to functions registering custom widgets
+
+November 30 2013 - 2.0.0
+===========================================================
+- Moved to 2.X.X version number to not receive auto-update notifications from the wordpress.org version
+- Improved child theme support
+- Updated help dropdown
+- Added option for boxed layout for better background image support
+- Added font selection option (also latin-ext, cyrillic)
+- Added empty title/id/icon checks for social links and widget areas
+- Added star indication for admin comments
+- Rebuilt dynamic styling options:
+-- Fixed for theme updates
+-- Fixed for network and subdirectory installations
+-- Fixed so that no file permission/chmod is required
+-- Fixed css for each styling option to only be added if set
+-- Added option to disable styling options css
+-- Removed dynamic.css
+
+November 22 2013 - 1.1.3
+===========================================================
+- Improved IE8 support
+- Added option for header image
+- Fixed nav dropdowns expanding behind second nav row when too many menu links are used
+- Removed custom css field in styling options, replaced with custom.css file option
+- Fixed thumbnail comment count position with Disqus plugin enabled
+- Fixed related posts heading appearing even if there are no related posts
+- Changed page background area to full body background in styling options
+- Changed theme license to GPLv3
+
+November 18 2013 - 1.1.2
+===========================================================
+- Fixed broken comments pagination when there are pingbacks as well
+- Polished and made post author comment icons slightly smaller
+
+November 18 2013 - 1.1.1
+===========================================================
+- Fixed tabs widget tab-button css for better mobile browser compatibility
+- Fixed lists spacing
+
+November 15 2013 - 1.1.0
+===========================================================
+- Added styling option to change sidebar padding / width
+
+November 15 2013 - 1.0.9
+===========================================================
+- Added option to hide one or both sidebars for low-res mobile
+- Moved to a single css grid percent-width system
+- Centered footer bottom content on mobile
+- Fixed sidebar padding for low-res mobile
+
+November 12 2013 - 1.0.8
+===========================================================
+- Fixed and polished styling for widgets
+- Fixed primary color styling missing for slider controls
+
+November 11 2013 - 1.0.7
+===========================================================
+- Added sidebar layout option for category archives
+- Added fade-in and auto focus of header search field
+
+November 9 2013 - 1.0.6
+===========================================================
+- Fixed double sidebar left layout, for expanded sidebar secondary
+- Fixed hidden dropdowns behind toggle-expanded sidebars
+
+November 9 2013 - 1.0.5
+===========================================================
+- Added additional license information
+- Moved no-js/js class javascript to functions.php
+
+November 8 2013 - 1.0.4
+===========================================================
+- Restructured functions.php according to wordpress best practices
+- Loading IE-specific js via functions.php instead of template
+- Moved & added new browser body classes to functions.php
+- Fixed responsive embeds with Jetpack
+- Fixed featured slider flickering issue on iPad
+
+November 7 2013 - 1.0.3
+===========================================================
+- Updated to Flexslider 2.2.0
+- Updated to Sharrre 1.3.5
+- Updated to Font Awesome 4.0.3
+- Removed reply button for pingbacks & trackbacks
+- Fixed double site title in RSS feed
+
+November 2 2013 - 1.0.2
+===========================================================
+- Fixed margin issue with topbar menu disabled
+- Fixed responsive columns
+
+November 1 2013 - 1.0.1
+===========================================================
+- Theme screenshot updated
+- Detailed theme description added
+- New default color combination
+
+October 31 2013 - 1.0.0
+===========================================================
+- Theme released
