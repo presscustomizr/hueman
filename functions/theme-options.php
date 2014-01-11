@@ -1139,6 +1139,16 @@ function custom_theme_options() {
 			'section'	=> 'styling',
 			'class'		=> ''
 		),
+		// Styling: Footer Background
+		array(
+			'id'		=> 'color-font-1',
+			'label'		=> 'Font in the way',
+			'desc'		=> '<i>Default: #Test</i>',
+			'std'		=> '#34363b',
+			'type'		=> 'colorpicker',
+			'section'	=> 'styling',
+			'class'		=> ''
+		),
 		// Styling: Header Logo Max-height
 		array(
 			'id'			=> 'logo-max-height',
