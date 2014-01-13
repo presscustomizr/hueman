@@ -1060,6 +1060,16 @@ function custom_theme_options() {
 				)
 			)
 		),
+		// Styling: Font Color
+		array(
+			'id'		=> 'color-font',
+			'label'		=> 'Font Color',
+			'desc'		=> '<i>Default: #666666</i>',
+			'std'		=> '#666666',
+			'type'		=> 'colorpicker',
+			'section'	=> 'styling',
+			'class'		=> ''
+		),
 		// Styling: Container Width
 		array(
 			'id'			=> 'container-width',

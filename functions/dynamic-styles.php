@@ -217,6 +217,10 @@ a,
 					$styles .= '';
 				}
 			}
+
+			if ( ot_get_option('color-font') != '') {
+				$styles .= 'body{ color:'.ot_get_option('color-font').'}';
+			}
 			
 			$styles .= '</style>'."\n";
 			// end output
