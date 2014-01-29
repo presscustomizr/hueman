@@ -29,7 +29,7 @@
 		<?php } ?>
 		
 		<?php if ( ! empty( $comments_by_type['pings'] ) ) { ?>
-		<div id="pinglist-container" class="comment-tab" style="display: none;">
+		<div id="pinglist-container" class="comment-tab">
 			
 			<ol class="pinglist">
 				<?php // not calling wp_list_comments twice, as it breaks pagination

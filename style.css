@@ -1263,6 +1263,7 @@ box-shadow: inset 0 1px 0 rgba(255,255,255,0.25); }
  *  Comments
 /* ------------------------------------------------------------------------- */
 #comments { margin-top: 20px; }
+#pinglist-container { display: none; }
 
 .comment-tabs { border-bottom: 2px solid #eee; margin-bottom: 20px; }
 .comment-tabs li { float: left; margin-bottom: -2px; }
