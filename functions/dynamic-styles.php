@@ -208,9 +208,12 @@ a,
 				$body_position = $body_background['background-position'];
 				$body_attachment = $body_background['background-attachment'];
 				$body_repeat = $body_background['background-repeat'];
+				$body_size = $body_background['background-size'];
 				
-				if ( $body_image ) {
+				if ( $body_image && $body_size == "" ) {
 					$styles .= 'body { background: '.$body_color.' url('.$body_image.') '.$body_attachment.' '.$body_position.' '.$body_repeat.'; }'."\n";
+				} elseif ( $body_image && $body_size != "" ) {
+					$styles .= 'body { background: '.$body_color.' url('.$body_image.') '.$body_attachment.' '.$body_position.' '.$body_repeat.'; background-size: '.$body_size.'; }'."\n";
 				} elseif ( $body_background['background-color'] ) {
 					$styles .= 'body { background-color: '.$body_color.'; }'."\n";
 				} else {

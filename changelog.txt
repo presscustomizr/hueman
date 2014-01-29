@@ -1,6 +1,11 @@
   Theme : Hueman
-Version : 2.0.9
+Version : 2.1.0
  Author : Alexander "Alx" Agnarson - http://alxmedia.se
+
+January 29 2014 - 2.1.0
+===========================================================
+- Updated to OptionTree 2.2.2
+- Fixed background-size styling option
 
 January 23 2014 - 2.0.9
 ===========================================================
