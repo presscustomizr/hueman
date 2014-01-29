@@ -416,7 +416,7 @@ box-shadow: inset 0 1px 1px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.03); }
 .page-title h2,
 .page-title h4 { color: #666; }
 .page-title .meta-single li { float: left; margin-right: 14px; }
-.page-title .meta-single li:last-child { float: right; margin-right: 0; }
+.page-title .meta-single li.comments { float: right; margin-right: 0; }
 
 /*  common : notebox
 /* ------------------------------------ */

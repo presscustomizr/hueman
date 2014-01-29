@@ -23,7 +23,7 @@
 					<?php if ( has_post_format('audio') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fa fa-volume-up"></i></span>'; ?>
 					<?php if ( is_sticky() ) echo'<span class="thumb-icon small"><i class="fa fa-star"></i></span>'; ?>
 				</a>
-				<?php if ( !ot_get_option( 'comment-count' ) ): ?>
+				<?php if ( comments_open() && !ot_get_option( 'comment-count' ) ): ?>
 					<a class="post-comments" href="<?php comments_link(); ?>"><span><i class="fa fa-comments-o"></i><?php comments_number( '0', '1', '%' ); ?></span></a>
 				<?php endif; ?>
 			</div><!--/.post-thumbnail-->

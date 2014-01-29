@@ -6,7 +6,9 @@
 	<?php elseif ( is_single() ): ?>
 		<ul class="meta-single group">
 			<li class="category"><?php the_category(' <span>/</span> '); ?></li>
+			<?php if ( comments_open() && !ot_get_option( 'comment-count' ) ): ?>
 			<li class="comments"><a href="<?php comments_link(); ?>"><i class="fa fa-comments-o"></i><?php comments_number( '0', '1', '%' ); ?></a></li>
+			<?php endif; ?>
 		</ul>
 		
 	<?php elseif ( is_page() ): ?>
