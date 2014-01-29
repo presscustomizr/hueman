@@ -13,7 +13,7 @@
 					<h1 class="post-title"><?php the_title(); ?></h1>
 					<p class="post-byline"><?php _e('by','hueman'); ?> <?php the_author_posts_link(); ?> &middot; <?php the_time(get_option('date_format')); ?></p>
 					
-					<?php get_template_part('inc/post-formats'); ?>
+					<?php if( get_post_format() ) { get_template_part('inc/post-formats'); } ?>
 					
 					<div class="clear"></div>
 					
