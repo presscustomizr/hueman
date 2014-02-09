@@ -2,8 +2,12 @@
 
 <?php if ( $related->have_posts() ): ?>
 
-<h4 class="heading">
-	<i class="fa fa-hand-o-right"></i><?php _e('You may also like...','hueman'); ?>
+<h4 class="heading heading-featured">
+	<?php if ( ot_get_option('blog-featured-text', false) ): ?>
+		<?php echo ot_get_option('blog-featured-text', false); ?>
+	<?php else: ?>
+		<i class="fa fa-hand-o-right"></i><?php _e('You may also like...','hueman'); ?>
+	<?php endif; ?>
 </h4>
 
 <ul class="related-posts group">

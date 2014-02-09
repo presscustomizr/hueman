@@ -208,6 +208,14 @@ function custom_theme_options() {
 			'type'		=> 'text',
 			'section'	=> 'blog'
 		),
+		// Blog: Featured
+		array(
+			'id'		=> 'blog-featured-text',
+			'label'		=> 'Featured Text',
+			'desc'		=> 'Your text to feature other articles (default). Filling out this field removes the finger item.',
+			'type'		=> 'text',
+			'section'	=> 'blog'
+		),
 		// Blog: Excerpt Length
 		array(
 			'id'			=> 'excerpt-length',
