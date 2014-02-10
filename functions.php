@@ -131,8 +131,8 @@ if ( ! function_exists( 'alx_styles' ) ) {
 	
 	function alx_styles() {
 		wp_enqueue_style( 'style', get_stylesheet_uri() );
-		if ( !ot_get_option('responsive') ) { wp_enqueue_style( 'responsive', get_template_directory_uri().'/responsive.css' ); }
-		if ( ot_get_option('custom') ) { wp_enqueue_style( 'custom', get_template_directory_uri().'/custom.css' ); }
+		if ( ot_get_option('responsive') != 'off' ) { wp_enqueue_style( 'responsive', get_template_directory_uri().'/responsive.css' ); }
+		if ( ot_get_option('custom') == 'on' ) { wp_enqueue_style( 'custom', get_template_directory_uri().'/custom.css' ); }
 		wp_enqueue_style( 'font-awesome', get_template_directory_uri().'/fonts/font-awesome.min.css' );
 	}
 	
@@ -506,8 +506,8 @@ if ( ! function_exists( 'alx_body_class' ) ) {
 
 	function alx_body_class( $classes ) {
 		$classes[] = alx_layout_class();
-		if ( !ot_get_option( 'boxed' ) ) { $classes[] = 'full-width'; }
-		if ( ot_get_option( 'boxed' ) ) { $classes[] = 'boxed'; }
+		if ( ot_get_option( 'boxed' ) != 'on' ) { $classes[] = 'full-width'; }
+		if ( ot_get_option( 'boxed' ) == 'on' ) { $classes[] = 'boxed'; }
 		if ( has_nav_menu('topbar') ) {	$classes[] = 'topbar-enabled'; }
 		if ( ot_get_option( 'mobile-sidebar-hide' ) == 's1' ) { $classes[] = 'mobile-sidebar-hide-s1'; }
 		if ( ot_get_option( 'mobile-sidebar-hide' ) == 's2' ) { $classes[] = 'mobile-sidebar-hide-s2'; }

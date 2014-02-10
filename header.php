@@ -18,7 +18,7 @@
 
 	<header id="header">
 	
-		<?php if (has_nav_menu('topbar')): ?>
+		<?php if ( has_nav_menu('topbar') ): ?>
 			<nav class="nav-container group" id="nav-topbar">
 				<div class="nav-toggle"><i class="fa fa-bars"></i></div>
 				<div class="nav-text"><!-- put your mobile menu text here --></div>
@@ -44,7 +44,7 @@
 				<?php if ( ot_get_option('header-image') == '' ): ?>
 				<div class="group pad">
 					<?php echo alx_site_title(); ?>
-					<?php if ( !ot_get_option('site-description') ): ?><p class="site-description"><?php bloginfo( 'description' ); ?></p><?php endif; ?>
+					<?php if ( ot_get_option('site-description') != 'off' ): ?><p class="site-description"><?php bloginfo( 'description' ); ?></p><?php endif; ?>
 				</div>
 				<?php endif; ?>
 				<?php if ( ot_get_option('header-image') ): ?>
@@ -53,7 +53,7 @@
 					</a>
 				<?php endif; ?>
 				
-				<?php if (has_nav_menu('header')): ?>
+				<?php if ( has_nav_menu('header') ): ?>
 					<nav class="nav-container group" id="nav-header">
 						<div class="nav-toggle"><i class="fa fa-bars"></i></div>
 						<div class="nav-text"><!-- put your mobile menu text here --></div>

@@ -24,29 +24,16 @@ function custom_theme_options() {
           'title'     => 'Documentation',
           'content'   => '
 			<h1>Hueman</h1>
-			<p>Thanks for using this theme! First, a friendly warning: Please remember that the "Reset Options" button resets <strong>ALL</strong> options. That means, if you reset your styling options, all your custom sidebars and other settings will be reset as well.</p>
-			<h3>Frequently Asked Questions</h3>
-			<p><i>Q: Why are social sharing buttons missing Google Plus?</i> &mdash; A: You need to enable urlCurl on your server for G+ to work. Ask your webhost to do so. If you are unable to, you can disable the buttons and use any other plugin instead.</p>
-			<p><i>Q: My old thumbnails have different sizes, why?</i> &mdash; A: Thumbnails uploaded before changing theme will not be automatically re-cropped. To fix this, you need to run the <a target="_blank" href="http://wordpress.org/plugins/regenerate-thumbnails/">Regenerate Thumbnails</a> plugin once.</p>
-			<p><i>Q: I did not use featured images before and have many posts, what do I do?</i> &mdash; A: Use the <a target="_blank" href="http://wordpress.org/plugins/easy-add-thumbnail/">Easy Add Thumbnail</a> plugin to automatically make the first image uploaded to each post a featured image.</p>
-			<p><i>Q: Why is my featured image not appearing on the single post page?</i> &mdash; A: You need to use the "Image" format option for it to show up, as not everyone wants to show the featured image at the top for the "Standard" post format.</p>
-			<p><i>Q: My gallery format post shows images twice, why?</i> &mdash; A: This is because you insert a standard gallery into the post itself. This is not needed, as the gallery format post will auto-display attached images in the slider above.</p>
-			<p><i>Q: My slider gallery includes images I only want to show in the content below</i> &mdash; A: The gallery format will always show all attached images. For it to not show up, go to Media > Add New and upload it there. Then go back to the post and add it.</p>
-			<p><i>Q: How do I make the homepage slider auto-progress?</i> &mdash; A: In /inc/featured.php change <i>slideshow: false</i> to true.</p>
-			<h3>Dynamic Styles</h3>
-			<p>The dynamic styles will be added directly to the head of your theme. This is according to WordPress best practices, but if you do not want it printed out there, simply inspect the code of your page with the styling options set. Copy the CSS from head into your child theme\'s style.css file or this theme\'s custom.css (which you need to enable), and disable dynamic styling.</p>
-			<h3>Theme Customization</h3>
-			<p>When modifiying the theme you should always use a child theme, otherwise your customized files will be removed/overwritten when you update the theme. Download the sample child theme below and upload it via admin. Then activate your child theme and start customizing it!</p>
+			<p>Thanks for using this theme! Enjoy.</p>
 			<ul>
-				<li>Read more how to use a child theme <a target="_blank" href="http://codex.wordpress.org/Child_Themes">here</a>.</li>
-				<li>Download the Hueman sample child theme <a href="https://github.com/AlxMedia/hueman-child/archive/master.zip">here</a>.</li>
+				<li>Read the theme documentation <a target="_blank" href="'.get_template_directory_uri().'/functions/documentation/documentation.html">here</a></li>
+				<li>Download the sample child theme <a href="https://github.com/AlxMedia/hueman-child/archive/master.zip">here</a></li>
+				<li>Download or contribute translations <a target="_blank" href="https://github.com/AlxMedia/hueman-languages">here</a></li>
+				<li>Feel free to rate/review the theme <a target="_blank" href="http://wordpress.org/support/view/theme-reviews/hueman">here</a></li>
+				<li>If you have theme questions, go <a target="_blank" href="http://wordpress.org/support/theme/hueman">here</a></li>
 			</ul>
-			<p>If you are <strong>not using a child theme</strong>, you must do this before each theme update:</p>
-			<ol>
-				<li>Backup your custom.css file if you have used it, it will be overwritten and needs to be re-added after the update.</li>
-				<li>Backup your additional language files if you have created/modified any, they will be removed and need to be re-added after the update.</li>
-				<li>Backup any other custom code.</li>
-			</ol>
+			<hr />
+			<p>You can support the theme author by donating <a target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K54RW72RZM2HN">here</a> – any amount is always appreciated.</p>
 		'
         )
       )
@@ -97,29 +84,19 @@ function custom_theme_options() {
 		array(
 			'id'		=> 'custom',
 			'label'		=> 'Custom Stylesheet',
-			'desc'		=> 'Load your custom styles [ <strong>custom.css</strong> ]<br /><i>Note: You must backup this file before a theme update. Consider using a <a target="_blank" href="http://codex.wordpress.org/Child_Themes">child theme</a> instead. A sample child theme is available in the help dropdown.</i>',
-			'type'		=> 'checkbox',
-			'section'	=> 'general',
-			'choices'	=> array(
-				array( 
-					'value' => '1',
-					'label' => 'Enable'
-				)
-			)
+			'desc'		=> 'Load custom stylesheet [ <strong>custom.css</strong> ]<br /><i>Note: You must backup this file before a theme update. Consider using a <a target="_blank" href="http://codex.wordpress.org/Child_Themes">child theme</a> instead. A sample child theme is available in the help dropdown.</i>',
+			'std'		=> 'off',
+			'type'		=> 'on-off',
+			'section'	=> 'general'
 		),
 		// General: Responsive Layout
 		array(
 			'id'		=> 'responsive',
 			'label'		=> 'Responsive Layout',
-			'desc'		=> 'Disable mobile and tablet optimizations [ <strong>responsive.css</strong> ]',
-			'type'		=> 'checkbox',
-			'section'	=> 'general',
-			'choices'	=> array(
-				array( 
-					'value' => '1',
-					'label' => 'Disable'
-				)
-			)
+			'desc'		=> 'Mobile and tablet optimizations [ <strong>responsive.css</strong> ]',
+			'std'		=> 'on',
+			'type'		=> 'on-off',
+			'section'	=> 'general'
 		),
 		// General: Mobile Sidebar
 		array(
@@ -176,17 +153,11 @@ function custom_theme_options() {
 		// General: Comments
 		array(
 			'id'		=> 'page-comments',
-			'label'		=> 'Comments',
-			'desc'		=> '',
-			'type'		=> 'checkbox',
-			'section'	=> 'general',
-			'choices'	=> array(
-				array( 
-					'value' => '1',
-					'label' => 'Enable comments on pages',
-					'std'	=> '1'
-				)
-			)
+			'label'		=> 'Page Comments',
+			'desc'		=> 'Comments on pages',
+			'std'		=> 'off',
+			'type'		=> 'on-off',
+			'section'	=> 'general'
 		),
 		// Blog: Heading
 		array(
@@ -246,33 +217,41 @@ function custom_theme_options() {
 			'section'		=> 'blog',
 			'min_max_step'	=> '0,10,1'
 		),
+		// Blog: Thumbnail Placeholder
+		array(
+			'id'		=> 'placeholder',
+			'label'		=> 'Thumbnail Placeholder',
+			'desc'		=> 'Show featured image placeholders if no featured image is set',
+			'std'		=> 'on',
+			'type'		=> 'on-off',
+			'section'	=> 'blog'
+		),
 		// Blog: Comment Count
 		array(
 			'id'		=> 'comment-count',
 			'label'		=> 'Thumbnail Comment Count',
 			'desc'		=> 'Comment count on thumbnails',
-			'type'		=> 'checkbox',
-			'section'	=> 'blog',
-			'choices'	=> array(
-				array( 
-					'value' => '1',
-					'label' => 'Disable'
-				)
-			)
+			'std'		=> 'on',
+			'type'		=> 'on-off',
+			'section'	=> 'blog'
 		),
 		// Blog: Single - Sharrre
 		array(
 			'id'		=> 'sharrre',
-			'label'		=> 'Single &mdash; Share Buttons',
+			'label'		=> 'Single &mdash; Share Bar',
 			'desc'		=> 'Social sharing buttons for each article',
-			'type'		=> 'checkbox',
-			'section'	=> 'blog',
-			'choices'	=> array(
-				array( 
-					'value' => '1',
-					'label' => 'Disable'
-				)
-			)
+			'std'		=> 'on',
+			'type'		=> 'on-off',
+			'section'	=> 'blog'
+		),
+		// Blog: Single - Sharrre Sticky
+		array(
+			'id'		=> 'sharrre-scrollable',
+			'label'		=> 'Single &mdash; Scrollable Share Bar',
+			'desc'		=> 'Make social links stick to browser window when scrolling down',
+			'std'		=> 'off',
+			'type'		=> 'on-off',
+			'section'	=> 'blog'
 		),
 		// Blog: Twitter Username
 		array(
@@ -287,14 +266,9 @@ function custom_theme_options() {
 			'id'		=> 'author-bio',
 			'label'		=> 'Single &mdash; Author Bio',
 			'desc'		=> 'Shows post author description, if it exists',
-			'type'		=> 'checkbox',
-			'section'	=> 'blog',
-			'choices'	=> array(
-				array( 
-					'value' => '1',
-					'label' => 'Disable'
-				)
-			)
+			'std'		=> 'on',
+			'type'		=> 'on-off',
+			'section'	=> 'blog'
 		),
 		// Blog: Single - Related Posts
 		array(
@@ -359,14 +333,9 @@ function custom_theme_options() {
 			'id'		=> 'site-description',
 			'label'		=> 'Site Description',
 			'desc'		=> 'The description that appears next to your logo',
-			'type'		=> 'checkbox',
-			'section'	=> 'header',
-			'choices'	=> array(
-				array( 
-					'value' => '1',
-					'label' => 'Disable'
-				)
-			)
+			'std'		=> 'on',
+			'type'		=> 'on-off',
+			'section'	=> 'header'
 		),
 		// Header: Header Image
 		array(
@@ -433,16 +402,10 @@ function custom_theme_options() {
 		array(
 			'id'		=> 'credit',
 			'label'		=> 'Footer Credit',
-			'desc'		=> 'Disable footer credit text',
-			'std'		=> '',
-			'type'		=> 'checkbox',
-			'section'	=> 'footer',
-			'choices'	=> array(
-				array( 
-					'value' => '1',
-					'label' => 'Disable'
-				)
-			)
+			'desc'		=> 'Footer credit text',
+			'std'		=> 'on',
+			'type'		=> 'on-off',
+			'section'	=> 'footer'
 		),
 		// Layout : Global
 		array(
@@ -977,29 +940,19 @@ function custom_theme_options() {
 		array(
 			'id'		=> 'dynamic-styles',
 			'label'		=> 'Dynamic Styles',
-			'desc'		=> 'Turn styling options on / off',
-			'type'		=> 'checkbox',
-			'section'	=> 'styling',
-			'choices'	=> array(
-				array( 
-					'value' => '1',
-					'label' => 'Enable to use the options below'
-				)
-			)
+			'desc'		=> 'Turn on to use the styling options below',
+			'std'		=> 'on',
+			'type'		=> 'on-off',
+			'section'	=> 'styling'
 		),
 		// General: Boxed Layout
 		array(
 			'id'		=> 'boxed',
 			'label'		=> 'Boxed Layout',
 			'desc'		=> 'Use a boxed layout',
-			'type'		=> 'checkbox',
-			'section'	=> 'styling',
-			'choices'	=> array(
-				array( 
-					'value' => '1',
-					'label' => 'Enable'
-				)
-			)
+			'std'		=> 'off',
+			'type'		=> 'on-off',
+			'section'	=> 'styling'
 		),
 		// Styling: Font
 		array(
@@ -1035,6 +988,10 @@ function custom_theme_options() {
 					'label' => 'Ubuntu, Latin-Ext (Google Fonts)'
 				),
 				array( 
+					'value' => 'ubuntu-cyr',
+					'label' => 'Ubuntu, Latin / Cyrillic-Ext (Google Fonts)'
+				),
+				array( 
 					'value' => 'roboto-condensed',
 					'label' => 'Roboto Condensed, Latin-Ext (Google Fonts)'
 				),
@@ -1049,6 +1006,14 @@ function custom_theme_options() {
 				array( 
 					'value' => 'open-sans-cyr',
 					'label' => 'Open Sans, Latin / Cyrillic-Ext (Google Fonts)'
+				),
+				array( 
+					'value' => 'pt-serif',
+					'label' => 'PT Serif, Latin-Ext (Google Fonts)'
+				),
+				array( 
+					'value' => 'pt-serif-cyr',
+					'label' => 'PT Serif, Latin / Cyrillic-Ext (Google Fonts)'
 				),
 				array( 
 					'value' => 'arial',
@@ -1074,7 +1039,6 @@ function custom_theme_options() {
 		array(
 			'id'		=> 'sidebar-padding',
 			'label'		=> 'Sidebar Width',
-			'desc'		=> 'Change sidebar content padding and width',
 			'type'		=> 'radio',
 			'std'		=> '30',
 			'section'	=> 'styling',
@@ -1121,6 +1085,15 @@ function custom_theme_options() {
 			'id'		=> 'color-header',
 			'label'		=> 'Header Background',
 			'std'		=> '#33363b',
+			'type'		=> 'colorpicker',
+			'section'	=> 'styling',
+			'class'		=> ''
+		),
+		// Styling: Header Menu Background
+		array(
+			'id'		=> 'color-header-menu',
+			'label'		=> 'Header Menu Background',
+			'std'		=> '',
 			'type'		=> 'colorpicker',
 			'section'	=> 'styling',
 			'class'		=> ''

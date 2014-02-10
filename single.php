@@ -17,12 +17,12 @@
 					
 					<div class="clear"></div>
 					
-					<div class="entry <?php if ( !ot_get_option('sharrre') ) { echo 'share'; }; ?>">	
+					<div class="entry <?php if ( ot_get_option('sharrre') != 'off' ) { echo 'share'; }; ?>">	
 						<div class="entry-inner">
 							<?php the_content(); ?>
 							<?php wp_link_pages(array('before'=>'<div class="post-pages">'.__('Pages:','hueman'),'after'=>'</div>')); ?>
 						</div>
-						<?php if ( !ot_get_option('sharrre') ) { get_template_part('inc/sharrre'); } ?>
+						<?php if ( ot_get_option('sharrre') != 'off' ) { get_template_part('inc/sharrre'); } ?>
 						<div class="clear"></div>				
 					</div><!--/.entry-->
 					
@@ -34,7 +34,7 @@
 		
 		<?php the_tags('<p class="post-tags"><span>'.__('Tags:','hueman').'</span> ','','</p>'); ?>
 		
-		<?php if ( !ot_get_option( 'author-bio' ) && get_the_author_meta( 'description' ) ): ?>
+		<?php if ( ( ot_get_option( 'author-bio' ) != 'off' ) && get_the_author_meta( 'description' ) ): ?>
 			<div class="author-bio">
 				<div class="bio-avatar"><?php echo get_avatar(get_the_author_meta('user_email'),'128'); ?></div>
 				<p class="bio-name"><?php the_author_meta('display_name'); ?></p>

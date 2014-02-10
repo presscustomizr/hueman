@@ -1,6 +1,16 @@
   Theme : Hueman
-Version : 2.1.0
+Version : 2.1.1
  Author : Alexander "Alx" Agnarson - http://alxmedia.se
+
+February 10 2014 - 2.1.1
+===========================================================
+- Updated to OptionTree 2.3.0
+- Changed checkbox options to the new on-off toggle
+- Added additional Google fonts
+- Added styling option to recolor the header menu area
+- Added option to disable featured image placeholders - @fran-kee (via GitHub)
+- Added option to enable scrollable sharrre bar - @erikfrye (via GitHub)
+- Updated help dropdown information and included theme documentation with the theme
 
 January 29 2014 - 2.1.0
 ===========================================================

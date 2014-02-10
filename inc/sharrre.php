@@ -64,5 +64,61 @@
 				api.openPopup('pinterest');
 			}
 		});
+		
+		<?php if ( ot_get_option( 'sharrre-scrollable' ) == 'on' ): ?>		
+			// Scrollable sharrre bar, contributed by Erik Frye. Awesome!
+			var shareContainer = jQuery(".sharrre-container"),
+			header = jQuery('#header'),
+			postEntry = jQuery('.entry'),
+			$window = jQuery(window),
+			distanceFromTop = 20,
+			startSharePosition = shareContainer.offset(),
+			contentBottom = postEntry.offset().top + postEntry.outerHeight(),
+			topOfTemplate = header.offset().top;
+			getTopSpacing();
+
+			shareScroll = function(){
+				if($window.width() > 719){	
+					var scrollTop = $window.scrollTop() + topOfTemplate,
+					stopLocation = contentBottom - (shareContainer.outerHeight() + topSpacing);
+					if(scrollTop > stopLocation){
+						shareContainer.offset({top: contentBottom - shareContainer.outerHeight(),left: startSharePosition.left});
+					}
+					else if(scrollTop >= postEntry.offset().top-topSpacing){
+						shareContainer.offset({top: scrollTop + topSpacing, left: startSharePosition.left});
+					}else if(scrollTop < startSharePosition.top+(topSpacing-1)){
+						shareContainer.offset({top: startSharePosition.top,left:startSharePosition.left});
+					}
+				}
+			},
+
+			shareMove = function(){
+				startSharePosition = shareContainer.offset();
+				contentBottom = postEntry.offset().top + postEntry.outerHeight();
+				topOfTemplate = header.offset().top;
+				getTopSpacing();
+			};
+
+			/* As new images load the page content body gets longer. The bottom of the content area needs to be adjusted in case images are still loading. */
+			setTimeout(function() {
+				contentBottom = postEntry.offset().top + postEntry.outerHeight();
+			}, 2000);
+
+			if (window.addEventListener) {
+				window.addEventListener('scroll', shareScroll, false);
+				window.addEventListener('resize', shareMove, false);
+			} else if (window.attachEvent) {
+				window.attachEvent('onscroll', shareScroll);
+				window.attachEvent('onresize', shareMove);
+			}
+
+			function getTopSpacing(){
+				if($window.width() > 1024)
+					topSpacing = distanceFromTop + jQuery('.nav-wrap').outerHeight();
+				else
+					topSpacing = distanceFromTop;
+			}
+		<?php endif; ?>
+		
 	});
 </script>

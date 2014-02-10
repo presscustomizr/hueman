@@ -24,7 +24,7 @@ Template Name: Child Menu
 				
 			</article>
 			
-			<?php if ( ot_get_option('page-comments') != '' ) { comments_template('/comments.php',true); } ?>
+			<?php if ( ot_get_option('page-comments') == 'on' ) { comments_template('/comments.php',true); } ?>
 			
 		<?php endwhile; ?>
 		
