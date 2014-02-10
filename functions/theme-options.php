@@ -76,6 +76,10 @@ function custom_theme_options() {
 			'title'		=> 'Layout'
 		),
 		array(
+			'id'		=> 'images',
+			'title'		=> 'Images'
+		),
+		array(
 			'id'		=> 'sidebars',
 			'title'		=> 'Sidebars'
 		),
@@ -201,6 +205,14 @@ function custom_theme_options() {
 			'id'		=> 'blog-subheading',
 			'label'		=> 'Subheading',
 			'desc'		=> 'Your blog subheading',
+			'type'		=> 'text',
+			'section'	=> 'blog'
+		),
+		// Blog: Featured
+		array(
+			'id'		=> 'blog-featured-text',
+			'label'		=> 'Featured Text',
+			'desc'		=> 'Your text to feature other articles (default). Filling out this field removes the finger item.',
 			'type'		=> 'text',
 			'section'	=> 'blog'
 		),
@@ -804,6 +816,21 @@ function custom_theme_options() {
 					'value'		=> 'col-3cr',
 					'label'		=> '3 Column Right',
 					'src'		=> get_template_directory_uri() . '/functions/images/col-3cr.png'
+				)
+			)
+		),
+		// Images: Hide Default Thumbs
+		array(
+			'id'		=> 'images-default-thumbs',
+			'label'		=> 'Default Thumbs',
+			'desc'		=> 'Show default thumbs, where an image is missing',
+			'type'		=> 'checkbox',
+			'std'		=> '1',
+			'section'	=> 'images',
+			'choices'	=> array(
+				array( 
+					'value' => '1',
+					'label' => 'Enable',
 				)
 			)
 		),

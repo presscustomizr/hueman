@@ -2,8 +2,12 @@
 
 <?php if ( $related->have_posts() ): ?>
 
-<h4 class="heading">
-	<i class="fa fa-hand-o-right"></i><?php _e('You may also like...','hueman'); ?>
+<h4 class="heading heading-featured">
+	<?php if ( ot_get_option('blog-featured-text', false) ): ?>
+		<?php echo ot_get_option('blog-featured-text', false); ?>
+	<?php else: ?>
+		<i class="fa fa-hand-o-right"></i><?php _e('You may also like...','hueman'); ?>
+	<?php endif; ?>
 </h4>
 
 <ul class="related-posts group">
@@ -16,7 +20,7 @@
 				<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 					<?php if ( has_post_thumbnail() ): ?>
 						<?php the_post_thumbnail('thumb-medium'); ?>
-					<?php else: ?>
+					<?php elseif ( ot_get_option('images-default-thumbs') ): ?>
 						<img src="<?php echo get_template_directory_uri(); ?>/img/thumb-medium.png" alt="<?php the_title(); ?>" />
 					<?php endif; ?>
 					<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fa fa-play"></i></span>'; ?>

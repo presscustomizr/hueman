@@ -91,7 +91,7 @@ class AlxTabs extends WP_Widget {
 						<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 							<?php if ( has_post_thumbnail() ): ?>
 								<?php the_post_thumbnail('thumb-small'); ?>
-							<?php else: ?>
+							<?php elseif ( ot_get_option('images-default-thumbs') ): ?>
 								<img src="<?php echo get_template_directory_uri(); ?>/img/thumb-small.png" alt="<?php the_title(); ?>" />
 							<?php endif; ?>
 							<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fa fa-play"></i></span>'; ?>
@@ -141,7 +141,7 @@ class AlxTabs extends WP_Widget {
 						<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 							<?php if ( has_post_thumbnail() ): ?>
 								<?php the_post_thumbnail('thumb-small'); ?>
-							<?php else: ?>
+							<?php elseif ( ot_get_option('images-default-thumbs') ): ?>
 								<img src="<?php echo get_template_directory_uri(); ?>/img/thumb-small.png" alt="<?php the_title(); ?>" />
 							<?php endif; ?>
 							<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fa fa-play"></i></span>'; ?>
