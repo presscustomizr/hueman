@@ -1,6 +1,10 @@
   Theme : Hueman
-Version : 2.1.1
+Version : 2.1.2
  Author : Alexander "Alx" Agnarson - http://alxmedia.se
+
+Mars 24 2014 - 2.1.2
+===========================================================
+- Updated to OptionTree 2.3.4
 
 February 10 2014 - 2.1.1
 ===========================================================
