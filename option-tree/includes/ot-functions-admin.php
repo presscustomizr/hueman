@@ -467,7 +467,7 @@ if ( ! function_exists( 'ot_validate_setting' ) ) {
       $input['background-image'] = ot_validate_setting( $input['background-image'], 'upload', $field_id );
       
       // Loop over array and check for values
-      foreach( $input as $key => $value ) {
+      foreach( (array) $input as $key => $value ) {
         if ( ! empty( $value ) ) {
           $has_value = true;
         }
@@ -703,6 +703,7 @@ if ( ! function_exists( 'ot_create_media_post' ) ) {
       /* create post object */
       $_p = array();
       $_p['post_title']     = 'Media';
+      $_p['post_name']      = 'media';
       $_p['post_status']    = 'private';
       $_p['post_type']      = 'option-tree';
       $_p['comment_status'] = 'closed';
@@ -3630,16 +3631,16 @@ if ( ! function_exists( 'ot_contextual_help_view' ) ) {
  * @access    public
  * @since     2.0
  */
-if ( ! function_exists( 'ot_layouts_view' ) ) {
+if ( ! function_exists( 'ot_layout_view' ) ) {
 
   function ot_layout_view( $key, $data = '', $active_layout = '' ) {
-  
+
     return '
     <div class="option-tree-setting">
       <div class="open">' . ( isset( $key ) ? esc_attr( $key ) : __( 'Layout', 'option-tree' ) ) . '</div>
       <div class="button-section">
         <a href="javascript:void(0);" class="option-tree-layout-activate option-tree-ui-button button left-item' . ( $active_layout == $key ? ' active' : '' ) . '" title="' . __( 'Activate', 'option-tree' ) . '">
-          <span class="icon ot-icon-pencil"></span>' . __( 'Activate', 'option-tree' ) . '
+          <span class="icon ot-icon-check-empty"></span>' . __( 'Activate', 'option-tree' ) . '
         </a>
         <a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="'. __( 'Delete', 'option-tree' ) . '">
           <span class="icon ot-icon-trash"></span>' . __( 'Delete', 'option-tree' ) . '
@@ -4289,6 +4290,100 @@ function ot_wpml_unregister_string( $id ) {
       
     icl_unregister_string( 'Theme Options', $id );
       
+  }
+  
+}
+
+/**
+ * Maybe migrate Settings
+ *
+ * @return    void
+ *
+ * @access    public
+ * @since     2.3.3
+ */
+if ( ! function_exists( 'ot_maybe_migrate_settings' ) ) {
+
+  function ot_maybe_migrate_settings() {
+    
+    // Filter the ID to migrate from
+    $settings_id = apply_filters( 'ot_migrate_settings_id', '' );
+    
+    // Attempt to migrate Settings 
+    if ( ! empty( $settings_id ) && get_option( ot_settings_id() ) === false && ot_settings_id() !== $settings_id ) {
+      
+      // Old settings
+      $settings = get_option( $settings_id );
+      
+      // Check for array keys
+      if ( isset( $settings['sections'] ) && isset( $settings['settings'] ) ) {
+      
+        update_option( ot_settings_id(), $settings );
+        
+      }
+      
+    }
+
+  }
+  
+}
+
+/**
+ * Maybe migrate Option
+ *
+ * @return    void
+ *
+ * @access    public
+ * @since     2.3.3
+ */
+if ( ! function_exists( 'ot_maybe_migrate_options' ) ) {
+
+  function ot_maybe_migrate_options() {
+    
+    // Filter the ID to migrate from
+    $options_id = apply_filters( 'ot_migrate_options_id', '' );
+    
+    // Attempt to migrate Theme Options
+    if ( ! empty( $options_id ) && get_option( ot_options_id() ) === false && ot_options_id() !== $options_id ) {
+      
+      // Old options
+      $options = get_option( $options_id );
+      
+      // Migrate to new ID
+      update_option( ot_options_id(), $options );
+      
+    }
+
+  }
+  
+}
+
+/**
+ * Maybe migrate Layouts
+ *
+ * @return    void
+ *
+ * @access    public
+ * @since     2.3.3
+ */
+if ( ! function_exists( 'ot_maybe_migrate_layouts' ) ) {
+
+  function ot_maybe_migrate_layouts() {
+    
+    // Filter the ID to migrate from
+    $layouts_id = apply_filters( 'ot_migrate_layouts_id', '' );
+    
+    // Attempt to migrate Layouts
+    if ( ! empty( $layouts_id ) && get_option( ot_layouts_id() ) === false && ot_layouts_id() !== $layouts_id ) {
+      
+      // Old options
+      $layouts = get_option( $layouts_id );
+      
+      // Migrate to new ID
+      update_option( ot_layouts_id(), $layouts );
+      
+    }
+
   }
   
 }

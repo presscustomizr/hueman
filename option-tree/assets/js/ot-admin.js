@@ -244,6 +244,7 @@
               OT_UI.init_sortable();
               OT_UI.init_select_wrapper();
               OT_UI.init_numeric_slider();
+              OT_UI.parse_condition();
             }, 500);
             self.processing = false;
           }
@@ -326,16 +327,16 @@
 
           switch ( condition.rule ) {
             case 'less_than':
-              result = ( v1 < v2 );
+              result = ( parseInt( v1 ) < parseInt( v2 ) );
               break;
             case 'less_than_or_equal_to':
-              result = ( v1 <= v2 );
+              result = ( parseInt( v1 ) <= parseInt( v2 ) );
               break;
             case 'greater_than':
-              result = ( v1 > v2 );
+              result = ( parseInt( v1 ) > parseInt( v2 ) );
               break;
             case 'greater_than_or_equal_to':
-              result = ( v1 >= v2 );
+              result = ( parseInt( v1 ) >= parseInt( v2 ) );
               break;
             case 'contains':
               result = ( v2.indexOf(v1) !== -1 ? true : false );
@@ -551,18 +552,20 @@
     bind_colorpicker: function(field_id) {
       $('#'+field_id).wpColorPicker();
     },
-    bind_date_picker: function(field_id) {
+    bind_date_picker: function(field_id, date_format) {
       $('#'+field_id).datepicker({
         showOtherMonths: true,
         showButtonPanel: true,
         currentText: option_tree.date_current,
-        closeText: option_tree.date_close
+        closeText: option_tree.date_close,
+        dateFormat: date_format
       });
     },
-    bind_date_time_picker: function(field_id) {
+    bind_date_time_picker: function(field_id, date_format) {
       $('#'+field_id).datetimepicker({
         showOtherMonths: true,
-        closeText: option_tree.date_close
+        closeText: option_tree.date_close,
+        dateFormat: date_format
       });
     },
     fix_upload_parent: function() {
@@ -643,15 +646,12 @@
   });
 })(jQuery);
 
-/* Gallery*/
+/* Gallery */
 !function ($) {
   
   ot_gallery = {
       
     frame: function (elm) {
-
-      if ( this._frame )
-        return this._frame
       
       var selection = this.select(elm)
       
@@ -671,6 +671,7 @@
           , ids = library.pluck('id')
           , parent = $(elm).parents('.format-setting-inner')
           , input = parent.children('.ot-gallery-value')
+          , shortcode = wp.media.gallery.shortcode( selection ).string().replace(/\"/g,"'")
         
         input.attr('value', ids)
                         
@@ -682,11 +683,13 @@
           url: ajaxurl,
           dataType: 'html',
           data: {
-            action: 'gallery_update',
-            ids: ids
+            action: 'gallery_update'
+          , ids: ids
           },
           success: function(res) {
             parent.children('.ot-gallery-list').html(res)
+            if ( input.hasClass('ot-gallery-shortcode') ) 
+              input.val(shortcode)
             if ( $(elm).parent().children('.ot-gallery-delete').length <= 0 ) {
               $(elm).parent().append('<a href="#" class="option-tree-ui-button button button-secondary hug-left ot-gallery-delete">' + option_tree.delete + '</a>')
             }
@@ -701,9 +704,10 @@
     }
       
   , select: function (elm) {
-      var ids = $(elm).parents('.format-setting-inner').children('.ot-gallery-value').attr('value')
-        , fakeShortcode = '[gallery ids="' + ids + '"]'
-        , shortcode = wp.shortcode.next('gallery', ( ids ? fakeShortcode : wp.media.view.settings.ot_gallery.shortcode ) )
+      var input = $(elm).parents('.format-setting-inner').children('.ot-gallery-value')
+        , ids = input.attr('value')
+        , _shortcode = input.hasClass('ot-gallery-shortcode') ? ids : '[gallery ids=\'' + ids + '\]'
+        , shortcode = wp.shortcode.next('gallery', ( ids ? _shortcode : wp.media.view.settings.ot_gallery.shortcode ) )
         , defaultPostId = wp.media.gallery.defaults.id
         , attachments
         , selection
@@ -717,6 +721,12 @@
       
       if ( _.isUndefined( shortcode.get('id') ) && ! _.isUndefined( defaultPostId ) )
         shortcode.set( 'id', defaultPostId )
+      
+      if ( _.isUndefined( shortcode.get('ids') ) && ! input.hasClass('ot-gallery-shortcode') && ids )
+        shortcode.set( 'ids', ids )
+      
+      if ( _.isUndefined( shortcode.get('ids') ) )
+        shortcode.set( 'ids', '0' )
       
       attachments = wp.media.gallery.attachments( shortcode )
 
