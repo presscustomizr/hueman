@@ -120,32 +120,6 @@
 	.page-title.pad { padding-top: 12px; padding-bottom: 12px; }
 }
 
-/* ------------------------------------------------------------------------- *
- *  Tablet (Portrait) : 800px > 720px
-/* ------------------------------------------------------------------------- */
-@media only screen and (min-width: 720px) and (max-width: 800px) {
-	
-	/* layout */
-	.grid { margin-right: 2.9%; }
-	.pad { padding: 25px 25px 15px; }
-	
-	.one-half { width: 48.5%; }
-	.one-third { width: 31.4%; }
-	.two-third { width: 65.65%; }
-	.one-fourth { width: 22.8%; }
-	.three-fourth { width: 74.1%; }
-	.one-fifth { width: 17.6%; }
-	.two-fifth { width: 38.5%; }
-	.three-fifth { width: 59%; }
-	.four-fifth { width: 79.5%; }
-	
-	/* blog */
-	#flexslider-featured { margin-top: 5px; }	
-	.format-gallery .post-format .flexslider .slides img { max-height: 300px; }
-	.format-link .post-format p { margin-bottom: 15px; }
-
-}
-
 
 /* ------------------------------------------------------------------------- *
  *  Mobile (Mid Res) : 719px > 0px (480px & 320px)
