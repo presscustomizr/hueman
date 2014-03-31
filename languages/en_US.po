@@ -37,7 +37,7 @@ msgid "Comments"
 msgstr ""
 
 #: ../comments.php:11
-msgid "Trackbacks &amp; Pingbacks"
+msgid "Pingbacks"
 msgstr ""
 
 #: ../footer.php:67

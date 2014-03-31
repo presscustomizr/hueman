@@ -137,7 +137,8 @@ a,
 .s1 .widget_calendar caption,
 #footer .widget_calendar caption,
 .author-bio .bio-avatar:after,
-.commentlist li.bypostauthor > .comment-body:after { background-color: '.ot_get_option('color-1').'; }
+.commentlist li.bypostauthor > .comment-body:after,
+.commentlist li.comment-author-admin > .comment-body:after { background-color: '.ot_get_option('color-1').'; }
 
 .post-format .format-container { border-color: '.ot_get_option('color-1').'; }
 
