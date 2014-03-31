@@ -2,16 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Hueman\n"
 "POT-Creation-Date: 2013-12-27 14:37+0100\n"
-"PO-Revision-Date: 2013-12-27 14:37+0100\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2014-02-02 11:20+0100\n"
+"Last-Translator: Wiktor 'wikiyu' Jedrzejczak <wiktor.jedrzejczak@gmail.com>\n"
 "Language-Team: \n"
-"Language: English\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
-"X-Poedit-KeywordsList: __;_e\n"
+"X-Generator: Poedit 1.6.3\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_n_noop:1,2;_nx:1,2;_nx_noop:1,2\n"
 "X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../404.php:14
@@ -21,24 +22,23 @@ msgid ""
 msgstr ""
 
 #: ../comments.php:7
-msgid "No Responses"
-msgstr ""
-
-#: ../comments.php:7
-msgid "1 Response"
-msgstr ""
-
-#: ../comments.php:7
-msgid "% Responses"
-msgstr ""
+#, php-format
+msgid "One Comment"
+msgid_plural "%1$s Comments"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../comments.php:10
-msgid "Comments"
-msgstr ""
+msgid "comment"
+msgid_plural "comments"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../comments.php:11
 msgid "Trackbacks &amp; Pingbacks"
-msgstr ""
+msgid_plural "Trackbacks &amp; Pingbacks"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../footer.php:67
 msgid "All Rights Reserved."

@@ -3,12 +3,12 @@
 <section id="comments" class="themeform">
 	
 	<?php if ( have_comments() ) : global $wp_query; ?>
-	
-		<h3 class="heading"><?php comments_number( __( 'No Responses', 'hueman' ), __( '1 Response', 'hueman' ), __( '% Responses', 'hueman' ) ); ?></h3>
+
+		<h3 class="heading"><?php printf( _n( 'One Comment', '%1$s Comments', get_comments_number(), 'hueman' ), number_format_i18n( get_comments_number() )); ?></h3>
 	
 		<ul class="comment-tabs group">
-			<li class="active"><a href="#commentlist-container"><i class="fa fa-comments-o"></i><?php echo count($wp_query->comments_by_type['comment']); ?> <?php _e( 'Comments', 'hueman' ); ?></a></li>
-			<li><a href="#pinglist-container"><i class="fa fa-share"></i><?php echo count($wp_query->comments_by_type['pings']); ?> <?php _e( 'Trackbacks &amp; Pingbacks', 'hueman' ); ?></a></li>
+			<li class="active"><a href="#commentlist-container"><i class="fa fa-comments-o"></i><?php echo count($wp_query->comments_by_type['comment']); ?> <?php printf(_n( 'comment', 'comments', count($wp_query->comments_by_type['comments']), 'hueman' ), number_format_i18n( count($wp_query->comments_by_type['comments']) )); ?></a></li>
+			<li><a href="#pinglist-container"><i class="fa fa-share"></i><?php echo count($wp_query->comments_by_type['pings']); ?> <?php printf(_n( 'Trackbacks &amp; Pingbacks', 'Trackbacks &amp; Pingbacks', count($wp_query->comments_by_type['pings']), 'hueman' ), number_format_i18n( count($wp_query->comments_by_type['pings']),0 )); ?></a></li>
 		</ul>
 
 		<?php if ( ! empty( $comments_by_type['comment'] ) ) { ?>
