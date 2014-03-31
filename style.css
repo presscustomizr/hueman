@@ -316,7 +316,7 @@ box-shadow: 6px 0 0 rgba(0,0,0,0.04), -6px 0 0 rgba(0,0,0,0.04); }
 
 /*  base : sidebar
 /* ------------------------------------ */
-.sidebar { padding-bottom: 20px; position: relative; z-index: 2; }
+.sidebar { background-color: #f0f0f0; padding-bottom: 20px; position: relative; z-index: 2; }
 .sidebar .pad { padding-left: 20px; padding-right: 20px; }
 .sidebar-top { padding: 15px 30px; }
 .sidebar-top p { float: left; color: #fff; color: rgba(255,255,255,0.8); font-size: 16px; font-weight: 600; text-transform: uppercase; line-height: 24px; padding: 3px 0; }
