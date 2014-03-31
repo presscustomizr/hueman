@@ -842,6 +842,6 @@ add_action('woocommerce_after_main_content', 'alx_wc_wrapper_end', 10);
 /*  WP-PageNavi support - @devinsays via GitHub
 /* ------------------------------------ */
 function alx_deregister_styles() {
-    wp_deregister_style( 'wp-pagenavi' );
+	wp_deregister_style( 'wp-pagenavi' );
 }
 add_action( 'wp_print_styles', 'alx_deregister_styles', 100 );
