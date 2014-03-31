@@ -1,6 +1,13 @@
   Theme : Hueman
-Version : 2.1.2
+Version : 2.1.3
  Author : Alexander "Alx" Agnarson - http://alxmedia.se
+
+Mars 31 2014 - 2.1.3
+===========================================================
+- WP-PageNavi optimizations - @devinsays (via GitHub)
+- Fixed admin comment accent color styling option
+- Restructured comment/pingback counts for no plural translation
+- Optimzed and removed unnecessary css
 
 Mars 24 2014 - 2.1.2
 ===========================================================

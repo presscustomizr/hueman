@@ -839,7 +839,7 @@ add_action('woocommerce_before_main_content', 'alx_wc_wrapper_start', 10);
 add_action('woocommerce_after_main_content', 'alx_wc_wrapper_end', 10);
 
 
-/*  WP-PageNavi support - @devinsays via GitHub
+/*  WP-PageNavi support - @devinsays (via GitHub)
 /* ------------------------------------ */
 function alx_deregister_styles() {
 	wp_deregister_style( 'wp-pagenavi' );
