@@ -845,3 +845,13 @@ function alx_deregister_styles() {
 	wp_deregister_style( 'wp-pagenavi' );
 }
 add_action( 'wp_print_styles', 'alx_deregister_styles', 100 );
+
+/* change the Type Argument for get_comment_link()
+/* ------------------------------------ */
+function change_comment_page_count( $location ) {
+	preg_match( '/#comment-(\d+)/i', $location, $matches );
+	$comment_ID = $matches[1] * 1;
+	$comment_page = get_page_of_comment( $commentID, $array( 'type' => 'comment' ) );
+	return preg_replace( '/\/comment-page-(\d+)\//', '/comment-page-'.$comment_page.'/', $location );
+}
+add_filter('get_comment_link', 'change_comment_page_count');
