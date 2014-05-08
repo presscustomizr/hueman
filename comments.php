@@ -18,7 +18,7 @@
 				<?php wp_list_comments( 'avatar_size=96&type=comment' ); ?>	
 			</ol><!--/.commentlist-->
 			
-			<?php if ( get_comment_pages_count( $wp_query->comments_by_type['comment'] ) > 1 && get_option('page_comments') ) : ?>
+			<?php if ( get_comment_pages_count() > 1 && get_option('page_comments') ) : ?>
 			<nav class="comments-nav group">
 				<div class="nav-previous"><?php previous_comments_link(); ?></div>
 				<div class="nav-next"><?php next_comments_link(); ?></div>
