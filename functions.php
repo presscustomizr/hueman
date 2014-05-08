@@ -846,6 +846,7 @@ function alx_deregister_styles() {
 }
 add_action( 'wp_print_styles', 'alx_deregister_styles', 100 );
 
+
 /* change the Type Argument for get_comment_link()
 /* ------------------------------------ */
 function change_comment_page_count( $location ) {
