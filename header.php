@@ -40,7 +40,13 @@
 		
 		<div class="container group">
 			<div class="container-inner">
-				
+
+				<?php if ( is_active_sidebar( 'extra-header-widget-area' ) ) : ?>
+					<aside class="extra-header widget-area half right" role="complementary">
+						<?php dynamic_sidebar( 'extra-header-widget-area' ); ?>
+					</aside>
+				<?php endif; ?>
+
 				<?php if ( ot_get_option('header-image') == '' ): ?>
 				<div class="group pad">
 					<?php echo alx_site_title(); ?>
