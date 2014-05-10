@@ -848,3 +848,23 @@ function alx_deregister_styles() {
 	wp_deregister_style( 'wp-pagenavi' );
 }
 add_action( 'wp_print_styles', 'alx_deregister_styles', 100 );
+
+/*  Add banner on header
+/* ------------------------------------ */
+function hueman_header_extra_widget() {
+
+	if (function_exists('register_sidebar')) :
+		// In header widget area, located to the right hand side of the header, next to the site title and description. Empty by default.
+		register_sidebar( array(
+			'name' => 'Extra Header Widget Area',
+			'id' => 'extra-header-widget-area',
+			'description' => 'A widget area located to the right hand side of the header, next to the site title and description.',
+			'before_widget' => '<div class="widget-container %2$s" id="%1$s">',
+			'after_widget' => '</div>',
+			'before_title' => '<h3 class="widget-title">',
+			'after_title' => '</h3>',
+		) );
+	endif;
+ 
+}
+add_action( 'widgets_init', 'hueman_header_extra_widget' );
