@@ -1,6 +1,12 @@
   Theme : Hueman
-Version : 2.1.4
+Version : 2.1.5
  Author : Alexander "Alx" Agnarson - http://alxmedia.se
+
+May 17 2014 - 2.1.5
+===========================================================
+- Updated to OptionTree 2.4.0
+- Updated to Font Awesome 4.1.0
+- Improved alx_wp_title function - @Gummibeer (via GitHub)
 
 April 16 2014 - 2.1.4
 ===========================================================
