@@ -11,7 +11,6 @@
  *  OptionTree framework integration: Use in theme mode
 /* ------------------------------------------------------------------------- */
 	
-	add_filter( 'ot_show_pages', '__return_false' );
 	add_filter( 'ot_show_new_layout', '__return_false' );
 	add_filter( 'ot_theme_mode', '__return_true' );
 	load_template( get_template_directory() . '/option-tree/ot-loader.php' );
@@ -848,3 +847,13 @@ function alx_deregister_styles() {
 	wp_deregister_style( 'wp-pagenavi' );
 }
 add_action( 'wp_print_styles', 'alx_deregister_styles', 100 );
+
+
+/* dis-/enable OptionTree-Settings Page - @Gummibeer (via GitHub)
+/* ------------------------------------ */
+function remove_ot_menu () {
+    if ( ot_get_option('admin-ot-page') == 'off' ) {
+        remove_menu_page( 'ot-settings' );
+    }
+}
+add_action( 'admin_init', 'remove_ot_menu', 2 );
