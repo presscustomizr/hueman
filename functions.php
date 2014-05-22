@@ -847,12 +847,11 @@ function alx_deregister_styles() {
 add_action( 'wp_print_styles', 'alx_deregister_styles', 100 );
 
 
-/* change the Type Argument for get_comment_link()
+/* dis-/enable OptionTree-Settings Page - @Gummibeer (via GitHub)
 /* ------------------------------------ */
-function change_comment_page_count( $location ) {
-	preg_match( '/#comment-(\d+)/i', $location, $matches );
-	$comment_ID = $matches[1] * 1;
-	$comment_page = get_page_of_comment( $commentID, array( 'type' => 'comment' ) );
-	return preg_replace( '/\/comment-page-(\d+)\//', '/comment-page-'.$comment_page.'/', $location );
+function remove_ot_menu () {
+    if ( ot_get_option('admin-ot-page') == 'off' ) {
+        remove_menu_page( 'ot-settings' );
+    }
 }
-add_filter('get_comment_link', 'change_comment_page_count');
+add_action( 'admin_init', 'remove_ot_menu', 2 );
