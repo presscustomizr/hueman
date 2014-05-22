@@ -160,6 +160,15 @@ function custom_theme_options() {
 			'type'		=> 'on-off',
 			'section'	=> 'general'
 		),
+	        // General: OptionTree
+	        array(
+	            'id'		=> 'admin-ot-page',
+	            'label'		=> 'Option Tree Page',
+	            'desc'		=> 'Show OptionTree Pages in Admin-Area',
+	            'std'		=> 'off',
+	            'type'		=> 'on-off',
+	            'section'	=> 'general'
+	        ),
 		// Blog: Heading
 		array(
 			'id'		=> 'blog-heading',
