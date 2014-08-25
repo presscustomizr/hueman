@@ -481,7 +481,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 	.nav li a { color: #ccc; display: block; line-height: 20px; }
 	/* dropdown arrows */
 	.nav li > a:after { content: "\f0da"; float: right; opacity: 0.5; }
-	.nav > li > a:after {content: "\f0d7"; float: none; margin-left: 6px; font-size: 14px; }
+	.nav > li > a:after {content: "\f0d7"; float: none; margin-left: 6px; font-size: 14px; line-height: 1.2em; }
 	.nav li > a:only-child:after {content: ""; margin: 0; }
 	#footer .nav li > a:after { content: "\f0da"; }
 	#footer .nav > li > a:after { content: "\f0d8"; }
