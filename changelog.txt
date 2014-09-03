@@ -1,6 +1,11 @@
   Theme : Hueman
-Version : 2.1.6
+Version : 2.1.7
  Author : Alexander "Alx" Agnarson - http://alxmedia.se
+
+September 3 2014 - 2.1.7
+===========================================================
+- Updated to Font Awesome 4.2.0
+- Minor css fixes
 
 August 20 2014 - 2.1.6
 ===========================================================
