@@ -548,7 +548,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
  *  Section: Header
 /* ------------------------------------------------------------------------- */
 #header { background: #33363b; position: relative; padding-bottom: 60px; }
-#header .pad { padding-top: 28px; padding-bottom: 30px; }
+#header .pad { padding-top: 30px; padding-bottom: 30px; }
 #header .container-inner { position: relative; }
 
 .site-title { font-size: 42px; font-weight: 600; letter-spacing: -0.5px; float: left; line-height: 60px; padding: 10px 0; }
@@ -1001,7 +1001,7 @@ border-bottom-right-radius: 0; border-bottom-left-radius: 0; }
 /* jplayer */
 .jp-interface { background-color: #444; }
 .jp-play-bar, 
-.jp-volume-bar-value { background-color: #83ad02; }
+.jp-volume-bar-value { background-color: #82b965; }
 .jp-progress { background-color: #262626; }
 .jp-volume-bar { border: 1px solid #262626; }
 .jp-seek-bar,
