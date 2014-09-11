@@ -1,6 +1,57 @@
   Theme : Hueman
-Version : 2.0.8
+Version : 2.1.7
  Author : Alexander "Alx" Agnarson - http://alxmedia.se
+
+September 3 2014 - 2.1.7
+===========================================================
+- Updated to Font Awesome 4.2.0
+- Minor css fixes
+
+August 20 2014 - 2.1.6
+===========================================================
+- Updated to OptionTree 2.4.2
+
+May 17 2014 - 2.1.5
+===========================================================
+- Updated to OptionTree 2.4.0
+- Updated to Font Awesome 4.1.0
+- Improved alx_wp_title function - @Gummibeer (via GitHub)
+
+April 16 2014 - 2.1.4
+===========================================================
+- Fixed IE8 blank page issue, downgraded to stable selectivizr.js 1.0.2 instead of 1.0.3b
+
+Mars 31 2014 - 2.1.3
+===========================================================
+- WP-PageNavi optimizations - @devinsays (via GitHub)
+- Fixed admin comment accent color styling option
+- Restructured comment/pingback counts for no plural translation
+- Optimzed and removed unnecessary css
+
+Mars 24 2014 - 2.1.2
+===========================================================
+- Updated to OptionTree 2.3.4
+
+February 10 2014 - 2.1.1
+===========================================================
+- Updated to OptionTree 2.3.0
+- Changed checkbox options to the new on-off toggle
+- Added additional Google fonts
+- Added styling option to recolor the header menu area
+- Added option to disable featured image placeholders - @fran-kee (via GitHub)
+- Added option to enable scrollable sharrre bar - @erikfrye (via GitHub)
+- Updated help dropdown information and included theme documentation with the theme
+
+January 29 2014 - 2.1.0
+===========================================================
+- Updated to OptionTree 2.2.2
+- Fixed background-size styling option
+- Fixed comment counts to be hidden when disabled
+- Removed inline css from comments template
+
+January 23 2014 - 2.0.9
+===========================================================
+- Updated to OptionTree 2.2.1
 
 December 27 2013 - 2.0.8
 ===========================================================

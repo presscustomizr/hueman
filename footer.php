@@ -68,7 +68,7 @@
 							<?php endif; ?>
 						</div><!--/#copyright-->
 						
-						<?php if ( !ot_get_option( 'credit' ) ): ?>
+						<?php if ( ot_get_option( 'credit' ) != 'off' ): ?>
 						<div id="credit">
 							<p><?php _e('Powered by','hueman'); ?> <a href="http://wordpress.org" rel="nofollow">WordPress</a>. <?php _e('Theme by','hueman'); ?> <a href="http://alxmedia.se" rel="nofollow">Alx</a>.</p>
 						</div><!--/#credit-->

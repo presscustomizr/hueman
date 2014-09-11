@@ -26,7 +26,7 @@ if ( ! function_exists( 'ot_register_theme_options_page' ) ) {
   function ot_register_theme_options_page() {
   
     /* get the settings array */
-    $get_settings = get_option( 'option_tree_settings' );
+    $get_settings = get_option( ot_settings_id() );
     
     /* sections array */
     $sections = isset( $get_settings['sections'] ) ? $get_settings['sections'] : array();
@@ -42,7 +42,7 @@ if ( ! function_exists( 'ot_register_theme_options_page' ) ) {
       
       ot_register_settings( array(
           array(
-            'id'                  => 'option_tree',
+            'id'                  => ot_options_id(),
             'pages'               => array( 
               array(
                 'id'              => 'ot_theme_options',
@@ -67,7 +67,7 @@ if ( ! function_exists( 'ot_register_theme_options_page' ) ) {
       );
       
       // Filters the options.php to add the minimum user capabilities.
-      add_filter( 'option_page_capability_option_tree', create_function( '$caps', "return '$caps';" ), 999 );
+      add_filter( 'option_page_capability_' . ot_options_id(), create_function( '$caps', "return '$caps';" ), 999 );
     
     }
   
@@ -88,7 +88,21 @@ if ( ! function_exists( 'ot_register_theme_options_page' ) ) {
 if ( ! function_exists( 'ot_register_settings_page' ) ) {
 
   function ot_register_settings_page() {
+    global $ot_has_custom_theme_options;
+    
+    // Display UI Builder admin notice
+    if ( OT_SHOW_OPTIONS_UI == true && isset( $_REQUEST['page'] ) && $_REQUEST['page'] == 'ot-settings' && ( $ot_has_custom_theme_options == true || has_action( 'admin_init', 'custom_theme_options' ) ) ) {
+      
+      function ot_has_custom_theme_options() {
+    
+        echo '<div class="error"><p>' . __( 'The Theme Options UI Builder is being overridden by a custom file in your theme. Any changes you make via the UI Builder will not be saved.', 'option-tree' ) . '</p></div>';
+        
+      }
+      
+      add_action( 'admin_notices', 'ot_has_custom_theme_options' );
   
+    }
+    
     // Create the filterable pages array
     $ot_register_pages_array =  array( 
       array( 
@@ -371,7 +385,7 @@ if ( ! function_exists( 'ot_register_settings_page' ) ) {
     // Register the pages.
     ot_register_settings( array(
         array(
-          'id'              => 'option_tree_settings',
+          'id'              => ot_settings_id(),
           'pages'           => $ot_register_pages_array
         )
       )
@@ -400,7 +414,7 @@ if ( ! function_exists( 'ot_after_theme_options_save' ) ) {
     if ( apply_filters( 'ot_theme_options_menu_slug', 'ot-theme-options' ) == $page && $updated ) {
       
       /* grab a copy of the theme options */
-      $options = get_option( 'option_tree' );
+      $options = get_option( ot_options_id() );
       
       /* execute the action hook and pass the theme options to it */
       do_action( 'ot_after_theme_options_save', $options );
@@ -466,6 +480,18 @@ if ( ! function_exists( 'ot_validate_setting' ) ) {
       
       $input['background-image'] = ot_validate_setting( $input['background-image'], 'upload', $field_id );
       
+      // Loop over array and check for values
+      foreach( (array) $input as $key => $value ) {
+        if ( ! empty( $value ) ) {
+          $has_value = true;
+        }
+      }
+      
+      // No value; set to empty
+      if ( ! isset( $has_value ) ) {
+        $input = '';
+      }
+      
     } else if ( 'colorpicker' == $type ) {
 
       /* return empty & set error */
@@ -489,14 +515,50 @@ if ( ! function_exists( 'ot_validate_setting' ) ) {
     
       $input[0] = sanitize_text_field( $input[0] );
       
+      // No value; set to empty
+      if ( empty( $input[0] ) && empty( $input[1] ) ) {
+        $input = '';
+      }
+      
     } else if ( 'typography' == $type && isset( $input['font-color'] ) ) {
       
       $input['font-color'] = ot_validate_setting( $input['font-color'], 'colorpicker', $field_id );
-    
+      
+      // Loop over array and check for values
+      foreach( $input as $key => $value ) {
+        if ( ! empty( $value ) ) {
+          $has_value = true;
+        }
+      }
+      
+      // No value; set to empty
+      if ( ! isset( $has_value ) ) {
+        $input = '';
+      }
+      
     } else if ( 'upload' == $type ) {
 
       $input = sanitize_text_field( $input );
-         
+    
+    } else if ( 'gallery' == $type ) {
+
+      $input = trim( $input );
+           
+    } else if ( 'social-links' == $type ) {
+      
+      // Loop over array and check for values, plus sanitize the text field
+      foreach( (array) $input as $key => $value ) {
+        if ( ! empty( $value ) ) {
+          $has_value = true;
+          $input[$key] = sanitize_text_field( $value );
+        }
+      }
+      
+      // No value; set to empty
+      if ( ! isset( $has_value ) ) {
+        $input = '';
+      }
+    
     }
     
     $input = apply_filters( 'ot_after_validate_setting', $input, $type, $field_id );
@@ -506,7 +568,7 @@ if ( ! function_exists( 'ot_validate_setting' ) ) {
   }
 
 }
-  
+
 /**
  * Setup the default admin styles
  *
@@ -518,12 +580,23 @@ if ( ! function_exists( 'ot_validate_setting' ) ) {
 if ( ! function_exists( 'ot_admin_styles' ) ) {
 
   function ot_admin_styles() {
-  
-    wp_enqueue_style( 'ot-admin-css', OT_URL . 'assets/css/ot-admin.css', false, OT_VERSION );
+    global $wp_styles;
+    
+    /* execute styles before actions */
+    do_action( 'ot_admin_styles_before' );
     
     /* load WP colorpicker */
     wp_enqueue_style( 'wp-color-picker' );
     
+    /* load admin styles */
+    wp_enqueue_style( 'ot-admin-css', OT_URL . 'assets/css/ot-admin.css', false, OT_VERSION );
+    
+    /* load the RTL stylesheet */
+    $wp_styles->add_data( 'ot-admin-css','rtl', true );
+    
+    /* execute styles after actions */
+    do_action( 'ot_admin_styles_after' );
+
   }
   
 }
@@ -543,7 +616,10 @@ if ( ! function_exists( 'ot_admin_styles' ) ) {
 if ( ! function_exists( 'ot_admin_scripts' ) ) {
 
   function ot_admin_scripts() {
-
+    
+    /* execute scripts before actions */
+    do_action( 'ot_admin_scripts_before' );
+    
     if ( function_exists( 'wp_enqueue_media' ) ) {
       /* WP 3.5 Media Uploader */
       wp_enqueue_media();
@@ -554,17 +630,26 @@ if ( ! function_exists( 'ot_admin_scripts' ) ) {
     
     /* load jQuery-ui slider */
     wp_enqueue_script( 'jquery-ui-slider' );
+  
+    /* load jQuery-ui datepicker */
+    wp_enqueue_script( 'jquery-ui-datepicker' );
     
     /* load WP colorpicker */
     wp_enqueue_script( 'wp-color-picker' );
     
+    /* Load Ace Editor for CSS Editing */
+    wp_enqueue_script( 'ace-editor', OT_URL . 'assets/js/vendor/ace/ace.js', null, OT_VERSION );   
+    
+    /* load jQuery UI timepicker addon */
+    wp_enqueue_script( 'jquery-ui-timepicker', OT_URL . 'assets/js/vendor/jquery/jquery-ui-timepicker.js', array( 'jquery', 'jquery-ui-slider', 'jquery-ui-datepicker' ), '1.4.3' );
+    
     /* load all the required scripts */
-    wp_enqueue_script( 'ot-admin-js', OT_URL . 'assets/js/ot-admin.js', array( 'jquery', 'jquery-ui-tabs', 'jquery-ui-sortable', 'jquery-ui-slider', 'wp-color-picker' ), OT_VERSION );
+    wp_enqueue_script( 'ot-admin-js', OT_URL . 'assets/js/ot-admin.js', array( 'jquery', 'jquery-ui-tabs', 'jquery-ui-sortable', 'jquery-ui-slider', 'wp-color-picker', 'ace-editor', 'jquery-ui-datepicker', 'jquery-ui-timepicker' ), OT_VERSION );
     
     /* create localized JS array */
     $localized_array = array( 
       'ajax'                  => admin_url( 'admin-ajax.php' ),
-      'upload_text'           => __( 'Send to OptionTree', 'option-tree' ),
+      'upload_text'           => apply_filters( 'ot_upload_text', __( 'Send to OptionTree', 'option-tree' ) ),
       'remove_media_text'     => __( 'Remove Media', 'option-tree' ),
       'reset_agree'           => __( 'Are you sure you want to reset back to the defaults?', 'option-tree' ),
       'remove_no'             => __( 'You can\'t remove this! But you can edit the values.', 'option-tree' ),
@@ -574,11 +659,19 @@ if ( ! function_exists( 'ot_admin_scripts' ) ) {
       'delete'                => __( 'Delete Gallery', 'option-tree' ), 
       'edit'                  => __( 'Edit Gallery', 'option-tree' ), 
       'create'                => __( 'Create Gallery', 'option-tree' ), 
-      'confirm'               => __( 'Are you sure you want to delete this Gallery?', 'option-tree' )
+      'confirm'               => __( 'Are you sure you want to delete this Gallery?', 'option-tree' ),
+      'date_current'          => __( 'Today', 'option-tree' ),
+      'date_time_current'     => __( 'Now', 'option-tree' ),
+      'date_close'            => __( 'Close', 'option-tree' ),
+      'replace'               => __( 'Featured Image', 'option-tree' ),
+      'with'                  => __( 'Image', 'option-tree' )
     );
     
     /* localized script attached to 'option_tree' */
     wp_localize_script( 'ot-admin-js', 'option_tree', $localized_array );
+    
+    /* execute scripts after actions */
+    do_action( 'ot_admin_scripts_after' );
 
   }
   
@@ -641,6 +734,7 @@ if ( ! function_exists( 'ot_create_media_post' ) ) {
       /* create post object */
       $_p = array();
       $_p['post_title']     = 'Media';
+      $_p['post_name']      = 'media';
       $_p['post_status']    = 'private';
       $_p['post_type']      = 'option-tree';
       $_p['comment_status'] = 'closed';
@@ -668,13 +762,13 @@ if ( ! function_exists( 'ot_default_settings' ) ) {
   function ot_default_settings() {
     global $wpdb, $table_prefix;
     
-    if ( ! get_option( 'option_tree_settings' ) ) {
+    if ( ! get_option( ot_settings_id() ) ) {
       
       $section_count = 0;
       $settings_count = 0;
       $settings = array();
       
-      if ( mysql_num_rows( mysql_query( "SHOW TABLES LIKE '{$table_prefix}option_tree'" ) ) == 1 && $old_settings = $wpdb->get_results( "SELECT * FROM {$table_prefix}option_tree ORDER BY item_sort ASC" ) ) {
+      if ( count( $wpdb->get_results( "SHOW TABLES LIKE '{$table_prefix}option_tree'" ) ) == 1 && $old_settings = $wpdb->get_results( "SELECT * FROM {$table_prefix}option_tree ORDER BY item_sort ASC" ) ) {
         
         foreach ( $old_settings as $setting ) {
           
@@ -778,10 +872,10 @@ if ( ! function_exists( 'ot_default_settings' ) ) {
       }
       
       /* update the settings array */
-      update_option( 'option_tree_settings', $settings );
+      update_option( ot_settings_id(), $settings );
       
       /* get option tree array */
-      $options = get_option( 'option_tree' );
+      $options = get_option( ot_options_id() );
       
       /* validate options */
       if ( is_array( $options ) ) {
@@ -802,7 +896,7 @@ if ( ! function_exists( 'ot_default_settings' ) ) {
         do_action( 'ot_before_theme_options_save', $options );
         
         /* update the option tree array */
-        update_option( 'option_tree', $options );
+        update_option( ot_options_id(), $options );
         
       }
       
@@ -825,7 +919,7 @@ if ( ! function_exists( 'ot_save_css' ) ) {
   function ot_save_css( $options ) {
     
     /* grab a copy of the settings */
-    $settings = get_option( 'option_tree_settings' );
+    $settings = get_option( ot_settings_id() );
       
     /* has settings */
     if ( isset( $settings['settings'] ) ) {
@@ -960,7 +1054,7 @@ if ( ! function_exists( 'ot_import' ) ) {
         }
         
         /* update settings */
-        update_option( 'option_tree_settings', $settings );
+        update_option( ot_settings_id(), $settings );
         
         /* set message */
         $message = 'success';
@@ -984,7 +1078,7 @@ if ( ! function_exists( 'ot_import' ) ) {
       
       /* is array: save & show success message */
       if ( is_array( $textarea ) ) {
-        update_option( 'option_tree_settings', $textarea );
+        update_option( ot_settings_id(), $textarea );
         $message = 'success';
       }
       
@@ -1004,7 +1098,7 @@ if ( ! function_exists( 'ot_import' ) ) {
       $options = isset( $_POST['import_data'] ) ? unserialize( ot_decode( $_POST['import_data'] ) ) : '';
       
       /* get settings array */
-      $settings = get_option( 'option_tree_settings' );
+      $settings = get_option( ot_settings_id() );
       
       /* has options */
       if ( is_array( $options ) ) {
@@ -1030,7 +1124,7 @@ if ( ! function_exists( 'ot_import' ) ) {
         do_action( 'ot_before_theme_options_save', $options );
       
         /* update the option tree array */
-        update_option( 'option_tree', $options );
+        update_option( ot_options_id(), $options );
         
         $message = 'success';
         
@@ -1052,7 +1146,7 @@ if ( ! function_exists( 'ot_import' ) ) {
       $layouts = isset( $_POST['import_layouts'] ) ? unserialize( ot_decode( $_POST['import_layouts'] ) ) : '';
       
       /* get settings array */
-      $settings = get_option( 'option_tree_settings' );
+      $settings = get_option( ot_settings_id() );
       
       /* has layouts */
       if ( is_array( $layouts ) ) {
@@ -1093,12 +1187,12 @@ if ( ! function_exists( 'ot_import' ) ) {
           /* execute the action hook and pass the theme options to it */
           do_action( 'ot_before_theme_options_save', $new_options );
         
-          update_option( 'option_tree', $new_options );
+          update_option( ot_options_id(), $new_options );
           
         }
         
         /* update the option tree layouts array */
-        update_option( 'option_tree_layouts', $layouts );
+        update_option( ot_layouts_id(), $layouts );
         
         $message = 'success';
         
@@ -1266,7 +1360,16 @@ if ( ! function_exists( 'ot_export_php_settings_array' ) ) {
     $contextual_help      = '';
     $sections             = '';
     $settings             = '';
-    $option_tree_settings = get_option( 'option_tree_settings', array() );
+    $option_tree_settings = get_option( ot_settings_id(), array() );
+    
+    // Domain string helper
+    function ot_I18n_string( $string ) {
+      if ( ! empty( $string ) && isset( $_POST['domain'] ) && ! empty( $_POST['domain'] ) ) {
+        $domain = str_replace( ' ', '-', trim( $_POST['domain'] ) );
+        return "__( '$string', '$domain' )";
+      }
+      return "'$string'";
+    }
     
     header( "Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
     header( "Pragma: no-cache ");
@@ -1280,13 +1383,13 @@ if ( ! function_exists( 'ot_export_php_settings_array' ) ) {
       $help = '';
       foreach( $option_tree_settings['contextual_help']['content'] as $value ) {
         $_id = isset( $value['id'] ) ? $value['id'] : '';
-        $_title = isset( $value['title'] ) ? str_replace( "'", "\'", $value['title'] ) : '';
-        $_content = isset( $value['content'] ) ? html_entity_decode(  str_replace( "'", "\'", $value['content'] ) ) : '';
+        $_title = ot_I18n_string( isset( $value['title'] ) ? str_replace( "'", "\'", $value['title'] ) : '' );
+        $_content = ot_I18n_string( isset( $value['content'] ) ? html_entity_decode(  str_replace( "'", "\'", $value['content'] ) ) : '' );
         $help.= "
         array(
           'id'        => '$_id',
-          'title'     => '$_title',
-          'content'   => '$_content'
+          'title'     => $_title,
+          'content'   => $_content
         ),";
       }
       $help = substr_replace( $help, '' , -1 );
@@ -1298,7 +1401,7 @@ if ( ! function_exists( 'ot_export_php_settings_array' ) ) {
     /* build contextual help sidebar */
     if ( isset( $option_tree_settings['contextual_help']['sidebar'] ) ) {
       $contextual_help.= "
-      'sidebar'       => '" . html_entity_decode(  str_replace( "'", "\'", $option_tree_settings['contextual_help']['sidebar'] ) ) . "'";
+      'sidebar'       => " . ot_I18n_string( html_entity_decode(  str_replace( "'", "\'", $option_tree_settings['contextual_help']['sidebar'] ) ) );
     }
     
     /* check that $contexual_help has a value and add to $build_settings */
@@ -1312,11 +1415,11 @@ if ( ! function_exists( 'ot_export_php_settings_array' ) ) {
     if ( isset( $option_tree_settings['sections'] ) ) {
       foreach( $option_tree_settings['sections'] as $value ) {
         $_id = isset( $value['id'] ) ? $value['id'] : '';
-        $_title = isset( $value['title'] ) ? str_replace( "'", "\'", $value['title'] ) : '';
+        $_title = ot_I18n_string( isset( $value['title'] ) ? str_replace( "'", "\'", $value['title'] ) : '' );
         $sections.= "
       array(
         'id'          => '$_id',
-        'title'       => '$_title'
+        'title'       => $_title
       ),";
       }
       $sections = substr_replace( $sections, '' , -1 );
@@ -1333,8 +1436,8 @@ if ( ! function_exists( 'ot_export_php_settings_array' ) ) {
     if ( isset( $option_tree_settings['settings'] ) ) {
       foreach( $option_tree_settings['settings'] as $value ) {
         $_id = isset( $value['id'] ) ? $value['id'] : '';
-        $_label = isset( $value['label'] ) ? str_replace( "'", "\'", $value['label'] ) : '';
-        $_desc = isset( $value['desc'] ) ? str_replace( "'", "\'", $value['desc'] ) : '';
+        $_label = ot_I18n_string( isset( $value['label'] ) ? str_replace( "'", "\'", $value['label'] ) : '' );
+        $_desc = ot_I18n_string( isset( $value['desc'] ) ? str_replace( "'", "\'", $value['desc'] ) : '' );
         $_std = isset( $value['std'] ) ? str_replace( "'", "\'", $value['std'] ) : '';
         $_type = isset( $value['type'] ) ? $value['type'] : '';
         $_section = isset( $value['section'] ) ? $value['section'] : '';
@@ -1350,12 +1453,12 @@ if ( ! function_exists( 'ot_export_php_settings_array' ) ) {
         if ( isset( $value['choices'] ) && ! empty( $value['choices'] ) ) {
           foreach( $value['choices'] as $choice ) {
             $_choice_value = isset( $choice['value'] ) ? str_replace( "'", "\'", $choice['value'] ) : '';
-            $_choice_label = isset( $choice['label'] ) ? str_replace( "'", "\'", $choice['label'] ) : '';
+            $_choice_label = ot_I18n_string( isset( $choice['label'] ) ? str_replace( "'", "\'", $choice['label'] ) : '' );
             $_choice_src = isset( $choice['src'] ) ? str_replace( "'", "\'", $choice['src'] ) : '';
             $choices.= "
           array(
             'value'       => '$_choice_value',
-            'label'       => '$_choice_label',
+            'label'       => $_choice_label,
             'src'         => '$_choice_src'
           ),";
           }
@@ -1380,8 +1483,8 @@ if ( ! function_exists( 'ot_export_php_settings_array' ) ) {
         if ( isset( $value['settings'] ) && ! empty( $value['settings'] ) ) {
           foreach( $value['settings'] as $setting ) {
             $_setting_id = isset( $setting['id'] ) ? $setting['id'] : '';
-            $_setting_label = isset( $setting['label'] ) ? str_replace( "'", "\'", $setting['label'] ) : '';
-            $_setting_desc = isset( $setting['desc'] ) ? str_replace( "'", "\'", $setting['desc'] ) : '';
+            $_setting_label = ot_I18n_string( isset( $setting['label'] ) ? str_replace( "'", "\'", $setting['label'] ) : '' );
+            $_setting_desc = ot_I18n_string( isset( $setting['desc'] ) ? str_replace( "'", "\'", $setting['desc'] ) : '' );
             $_setting_std = isset( $setting['std'] ) ? $setting['std'] : '';
             $_setting_type = isset( $setting['type'] ) ? $setting['type'] : '';
             $_setting_rows = isset( $setting['rows'] ) ? $setting['rows'] : '';
@@ -1396,12 +1499,12 @@ if ( ! function_exists( 'ot_export_php_settings_array' ) ) {
             if ( isset( $setting['choices'] ) && ! empty( $setting['choices'] ) ) {
               foreach( $setting['choices'] as $setting_choice ) {
                 $_setting_choice_value = isset( $setting_choice['value'] ) ? $setting_choice['value'] : '';
-                $_setting_choice_label = isset( $setting_choice['label'] ) ? str_replace( "'", "\'", $setting_choice['label'] ) : '';
+                $_setting_choice_label = ot_I18n_string( isset( $setting_choice['label'] ) ? str_replace( "'", "\'", $setting_choice['label'] ) : '' );
                 $_setting_choice_src = isset( $setting_choice['src'] ) ? str_replace( "'", "\'", $setting_choice['src'] ) : '';
                 $setting_choices.= "
               array(
                 'value'       => '$_setting_choice_value',
-                'label'       => '$_setting_choice_label',
+                'label'       => $_setting_choice_label,
                 'src'         => '$_setting_choice_src'
               ),";
               }
@@ -1425,8 +1528,8 @@ if ( ! function_exists( 'ot_export_php_settings_array' ) ) {
             $setting_settings.= "
           array(
             'id'          => '$_setting_id',
-            'label'       => '$_setting_label',
-            'desc'        => '$_setting_desc',
+            'label'       => $_setting_label,
+            'desc'        => $_setting_desc,
             'std'         => $setting_std,
             'type'        => '$_setting_type',
             'rows'        => '$_setting_rows',
@@ -1447,8 +1550,8 @@ if ( ! function_exists( 'ot_export_php_settings_array' ) ) {
         $settings.= "
       array(
         'id'          => '$_id',
-        'label'       => '$_label',
-        'desc'        => '$_desc',
+        'label'       => $_label,
+        'desc'        => $_desc,
         'std'         => $std,
         'type'        => '$_type',
         'section'     => '$_section',
@@ -1481,10 +1584,15 @@ add_action( 'admin_init', 'custom_theme_options' );
  * Build the custom settings & update OptionTree.
  */
 function custom_theme_options() {
+  
+  /* OptionTree is not loaded yet */
+  if ( ! function_exists( 'ot_settings_id' ) )
+    return false;
+    
   /**
    * Get a copy of the saved settings array. 
    */
-  \$saved_settings = get_option( 'option_tree_settings', array() );
+  \$saved_settings = get_option( ot_settings_id(), array() );
   
   /**
    * Custom settings array that will eventually be 
@@ -1494,12 +1602,16 @@ function custom_theme_options() {
   );
   
   /* allow settings to be filtered before saving */
-  \$custom_settings = apply_filters( 'option_tree_settings_args', \$custom_settings );
+  \$custom_settings = apply_filters( ot_settings_id() . '_args', \$custom_settings );
   
   /* settings are not the same update the DB */
   if ( \$saved_settings !== \$custom_settings ) {
-    update_option( 'option_tree_settings', \$custom_settings ); 
+    update_option( ot_settings_id(), \$custom_settings ); 
   }
+  
+  /* Lets OptionTree know the UI Builder is being overridden */
+  global \$ot_has_custom_theme_options;
+  \$ot_has_custom_theme_options = true;
   
 }";
 
@@ -1525,7 +1637,7 @@ if ( ! function_exists( 'ot_save_settings' ) ) {
     if ( isset( $_POST['option_tree_settings_nonce'] ) && wp_verify_nonce( $_POST['option_tree_settings_nonce'], 'option_tree_settings_form' ) ) {
 
       /* settings value */
-      $settings = isset( $_POST['option_tree_settings'] ) ? $_POST['option_tree_settings'] : '';
+      $settings = isset( $_POST[ot_settings_id()] ) ? $_POST[ot_settings_id()] : '';
       
       /* validate sections */
       if ( isset( $settings['sections'] ) ) {
@@ -1649,8 +1761,8 @@ if ( ! function_exists( 'ot_save_settings' ) ) {
         /* WPML unregister ID's that have been removed */
         if ( function_exists( 'icl_unregister_string' ) ) {
           
-          $current = get_option( 'option_tree_settings' );
-          $options = get_option( 'option_tree' );
+          $current = get_option( ot_settings_id() );
+          $options = get_option( ot_options_id() );
           
           if ( isset( $current['settings'] ) ) {
             
@@ -1684,6 +1796,18 @@ if ( ! function_exists( 'ot_save_settings' ) ) {
                     }
                   
                   }
+                
+                } else if ( ! empty( $options[$current_setting['id']] ) && $current_setting['type'] == 'social-icons' ) {
+                  
+                  foreach( $options[$current_setting['id']] as $key => $value ) {
+          
+                    foreach( $value as $ckey => $cvalue ) {
+                      
+                      ot_wpml_unregister_string( $current_setting['id'] . '_' . $ckey . '_' . $key );
+                      
+                    }
+                  
+                  }
                   
                 } else {
                 
@@ -1699,7 +1823,7 @@ if ( ! function_exists( 'ot_save_settings' ) ) {
           
         }
         
-        update_option( 'option_tree_settings', $settings );
+        update_option( ot_settings_id(), $settings );
         $message = 'success';
         
       }
@@ -1848,10 +1972,10 @@ if ( ! function_exists( 'ot_modify_layouts' ) ) {
     if ( isset( $_POST['option_tree_modify_layouts_nonce'] ) && wp_verify_nonce( $_POST['option_tree_modify_layouts_nonce'], 'option_tree_modify_layouts_form' ) ) {
       
       /* previous layouts value */
-      $option_tree_layouts = get_option( 'option_tree_layouts' );
+      $option_tree_layouts = get_option( ot_layouts_id() );
       
       /* new layouts value */
-      $layouts = isset( $_POST['option_tree_layouts'] ) ? $_POST['option_tree_layouts'] : '';
+      $layouts = isset( $_POST[ot_layouts_id()] ) ? $_POST[ot_layouts_id()] : '';
       
       /* rebuild layout array */
       $rebuild = array();
@@ -1867,7 +1991,7 @@ if ( ! function_exists( 'ot_modify_layouts' ) ) {
         /* add new and overwrite active layout */
         if ( isset( $layouts['_add_new_layout_'] ) && ! empty( $layouts['_add_new_layout_'] ) ) {
           $rebuild['active_layout'] = ot_sanitize_layout_id( $layouts['_add_new_layout_'] );
-          $rebuild[$rebuild['active_layout']] = ot_encode( serialize( get_option( 'option_tree' ) ) );
+          $rebuild[$rebuild['active_layout']] = ot_encode( serialize( get_option( ot_options_id() ) ) );
         }
         
         $first_layout = '';
@@ -1908,12 +2032,12 @@ if ( ! function_exists( 'ot_modify_layouts' ) ) {
           /* execute the action hook and pass the theme options to it */
           do_action( 'ot_before_theme_options_save', $rebuild_option_tree );
           
-          update_option( 'option_tree', $rebuild_option_tree );
+          update_option( ot_options_id(), $rebuild_option_tree );
           
         }
         
         /* rebuild the layouts */
-        update_option( 'option_tree_layouts', $rebuild );
+        update_option( ot_layouts_id(), $rebuild );
         
         /* change message */
         $message = 'success';
@@ -1921,7 +2045,7 @@ if ( ! function_exists( 'ot_modify_layouts' ) ) {
       } else if ( count( $rebuild ) <= 1 ) {
 
         /* delete layouts option */
-        delete_option( 'option_tree_layouts' );
+        delete_option( ot_layouts_id() );
         
         /* change message */
         $message = 'deleted';
@@ -1960,6 +2084,12 @@ if ( ! function_exists( 'ot_alert_message' ) ) {
     
     if ( empty( $page ) )
       return false;
+    
+    $before = apply_filters( 'ot_before_page_messages', '', $page );
+    
+    if ( $before ) {
+      return $before;
+    }
     
     $action = isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : '';
     $message = isset( $_REQUEST['message'] ) ? $_REQUEST['message'] : '';
@@ -2038,7 +2168,7 @@ if ( ! function_exists( 'ot_alert_message' ) ) {
         
     }
     
-    do_action( 'ot_custom_page_messages' );
+    do_action( 'ot_custom_page_messages', $page );
     
     if ( $updated == 'true' ) {  
        
@@ -2069,39 +2199,43 @@ if ( ! function_exists( 'ot_option_types_array' ) ) {
   function ot_option_types_array() {
   
     return apply_filters( 'ot_option_types_array', array( 
-      'background'                => 'Background',
-      'category-checkbox'         => 'Category Checkbox',
-      'category-select'           => 'Category Select',
-      'checkbox'                  => 'Checkbox',
-      'colorpicker'               => 'Color Picker',
-      'css'                       => 'CSS',
-      'custom-post-type-checkbox' => 'Custom Post Type Checkbox',
-      'custom-post-type-select'   => 'Custom Post Type Select',
-      'gallery'                   => 'Gallery',
-      'list-item'                 => 'List Item',
-      'measurement'               => 'Measurement',
-      'numeric-slider'            => 'Numeric Slider',
-      'on-off'                    => 'On/Off',
-      'page-checkbox'             => 'Page Checkbox',
-      'page-select'               => 'Page Select',
-      'post-checkbox'             => 'Post Checkbox',
-      'post-select'               => 'Post Select',
-      'radio'                     => 'Radio',
-      'radio-image'               => 'Radio Image',
-      'select'                    => 'Select',
-      'sidebar-select'            => 'Sidebar Select', 
-      'slider'                    => 'Slider',
-      'tag-checkbox'              => 'Tag Checkbox',
-      'tag-select'                => 'Tag Select',
-      'taxonomy-checkbox'         => 'Taxonomy Checkbox',
-      'taxonomy-select'           => 'Taxonomy Select',
-      'text'                      => 'Text',
-      'textarea'                  => 'Textarea',
-      'textarea-simple'           => 'Textarea Simple',
-      'textblock'                 => 'Textblock',
-      'textblock-titled'          => 'Textblock Titled',
-      'typography'                => 'Typography',
-      'upload'                    => 'Upload'
+      'background'                => __('Background', 'option-tree'),
+      'category-checkbox'         => __('Category Checkbox', 'option-tree'),
+      'category-select'           => __('Category Select', 'option-tree'),
+      'checkbox'                  => __('Checkbox', 'option-tree'),
+      'colorpicker'               => __('Color Picker', 'option-tree'),
+      'css'                       => __('CSS', 'option-tree'),
+      'custom-post-type-checkbox' => __('Custom Post Type Checkbox', 'option-tree'),
+      'custom-post-type-select'   => __('Custom Post Type Select', 'option-tree'),
+      'date-picker'               => __('Date Picker', 'option-tree'),
+      'date-time-picker'          => __('Date Time Picker', 'option-tree'),
+      'gallery'                   => __('Gallery', 'option-tree'),
+      'list-item'                 => __('List Item', 'option-tree'),
+      'measurement'               => __('Measurement', 'option-tree'),
+      'numeric-slider'            => __('Numeric Slider', 'option-tree'),
+      'on-off'                    => __('On/Off', 'option-tree'),
+      'page-checkbox'             => __('Page Checkbox', 'option-tree'),
+      'page-select'               => __('Page Select', 'option-tree'),
+      'post-checkbox'             => __('Post Checkbox', 'option-tree'),
+      'post-select'               => __('Post Select', 'option-tree'),
+      'radio'                     => __('Radio', 'option-tree'),
+      'radio-image'               => __('Radio Image', 'option-tree'),
+      'select'                    => __('Select', 'option-tree'),
+      'sidebar-select'            => __('Sidebar Select',  'option-tree'),
+      'slider'                    => __('Slider', 'option-tree'),
+      'social-links'              => __('Social Links', 'option-tree'),
+      'tab'                       => __('Tab', 'option-tree'),
+      'tag-checkbox'              => __('Tag Checkbox', 'option-tree'),
+      'tag-select'                => __('Tag Select', 'option-tree'),
+      'taxonomy-checkbox'         => __('Taxonomy Checkbox', 'option-tree'),
+      'taxonomy-select'           => __('Taxonomy Select', 'option-tree'),
+      'text'                      => __('Text', 'option-tree'),
+      'textarea'                  => __('Textarea', 'option-tree'),
+      'textarea-simple'           => __('Textarea Simple', 'option-tree'),
+      'textblock'                 => __('Textblock', 'option-tree'),
+      'textblock-titled'          => __('Textblock Titled', 'option-tree'),
+      'typography'                => __('Typography', 'option-tree'),
+      'upload'                    => __('Upload', 'option-tree')
     ) );
     
   }
@@ -2222,7 +2356,7 @@ if ( ! function_exists( 'ot_recognized_font_sizes' ) ) {
       $range[$k] = $v . $unit;
     }
     
-    return $range;
+    return apply_filters( 'ot_recognized_font_sizes', $range, $field_id );
   }
 
 }
@@ -2352,7 +2486,7 @@ if ( ! function_exists( 'ot_recognized_letter_spacing' ) ) {
       $range[$k] = $v . $unit;
     }
     
-    return $range;
+    return apply_filters( 'ot_recognized_letter_spacing', $range, $field_id );
   }
 
 }
@@ -2386,7 +2520,7 @@ if ( ! function_exists( 'ot_recognized_line_heights' ) ) {
       $range[$k] = $v . $unit;
     }
     
-    return $range;
+    return apply_filters( 'ot_recognized_line_heights', $range, $field_id );
   }
 
 }
@@ -2766,6 +2900,53 @@ if ( ! function_exists( 'ot_slider_settings' ) ) {
 }
 
 /**
+ * Default Social Links Settings array.
+ *
+ * Returns an array of the default social links settings.
+ * You can filter this function to change the settings
+ * on a per option basis.
+ *
+ * @uses      apply_filters()
+ *
+ * @return    array
+ *
+ * @access    public
+ * @since     2.4.0
+ */
+if ( ! function_exists( 'ot_social_links_settings' ) ) {
+
+  function ot_social_links_settings( $id ) {
+    
+    $settings = apply_filters( 'ot_social_links_settings', array(
+      array(
+        'id'        => 'name',
+        'label'     => __( 'Name', 'option-tree' ),
+        'desc'      => __( 'Enter the name of the social website.', 'option-tree' ),
+        'std'       => '',
+        'type'      => 'text',
+        'class'     => 'option-tree-setting-title'
+      ),
+      array(
+        'id'        => 'title',
+        'label'     => 'Title',
+        'desc'      => __( 'Enter the text shown in the title attribute of the link.', 'option-tree' ),
+        'type'      => 'text'
+      ),
+      array(
+        'id'        => 'href',
+        'label'     => 'Link',
+        'desc'      => sprintf( __( 'Enter a link to the profile or page on the social website. Remember to add the %s part to the front of the link.', 'option-tree' ), '<code>http://</code>' ),
+        'type'      => 'text',
+      )
+    ), $id );
+    
+    return $settings;
+  
+  }
+
+}
+
+/**
  * Inserts CSS with field_id markers.
  *
  * Inserts CSS into a dynamic.css file, placing it between
@@ -2819,6 +3000,7 @@ if ( ! function_exists( 'ot_insert_css_with_markers' ) ) {
         $value        = '';
         $option_id    = str_replace( array( '{{', '}}' ), '', $option );
         $option_array = explode( '|', $option_id );
+        $option_type  = ot_get_option_type_by_id( $option_id );
         
         /* get the array value */
         if ( $meta ) {
@@ -2828,7 +3010,7 @@ if ( ! function_exists( 'ot_insert_css_with_markers' ) ) {
           
         } else {
         
-          $options = get_option( 'option_tree' );
+          $options = get_option( ot_options_id() );
           
           if ( isset( $options[$option_array[0]] ) ) {
             
@@ -2897,8 +3079,25 @@ if ( ! function_exists( 'ot_insert_css_with_markers' ) ) {
               if ( ! empty( $value['background-color'] ) )
                 $bg[] = $value['background-color'];
                 
-              if ( ! empty( $value['background-image'] ) )
+              if ( ! empty( $value['background-image'] ) ) {
+                
+                /* If an attachment ID is stored here fetch its URL and replace the value */
+                if ( wp_attachment_is_image( $value['background-image'] ) ) {
+                
+                  $attachment_data = wp_get_attachment_image_src( $value['background-image'], 'original' );
+                  
+                  /* check for attachment data */
+                  if ( $attachment_data ) {
+                  
+                    $value['background-image'] = $attachment_data[0];
+                    
+                  }
+                  
+                }
+    
                 $bg[] = 'url("' . $value['background-image'] . '")';
+                
+              }
                 
               if ( ! empty( $value['background-repeat'] ) )
                 $bg[] = $value['background-repeat'];
@@ -2925,18 +3124,32 @@ if ( ! function_exists( 'ot_insert_css_with_markers' ) ) {
             }
           
           } else {
-          
+               
             $value = $value[$option_array[1]];
             
           }
          
         }
         
+        /* If an attachment ID is stored here fetch its URL and replace the value */
+        if ( $option_type == 'upload' && wp_attachment_is_image( $value ) ) {
+        
+          $attachment_data = wp_get_attachment_image_src( $value, 'original' );
+          
+          /* check for attachment data */
+          if ( $attachment_data ) {
+          
+            $value = $attachment_data[0];
+            
+          }
+          
+        }
+            
         // Filter the CSS
-         $value = apply_filters( 'ot_insert_css_with_markers_value', $value, $option_id );
+        $value = apply_filters( 'ot_insert_css_with_markers_value', $value, $option_id );
          
         /* insert CSS, even if the value is empty */
-         $insertion = stripslashes( str_replace( $option, $value, $insertion ) );
+        $insertion = stripslashes( str_replace( $option, $value, $insertion ) );
          
       }
     
@@ -3150,7 +3363,7 @@ if ( ! function_exists( 'ot_loop_through_choices' ) ) {
     
     $content = '';
     
-    foreach( $choices as $key => $choice )
+    foreach( (array) $choices as $key => $choice )
       $content.= '<li class="ui-state-default list-choice">' . ot_choices_view( $name, $key, $choice ) . '</li>';
     
     return $content;
@@ -3205,11 +3418,11 @@ if ( ! function_exists( 'ot_sections_view' ) ) {
     <div class="option-tree-setting is-section">
       <div class="open">' . ( isset( $section['title'] ) ? esc_attr( $section['title'] ) : 'Section ' . ( $key + 1 ) ) . '</div>
       <div class="button-section">
-        <a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button left-item" title="' . __( 'edit', 'option-tree' ) . '">
-          <span class="icon pencil">' . __( 'Edit', 'option-tree' ) . '</span> 
+        <a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button button left-item" title="' . __( 'edit', 'option-tree' ) . '">
+          <span class="icon ot-icon-pencil"></span>' . __( 'Edit', 'option-tree' ) . '
         </a>
-        <a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button red light right-item" title="' . __( 'Delete', 'option-tree' ) . '">
-          <span class="icon trash-can">' . __( 'Delete', 'option-tree' ) . '</span>
+        <a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="' . __( 'Delete', 'option-tree' ) . '">
+          <span class="icon ot-icon-trash-o"></span>' . __( 'Delete', 'option-tree' ) . '
         </a>
       </div>
       <div class="option-tree-setting-body">
@@ -3274,11 +3487,11 @@ if ( ! function_exists( 'ot_settings_view' ) ) {
     <div class="option-tree-setting">
       <div class="open">' . ( isset( $setting['label'] ) ? esc_attr( $setting['label'] ) : 'Setting ' . ( $key + 1 ) ) . '</div>
       <div class="button-section">
-        <a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button left-item" title="' . __( 'Edit', 'option-tree' ) . '">
-          <span class="icon pencil">' . __( 'Edit', 'option-tree' ) . '</span>
+        <a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button button left-item" title="' . __( 'Edit', 'option-tree' ) . '">
+          <span class="icon ot-icon-pencil"></span>' . __( 'Edit', 'option-tree' ) . '
         </a>
-        <a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button red light right-item" title="' . __( 'Delete', 'option-tree' ) . '">
-          <span class="icon trash-can">' . __( 'Delete', 'option-tree' ) . '</span>
+        <a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="' . __( 'Delete', 'option-tree' ) . '">
+          <span class="icon ot-icon-trash-o"></span>' . __( 'Delete', 'option-tree' ) . '
         </a>
       </div>
       <div class="option-tree-setting-body">
@@ -3324,7 +3537,7 @@ if ( ! function_exists( 'ot_settings_view' ) ) {
               <ul class="option-tree-setting-wrap option-tree-sortable" data-name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . ']">
                 ' . ( isset( $setting['choices'] ) ? ot_loop_through_choices( $name . '[' . $key . ']', $setting['choices'] ) : '' ) . '
               </ul>
-              <a href="javascript:void(0);" class="option-tree-choice-add option-tree-ui-button hug-left">' . __( 'Add Choice', 'option-tree' ) . '</a>
+              <a href="javascript:void(0);" class="option-tree-choice-add option-tree-ui-button button hug-left">' . __( 'Add Choice', 'option-tree' ) . '</a>
             </div>
           </div>
         </div>
@@ -3335,7 +3548,7 @@ if ( ! function_exists( 'ot_settings_view' ) ) {
               <ul class="option-tree-setting-wrap option-tree-sortable" data-name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . ']">
                 ' . ( isset( $setting['settings'] ) ? ot_loop_through_sub_settings( $name . '[' . $key . '][settings]', $setting['settings'] ) : '' ) . '
               </ul>
-              <a href="javascript:void(0);" class="option-tree-list-item-setting-add option-tree-ui-button hug-left">' . __( 'Add Setting', 'option-tree' ) . '</a>
+              <a href="javascript:void(0);" class="option-tree-list-item-setting-add option-tree-ui-button button hug-left">' . __( 'Add Setting', 'option-tree' ) . '</a>
             </div>
           </div>
         </div>
@@ -3389,7 +3602,7 @@ if ( ! function_exists( 'ot_settings_view' ) ) {
         </div>
         <div class="format-settings">
           <div class="format-setting type-text wide-desc">
-            <div class="description">' . __( '<strong>Condition</strong>: Add a comma separated list of conditions where this field will be visible, leave empty to always show the field. Conditions can be in the form of <code>field_name:is(value)</code>, <code>field_name:not(value)</code>, <code>field_name:contains(value)</code>, <code>field_name:less_than(value)</code>, <code>field_name:less_than_or_equal_to(value)</code>, <code>field_name:greater_than(value)</code>, or <code>field_name:greater_than_or_equal_to(value)</code>.', 'option-tree' ) . '</div>
+            <div class="description">' . sprintf( __( '<strong>Condition</strong>: Add a comma separated list (no spaces) of conditions in which the field will be visible, leave this setting empty to always show the field. In these examples, <code>value</code> is a placeholder for your condition, which can be in the form of %s.', 'option-tree' ), '<code>field_id:is(value)</code>, <code>field_id:not(value)</code>, <code>field_id:contains(value)</code>, <code>field_id:less_than(value)</code>, <code>field_id:less_than_or_equal_to(value)</code>, <code>field_id:greater_than(value)</code>, or <code>field_id:greater_than_or_equal_to(value)</code>' ) . '</div>
             <div class="format-setting-inner">
               <input type="text" name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . '][condition]" value="' . ( isset( $setting['condition'] ) ? esc_attr( $setting['condition'] ) : '' ) . '" class="widefat option-tree-ui-input" autocomplete="off" />
             </div>
@@ -3397,7 +3610,7 @@ if ( ! function_exists( 'ot_settings_view' ) ) {
         </div>
         <div class="format-settings">
           <div class="format-setting type-select wide-desc">
-            <div class="description">' . __( '<strong>Condition Operator</strong>: Choose the logical operator to compute the result of the conditions.', 'option-tree' ) . '</div>
+            <div class="description">' . __( '<strong>Operator</strong>: Choose the logical operator to compute the result of the conditions.', 'option-tree' ) . '</div>
             <div class="format-setting-inner">
               <select name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . '][operator]" value="' . $operator . '" class="option-tree-ui-select">
                 <option value="and" ' . selected( $operator, 'and', false ) . '>' . __( 'and', 'option-tree' ) . '</option>
@@ -3437,11 +3650,11 @@ if ( ! function_exists( 'ot_choices_view' ) ) {
     <div class="option-tree-setting">
       <div class="open">' . ( isset( $choice['label'] ) ? esc_attr( $choice['label'] ) : 'Choice ' . ( $key + 1 ) ) . '</div>
       <div class="button-section">
-        <a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button left-item" title="' . __( 'Edit', 'option-tree' ) . '">
-          <span class="icon pencil">' . __( 'Edit', 'option-tree' ) . '</span>
+        <a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button button left-item" title="' . __( 'Edit', 'option-tree' ) . '">
+          <span class="icon ot-icon-pencil"></span>' . __( 'Edit', 'option-tree' ) . '
         </a>
-        <a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button red light right-item" title="' . __( 'Delete', 'option-tree' ) . '">
-          <span class="icon trash-can">' . __( 'Delete', 'option-tree' ) . '</span>
+        <a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="' . __( 'Delete', 'option-tree' ) . '">
+          <span class="icon ot-icon-trash-o"></span>' . __( 'Delete', 'option-tree' ) . '
         </a>
       </div>
       <div class="option-tree-setting-body">
@@ -3503,11 +3716,11 @@ if ( ! function_exists( 'ot_contextual_help_view' ) ) {
     <div class="option-tree-setting">
       <div class="open">' . ( isset( $content['title'] ) ? esc_attr( $content['title'] ) : 'Content ' . ( $key + 1 ) ) . '</div>
       <div class="button-section">
-        <a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button left-item" title="' . __( 'Edit', 'option-tree' ) . '">
-          <span class="icon pencil">' . __( 'Edit', 'option-tree' ) . '</span>
+        <a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button button left-item" title="' . __( 'Edit', 'option-tree' ) . '">
+          <span class="icon ot-icon-pencil"></span>' . __( 'Edit', 'option-tree' ) . '
         </a>
-        <a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button red light right-item" title="' . __( 'Delete', 'option-tree' ) . '">
-          <span class="icon trash-can">' . __( 'Delete', 'option-tree' ) . '</span>
+        <a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="' . __( 'Delete', 'option-tree' ) . '">
+          <span class="icon ot-icon-trash-o"></span>' . __( 'Delete', 'option-tree' ) . '
         </a>
       </div>
       <div class="option-tree-setting-body">
@@ -3554,22 +3767,22 @@ if ( ! function_exists( 'ot_contextual_help_view' ) ) {
  * @access    public
  * @since     2.0
  */
-if ( ! function_exists( 'ot_layouts_view' ) ) {
+if ( ! function_exists( 'ot_layout_view' ) ) {
 
   function ot_layout_view( $key, $data = '', $active_layout = '' ) {
-  
+
     return '
     <div class="option-tree-setting">
       <div class="open">' . ( isset( $key ) ? esc_attr( $key ) : __( 'Layout', 'option-tree' ) ) . '</div>
       <div class="button-section">
-        <a href="javascript:void(0);" class="option-tree-layout-activate option-tree-ui-button left-item' . ( $active_layout == $key ? ' active' : '' ) . '" title="' . __( 'Activate', 'option-tree' ) . '">
-          <span class="icon check">' . __( 'Activate', 'option-tree' ) . '</span>
+        <a href="javascript:void(0);" class="option-tree-layout-activate option-tree-ui-button button left-item' . ( $active_layout == $key ? ' active' : '' ) . '" title="' . __( 'Activate', 'option-tree' ) . '">
+          <span class="icon ot-icon-square-o"></span>' . __( 'Activate', 'option-tree' ) . '
         </a>
-        <a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button red light right-item" title="'. __( 'Delete', 'option-tree' ) . '">
-          <span class="icon trash-can">' . __( 'Delete', 'option-tree' ) . '</span>
+        <a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="'. __( 'Delete', 'option-tree' ) . '">
+          <span class="icon ot-icon-trash-o"></span>' . __( 'Delete', 'option-tree' ) . '
         </a>
       </div>
-      <input type="hidden" name="option_tree_layouts[' . esc_attr( $key ) . ']" value="' . $data . '" />
+      <input type="hidden" name="' . ot_layouts_id() . '[' . esc_attr( $key ) . ']" value="' . $data . '" />
     </div>';
     
   }
@@ -3631,11 +3844,145 @@ if ( ! function_exists( 'ot_list_item_view' ) ) {
     <div class="option-tree-setting">
       <div class="open">' . ( isset( $list_item['title'] ) ? esc_attr( $list_item['title'] ) : '' ) . '</div>
       <div class="button-section">
-        <a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button left-item" title="' . __( 'Edit', 'option-tree' ) . '">
-          <span class="icon pencil">' . __( 'Edit', 'option-tree' ) . '</span>
+        <a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button button left-item" title="' . __( 'Edit', 'option-tree' ) . '">
+          <span class="icon ot-icon-pencil"></span>' . __( 'Edit', 'option-tree' ) . '
         </a>
-        <a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button red light right-item" title="' . __( 'Delete', 'option-tree' ) . '">
-          <span class="icon trash-can">' . __( 'Delete', 'option-tree' ) . '</span>
+        <a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="' . __( 'Delete', 'option-tree' ) . '">
+          <span class="icon ot-icon-trash-o"></span>' . __( 'Delete', 'option-tree' ) . '
+        </a>
+      </div>
+      <div class="option-tree-setting-body">';
+        
+      foreach( $settings as $field ) {
+        
+        // Set field value
+        $field_value = isset( $list_item[$field['id']] ) ? $list_item[$field['id']] : '';
+        
+        /* set default to standard value */
+        if ( isset( $field['std'] ) ) {  
+          $field_value = ot_filter_std_value( $field_value, $field['std'] );
+        }
+        
+        // filter the title label and description
+        if ( $field['id'] == 'title' ) {
+          
+          // filter the label
+          $field['label'] = apply_filters( 'ot_list_item_title_label', $field['label'], $name );
+          
+          // filter the description
+          $field['desc'] = apply_filters( 'ot_list_item_title_desc', $field['desc'], $name );
+        
+        }
+          
+        /* make life easier */
+        $_field_name = $get_option ? $get_option . '[' . $name . ']' : $name;
+             
+        /* build the arguments array */
+        $_args = array(
+          'type'              => $field['type'],
+          'field_id'          => $name . '_' . $field['id'] . '_' . $key,
+          'field_name'        => $_field_name . '[' . $key . '][' . $field['id'] . ']',
+          'field_value'       => $field_value,
+          'field_desc'        => isset( $field['desc'] ) ? $field['desc'] : '',
+          'field_std'         => isset( $field['std'] ) ? $field['std'] : '',
+          'field_rows'        => isset( $field['rows'] ) ? $field['rows'] : 10,
+          'field_post_type'   => isset( $field['post_type'] ) && ! empty( $field['post_type'] ) ? $field['post_type'] : 'post',
+          'field_taxonomy'    => isset( $field['taxonomy'] ) && ! empty( $field['taxonomy'] ) ? $field['taxonomy'] : 'category',
+          'field_min_max_step'=> isset( $field['min_max_step'] ) && ! empty( $field['min_max_step'] ) ? $field['min_max_step'] : '0,100,1',
+          'field_class'       => isset( $field['class'] ) ? $field['class'] : '',
+          'field_condition'   => isset( $field['condition'] ) ? $field['condition'] : '',
+          'field_operator'    => isset( $field['operator'] ) ? $field['operator'] : 'and',
+          'field_choices'     => isset( $field['choices'] ) && ! empty( $field['choices'] ) ? $field['choices'] : array(),
+          'field_settings'    => isset( $field['settings'] ) && ! empty( $field['settings'] ) ? $field['settings'] : array(),
+          'post_id'           => $post_id,
+          'get_option'        => $get_option
+        );
+        
+        $conditions = '';
+        
+        /* setup the conditions */
+        if ( isset( $field['condition'] ) && ! empty( $field['condition'] ) ) {
+          
+          /* doing magic on the conditions so they work in a list item */
+          $conditionals = explode( ',', $field['condition'] );
+          foreach( $conditionals as $condition ) {
+            $parts = explode( ':', $condition );
+            if ( isset( $parts[0] ) ) {
+              $field['condition'] = str_replace( $condition, $name . '_' . $parts[0] . '_' . $key . ':' . $parts[1], $field['condition'] );
+            }
+          }
+
+          $conditions = ' data-condition="' . $field['condition'] . '"';
+          $conditions.= isset( $field['operator'] ) && in_array( $field['operator'], array( 'and', 'AND', 'or', 'OR' ) ) ? ' data-operator="' . $field['operator'] . '"' : '';
+
+        }
+          
+        /* option label */
+        echo '<div id="setting_' . $_args['field_id'] . '" class="format-settings"' . $conditions . '>';
+          
+          /* don't show title with textblocks */
+          if ( $_args['type'] != 'textblock' && ! empty( $field['label'] ) ) {
+            echo '<div class="format-setting-label">';
+              echo '<h3 class="label">' . esc_attr( $field['label'] ) . '</h3>';
+            echo '</div>';
+          }
+          
+          /* only allow simple textarea inside a list-item due to known DOM issues with wp_editor() */
+          if ( apply_filters( 'ot_override_forced_textarea_simple', false, $field['id'] ) == false && $_args['type'] == 'textarea' )
+            $_args['type'] = 'textarea-simple';
+            
+          /* option body, list-item is not allowed inside another list-item */
+          if ( $_args['type'] !== 'list-item' && $_args['type'] !== 'slider' ) {
+            echo ot_display_by_type( $_args );
+          }
+        
+        echo '</div>';
+      
+      }
+        
+      echo '</div>';
+    
+    echo '</div>';
+    
+  }
+  
+}
+
+/**
+ * Helper function to display social links.
+ *
+ * This function is used in AJAX to add a new list items
+ * and when they have already been added and saved.
+ *
+ * @param     string    $name The form field name.
+ * @param     int       $key The array key for the current element.
+ * @param     array     An array of values for the current list item.
+ *
+ * @return    void
+ *
+ * @access    public
+ * @since     2.4.0
+ */
+if ( ! function_exists( 'ot_social_links_view' ) ) {
+
+  function ot_social_links_view( $name, $key, $list_item = array(), $post_id = 0, $get_option = '', $settings = array(), $type = '' ) {
+    
+    /* if no settings array load the filterable social links settings */
+    if ( empty( $settings ) ) {
+      
+      $settings = ot_social_links_settings( $name );
+      
+    }
+    
+    echo '
+    <div class="option-tree-setting">
+      <div class="open">' . ( isset( $list_item['name'] ) ? esc_attr( $list_item['name'] ) : '' ) . '</div>
+      <div class="button-section">
+        <a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button button left-item" title="' . __( 'Edit', 'option-tree' ) . '">
+          <span class="icon ot-icon-pencil"></span>' . __( 'Edit', 'option-tree' ) . '
+        </a>
+        <a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="' . __( 'Delete', 'option-tree' ) . '">
+          <span class="icon ot-icon-trash-o"></span>' . __( 'Delete', 'option-tree' ) . '
         </a>
       </div>
       <div class="option-tree-setting-body">';
@@ -3681,45 +4028,44 @@ if ( ! function_exists( 'ot_list_item_view' ) ) {
           
           /* doing magic on the conditions so they work in a list item */
           $conditionals = explode( ',', $field['condition'] );
-          foreach( $conditionals as $conditions ) {
-            $parts = explode( ':', $conditions );
+          foreach( $conditionals as $condition ) {
+            $parts = explode( ':', $condition );
             if ( isset( $parts[0] ) ) {
-              $field['condition'] = str_replace( $parts[0], $name . '_' . $parts[0] . '_' . $key, $field['condition'] );
+              $field['condition'] = str_replace( $condition, $name . '_' . $parts[0] . '_' . $key . ':' . $parts[1], $field['condition'] );
             }
           }
 
           $conditions = ' data-condition="' . $field['condition'] . '"';
-          $conditions.= isset( $field['operator'] ) && in_array( $field['operator'], array( 'and', 'or' ) ) ? ' data-operator="' . $field['operator'] . '"' : '';
-        
+          $conditions.= isset( $field['operator'] ) && in_array( $field['operator'], array( 'and', 'AND', 'or', 'OR' ) ) ? ' data-operator="' . $field['operator'] . '"' : '';
 
         }
           
         /* option label */
         echo '<div id="setting_' . $_args['field_id'] . '" class="format-settings"' . $conditions . '>';
           
-        /* don't show title with textblocks */
-        if ( $_args['type'] != 'textblock' && ! empty( $field['label'] ) ) {
-          echo '<div class="format-setting-label">';
-            echo '<h3 class="label">' . esc_attr( $field['label'] ) . '</h3>';
-          echo '</div>';
-        }
-        
-        /* only allow simple textarea inside a list-item due to known DOM issues with wp_editor() */
-        if ( $_args['type'] == 'textarea' )
-          $_args['type'] = 'textarea-simple';
+          /* don't show title with textblocks */
+          if ( $_args['type'] != 'textblock' && ! empty( $field['label'] ) ) {
+            echo '<div class="format-setting-label">';
+              echo '<h3 class="label">' . esc_attr( $field['label'] ) . '</h3>';
+            echo '</div>';
+          }
           
-        /* option body, list-item is not allowed inside another list-item */
-        if ( $_args['type'] !== 'list-item' && $_args['type'] !== 'slider' ) {
-          echo ot_display_by_type( $_args );
-        }
+          /* only allow simple textarea inside a list-item due to known DOM issues with wp_editor() */
+          if ( $_args['type'] == 'textarea' )
+            $_args['type'] = 'textarea-simple';
+          
+          /* option body, list-item is not allowed inside another list-item */
+          if ( $_args['type'] !== 'list-item' && $_args['type'] !== 'slider' && $_args['type'] !== 'social-links' ) {
+            echo ot_display_by_type( $_args );
+          }
         
         echo '</div>';
       
       }
         
-    echo
-      '</div>
-    </div>';
+      echo '</div>';
+    
+    echo '</div>';
     
   }
   
@@ -3743,7 +4089,7 @@ if ( ! function_exists( 'ot_theme_options_layouts_form' ) ) {
       wp_nonce_field( 'option_tree_modify_layouts_form', 'option_tree_modify_layouts_nonce' );
         
       /* get the saved layouts */
-      $layouts = get_option( 'option_tree_layouts' );
+      $layouts = get_option( ot_layouts_id() );
       
       /* set active layout */
       $active_layout = isset( $layouts['active_layout'] ) ? $layouts['active_layout'] : '';
@@ -3756,7 +4102,7 @@ if ( ! function_exists( 'ot_theme_options_layouts_form' ) ) {
         
         echo '<div class="option-tree-active-layout">';
         
-          echo '<select name="option_tree_layouts[active_layout]" class="option-tree-ui-select">';
+          echo '<select name="' . ot_layouts_id() . '[active_layout]" class="option-tree-ui-select">';
       
             foreach( $layouts as $key => $data ) { 
               
@@ -3775,7 +4121,7 @@ if ( ! function_exists( 'ot_theme_options_layouts_form' ) ) {
           if ( $key == 'active_layout' )
               continue;
               
-          echo '<input type="hidden" name="option_tree_layouts[' . $key . ']" value="' . ( isset( $data ) ? $data : '' ) . '" />';
+          echo '<input type="hidden" name="' . ot_layouts_id() . '[' . $key . ']" value="' . ( isset( $data ) ? $data : '' ) . '" />';
           
         }
        
@@ -3785,9 +4131,9 @@ if ( ! function_exists( 'ot_theme_options_layouts_form' ) ) {
       echo '<div class="option-tree-save-layout' . ( ! empty( $active_layout ) ? ' active-layout' : '' ) . '">';
         
         /* add new layout */
-        echo '<input type="text" name="option_tree_layouts[_add_new_layout_]" value="" class="widefat option-tree-ui-input" autocomplete="off" />';
+        echo '<input type="text" name="' . ot_layouts_id() . '[_add_new_layout_]" value="" class="widefat option-tree-ui-input" autocomplete="off" />';
         
-        echo '<button type="submit" class="option-tree-ui-button blue save-layout" title="' . __( 'New Layout', 'option-tree' ) . '">' . __( 'New Layout', 'option-tree' ) . '</button>';
+        echo '<button type="submit" class="option-tree-ui-button button button-primary save-layout" title="' . __( 'New Layout', 'option-tree' ) . '">' . __( 'New Layout', 'option-tree' ) . '</button>';
       
       echo '</div>';
       
@@ -4202,6 +4548,366 @@ function ot_wpml_unregister_string( $id ) {
       
     icl_unregister_string( 'Theme Options', $id );
       
+  }
+  
+}
+
+/**
+ * Maybe migrate Settings
+ *
+ * @return    void
+ *
+ * @access    public
+ * @since     2.3.3
+ */
+if ( ! function_exists( 'ot_maybe_migrate_settings' ) ) {
+
+  function ot_maybe_migrate_settings() {
+    
+    // Filter the ID to migrate from
+    $settings_id = apply_filters( 'ot_migrate_settings_id', '' );
+    
+    // Attempt to migrate Settings 
+    if ( ! empty( $settings_id ) && get_option( ot_settings_id() ) === false && ot_settings_id() !== $settings_id ) {
+      
+      // Old settings
+      $settings = get_option( $settings_id );
+      
+      // Check for array keys
+      if ( isset( $settings['sections'] ) && isset( $settings['settings'] ) ) {
+      
+        update_option( ot_settings_id(), $settings );
+        
+      }
+      
+    }
+
+  }
+  
+}
+
+/**
+ * Maybe migrate Option
+ *
+ * @return    void
+ *
+ * @access    public
+ * @since     2.3.3
+ */
+if ( ! function_exists( 'ot_maybe_migrate_options' ) ) {
+
+  function ot_maybe_migrate_options() {
+    
+    // Filter the ID to migrate from
+    $options_id = apply_filters( 'ot_migrate_options_id', '' );
+    
+    // Attempt to migrate Theme Options
+    if ( ! empty( $options_id ) && get_option( ot_options_id() ) === false && ot_options_id() !== $options_id ) {
+      
+      // Old options
+      $options = get_option( $options_id );
+      
+      // Migrate to new ID
+      update_option( ot_options_id(), $options );
+      
+    }
+
+  }
+  
+}
+
+/**
+ * Maybe migrate Layouts
+ *
+ * @return    void
+ *
+ * @access    public
+ * @since     2.3.3
+ */
+if ( ! function_exists( 'ot_maybe_migrate_layouts' ) ) {
+
+  function ot_maybe_migrate_layouts() {
+    
+    // Filter the ID to migrate from
+    $layouts_id = apply_filters( 'ot_migrate_layouts_id', '' );
+    
+    // Attempt to migrate Layouts
+    if ( ! empty( $layouts_id ) && get_option( ot_layouts_id() ) === false && ot_layouts_id() !== $layouts_id ) {
+      
+      // Old options
+      $layouts = get_option( $layouts_id );
+      
+      // Migrate to new ID
+      update_option( ot_layouts_id(), $layouts );
+      
+    }
+
+  }
+
+}
+
+/**
+ * Returns an array with the post format gallery meta box.
+ *
+ * @param     mixed     $pages Excepts a comma separated string or array of 
+ *                      post_types and is what tells the metabox where to 
+ *                      display. Default 'post'.
+ * @return    array
+ *
+ * @access    public
+ * @since     2.4.0
+ */
+function ot_meta_box_post_format_gallery( $pages = 'post' ) {
+
+  if ( ! current_theme_supports( 'post-formats' ) || ! in_array( 'gallery', current( get_theme_support( 'post-formats' ) ) ) )
+    return false;
+    
+  if ( is_string( $pages ) )
+    $pages = explode( ',', $pages );
+  
+  return apply_filters( 'ot_meta_box_post_format_gallery', array(
+    'id'        => 'ot-post-format-gallery',
+    'title'     => __( 'Gallery', 'option-tree' ),
+    'desc'      => '',
+    'pages'     => $pages,
+    'context'   => 'side',
+    'priority'  => 'low',
+    'fields'    => array(
+      array(
+        'id'          => '_format_gallery',
+        'label'       => '',
+        'desc'        => '',
+        'std'         => '',
+        'type'        => 'gallery',
+        'class'       => 'ot-gallery-shortcode'
+      )
+  	)
+  ), $pages );
+
+}
+
+/**
+ * Returns an array with the post format link metabox.
+ *
+ * @param     mixed     $pages Excepts a comma separated string or array of 
+ *                      post_types and is what tells the metabox where to 
+ *                      display. Default 'post'.
+ * @return    array
+ *
+ * @access    public
+ * @since     2.4.0
+ */
+function ot_meta_box_post_format_link( $pages = 'post' ) {
+  
+  if ( ! current_theme_supports( 'post-formats' ) || ! in_array( 'link', current( get_theme_support( 'post-formats' ) ) ) )
+    return false;
+    
+  if ( is_string( $pages ) )
+    $pages = explode( ',', $pages );
+  
+  return apply_filters( 'ot_meta_box_post_format_link', array(
+    'id'        => 'ot-post-format-link',
+    'title'     => __( 'Link', 'option-tree' ),
+    'desc'      => '',
+    'pages'     => $pages,
+    'context'   => 'side',
+    'priority'  => 'low',
+    'fields'    => array(
+      array(
+        'id'      => '_format_link_url',
+        'label'   => '',
+        'desc'    => __( 'Link URL', 'option-tree' ),
+        'std'     => '',
+        'type'    => 'text'
+      ),
+      array(
+        'id'      => '_format_link_title',
+        'label'   => '',
+        'desc'    => __( 'Link Title', 'option-tree' ),
+        'std'     => '',
+        'type'    => 'text'
+      )
+  	)
+  ), $pages );
+
+}
+
+/**
+ * Returns an array with the post format quote metabox.
+ *
+ * @param     mixed     $pages Excepts a comma separated string or array of 
+ *                      post_types and is what tells the metabox where to 
+ *                      display. Default 'post'.
+ * @return    array
+ *
+ * @access    public
+ * @since     2.4.0
+ */
+function ot_meta_box_post_format_quote( $pages = 'post' ) {
+  
+  if ( ! current_theme_supports( 'post-formats' ) || ! in_array( 'quote', current( get_theme_support( 'post-formats' ) ) ) )
+    return false;
+    
+  if ( is_string( $pages ) )
+    $pages = explode( ',', $pages );
+
+  return apply_filters( 'ot_meta_box_post_format_quote', array(
+    'id'        => 'ot-post-format-quote',
+    'title'     => __( 'Quote', 'option-tree' ),
+    'desc'      => '',
+    'pages'     => $pages,
+    'context'   => 'side',
+    'priority'  => 'low',
+    'fields'    => array(
+      array(
+        'id'      => '_format_quote_source_name',
+        'label'   => '',
+        'desc'    => __( 'Source Name (ex. author, singer, actor)', 'option-tree' ),
+        'std'     => '',
+        'type'    => 'text'
+      ),
+      array(
+        'id'      => '_format_quote_source_url',
+        'label'   => '',
+        'desc'    => __( 'Source URL', 'option-tree' ),
+        'std'     => '',
+        'type'    => 'text'
+      ),
+      array(
+        'id'      => '_format_quote_source_title',
+        'label'   => '',
+        'desc'    => __( 'Source Title (ex. book, song, movie)', 'option-tree' ),
+        'std'     => '',
+        'type'    => 'text'
+      ),
+      array(
+        'id'      => '_format_quote_source_date',
+        'label'   => '',
+        'desc'    => __( 'Source Date', 'option-tree' ),
+        'std'     => '',
+        'type'    => 'text'
+      )
+  	)
+  ), $pages );
+
+}
+
+/**
+ * Returns an array with the post format video metabox.
+ *
+ * @param     mixed     $pages Excepts a comma separated string or array of 
+ *                      post_types and is what tells the metabox where to 
+ *                      display. Default 'post'.
+ * @return    array
+ *
+ * @access    public
+ * @since     2.4.0
+ */
+function ot_meta_box_post_format_video( $pages = 'post' ) {
+  
+  if ( ! current_theme_supports( 'post-formats' ) || ! in_array( 'video', current( get_theme_support( 'post-formats' ) ) ) )
+    return false;
+    
+  if ( is_string( $pages ) )
+    $pages = explode( ',', $pages );
+  
+  return apply_filters( 'ot_meta_box_post_format_video', array(
+    'id'        => 'ot-post-format-video',
+    'title'     => __( 'Video', 'option-tree' ),
+    'desc'      => '',
+    'pages'     => $pages,
+    'context'   => 'side',
+    'priority'  => 'low',
+    'fields'    => array(
+      array(
+        'id'      => '_format_video_embed',
+        'label'   => '',
+        'desc'    => sprintf( __( 'Embed video from services like Youtube, Vimeo, or Hulu. You can find a list of supported oEmbed sites in the %1$s. Alternatively, you could use the built-in %2$s shortcode.', 'option-tree' ), '<a href="http://codex.wordpress.org/Embeds" target="_blank">' . __( 'Wordpress Codex', 'option-tree' ) .'</a>', '<code>[video]</code>' ),
+        'std'     => '',
+        'type'    => 'textarea'
+      )
+  	)
+  ), $pages );
+
+}
+
+/**
+ * Returns an array with the post format audio metabox.
+ *
+ * @param     mixed     $pages Excepts a comma separated string or array of 
+ *                      post_types and is what tells the metabox where to 
+ *                      display. Default 'post'.
+ * @return    array
+ *
+ * @access    public
+ * @since     2.4.0
+ */
+function ot_meta_box_post_format_audio( $pages = 'post' ) {
+  
+  if ( ! current_theme_supports( 'post-formats' ) || ! in_array( 'audio', current( get_theme_support( 'post-formats' ) ) ) )
+    return false;
+    
+  if ( is_string( $pages ) )
+    $pages = explode( ',', $pages );
+  
+  return apply_filters( 'ot_meta_box_post_format_audio', array(
+    'id'        => 'ot-post-format-audio',
+    'title'     => __( 'Audio', 'option-tree' ),
+    'desc'      => '',
+    'pages'     => $pages,
+    'context'   => 'side',
+    'priority'  => 'low',
+    'fields'    => array(
+      array(
+        'id'      => '_format_audio_embed',
+        'label'   => '',
+        'desc'    => sprintf( __( 'Embed audio from services like SoundCloud and Rdio. You can find a list of supported oEmbed sites in the %1$s. Alternatively, you could use the built-in %2$s shortcode.', 'option-tree' ), '<a href="http://codex.wordpress.org/Embeds" target="_blank">' . __( 'Wordpress Codex', 'option-tree' ) .'</a>', '<code>[audio]</code>' ),
+        'std'     => '',
+        'type'    => 'textarea'
+      )
+  	)
+  ), $pages );
+
+}
+
+/**
+ * Returns the option type by ID.
+ *
+ * @param     string    $option_id The option ID
+ * @return    string    $settings_id The settings array ID
+ * @return    string    The option type.
+ *
+ * @access    public
+ * @since     2.4.2
+ */
+if ( ! function_exists( 'ot_get_option_type_by_id' ) ) {
+
+  function ot_get_option_type_by_id( $option_id, $settings_id = '' ) {
+    
+    if ( empty( $settings_id ) ) {
+    
+      $settings_id = ot_settings_id();
+    
+    }
+      
+    $settings = get_option( $settings_id, array() );
+    
+    if ( isset( $settings['settings'] ) ) {
+    
+      foreach( $settings['settings'] as $value ) {
+      
+        if ( $option_id == $value['id'] && isset( $value['type'] ) ) {
+        
+          return $value['type'];
+          
+        }
+        
+      }
+      
+    }
+    
+    return false;
+  
   }
   
 }

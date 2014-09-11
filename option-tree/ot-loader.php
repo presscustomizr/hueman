@@ -1,13 +1,30 @@
 <?php
 /**
  * Plugin Name: OptionTree
- * Plugin URI:  http://wp.envato.com
+ * Plugin URI:  https://github.com/valendesigns/option-tree/
  * Description: Theme Options UI Builder for WordPress. A simple way to create & save Theme Options and Meta Boxes for free or premium themes.
- * Version:     2.2.0
+ * Version:     2.4.2
  * Author:      Derek Herman
  * Author URI:  http://valendesigns.com
  * License:     GPLv3
  */
+
+/**
+ * Forces Plugin Mode when OptionTree is already loaded and displays an admin notice.
+ */
+if ( class_exists( 'OT_Loader' ) && defined( 'OT_PLUGIN_MODE' ) && OT_PLUGIN_MODE == true ) {
+  
+  add_filter( 'ot_theme_mode', '__return_false', 999 );
+  
+  function ot_conflict_notice() {
+    
+    echo '<div class="error"><p>' . __( 'OptionTree is installed as a plugin and also embedded in your current theme. Please deactivate the plugin to load the theme dependent version of OptionTree, and remove this warning.', 'option-tree' ) . '</p></div>';
+    
+  }
+  
+  add_action( 'admin_notices', 'ot_conflict_notice' );
+  
+}
 
 /**
  * This is the OptionTree loader class.
@@ -63,8 +80,27 @@ if ( ! class_exists( 'OT_Loader' ) ) {
        * This path will be relative in plugin mode and absolute in theme mode.
        *
        * @since     2.0.10
+       * @updated   2.4.1
        */
-      define( 'OT_LANG_DIR', dirname( plugin_basename( __FILE__ ) ) . DIRECTORY_SEPARATOR . 'languages' . DIRECTORY_SEPARATOR );
+      if ( OT_PLUGIN_MODE ) {
+        
+        define( 'OT_LANG_DIR', trailingslashit( dirname( plugin_basename( __FILE__ ) ) ) . trailingslashit( 'languages' ) );
+        
+      } else {
+      
+        if ( apply_filters( 'ot_child_theme_mode', false ) == true ) {
+        
+          $path = ltrim( end( @explode( get_stylesheet(), str_replace( '\\', '/', dirname( __FILE__ ) ) ) ), '/' );
+          define( 'OT_LANG_DIR', trailingslashit( trailingslashit( get_stylesheet_directory() ) . $path ) . trailingslashit( 'languages' ) . 'theme-mode' );
+          
+        } else {
+        
+          $path = ltrim( end( @explode( get_template(), str_replace( '\\', '/', dirname( __FILE__ ) ) ) ), '/' );
+          define( 'OT_LANG_DIR', trailingslashit( trailingslashit( get_template_directory() ) . $path ) . trailingslashit( 'languages' ) . 'theme-mode' );
+          
+        }
+      
+      }
 
       /* load the text domain  */
       if ( OT_PLUGIN_MODE ) {
@@ -95,7 +131,7 @@ if ( ! class_exists( 'OT_Loader' ) ) {
         
       } else {
       
-        load_theme_textdomain( 'option-tree', DIRECTORY_SEPARATOR . OT_LANG_DIR . 'theme-mode' );
+        load_theme_textdomain( 'option-tree', OT_LANG_DIR );
         
       }
       
@@ -142,19 +178,7 @@ if ( ! class_exists( 'OT_Loader' ) ) {
       /**
        * Current Version number.
        */
-      define( 'OT_VERSION', '2.2.0' );
-      
-      /**
-       * For developers: Allow Unfiltered HTML in all the textareas.
-       *
-       * Run a filter and set to true if you want all the
-       * users to be able to post anything in the textareas.
-       * WARNING: This opens a security hole for low level users
-       * to be able to post malicious scripts, you've been warned.
-       *
-       * @since     2.0
-       */
-      define( 'OT_ALLOW_UNFILTERED_HTML', apply_filters( 'ot_allow_unfiltered_html', false ) );
+      define( 'OT_VERSION', '2.4.2' );
       
       /**
        * For developers: Theme mode.
@@ -201,7 +225,7 @@ if ( ! class_exists( 'OT_Loader' ) ) {
       define( 'OT_SHOW_OPTIONS_UI', apply_filters( 'ot_show_options_ui', true ) );
       
       /**
-       * For developers: Hide Settings Import
+       * For developers: Show Settings Import
        *
        * Run a filter and set to false if you want to hide the
        * Settings Import options on the Import page.
@@ -211,7 +235,7 @@ if ( ! class_exists( 'OT_Loader' ) ) {
       define( 'OT_SHOW_SETTINGS_IMPORT', apply_filters( 'ot_show_settings_import', true ) );
       
       /**
-       * For developers: Hide Settings Export
+       * For developers: Show Settings Export
        *
        * Run a filter and set to false if you want to hide the
        * Settings Import options on the Import page.
@@ -260,6 +284,28 @@ if ( ! class_exists( 'OT_Loader' ) ) {
       define( 'OT_META_BOXES', apply_filters( 'ot_meta_boxes', true ) );
       
       /**
+       * For developers: Allow Unfiltered HTML in all the textareas.
+       *
+       * Run a filter and set to true if you want all the
+       * users to be able to post anything in the textareas.
+       * WARNING: This opens a security hole for low level users
+       * to be able to post malicious scripts, you've been warned.
+       *
+       * @since     2.0
+       */
+      define( 'OT_ALLOW_UNFILTERED_HTML', apply_filters( 'ot_allow_unfiltered_html', false ) );
+
+      /**
+       * For developers: Post Formats.
+       *
+       * Run a filter and set to true if you want OptionTree 
+       * to load meta boxes for post formats.
+       *
+       * @since     2.4.0
+       */
+      define( 'OT_POST_FORMATS', apply_filters( 'ot_post_formats', false ) );
+      
+      /**
        * Check if in theme mode.
        *
        * If OT_THEME_MODE and OT_CHILD_THEME_MODE is false, set the 
@@ -273,11 +319,11 @@ if ( ! class_exists( 'OT_Loader' ) ) {
         define( 'OT_URL', plugin_dir_url( __FILE__ ) );
       } else {
         if ( true == OT_CHILD_THEME_MODE ) {
-          $path = ltrim( end( @explode( end( @explode( '/', get_stylesheet_directory() ) ), dirname( __FILE__ ) ) ), '/' );
+          $path = ltrim( end( @explode( get_stylesheet(), str_replace( '\\', '/', dirname( __FILE__ ) ) ) ), '/' );
           define( 'OT_DIR', trailingslashit( trailingslashit( get_stylesheet_directory() ) . $path ) );
           define( 'OT_URL', trailingslashit( trailingslashit( get_stylesheet_directory_uri() ) . $path ) );
         } else {
-          $path = ltrim( end( @explode( end( @explode( '/', get_template_directory() ) ), dirname( __FILE__ ) ) ), '/' );
+          $path = ltrim( end( @explode( get_template(), str_replace( '\\', '/', dirname( __FILE__ ) ) ) ), '/' );
           define( 'OT_DIR', trailingslashit( trailingslashit( get_template_directory() ) . $path ) );
           define( 'OT_URL', trailingslashit( trailingslashit( get_template_directory_uri() ) . $path ) );
         }
@@ -323,6 +369,11 @@ if ( ! class_exists( 'OT_Loader' ) ) {
       /* include the meta box api */
       if ( OT_META_BOXES == true ) {
         $files[] = 'ot-meta-box-api';
+      }
+      
+      /* include the post formats api */
+      if ( OT_META_BOXES == true && OT_POST_FORMATS == true ) {
+        $files[] = 'ot-post-formats-api';
       }
       
       /* include the settings & docs pages */
@@ -380,6 +431,18 @@ if ( ! class_exists( 'OT_Loader' ) ) {
      * @since     2.0
      */
     private function hooks() {
+      
+      // Attempt to migrate the settings
+      if ( function_exists( 'ot_maybe_migrate_settings' ) )
+        add_action( 'init', 'ot_maybe_migrate_settings', 1 );
+      
+      // Attempt to migrate the Options
+      if ( function_exists( 'ot_maybe_migrate_options' ) )
+        add_action( 'init', 'ot_maybe_migrate_options', 1 );
+      
+      // Attempt to migrate the Layouts
+      if ( function_exists( 'ot_maybe_migrate_layouts' ) )
+        add_action( 'init', 'ot_maybe_migrate_layouts', 1 );
 
       /* load the Meta Box assets */
       if ( OT_META_BOXES == true ) {
@@ -450,6 +513,9 @@ if ( ! class_exists( 'OT_Loader' ) ) {
       
       /* AJAX call to create a new list item */
       add_action( 'wp_ajax_add_list_item', array( $this, 'add_list_item' ) );
+      
+      /* AJAX call to create a new social link */
+      add_action( 'wp_ajax_add_social_links', array( $this, 'add_social_links' ) );
       
       // Adds the temporary hacktastic shortcode
       add_filter( 'media_view_settings', array( $this, 'shortcode' ), 10, 2 );
@@ -539,7 +605,7 @@ if ( ! class_exists( 'OT_Loader' ) ) {
      * AJAX utility function for adding a new section.
      */
     public function add_section() {
-      echo ot_sections_view( 'option_tree_settings[sections]', $_REQUEST['count'] );
+      echo ot_sections_view( ot_settings_id() . '[sections]', $_REQUEST['count'] );
       die();
     }
     
@@ -588,6 +654,14 @@ if ( ! class_exists( 'OT_Loader' ) ) {
      */
     public function add_list_item() {
       ot_list_item_view( $_REQUEST['name'], $_REQUEST['count'], array(), $_REQUEST['post_id'], $_REQUEST['get_option'], unserialize( ot_decode( $_REQUEST['settings'] ) ), $_REQUEST['type'] );
+      die();
+    }
+    
+    /**
+     * AJAX utility function for adding a new social link.
+     */
+    public function add_social_links() {
+      ot_social_links_view( $_REQUEST['name'], $_REQUEST['count'], array(), $_REQUEST['post_id'], $_REQUEST['get_option'], unserialize( ot_decode( $_REQUEST['settings'] ) ), $_REQUEST['type'] );
       die();
     }
     
@@ -667,7 +741,7 @@ if ( ! class_exists( 'OT_Loader' ) ) {
         
         // Once is enough.
         remove_filter( 'gettext', array( $this, 'ot_change_image_button' ) );
-        return 'Send to OptionTree';
+        return apply_filters( 'ot_upload_text', __( 'Send to OptionTree', 'option-tree' ) );
         
       }
       
