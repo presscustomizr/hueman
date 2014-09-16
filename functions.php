@@ -632,7 +632,7 @@ add_filter( 'embed_oembed_html', 'alx_embed_wmode_transparent', 10, 3 );
 /* ------------------------------------ */	
 if ( ! function_exists( 'alx_embed_html' ) ) {
 
-	function alx_embed_html( $html ) {
+	function alx_embed_html( $html, $url ) {
 	
 		$pattern    = '/^https?:\/\/(www\.)?twitter\.com/';
 		$is_twitter = preg_match( $pattern, $url );
