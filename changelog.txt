@@ -1,6 +1,13 @@
   Theme : Hueman
-Version : 2.1.7
+Version : 2.1.8
  Author : Alexander "Alx" Agnarson - http://alxmedia.se
+
+September 18 2014 - 2.1.8
+===========================================================
+- Added option to turn recommended plugins off
+- Fixed protocol-relative URLs for Google Fonts - @chkorn (via GitHub)
+- Fixed Twitter embeds - @ShinichiNishikawa (via GitHub)
+- Fixed capability with WP-UserAgent - @JayXon (via GitHub)
 
 September 3 2014 - 2.1.7
 ===========================================================
