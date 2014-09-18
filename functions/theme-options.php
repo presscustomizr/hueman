@@ -160,6 +160,15 @@ function custom_theme_options() {
 			'type'		=> 'on-off',
 			'section'	=> 'general'
 		),
+		// General: Recommended Plugins
+		array(
+			'id'		=> 'recommended-plugins',
+			'label'		=> 'Recommended Plugins',
+			'desc'		=> 'Enable or disable the recommended plugins notice',
+			'std'		=> 'on',
+			'type'		=> 'on-off',
+			'section'	=> 'general'
+		),
 		// Blog: Heading
 		array(
 			'id'		=> 'blog-heading',
