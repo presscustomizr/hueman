@@ -1,6 +1,13 @@
   Theme : Hueman
-Version : 2.1.8
+Version : 2.1.9
  Author : Alexander "Alx" Agnarson - http://alxmedia.se
+
+October 10 2014 - 2.1.9
+===========================================================
+- Updated documentation
+- Added option to turn off sidebar top boxes
+- Fixed gallery format post slider, downgraded to flexslider 2.1 instead of 2.2
+- Re-fixed responsive Jetpack embeds
 
 September 18 2014 - 2.1.8
 ===========================================================
