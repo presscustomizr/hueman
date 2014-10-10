@@ -591,6 +591,7 @@ box-shadow: inset 1px 0 0 rgba(255,255,255,0.06); }
 @media only screen and (min-width: 720px) {
 
 	/* common */
+	#nav-topbar .container { padding-left: 15px; }
 	#nav-topbar .nav {  }
 	#nav-topbar .nav li a { color: #fff; color: rgba(255,255,255,0.7); }	
 	/* level 1 */
@@ -612,6 +613,7 @@ box-shadow: inset 1px 0 0 rgba(255,255,255,0.06); }
 @media only screen and (max-width: 719px) {
 	
 	/* common */
+	#nav-topbar .container { padding-left: 0; }
 	#nav-topbar .nav li a { color: #fff; color: rgba(255,255,255,0.8); border-top: 1px solid rgba(255,255,255,0.06); }	
 	/* level 1 */
 	#nav-topbar .nav li > a:hover { background: rgba(0,0,0,0.15); color: #fff; }

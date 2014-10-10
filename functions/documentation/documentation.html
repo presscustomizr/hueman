@@ -23,13 +23,18 @@
 							<li><a href="#install-updates">Theme updates</a></li>
 						</ul>
 					</li>
-					<li><a href="#options"><span class="label color-03">03</span>Theme Options</a></li>
+					<li><a href="#options"><span class="label color-03">03</span>Theme Options</a>
+						<ul>
+							<li><a href="#options-shortcodes">Shortcodes</a></li>
+						</ul>
+					</li>
 					<li><a href="#post-formats"><span class="label color-04">04</span>Post Formats</a></li>
 					<li><a href="#customization"><span class="label color-05">05</span>Customization</a>
 						<ul>
 							<li><a href="#customization-child-theme">Child Theme</a></li>
 							<li><a href="#customization-file-structure">File Structure</a></li>
 							<li><a href="#customization-css">CSS</a></li>
+							<li><a href="#customization-thumbnail">Thumbnail Size</a></li>
 						</ul>
 					</li>
 					<li><a href="#more"><span class="label color-06">06</span>More</a>
@@ -242,6 +247,64 @@
 	</section><!--/section-->
 
 	
+<!-- Shortcodes
+================================================== -->
+	<section id="options-shortcodes" class="color-03">
+		<div class="container">
+		
+			<h1><span class="label color-03">03.1</span>Shortcodes</h1>
+			
+			<p>This theme comes bundled with a few simple shortcodes mainly for content structure. If you want to add additional shortcodes, there are many <a target="_blank" href="http://wordpress.org/plugins/">plugins</a> out there to install.</p>
+			<p>Here is how to use them:</p>
+			<ul>
+				<li>Divider Line
+					<pre><code>[hr]</code></pre>
+				</li>
+				<li>Highlight Text
+					<pre><code>[highlight]My highlighted text[/highlight]</code></pre>
+				</li>
+				<li>Dropcap (large first letter)
+					<pre><code>[dropcap]A[/dropcap]nother dropcap here.</code></pre>
+					<div class="alert alert-warning">
+						<p><strong>Note:</strong> If you add the dropcap in the beginning of the article, it will disappear from the excerpt. To fix this, when editing the post, click Screen Options top right. Then enable Excerpt and you can write your own custom excerpt in the content box below the main text field.</p>
+					</div>
+				</li>
+				<li>Pullquote Left
+					<pre><code>[pullquote-left]Pullquote text[/pullquote-left]</code></pre>
+				</li>
+				<li>Pullquote Right
+					<pre><code>[pullquote-right]Pullquote text[/pullquote-right]</code></pre>
+				</li>
+				<li>Responsive Columns
+				<pre><code>[column size="one-half"]...[/column]
+[column size="one-half" last="true"]...[/column]
+
+[column size="one-third"]...[/column]
+[column size="one-third"]...[/column]
+[column size="one-third" last="true"]...[/column]
+
+[column size="two-third"]...[/column]
+[column size="one-third" last="true"]...[/column]
+
+[column size="one-fourth"]...[/column]
+[column size="one-fourth"]...[/column]
+[column size="one-fourth"]...[/column]
+[column size="one-fourth" last="true"]...[/column]
+
+[column size="three-fourth"]...[/column]
+[column size="one-fourth" last="true"]...[/column]
+
+[column size="one-fifth"]...[/column]
+[column size="one-fifth"]...[/column]
+[column size="one-fifth"]...[/column]
+[column size="one-fifth"]...[/column]
+[column size="one-fifth" last="true"]...[/column]</code></pre>
+				</li>
+			</ul>
+		</div>
+	</section><!--/section-->
+
+	
 <!-- Post Formats
 ================================================== -->	
 	<section id="post-formats" class="color-04">
@@ -352,8 +415,6 @@ load_theme_textdomain( 'themename', get_stylesheet_directory().'/languages' );</
 			
 			<h3>Replacing page templates</h3>
 			<p>Finally, we wish to modify the page.php template with some custom code. All we need to do then is just copy over page.php from the parent theme to the child theme, and now this file will be used instead - and you are free to modify it without having to fear losing it when updating the theme.</p>
-			
-			<p>Pretty nifty, isn't it?</p>
 		</div>
 	</section><!--/section-->	
 
@@ -473,6 +534,27 @@ float: left;
 			<p>Happy editing!</p>
 		</div>
 	</section><!--/section-->	
+
+	
+<!-- Thumbnail Size
+================================================== -->		
+	<section id="customization-thumbnail" class="color-05">
+		<div class="container">
+			
+			<h1><span class="label color-05">05.4</span>Change Thumbnail Size</h1>
+			<p>To modify the custom thumbnail sizes for your theme, you need to copy over the whole <code>function alx_setup() {}</code> to your child theme, using the methods explained above.</p>
+			<p>Within this function you will find the thumbnail sizes under where it says:</p>
+<pre><code>// Thumbnail sizes</code></pre>
+			
+			<p>Modify the height and width values as you want, using <a target="_blank" href="http://codex.wordpress.org/Function_Reference/add_image_size">add_image_size codex</a> as guideline to how it works. After that you've changed size and saved, you need to run the <a target="_blank" href="http://wordpress.org/plugins/regenerate-thumbnails/">regenerate thumbnails</a> plugin once before you will see any difference.</p>
+			
+			<div class="alert alert-warning">
+				<p><strong>Important:</strong> If you have trouble with the way thumbnails are upscaling to fit the desired width or height before being cropped, you need to disable the alx_thumbnail_upscale function. You do so by adding <code>function alx_thumbnail_upscale() {}</code> to your child theme's functions.php, disabling the function completely.</p>
+			</div>
+			
+		</div>
+	</section><!--/section-->	
+
 	
 <!-- More
 ================================================== -->	
@@ -524,6 +606,7 @@ float: left;
 			</ul>
 		</div>
 	</section><!--/section-->
+	
 	
 <!-- Troubleshooting
 ================================================== -->	
