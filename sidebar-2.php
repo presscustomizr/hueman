@@ -6,9 +6,11 @@
 	
 	<div class="sidebar-content">
 		
+		<?php if ( ot_get_option('sidebar-top') != 'off' ): ?>
 		<div class="sidebar-top group">
 			<p><?php _e('More','hueman'); ?></p>
 		</div>
+		<?php endif; ?>
 		
 		<?php if ( ot_get_option( 'post-nav' ) == 's2') { get_template_part('inc/post-nav'); } ?>
 		

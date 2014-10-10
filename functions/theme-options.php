@@ -99,6 +99,15 @@ function custom_theme_options() {
 			'type'		=> 'on-off',
 			'section'	=> 'general'
 		),
+		// General: Sidebar Top Boxes
+		array(
+			'id'		=> 'sidebar-top',
+			'label'		=> 'Sidebar Top Boxes',
+			'desc'		=> 'Boxes at the top of the sidebars',
+			'std'		=> 'on',
+			'type'		=> 'on-off',
+			'section'	=> 'general'
+		),
 		// General: Mobile Sidebar
 		array(
 			'id'		=> 'mobile-sidebar-hide',
