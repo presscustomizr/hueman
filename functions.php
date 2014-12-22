@@ -63,9 +63,12 @@ add_action( 'after_setup_theme', 'alx_load' );
 if ( ! function_exists( 'alx_setup' ) ) {
 	
 	function alx_setup() {		
+		// Enable title tag
+		add_theme_support( 'title-tag' );
+		
 		// Enable automatic feed links
 		add_theme_support( 'automatic-feed-links' );
-		
+
 		// Enable featured image
 		add_theme_support( 'post-thumbnails' );
 		
@@ -517,30 +520,6 @@ if ( ! function_exists( 'alx_body_class' ) ) {
 	
 }
 add_filter( 'body_class', 'alx_body_class' );
-
-
-/*  Site title
-/* ------------------------------------ */
-if ( ! function_exists( 'alx_wp_title' ) ) {
-
-	function alx_wp_title( $title ) {
-		// Do not filter for RSS feed / if SEO plugin installed
-		if ( is_feed() || class_exists('All_in_One_SEO_Pack') || class_exists('HeadSpace_Plugin') || class_exists('Platinum_SEO_Pack') || class_exists('wpSEO') || defined('WPSEO_VERSION') )
-			return $title;
-		if ( is_front_page() ) { 
-			$title = get_bloginfo('name').' - '.get_bloginfo('description');
-		}
-		if ( is_front_page() && get_bloginfo('description') == '' ) { 
-			$title = get_bloginfo('name');
-		}
-		if ( !is_front_page() ) { 
-			$title .= ' - '.get_bloginfo('name');
-		}
-		return $title;
-	}
-	
-}
-add_filter( 'wp_title', 'alx_wp_title' );
 
 
 /*  Custom rss feed
