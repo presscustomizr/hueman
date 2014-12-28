@@ -1,6 +1,10 @@
 #wrapper,
 .container-inner { min-width: 320px; }
 
+@media only screen and (max-width: 1200px) {
+	#header-ads { display: none; }
+}
+
 /* ------------------------------------------------------------------------- *
  *  Toggle Sidebar s2 : 1200px > 480px
 /* ------------------------------------------------------------------------- */

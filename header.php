@@ -45,6 +45,11 @@
 				<div class="group pad">
 					<?php echo alx_site_title(); ?>
 					<?php if ( ot_get_option('site-description') != 'off' ): ?><p class="site-description"><?php bloginfo( 'description' ); ?></p><?php endif; ?>
+					<?php if ( ot_get_option('header-ads') == 'on' ): ?>
+					<div id="header-ads">
+						<?php dynamic_sidebar( 'header-ads' ); ?>
+					</div><!--/#header-ads-->
+					<?php endif; ?>
 				</div>
 				<?php endif; ?>
 				<?php if ( ot_get_option('header-image') ): ?>

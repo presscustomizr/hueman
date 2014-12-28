@@ -339,6 +339,15 @@ function custom_theme_options() {
 				)
 			)
 		),
+		// Header: Ads
+		array(
+			'id'		=> 'header-ads',
+			'label'		=> 'Header Ads',
+			'desc'		=> 'Header widget ads area',
+			'std'		=> 'off',
+			'type'		=> 'on-off',
+			'section'	=> 'header'
+		),
 		// Header: Custom Logo
 		array(
 			'id'		=> 'custom-logo',
@@ -363,6 +372,15 @@ function custom_theme_options() {
 			'desc'		=> 'Upload a header image. This will disable header title/logo and description.',
 			'type'		=> 'upload',
 			'section'	=> 'header'
+		),
+		// Footer: Ads
+		array(
+			'id'		=> 'footer-ads',
+			'label'		=> 'Footer Ads',
+			'desc'		=> 'Footer widget ads area',
+			'std'		=> 'off',
+			'type'		=> 'on-off',
+			'section'	=> 'footer'
 		),
 		// Footer: Widget Columns
 		array(
