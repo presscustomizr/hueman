@@ -169,6 +169,15 @@ function custom_theme_options() {
 			'type'		=> 'on-off',
 			'section'	=> 'general'
 		),
+		// Blog: Standard
+		array(
+			'id'		=> 'blog-standard',
+			'label'		=> 'Standard Blog List',
+			'desc'		=> 'Show one post per row, image beside text',
+			'std'		=> 'off',
+			'type'		=> 'on-off',
+			'section'	=> 'blog'
+		),
 		// Blog: Heading
 		array(
 			'id'		=> 'blog-heading',

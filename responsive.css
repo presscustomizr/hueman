@@ -216,6 +216,8 @@
 	.post-list .page	{ width: 100%; }
 	.post-list .post-row { margin-left: 0; padding-left: 0; }
 	.post-list .post-inner { margin-right: 0; }
+	.post-standard .post-inner { padding-left: 120px; }
+	.post-standard .post-thumbnail { margin-left: -120px; max-width: 100px; }
 	
 	.featured .post-title,
 	.single .post-title { font-size: 22px; line-height: 1.5em; letter-spacing: 0; }
@@ -278,6 +280,8 @@
 	.site-title { font-size: 32px; }
 
 	/* blog */
+	.post-standard .post-inner { padding-left: 82px; }
+	.post-standard .post-thumbnail { margin-left: -82px; max-width: 72px; }
 	.format-link .post-format p { margin-bottom: 5px; }
 
 }
