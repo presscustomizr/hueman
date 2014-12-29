@@ -557,9 +557,9 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 .site-description { font-size: 16px; font-style: italic; color: #fff; color: rgba(255,255,255,0.5); float: left; margin-left: 20px; line-height: 60px; padding: 10px 0; }
 .site-image { display: block; margin: 0 auto; max-height: 400px; }
 
-#header-ads { text-align: center; float: right; }
-#header #header-ads .widget { padding-bottom: 0; font-size: 0; line-height: 0; }
+#header-ads { float: right; }
 #header-ads h3 { display: none; }
+#header-ads img { display: block; }
 
 /*  header : search
 /* ------------------------------------ */
