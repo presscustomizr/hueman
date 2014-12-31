@@ -4,6 +4,7 @@ Version : 2.2.0
 
 December 31 2014 - 2.2.0
 ===========================================================
+- Added WP 4.1 title tag support
 - Added standard blog list option
 - Added header and footer widget ads areas
 - Moved disable sidebar top option to sidebars section
