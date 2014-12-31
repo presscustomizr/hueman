@@ -1,6 +1,13 @@
   Theme : Hueman
-Version : 2.1.9
+Version : 2.2.0
  Author : Alexander "Alx" Agnarson - http://alxmedia.se
+
+December 31 2014 - 2.2.0
+===========================================================
+- Added standard blog list option
+- Added header and footer widget ads areas
+- Moved disable sidebar top option to sidebars section
+- Updated to OptionTree 2.4.6
 
 October 10 2014 - 2.1.9
 ===========================================================
