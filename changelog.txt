@@ -1,6 +1,10 @@
   Theme : Hueman
-Version : 2.2.0
+Version : 2.2.1
  Author : Alexander "Alx" Agnarson - http://alxmedia.se
+
+January 29 2015 - 2.2.1
+===========================================================
+- Fixed double title tags
 
 December 31 2014 - 2.2.0
 ===========================================================
