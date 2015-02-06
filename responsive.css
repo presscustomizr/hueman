@@ -41,9 +41,6 @@
 }
 @media only screen and (min-width: 961px) and (max-width: 1200px) {
 
-	.s2 .sidebar-toggle { height: 60px; }
-	.s2 .sidebar-toggle i { padding: 10px 0; }
-	
 	/* 3 column, content right */
 	.col-3cl .main { background-image: none; }
 	.col-3cl .main-inner { background: url(img/sidebar/s-right-dual-half-collapse.png) repeat-y right; padding-right: 390px; }
@@ -125,14 +122,6 @@
 	
 }
 
-@media only screen and (max-width: 960px) {
-	/* 60 > 50px spacing */
-	#page { margin-top: -50px; }
-	#header { padding-bottom: 50px; }
-	.page-title.pad { padding-top: 12px; padding-bottom: 12px; }
-}
-
-
 /* ------------------------------------------------------------------------- *
  *  Mobile (Mid Res) : 719px > 0px (480px & 320px)
 /* ------------------------------------------------------------------------- */
@@ -141,6 +130,11 @@
 	/* layout */
 	.container { padding: 0; }
 	.grid { width: 100%; margin: 0 0 10px; }
+	
+	/* sidebar toggle 60 > 50px height */
+	.page-title.pad { padding-top: 12px; padding-bottom: 12px; }
+	.sidebar-toggle { height: 50px; }
+	.sidebar-toggle i { padding: 5px 0; }
 	
 	/* hide */
 	.site-description,
