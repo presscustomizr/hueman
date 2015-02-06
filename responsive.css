@@ -33,6 +33,10 @@
 	.col-3cm .main-inner { padding-right: 50px; }
 	.col-3cm .s2 { margin-right: -50px; }
 	.col-3cm.s2-expand .s2 { right: 0; }
+	
+	/* ipad, iphone fix */
+	.safari .s2 { min-width: 50px; max-width: 50px; width: auto; }
+	.safari.s2-expand .s2 { min-width: 260px; max-width: 260px; width: auto; }
 
 }
 @media only screen and (min-width: 961px) and (max-width: 1200px) {
@@ -115,6 +119,10 @@
 	.col-3cr.s1-expand .s1 { left: 0; }
 	.col-3cr.s2-expand .s2 { left: 50px; }
 	
+	/* ipad, iphone fix */
+	.safari .s1 { min-width: 50px; max-width: 50px; width: auto; }
+	.safari.s1-expand .s1 { min-width: 340px; max-width: 340px; width: auto; }
+	
 }
 
 @media only screen and (max-width: 960px) {
@@ -129,36 +137,6 @@
  *  Mobile (Mid Res) : 719px > 0px (480px & 320px)
 /* ------------------------------------------------------------------------- */
 @media only screen and (max-width: 719px) {
-	
-	/* make collapsed sidebars 40px wide instead of 50px */
-	.s1,
-	.s2 { width: 40px; }
-	
-	/* 2 column, content right */
-	.col-2cr .main-inner { background-position: -300px 0!important; padding-left: 40px; }
-	.col-2cr .s1 { margin-left: -40px; }
-	
-	/* 2 column, content left */
-	.col-2cl .main-inner { background-image: url(img/sidebar/s-right-collapse-40.png); padding-right: 40px; }
-	.col-2cl .s1 { margin-right: -40px; }
-	
-	/* 3 column, content middle */
-	.col-3cm .main { background: url(img/sidebar/s-right-collapse-40.png) repeat-y right; }
-	.col-3cm .main-inner { background-position: -300px 0!important; padding-left: 40px; padding-right: 40px; }	
-	.col-3cm .s1 { margin-left: -40px; }
-	.col-3cm .s2 { margin-right: -40px; }
-	
-	/* 3 column, content left */
-	.col-3cl .main-inner { background: url(img/sidebar/s-right-dual-full-collapse-40.png) repeat-y right; padding-right: 80px; }
-	.col-3cl .s1 { margin-right: -80px; }
-	.col-3cl .s2 { margin-right: -40px; }
-	.col-3cl.s2-expand .s2 { right: 40px; }
-	
-	/* 3 column, content right */
-	.col-3cr .main-inner { background: url(img/sidebar/s-left-dual-full-collapse-40.png) repeat-y left; padding-left: 80px; }
-	.col-3cr .s1 { margin-left: -80px; }
-	.col-3cr .s2 { margin-left: -40px; }
-	.col-3cr.s2-expand .s2 { left: 40px; }
 	
 	/* layout */
 	.container { padding: 0; }
