@@ -524,8 +524,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 	transition: height 0.35s ease; }
 	.expand .nav-wrap { height: auto; }
 	/* iphone fix */
-	.safari .nav-wrap { max-height: 0; height: auto; }
-	.safari .nav-wrap.transition { max-height: none; -webkit-transition: none; transition: none; }
+	.safari .nav-wrap.transition { -webkit-transition: none; transition: none; }
 	/* common */
 	.nav { float: left; width: 100%; }
 	.nav li a { line-height: 20px; display: block; padding: 8px 20px; }
