@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Hueman\n"
-"POT-Creation-Date: 2013-12-27 14:37+0100\n"
-"PO-Revision-Date: 2013-12-27 14:37+0100\n"
+"POT-Creation-Date: 2015-02-06 14:15+0100\n"
+"PO-Revision-Date: 2015-02-06 14:16+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: English\n"
@@ -40,15 +40,15 @@ msgstr ""
 msgid "Pingbacks"
 msgstr ""
 
-#: ../footer.php:67
+#: ../footer.php:76
 msgid "All Rights Reserved."
 msgstr ""
 
-#: ../footer.php:73
+#: ../footer.php:82
 msgid "Powered by"
 msgstr ""
 
-#: ../footer.php:73
+#: ../footer.php:82
 msgid "Theme by"
 msgstr ""
 
@@ -68,11 +68,11 @@ msgstr ""
 msgid "Expand Sidebar"
 msgstr ""
 
-#: ../sidebar-2.php:10
+#: ../sidebar-2.php:11
 msgid "More"
 msgstr ""
 
-#: ../sidebar.php:14
+#: ../sidebar.php:15
 msgid "Follow:"
 msgstr ""
 
@@ -104,43 +104,47 @@ msgstr ""
 msgid "Tags"
 msgstr ""
 
-#: ../functions/widgets/alx-tabs.php:185
+#: ../functions/widgets/alx-tabs.php:187
 msgid "says:"
 msgstr ""
 
-#: ../inc/page-title.php:19
+#: ../inc/page-title.php:23
+msgid "Search result"
+msgstr ""
+
+#: ../inc/page-title.php:25
 msgid "Search results"
 msgstr ""
 
-#: ../inc/page-title.php:22
+#: ../inc/page-title.php:31
 msgid "Error 404."
 msgstr ""
 
-#: ../inc/page-title.php:22
+#: ../inc/page-title.php:31
 msgid "Page not found!"
 msgstr ""
 
-#: ../inc/page-title.php:26
+#: ../inc/page-title.php:35
 msgid "Author:"
 msgstr ""
 
-#: ../inc/page-title.php:29
+#: ../inc/page-title.php:38
 msgid "Category:"
 msgstr ""
 
-#: ../inc/page-title.php:32
+#: ../inc/page-title.php:41
 msgid "Tagged:"
 msgstr ""
 
-#: ../inc/page-title.php:35
+#: ../inc/page-title.php:44
 msgid "Daily Archive:"
 msgstr ""
 
-#: ../inc/page-title.php:38
+#: ../inc/page-title.php:47
 msgid "Monthly Archive:"
 msgstr ""
 
-#: ../inc/page-title.php:41
+#: ../inc/page-title.php:50
 msgid "Yearly Archive:"
 msgstr ""
 
