@@ -75,6 +75,7 @@ class AlxPosts extends WP_Widget {
 			
 		</li>
 		<?php endwhile; ?>
+		<?php wp_reset_postdata(); ?>
 	</ul><!--/.alx-posts-->
 
 <?php

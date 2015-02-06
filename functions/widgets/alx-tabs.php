@@ -109,6 +109,7 @@ class AlxTabs extends WP_Widget {
 					
 				</li>
 				<?php endwhile; ?>
+				<?php wp_reset_postdata(); ?>
 			</ul><!--/.alx-tab-->
 
 		<?php } ?>
@@ -159,6 +160,7 @@ class AlxTabs extends WP_Widget {
 					
 				</li>
 				<?php endwhile; ?>
+				<?php wp_reset_postdata(); ?>
 			</ul><!--/.alx-tab-->
 			
 		<?php } ?>
