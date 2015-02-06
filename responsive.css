@@ -190,7 +190,7 @@
 	.post-list { margin-left: 0; margin-right: 0;  }
 	.post-list .post,
 	.post-list .page	{ width: 100%; }
-	.post-list .post-row { margin-left: 0; padding-left: 0; }
+	.post-list .post-row { margin-left: 0; padding-left: 0; margin-bottom: 0; border: 0; }
 	.post-list .post-inner { margin-right: 0; }
 	.post-standard .post-inner { padding-left: 120px; }
 	.post-standard .post-thumbnail { margin-left: -120px; max-width: 100px; }
