@@ -1,6 +1,13 @@
   Theme : Hueman
-Version : 2.2.1
+Version : 2.2.2
  Author : Alexander "Alx" Agnarson - http://alxmedia.se
+
+February 6 2015 - 2.2.2
+===========================================================
+- Fixed dropdown menus for iPhone
+- Fixed toggle sidebars for iPhone and iPad
+- Fixed typos in functions.php - @jaylinski (via GitHub)
+- Updated to jPlayer 2.9.2
 
 January 29 2015 - 2.2.1
 ===========================================================
