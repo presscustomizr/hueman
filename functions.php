@@ -806,8 +806,7 @@ if ( ! function_exists( 'alx_plugins' ) ) {
 				),
 				array(
 					'name' 				=> 'Responsive Lightbox',
-					'slug' 				=> 'light',
-					'source'			=> get_template_directory() . '/functions/plugins/light.zip',
+					'slug' 				=> 'responsive-lightbox',
 					'required'			=> false,
 					'force_activation' 	=> false,
 					'force_deactivation'=> false,
