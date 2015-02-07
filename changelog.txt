@@ -7,7 +7,7 @@ February 6 2015 - 2.2.2
 - Fixed dropdown menus for iPhone
 - Fixed toggle sidebars for iPhone and iPad
 - Fixed typos in functions.php - @jaylinski (via GitHub)
-- Added missing wp_reset_postdata to tabs and posts widgets - @Marco Almeida
+- Added several missing wp_reset_postdata - @Marco Almeida
 - Optimized search results - @Marco Almeida
 - Updated language files
 - Updated to jPlayer 2.9.2
