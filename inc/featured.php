@@ -60,3 +60,4 @@ $featured = new WP_Query(
 	</div><!--/.featured-->
 	
 <?php endif; ?>
+<?php wp_reset_postdata(); ?>

@@ -43,6 +43,7 @@
 		</article>
 	</li><!--/.related-->
 	<?php endwhile; ?>
+	<?php wp_reset_postdata(); ?>
 
 </ul><!--/.post-related-->
 <?php endif; ?>
