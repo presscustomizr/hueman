@@ -57,7 +57,7 @@ class AlxPosts extends WP_Widget {
 				<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 					<?php if ( has_post_thumbnail() ): ?>
 						<?php the_post_thumbnail('thumb-medium'); ?>
-					<?php elseif ( ot_get_option('placeholder') != 'off' ): ?>
+					<?php else: ?>
 						<img src="<?php echo get_template_directory_uri(); ?>/img/thumb-medium.png" alt="<?php the_title(); ?>" />
 					<?php endif; ?>
 					<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fa fa-play"></i></span>'; ?>
@@ -127,35 +127,35 @@ class AlxPosts extends WP_Widget {
 	
 	<div class="alx-options-posts">
 		<p>
-			<label for="<?php echo $this->get_field_id('title'); ?>">Title:</label>
-			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($instance["title"]); ?>" />
+			<label for="<?php echo esc_attr( $this->get_field_id('title') ); ?>">Title:</label>
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id('title') ); ?>" name="<?php echo esc_attr( $this->get_field_name('title') ); ?>" type="text" value="<?php echo esc_attr( $instance["title"] ); ?>" />
 		</p>
 		
 		<h4>List Posts</h4>
 		
 		<p>
-			<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('posts_thumb'); ?>" name="<?php echo $this->get_field_name('posts_thumb'); ?>" <?php checked( (bool) $instance["posts_thumb"], true ); ?>>
-			<label for="<?php echo $this->get_field_id('posts_thumb'); ?>">Show thumbnails</label>
+			<input type="checkbox" class="checkbox" id="<?php echo esc_attr( $this->get_field_id('posts_thumb') ); ?>" name="<?php echo esc_attr( $this->get_field_name('posts_thumb') ); ?>" <?php checked( (bool) $instance["posts_thumb"], true ); ?>>
+			<label for="<?php echo esc_attr( $this->get_field_id('posts_thumb') ); ?>">Show thumbnails</label>
 		</p>	
 		<p>
-			<label style="width: 55%; display: inline-block;" for="<?php echo $this->get_field_id("posts_num"); ?>">Items to show</label>
-			<input style="width:20%;" id="<?php echo $this->get_field_id("posts_num"); ?>" name="<?php echo $this->get_field_name("posts_num"); ?>" type="text" value="<?php echo absint($instance["posts_num"]); ?>" size='3' />
+			<label style="width: 55%; display: inline-block;" for="<?php echo esc_attr( $this->get_field_id("posts_num") ); ?>">Items to show</label>
+			<input style="width:20%;" id="<?php echo esc_attr( $this->get_field_id("posts_num") ); ?>" name="<?php echo esc_attr( $this->get_field_name("posts_num") ); ?>" type="text" value="<?php echo absint($instance["posts_num"]); ?>" size='3' />
 		</p>
 		<p>
-			<label style="width: 100%; display: inline-block;" for="<?php echo $this->get_field_id("posts_cat_id"); ?>">Category:</label>
+			<label style="width: 100%; display: inline-block;" for="<?php echo esc_attr( $this->get_field_id("posts_cat_id") ); ?>">Category:</label>
 			<?php wp_dropdown_categories( array( 'name' => $this->get_field_name("posts_cat_id"), 'selected' => $instance["posts_cat_id"], 'show_option_all' => 'All', 'show_count' => true ) ); ?>		
 		</p>
 		<p style="padding-top: 0.3em;">
-			<label style="width: 100%; display: inline-block;" for="<?php echo $this->get_field_id("posts_orderby"); ?>">Order by:</label>
-			<select style="width: 100%;" id="<?php echo $this->get_field_id("posts_orderby"); ?>" name="<?php echo $this->get_field_name("posts_orderby"); ?>">
+			<label style="width: 100%; display: inline-block;" for="<?php echo esc_attr( $this->get_field_id("posts_orderby") ); ?>">Order by:</label>
+			<select style="width: 100%;" id="<?php echo esc_attr( $this->get_field_id("posts_orderby") ); ?>" name="<?php echo esc_attr( $this->get_field_name("posts_orderby") ); ?>">
 			  <option value="date"<?php selected( $instance["posts_orderby"], "date" ); ?>>Most recent</option>
 			  <option value="comment_count"<?php selected( $instance["posts_orderby"], "comment_count" ); ?>>Most commented</option>
 			  <option value="rand"<?php selected( $instance["posts_orderby"], "rand" ); ?>>Random</option>
 			</select>	
 		</p>
 		<p style="padding-top: 0.3em;">
-			<label style="width: 100%; display: inline-block;" for="<?php echo $this->get_field_id("posts_time"); ?>">Posts from:</label>
-			<select style="width: 100%;" id="<?php echo $this->get_field_id("posts_time"); ?>" name="<?php echo $this->get_field_name("posts_time"); ?>">
+			<label style="width: 100%; display: inline-block;" for="<?php echo esc_attr( $this->get_field_id("posts_time") ); ?>">Posts from:</label>
+			<select style="width: 100%;" id="<?php echo esc_attr( $this->get_field_id("posts_time") ); ?>" name="<?php echo esc_attr( $this->get_field_name("posts_time") ); ?>">
 			  <option value="0"<?php selected( $instance["posts_time"], "0" ); ?>>All time</option>
 			  <option value="1 year ago"<?php selected( $instance["posts_time"], "1 year ago" ); ?>>This year</option>
 			  <option value="1 month ago"<?php selected( $instance["posts_time"], "1 month ago" ); ?>>This month</option>
@@ -168,12 +168,12 @@ class AlxPosts extends WP_Widget {
 		<h4>Post Info</h4>
 		
 		<p>
-			<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('posts_category'); ?>" name="<?php echo $this->get_field_name('posts_category'); ?>" <?php checked( (bool) $instance["posts_category"], true ); ?>>
-			<label for="<?php echo $this->get_field_id('posts_category'); ?>">Show categories</label>
+			<input type="checkbox" class="checkbox" id="<?php echo esc_attr( $this->get_field_id('posts_category') ); ?>" name="<?php echo esc_attr( $this->get_field_name('posts_category') ); ?>" <?php checked( (bool) $instance["posts_category"], true ); ?>>
+			<label for="<?php echo esc_attr( $this->get_field_id('posts_category') ); ?>">Show categories</label>
 		</p>
 		<p>
-			<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('posts_date'); ?>" name="<?php echo $this->get_field_name('posts_date'); ?>" <?php checked( (bool) $instance["posts_date"], true ); ?>>
-			<label for="<?php echo $this->get_field_id('posts_date'); ?>">Show dates</label>
+			<input type="checkbox" class="checkbox" id="<?php echo esc_attr( $this->get_field_id('posts_date') ); ?>" name="<?php echo esc_attr( $this->get_field_name('posts_date') ); ?>" <?php checked( (bool) $instance["posts_date"], true ); ?>>
+			<label for="<?php echo esc_attr( $this->get_field_id('posts_date') ); ?>">Show dates</label>
 		</p>
 
 		<hr>

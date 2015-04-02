@@ -33,15 +33,11 @@ class AlxVideo extends WP_Widget {
 		
 		// The widget
 		if ( !empty($instance['video_url']) ) {
-			// echo '<div class="video-container">'; - We have a filter adding this to embed shortcode
 			global $wp_embed;
 			$video = $wp_embed->run_shortcode('[embed]'.$instance['video_url'].'[/embed]');
-			// echo '</div>';
 		} 
 		elseif ( !empty($instance['video_embed_code']) ) {
-			echo '<div class="video-container">';
-			$video = $instance['video_embed_code'];
-			echo '</div>';
+			$video = '<div class="video-container">'. $instance['video_embed_code'] .'</div>';
 		} else {
 			$video = '';
 		}
@@ -86,19 +82,19 @@ class AlxVideo extends WP_Widget {
 	
 	<div class="alx-options-video">
 		<p>
-			<label for="<?php echo $this->get_field_id('title'); ?>">Title:</label>
-			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($instance["title"]); ?>" />
+			<label for="<?php echo esc_attr( $this->get_field_id('title') ); ?>">Title:</label>
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id('title') ); ?>" name="<?php echo esc_attr( $this->get_field_name('title') ); ?>" type="text" value="<?php echo esc_attr($instance["title"]); ?>" />
 		</p>
 		
 		<h4>Responsive Video</h4>
 	
 		<p>
-			<label for="<?php echo $this->get_field_id("video_url"); ?>">Video URL</label>
-			<input style="width:100%;" id="<?php echo $this->get_field_id("video_url"); ?>" name="<?php echo $this->get_field_name("video_url"); ?>" type="text" value="<?php echo esc_url($instance["video_url"]); ?>" />
+			<label for="<?php echo esc_attr( $this->get_field_id("video_url") ); ?>">Video URL</label>
+			<input style="width:100%;" id="<?php echo esc_attr( $this->get_field_id("video_url") ); ?>" name="<?php echo esc_attr( $this->get_field_name("video_url") ); ?>" type="text" value="<?php echo esc_url( $instance["video_url"] ); ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id("video_embed_code"); ?>">Video Embed Code</label>
-			<textarea class="widefat" id="<?php echo $this->get_field_id('video_embed_code'); ?>" name="<?php echo $this->get_field_name('video_embed_code'); ?>"><?php echo $instance["video_embed_code"]; ?></textarea>
+			<label for="<?php echo esc_attr( $this->get_field_id("video_embed_code") ); ?>">Video Embed Code</label>
+			<textarea class="widefat" id="<?php echo esc_attr( $this->get_field_id('video_embed_code') ); ?>" name="<?php echo esc_attr( $this->get_field_name('video_embed_code') ); ?>"><?php echo esc_html( $instance["video_embed_code"] ); ?></textarea>
 		</p>
 	</div>
 <?php
