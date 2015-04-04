@@ -109,7 +109,7 @@
 					<?php foreach ( $images as $image ): ?>
 						<li>
 							<?php $imageid = wp_get_attachment_image_src($image->ID,'large'); ?>
-							<img src="<?php echo $imageid[0]; ?>" alt="<?php echo $image->post_title; ?>">
+							<img src="<?php echo esc_attr( $imageid[0] ); ?>" alt="<?php echo esc_attr( $image->post_title ); ?>">
 							
 							<?php if ( $image->post_excerpt ): ?>
 								<div class="image-caption"><?php echo $image->post_excerpt; ?></div>
