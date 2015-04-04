@@ -8,7 +8,7 @@ Author URI: http://alxmedia.se
 Tags: light, one-column, two-columns, three-columns, right-sidebar, left-sidebar, fluid-layout, fixed-layout, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Text Domain: hueman
 
-	Copyright: (c) 2013 Alexander "Alx" Agnarson
+	Copyright: (c) 2015 Alexander "Alx" Agnarson
 	License: GNU General Public License v3.0
 	License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
@@ -19,6 +19,34 @@ To make it easy to update your theme, you should not edit the styles in this fil
 file or a child theme to add your styles. You can copy a style from this file and paste it in custom.css 
 or the child theme's style.css and it will override the style in this file. You have been warned! :)
 */
+
+/* ------------------------------------------------------------------------- *
+ *  Table of contents
+	
+	1. Reset
+	2. Base Styles
+		- Fonts
+		- Forms
+		- Entry Text
+		- Headings
+	3. Base Structure
+		- Layout
+	4. Common Elements
+		- Nav
+	5. Header
+	6. Page
+	7. Footer
+	8. Post Entry
+	9. Post Formats
+	10. Widgets
+	11. Comments
+	12. Child Menu
+	13. Plugins
+	14. Flexslider
+	15. Shortcodes
+	16. IE Fixes
+	
+/* ------------------------------------------------------------------------- */
 
 /* ------------------------------------------------------------------------- *
  *  Reset - http://meyerweb.com/eric/tools/css/reset/ v2.0 | 20110126
