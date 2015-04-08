@@ -158,7 +158,7 @@ if ( ! function_exists( 'alx_custom_sidebars' ) ) {
 			if ( !empty( $sidebars ) ) {
 				foreach( $sidebars as $sidebar ) {
 					if ( isset($sidebar['title']) && !empty($sidebar['title']) && isset($sidebar['id']) && !empty($sidebar['id']) && ($sidebar['id'] !='sidebar-') ) {
-						register_sidebar(array('name' => ''.$sidebar['title'].'','id' => ''.strtolower($sidebar['id']).'','before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>','before_title' => '<h3>','after_title' => '</h3>'));
+						register_sidebar(array('name' => ''.esc_attr( $sidebar['title'] ).'','id' => ''.esc_attr( strtolower($sidebar['id']) ).'','before_widget' => '<div id="%1$s" class="widget %2$s">','after_widget' => '</div>','before_title' => '<h3>','after_title' => '</h3>'));
 					}
 				}
 			}
@@ -296,13 +296,13 @@ if ( ! function_exists( 'alx_social_links' ) ) {
 					
 					// Build each separate html-section only if set
 					if ( isset($item['title']) && !empty($item['title']) ) 
-						{ $title = 'title="' .$item['title']. '"'; } else $title = '';
+						{ $title = 'title="' .esc_attr( $item['title'] ). '"'; } else $title = '';
 					if ( isset($item['social-link']) && !empty($item['social-link']) ) 
-						{ $link = 'href="' .$item['social-link']. '"'; } else $link = '';
+						{ $link = 'href="' .esc_attr( $item['social-link'] ). '"'; } else $link = '';
 					if ( isset($item['social-target']) && !empty($item['social-target']) ) 
 						{ $target = 'target="' .$item['social-target']. '"'; } else $target = '';
 					if ( isset($item['social-icon']) && !empty($item['social-icon']) ) 
-						{ $icon = 'class="fa ' .$item['social-icon']. '"'; } else $icon = '';
+						{ $icon = 'class="fa ' .esc_attr( $item['social-icon'] ). '"'; } else $icon = '';
 					if ( isset($item['social-color']) && !empty($item['social-color']) ) 
 						{ $color = 'style="color: ' .$item['social-color']. ';"'; } else $color = '';
 					
@@ -353,8 +353,8 @@ if ( ! function_exists( 'alx_page_title' ) ) {
 	function alx_page_title() {
 		global $post;
 
-		$heading = get_post_meta($post->ID,'_heading',true);
-		$subheading = get_post_meta($post->ID,'_subheading',true);
+		$heading = esc_attr( get_post_meta($post->ID,'_heading',true) );
+		$subheading = esc_attr( get_post_meta($post->ID,'_subheading',true) );
 		$title = $heading?$heading:the_title();
 		if($subheading) {
 			$title = $title.' <span>'.$subheading.'</span>';
@@ -372,8 +372,8 @@ if ( ! function_exists( 'alx_blog_title' ) ) {
 
 	function alx_blog_title() {
 		global $post;
-		$heading = ot_get_option('blog-heading');
-		$subheading = ot_get_option('blog-subheading');
+		$heading = esc_attr( ot_get_option('blog-heading') );
+		$subheading = esc_attr( ot_get_option('blog-subheading') );
 		if($heading) { 
 			$title = $heading;
 		} else {
@@ -534,7 +534,7 @@ if ( ! function_exists( 'alx_feed_link' ) ) {
 		if ( strpos( $output, 'comments' ) )
 			return $output;
 		// Return feed url
-		return ot_get_option('rss-feed',$output);
+		return esc_attr( ot_get_option('rss-feed',$output) );
 	}
 	
 }

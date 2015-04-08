@@ -16,7 +16,7 @@ class AlxVideo extends WP_Widget {
 /*  Constructor
 /* ------------------------------------ */
 	function AlxVideo() {
-		parent::__construct( false, 'AlxVideo', array('description' => 'Display a responsive video by adding a link or embed code.', 'classname' => 'widget_alx_video') );;	
+		parent::__construct( false, 'AlxVideo', array('description' => 'Display a responsive video by adding a link.', 'classname' => 'widget_alx_video') );;	
 	}
 	
 /*  Widget
@@ -36,9 +36,7 @@ class AlxVideo extends WP_Widget {
 			global $wp_embed;
 			$video = $wp_embed->run_shortcode('[embed]'.$instance['video_url'].'[/embed]');
 		} 
-		elseif ( !empty($instance['video_embed_code']) ) {
-			$video = '<div class="video-container">'. $instance['video_embed_code'] .'</div>';
-		} else {
+		else {
 			$video = '';
 		}
 		echo $video; 
@@ -56,7 +54,6 @@ class AlxVideo extends WP_Widget {
 		$instance['title'] = esc_attr($new['title']);
 	// Video
 		$instance['video_url'] = esc_url($new['video_url']);
-		$instance['video_embed_code'] = $new['video_embed_code'];
 		return $instance;
 	}
 
@@ -68,7 +65,6 @@ class AlxVideo extends WP_Widget {
 			'title' 			=> '',
 		// Video
 			'video_url' 		=> '',
-			'video_embed_code' 	=> '',
 		);
 		$instance = wp_parse_args( (array) $instance, $defaults );
 ?>
@@ -91,10 +87,6 @@ class AlxVideo extends WP_Widget {
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id("video_url") ); ?>">Video URL</label>
 			<input style="width:100%;" id="<?php echo esc_attr( $this->get_field_id("video_url") ); ?>" name="<?php echo esc_attr( $this->get_field_name("video_url") ); ?>" type="text" value="<?php echo esc_url( $instance["video_url"] ); ?>" />
-		</p>
-		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id("video_embed_code") ); ?>">Video Embed Code</label>
-			<textarea class="widefat" id="<?php echo esc_attr( $this->get_field_id('video_embed_code') ); ?>" name="<?php echo esc_attr( $this->get_field_name('video_embed_code') ); ?>"><?php echo esc_html( $instance["video_embed_code"] ); ?></textarea>
 		</p>
 	</div>
 <?php
