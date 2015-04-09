@@ -591,7 +591,7 @@ box-shadow: inset 1px 0 0 rgba(255,255,255,0.06); }
 @media only screen and (min-width: 1025px) {
 	/* fixed nav */
 	.full-width.topbar-enabled #header { padding-top: 50px; }
-	.full-width #nav-topbar.nav-container { position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 999; }
+	.full-width #nav-topbar.nav-container { position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 9999; }
 	.full-width.admin-bar #nav-topbar.nav-container { top: 32px; }
 }
 
