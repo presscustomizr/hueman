@@ -28,7 +28,6 @@ function custom_theme_options() {
 			<ul>
 				<li>Read the theme documentation <a target="_blank" href="'.get_template_directory_uri().'/functions/documentation/documentation.html">here</a></li>
 				<li>Download the sample child theme <a href="https://github.com/AlxMedia/hueman-child/archive/master.zip">here</a></li>
-				<li>Download or contribute translations <a target="_blank" href="https://github.com/AlxMedia/hueman-languages">here</a></li>
 				<li>Feel free to rate/review the theme <a target="_blank" href="http://wordpress.org/support/view/theme-reviews/hueman">here</a></li>
 				<li>If you have theme questions, go <a target="_blank" href="http://wordpress.org/support/theme/hueman">here</a></li>
 				<li>Hueman is on <a target="_blank" href="https://github.com/AlxMedia/hueman">GitHub</a></li>
