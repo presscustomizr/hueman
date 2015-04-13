@@ -33,8 +33,6 @@ function custom_theme_options() {
 				<li>If you have theme questions, go <a target="_blank" href="http://wordpress.org/support/theme/hueman">here</a></li>
 				<li>Hueman is on <a target="_blank" href="https://github.com/AlxMedia/hueman">GitHub</a></li>
 			</ul>
-			<hr />
-			<p>You can support the theme author by donating <a target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K54RW72RZM2HN">here</a> – any amount is always appreciated.</p>
 		'
         )
       )
