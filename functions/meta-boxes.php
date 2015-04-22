@@ -253,13 +253,7 @@ $post_format_video = array(
 			'label'		=> 'Video URL',
 			'id'		=> '_video_url',
 			'type'		=> 'text',
-			'desc'		=> 'Recommended to use.'
-		),
-		array(
-			'label'		=> 'Video Embed Code',
-			'id'		=> '_video_embed_code',
-			'type'		=> 'textarea',
-			'rows'		=> '2'
+			'desc'		=> ''
 		)
 	)
 );

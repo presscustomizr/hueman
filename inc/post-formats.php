@@ -109,7 +109,7 @@
 					<?php foreach ( $images as $image ): ?>
 						<li>
 							<?php $imageid = wp_get_attachment_image_src($image->ID,'large'); ?>
-							<img src="<?php echo $imageid[0]; ?>" alt="<?php echo $image->post_title; ?>">
+							<img src="<?php echo esc_attr( $imageid[0] ); ?>" alt="<?php echo esc_attr( $image->post_title ); ?>">
 							
 							<?php if ( $image->post_excerpt ): ?>
 								<div class="image-caption"><?php echo $image->post_excerpt; ?></div>
@@ -146,10 +146,6 @@
 				global $wp_embed;
 				$video = $wp_embed->run_shortcode('[embed]'.$meta['_video_url'][0].'[/embed]');
 				echo $video;
-			} elseif ( isset($meta['_video_embed_code'][0]) && !empty($meta['_video_embed_code'][0]) ) {
-				echo '<div class="video-container">';
-				echo $meta['_video_embed_code'][0];
-				echo '</div>';
 			}
 		?>	
 	</div>

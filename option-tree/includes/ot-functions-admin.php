@@ -816,22 +816,27 @@ if ( ! function_exists( 'ot_admin_scripts' ) ) {
       /* Legacy Thickbox */
       add_thickbox();
     }
-    
+
     /* load jQuery-ui slider */
     wp_enqueue_script( 'jquery-ui-slider' );
-  
+
     /* load jQuery-ui datepicker */
     wp_enqueue_script( 'jquery-ui-datepicker' );
-    
+
     /* load WP colorpicker */
     wp_enqueue_script( 'wp-color-picker' );
-    
-    /* Load Ace Editor for CSS Editing */
+
+    /* load Ace Editor for CSS Editing */
     wp_enqueue_script( 'ace-editor', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js', null, '1.1.3' );   
-    
+
     /* load jQuery UI timepicker addon */
     wp_enqueue_script( 'jquery-ui-timepicker', OT_URL . 'assets/js/vendor/jquery/jquery-ui-timepicker.js', array( 'jquery', 'jquery-ui-slider', 'jquery-ui-datepicker' ), '1.4.3' );
-    
+
+    /* load the post formats */
+    if ( OT_META_BOXES == true && OT_POST_FORMATS == true ) {
+      wp_enqueue_script( 'ot-postformats', OT_URL . 'assets/js/ot-postformats.js', array( 'jquery' ), '1.0.1' );
+    }
+
     /* load all the required scripts */
     wp_enqueue_script( 'ot-admin-js', OT_URL . 'assets/js/ot-admin.js', array( 'jquery', 'jquery-ui-tabs', 'jquery-ui-sortable', 'jquery-ui-slider', 'wp-color-picker', 'ace-editor', 'jquery-ui-datepicker', 'jquery-ui-timepicker' ), OT_VERSION );
 
@@ -968,15 +973,16 @@ if ( ! function_exists( 'ot_create_media_post' ) ) {
 if ( ! function_exists( 'ot_default_settings' ) ) {
 
   function ot_default_settings() {
-    global $wpdb, $table_prefix;
+    global $wpdb;
     
     if ( ! get_option( ot_settings_id() ) ) {
       
       $section_count = 0;
       $settings_count = 0;
       $settings = array();
+      $table_name = $wpdb->prefix . 'option_tree';
       
-      if ( count( $wpdb->get_results( "SHOW TABLES LIKE '{$table_prefix}option_tree'" ) ) == 1 && $old_settings = $wpdb->get_results( "SELECT * FROM {$table_prefix}option_tree ORDER BY item_sort ASC" ) ) {
+      if ( $wpdb->get_var( $wpdb->prepare( "SHOW TABLES LIKE %s", $table_name ) ) == $table_name && $old_settings = $wpdb->get_results( "SELECT * FROM $table_name ORDER BY item_sort ASC" ) ) {
         
         foreach ( $old_settings as $setting ) {
           
@@ -1270,7 +1276,7 @@ if ( ! function_exists( 'ot_import' ) ) {
       }
       
       /* redirect */
-      wp_redirect( add_query_arg( array( 'action' => 'import-xml', 'message' => $message ), $_POST['_wp_http_referer'] ) );
+      wp_redirect( esc_url_raw( add_query_arg( array( 'action' => 'import-xml', 'message' => $message ), $_POST['_wp_http_referer'] ) ) );
       exit;
       
     }
@@ -1291,7 +1297,7 @@ if ( ! function_exists( 'ot_import' ) ) {
       }
       
       /* redirect */
-      wp_redirect( add_query_arg( array( 'action' => 'import-settings', 'message' => $message ), $_POST['_wp_http_referer'] ) );
+      wp_redirect( esc_url_raw( add_query_arg( array( 'action' => 'import-settings', 'message' => $message ), $_POST['_wp_http_referer'] ) ) );
       exit;
       
     }
@@ -1339,7 +1345,7 @@ if ( ! function_exists( 'ot_import' ) ) {
       }
       
       /* redirect accordingly */
-      wp_redirect( add_query_arg( array( 'action' => 'import-data', 'message' => $message ), $_POST['_wp_http_referer'] ) );
+      wp_redirect( esc_url_raw( add_query_arg( array( 'action' => 'import-data', 'message' => $message ), $_POST['_wp_http_referer'] ) ) );
       exit;
       
     }
@@ -1407,7 +1413,7 @@ if ( ! function_exists( 'ot_import' ) ) {
       }
         
       /* redirect accordingly */
-      wp_redirect( add_query_arg( array( 'action' => 'import-layouts', 'message' => $message ), $_POST['_wp_http_referer'] ) );
+      wp_redirect( esc_url_raw( add_query_arg( array( 'action' => 'import-layouts', 'message' => $message ), $_POST['_wp_http_referer'] ) ) );
       exit;
       
     }
@@ -2037,7 +2043,7 @@ if ( ! function_exists( 'ot_save_settings' ) ) {
       }
       
       /* redirect */
-      wp_redirect( add_query_arg( array( 'action' => 'save-settings', 'message' => $message ), $_POST['_wp_http_referer'] ) );
+      wp_redirect( esc_url_raw( add_query_arg( array( 'action' => 'save-settings', 'message' => $message ), $_POST['_wp_http_referer'] ) ) );
       exit;
       
     }
@@ -2262,9 +2268,9 @@ if ( ! function_exists( 'ot_modify_layouts' ) ) {
       
       /* redirect */
       if ( isset( $_REQUEST['page'] ) && $_REQUEST['page'] == apply_filters( 'ot_theme_options_menu_slug', 'ot-theme-options' ) ) {
-        $query_args = add_query_arg( array( 'settings-updated' => 'layout' ), remove_query_arg( array( 'action', 'message' ), $_POST['_wp_http_referer'] ) );
+        $query_args = esc_url_raw( add_query_arg( array( 'settings-updated' => 'layout' ), remove_query_arg( array( 'action', 'message' ), $_POST['_wp_http_referer'] ) ) );
       } else {
-        $query_args = add_query_arg( array( 'action' => 'save-layouts', 'message' => $message ), $_POST['_wp_http_referer'] );
+        $query_args = esc_url_raw( add_query_arg( array( 'action' => 'save-layouts', 'message' => $message ), $_POST['_wp_http_referer'] ) );
       }
       wp_redirect( $query_args );
       exit;
@@ -3417,12 +3423,12 @@ if ( ! function_exists( 'ot_social_links_settings' ) ) {
  *
  * @access    public
  * @since     1.1.8
- * @updated   2.0.12
+ * @updated   2.5.3
  */
 if ( ! function_exists( 'ot_insert_css_with_markers' ) ) {
 
   function ot_insert_css_with_markers( $field_id = '', $insertion = '', $meta = false ) {
-    
+
     /* missing $field_id or $insertion exit early */
     if ( '' == $field_id || '' == $insertion )
       return;
@@ -3435,7 +3441,7 @@ if ( ! function_exists( 'ot_insert_css_with_markers' ) ) {
         $filepath = $multisite_filepath;
       }
     }
-    
+
     /* allow filter on path */
     $filepath = apply_filters( 'css_option_file_path', $filepath, $field_id );
 
@@ -3457,117 +3463,122 @@ if ( ! function_exists( 'ot_insert_css_with_markers' ) ) {
 
     /* insert CSS into file */
     if ( file_exists( $filepath ) ) {
-      
+
       $insertion   = ot_normalize_css( $insertion );
       $regex       = "/{{([a-zA-Z0-9\_\-\#\|\=]+)}}/";
       $marker      = $field_id;
-      
+
       /* Match custom CSS */
       preg_match_all( $regex, $insertion, $matches );
-      
+
       /* Loop through CSS */
       foreach( $matches[0] as $option ) {
 
         $value        = '';
-        $option_id    = str_replace( array( '{{', '}}' ), '', $option );
-        $option_array = explode( '|', $option_id );
+        $option_array = explode( '|', str_replace( array( '{{', '}}' ), '', $option ) );
+        $option_id    = isset( $option_array[0] ) ? $option_array[0] : '';
+        $option_key   = isset( $option_array[1] ) ? $option_array[1] : '';
         $option_type  = ot_get_option_type_by_id( $option_id );
-        
-        /* get the array value */
+        $fallback     = '';
+
+        // Get the meta array value
         if ( $meta ) {
           global $post;
-          
-          $value = get_post_meta( $post->ID, $option_array[0], true );
-          
+
+          $value = get_post_meta( $post->ID, $option_id, true );
+
+        // Get the options array value
         } else {
-        
+
           $options = get_option( ot_options_id() );
-          
-          if ( isset( $options[$option_array[0]] ) ) {
-            
-            $value = $options[$option_array[0]];
-  
+
+          if ( isset( $options[$option_id] ) ) {
+
+            $value = $options[$option_id];
+
           }
-          
+
         }
-        
+
+        // This in an array of values
         if ( is_array( $value ) ) {
-          
-          if ( ! isset( $option_array[1] ) ) {
-          
-            /* Measurement */
-            if ( isset( $value[0] ) && isset( $value[1] ) ) {
-              
-              /* set $value with measurement properties */
-              $value = $value[0].$value[1];
-              
-            /* Border */
-            } else if ( ot_array_keys_exists( $value, array( 'width', 'unit', 'style', 'color' ) ) && ! ot_array_keys_exists( $value, array( 'top', 'right', 'bottom', 'left', 'height', 'inset', 'offset-x', 'offset-y', 'blur-radius', 'spread-radius' ) ) ) {
+
+          if ( empty( $option_key ) ) {
+
+            // Measurement
+            if ( $option_type == 'measurement' ) {
+
+              // Set $value with measurement properties
+              if ( isset( $value[0] ) && isset( $value[1] ) )
+                $value = $value[0].$value[1];
+
+            // Border
+            } else if ( $option_type == 'border' ) {
               $border = array();
-              
+
               $unit = ! empty( $value['unit'] ) ? $value['unit'] : 'px';
-              
+
               if ( ! empty( $value['width'] ) )
                 $border[] = $value['width'].$unit;
-                
+
               if ( ! empty( $value['style'] ) )
                 $border[] = $value['style'];
-                
+
               if ( ! empty( $value['color'] ) )
                 $border[] = $value['color'];
-                
+
               /* set $value with border properties or empty string */
               $value = ! empty( $border ) ? implode( ' ', $border ) : '';
-            
-            /* Box Shadow */
-            } else if ( ot_array_keys_exists( $value, array( 'inset', 'offset-x', 'offset-y', 'blur-radius', 'spread-radius', 'color' ) ) && ! ot_array_keys_exists( $value, array( 'width', 'height', 'unit', 'style', 'top', 'right', 'bottom', 'left' ) ) ) {
+
+            // Box Shadow
+            } else if ( $option_type == 'box-shadow' ) {
 
               /* set $value with box-shadow properties or empty string */
               $value = ! empty( $value ) ? implode( ' ', $value ) : '';
-             
-            /* Dimension */
-            } else if ( ot_array_keys_exists( $value, array( 'width', 'height', 'unit' ) ) && ! ot_array_keys_exists( $value, array( 'style', 'color', 'top', 'right', 'bottom', 'left' ) ) ) {
+
+            // Dimension
+            } else if ( $option_type == 'dimension' ) {
               $dimension = array();
-              
+
               $unit = ! empty( $value['unit'] ) ? $value['unit'] : 'px';
-              
+
               if ( ! empty( $value['width'] ) )
                 $dimension[] = $value['width'].$unit;
-                
+
               if ( ! empty( $value['height'] ) )
                 $dimension[] = $value['height'].$unit;
-                
-              /* set $value with dimension properties or empty string */
+
+              // Set $value with dimension properties or empty string
               $value = ! empty( $dimension ) ? implode( ' ', $dimension ) : '';
-              
-            /* Spacing */
-            } else if ( ot_array_keys_exists( $value, array( 'top', 'right', 'bottom', 'left', 'unit' ) ) && ! ot_array_keys_exists( $value, array( 'width', 'height', 'style', 'color' ) ) ) {
+
+            // Spacing
+            } else if ( $option_type == 'spacing' ) {
               $spacing = array();
-              
+
               $unit = ! empty( $value['unit'] ) ? $value['unit'] : 'px';
-              
+
               if ( ! empty( $value['top'] ) )
                 $spacing[] = $value['top'].$unit;
-                
+
               if ( ! empty( $value['right'] ) )
                 $spacing[] = $value['right'].$unit;
-                
+
               if ( ! empty( $value['bottom'] ) )
                 $spacing[] = $value['bottom'].$unit;
-                
+
               if ( ! empty( $value['left'] ) )
                 $spacing[] = $value['left'].$unit;
-                
-              /* set $value with spacing properties or empty string */
+
+              // Set $value with spacing properties or empty string
               $value = ! empty( $spacing ) ? implode( ' ', $spacing ) : '';
-              
-            /* typography */
-            } else if ( ot_array_keys_exists( $value, array( 'font-color', 'font-family', 'font-size', 'font-style', 'font-variant', 'font-weight', 'letter-spacing', 'line-height', 'text-decoration', 'text-transform' ) ) ) {
+
+            // Typography
+            } else if ( $option_type == 'typography' ) {
               $font = array();
-              
+
               if ( ! empty( $value['font-color'] ) )
                 $font[] = "color: " . $value['font-color'] . ";";
-              
+
               if ( ! empty( $value['font-family'] ) ) {
                 foreach ( ot_recognized_font_families( $marker ) as $key => $v ) {
                   if ( $key == $value['font-family'] ) {
@@ -3575,113 +3586,167 @@ if ( ! function_exists( 'ot_insert_css_with_markers' ) ) {
                   }
                 }
               }
-              
+
               if ( ! empty( $value['font-size'] ) )
                 $font[] = "font-size: " . $value['font-size'] . ";";
-              
+
               if ( ! empty( $value['font-style'] ) )
                 $font[] = "font-style: " . $value['font-style'] . ";";
-              
+
               if ( ! empty( $value['font-variant'] ) )
                 $font[] = "font-variant: " . $value['font-variant'] . ";";
-              
+
               if ( ! empty( $value['font-weight'] ) )
                 $font[] = "font-weight: " . $value['font-weight'] . ";";
-                
+
               if ( ! empty( $value['letter-spacing'] ) )
                 $font[] = "letter-spacing: " . $value['letter-spacing'] . ";";
-              
+
               if ( ! empty( $value['line-height'] ) )
                 $font[] = "line-height: " . $value['line-height'] . ";";
-              
+
               if ( ! empty( $value['text-decoration'] ) )
                 $font[] = "text-decoration: " . $value['text-decoration'] . ";";
-              
+
               if ( ! empty( $value['text-transform'] ) )
                 $font[] = "text-transform: " . $value['text-transform'] . ";";
-              
-              /* set $value with font properties or empty string */
+
+              // Set $value with font properties or empty string
               $value = ! empty( $font ) ? implode( "\n", $font ) : '';
-              
-            /* background */
-            } else if ( ot_array_keys_exists( $value, array( 'background-color', 'background-image', 'background-repeat', 'background-attachment', 'background-position', 'background-size' ) ) ) {
+
+            // Background
+            } else if ( $option_type == 'background' ) {
               $bg = array();
-              
+
               if ( ! empty( $value['background-color'] ) )
                 $bg[] = $value['background-color'];
-                
+
               if ( ! empty( $value['background-image'] ) ) {
-                
-                /* If an attachment ID is stored here fetch its URL and replace the value */
+
+                // If an attachment ID is stored here fetch its URL and replace the value
                 if ( wp_attachment_is_image( $value['background-image'] ) ) {
-                
+
                   $attachment_data = wp_get_attachment_image_src( $value['background-image'], 'original' );
-                  
-                  /* check for attachment data */
+
+                  // Check for attachment data
                   if ( $attachment_data ) {
-                  
+
                     $value['background-image'] = $attachment_data[0];
-                    
+
                   }
-                  
+
                 }
-    
+
                 $bg[] = 'url("' . $value['background-image'] . '")';
-                
+
               }
-                
+
               if ( ! empty( $value['background-repeat'] ) )
                 $bg[] = $value['background-repeat'];
-                
+
               if ( ! empty( $value['background-attachment'] ) )
                 $bg[] = $value['background-attachment'];
-                
+
               if ( ! empty( $value['background-position'] ) )
                 $bg[] = $value['background-position'];
-              
+
               if ( ! empty( $value['background-size'] ) )
                 $size = $value['background-size'];
-                
-              /* set $value with background properties or empty string */
+
+              // Set $value with background properties or empty string
               $value = ! empty( $bg ) ? 'background: ' . implode( " ", $bg ) . ';' : '';
-              
+
               if ( isset( $size ) ) {
                 if ( ! empty( $bg ) ) {
                   $value.= apply_filters( 'ot_insert_css_with_markers_bg_size_white_space', "\n\x20\x20", $option_id );
                 }
                 $value.= "background-size: $size;";
               }
-              
+
             }
-          
+
           } else {
-               
-            $value = $value[$option_array[1]];
-            
+
+            $value = $value[$option_key];
+
           }
-         
+
         }
-        
-        /* If an attachment ID is stored here fetch its URL and replace the value */
+
+        // If an attachment ID is stored here fetch its URL and replace the value
         if ( $option_type == 'upload' && wp_attachment_is_image( $value ) ) {
-        
+
           $attachment_data = wp_get_attachment_image_src( $value, 'original' );
-          
-          /* check for attachment data */
+
+          // Check for attachment data
           if ( $attachment_data ) {
-          
+
             $value = $attachment_data[0];
-            
+
           }
-          
+
         }
-            
+
+        // Attempt to fallback when `$value` is empty
+        if ( empty( $value ) ) {
+
+          // We're trying to access a single array key
+          if ( ! empty( $option_key ) ) {
+
+            // Link Color `inherit`
+            if ( $option_type == 'link-color' ) {
+              $fallback = 'inherit';
+            }
+
+          } else {
+
+            // Border
+            if ( $option_type == 'border' ) {
+              $fallback = 'inherit';
+            }
+
+            // Box Shadow
+            if ( $option_type == 'box-shadow' ) {
+              $fallback = 'none';
+            }
+
+            // Colorpicker
+            if ( $option_type == 'colorpicker' ) {
+              $fallback = 'inherit';
+            }
+
+            // Colorpicker Opacity
+            if ( $option_type == 'colorpicker-opacity' ) {
+              $fallback = 'inherit';
+            }
+
+          }
+
+          /**
+           * Filter the `dynamic.css` fallback value.
+           *
+           * @since 2.5.3
+           *
+           * @param string $fallback The default CSS fallback value.
+           * @param string $option_id The option ID.
+           * @param string $option_type The option type.
+           * @param string $option_key The option array key.
+           */
+          $fallback = apply_filters( 'ot_insert_css_with_markers_fallback', $fallback, $option_id, $option_type, $option_key );
+
+        }
+
+        // Let's fallback!
+        if ( ! empty( $fallback ) ) {
+          $value = $fallback;
+        }
+
         // Filter the CSS
         $value = apply_filters( 'ot_insert_css_with_markers_value', $value, $option_id );
-         
-        /* insert CSS, even if the value is empty */
+
+        // Insert CSS, even if the value is empty
         $insertion = stripslashes( str_replace( $option, $value, $insertion ) );
-         
+
       }
 
       // Can't write to the file so we error out
@@ -3689,37 +3754,37 @@ if ( ! function_exists( 'ot_insert_css_with_markers' ) ) {
         add_settings_error( 'option-tree', 'dynamic_css', sprintf( __( 'Unable to write to file %s.', 'option-tree' ), '<code>' . $filepath . '</code>' ), 'error' );
         return false;
       }
-      
-      /* create array from the lines of code */
+
+      // Create array from the lines of code
       $markerdata = explode( "\n", implode( '', file( $filepath ) ) );
-      
-      /* can't write to the file return false */
+
+      // Can't write to the file return false
       if ( ! $f = ot_file_open( $filepath, 'w' ) ) {
         return false;
       }
-      
+
       $searching = true;
       $foundit = false;
-      
-      /* has array of lines */
+
+      // Has array of lines
       if ( ! empty( $markerdata ) ) {
-        
-        /* foreach line of code */
+
+        // Foreach line of code
         foreach( $markerdata as $n => $markerline ) {
-          
-          /* found begining of marker, set $searching to false  */
+
+          // Found begining of marker, set $searching to false
           if ( $markerline == "/* BEGIN {$marker} */" )
             $searching = false;
-          
-          /* keep rewrite each line of CSS  */
+
+          // Keep searching each line of CSS
           if ( $searching == true ) {
             if ( $n + 1 < count( $markerdata ) )
               ot_file_write( $f, "{$markerline}\n" );
             else
               ot_file_write( $f, "{$markerline}" );
           }
-          
-          /* found end marker write code */
+
+          // Found end marker write code
           if ( $markerline == "/* END {$marker} */" ) {
             ot_file_write( $f, "/* BEGIN {$marker} */\n" );
             ot_file_write( $f, "{$insertion}\n" );
@@ -3727,23 +3792,23 @@ if ( ! function_exists( 'ot_insert_css_with_markers' ) ) {
             $searching = true;
             $foundit = true;
           }
-          
+
         }
-        
+
       }
-      
-      /* nothing inserted, write code. DO IT, DO IT! */
+
+      // Nothing inserted, write code. DO IT, DO IT!
       if ( ! $foundit ) {
         ot_file_write( $f, "/* BEGIN {$marker} */\n" );
         ot_file_write( $f, "{$insertion}\n" );
         ot_file_write( $f, "/* END {$marker} */\n" );
       }
-      
-      /* close file */
+
+      // Close file
       ot_file_close( $f );
       return true;
     }
-    
+
     return false;
 
   }
@@ -5162,7 +5227,7 @@ function ot_fetch_google_fonts( $normalize = true, $force_rebuild = false ) {
     );
 
     /* Build and make the request */
-    $ot_google_fonts_query = add_query_arg( $ot_google_fonts_query_args, $ot_google_fonts_api_url );
+    $ot_google_fonts_query = esc_url_raw( add_query_arg( $ot_google_fonts_query_args, $ot_google_fonts_api_url ) );
     $ot_google_fonts_response = wp_safe_remote_get( $ot_google_fonts_query, array( 'sslverify' => false, 'timeout' => 15 ) );
 
     /* continue if we got a valid response */
@@ -5640,6 +5705,418 @@ if ( ! function_exists( 'ot_get_option_type_by_id' ) ) {
   }
   
 }
+
+/**
+ * Build an array of potential Theme Options that could share terms
+ *
+ * @return    array
+ *
+ * @access    private
+ * @since     2.5.4
+ */
+function _ot_settings_potential_shared_terms() {
+
+  $options      = array();
+  $settings     = get_option( ot_settings_id(), array() );
+  $option_types = array( 
+    'category-checkbox',
+    'category-select',
+    'tag-checkbox',
+    'tag-select',
+    'taxonomy-checkbox',
+    'taxonomy-select'
+  );
+
+  if ( isset( $settings['settings'] ) ) {
+
+    foreach( $settings['settings'] as $value ) {
+
+      if ( isset( $value['type'] ) ) {
+
+        if ( $value['type'] == 'list-item' && isset( $value['settings'] ) ) {
+
+          $saved = ot_get_option( $value['id'] );
+
+          foreach( $value['settings'] as $item ) {
+
+            if ( isset( $value['id'] ) && isset( $item['type'] ) && in_array( $item['type'], $option_types ) ) {
+              $sub_options = array();
+
+              foreach( $saved as $sub_key => $sub_value ) {
+                if ( isset( $sub_value[$item['id']] ) ) {
+                  $sub_options[$sub_key] = $sub_value[$item['id']];
+                }
+              }
+
+              if ( ! empty( $sub_options ) ) {
+                $options[] = array( 
+                  'id'       => $item['id'],
+                  'taxonomy' => $value['taxonomy'],
+                  'parent'   => $value['id'],
+                  'value'    => $sub_options
+                );
+              }
+            }
+
+          }
+
+        }
+
+        if ( in_array( $value['type'], $option_types ) ) {
+          $saved = ot_get_option( $value['id'] );
+          if ( ! empty( $saved ) ) {
+            $options[] = array( 
+              'id'       => $value['id'],
+              'taxonomy' => $value['taxonomy'],
+              'value'    => $saved
+            );
+          }
+        }
+
+      }
+
+    }
+
+  }
+
+  return $options;
+
+}
+
+/**
+ * Build an array of potential Meta Box options that could share terms
+ *
+ * @return    array
+ *
+ * @access    private
+ * @since     2.5.4
+ */
+function _ot_meta_box_potential_shared_terms() {
+  global $ot_meta_boxes;
+
+  $options      = array();
+  $settings     = $ot_meta_boxes;
+  $option_types = array( 
+    'category-checkbox',
+    'category-select',
+    'tag-checkbox',
+    'tag-select',
+    'taxonomy-checkbox',
+    'taxonomy-select'
+  );
+
+  foreach( $settings as $setting ) {
+
+    if ( isset( $setting['fields'] ) ) {
+
+      foreach( $setting['fields'] as $value ) {
+
+        if ( isset( $value['type'] ) ) {
+
+          if ( $value['type'] == 'list-item' && isset( $value['settings'] ) ) {
+
+            $children = array();
+
+            foreach( $value['settings'] as $item ) {
+
+              if ( isset( $value['id'] ) && isset( $item['type'] ) && in_array( $item['type'], $option_types ) ) {
+
+                $children[$value['id']][] = $item['id'];
+
+              }
+
+            }
+            
+            if ( ! empty( $children[$value['id']] ) ) {
+              $options[] = array( 
+                'id'       => $value['id'],
+                'children' => $children[$value['id']],
+                'taxonomy' => $value['taxonomy'],
+              );
+            }
+
+          }
+
+          if ( in_array( $value['type'], $option_types ) ) {
+
+            $options[] = array( 
+              'id'       => $value['id'],
+              'taxonomy' => $value['taxonomy'],
+            );
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+  return $options;
+
+}
+
+/**
+ * Update terms when a term gets split.
+ *
+ * @param     int     $term_id ID of the formerly shared term.
+ * @param     int     $new_term_id ID of the new term created for the $term_taxonomy_id.
+ * @param     int     $term_taxonomy_id ID for the term_taxonomy row affected by the split.
+ * @param     string  $taxonomy Taxonomy for the split term.
+ * @return    void
+ *
+ * @access    public
+ * @since     2.5.4
+ */
+function ot_split_shared_term( $term_id, $new_term_id, $term_taxonomy_id, $taxonomy ) {
+
+  // Process the Theme Options
+  $settings    = _ot_settings_potential_shared_terms();
+  $old_options = get_option( ot_options_id(), array() );
+  $new_options = $old_options;
+
+  // Process the saved settings
+  if ( ! empty( $settings ) && ! empty( $old_options ) ) {
+
+    // Loop over the Theme Options
+    foreach( $settings as $option ) {
+
+      if ( ! is_array( $option['taxonomy'] ) ) {
+        $option['taxonomy'] = explode( ',', $option['taxonomy'] );
+      }
+
+      if ( ! in_array( $taxonomy, $option['taxonomy'] ) ) {
+        continue;
+      }
+
+      // The option ID was found
+      if ( array_key_exists( $option['id'], $old_options ) || ( isset( $option['parent'] ) && array_key_exists( $option['parent'], $old_options ) ) ) {
+
+        // This is a list item, we have to go deeper
+        if ( isset( $option['parent'] ) ) {
+
+          // Loop over the array
+          foreach( $option['value'] as $key => $value ) {
+
+            // The value is an array of IDs
+            if ( is_array( $value ) ) {
+
+              // Loop over the sub array
+              foreach( $value as $sub_key => $sub_value ) {
+
+                if ( $sub_value == $term_id ) {
+
+                  unset( $new_options[$option['parent']][$key][$option['id']][$sub_key] );
+                  $new_options[$option['parent']][$key][$option['id']][$new_term_id] = $new_term_id;
+
+                }
+
+              }
+
+            } else if ( $value == $term_id ) {
+
+              unset( $new_options[$option['parent']][$key][$option['id']] );
+              $new_options[$option['parent']][$key][$option['id']] = $new_term_id;
+
+            }
+
+          }
+
+        } else {
+
+          // The value is an array of IDs
+          if ( is_array( $option['value'] ) ) {
+
+            // Loop over the array
+            foreach( $option['value'] as $key => $value ) {
+
+              // It's a single value, just replace it
+              if ( $value == $term_id ) {
+
+                unset( $new_options[$option['id']][$key] );
+                $new_options[$option['id']][$new_term_id] = $new_term_id;
+
+              }
+
+            }
+
+          // It's a single value, just replace it
+          } else if ( $option['value'] == $term_id ) {
+
+            $new_options[$option['id']] = $new_term_id;
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+  // Options need to be updated
+  if ( $old_options !== $new_options ) {
+    update_option( ot_options_id(), $new_options );
+  }
+
+  // Process the Meta Boxes
+  $meta_settings = _ot_meta_box_potential_shared_terms();
+  $option_types  = array( 
+    'category-checkbox',
+    'category-select',
+    'tag-checkbox',
+    'tag-select',
+    'taxonomy-checkbox',
+    'taxonomy-select'
+  );
+
+  if ( ! empty( $meta_settings ) ) {
+    $old_meta = array();
+    
+    foreach( $meta_settings as $option ) {
+
+      if ( ! is_array( $option['taxonomy'] ) ) {
+        $option['taxonomy'] = explode( ',', $option['taxonomy'] );
+      }
+      
+      if ( ! in_array( $taxonomy, $option['taxonomy'] ) ) {
+        continue;
+      }
+
+      if ( isset( $option['children'] ) ) {
+        $post_ids = get_posts( array(
+          'fields'     => 'ids',
+          'meta_key'   => $option['id'],
+        ) );
+
+        if ( $post_ids ) {
+
+          foreach( $post_ids as $post_id ) {
+
+            // Get the meta
+            $old_meta = get_post_meta( $post_id, $option['id'], true );
+            $new_meta = $old_meta;
+
+            // Has a saved value
+            if ( ! empty( $old_meta ) && is_array( $old_meta ) ) {
+
+              // Loop over the array
+              foreach( $old_meta as $key => $value ) {
+
+                foreach( $value as $sub_key => $sub_value ) {
+
+                  if ( in_array( $sub_key, $option['children'] ) ) {
+
+                    // The value is an array of IDs
+                    if ( is_array( $sub_value ) ) {
+
+                      // Loop over the array
+                      foreach( $sub_value as $sub_sub_key => $sub_sub_value ) {
+
+                        // It's a single value, just replace it
+                        if ( $sub_sub_value == $term_id ) {
+
+                          unset( $new_meta[$key][$sub_key][$sub_sub_key] );
+                          $new_meta[$key][$sub_key][$new_term_id] = $new_term_id;
+
+                        }
+
+                      }
+
+                    // It's a single value, just replace it
+                    } else if ( $sub_value == $term_id ) {
+
+                      $new_meta[$key][$sub_key] = $new_term_id;
+
+                    }
+
+                  }
+
+                }
+
+              }
+
+              // Update
+              if ( $old_meta !== $new_meta ) {
+  
+                update_post_meta( $post_id, $option['id'], $new_meta, $old_meta );
+  
+              }
+
+            }
+
+          }
+
+        }
+
+      } else {
+        $post_ids = get_posts( array(
+          'fields'     => 'ids',
+          'meta_query' => array(
+            'key'     => $option['id'],
+            'value'   => $term_id,
+            'compare' => 'IN'
+          ),
+        ) );
+
+        if ( $post_ids ) {
+
+          foreach( $post_ids as $post_id ) {
+
+            // Get the meta
+            $old_meta = get_post_meta( $post_id, $option['id'], true );
+            $new_meta = $old_meta;
+
+            // Has a saved value
+            if ( ! empty( $old_meta ) ) {
+
+              // The value is an array of IDs
+              if ( is_array( $old_meta ) ) {
+
+                // Loop over the array
+                foreach( $old_meta as $key => $value ) {
+
+                  // It's a single value, just replace it
+                  if ( $value == $term_id ) {
+
+                    unset( $new_meta[$key] );
+                    $new_meta[$new_term_id] = $new_term_id;
+
+                  }
+
+                }
+
+              // It's a single value, just replace it
+              } else if ( $old_meta == $term_id ) {
+
+                $new_meta = $new_term_id;
+
+              }
+
+              // Update
+              if ( $old_meta !== $new_meta ) {
+  
+                update_post_meta( $post_id, $option['id'], $new_meta, $old_meta );
+  
+              }
+
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
+add_action( 'split_shared_term', 'ot_split_shared_term', 10, 4 );
 
 /* End of file ot-functions-admin.php */
 /* Location: ./includes/ot-functions-admin.php */

@@ -3,8 +3,8 @@ Contributors: valendesigns
 Donate link: http://bit.ly/NuXI3T
 Tags: options, theme options, meta boxes
 Requires at least: 3.8
-Tested up to: 4.2-alpha
-Stable tag: 2.5.1
+Tested up to: 4.2
+Stable tag: 2.5.4
 License: GPLv3
 
 Theme Options UI Builder for WordPress. A simple way to create & save Theme Options and Meta Boxes for free or premium themes.
@@ -125,6 +125,33 @@ The most likely scenario is your theme already has OptionTree installed in Theme
 3. Documentation
 
 == Changelog ==
+
+= 2.5.4 =
+* Hotfix - Support for WordPress 4.2 term splitting.
+* Hotfix - Removed any potential XSS security issues with `add_query_arg` by escaping it.
+* Hotfix - Fixed an issue where Visual Composer was indirectly destroying OptionTree meta box values.
+* Hotfix - Fixed an issue where the select field value was not visible. Contributors via github @sabbirk15.
+
+= 2.5.3 =
+* Hotfix - Added `inherit` fallback to the `border` option type in dynamic.css.
+* Hotfix - Added `none` fallback to the `box-shadow` option type in dynamic.css.
+* Hotfix - Added `inherit` fallback to the `colorpicker` option type in dynamic.css.
+* Hotfix - Added `inherit` fallback to the `colorpicker-opacity` option type in dynamic.css.
+* Hotfix - Added filter `ot_insert_css_with_markers_fallback` to filter the `dynamic.css` fallback value.
+* Hotfix - Added filter `ot_type_radio_image_attributes` to filter the image attributes for each radio choice. Contributors via github @BassemN, and @valendesigns.
+* Hotfix - Refactored `ot_insert_css_with_markers` to remove confusing & unnecessary PHP statements and fix whitespace.
+* Hotfix - Fixed an issue in `ot_insert_css_with_markers` where the `$option_type` variable was not being set properly.
+* Hotfix - Fixed an issue where having multiple Google Fonts option types caused the "Add Google Font" button to insert multiple dropdowns.
+
+= 2.5.2 =
+* Hotfix - Added `inherit` fallback to the `link-color` option type in dynamic.css.
+* Hotfix - Remove `$.browser.msie` JS error caused by function being deprecated.
+* Hotfix - Change `hover` to `mouseenter mouseleave` to stop jQuery migrate error message.
+* Hotfix - Don't allow duplicate Google Fonts in the `ot-google-fonts-css` enqueue.
+* Hotfix - Fixed an issue with the CSS and JavaScript option types not being initiating inside of tabs.
+* Hotfix - Fixed metabox tab styles for mobile.
+* Hotfix - Separate the post formats JS so it does not interfere with the default behavior and loads only as needed.
+* Hotfix - Adding the `not-sortable` class to the List Item option type will remove the sortable feature for that option.
 
 = 2.5.1 =
 * Hotfix - Overhaul the Colorpicker Opacity option type so it saves rgba values, not arrays.

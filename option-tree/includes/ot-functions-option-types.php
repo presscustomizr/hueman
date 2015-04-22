@@ -1444,6 +1444,18 @@ if ( ! function_exists( 'ot_type_list_item' ) ) {
     /* verify a description */
     $has_desc = $field_desc ? true : false;
 
+    // Default
+    $sortable = true;
+
+    // Check if the list can be sorted
+    if ( ! empty( $field_class ) ) {
+      $classes = explode( ' ', $field_class );
+      if ( in_array( 'not-sortable', $classes ) ) {
+        $sortable = false;
+        str_replace( 'not-sortable', '', $field_class );
+      }
+    }
+
     /* format setting outer wrapper */
     echo '<div class="format-setting type-list-item ' . ( $has_desc ? 'has-desc' : 'no-desc' ) . '">';
       
@@ -1465,7 +1477,7 @@ if ( ! function_exists( 'ot_type_list_item' ) ) {
           $get_option = '';
           
         /* build list items */
-        echo '<ul class="option-tree-setting-wrap option-tree-sortable" data-name="' . esc_attr( $field_id ) . '" data-id="' . esc_attr( $post_id ) . '" data-get-option="' . esc_attr( $get_option ) . '" data-type="' . esc_attr( $type ) . '">';
+        echo '<ul class="option-tree-setting-wrap' . ( $sortable ? ' option-tree-sortable' : '' ) .'" data-name="' . esc_attr( $field_id ) . '" data-id="' . esc_attr( $post_id ) . '" data-get-option="' . esc_attr( $get_option ) . '" data-type="' . esc_attr( $type ) . '">';
         
         if ( is_array( $field_value ) && ! empty( $field_value ) ) {
         
@@ -1485,7 +1497,8 @@ if ( ! function_exists( 'ot_type_list_item' ) ) {
         echo '<a href="javascript:void(0);" class="option-tree-list-item-add option-tree-ui-button button button-primary right hug-right" title="' . __( 'Add New', 'option-tree' ) . '">' . __( 'Add New', 'option-tree' ) . '</a>';
         
         /* description */
-        echo '<div class="list-item-description">' . apply_filters( 'ot_list_item_description', __( 'You can re-order with drag & drop, the order will update after saving.', 'option-tree' ), $field_id ) . '</div>';
+        $list_desc = $sortable ? __( 'You can re-order with drag & drop, the order will update after saving.', 'option-tree' ) : '';
+        echo '<div class="list-item-description">' . apply_filters( 'ot_list_item_description', $list_desc, $field_id ) . '</div>';
       
       echo '</div>';
 
@@ -2022,9 +2035,20 @@ if ( ! function_exists( 'ot_type_radio_image' ) ) {
           /* make radio image source filterable */
           $src = apply_filters( 'ot_type_radio_image_src', $src, $field_id );
           
+          /**
+           * Filter the image attributes.
+           *
+           * @since 2.5.3
+           *
+           * @param string $attributes The image attributes.
+           * @param string $field_id The field ID.
+           * @param array $choice The choice.
+           */
+          $attributes = apply_filters( 'ot_type_radio_image_attributes', '', $field_id, $choice );
+          
           echo '<div class="option-tree-ui-radio-images">';
             echo '<p style="display:none"><input type="radio" name="' . esc_attr( $field_name ) . '" id="' . esc_attr( $field_id ) . '-' . esc_attr( $key ) . '" value="' . esc_attr( $choice['value'] ) . '"' . checked( $field_value, $choice['value'], false ) . ' class="option-tree-ui-radio option-tree-ui-images" /><label for="' . esc_attr( $field_id ) . '-' . esc_attr( $key ) . '">' . esc_attr( $choice['label'] ) . '</label></p>';
-            echo '<img src="' . esc_url( $src ) . '" alt="' . esc_attr( $choice['label'] ) .'" title="' . esc_attr( $choice['label'] ) .'" class="option-tree-ui-radio-image ' . esc_attr( $field_class ) . ( $field_value == $choice['value'] ? ' option-tree-ui-radio-image-selected' : '' ) . '" />';
+            echo '<img ' . $attributes . ' src="' . esc_url( $src ) . '" alt="' . esc_attr( $choice['label'] ) .'" title="' . esc_attr( $choice['label'] ) .'" class="option-tree-ui-radio-image ' . esc_attr( $field_class ) . ( $field_value == $choice['value'] ? ' option-tree-ui-radio-image-selected' : '' ) . '" />';
           echo '</div>';
         }
         

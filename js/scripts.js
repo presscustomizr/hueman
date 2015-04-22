@@ -7,6 +7,8 @@
 	Copyright: (c) 2013 Alexander "Alx" Agnarson, http://alxmedia.se
 */
 
+"use strict";
+
 jQuery(document).ready(function($) {
 
 /*  Toggle header search

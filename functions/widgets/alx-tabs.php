@@ -184,8 +184,8 @@ class AlxTabs extends WP_Widget {
 						
 						<div class="tab-item-inner group">
 							<?php $str=explode(' ',get_comment_excerpt($comment->comment_ID)); $comment_excerpt=implode(' ',array_slice($str,0,11)); if(count($str) > 11 && substr($comment_excerpt,-1)!='.') $comment_excerpt.='...' ?>					
-							<div class="tab-item-name"><?php echo $comment->comment_author; ?> <?php _e('says:','hueman'); ?></div>
-							<div class="tab-item-comment"><a href="<?php echo esc_url(get_comment_link($comment->comment_ID)); ?>"><?php echo $comment_excerpt; ?></a></div>
+							<div class="tab-item-name"><?php echo esc_attr( $comment->comment_author ); ?> <?php _e('says:','hueman'); ?></div>
+							<div class="tab-item-comment"><a href="<?php echo esc_url(get_comment_link($comment->comment_ID)); ?>"><?php echo esc_attr( $comment_excerpt ); ?></a></div>
 							
 						</div>
 
@@ -287,26 +287,26 @@ class AlxTabs extends WP_Widget {
 	
 	<div class="alx-options-tabs">
 		<p>
-			<label for="<?php echo $this->get_field_id('title'); ?>">Title:</label>
-			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($instance["title"]); ?>" />
+			<label for="<?php echo esc_attr( $this->get_field_id('title') ); ?>">Title:</label>
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id('title') ); ?>" name="<?php echo esc_attr( $this->get_field_name('title') ); ?>" type="text" value="<?php echo esc_attr($instance["title"]); ?>" />
 		</p>
-
+		
 		<h4>Recent Posts</h4>
 		
 		<p>
-			<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('recent_enable'); ?>" name="<?php echo $this->get_field_name('recent_enable'); ?>" <?php checked( (bool) $instance["recent_enable"], true ); ?>>
-			<label for="<?php echo $this->get_field_id('recent_enable'); ?>">Enable recent posts</label>
+			<input type="checkbox" class="checkbox" id="<?php echo esc_attr( $this->get_field_id('recent_enable') ); ?>" name="<?php echo esc_attr( $this->get_field_name('recent_enable') ); ?>" <?php checked( (bool) $instance["recent_enable"], true ); ?>>
+			<label for="<?php echo esc_attr( $this->get_field_id('recent_enable') ); ?>">Enable recent posts</label>
 		</p>
 		<p>
-			<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('recent_thumbs'); ?>" name="<?php echo $this->get_field_name('recent_thumbs'); ?>" <?php checked( (bool) $instance["recent_thumbs"], true ); ?>>
-			<label for="<?php echo $this->get_field_id('recent_thumbs'); ?>">Show thumbnails</label>
+			<input type="checkbox" class="checkbox" id="<?php echo esc_attr( $this->get_field_id('recent_thumbs') ); ?>" name="<?php echo esc_attr( $this->get_field_name('recent_thumbs') ); ?>" <?php checked( (bool) $instance["recent_thumbs"], true ); ?>>
+			<label for="<?php echo esc_attr( $this->get_field_id('recent_thumbs') ); ?>">Show thumbnails</label>
 		</p>	
 		<p>
-			<label style="width: 55%; display: inline-block;" for="<?php echo $this->get_field_id("recent_num"); ?>">Items to show</label>
-			<input style="width:20%;" id="<?php echo $this->get_field_id("recent_num"); ?>" name="<?php echo $this->get_field_name("recent_num"); ?>" type="text" value="<?php echo absint($instance["recent_num"]); ?>" size='3' />
+			<label style="width: 55%; display: inline-block;" for="<?php echo esc_attr( $this->get_field_id("recent_num") ); ?>">Items to show</label>
+			<input style="width:20%;" id="<?php echo esc_attr( $this->get_field_id("recent_num") ); ?>" name="<?php echo esc_attr( $this->get_field_name("recent_num") ); ?>" type="text" value="<?php echo absint($instance["recent_num"]); ?>" size='3' />
 		</p>
 		<p>
-			<label style="width: 100%; display: inline-block;" for="<?php echo $this->get_field_id("recent_cat_id"); ?>">Category:</label>
+			<label style="width: 100%; display: inline-block;" for="<?php echo esc_attr( $this->get_field_id("recent_cat_id") ); ?>">Category:</label>
 			<?php wp_dropdown_categories( array( 'name' => $this->get_field_name("recent_cat_id"), 'selected' => $instance["recent_cat_id"], 'show_option_all' => 'All', 'show_count' => true ) ); ?>		
 		</p>
 		
@@ -314,24 +314,24 @@ class AlxTabs extends WP_Widget {
 		<h4>Most Popular</h4>
 		
 		<p>
-			<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('popular_enable'); ?>" name="<?php echo $this->get_field_name('popular_enable'); ?>" <?php checked( (bool) $instance["popular_enable"], true ); ?>>
-			<label for="<?php echo $this->get_field_id('popular_enable'); ?>">Enable most popular posts</label>
+			<input type="checkbox" class="checkbox" id="<?php echo esc_attr( $this->get_field_id('popular_enable') ); ?>" name="<?php echo esc_attr( $this->get_field_name('popular_enable') ); ?>" <?php checked( (bool) $instance["popular_enable"], true ); ?>>
+			<label for="<?php echo esc_attr( $this->get_field_id('popular_enable') ); ?>">Enable most popular posts</label>
 		</p>
 		<p>
-			<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('popular_thumbs'); ?>" name="<?php echo $this->get_field_name('popular_thumbs'); ?>" <?php checked( (bool) $instance["popular_thumbs"], true ); ?>>
-			<label for="<?php echo $this->get_field_id('popular_thumbs'); ?>">Show thumbnails</label>
+			<input type="checkbox" class="checkbox" id="<?php echo esc_attr( $this->get_field_id('popular_thumbs') ); ?>" name="<?php echo esc_attr( $this->get_field_name('popular_thumbs') ); ?>" <?php checked( (bool) $instance["popular_thumbs"], true ); ?>>
+			<label for="<?php echo esc_attr( $this->get_field_id('popular_thumbs') ); ?>">Show thumbnails</label>
 		</p>	
 		<p>
-			<label style="width: 55%; display: inline-block;" for="<?php echo $this->get_field_id("popular_num"); ?>">Items to show</label>
-			<input style="width:20%;" id="<?php echo $this->get_field_id("popular_num"); ?>" name="<?php echo $this->get_field_name("popular_num"); ?>" type="text" value="<?php echo absint($instance["popular_num"]); ?>" size='3' />
+			<label style="width: 55%; display: inline-block;" for="<?php echo esc_attr( $this->get_field_id("popular_num") ); ?>">Items to show</label>
+			<input style="width:20%;" id="<?php echo esc_attr( $this->get_field_id("popular_num") ); ?>" name="<?php echo esc_attr( $this->get_field_name("popular_num") ); ?>" type="text" value="<?php echo absint($instance["popular_num"]); ?>" size='3' />
 		</p>
 		<p>
-			<label style="width: 100%; display: inline-block;" for="<?php echo $this->get_field_id("popular_cat_id"); ?>">Category:</label>
+			<label style="width: 100%; display: inline-block;" for="<?php echo esc_attr( $this->get_field_id("popular_cat_id") ); ?>">Category:</label>
 			<?php wp_dropdown_categories( array( 'name' => $this->get_field_name("popular_cat_id"), 'selected' => $instance["popular_cat_id"], 'show_option_all' => 'All', 'show_count' => true ) ); ?>		
 		</p>
 		<p style="padding-top: 0.3em;">
-			<label style="width: 100%; display: inline-block;" for="<?php echo $this->get_field_id("popular_time"); ?>">Post with most comments from:</label>
-			<select style="width: 100%;" id="<?php echo $this->get_field_id("popular_time"); ?>" name="<?php echo $this->get_field_name("popular_time"); ?>">
+			<label style="width: 100%; display: inline-block;" for="<?php echo esc_attr( $this->get_field_id("popular_time") ); ?>">Post with most comments from:</label>
+			<select style="width: 100%;" id="<?php echo esc_attr( $this->get_field_id("popular_time") ); ?>" name="<?php echo esc_attr( $this->get_field_name("popular_time") ); ?>">
 			  <option value="0"<?php selected( $instance["popular_time"], "0" ); ?>>All time</option>
 			  <option value="1 year ago"<?php selected( $instance["popular_time"], "1 year ago" ); ?>>This year</option>
 			  <option value="1 month ago"<?php selected( $instance["popular_time"], "1 month ago" ); ?>>This month</option>
@@ -344,56 +344,56 @@ class AlxTabs extends WP_Widget {
 		<h4>Recent Comments</h4>
 		
 		<p>
-			<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('comments_enable'); ?>" name="<?php echo $this->get_field_name('comments_enable'); ?>" <?php checked( (bool) $instance["comments_enable"], true ); ?>>
-			<label for="<?php echo $this->get_field_id('comments_enable'); ?>">Enable recent comments</label>
+			<input type="checkbox" class="checkbox" id="<?php echo esc_attr( $this->get_field_id('comments_enable') ); ?>" name="<?php echo esc_attr( $this->get_field_name('comments_enable') ); ?>" <?php checked( (bool) $instance["comments_enable"], true ); ?>>
+			<label for="<?php echo esc_attr( $this->get_field_id('comments_enable') ); ?>">Enable recent comments</label>
 		</p>
 		<p>
-			<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('comments_avatars'); ?>" name="<?php echo $this->get_field_name('comments_avatars'); ?>" <?php checked( (bool) $instance["comments_avatars"], true ); ?>>
-			<label for="<?php echo $this->get_field_id('comments_avatars'); ?>">Show avatars</label>
+			<input type="checkbox" class="checkbox" id="<?php echo esc_attr( $this->get_field_id('comments_avatars') ); ?>" name="<?php echo esc_attr( $this->get_field_name('comments_avatars') ); ?>" <?php checked( (bool) $instance["comments_avatars"], true ); ?>>
+			<label for="<?php echo esc_attr( $this->get_field_id('comments_avatars') ); ?>">Show avatars</label>
 		</p>
 		<p>
-			<label style="width: 55%; display: inline-block;" for="<?php echo $this->get_field_id("comments_num"); ?>">Items to show</label>
-			<input style="width:20%;" id="<?php echo $this->get_field_id("comments_num"); ?>" name="<?php echo $this->get_field_name("comments_num"); ?>" type="text" value="<?php echo absint($instance["comments_num"]); ?>" size='3' />
+			<label style="width: 55%; display: inline-block;" for="<?php echo esc_attr( $this->get_field_id("comments_num") ); ?>">Items to show</label>
+			<input style="width:20%;" id="<?php echo esc_attr( $this->get_field_id("comments_num") ); ?>" name="<?php echo esc_attr( $this->get_field_name("comments_num") ); ?>" type="text" value="<?php echo absint($instance["comments_num"]); ?>" size='3' />
 		</p>
 
 		<hr>
 		<h4>Tags</h4>
 		
 		<p>
-			<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('tags_enable'); ?>" name="<?php echo $this->get_field_name('tags_enable'); ?>" <?php checked( (bool) $instance["tags_enable"], true ); ?>>
-			<label for="<?php echo $this->get_field_id('tags_enable'); ?>">Enable tags</label>
+			<input type="checkbox" class="checkbox" id="<?php echo esc_attr( $this->get_field_id('tags_enable') ); ?>" name="<?php echo esc_attr( $this->get_field_name('tags_enable') ); ?>" <?php checked( (bool) $instance["tags_enable"], true ); ?>>
+			<label for="<?php echo esc_attr( $this->get_field_id('tags_enable') ); ?>">Enable tags</label>
 		</p>
 	
 		<hr>
 		<h4>Tab Order</h4>
 		
 		<p>
-			<label style="width: 55%; display: inline-block;" for="<?php echo $this->get_field_id("order_recent"); ?>">Recent posts</label>
-			<input class="widefat" style="width:20%;" type="text" id="<?php echo $this->get_field_id("order_recent"); ?>" name="<?php echo $this->get_field_name("order_recent"); ?>" value="<?php echo $instance["order_recent"]; ?>" />
+			<label style="width: 55%; display: inline-block;" for="<?php echo esc_attr( $this->get_field_id("order_recent") ); ?>">Recent posts</label>
+			<input class="widefat" style="width:20%;" type="text" id="<?php echo esc_attr( $this->get_field_id("order_recent") ); ?>" name="<?php echo esc_attr( $this->get_field_name("order_recent") ); ?>" value="<?php echo esc_attr( $instance["order_recent"] ); ?>" />
 		</p>
 		<p>
-			<label style="width: 55%; display: inline-block;" for="<?php echo $this->get_field_id("order_popular"); ?>">Most popular</label>
-			<input class="widefat" style="width:20%;" type="text" id="<?php echo $this->get_field_id("order_popular"); ?>" name="<?php echo $this->get_field_name("order_popular"); ?>" value="<?php echo $instance["order_popular"]; ?>" />
+			<label style="width: 55%; display: inline-block;" for="<?php echo esc_attr( $this->get_field_id("order_popular") ); ?>">Most popular</label>
+			<input class="widefat" style="width:20%;" type="text" id="<?php echo esc_attr( $this->get_field_id("order_popular") ); ?>" name="<?php echo esc_attr( $this->get_field_name("order_popular") ); ?>" value="<?php echo esc_attr( $instance["order_popular"] ); ?>" />
 		</p>
 		<p>
-			<label style="width: 55%; display: inline-block;" for="<?php echo $this->get_field_id("order_comments"); ?>">Recent comments</label>
-			<input class="widefat" style="width:20%;" type="text" id="<?php echo $this->get_field_id("order_comments"); ?>" name="<?php echo $this->get_field_name("order_comments"); ?>" value="<?php echo $instance["order_comments"]; ?>" />
+			<label style="width: 55%; display: inline-block;" for="<?php echo esc_attr( $this->get_field_id("order_comments") ); ?>">Recent comments</label>
+			<input class="widefat" style="width:20%;" type="text" id="<?php echo esc_attr( $this->get_field_id("order_comments") ); ?>" name="<?php echo esc_attr( $this->get_field_name("order_comments") ); ?>" value="<?php echo esc_attr( $instance["order_comments"] ); ?>" />
 		</p>
 		<p>
-			<label style="width: 55%; display: inline-block;" for="<?php echo $this->get_field_id("order_tags"); ?>">Tags</label>
-			<input class="widefat" style="width:20%;" type="text" id="<?php echo $this->get_field_id("order_tags"); ?>" name="<?php echo $this->get_field_name("order_tags"); ?>" value="<?php echo $instance["order_tags"]; ?>" />
+			<label style="width: 55%; display: inline-block;" for="<?php echo esc_attr( $this->get_field_id("order_tags") ); ?>">Tags</label>
+			<input class="widefat" style="width:20%;" type="text" id="<?php echo esc_attr( $this->get_field_id("order_tags") ); ?>" name="<?php echo esc_attr( $this->get_field_name("order_tags") ); ?>" value="<?php echo esc_attr( $instance["order_tags"] ); ?>" />
 		</p>
 		
 		<hr>
 		<h4>Tab Info</h4>
 		
 		<p>
-			<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('tabs_category'); ?>" name="<?php echo $this->get_field_name('tabs_category'); ?>" <?php checked( (bool) $instance["tabs_category"], true ); ?>>
-			<label for="<?php echo $this->get_field_id('tabs_category'); ?>">Show categories</label>
+			<input type="checkbox" class="checkbox" id="<?php echo esc_attr( $this->get_field_id('tabs_category') ); ?>" name="<?php echo esc_attr( $this->get_field_name('tabs_category') ); ?>" <?php checked( (bool) $instance["tabs_category"], true ); ?>>
+			<label for="<?php echo esc_attr( $this->get_field_id('tabs_category') ); ?>">Show categories</label>
 		</p>
 		<p>
-			<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('tabs_date'); ?>" name="<?php echo $this->get_field_name('tabs_date'); ?>" <?php checked( (bool) $instance["tabs_date"], true ); ?>>
-			<label for="<?php echo $this->get_field_id('tabs_date'); ?>">Show dates</label>
+			<input type="checkbox" class="checkbox" id="<?php echo esc_attr( $this->get_field_id('tabs_date') ); ?>" name="<?php echo esc_attr( $this->get_field_name('tabs_date') ); ?>" <?php checked( (bool) $instance["tabs_date"], true ); ?>>
+			<label for="<?php echo esc_attr( $this->get_field_id('tabs_date') ); ?>">Show dates</label>
 		</p>
 		
 		<hr>

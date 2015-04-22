@@ -1,8 +1,5 @@
 View more themes from this author: http://alxmedia.se/themes/
 
-You can support the theme author by donating here: 
-https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K54RW72RZM2HN – any amount is always appreciated.
-
 
 /*  Theme License
 /* ------------------------------------ */

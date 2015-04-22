@@ -71,7 +71,7 @@
 						
 						<div id="copyright">
 							<?php if ( ot_get_option( 'copyright' ) ): ?>
-								<p><?php echo ot_get_option( 'copyright' ); ?></p>
+								<p><?php echo esc_attr( ot_get_option( 'copyright' ) ); ?></p>
 							<?php else: ?>
 								<p><?php bloginfo(); ?> &copy; <?php echo date( 'Y' ); ?>. <?php _e( 'All Rights Reserved.', 'hueman' ); ?></p>
 							<?php endif; ?>

@@ -28,13 +28,10 @@ function custom_theme_options() {
 			<ul>
 				<li>Read the theme documentation <a target="_blank" href="'.get_template_directory_uri().'/functions/documentation/documentation.html">here</a></li>
 				<li>Download the sample child theme <a href="https://github.com/AlxMedia/hueman-child/archive/master.zip">here</a></li>
-				<li>Download or contribute translations <a target="_blank" href="https://github.com/AlxMedia/hueman-languages">here</a></li>
 				<li>Feel free to rate/review the theme <a target="_blank" href="http://wordpress.org/support/view/theme-reviews/hueman">here</a></li>
 				<li>If you have theme questions, go <a target="_blank" href="http://wordpress.org/support/theme/hueman">here</a></li>
 				<li>Hueman is on <a target="_blank" href="https://github.com/AlxMedia/hueman">GitHub</a></li>
 			</ul>
-			<hr />
-			<p>You can support the theme author by donating <a target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=K54RW72RZM2HN">here</a> – any amount is always appreciated.</p>
 		'
         )
       )
@@ -141,15 +138,6 @@ function custom_theme_options() {
 			'desc'		=> 'Enter your full FeedBurner URL (or any other preferred feed URL) if you wish to use FeedBurner over the standard WordPress feed e.g. http://feeds.feedburner.com/yoururlhere ',
 			'type'		=> 'text',
 			'section'	=> 'general'
-		),
-		// General: Tracking Code
-		array(
-			'id'		=> 'tracking-code',
-			'label'		=> 'Tracking Code',
-			'desc'		=> 'Paste your Google Analytics (or other) tracking code here. It will be inserted before the closing body tag of your theme.',
-			'type'		=> 'textarea-simple',
-			'section'	=> 'general',
-			'rows'		=> '3'
 		),
 		// General: Comments
 		array(
@@ -1006,7 +994,7 @@ function custom_theme_options() {
 			'label'		=> 'Font',
 			'desc'		=> 'Select font for the theme',
 			'type'		=> 'select',
-			'std'		=> '30',
+			'std'		=> 'source-sans-pro',
 			'section'	=> 'styling',
 			'choices'	=> array(
 				array( 
@@ -1015,51 +1003,71 @@ function custom_theme_options() {
 				),
 				array( 
 					'value' => 'titillium-web-ext',
-					'label' => 'Titillium Web, Latin-Ext (Google Fonts)'
+					'label' => 'Titillium Web, Latin-Ext'
 				),
 				array( 
 					'value' => 'droid-serif',
-					'label' => 'Droid Serif, Latin (Google Fonts)'
+					'label' => 'Droid Serif, Latin'
 				),
 				array( 
 					'value' => 'source-sans-pro',
-					'label' => 'Source Sans Pro, Latin-Ext (Google Fonts)'
+					'label' => 'Source Sans Pro, Latin-Ext'
 				),
 				array( 
 					'value' => 'lato',
-					'label' => 'Lato, Latin (Google Fonts)'
+					'label' => 'Lato, Latin'
+				),
+				array( 
+					'value' => 'raleway',
+					'label' => 'Raleway, Latin'
 				),
 				array( 
 					'value' => 'ubuntu',
-					'label' => 'Ubuntu, Latin-Ext (Google Fonts)'
+					'label' => 'Ubuntu, Latin-Ext'
 				),
 				array( 
 					'value' => 'ubuntu-cyr',
-					'label' => 'Ubuntu, Latin / Cyrillic-Ext (Google Fonts)'
+					'label' => 'Ubuntu, Latin / Cyrillic-Ext'
 				),
 				array( 
 					'value' => 'roboto-condensed',
-					'label' => 'Roboto Condensed, Latin-Ext (Google Fonts)'
+					'label' => 'Roboto Condensed, Latin-Ext'
 				),
 				array( 
 					'value' => 'roboto-condensed-cyr',
-					'label' => 'Roboto Condensed, Latin / Cyrillic-Ext (Google Fonts)'
+					'label' => 'Roboto Condensed, Latin / Cyrillic-Ext'
+				),
+				array( 
+					'value' => 'roboto-slab',
+					'label' => 'Roboto Slab, Latin-Ext'
+				),
+				array( 
+					'value' => 'roboto-slab-cyr',
+					'label' => 'Roboto Slab, Latin / Cyrillic-Ext'
+				),
+				array( 
+					'value' => 'playfair-display',
+					'label' => 'Playfair Display, Latin-Ext'
+				),
+				array( 
+					'value' => 'playfair-display-cyr',
+					'label' => 'Playfair Display, Latin / Cyrillic'
 				),
 				array( 
 					'value' => 'open-sans',
-					'label' => 'Open Sans, Latin-Ext (Google Fonts)'
+					'label' => 'Open Sans, Latin-Ext'
 				),
 				array( 
 					'value' => 'open-sans-cyr',
-					'label' => 'Open Sans, Latin / Cyrillic-Ext (Google Fonts)'
+					'label' => 'Open Sans, Latin / Cyrillic-Ext'
 				),
 				array( 
 					'value' => 'pt-serif',
-					'label' => 'PT Serif, Latin-Ext (Google Fonts)'
+					'label' => 'PT Serif, Latin-Ext'
 				),
 				array( 
 					'value' => 'pt-serif-cyr',
-					'label' => 'PT Serif, Latin / Cyrillic-Ext (Google Fonts)'
+					'label' => 'PT Serif, Latin / Cyrillic-Ext'
 				),
 				array( 
 					'value' => 'arial',
@@ -1068,6 +1076,14 @@ function custom_theme_options() {
 				array( 
 					'value' => 'georgia',
 					'label' => 'Georgia'
+				),
+				array( 
+					'value' => 'verdana',
+					'label' => 'Verdana'
+				),
+				array( 
+					'value' => 'tahoma',
+					'label' => 'Tahoma'
 				)
 			)
 		),
