@@ -1,6 +1,13 @@
   Theme : Hueman
-Version : 2.2.2
+Version : 2.2.3
  Author : Alexander "Alx" Agnarson - http://alxmedia.se
+
+April 22 2015 - 2.2.3
+===========================================================
+- Updated to OptionTree 2.5.4
+- XSS security fixes
+- Removed tracking code field
+- Added additional Google fonts
 
 February 6 2015 - 2.2.2
 ===========================================================
