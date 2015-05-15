@@ -76,10 +76,10 @@ img { max-width: 100%; height: auto; }
 a,
 a:before,
 a:after {
--webkit-transition-property: background color; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease;
--moz-transition-property: background color; -moz-transition-duration: 0.2s; -moz-transition-timing-function: ease;
--o-transition-property: background color; -o-transition-duration: 0.2s; -o-transition-timing-function: ease; 
-transition-property: background color; transition-duration: 0.2s; transition-timing-function: ease; }
+-webkit-transition-property: background-color; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease;
+-moz-transition-property: background-color; -moz-transition-duration: 0.2s; -moz-transition-timing-function: ease;
+-o-transition-property: background-color; -o-transition-duration: 0.2s; -o-transition-timing-function: ease; 
+transition-property: background-color; transition-duration: 0.2s; transition-timing-function: ease; }
 a img {
 -webkit-transition: opacity 0.2s ease;
 -moz-transition: opacity 0.2s ease;
@@ -970,10 +970,10 @@ box-shadow: inset -1px 0 1px rgba(0,0,0,0.2); }
 .post-nav li.next i { right: 10px; }
 .post-nav li a span,
 .post-nav li a i { 
--webkit-transition-property: background color; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease-out;
--moz-transition-property: background color; -moz-transition-duration: 0.2s; -moz-transition-timing-function: ease-out;
--o-transition-property: background color; -o-transition-duration: 0.2s; -o-transition-timing-function: ease-out; 
-transition-property: background color; transition-duration: 0.2s; transition-timing-function: ease-out; }
+-webkit-transition-property: background-color; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease-out;
+-moz-transition-property: background-color; -moz-transition-duration: 0.2s; -moz-transition-timing-function: ease-out;
+-o-transition-property: background-color; -o-transition-duration: 0.2s; -o-transition-timing-function: ease-out; 
+transition-property: background-color; transition-duration: 0.2s; transition-timing-function: ease-out; }
 
 /* sidebar-specific */
 .sidebar .post-nav li a { border-top: 1px solid #eee; border-bottom: 1px solid #ddd; }
