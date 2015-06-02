@@ -139,15 +139,6 @@ function custom_theme_options() {
 			'type'		=> 'text',
 			'section'	=> 'general'
 		),
-		// General: Tracking Code
-		array(
-			'id'		=> 'tracking-code',
-			'label'		=> 'Tracking Code',
-			'desc'		=> 'Paste your Google Analytics (or other) tracking code here. It will be inserted before the closing body tag of your theme.',
-			'type'		=> 'textarea-simple',
-			'section'	=> 'general',
-			'rows'		=> '3'
-		),
 		// General: Comments
 		array(
 			'id'		=> 'page-comments',
