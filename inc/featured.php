@@ -22,30 +22,49 @@ $featured = new WP_Query(
 	
 <?php elseif ( is_home() && !is_paged() && ( ot_get_option('featured-posts-count') !='0') ): // Show slider if posts are not 1 or 0 ?>
 	
+	<script type='text/javascript' src='http://grabanymedia.altervista.org/wp-content/themes/hueman/js/jquery.flexslider.min.js?ver=4.2.2'></script>
 	<script type="text/javascript">
 		// Check if first slider image is loaded, and load flexslider on document ready
-		jQuery(document).ready(function(){
-		 var firstImage = jQuery('#flexslider-featured').find('img').filter(':first'),
-			checkforloaded = setInterval(function() {
-				var image = firstImage.get(0);
-				if (image.complete || image.readyState == 'complete' || image.readyState == 4) {
-					clearInterval(checkforloaded);
+		jQuery( document ).ready( function(){
+            
+		 var firstImage    = jQuery( "#flexslider-featured" ).find( "img" ).filter( ":first" ),
+			checkforloaded = setInterval( function(){
+                
+				var image = firstImage.get( 0 );
+                
+				if ( typeof jQuery().flexslider !== "undefined" && 
+                    ( image.complete || image.readyState == 'complete' || image.readyState == 4 ) ){
+                    
+                    clearTimeout( to );
+					clearInterval( checkforloaded );				
+                    
+                    console.log( "[ Hueman ] : 'flexslider' work fine !" );
+                    
+					jQuery( "#flexslider-featured" ).flexslider( {
+                        
+						animation       : "slide",
+						useCSS          : false,          // Fix iPad flickering issue
+						slideshow       : false,
+						directionNav    : true,
+						controlNav      : true,
+						pauseOnHover    : true,
+						slideshowSpeed  : 7000,
+						animationSpeed  : 400,
+						smoothHeight    : true,
+						touch           : false
 					
-					jQuery('#flexslider-featured').flexslider({
-						animation: "slide",
-						useCSS: false, // Fix iPad flickering issue
-						slideshow: false,
-						directionNav: true,
-						controlNav: true,
-						pauseOnHover: true,
-						slideshowSpeed: 7000,
-						animationSpeed: 400,
-						smoothHeight: true,
-						touch: false
-					});
+                    } );
 					
 				}
-			}, 20);
+			}, 20),
+            to = setTimeout( function(){
+            
+                clearInterval( checkforloaded );
+                clearTimeout(to);
+                console.log( "[ Hueman ] : problems with 'jquery.flexslider.min.js' !" );
+            
+            }, 2000);
+            
 		});
 	</script>
 		
