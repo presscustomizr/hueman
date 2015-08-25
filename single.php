@@ -41,6 +41,7 @@
 						<?php if ( ot_get_option('sharrre') != 'off' ) { get_template_part('inc/sharrre'); } ?>
 						<div class="clear"></div>
 					</div><!--/.entry-->
+
 					<?php the_tags('<p class="post-tags"><span>'.__('Tags:','hueman').'</span> ','','</p>'); ?>
 
 				</div><!--/.post-inner-->
