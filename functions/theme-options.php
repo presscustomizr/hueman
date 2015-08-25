@@ -1,6 +1,6 @@
 <?php
 
-/*  Initialize the options before anything else. 
+/*  Initialize the options before anything else.
 /* ------------------------------------ */
 add_action( 'admin_init', 'custom_theme_options', 1 );
 
@@ -8,7 +8,7 @@ add_action( 'admin_init', 'custom_theme_options', 1 );
 /*  Build the custom settings & update OptionTree.
 /* ------------------------------------ */
 function custom_theme_options() {
-	
+
 	// Get a copy of the saved settings array.
 	$saved_settings = get_option( 'option_tree_settings', array() );
 
@@ -16,9 +16,9 @@ function custom_theme_options() {
 	$custom_settings = array(
 
 /*  Help pages
-/* ------------------------------------ */	
+/* ------------------------------------ */
 	'contextual_help' => array(
-      'content'       => array( 
+      'content'       => array(
         array(
           'id'        => 'general_help',
           'title'     => 'Documentation',
@@ -36,9 +36,9 @@ function custom_theme_options() {
         )
       )
     ),
-	
+
 /*  Admin panel sections
-/* ------------------------------------ */	
+/* ------------------------------------ */
 	'sections'        => array(
 		array(
 			'id'		=> 'general',
@@ -73,11 +73,11 @@ function custom_theme_options() {
 			'title'		=> 'Styling'
 		),
 	),
-	
+
 /*  Theme options
 /* ------------------------------------ */
 	'settings'        => array(
-		
+
 		// General: Custom CSS
 		array(
 			'id'		=> 'custom',
@@ -105,19 +105,19 @@ function custom_theme_options() {
 			'std'		=> '1',
 			'section'	=> 'general',
 			'choices'	=> array(
-				array( 
+				array(
 					'value' => '1',
 					'label' => 'Show sidebars'
 				),
-				array( 
+				array(
 					'value' => 's1',
 					'label' => 'Hide primary sidebar'
 				),
-				array( 
+				array(
 					'value' => 's2',
 					'label' => 'Hide secondary sidebar'
 				),
-				array( 
+				array(
 					'value' => 's1-s2',
 					'label' => 'Hide both sidebars'
 				)
@@ -191,7 +191,7 @@ function custom_theme_options() {
 			'type'		=> 'checkbox',
 			'section'	=> 'blog',
 			'choices'	=> array(
-				array( 
+				array(
 					'value' => '1',
 					'label' => 'Include featured posts in content area'
 				)
@@ -268,6 +268,51 @@ function custom_theme_options() {
 			'type'		=> 'text',
 			'section'	=> 'blog'
 		),
+		// Blog: Single - Before Navigation Widget
+		array(
+			'id'		=> 'before-nav-widget',
+			'label'		=> 'Before navigation widget',
+			'desc'		=> 'Widget shown before navigation links',
+			'std'		=> 'off',
+			'type'		=> 'on-off',
+			'section'	=> 'blog'
+		),
+		// Blog: Single - Before Related Widget
+		array(
+			'id'		=> 'before-rel-widget',
+			'label'		=> 'Before related widget',
+			'desc'		=> 'Widget shown before related posts',
+			'std'		=> 'off',
+			'type'		=> 'on-off',
+			'section'	=> 'blog'
+		),
+		// Blog: Single - Before Comments Widget
+		array(
+			'id'		=> 'before-com-widget',
+			'label'		=> 'Before comments widget',
+			'desc'		=> 'Widget shown before comments section',
+			'std'		=> 'off',
+			'type'		=> 'on-off',
+			'section'	=> 'blog'
+		),
+		// Blog: Single - Before Content Widget
+		array(
+			'id'		=> 'before-content-widget',
+			'label'		=> 'Before content widget',
+			'desc'		=> 'Widget shown before content',
+			'std'		=> 'off',
+			'type'		=> 'on-off',
+			'section'	=> 'blog'
+		),
+		// Blog: Single - After Content Widget
+		array(
+			'id'		=> 'after-content-widget',
+			'label'		=> 'After content widget',
+			'desc'		=> 'Widget shown after content',
+			'std'		=> 'off',
+			'type'		=> 'on-off',
+			'section'	=> 'blog'
+		),
 		// Blog: Single - Authorbox
 		array(
 			'id'		=> 'author-bio',
@@ -286,15 +331,15 @@ function custom_theme_options() {
 			'type'		=> 'radio',
 			'section'	=> 'blog',
 			'choices'	=> array(
-				array( 
+				array(
 					'value' => '1',
 					'label' => 'Disable'
 				),
-				array( 
+				array(
 					'value' => 'categories',
 					'label' => 'Related by categories'
 				),
-				array( 
+				array(
 					'value' => 'tags',
 					'label' => 'Related by tags'
 				)
@@ -309,19 +354,19 @@ function custom_theme_options() {
 			'type'		=> 'radio',
 			'section'	=> 'blog',
 			'choices'	=> array(
-				array( 
+				array(
 					'value' => '1',
 					'label' => 'Disable'
 				),
-				array( 
+				array(
 					'value' => 's1',
 					'label' => 'Sidebar Primary'
 				),
-				array( 
+				array(
 					'value' => 's2',
 					'label' => 'Sidebar Secondary'
 				),
-				array( 
+				array(
 					'value' => 'content',
 					'label' => 'Below content'
 				)
@@ -962,7 +1007,7 @@ function custom_theme_options() {
 					'std'		=> '',
 					'type'		=> 'checkbox',
 					'choices'	=> array(
-						array( 
+						array(
 							'value' => '_blank',
 							'label' => 'Open in new window'
 						)
@@ -997,91 +1042,91 @@ function custom_theme_options() {
 			'std'		=> 'source-sans-pro',
 			'section'	=> 'styling',
 			'choices'	=> array(
-				array( 
+				array(
 					'value' => 'titillium-web',
 					'label' => 'Titillium Web, Latin (Self-hosted)'
 				),
-				array( 
+				array(
 					'value' => 'titillium-web-ext',
 					'label' => 'Titillium Web, Latin-Ext'
 				),
-				array( 
+				array(
 					'value' => 'droid-serif',
 					'label' => 'Droid Serif, Latin'
 				),
-				array( 
+				array(
 					'value' => 'source-sans-pro',
 					'label' => 'Source Sans Pro, Latin-Ext'
 				),
-				array( 
+				array(
 					'value' => 'lato',
 					'label' => 'Lato, Latin'
 				),
-				array( 
+				array(
 					'value' => 'raleway',
 					'label' => 'Raleway, Latin'
 				),
-				array( 
+				array(
 					'value' => 'ubuntu',
 					'label' => 'Ubuntu, Latin-Ext'
 				),
-				array( 
+				array(
 					'value' => 'ubuntu-cyr',
 					'label' => 'Ubuntu, Latin / Cyrillic-Ext'
 				),
-				array( 
+				array(
 					'value' => 'roboto-condensed',
 					'label' => 'Roboto Condensed, Latin-Ext'
 				),
-				array( 
+				array(
 					'value' => 'roboto-condensed-cyr',
 					'label' => 'Roboto Condensed, Latin / Cyrillic-Ext'
 				),
-				array( 
+				array(
 					'value' => 'roboto-slab',
 					'label' => 'Roboto Slab, Latin-Ext'
 				),
-				array( 
+				array(
 					'value' => 'roboto-slab-cyr',
 					'label' => 'Roboto Slab, Latin / Cyrillic-Ext'
 				),
-				array( 
+				array(
 					'value' => 'playfair-display',
 					'label' => 'Playfair Display, Latin-Ext'
 				),
-				array( 
+				array(
 					'value' => 'playfair-display-cyr',
 					'label' => 'Playfair Display, Latin / Cyrillic'
 				),
-				array( 
+				array(
 					'value' => 'open-sans',
 					'label' => 'Open Sans, Latin-Ext'
 				),
-				array( 
+				array(
 					'value' => 'open-sans-cyr',
 					'label' => 'Open Sans, Latin / Cyrillic-Ext'
 				),
-				array( 
+				array(
 					'value' => 'pt-serif',
 					'label' => 'PT Serif, Latin-Ext'
 				),
-				array( 
+				array(
 					'value' => 'pt-serif-cyr',
 					'label' => 'PT Serif, Latin / Cyrillic-Ext'
 				),
-				array( 
+				array(
 					'value' => 'arial',
 					'label' => 'Arial'
 				),
-				array( 
+				array(
 					'value' => 'georgia',
 					'label' => 'Georgia'
 				),
-				array( 
+				array(
 					'value' => 'verdana',
 					'label' => 'Verdana'
 				),
-				array( 
+				array(
 					'value' => 'tahoma',
 					'label' => 'Tahoma'
 				)
@@ -1105,11 +1150,11 @@ function custom_theme_options() {
 			'std'		=> '30',
 			'section'	=> 'styling',
 			'choices'	=> array(
-				array( 
+				array(
 					'value' => '30',
 					'label' => '280px primary, 200px secondary (30px padding)'
 				),
-				array( 
+				array(
 					'value' => '20',
 					'label' => '300px primary, 220px secondary (20px padding)'
 				)
@@ -1203,6 +1248,6 @@ function custom_theme_options() {
 /*  Settings are not the same? Update the DB
 /* ------------------------------------ */
 	if ( $saved_settings !== $custom_settings ) {
-		update_option( 'option_tree_settings', $custom_settings ); 
-	} 
+		update_option( 'option_tree_settings', $custom_settings );
+	}
 }
