@@ -4,6 +4,12 @@
 
 	<?php get_template_part('inc/page-title'); ?>
 
+	<?php if ( ot_get_option('before-content-widget') == 'on' ): ?>
+	<div id="before-content-widget">
+		<?php dynamic_sidebar( 'before-content-widget' ); ?>
+	</div><!--/#before-content-widget-->
+	<?php endif; ?>
+
 	<div class="pad group">
 
 		<?php while ( have_posts() ): the_post(); ?>
@@ -52,13 +58,37 @@
 			</div>
 		<?php endif; ?>
 
+		<?php if ( ot_get_option('before-nav-widget') == 'on' ): ?>
+		<div id="before-nav-widget">
+			<?php dynamic_sidebar( 'before-nav-widget' ); ?>
+		</div><!--/#before-nav-widget-->
+		<?php endif; ?>
+
 		<?php if ( ot_get_option( 'post-nav' ) == 'content') { get_template_part('inc/post-nav'); } ?>
 
+		<?php if ( ot_get_option('before-rel-widget') == 'on' ): ?>
+		<div id="before-rel-widget">
+			<?php dynamic_sidebar( 'before-rel-widget' ); ?>
+		</div><!--/#before-rel-widget-->
+		<?php endif; ?>
+
 		<?php if ( ot_get_option( 'related-posts' ) != '1' ) { get_template_part('inc/related-posts'); } ?>
+
+		<?php if ( ot_get_option('before-com-widget') == 'on' ): ?>
+		<div id="before-com-widget">
+			<?php dynamic_sidebar( 'before-com-widget' ); ?>
+		</div><!--/#before-com-widget-->
+		<?php endif; ?>
 
 		<?php comments_template('/comments.php',true); ?>
 
 	</div><!--/.pad-->
+
+	<?php if ( ot_get_option('after-content-widget') == 'on' ): ?>
+	<div id="after-content-widget">
+		<?php dynamic_sidebar( 'after-content-widget' ); ?>
+	</div><!--/#after-content-widget-->
+	<?php endif; ?>
 
 </section><!--/.content-->
 
