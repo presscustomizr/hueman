@@ -18,7 +18,7 @@
 						<span class="vcard author">
 							<span class="fn"><a href="<?php get_the_author_link(); ?>" rel="author"><?php the_author() ?></a></span>
 						</span> &middot; Published <time class="published" datetime="<?php the_time('Y-m-d H:i:s'); ?>"><?php the_time('F j, Y'); ?></time>
-						<?php if( get_the_modified_time() != get_the_time() ) : ?> &middot; Updated <time class="updated" datetime="<?php the_modified_time('Y-m-d H:i:s'); ?>"><?php the_modified_time('F j, Y'); ?></time><?php endif; ?>
+						<?php if( get_the_modified_date() != get_the_date() || get_the_modified_time() != get_the_time() ) : ?> &middot; Updated <time class="updated" datetime="<?php the_modified_time('Y-m-d H:i:s'); ?>"><?php the_modified_time('F j, Y'); ?></time><?php endif; ?>
 					</p>
 
 					<?php if( get_post_format() ) { get_template_part('inc/post-formats'); } ?>
@@ -29,12 +29,6 @@
 						<div class="entry-inner">
 
 							<div class="entry-content"><?php the_content(); ?></div>
-							<p class="post-byline"><?php _e('by','hueman'); ?>
-								<span class="vcard author">
-									<span class="fn"><a href="<?php get_the_author_link(); ?>" rel="author"><?php the_author() ?></a></span>
-								</span> &middot; Published <time class="published" datetime="<?php the_time('Y-m-d H:i:s'); ?>"><?php the_date('F j, Y'); ?></time>
-								<?php if( get_the_modified_date() != get_the_date() ) : ?> &middot; Updated <time class="updated" datetime="<?php the_modified_time('Y-m-d H:i:s'); ?>"><?php the_modified_date('F j, Y'); ?></time><?php endif; ?>
-							</p>
 
 							<?php wp_link_pages(array('before'=>'<div class="post-pages">'.__('Pages:','hueman'),'after'=>'</div>')); ?>
 						</div>
