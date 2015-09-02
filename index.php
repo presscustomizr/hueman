@@ -5,6 +5,12 @@
 	<?php get_template_part('inc/page-title'); ?>
 	
 	<div class="pad group">
+
+		<?php if ( is_home() && !is_paged() && ot_get_option('before-featured-widget') == 'on' ): ?>
+		<div id="before-featured-widget">
+			<?php dynamic_sidebar( 'before-featured-widget' ); ?>
+		</div><!--/#before-featured-widget-->
+		<?php endif; ?>
 		
 		<?php get_template_part('inc/featured'); ?>
 		

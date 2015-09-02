@@ -215,6 +215,15 @@ function custom_theme_options() {
 			'section'		=> 'blog',
 			'min_max_step'	=> '0,10,1'
 		),
+		// Blog: Featured - Before Featured Widget
+		array(
+			'id'		=> 'before-featured-widget',
+			'label'		=> 'Before featured widget',
+			'desc'		=> 'Widget shown before featured posts',
+			'std'		=> 'off',
+			'type'		=> 'on-off',
+			'section'	=> 'blog'
+		),
 		// Blog: Standard
 		array(
 			'id'		=> 'blog-standard',
