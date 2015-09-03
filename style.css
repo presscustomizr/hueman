@@ -626,7 +626,6 @@ box-shadow: inset 1px 0 0 rgba(255,255,255,0.06); }
 @media only screen and (min-width: 720px) {
 
 	/* common */
-	#nav-topbar .container { padding-left: 15px; }
 	#nav-topbar .nav {  }
 	#nav-topbar .nav li a { color: #fff; color: rgba(255,255,255,0.7); }	
 	/* level 1 */
