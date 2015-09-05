@@ -815,13 +815,18 @@ add_action( 'tgmpa_register', 'alx_plugins' );
 
 /*  WooCommerce basic support
 /* ------------------------------------ */
-function alx_wc_wrapper_start() {
+if ( ! function_exists( 'alx_wc_wrapper_start' ) ) {
+    function alx_wc_wrapper_start() {
 	echo '<section class="content">';
 	echo '<div class="pad">';
+    }
 }
-function alx_wc_wrapper_end() {
+
+if ( ! function_exists( 'alx_wc_wrapper_end' ) ) {
+    function alx_wc_wrapper_end() {
 	echo '</div>';
 	echo '</section>';
+    }
 }
 remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
 remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
@@ -831,7 +836,9 @@ add_action('woocommerce_after_main_content', 'alx_wc_wrapper_end', 10);
 
 /*  WP-PageNavi support - @devinsays (via GitHub)
 /* ------------------------------------ */
-function alx_deregister_styles() {
-	wp_deregister_style( 'wp-pagenavi' );
+if ( ! function_exists( 'alx_deregister_styles' ) ) {
+    function alx_deregister_styles() {
+    	wp_deregister_style( 'wp-pagenavi' );
+    }
 }
 add_action( 'wp_print_styles', 'alx_deregister_styles', 100 );
