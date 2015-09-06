@@ -260,6 +260,42 @@ function custom_theme_options() {
 			'type'		=> 'on-off',
 			'section'	=> 'blog'
 		),
+		// Blog: Single - Twitter Button
+		array(
+			'id'		=> 'sharrre-twitter',
+			'label'		=> 'Single &mdash; Twitter Share Button',
+			'desc'		=> 'Enable Twitter share button',
+			'std'		=> 'on',
+			'type'		=> 'on-off',
+			'section'	=> 'blog'
+		),
+		// Blog: Single - Facebook Button
+		array(
+			'id'		=> 'sharrre-facebook',
+			'label'		=> 'Single &mdash; Facebook Share Button',
+			'desc'		=> 'Enable Facebook share button',
+			'std'		=> 'on',
+			'type'		=> 'on-off',
+			'section'	=> 'blog'
+		),
+		// Blog: Single - Google+ Button
+		array(
+			'id'		=> 'sharrre-googleplus',
+			'label'		=> 'Single &mdash; Google+ Share Button',
+			'desc'		=> 'Enable Google+ share button',
+			'std'		=> 'on',
+			'type'		=> 'on-off',
+			'section'	=> 'blog'
+		),
+		// Blog: Single - Pinterest Button
+		array(
+			'id'		=> 'sharrre-pinterest',
+			'label'		=> 'Single &mdash; Pinterest Share Button',
+			'desc'		=> 'Enable Pinterest share button',
+			'std'		=> 'on',
+			'type'		=> 'on-off',
+			'section'	=> 'blog'
+		),
 		// Blog: Twitter Username
 		array(
 			'id'		=> 'twitter-username',
