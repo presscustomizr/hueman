@@ -34,14 +34,14 @@ $featured = new WP_Query(
 					jQuery('#flexslider-featured').flexslider({
 						animation: "slide",
 						useCSS: false, // Fix iPad flickering issue
-						slideshow: false,
 						directionNav: true,
 						controlNav: true,
 						pauseOnHover: true,
-						slideshowSpeed: 7000,
 						animationSpeed: 400,
 						smoothHeight: true,
-						touch: false
+						touch: false,
+						slideshow: <?php if (ot_get_option('featured-slideshow') == 'on') { echo 'true'; } else { echo 'false'; } ?>,
+						slideshowSpeed: <?php echo ot_get_option('featured-slideshow-speed', 5000); ?>,
 					});
 					
 				}
