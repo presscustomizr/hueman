@@ -25,7 +25,7 @@ if ( ! function_exists( 'alx_load' ) ) {
 	
 	function alx_load() {
 		// Load theme languages
-		load_theme_textdomain( 'hueman', get_template_directory().'/languages' );
+		load_theme_textdomain( 'hueman', get_stylesheet_directory().'/languages' );
 		
 		// Load theme options and meta boxes
 		load_template( get_template_directory() . '/functions/theme-options.php' );
