@@ -871,7 +871,7 @@ box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
 -webkit-box-shadow: inset -1px 0 1px rgba(0,0,0,0.2); 
 box-shadow: inset -1px 0 1px rgba(0,0,0,0.2); }
 .post-comments > span { display: block; position: relative; padding: 2px 7px; }
-.post-comments > span:before { content:''; display: inline-block; border-left: 7px solid transparent; border-right: 7px solid #82b965; border-top: 7px solid transparent; border-bottom: 7px solid transparent; position: absolute; top: 5px; left: -14px; }
+.post-comments > span:before { content:''; display: inline-block; border-left: 9px solid transparent; border-right: 9px solid #82b965; border-top: 9px solid transparent; border-bottom: 9px solid transparent; position: absolute; top: 3px; left: -16px; }
 .post-comments i { margin-right: 3px; }
 .post-comments:hover { color: #fff!important; padding-right: 4px; }
 
