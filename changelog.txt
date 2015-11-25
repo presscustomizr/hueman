@@ -1,6 +1,16 @@
   Theme : Hueman
-Version : 2.2.4
+Version : 2.2.5
  Author : Alexander "Alx" Agnarson - http://alxmedia.se
+
+November 25 2015 - 2.2.5
+===========================================================
+- Added new languages
+- Added option to turn on featured slideshow and speed - @raeffs (via GitHub)
+- Added option to turn off post comments - @gregl83 (via GitHub)
+- Added select element in themeform CSS - @pirmax (via GitHub)
+- Added new input types in themeform CSS - @andreaskas (via GitHub)
+- Replaced http:// with // for SSL - @IvanDoomer (via GitHub)
+- Minor CSS fixes - @Zodiac1978 (via GitHub)
 
 November 24 2015 - 2.2.4
 ===========================================================
