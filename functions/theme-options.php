@@ -139,7 +139,16 @@ function custom_theme_options() {
 			'type'		=> 'text',
 			'section'	=> 'general'
 		),
-		// General: Comments
+		// General: Post Comments
+		array(
+			'id'		=> 'post-comments',
+			'label'		=> 'Post Comments',
+			'desc'		=> 'Comments on posts',
+			'std'		=> 'on',
+			'type'		=> 'on-off',
+			'section'	=> 'general'
+		),
+		// General: Page Comments
 		array(
 			'id'		=> 'page-comments',
 			'label'		=> 'Page Comments',

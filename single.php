@@ -47,7 +47,7 @@
 		
 		<?php if ( ot_get_option( 'related-posts' ) != '1' ) { get_template_part('inc/related-posts'); } ?>
 		
-		<?php comments_template('/comments.php',true); ?>
+		<?php if ( ot_get_option('post-comments') != 'off' ) { comments_template('/comments.php',true); } ?>
 		
 	</div><!--/.pad-->
 	
