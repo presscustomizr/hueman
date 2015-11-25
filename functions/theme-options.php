@@ -215,6 +215,25 @@ function custom_theme_options() {
 			'section'		=> 'blog',
 			'min_max_step'	=> '0,10,1'
 		),
+		// Blog: Featured Slideshow
+		array(
+			'id'			=> 'featured-slideshow',
+			'label'			=> 'Featured Slideshow',
+			'desc'			=> 'Enable slideshow of featured posts (automatic animation)',
+			'std'			=> 'off',
+			'type'			=> 'on-off',
+			'section'		=> 'blog'
+		),
+		// Blog: Featured Slideshow Speed
+		array(
+			'id'			=> 'featured-slideshow-speed',
+			'label'			=> 'Featured Slideshow Speed',
+			'desc'			=> 'Speed of the automatic slideshow animation',
+			'std'			=> '5000',
+			'type'			=> 'numeric-slider',
+			'section'		=> 'blog',
+			'min_max_step'	=> '1000,10000,1000'
+		),
 		// Blog: Standard
 		array(
 			'id'		=> 'blog-standard',
