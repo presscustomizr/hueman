@@ -170,6 +170,9 @@ input, textarea, button, select, label { font-family: inherit; }
 .themeform input[type="text"],
 .themeform input[type="password"],
 .themeform input[type="email"],
+.themeform input[type="url"],
+.themeform input[type="tel"],
+.themeform input[type="number"],
 .themeform input[type="submit"],
 .themeform select,
 .themeform button, 
@@ -184,11 +187,17 @@ input, textarea, button, select, label { font-family: inherit; }
 .themeform input[type="text"], 
 .themeform input[type="password"], 
 .themeform input[type="email"],
+.themeform input[type="url"],
+.themeform input[type="tel"],
+.themeform input[type="number"],
 .themeform select,
 .themeform textarea { background: #fff; border: 2px solid #ddd; color: #777; display: block; max-width: 100%; outline: none; padding: 7px 8px; }
 .themeform input[type="text"]:focus, 
 .themeform input[type="password"]:focus, 
-.themeform input[type="email"]:focus, 
+.themeform input[type="email"]:focus,
+.themeform input[type="url"]:focus,
+.themeform input[type="tel"]:focus,
+.themeform input[type="number"]:focus, 
 .themeform select:focus,
 .themeform textarea:focus { border-color: #ccc; color: #444; -webkit-box-shadow: 0 0 3px rgba(0,0,0,0.1); box-shadow: 0 0 3px rgba(0,0,0,0.1); }
 .themeform label .required { color: #3b8dbd; }
@@ -1482,10 +1491,16 @@ box-shadow: 0 1px 0 rgba(0,0,0,0.04); }
 .wpcf7 label { display: block; float: left; width: 20%; margin: 9px 0 0 12px; text-align: left; }
 .wpcf7 input[type="text"],
 .wpcf7 input[type="email"],
+.wpcf7 input[type="url"],
+.wpcf7 input[type="tel"],
+.wpcf7 input[type="number"],
 .wpcf7 select { display: block; float: left; padding: 10px; }  
 .wpcf7 textarea { display: block; float: left; padding: 10px; width: 100%; }  
 .wpcf7 input[type="text"],
 .wpcf7 input[type="email"],
+.wpcf7 input[type="url"],
+.wpcf7 input[type="tel"],
+.wpcf7 input[type="number"],
 .wpcf7 select,
 .wpcf7 textarea { background: #f5f5f5; margin-top: 12px; }
 .wpcf7 input[type="submit"] { font-size: 18px; }
