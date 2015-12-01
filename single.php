@@ -17,7 +17,7 @@
 					
 					<div class="clear"></div>
 					
-					<div class="entry <?php if ( ot_get_option('sharrre') != 'off' ) { echo 'share'; }; ?>">	
+					<div class="entry themeform <?php if ( ot_get_option('sharrre') != 'off' ) { echo 'share'; }; ?>">	
 						<div class="entry-inner">
 							<?php the_content(); ?>
 							<?php wp_link_pages(array('before'=>'<div class="post-pages">'.__('Pages:','hueman'),'after'=>'</div>')); ?>
