@@ -555,20 +555,6 @@ if ( ! function_exists( 'alx_favicon' ) ) {
 add_filter( 'wp_head', 'alx_favicon' );
 
 
-/*  Tracking code
-/* ------------------------------------ */
-if ( ! function_exists( 'alx_tracking_code' ) ) {
-
-	function alx_tracking_code() {
-		if ( ot_get_option('tracking-code') ) {
-			echo ''.ot_get_option('tracking-code').''."\n";
-		}
-	}
-	
-}
-add_filter( 'wp_footer', 'alx_tracking_code' );
-
-
 /*  Excerpt ending
 /* ------------------------------------ */
 if ( ! function_exists( 'alx_excerpt_more' ) ) {
