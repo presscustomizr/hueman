@@ -17,7 +17,7 @@ Template Name: Child Menu
 				
 				<?php get_template_part('inc/page-image'); ?>
 				
-				<div class="entry">
+				<div class="entry themeform">
 					<?php the_content(); ?>
 					<div class="clear"></div>
 				</div><!--/.entry-->

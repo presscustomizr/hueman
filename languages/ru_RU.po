@@ -1,0 +1,166 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Hueman\n"
+"POT-Creation-Date: 2015-02-06 14:15+0100\n"
+"PO-Revision-Date: 2015-10-28 22:41+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../404.php:14
+msgid ""
+"The page you are trying to reach does not exist, or has been moved. Please "
+"use the menus or the search box to find what you are looking for."
+msgstr ""
+"Cтраница была удалена или перемещена. Используйте меню или поиск по сайту."
+
+#: ../comments.php:7
+msgid "No Responses"
+msgstr "Нет ответов"
+
+#: ../comments.php:7
+msgid "1 Response"
+msgstr "1 ответ"
+
+#: ../comments.php:7
+msgid "% Responses"
+msgstr "% ответов"
+
+#: ../comments.php:10
+msgid "Comments"
+msgstr "Комментарии"
+
+#: ../comments.php:11
+msgid "Pingbacks"
+msgstr "Пингбэки"
+
+#: ../footer.php:76
+msgid "All Rights Reserved."
+msgstr "Все права защищены"
+
+#: ../footer.php:82
+msgid "Powered by"
+msgstr "Работает на"
+
+#: ../footer.php:82
+msgid "Theme by"
+msgstr "Тема: "
+
+#: ../search.php:10
+msgid "For the term"
+msgstr "Для"
+
+#: ../search.php:12
+msgid "Please try another search:"
+msgstr "Попробуйте уточнить поисковый запрос"
+
+#: ../searchform.php:3
+msgid "To search type and hit enter"
+msgstr "Поиск по сайту"
+
+#: ../sidebar-2.php:5 ../sidebar.php:9
+msgid "Expand Sidebar"
+msgstr "Свернуть боковую колонку"
+
+#: ../sidebar-2.php:11
+msgid "More"
+msgstr "Еще"
+
+#: ../sidebar.php:15
+msgid "Follow:"
+msgstr "Соцсети"
+
+#: ../single.php:14
+msgid "by"
+msgstr ""
+
+#: ../single.php:23
+msgid "Pages:"
+msgstr "Страницы:"
+
+#: ../single.php:35
+msgid "Tags:"
+msgstr "Теги:"
+
+#: ../functions/widgets/alx-tabs.php:27
+msgid "Recent Posts"
+msgstr "Свежие статьи"
+
+#: ../functions/widgets/alx-tabs.php:28
+msgid "Popular Posts"
+msgstr "Популярные статьи"
+
+#: ../functions/widgets/alx-tabs.php:29
+msgid "Recent Comments"
+msgstr "Свежие комментарии"
+
+#: ../functions/widgets/alx-tabs.php:30
+msgid "Tags"
+msgstr "Теги"
+
+#: ../functions/widgets/alx-tabs.php:187
+msgid "says:"
+msgstr "пишет:"
+
+#: ../inc/page-title.php:23
+msgid "Search result"
+msgstr "Результат поиска"
+
+#: ../inc/page-title.php:25
+msgid "Search results"
+msgstr "Результаты поиска"
+
+#: ../inc/page-title.php:31
+msgid "Error 404."
+msgstr "Ошибка 404."
+
+#: ../inc/page-title.php:31
+msgid "Page not found!"
+msgstr "Страница не найдена!"
+
+#: ../inc/page-title.php:35
+msgid "Author:"
+msgstr "Автор:"
+
+#: ../inc/page-title.php:38
+msgid "Category:"
+msgstr "Категория:"
+
+#: ../inc/page-title.php:41
+msgid "Tagged:"
+msgstr "Теги:"
+
+#: ../inc/page-title.php:44
+msgid "Daily Archive:"
+msgstr "Архив по дням:"
+
+#: ../inc/page-title.php:47
+msgid "Monthly Archive:"
+msgstr "Архив по месяцам:"
+
+#: ../inc/page-title.php:50
+msgid "Yearly Archive:"
+msgstr "Архив по годам:"
+
+#: ../inc/post-nav.php:3
+msgid "Next story"
+msgstr "Следующий пост"
+
+#: ../inc/post-nav.php:4
+msgid "Previous story"
+msgstr "Предыдущий пост"
+
+#: ../inc/related-posts.php:6
+msgid "You may also like..."
+msgstr "Вам может быть так же интересно:"
+
+#: ../inc/sharrre.php:2
+msgid "Share"
+msgstr "Поделиться"

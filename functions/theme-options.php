@@ -139,16 +139,16 @@ function custom_theme_options() {
 			'type'		=> 'text',
 			'section'	=> 'general'
 		),
-		// General: Tracking Code
+		// General: Post Comments
 		array(
-			'id'		=> 'tracking-code',
-			'label'		=> 'Tracking Code',
-			'desc'		=> 'Paste your Google Analytics (or other) tracking code here. It will be inserted before the closing body tag of your theme.',
-			'type'		=> 'textarea-simple',
-			'section'	=> 'general',
-			'rows'		=> '3'
+			'id'		=> 'post-comments',
+			'label'		=> 'Post Comments',
+			'desc'		=> 'Comments on posts',
+			'std'		=> 'on',
+			'type'		=> 'on-off',
+			'section'	=> 'general'
 		),
-		// General: Comments
+		// General: Page Comments
 		array(
 			'id'		=> 'page-comments',
 			'label'		=> 'Page Comments',
@@ -223,6 +223,25 @@ function custom_theme_options() {
 			'type'			=> 'numeric-slider',
 			'section'		=> 'blog',
 			'min_max_step'	=> '0,10,1'
+		),
+		// Blog: Featured Slideshow
+		array(
+			'id'			=> 'featured-slideshow',
+			'label'			=> 'Featured Slideshow',
+			'desc'			=> 'Enable slideshow of featured posts (automatic animation)',
+			'std'			=> 'off',
+			'type'			=> 'on-off',
+			'section'		=> 'blog'
+		),
+		// Blog: Featured Slideshow Speed
+		array(
+			'id'			=> 'featured-slideshow-speed',
+			'label'			=> 'Featured Slideshow Speed',
+			'desc'			=> 'Speed of the automatic slideshow animation',
+			'std'			=> '5000',
+			'type'			=> 'numeric-slider',
+			'section'		=> 'blog',
+			'min_max_step'	=> '1000,10000,1000'
 		),
 		// Blog: Standard
 		array(

@@ -1,0 +1,169 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Hueman\n"
+"POT-Creation-Date: 2015-02-06 14:15+0100\n"
+"PO-Revision-Date: 2015-12-07 15:58-0200\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.4\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"Last-Translator: Elvis Henrique Pereira <elvishp2006@gmail.com>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: pt_BR\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../404.php:14
+msgid ""
+"The page you are trying to reach does not exist, or has been moved. Please "
+"use the menus or the search box to find what you are looking for."
+msgstr ""
+"A página que você está tentando acessar não existe, ou foi movida. Por "
+"favor, utilize os menus ou a caixa de pesquisa para encontrar o que você "
+"está procurando."
+
+#: ../comments.php:7
+msgid "No Responses"
+msgstr "Sem Resultados"
+
+#: ../comments.php:7
+msgid "1 Response"
+msgstr "1 Resultado"
+
+#: ../comments.php:7
+msgid "% Responses"
+msgstr "% Resultados"
+
+#: ../comments.php:10
+msgid "Comments"
+msgstr "Comentários"
+
+#: ../comments.php:11
+msgid "Pingbacks"
+msgstr ""
+
+#: ../footer.php:76
+msgid "All Rights Reserved."
+msgstr "Todos Direitos Reservados."
+
+#: ../footer.php:82
+msgid "Powered by"
+msgstr ""
+
+#: ../footer.php:82
+msgid "Theme by"
+msgstr ""
+
+#: ../search.php:10
+msgid "For the term"
+msgstr "Para o termo"
+
+#: ../search.php:12
+msgid "Please try another search:"
+msgstr "Por favor, tente outra pesquisa:"
+
+#: ../searchform.php:3
+msgid "To search type and hit enter"
+msgstr "Para procurar digite e aperte enter"
+
+#: ../sidebar-2.php:5 ../sidebar.php:9
+msgid "Expand Sidebar"
+msgstr "Expandir Sidebar"
+
+#: ../sidebar-2.php:11
+msgid "More"
+msgstr "Mais"
+
+#: ../sidebar.php:15
+msgid "Follow:"
+msgstr "Siga:"
+
+#: ../single.php:14
+msgid "by"
+msgstr "por"
+
+#: ../single.php:23
+msgid "Pages:"
+msgstr "Páginas:"
+
+#: ../single.php:35
+msgid "Tags:"
+msgstr ""
+
+#: ../functions/widgets/alx-tabs.php:27
+msgid "Recent Posts"
+msgstr "Posts Recentes"
+
+#: ../functions/widgets/alx-tabs.php:28
+msgid "Popular Posts"
+msgstr "Posts Populares"
+
+#: ../functions/widgets/alx-tabs.php:29
+msgid "Recent Comments"
+msgstr "Comentários Recentes"
+
+#: ../functions/widgets/alx-tabs.php:30
+msgid "Tags"
+msgstr ""
+
+#: ../functions/widgets/alx-tabs.php:187
+msgid "says:"
+msgstr "diz:"
+
+#: ../inc/page-title.php:23
+msgid "Search result"
+msgstr "Resultado de busca"
+
+#: ../inc/page-title.php:25
+msgid "Search results"
+msgstr "Resultados de busca"
+
+#: ../inc/page-title.php:31
+msgid "Error 404."
+msgstr "Erro 404."
+
+#: ../inc/page-title.php:31
+msgid "Page not found!"
+msgstr "Página não encontrada!"
+
+#: ../inc/page-title.php:35
+msgid "Author:"
+msgstr "Autor:"
+
+#: ../inc/page-title.php:38
+msgid "Category:"
+msgstr "Categoria:"
+
+#: ../inc/page-title.php:41
+msgid "Tagged:"
+msgstr "Tag:"
+
+#: ../inc/page-title.php:44
+msgid "Daily Archive:"
+msgstr "Arquivo diário:"
+
+#: ../inc/page-title.php:47
+msgid "Monthly Archive:"
+msgstr "Arquivo Mensal:"
+
+#: ../inc/page-title.php:50
+msgid "Yearly Archive:"
+msgstr "Arquivo Anual:"
+
+#: ../inc/post-nav.php:3
+msgid "Next story"
+msgstr "Próximo história"
+
+#: ../inc/post-nav.php:4
+msgid "Previous story"
+msgstr "História anterior"
+
+#: ../inc/related-posts.php:6
+msgid "You may also like..."
+msgstr "Você pode gostar..."
+
+#: ../inc/sharrre.php:2
+msgid "Share"
+msgstr ""

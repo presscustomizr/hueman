@@ -12,7 +12,7 @@ $featured = new WP_Query(
 );
 ?>
 
-<?php if ( is_home() && !is_paged() && ( ot_get_option('featured-posts-count') =='1') ): // No slider if 1 post is featured ?>
+<?php if ( is_home() && !is_paged() && ( ot_get_option('featured-posts-count') =='1') && $featured->have_posts() ): // No slider if 1 post is featured ?>
 	
 	<div class="featured">
 		<?php while ( $featured->have_posts() ): $featured->the_post(); ?>
@@ -20,7 +20,7 @@ $featured = new WP_Query(
 		<?php endwhile; ?>	
 	</div><!--/.featured-->
 	
-<?php elseif ( is_home() && !is_paged() && ( ot_get_option('featured-posts-count') !='0') ): // Show slider if posts are not 1 or 0 ?>
+<?php elseif ( is_home() && !is_paged() && ( ot_get_option('featured-posts-count') !='0') && $featured->have_posts() ): // Show slider if posts are not 1 or 0 ?>
 	
 	<script type="text/javascript">
 		// Check if first slider image is loaded, and load flexslider on document ready
@@ -34,14 +34,14 @@ $featured = new WP_Query(
 					jQuery('#flexslider-featured').flexslider({
 						animation: "slide",
 						useCSS: false, // Fix iPad flickering issue
-						slideshow: false,
 						directionNav: true,
 						controlNav: true,
 						pauseOnHover: true,
-						slideshowSpeed: 7000,
 						animationSpeed: 400,
 						smoothHeight: true,
-						touch: false
+						touch: false,
+						slideshow: <?php if (ot_get_option('featured-slideshow') == 'on') { echo 'true'; } else { echo 'false'; } ?>,
+						slideshowSpeed: <?php echo ot_get_option('featured-slideshow-speed', 5000); ?>,
 					});
 					
 				}

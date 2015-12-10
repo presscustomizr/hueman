@@ -17,7 +17,7 @@
 					
 					<div class="clear"></div>
 					
-					<div class="entry <?php if ( ot_get_option('sharrre') != 'off' ) { echo 'share'; }; ?>">	
+					<div class="entry themeform <?php if ( ot_get_option('sharrre') != 'off' ) { echo 'share'; }; ?>">	
 						<div class="entry-inner">
 							<?php the_content(); ?>
 							<?php wp_link_pages(array('before'=>'<div class="post-pages">'.__('Pages:','hueman'),'after'=>'</div>')); ?>
@@ -47,7 +47,7 @@
 		
 		<?php if ( ot_get_option( 'related-posts' ) != '1' ) { get_template_part('inc/related-posts'); } ?>
 		
-		<?php comments_template('/comments.php',true); ?>
+		<?php if ( ot_get_option('post-comments') != 'off' ) { comments_template('/comments.php',true); } ?>
 		
 	</div><!--/.pad-->
 	
