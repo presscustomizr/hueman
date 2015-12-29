@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Hueman\n"
 "POT-Creation-Date: 2015-02-06 14:15+0100\n"
-"PO-Revision-Date: 2015-12-17 18:24-0430\n"
+"PO-Revision-Date: 2015-12-29 14:42-0430\n"
 "Last-Translator: José Subero | @arawako <jose.subero@arawako.com>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -20,7 +20,7 @@ msgid ""
 "use the menus or the search box to find what you are looking for."
 msgstr ""
 "La página a la que estás tratando de llegar no existe, o se ha movido. Por "
-"favor, use los menús o el cuadro de búsqueda para encontrar lo que busca."
+"favor, usa los menús o el cuadro de búsqueda para encontrar lo que buscas."
 
 #: ../comments.php:7
 msgid "No Responses"
@@ -60,11 +60,11 @@ msgstr "Bajo el término"
 
 #: ../search.php:12
 msgid "Please try another search:"
-msgstr "Por favor, intente otra búsqueda:"
+msgstr "Por favor, intenta otra búsqueda:"
 
 #: ../searchform.php:3
 msgid "To search type and hit enter"
-msgstr "Escribe para buscar y presiona entrar"
+msgstr "Para buscar, escribe y presiona entrar"
 
 #: ../sidebar-2.php:5 ../sidebar.php:9
 msgid "Expand Sidebar"
@@ -104,7 +104,7 @@ msgstr "Comentarios recientes"
 
 #: ../functions/widgets/alx-tabs.php:30
 msgid "Tags"
-msgstr "Etiqueta"
+msgstr "Etiquetas"
 
 #: ../functions/widgets/alx-tabs.php:187
 msgid "says:"
@@ -112,7 +112,7 @@ msgstr "dice:"
 
 #: ../inc/page-title.php:23
 msgid "Search result"
-msgstr "Resultado de la busqueda"
+msgstr "Resultado de la búsqueda"
 
 #: ../inc/page-title.php:25
 msgid "Search results"
