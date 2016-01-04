@@ -1228,6 +1228,9 @@ function custom_theme_options() {
 	)
 );
 
+/* allow settings to be filtered before saving */
+$custom_settings = apply_filters( ot_settings_id() . '_args', $custom_settings );
+
 /*  Settings are not the same? Update the DB
 /* ------------------------------------ */
 	if ( $saved_settings !== $custom_settings ) {
