@@ -1,0 +1,168 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Hueman\n"
+"POT-Creation-Date: 2015-02-06 14:15+0100\n"
+"PO-Revision-Date: 2016-02-03 03:46+0200\n"
+"Last-Translator: Mertcan <admin@mertcangokgoz.com>\n"
+"Language-Team: Mertcan Gökgöz <admin@mertcangokgoz.com>\n"
+"Language: tr_TR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.4\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../404.php:14
+msgid ""
+"The page you are trying to reach does not exist, or has been moved. Please "
+"use the menus or the search box to find what you are looking for."
+msgstr ""
+"Ulaşmaya çalıştığınız sayfa mevcut değil yada taşındı.Aradığınızı bulmak "
+"istiyorsanız menüleri veya arama kısmını kullanabilirsiniz."
+
+#: ../comments.php:7
+msgid "No Responses"
+msgstr "Yanıt yok"
+
+#: ../comments.php:7
+msgid "1 Response"
+msgstr "1 Yanıt"
+
+#: ../comments.php:7
+msgid "% Responses"
+msgstr "% Yanıt"
+
+#: ../comments.php:10
+msgid "Comments"
+msgstr "Yorumlar"
+
+#: ../comments.php:11
+msgid "Pingbacks"
+msgstr "Geri bildirimler"
+
+#: ../footer.php:76
+msgid "All Rights Reserved."
+msgstr "Her hakkı saklıdır."
+
+#: ../footer.php:82
+msgid "Powered by"
+msgstr ""
+
+#: ../footer.php:82
+msgid "Theme by"
+msgstr ""
+
+#: ../search.php:10
+msgid "For the term"
+msgstr "Şartlar için"
+
+#: ../search.php:12
+msgid "Please try another search:"
+msgstr "Başka bir arama yapmayı deneyin:"
+
+#: ../searchform.php:3
+msgid "To search type and hit enter"
+msgstr "Arama yapmak için tıklayın"
+
+#: ../sidebar-2.php:5 ../sidebar.php:9
+msgid "Expand Sidebar"
+msgstr "Kenar Çubuğu'nu genişlet"
+
+#: ../sidebar-2.php:11
+msgid "More"
+msgstr "daha fazlası"
+
+#: ../sidebar.php:15
+msgid "Follow:"
+msgstr "Takip Et:"
+
+#: ../single.php:14
+msgid "by"
+msgstr "tarafından"
+
+#: ../single.php:23
+msgid "Pages:"
+msgstr "Sayfalar:"
+
+#: ../single.php:35
+msgid "Tags:"
+msgstr "Etikerler:"
+
+#: ../functions/widgets/alx-tabs.php:27
+msgid "Recent Posts"
+msgstr "Yakın zamanda yayınlanan yazılar"
+
+#: ../functions/widgets/alx-tabs.php:28
+msgid "Popular Posts"
+msgstr "Popüler Yazılar"
+
+#: ../functions/widgets/alx-tabs.php:29
+msgid "Recent Comments"
+msgstr "Son yorumlar"
+
+#: ../functions/widgets/alx-tabs.php:30
+msgid "Tags"
+msgstr "Etiketler"
+
+#: ../functions/widgets/alx-tabs.php:187
+msgid "says:"
+msgstr "dedi ki:"
+
+#: ../inc/page-title.php:23
+msgid "Search result"
+msgstr "Arama sonucu"
+
+#: ../inc/page-title.php:25
+msgid "Search results"
+msgstr "Arama sonuçları"
+
+#: ../inc/page-title.php:31
+msgid "Error 404."
+msgstr "HATA 404"
+
+#: ../inc/page-title.php:31
+msgid "Page not found!"
+msgstr "Sayfa bulunamadı!"
+
+#: ../inc/page-title.php:35
+msgid "Author:"
+msgstr "Yazar:"
+
+#: ../inc/page-title.php:38
+msgid "Category:"
+msgstr "Kategori:"
+
+#: ../inc/page-title.php:41
+msgid "Tagged:"
+msgstr "Etiketlendi:"
+
+#: ../inc/page-title.php:44
+msgid "Daily Archive:"
+msgstr "Günlük Arşiv:"
+
+#: ../inc/page-title.php:47
+msgid "Monthly Archive:"
+msgstr "Aylık Arşiv:"
+
+#: ../inc/page-title.php:50
+msgid "Yearly Archive:"
+msgstr "Yıllık Arşiv:"
+
+#: ../inc/post-nav.php:3
+msgid "Next story"
+msgstr "Sonraki yazı"
+
+#: ../inc/post-nav.php:4
+msgid "Previous story"
+msgstr "Önceki yazı"
+
+#: ../inc/related-posts.php:6
+msgid "You may also like..."
+msgstr "Sevebilirsin..."
+
+#: ../inc/sharrre.php:2
+msgid "Share"
+msgstr "Paylaş"
