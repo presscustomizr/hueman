@@ -1,6 +1,6 @@
 <?php
 
-/*  Initialize the options before anything else. 
+/*  Initialize the options before anything else.
 /* ------------------------------------ */
 add_action( 'admin_init', 'custom_theme_options', 1 );
 
@@ -8,7 +8,7 @@ add_action( 'admin_init', 'custom_theme_options', 1 );
 /*  Build the custom settings & update OptionTree.
 /* ------------------------------------ */
 function custom_theme_options() {
-	
+
 	// Get a copy of the saved settings array.
 	$saved_settings = get_option( 'option_tree_settings', array() );
 
@@ -16,9 +16,9 @@ function custom_theme_options() {
 	$custom_settings = array(
 
 /*  Help pages
-/* ------------------------------------ */	
+/* ------------------------------------ */
 	'contextual_help' => array(
-      'content'       => array( 
+      'content'       => array(
         array(
           'id'        => 'general_help',
           'title'     => 'Documentation',
@@ -36,9 +36,9 @@ function custom_theme_options() {
         )
       )
     ),
-	
+
 /*  Admin panel sections
-/* ------------------------------------ */	
+/* ------------------------------------ */
 	'sections'        => array(
 		array(
 			'id'		=> 'general',
@@ -73,20 +73,23 @@ function custom_theme_options() {
 			'title'		=> 'Styling'
 		),
 	),
-	
+
 /*  Theme options
 /* ------------------------------------ */
 	'settings'        => array(
-		
-		// General: Custom CSS
-		array(
-			'id'		=> 'custom',
-			'label'		=> 'Custom Stylesheet',
-			'desc'		=> 'Load custom stylesheet [ <strong>custom.css</strong> ]<br /><i>Note: You must backup this file before a theme update. Consider using a <a target="_blank" href="http://codex.wordpress.org/Child_Themes">child theme</a> instead. A sample child theme is available in the help dropdown.</i>',
-			'std'		=> 'off',
-			'type'		=> 'on-off',
-			'section'	=> 'general'
-		),
+    // General: Custom CSS @fromfull @should be removed, user should use a child theme instead
+    array(
+      'id'    => 'custom',
+      'label'   => 'Custom Stylesheet',
+      'desc'    => 'Load custom stylesheet [ <strong>custom.css</strong> ]<br /><i>Note: You must backup this file before a theme update. Consider using a <a target="_blank" href="http://codex.wordpress.org/Child_Themes">child theme</a> instead. A sample child theme is available in the help dropdown.</i>',
+      'std'   => 'off',
+      'type'    => 'on-off',
+      'section' => 'general'
+    ),
+
+
+
+
 		// General: Responsive Layout
 		array(
 			'id'		=> 'responsive',
@@ -105,19 +108,19 @@ function custom_theme_options() {
 			'std'		=> '1',
 			'section'	=> 'general',
 			'choices'	=> array(
-				array( 
+				array(
 					'value' => '1',
 					'label' => 'Show sidebars'
 				),
-				array( 
+				array(
 					'value' => 's1',
 					'label' => 'Hide primary sidebar'
 				),
-				array( 
+				array(
 					'value' => 's2',
 					'label' => 'Hide secondary sidebar'
 				),
-				array( 
+				array(
 					'value' => 's1-s2',
 					'label' => 'Hide both sidebars'
 				)
@@ -200,7 +203,7 @@ function custom_theme_options() {
 			'type'		=> 'checkbox',
 			'section'	=> 'blog',
 			'choices'	=> array(
-				array( 
+				array(
 					'value' => '1',
 					'label' => 'Include featured posts in content area'
 				)
@@ -270,32 +273,36 @@ function custom_theme_options() {
 			'type'		=> 'on-off',
 			'section'	=> 'blog'
 		),
-		// Blog: Single - Sharrre
-		array(
-			'id'		=> 'sharrre',
-			'label'		=> 'Single &mdash; Share Bar',
-			'desc'		=> 'Social sharing buttons for each article',
-			'std'		=> 'on',
-			'type'		=> 'on-off',
-			'section'	=> 'blog'
-		),
-		// Blog: Single - Sharrre Sticky
-		array(
-			'id'		=> 'sharrre-scrollable',
-			'label'		=> 'Single &mdash; Scrollable Share Bar',
-			'desc'		=> 'Make social links stick to browser window when scrolling down',
-			'std'		=> 'off',
-			'type'		=> 'on-off',
-			'section'	=> 'blog'
-		),
-		// Blog: Twitter Username
-		array(
-			'id'		=> 'twitter-username',
-			'label'		=> 'Twitter Username',
-			'desc'		=> 'Your @username will be added to share-tweets of your posts (optional)',
-			'type'		=> 'text',
-			'section'	=> 'blog'
-		),
+
+    /******************* @fromfull plugin territory *******************/
+    // Blog: Single - Sharrre
+    array(
+      'id'    => 'sharrre',
+      'label'   => 'Single &mdash; Share Bar',
+      'desc'    => 'Social sharing buttons for each article',
+      'std'   => 'on',
+      'type'    => 'on-off',
+      'section' => 'blog'
+    ),
+    // Blog: Single - Sharrre Sticky
+    array(
+      'id'    => 'sharrre-scrollable',
+      'label'   => 'Single &mdash; Scrollable Share Bar',
+      'desc'    => 'Make social links stick to browser window when scrolling down',
+      'std'   => 'off',
+      'type'    => 'on-off',
+      'section' => 'blog'
+    ),
+    // Blog: Twitter Username
+    array(
+      'id'    => 'twitter-username',
+      'label'   => 'Twitter Username',
+      'desc'    => 'Your @username will be added to share-tweets of your posts (optional)',
+      'type'    => 'text',
+      'section' => 'blog'
+    ),
+    /******************* end of @fromfull plugin territory *******************/
+
 		// Blog: Single - Authorbox
 		array(
 			'id'		=> 'author-bio',
@@ -314,15 +321,15 @@ function custom_theme_options() {
 			'type'		=> 'radio',
 			'section'	=> 'blog',
 			'choices'	=> array(
-				array( 
+				array(
 					'value' => '1',
 					'label' => 'Disable'
 				),
-				array( 
+				array(
 					'value' => 'categories',
 					'label' => 'Related by categories'
 				),
-				array( 
+				array(
 					'value' => 'tags',
 					'label' => 'Related by tags'
 				)
@@ -337,19 +344,19 @@ function custom_theme_options() {
 			'type'		=> 'radio',
 			'section'	=> 'blog',
 			'choices'	=> array(
-				array( 
+				array(
 					'value' => '1',
 					'label' => 'Disable'
 				),
-				array( 
+				array(
 					'value' => 's1',
 					'label' => 'Sidebar Primary'
 				),
-				array( 
+				array(
 					'value' => 's2',
 					'label' => 'Sidebar Secondary'
 				),
-				array( 
+				array(
 					'value' => 'content',
 					'label' => 'Below content'
 				)
@@ -381,14 +388,23 @@ function custom_theme_options() {
 			'type'		=> 'on-off',
 			'section'	=> 'header'
 		),
-		// Header: Header Image
-		array(
-			'id'		=> 'header-image',
-			'label'		=> 'Header Image',
-			'desc'		=> 'Upload a header image. This will disable header title/logo and description.',
-			'type'		=> 'upload',
-			'section'	=> 'header'
-		),
+
+
+    /******************* @fromfull keep on wp.org *******************/
+    // Header: Header Image
+    array(
+      'id'    => 'header-image',
+      'label'   => 'Header Image',
+      'desc'    => 'Upload a header image. This will disable header title/logo and description.',
+      'type'    => 'upload',
+      'section' => 'header'
+    ),
+
+
+    /******************* end of @fromfull plugin territory *******************/
+
+
+
 		// Footer: Ads
 		array(
 			'id'		=> 'footer-ads',
@@ -411,27 +427,27 @@ function custom_theme_options() {
 				array(
 					'value'		=> '0',
 					'label'		=> 'Disable',
-					'src'		=> get_template_directory_uri() . '/functions/images/layout-off.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/layout-off.png'
 				),
 				array(
 					'value'		=> '1',
 					'label'		=> '1 Column',
-					'src'		=> get_template_directory_uri() . '/functions/images/footer-widgets-1.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/footer-widgets-1.png'
 				),
 				array(
 					'value'		=> '2',
 					'label'		=> '2 Columns',
-					'src'		=> get_template_directory_uri() . '/functions/images/footer-widgets-2.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/footer-widgets-2.png'
 				),
 				array(
 					'value'		=> '3',
 					'label'		=> '3 Columns',
-					'src'		=> get_template_directory_uri() . '/functions/images/footer-widgets-3.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/footer-widgets-3.png'
 				),
 				array(
 					'value'		=> '4',
 					'label'		=> '4 Columns',
-					'src'		=> get_template_directory_uri() . '/functions/images/footer-widgets-4.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/footer-widgets-4.png'
 				)
 			)
 		),
@@ -472,32 +488,32 @@ function custom_theme_options() {
 				array(
 					'value'		=> 'col-1c',
 					'label'		=> '1 Column',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-1c.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-1c.png'
 				),
 				array(
 					'value'		=> 'col-2cl',
 					'label'		=> '2 Column Left',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-2cl.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-2cl.png'
 				),
 				array(
 					'value'		=> 'col-2cr',
 					'label'		=> '2 Column Right',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-2cr.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-2cr.png'
 				),
 				array(
 					'value'		=> 'col-3cm',
 					'label'		=> '3 Column Middle',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cm.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cm.png'
 				),
 				array(
 					'value'		=> 'col-3cl',
 					'label'		=> '3 Column Left',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cl.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cl.png'
 				),
 				array(
 					'value'		=> 'col-3cr',
 					'label'		=> '3 Column Right',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cr.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cr.png'
 				)
 			)
 		),
@@ -513,37 +529,37 @@ function custom_theme_options() {
 				array(
 					'value'		=> 'inherit',
 					'label'		=> 'Inherit Global Layout',
-					'src'		=> get_template_directory_uri() . '/functions/images/layout-off.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/layout-off.png'
 				),
 				array(
 					'value'		=> 'col-1c',
 					'label'		=> '1 Column',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-1c.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-1c.png'
 				),
 				array(
 					'value'		=> 'col-2cl',
 					'label'		=> '2 Column Left',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-2cl.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-2cl.png'
 				),
 				array(
 					'value'		=> 'col-2cr',
 					'label'		=> '2 Column Right',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-2cr.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-2cr.png'
 				),
 				array(
 					'value'		=> 'col-3cm',
 					'label'		=> '3 Column Middle',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cm.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cm.png'
 				),
 				array(
 					'value'		=> 'col-3cl',
 					'label'		=> '3 Column Left',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cl.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cl.png'
 				),
 				array(
 					'value'		=> 'col-3cr',
 					'label'		=> '3 Column Right',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cr.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cr.png'
 				)
 			)
 		),
@@ -559,37 +575,37 @@ function custom_theme_options() {
 				array(
 					'value'		=> 'inherit',
 					'label'		=> 'Inherit Global Layout',
-					'src'		=> get_template_directory_uri() . '/functions/images/layout-off.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/layout-off.png'
 				),
 				array(
 					'value'		=> 'col-1c',
 					'label'		=> '1 Column',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-1c.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-1c.png'
 				),
 				array(
 					'value'		=> 'col-2cl',
 					'label'		=> '2 Column Left',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-2cl.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-2cl.png'
 				),
 				array(
 					'value'		=> 'col-2cr',
 					'label'		=> '2 Column Right',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-2cr.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-2cr.png'
 				),
 				array(
 					'value'		=> 'col-3cm',
 					'label'		=> '3 Column Middle',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cm.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cm.png'
 				),
 				array(
 					'value'		=> 'col-3cl',
 					'label'		=> '3 Column Left',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cl.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cl.png'
 				),
 				array(
 					'value'		=> 'col-3cr',
 					'label'		=> '3 Column Right',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cr.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cr.png'
 				)
 			)
 		),
@@ -605,37 +621,37 @@ function custom_theme_options() {
 				array(
 					'value'		=> 'inherit',
 					'label'		=> 'Inherit Global Layout',
-					'src'		=> get_template_directory_uri() . '/functions/images/layout-off.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/layout-off.png'
 				),
 				array(
 					'value'		=> 'col-1c',
 					'label'		=> '1 Column',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-1c.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-1c.png'
 				),
 				array(
 					'value'		=> 'col-2cl',
 					'label'		=> '2 Column Left',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-2cl.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-2cl.png'
 				),
 				array(
 					'value'		=> 'col-2cr',
 					'label'		=> '2 Column Right',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-2cr.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-2cr.png'
 				),
 				array(
 					'value'		=> 'col-3cm',
 					'label'		=> '3 Column Middle',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cm.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cm.png'
 				),
 				array(
 					'value'		=> 'col-3cl',
 					'label'		=> '3 Column Left',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cl.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cl.png'
 				),
 				array(
 					'value'		=> 'col-3cr',
 					'label'		=> '3 Column Right',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cr.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cr.png'
 				)
 			)
 		),
@@ -651,37 +667,37 @@ function custom_theme_options() {
 				array(
 					'value'		=> 'inherit',
 					'label'		=> 'Inherit Global Layout',
-					'src'		=> get_template_directory_uri() . '/functions/images/layout-off.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/layout-off.png'
 				),
 				array(
 					'value'		=> 'col-1c',
 					'label'		=> '1 Column',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-1c.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-1c.png'
 				),
 				array(
 					'value'		=> 'col-2cl',
 					'label'		=> '2 Column Left',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-2cl.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-2cl.png'
 				),
 				array(
 					'value'		=> 'col-2cr',
 					'label'		=> '2 Column Right',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-2cr.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-2cr.png'
 				),
 				array(
 					'value'		=> 'col-3cm',
 					'label'		=> '3 Column Middle',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cm.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cm.png'
 				),
 				array(
 					'value'		=> 'col-3cl',
 					'label'		=> '3 Column Left',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cl.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cl.png'
 				),
 				array(
 					'value'		=> 'col-3cr',
 					'label'		=> '3 Column Right',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cr.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cr.png'
 				)
 			)
 		),
@@ -697,37 +713,37 @@ function custom_theme_options() {
 				array(
 					'value'		=> 'inherit',
 					'label'		=> 'Inherit Global Layout',
-					'src'		=> get_template_directory_uri() . '/functions/images/layout-off.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/layout-off.png'
 				),
 				array(
 					'value'		=> 'col-1c',
 					'label'		=> '1 Column',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-1c.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-1c.png'
 				),
 				array(
 					'value'		=> 'col-2cl',
 					'label'		=> '2 Column Left',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-2cl.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-2cl.png'
 				),
 				array(
 					'value'		=> 'col-2cr',
 					'label'		=> '2 Column Right',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-2cr.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-2cr.png'
 				),
 				array(
 					'value'		=> 'col-3cm',
 					'label'		=> '3 Column Middle',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cm.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cm.png'
 				),
 				array(
 					'value'		=> 'col-3cl',
 					'label'		=> '3 Column Left',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cl.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cl.png'
 				),
 				array(
 					'value'		=> 'col-3cr',
 					'label'		=> '3 Column Right',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cr.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cr.png'
 				)
 			)
 		),
@@ -743,37 +759,37 @@ function custom_theme_options() {
 				array(
 					'value'		=> 'inherit',
 					'label'		=> 'Inherit Global Layout',
-					'src'		=> get_template_directory_uri() . '/functions/images/layout-off.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/layout-off.png'
 				),
 				array(
 					'value'		=> 'col-1c',
 					'label'		=> '1 Column',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-1c.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-1c.png'
 				),
 				array(
 					'value'		=> 'col-2cl',
 					'label'		=> '2 Column Left',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-2cl.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-2cl.png'
 				),
 				array(
 					'value'		=> 'col-2cr',
 					'label'		=> '2 Column Right',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-2cr.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-2cr.png'
 				),
 				array(
 					'value'		=> 'col-3cm',
 					'label'		=> '3 Column Middle',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cm.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cm.png'
 				),
 				array(
 					'value'		=> 'col-3cl',
 					'label'		=> '3 Column Left',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cl.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cl.png'
 				),
 				array(
 					'value'		=> 'col-3cr',
 					'label'		=> '3 Column Right',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cr.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cr.png'
 				)
 			)
 		),
@@ -789,37 +805,37 @@ function custom_theme_options() {
 				array(
 					'value'		=> 'inherit',
 					'label'		=> 'Inherit Global Layout',
-					'src'		=> get_template_directory_uri() . '/functions/images/layout-off.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/layout-off.png'
 				),
 				array(
 					'value'		=> 'col-1c',
 					'label'		=> '1 Column',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-1c.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-1c.png'
 				),
 				array(
 					'value'		=> 'col-2cl',
 					'label'		=> '2 Column Left',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-2cl.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-2cl.png'
 				),
 				array(
 					'value'		=> 'col-2cr',
 					'label'		=> '2 Column Right',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-2cr.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-2cr.png'
 				),
 				array(
 					'value'		=> 'col-3cm',
 					'label'		=> '3 Column Middle',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cm.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cm.png'
 				),
 				array(
 					'value'		=> 'col-3cl',
 					'label'		=> '3 Column Left',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cl.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cl.png'
 				),
 				array(
 					'value'		=> 'col-3cr',
 					'label'		=> '3 Column Right',
-					'src'		=> get_template_directory_uri() . '/functions/images/col-3cr.png'
+					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cr.png'
 				)
 			)
 		),
@@ -990,7 +1006,7 @@ function custom_theme_options() {
 					'std'		=> '',
 					'type'		=> 'checkbox',
 					'choices'	=> array(
-						array( 
+						array(
 							'value' => '_blank',
 							'label' => 'Open in new window'
 						)
@@ -1025,91 +1041,91 @@ function custom_theme_options() {
 			'std'		=> 'source-sans-pro',
 			'section'	=> 'styling',
 			'choices'	=> array(
-				array( 
+				array(
 					'value' => 'titillium-web',
 					'label' => 'Titillium Web, Latin (Self-hosted)'
 				),
-				array( 
+				array(
 					'value' => 'titillium-web-ext',
 					'label' => 'Titillium Web, Latin-Ext'
 				),
-				array( 
+				array(
 					'value' => 'droid-serif',
 					'label' => 'Droid Serif, Latin'
 				),
-				array( 
+				array(
 					'value' => 'source-sans-pro',
 					'label' => 'Source Sans Pro, Latin-Ext'
 				),
-				array( 
+				array(
 					'value' => 'lato',
 					'label' => 'Lato, Latin'
 				),
-				array( 
+				array(
 					'value' => 'raleway',
 					'label' => 'Raleway, Latin'
 				),
-				array( 
+				array(
 					'value' => 'ubuntu',
 					'label' => 'Ubuntu, Latin-Ext'
 				),
-				array( 
+				array(
 					'value' => 'ubuntu-cyr',
 					'label' => 'Ubuntu, Latin / Cyrillic-Ext'
 				),
-				array( 
+				array(
 					'value' => 'roboto-condensed',
 					'label' => 'Roboto Condensed, Latin-Ext'
 				),
-				array( 
+				array(
 					'value' => 'roboto-condensed-cyr',
 					'label' => 'Roboto Condensed, Latin / Cyrillic-Ext'
 				),
-				array( 
+				array(
 					'value' => 'roboto-slab',
 					'label' => 'Roboto Slab, Latin-Ext'
 				),
-				array( 
+				array(
 					'value' => 'roboto-slab-cyr',
 					'label' => 'Roboto Slab, Latin / Cyrillic-Ext'
 				),
-				array( 
+				array(
 					'value' => 'playfair-display',
 					'label' => 'Playfair Display, Latin-Ext'
 				),
-				array( 
+				array(
 					'value' => 'playfair-display-cyr',
 					'label' => 'Playfair Display, Latin / Cyrillic'
 				),
-				array( 
+				array(
 					'value' => 'open-sans',
 					'label' => 'Open Sans, Latin-Ext'
 				),
-				array( 
+				array(
 					'value' => 'open-sans-cyr',
 					'label' => 'Open Sans, Latin / Cyrillic-Ext'
 				),
-				array( 
+				array(
 					'value' => 'pt-serif',
 					'label' => 'PT Serif, Latin-Ext'
 				),
-				array( 
+				array(
 					'value' => 'pt-serif-cyr',
 					'label' => 'PT Serif, Latin / Cyrillic-Ext'
 				),
-				array( 
+				array(
 					'value' => 'arial',
 					'label' => 'Arial'
 				),
-				array( 
+				array(
 					'value' => 'georgia',
 					'label' => 'Georgia'
 				),
-				array( 
+				array(
 					'value' => 'verdana',
 					'label' => 'Verdana'
 				),
-				array( 
+				array(
 					'value' => 'tahoma',
 					'label' => 'Tahoma'
 				)
@@ -1129,15 +1145,16 @@ function custom_theme_options() {
 		array(
 			'id'		=> 'sidebar-padding',
 			'label'		=> 'Sidebar Width',
+			'desc'		=> 'Change sidebar content padding and width',
 			'type'		=> 'radio',
 			'std'		=> '30',
 			'section'	=> 'styling',
 			'choices'	=> array(
-				array( 
+				array(
 					'value' => '30',
 					'label' => '280px primary, 200px secondary (30px padding)'
 				),
-				array( 
+				array(
 					'value' => '20',
 					'label' => '300px primary, 220px secondary (20px padding)'
 				)
@@ -1221,8 +1238,10 @@ function custom_theme_options() {
 		array(
 			'id'		=> 'body-background',
 			'label'		=> 'Body Background',
-			'desc'		=> 'Set background color and/or upload your own background image',
-			'type'		=> 'background',
+			//'std'		=> '#eaeaea', <= was there originally on wp.org
+      'desc'   => 'Set background color and/or upload your own background image',//@fromfull
+      //'type'    => 'colorpicker',<= was there originally on wp.org
+      'type'    => 'background',//@fromfull
 			'section'	=> 'styling'
 		)
 	)
@@ -1231,6 +1250,6 @@ function custom_theme_options() {
 /*  Settings are not the same? Update the DB
 /* ------------------------------------ */
 	if ( $saved_settings !== $custom_settings ) {
-		update_option( 'option_tree_settings', $custom_settings ); 
-	} 
+		update_option( 'option_tree_settings', $custom_settings );
+	}
 }

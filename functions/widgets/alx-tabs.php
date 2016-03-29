@@ -16,7 +16,7 @@ class AlxTabs extends WP_Widget {
 /*  Constructor
 /* ------------------------------------ */
 	function AlxTabs() {
-		parent::__construct( false, 'AlxTabs', array('description' => 'List posts, comments, and/or tags with or without tabs.', 'classname' => 'widget_alx_tabs') );;
+		parent::__construct( false, 'AlxTabs', array('description' => 'List posts, comments, and/or tags with or without tabs.', 'classname' => 'widget_hu_tabs') );;
 	}
 
 /*  Create tabs-nav
@@ -92,7 +92,7 @@ class AlxTabs extends WP_Widget {
 							<?php if ( has_post_thumbnail() ): ?>
 								<?php the_post_thumbnail('thumb-small'); ?>
 							<?php else: ?>
-								<img src="<?php echo get_template_directory_uri(); ?>/img/thumb-small.png" alt="<?php the_title(); ?>" />
+								<img src="<?php echo get_template_directory_uri(); ?>/assets/front/img/thumb-small.png" alt="<?php the_title(); ?>" />
 							<?php endif; ?>
 							<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fa fa-play"></i></span>'; ?>
 							<?php if ( has_post_format('audio') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fa fa-volume-up"></i></span>'; ?>
@@ -143,7 +143,7 @@ class AlxTabs extends WP_Widget {
 							<?php if ( has_post_thumbnail() ): ?>
 								<?php the_post_thumbnail('thumb-small'); ?>
 							<?php else: ?>
-								<img src="<?php echo get_template_directory_uri(); ?>/img/thumb-small.png" alt="<?php the_title(); ?>" />
+								<img src="<?php echo get_template_directory_uri(); ?>/assets/front/img/thumb-small.png" alt="<?php the_title(); ?>" />
 							<?php endif; ?>
 							<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fa fa-play"></i></span>'; ?>
 							<?php if ( has_post_format('audio') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fa fa-volume-up"></i></span>'; ?>
@@ -407,11 +407,11 @@ class AlxTabs extends WP_Widget {
 
 /*  Register widget
 /* ------------------------------------ */
-if ( ! function_exists( 'alx_register_widget_tabs' ) ) {
+if ( ! function_exists( 'hu_register_widget_tabs' ) ) {
 
-	function alx_register_widget_tabs() {
+	function hu_register_widget_tabs() {
 		register_widget( 'AlxTabs' );
 	}
 
 }
-add_action( 'widgets_init', 'alx_register_widget_tabs' );
+add_action( 'widgets_init', 'hu_register_widget_tabs' );
