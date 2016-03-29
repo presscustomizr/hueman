@@ -108,58 +108,58 @@ msgstr ""
 msgid "says:"
 msgstr ""
 
-#: ../inc/page-title.php:23
+#: ../parts/page-title.php:23
 msgid "Search result"
 msgstr ""
 
-#: ../inc/page-title.php:25
+#: ../parts/page-title.php:25
 msgid "Search results"
 msgstr ""
 
-#: ../inc/page-title.php:31
+#: ../parts/page-title.php:31
 msgid "Error 404."
 msgstr ""
 
-#: ../inc/page-title.php:31
+#: ../parts/page-title.php:31
 msgid "Page not found!"
 msgstr ""
 
-#: ../inc/page-title.php:35
+#: ../parts/page-title.php:35
 msgid "Author:"
 msgstr ""
 
-#: ../inc/page-title.php:38
+#: ../parts/page-title.php:38
 msgid "Category:"
 msgstr ""
 
-#: ../inc/page-title.php:41
+#: ../parts/page-title.php:41
 msgid "Tagged:"
 msgstr ""
 
-#: ../inc/page-title.php:44
+#: ../parts/page-title.php:44
 msgid "Daily Archive:"
 msgstr ""
 
-#: ../inc/page-title.php:47
+#: ../parts/page-title.php:47
 msgid "Monthly Archive:"
 msgstr ""
 
-#: ../inc/page-title.php:50
+#: ../parts/page-title.php:50
 msgid "Yearly Archive:"
 msgstr ""
 
-#: ../inc/post-nav.php:3
+#: ../parts/post-nav.php:3
 msgid "Next story"
 msgstr ""
 
-#: ../inc/post-nav.php:4
+#: ../parts/post-nav.php:4
 msgid "Previous story"
 msgstr ""
 
-#: ../inc/related-posts.php:6
+#: ../parts/related-posts.php:6
 msgid "You may also like..."
 msgstr ""
 
-#: ../inc/sharrre.php:2
+#: ../parts/sharrre.php:2
 msgid "Share"
 msgstr ""

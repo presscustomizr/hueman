@@ -16,7 +16,7 @@ class AlxVideo extends WP_Widget {
 /*  Constructor
 /* ------------------------------------ */
 	function AlxVideo() {
-		parent::__construct( false, 'AlxVideo', array('description' => 'Display a responsive video by adding a link.', 'classname' => 'widget_alx_video') );;
+		parent::__construct( false, 'AlxVideo', array('description' => 'Display a responsive video by adding a link.', 'classname' => 'widget_hu_video') );;
 	}
 
 /*  Widget
@@ -97,11 +97,11 @@ class AlxVideo extends WP_Widget {
 
 /*  Register widget
 /* ------------------------------------ */
-if ( ! function_exists( 'alx_register_widget_video' ) ) {
+if ( ! function_exists( 'hu_register_widget_video' ) ) {
 
-	function alx_register_widget_video() {
+	function hu_register_widget_video() {
 		register_widget( 'AlxVideo' );
 	}
 
 }
-add_action( 'widgets_init', 'alx_register_widget_video' );
+add_action( 'widgets_init', 'hu_register_widget_video' );

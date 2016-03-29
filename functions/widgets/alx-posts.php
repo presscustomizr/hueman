@@ -5,7 +5,7 @@
 	License: GNU General Public License v3.0
 	License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-	Copyright: (c) 2013-2015 Alexander "Alx" Agnarson, 2015 Nicolas GUILLAUME (nikeo)
+	Copyright: (c) 2013 Alexander "Alx" AgnarsCopyright: (c) 2013-2015 Alexander "Alx" Agnarson, 2015 Nicolas GUILLAUME (nikeo)
 
 		@package AlxPosts
 		@version 1.0
@@ -16,7 +16,7 @@ class AlxPosts extends WP_Widget {
 /*  Constructor
 /* ------------------------------------ */
 	function AlxPosts() {
-		parent::__construct( false, 'AlxPosts', array('description' => 'Display posts from a category', 'classname' => 'widget_alx_posts') );;
+		parent::__construct( false, 'AlxPosts', array('description' => 'Display posts from a category', 'classname' => 'widget_hu_posts') );;
 	}
 
 /*  Widget
@@ -58,7 +58,7 @@ class AlxPosts extends WP_Widget {
 					<?php if ( has_post_thumbnail() ): ?>
 						<?php the_post_thumbnail('thumb-medium'); ?>
 					<?php else: ?>
-						<img src="<?php echo get_template_directory_uri(); ?>/img/thumb-medium.png" alt="<?php the_title(); ?>" />
+						<img src="<?php echo get_template_directory_uri(); ?>/assets/front/img/thumb-medium.png" alt="<?php the_title(); ?>" />
 					<?php endif; ?>
 					<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fa fa-play"></i></span>'; ?>
 					<?php if ( has_post_format('audio') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fa fa-volume-up"></i></span>'; ?>
@@ -187,11 +187,11 @@ class AlxPosts extends WP_Widget {
 
 /*  Register widget
 /* ------------------------------------ */
-if ( ! function_exists( 'alx_register_widget_posts' ) ) {
+if ( ! function_exists( 'hu_register_widget_posts' ) ) {
 
-	function alx_register_widget_posts() {
+	function hu_register_widget_posts() {
 		register_widget( 'AlxPosts' );
 	}
 
 }
-add_action( 'widgets_init', 'alx_register_widget_posts' );
+add_action( 'widgets_init', 'hu_register_widget_posts' );

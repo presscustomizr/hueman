@@ -11,7 +11,7 @@
 if ( ! class_exists( 'OT_Cleanup' ) ) {
 
   class OT_Cleanup {
-  
+
     /**
      * PHP5 constructor method.
      *
@@ -30,15 +30,15 @@ if ( ! class_exists( 'OT_Cleanup' ) ) {
 
       // Load styles
       add_action( 'admin_head', array( $this, 'styles' ), 1 );
-      
+
       // Maybe Clean up OptionTree
       add_action( 'admin_menu', array( $this, 'maybe_cleanup' ), 100 );
-      
+
       // Increase timeout if allowed
       add_action( 'ot_pre_consolidate_posts', array( $this, 'increase_timeout' ) );
-      
+
     }
-    
+
     /**
      * Adds the cleanup styles to the admin head
      *
@@ -52,7 +52,7 @@ if ( ! class_exists( 'OT_Cleanup' ) ) {
       echo '<style>#toplevel_page_ot-cleanup{display:none;}</style>';
 
     }
-    
+
     /**
      * Check if OptionTree needs to be cleaned up from a previous install.
      *
@@ -75,18 +75,18 @@ if ( ! class_exists( 'OT_Cleanup' ) ) {
       }
 
       if ( $ot_maybe_cleanup_posts || $ot_maybe_cleanup_table ) {
-        
+
         if ( $page != 'ot-cleanup' )
           add_action( 'admin_notices', array( $this, 'cleanup_notice' ) );
 
-        $theme_check_bs = 'add_menu_page';
+		$theme_check_bs = 'add_menu_page';
 
         $theme_check_bs( apply_filters( 'ot_cleanup_page_title', __( 'OptionTree Cleanup', 'option-tree' ) ), apply_filters( 'ot_cleanup_menu_title', __( 'OptionTree Cleanup', 'option-tree' ) ), 'edit_theme_options', 'ot-cleanup', array( $this, 'options_page' ) );
 
       }
-      
+
     }
-    
+
     /**
      * Adds an admin nag.
      *
@@ -99,7 +99,7 @@ if ( ! class_exists( 'OT_Cleanup' ) ) {
 
       if ( get_current_screen()->id != 'appearance_page_ot-cleanup' )
         echo '<div class="update-nag">' . sprintf( __( 'OptionTree has outdated data that should be removed. Please go to %s for more information.', 'option-tree' ), sprintf( '<a href="%s">%s</a>', admin_url( 'themes.php?page=ot-cleanup' ), apply_filters( 'ot_cleanup_menu_title', __( 'OptionTree Cleanup', 'option-tree' ) ) ) ) . '</div>';
-    
+
     }
 
     /**
@@ -181,7 +181,7 @@ if ( ! class_exists( 'OT_Cleanup' ) ) {
                 </script>';
                 break;
               }
- 
+
               // Get the attachements
               $attachments = get_children( 'post_type=attachment&post_parent=' . $post->ID );
 
@@ -191,7 +191,7 @@ if ( ! class_exists( 'OT_Cleanup' ) ) {
                 echo 'Updating Attachments parent ID for <tt>option-tree</tt> post <tt>#' . $post->ID . '</tt>.<br />';
 
                 foreach( $attachments as $attachment_id => $attachment ) {
-                  wp_update_post( 
+                  wp_update_post(
                     array(
                       'ID' => $attachment_id,
                       'post_parent' => $post_ID
@@ -260,7 +260,7 @@ if ( ! class_exists( 'OT_Cleanup' ) ) {
           }
 
         }
- 
+
       echo '</div>';
 
     }
@@ -276,13 +276,13 @@ if ( ! class_exists( 'OT_Cleanup' ) ) {
      * @since     2.4.6
      */
     public function increase_timeout() {
-      
+
       if ( ! ini_get( 'safe_mode' ) ) {
-      
+
         @set_time_limit( 0 );
-        
+
       }
-      
+
     }
 
   }
