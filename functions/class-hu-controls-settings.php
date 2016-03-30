@@ -667,7 +667,7 @@ if ( ! class_exists( 'HU_Customize_Socials' ) ) :
           <div class="hu-input">
             <input data-type="social-link" type="text" value="{{ data['social-link'] }}" placeholder="<?php _e('http://...', 'hueman'); ?>"></input>
           </div>
-          <span class="hu-notice"><?php _e('Enter the full url for your icon button. (must include http://)', 'hueman'); ?></span>
+          <span class="hu-notice"><?php _e('Enter the full url of your social profile (must start with "http://").', 'hueman'); ?></span>
         </div>
         <div class="hu-sub-set">
           <div class="customize-control-title"><?php _e('Title', 'hueman'); ?></div>

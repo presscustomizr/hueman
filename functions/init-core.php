@@ -55,6 +55,43 @@ function hu_is_customizing() {
   ) );
 }
 
+/* HELPER FOR CHECKBOX OPTIONS */
+//the old options used 'on' and 'off'
+//the new options use 1 and 0
+function hu_is_checked( $opt_name = '') {
+  $val = hu_get_option($opt_name);
+  return hu_booleanize_checkbox_val( $val );
+}
+
+function hu_booleanize_checkbox_val( $val ) {
+  if ( ! $val )
+    return;
+
+  switch ( $val ) {
+    case 'on':
+    case 1 :
+    case '1' :
+    case true :
+      return true;
+      break;
+
+    case 'off':
+    case 0 :
+    case '0' :
+    case false :
+      return false;
+      break;
+
+    default: return false;
+  }
+}
+
+//used in the customizer
+//replace wp checked() function
+function hu_checked( $val ) {
+  echo hu_is_checked( $val ) ? 'checked="checked"' : '';
+}
+
 
 
 
@@ -105,8 +142,8 @@ function sample_admin_notice__success() {
       <br/><br/>
           <?php
             printf(
-              __( '<h2>As per the %1$s, all the Hueman theme options have been moved to the %2$s.</h2>', 'hueman' ),
-              sprintf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://make.wordpress.org/themes/handbook/review/required/#options-and-settings'), __('WordPress themes guidelines', 'hueman') ),
+              __( '<h2>As per the WordPress themes guidelines (%1$s), all the Hueman theme options have been moved to the %2$s.</h2>', 'hueman' ),
+              sprintf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://make.wordpress.org/themes/handbook/review/required/#options-and-settings'), __('more informations here', 'hueman') ),
               sprintf('<a href="%1$s">%2$s</a>', admin_url('customize.php'), __('customizer', 'hueman') )
             );
           ?>
@@ -338,9 +375,13 @@ function hu_update_options() {
   if ( isset($_options['has_been_copied']) && true === $_options['has_been_copied'] && ! $copy_option_tree )
     return;
 
+  $_old_options = get_option( 'option_tree' );
+
+  $_old_options = ( false == $_old_options || empty($_old_options) ) ? array() : $_old_options;
+
   //if not then grab the options from option tree and copy them into the new option raw
   //Ensure compatibility for some options like sidebar-areas + s1*, s2*options
-  $_opt_to_copy = apply_filters('hu_implement_options_compat', get_option( 'option_tree' ) );
+  $_opt_to_copy = apply_filters('hu_implement_options_compat', $_old_options );
 
   update_option(
     HU_THEME_OPTIONS,

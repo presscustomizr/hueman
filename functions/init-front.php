@@ -1,29 +1,4 @@
 <?php
-/* HELPER FOR CHECKBOX OPTIONS */
-//the old options used 'on' and 'off'
-//the new options use 1 and 0
-function hu_is_checked( $opt_name = '') {
-  return hu_booleanize_checkbox_val( hu_get_option($opt_name) );
-}
-
-function hu_booleanize_checkbox_val( $val ) {
-  switch ( $val ) {
-    case 'on': return true; break;
-    case 'off': return false; break;
-    case 1: return true; break;
-    case '1' : return true; break;
-    default: return false;
-  }
-}
-
-//used in the customizer
-//replace wp checked() function
-function hu_checked( $val ) {
-  echo hu_is_checked( $val ) ? 'checked="checked"' : '';
-}
-
-
-
 /* Dev mode script */
 //Grunt Live reload script on DEV mode (HU_DEV constant has to be defined. In wp_config for example)
 if ( defined('TC_DEV') && true === TC_DEV && apply_filters('hu_live_reload_in_dev_mode' , true ) )

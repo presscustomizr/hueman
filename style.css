@@ -601,7 +601,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 .site-image { display: block; margin: 0 auto; max-height: 400px; }
 
 #header-ads { float: right; }
-#header-ads h3 { display: none; }
+/*#header-ads h3 { display: none; }*/
 #header-ads img { display: block; }
 
 /*  header : search
@@ -734,8 +734,9 @@ box-shadow: 0 1px 1px rgba(0,0,0,0.1); }
 #footer .pad { padding-bottom: 30px; }
 
 #footer-ads { text-align: center; padding: 10px 0; border-bottom: 1px solid #eee; }
-#footer #footer-ads .widget { padding-bottom: 0; font-size: 0; line-height: 0; }
-#footer-ads h3 { display: none; }
+
+/*#footer #footer-ads .widget { padding-bottom: 0; font-size: 0; line-height: 0; }
+#footer-ads h3 { display: none; }*/
 
 #footer-widgets{
   padding-top: 20px;

@@ -1070,9 +1070,11 @@ span.select2-results, body .select2-container {
   top: 2px;
   color: #23282d;
 }
+
 /* Socials Specifics */
 .customize-control-hu_socials .select2-container--default .select2-selection--single .select2-selection__rendered {
   padding: 5px;
+  line-height: 16px;
 }
 
 
