@@ -67,20 +67,14 @@ function hu_booleanize_checkbox_val( $val ) {
   if ( ! $val )
     return;
 
-  switch ( $val ) {
-    case 'on':
-    case 1 :
-    case '1' :
-    case true :
-      return true;
-      break;
-
+  switch ( (string) $val ) {
     case 'off':
-    case 0 :
-    case '0' :
-    case false :
+    case '' :
       return false;
-      break;
+
+    case 'on':
+    case '1' :
+      return true;
 
     default: return false;
   }
