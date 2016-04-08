@@ -15,7 +15,7 @@ class AlxPosts extends WP_Widget {
 
 /*  Constructor
 /* ------------------------------------ */
-	function AlxPosts() {
+	function __construct() {
 		parent::__construct( false, 'AlxPosts', array('description' => 'Display posts from a category', 'classname' => 'widget_hu_posts') );;
 	}
 

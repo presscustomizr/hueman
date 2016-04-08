@@ -15,7 +15,7 @@ class AlxTabs extends WP_Widget {
 
 /*  Constructor
 /* ------------------------------------ */
-	function AlxTabs() {
+	function __construct() {
 		parent::__construct( false, 'AlxTabs', array('description' => 'List posts, comments, and/or tags with or without tabs.', 'classname' => 'widget_hu_tabs') );;
 	}
 

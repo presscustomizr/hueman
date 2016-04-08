@@ -15,7 +15,7 @@ class AlxVideo extends WP_Widget {
 
 /*  Constructor
 /* ------------------------------------ */
-	function AlxVideo() {
+	function __construct() {
 		parent::__construct( false, 'AlxVideo', array('description' => 'Display a responsive video by adding a link.', 'classname' => 'widget_hu_video') );;
 	}
 
