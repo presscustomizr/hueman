@@ -2,11 +2,15 @@
 
 <section class="content">
 
-	<?php get_template_part('parts/page-title'); ?>
+	<?php
+    if ( hu_is_checked('blog-heading-enabled') && is_home() ) {
+      get_template_part('parts/page-title');
+    }
+  ?>
 
 	<div class="pad group">
 
-		<?php get_template_part('parts/featured'); ?>
+		<?php if ( hu_is_checked('featured-posts-enabled') ) { get_template_part('parts/featured'); } ?>
 
 		<?php if ( have_posts() ) : ?>
 

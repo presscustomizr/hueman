@@ -5,10 +5,10 @@
 
   <footer id="footer">
 
-    <?php if ( hu_is_checked('footer-ads') ): ?>
+    <?php if ( hu_is_checked('footer-ads') ) : ?>
       <section class="container" id="footer-ads">
         <div class="container-inner">
-          <?php dynamic_sidebar( 'footer-ads' ); ?>
+          <?php hu_print_widgets_in_location('footer-ads' ); ?>
         </div><!--/.container-inner-->
       </section><!--/.container-->
     <?php endif; ?>
@@ -106,7 +106,7 @@
           </div>
 
           <div class="grid one-half last">
-            <?php hu_social_links() ; ?>
+            <?php hu_print_social_links(); ?>
           </div>
 
         </div><!--/.pad-->

@@ -2,9 +2,9 @@
 
 /*  Initialize the meta boxes.
 /* ------------------------------------ */
-add_action( 'admin_init', '_custom_meta_boxes' );
+add_action( 'admin_init', 'hu_custom_meta_boxes' );
 
-function _custom_meta_boxes() {
+function hu_custom_meta_boxes() {
 
 /*  Custom meta boxes
 /* ------------------------------------ */

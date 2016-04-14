@@ -9,6 +9,15 @@ View more themes from this author: http://presscustomizr.com
 * DEMO : http://demo-hueman.presscustomizr.com/
 * DOCUMENTATION : http://hueman.presscustomizr.com/
 
+## Hueman Addons plugin
+The Hueman Addons plugin is a free WordPress plugin which includes cool additional features specifically designed for the Hueman WordPress : 
+* Shortcodes to help you style your content ( columns, dropcaps, ...)
+* A social sharing bar for your posts with count boxes for Twitter, Facebook, Google Plus, Pinterest
+
+**Download the plugin : [hueman-addons.zip](http://08bcf6c59e1667b0c11e-d508f833103a9ef76bbbec804d0292d4.r24.cf1.rackcdn.com/hueman-addons.zip)**
+
+The Hueman Addons plugin is documented [here](https://github.com/presscustomizr/hueman-addons)
+
 
 ## Theme License
 The **Hueman WordPress theme** theme itself is nothing but 100% GPLv3. See headers of files for further details.[GNU GPL v3.0 or later](http://www.gnu.org/licenses/gpl-3.0.en.html)

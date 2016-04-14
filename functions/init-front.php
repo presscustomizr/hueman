@@ -1,88 +1,7 @@
 <?php
-/* HELPER FOR CHECKBOX OPTIONS */
-//the old options used 'on' and 'off'
-//the new options use 1 and 0
-function hu_is_checked( $opt_name = '') {
-  return hu_booleanize_checkbox_val( hu_get_option($opt_name) );
-}
-
-function hu_booleanize_checkbox_val( $val ) {
-  switch ( $val ) {
-    case 'on': return true; break;
-    case 'off': return false; break;
-    case 1: return true; break;
-    case '1' : return true; break;
-    default: return false;
-  }
-}
-
-//used in the customizer
-//replace wp checked() function
-function hu_checked( $val ) {
-  echo hu_is_checked( $val ) ? 'checked="checked"' : '';
-}
-
-
-
-/* Dev mode script */
-//Grunt Live reload script on DEV mode (HU_DEV constant has to be defined. In wp_config for example)
-if ( defined('TC_DEV') && true === TC_DEV && apply_filters('hu_live_reload_in_dev_mode' , true ) )
-  add_action( 'wp_head'        , 'hu_add_livereload_script' );
-
-/*
-* Writes the livereload script in dev mode (Grunt watch livereload enabled)
-*@since v3.2.4
-*/
-function hu_add_livereload_script() {
-  ?>
-  <script id="hu-dev-live-reload" type="text/javascript">
-      document.write('<script src="http://'
-          + ('localhost').split(':')[0]
-          + ':35729/livereload.js?snipver=1" type="text/javascript"><\/script>')
-      console.log('When WP_DEBUG mode is enabled, activate the watch Grunt task to enable live reloading. This script can be disabled with the following code to paste in your functions.php file : add_filter("hu_live_reload_in_dev_mode" , "__return_false")');
-  </script>
-  <?php
-}
-
-
-
-/*  Enqueue javascript
-/* ------------------------------------ */
-if ( ! function_exists( 'hu_scripts' ) ) {
-
-  function hu_scripts() {
-    wp_enqueue_script( 'flexslider', get_template_directory_uri() . '/assets/front/js/jquery.flexslider.min.js', array( 'jquery' ),'', false );
-
-    //@fromfull => keep it in hueman .org
-    wp_enqueue_script( 'jplayer', get_template_directory_uri() . '/assets/front/js/jquery.jplayer.min.js', array( 'jquery' ),'', true );
-
-    wp_enqueue_script( 'scripts', get_template_directory_uri() . '/assets/front/js/scripts.js', array( 'jquery' ),'', true );
-
-    if ( is_singular() && get_option( 'thread_comments' ) ) { wp_enqueue_script( 'comment-reply' ); }
-  }
-
-}
-add_action( 'wp_enqueue_scripts', 'hu_scripts' );
-
-
-/*  Enqueue css
-/* ------------------------------------ */
-if ( ! function_exists( 'hu_styles' ) ) {
-
-  function hu_styles() {
-    wp_enqueue_style( 'style', get_stylesheet_uri() );
-    if ( hu_is_checked('responsive') ) { wp_enqueue_style( 'responsive', get_template_directory_uri().'/responsive.css' ); }
-
-    wp_enqueue_style( 'font-awesome', get_template_directory_uri().'/assets/global/fonts/font-awesome.min.css' );
-  }
-
-}
-add_action( 'wp_enqueue_scripts', 'hu_styles' );
-
-
-
 /* ------------------------------------------------------------------------- *
- *  Template functions
+ *  Template functions (pluggables)
+ *  https://codex.wordpress.org/Pluggable_Functions
 /* ------------------------------------------------------------------------- */
 
 /*  Layout class
@@ -127,17 +46,10 @@ if ( ! function_exists( 'hu_layout_class' ) ) {
 }
 
 
-/**
-* Check if we are displaying posts lists or front page
-*
-*
-*/
-function hu_is_home() {
-  //get info whether the front page is a list of last posts or a page
-  return ( is_home() && ( 'posts' == get_option( 'show_on_front' ) || 'nothing' == get_option( 'show_on_front' ) ) ) || is_front_page();
-}
 
 
+/*  Maybe print relevant widget zones in a location
+/* ------------------------------------ */
 //what are the widget zones to display in this location ?
 //Is the zone a built-in one or a custom ?
 //  => if built-in zone, then it's location is pre-defined
@@ -154,317 +66,43 @@ function hu_is_home() {
 // 'footer-2'    => 'footer-2',
 // 'footer-3'    => 'footer-3',
 // 'footer-4'    => 'footer-4'
-function hu_print_widgets_in_location( $location ) {
-  $_eligible_zones = array();
+if ( ! function_exists('hu_print_widgets_in_location') ) {
+  function hu_print_widgets_in_location( $location ) {
+    $_eligible_zones = array();
 
-  if ( false != hu_get_singular_meta_widget_zone( $location ) ) {
-    $_eligible_zones[] = hu_get_singular_meta_widget_zone( $location );
-  } else {
-    $_eligible_zones    = apply_filters(
-      'hu_eligible_widget_zones',
-      array(),
-      $location,
-      hu_get_option('sidebar-areas')
-    );
-  }
-
-  foreach ( $_eligible_zones as $_id ) {
-    hu_print_dynamic_sidebars( $_id, $location );
-  }
-}
-
-
-
-//@return false or string if a meta widget zone is found.
-function hu_get_singular_meta_widget_zone( $location ) {
-  //for single post and page, users can set a widget zone for the right and left sidebars
-  //if set, those widget zones will override the global settings
-  //must be singular == is_page || is_single
-  if ( ! is_singular() )
-    return;
-
-  //we might request "primary" instead of "s1"
-  //in this case, normalize the location name
-  $_rosetta = hu_get_widget_zone_rosetta_stone();
-  if ( in_array( $location, $_rosetta) ) {
-    $location = array_search( $location, $_rosetta );
-  }
-
-  $_meta_map = array(
-    's1'   => '_sidebar_primary',
-    's2'   => '_sidebar_secondary'
-  );
-
-  if ( ! isset($_meta_map[$location]) )
-    return;
-
-  wp_reset_postdata();
-  global $post;
-  $meta_zone = get_post_meta(
-    $post->ID,
-    $_meta_map[$location],
-    true
-  );
-
-  return ! $meta_zone ? false : $meta_zone;
-}
-
-
-
-
-//the job of this function is to print a dynamic widget zone if exists
-//if exists but empty, and if the user is in a customization context, let's print a placeholder
-function hu_print_dynamic_sidebars( $_id, $location ) {
-  global $wp_registered_sidebars;
-  $sidebars_widgets = wp_get_sidebars_widgets();
-
-  if ( ! isset($wp_registered_sidebars[$_id]) )
-    return;
-
-  if ( hu_is_customize_preview_frame() ) {
-    //is there a meta setting overriding the customizer ?
-    if ( false != hu_get_singular_meta_widget_zone($location) ) {
-      printf('<div class="widget"><div class="hu-placeholder-widget"><h3>%1$s<br/><span class="zone-name">"%2$s"</span> %3$s</h3><br/><p>%4$s</p></div></div>',
-        __('You have already assigned the following widget zone here : ', 'hueman'),
-        $wp_registered_sidebars[$_id]['name'],
-        __('in this post or page options.', 'hueman'),
-        __('You can change or disable this setting by editing the options of the current post / page.', 'hueman')
+    if ( false != hu_get_singular_meta_widget_zone( $location ) ) {
+      $_eligible_zones[] = hu_get_singular_meta_widget_zone( $location );
+    } else {
+      $_eligible_zones    = apply_filters(
+        'hu_eligible_widget_zones',
+        array(),
+        $location,
+        hu_get_option('sidebar-areas')
       );
     }
-
-    if ( empty( $sidebars_widgets[ $_id ] ) || ! is_array( $sidebars_widgets[ $_id ] ) ) {
-      printf('<div class="widget"><div class="hu-placeholder-widget"><h3>%1$s<br/><span class="zone-name">"%2$s"</span></h3></div></div>',
-        __('Add widgets to the zone :', 'hueman'),
-        $wp_registered_sidebars[$_id]['name']
+    //print a message if this location is visible but has not eligible widget zones to display
+    //=> print only when customizing
+    if ( empty( $_eligible_zones ) && in_array( $location, array('s1', 's2') ) && hu_is_customize_preview_frame() ) {
+        printf('<div class="widget"><div class="hu-placeholder-widget"><h3>%1$s<br/></h3><p>%2$s</p></div></div>',
+        __('No widget zones available in this sidebar.', 'hueman'),
+        __('You can add Widget Areas here from the customizer, in the <strong>Dynamic Sidebars and Widgets</strong> panel, or you can change the layout to remove this sidebar in <strong>Content &raquo; Layout Options for the main content</strong>.', 'hueman')
       );
-    }
-  }//end if customizing
-
-  //print it
-  dynamic_sidebar($_id);
-
-}
-
-
-add_filter('hu_eligible_widget_zones', 'hu_get_widget_zones_in_location', 3, 10);
-add_filter('hu_eligible_widget_zones', 'hu_get_widget_zones_in_context', 3, 20);
-
-
-
-
-
-// 'primary'     => array( 's1' => __('Left Sidebar', 'hueman') ),
-// 'secondary'   => array( 's2' => __('Right Sidebar', 'hueman') ),
-// 'header-ads'  => array( 'header-ads' => __('Header', 'hueman') ),
-// 'footer-ads'  => array( 'footer-ads' => __('Before footer', 'hueman') ),
-// 'footer-1'    => array( 'footer-1' => __('Footer 1', 'hueman') ),
-// 'footer-2'    => array( 'footer-2' => __('Footer 2', 'hueman') ),
-// 'footer-3'    => array( 'footer-3' => __('Footer 3', 'hueman') ),
-// 'footer-4'    => array( 'footer-4' => __('Footer 4', 'hueman') )
-//hook : hu_eligible_widget_zones : 10
-function hu_get_widget_zones_in_location( $_eligible_zones = array() , $location , $_user_option = null) {
-  //what are the zones assigned by the user to this location ?
-  if ( empty( $_user_option ) )
-    return $_eligible_zones;
-
-  foreach ( $_user_option as $key => $_zone ) {
-    $_id = $_zone['id'];
-
-    if( ! array_key_exists('locations', $_zone) ) {
-      if ( hu_is_builtin_widget_zone($_id) ) {
-        $builtin_locations = hu_get_builtin_widget_zones_location();
-        foreach ( $builtin_locations as $_zone_id => $_location_data ) {
-          if ( $location == key($_location_data) )
-            $_eligible_zones[] = $_zone_id;
-        }//foreach
-      }//if
-      continue;
+      return;
     }
 
-    //do we have a location match ?
-    if ( isset($_zone['locations']) && in_array($location, $_zone['locations']) )
-      $_eligible_zones[] = $_zone['id'];
-  }//foreach
-
-  return $_eligible_zones;
-}
-
-
-
-//hook : hu_eligible_widget_zones : 20
-function hu_get_widget_zones_in_context( $_eligible_zones = array(), $location, $_user_option = null ) {
-  $_contextualized = array();
-  //context => callback
-  $_map_conditionals = array(
-    'home'              => 'hu_is_home',
-    'page'              => 'is_page',
-    'single'            => 'is_single',
-    'archive'           => 'is_archive',
-    'archive-category'  => 'is_category',
-    'search'            => 'is_search',
-    '404'               => 'is_404'
-  );
-
-  foreach ( $_eligible_zones as $_zone_id ) {
-    //BUILT IN ZONES
-    //is a context set for a the built-in zones?
-    //If no specific context option is found yet, then allow by default
-    $_user_allowed_contexts = hu_get_widget_zone_allowed_contexts($_zone_id);
-
-    if ( 'no_option_found' == $_user_allowed_contexts && hu_is_builtin_widget_zone($_zone_id) ) {
-      $_contextualized[] = $_zone_id;
-    }
-    elseif ( is_array($_user_allowed_contexts) && ! empty($_user_allowed_contexts) ) {
-      if ( hu_is_widget_zone_allowed_in_context( $_user_allowed_contexts, $_map_conditionals) )
-        $_contextualized[] = $_zone_id;
+    foreach ( $_eligible_zones as $_id ) {
+      hu_print_dynamic_sidebars( $_id, $location );
     }
   }
-
-  return $_contextualized;
-}
-
-//helper
-function hu_is_builtin_widget_zone( $id ) {
-  return array_key_exists( $id, hu_get_builtin_widget_zones_location() );
-}
-
-
-//@id = widget zone id
-//@user_option = array() or null
-//@returns a string 'no_option_found' or an array of allowed contexts
-function hu_get_widget_zone_allowed_contexts( $id, $_user_option = null ) {
-  $_user_option = is_null($_user_option) ? hu_get_option('sidebar-areas') : $_user_option;
-  $allowed_contexts = array();
-  $no_option_found = true;
-  foreach ( $_user_option as $key => $_zone ) {
-
-    if ( $id != $_zone['id'] || ! empty($allowed_contexts) )
-      continue;
-
-    if ( array_key_exists('contexts', $_zone) ) {
-      $allowed_contexts = is_array($_zone['contexts']) ? $_zone['contexts'] : array();
-      $no_option_found = false;
-    }
-  }
-  return $no_option_found ? 'no_option_found' : $allowed_contexts;
-}
-
-
-
-
-
-//helper
-//@contexts = array()
-//@map_conditionals = array()
-function hu_is_widget_zone_allowed_in_context( $_contexts, $_map_conditionals ) {
-  if ( ! is_array($_contexts) )
-    return;
-  if ( in_array( '_all_', $_contexts ) )
-    return true;
-  foreach ($_map_conditionals as $_context_id => $_cb) {
-    if ( ! function_exists($_cb) || ! in_array($_context_id, $_contexts) )
-      continue;
-    if ( true === call_user_func($_cb) )
-      return true;
-  }
-  return false;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*  Dynamic sidebar primary
-/* ------------------------------------ */
-/* DEPRECATED */
-if ( ! function_exists( 'hu_sidebar_primary' ) ) {
-
-  function hu_sidebar_primary() {
-    // Default sidebar
-    $sidebar = 'primary';
-
-    // Set sidebar based on page
-    if ( is_home() && hu_get_option('s1-home') ) $sidebar = hu_get_option('s1-home');
-    if ( is_single() && hu_get_option('s1-single') ) $sidebar = hu_get_option('s1-single');
-    if ( is_archive() && hu_get_option('s1-archive') ) $sidebar = hu_get_option('s1-archive');
-    if ( is_category() && hu_get_option('s1-archive-category') ) $sidebar = hu_get_option('s1-archive-category');
-    if ( is_search() && hu_get_option('s1-search') ) $sidebar = hu_get_option('s1-search');
-    if ( is_404() && hu_get_option('s1-404') ) $sidebar = hu_get_option('s1-404');
-    if ( is_page() && hu_get_option('s1-page') ) $sidebar = hu_get_option('s1-page');
-
-    // Check for page/post specific sidebar
-    if ( is_page() || is_single() ) {
-      // Reset post data
-      wp_reset_postdata();
-      global $post;
-      // Get meta
-      $meta = get_post_meta($post->ID,'_sidebar_primary',true);
-      if ( $meta ) { $sidebar = $meta; }
-    }
-
-    // Return sidebar
-    return $sidebar;
-  }
-
-}
-
-
-/*  Dynamic sidebar secondary
-/* ------------------------------------ */
-/* DEPRECATED */
-if ( ! function_exists( 'hu_sidebar_secondary' ) ) {
-
-  function hu_sidebar_secondary() {
-    // Default sidebar
-    $sidebar = 'secondary';
-
-    // Set sidebar based on page
-    if ( is_home() && hu_get_option('s2-home') ) $sidebar = hu_get_option('s2-home');
-    if ( is_single() && hu_get_option('s2-single') ) $sidebar = hu_get_option('s2-single');
-    if ( is_archive() && hu_get_option('s2-archive') ) $sidebar = hu_get_option('s2-archive');
-    if ( is_category() && hu_get_option('s2-archive-category') ) $sidebar = hu_get_option('s2-archive-category');
-    if ( is_search() && hu_get_option('s2-search') ) $sidebar = hu_get_option('s2-search');
-    if ( is_404() && hu_get_option('s2-404') ) $sidebar = hu_get_option('s2-404');
-    if ( is_page() && hu_get_option('s2-page') ) $sidebar = hu_get_option('s2-page');
-
-    // Check for page/post specific sidebar
-    if ( is_page() || is_single() ) {
-      // Reset post data
-      wp_reset_postdata();
-      global $post;
-      // Get meta
-      $meta = get_post_meta($post->ID,'_sidebar_secondary',true);
-      if ( $meta ) { $sidebar = $meta; }
-    }
-
-    // Return sidebar
-    return $sidebar;
-  }
-
-}
-
-
-
-
-
-
+}//endif
 
 
 
 
 /*  Social links
 /* ------------------------------------ */
-if ( ! function_exists( 'hu_social_links' ) ) :
-  function hu_social_links() {
+if ( ! function_exists( 'hu_print_social_links' ) ) {
+  function hu_print_social_links() {
     $_socials = hu_get_option('social-links');
     if ( empty( $_socials ) )
       return;
@@ -487,38 +125,6 @@ if ( ! function_exists( 'hu_social_links' ) ) :
     }
     echo '</ul>';
   }
-endif;
-
-
-
-
-//helper ensuring backward compatibility with the previous option system
-function hu_get_img_src( $option_name ) {
-  $_img_option    = esc_attr( hu_get_option($option_name) );
-  if ( ! $_img_option )
-    return;
-
-  $_logo_src      = '';
-  $_width         = false;
-  $_height        = false;
-  $_attachement_id    = false;
-
-  //Get the logo src
-  if ( is_numeric($_img_option) ) {
-      $_attachement_id  = $_img_option;
-      $_attachment_data   = apply_filters( "hu_logo_attachment_img" , wp_get_attachment_image_src( $_img_option , 'full' ) );
-      $_logo_src      = $_attachment_data[0];
-      $_width       = ( isset($_attachment_data[1]) && $_attachment_data[1] > 1 ) ? $_attachment_data[1] : $_width;
-      $_height      = ( isset($_attachment_data[2]) && $_attachment_data[2] > 1 ) ? $_attachment_data[2] : $_height;
-  } else { //old treatment
-      //rebuild the logo path : check if the full path is already saved in DB. If not, then rebuild it.
-      $upload_dir       = wp_upload_dir();
-      $_saved_path      = esc_url ( $_img_option );
-      $_logo_src        = ( false !== strpos( $_saved_path , '/wp-content/' ) ) ? $_saved_path : $upload_dir['baseurl'] . $_saved_path;
-  }
-
-  //hook + makes ssl compliant
-  return apply_filters( "hu_logo_src" , is_ssl() ? str_replace('http://', 'https://', $_logo_src) : $_logo_src ) ;
 }
 
 
@@ -574,19 +180,15 @@ if ( ! function_exists( 'hu_page_title' ) ) {
 if ( ! function_exists( 'hu_blog_title' ) ) {
 
   function hu_blog_title() {
-    global $post;
-    $heading = esc_attr( hu_get_option('blog-heading') );
+    $heading    = esc_attr( hu_get_option('blog-heading') );
+    $heading    = $heading ? $heading : get_bloginfo('name');
     $subheading = esc_attr( hu_get_option('blog-subheading') );
-    if($heading) {
-      $title = $heading;
-    } else {
-      $title = get_bloginfo('name');
-    }
-    if($subheading) {
-      $title = $title.' <span>'.$subheading.'</span>';
-    }
+    $subheading = $subheading ? $subheading : __('Blog', 'hueman');
 
-    return $title;
+    return sprintf('%1$s <span class="hu-blog-subheading">%2$s</span>',
+      $heading,
+      $subheading
+    );
   }
 
 }
@@ -684,6 +286,11 @@ if ( ! function_exists( 'hu_get_featured_post_ids' ) ) {
   }
 
 }
+
+
+
+
+
 
 
 
@@ -809,6 +416,45 @@ if ( ! function_exists( 'hu_browser_body_class' ) ) {
 add_filter( 'body_class', 'hu_browser_body_class' );
 
 
+
+
+
+/* ------------------------------------------------------------------------- *
+ *  Styles and scripts
+/* ------------------------------------------------------------------------- */
+/*  Enqueue javascript
+/* ------------------------------------ */
+if ( ! function_exists( 'hu_scripts' ) ) {
+  function hu_scripts() {
+    wp_enqueue_script( 'flexslider', get_template_directory_uri() . '/assets/front/js/jquery.flexslider.min.js', array( 'jquery' ),'', false );
+    wp_enqueue_script( 'jplayer', get_template_directory_uri() . '/assets/front/js/jquery.jplayer.min.js', array( 'jquery' ),'', true );
+    wp_enqueue_script( 'scripts', get_template_directory_uri() . '/assets/front/js/scripts.js', array( 'jquery' ),'', true );
+
+    if ( is_singular() && get_option( 'thread_comments' ) ) { wp_enqueue_script( 'comment-reply' ); }
+  }
+}
+add_action( 'wp_enqueue_scripts', 'hu_scripts' );
+
+
+/*  Enqueue css
+/* ------------------------------------ */
+if ( ! function_exists( 'hu_styles' ) ) {
+  function hu_styles() {
+    wp_enqueue_style( 'style', get_stylesheet_uri() );
+    if ( hu_is_checked('responsive') ) { wp_enqueue_style( 'responsive', get_template_directory_uri().'/responsive.css' ); }
+    wp_enqueue_style( 'font-awesome', get_template_directory_uri().'/assets/global/fonts/font-awesome.min.css' );
+  }
+}
+add_action( 'wp_enqueue_scripts', 'hu_styles' );
+
+
+
+
+
+
+
+
+
 /* ------------------------------------------------------------------------- *
  *  Actions
 /* ------------------------------------------------------------------------- */
@@ -901,3 +547,301 @@ function hu_deregister_styles() {
   wp_deregister_style( 'wp-pagenavi' );
 }
 add_action( 'wp_print_styles', 'hu_deregister_styles', 100 );
+
+
+
+
+
+
+/* ------------------------------------------------------------------------- *
+ *  Various Helpers
+/* ------------------------------------------------------------------------- */
+/**
+* helper
+* Check if we are displaying posts lists or front page
+* @return  bool
+*/
+function hu_is_home() {
+  //get info whether the front page is a list of last posts or a page
+  return ( is_home() && ( 'posts' == get_option( 'show_on_front' ) || 'nothing' == get_option( 'show_on_front' ) ) ) || is_front_page();
+}
+
+/**
+* helper
+* States if the current context is the blog page from a WP standpoint
+* @return  bool
+*/
+function hu_is_blogpage() {
+  return is_home() && ! is_front_page();
+}
+
+/**
+* helper
+* @return  bool
+*/
+function hu_has_social_links() {
+  $_socials = hu_get_option('social-links');
+  return ! empty( $_socials ) && false != $_socials;
+}
+
+/**
+* helper ensuring backward compatibility with the previous option system
+* @return logo src string
+*/
+function hu_get_img_src( $option_name ) {
+  $_img_option    = esc_attr( hu_get_option($option_name) );
+  if ( ! $_img_option )
+    return;
+
+  $_logo_src      = '';
+  $_width         = false;
+  $_height        = false;
+  $_attachement_id    = false;
+
+  //Get the logo src
+  if ( is_numeric($_img_option) ) {
+      $_attachement_id  = $_img_option;
+      $_attachment_data   = apply_filters( "hu_logo_attachment_img" , wp_get_attachment_image_src( $_img_option , 'full' ) );
+      $_logo_src      = $_attachment_data[0];
+      $_width       = ( isset($_attachment_data[1]) && $_attachment_data[1] > 1 ) ? $_attachment_data[1] : $_width;
+      $_height      = ( isset($_attachment_data[2]) && $_attachment_data[2] > 1 ) ? $_attachment_data[2] : $_height;
+  } else { //old treatment
+      //rebuild the logo path : check if the full path is already saved in DB. If not, then rebuild it.
+      $upload_dir       = wp_upload_dir();
+      $_saved_path      = esc_url ( $_img_option );
+      $_logo_src        = ( false !== strpos( $_saved_path , '/wp-content/' ) ) ? $_saved_path : $upload_dir['baseurl'] . $_saved_path;
+  }
+
+  //hook + makes ssl compliant
+  return apply_filters( "hu_logo_src" , is_ssl() ? str_replace('http://', 'https://', $_logo_src) : $_logo_src ) ;
+}
+
+
+
+/* ------------------------------------------------------------------------- *
+ *  Widgets and sidebars helpers
+/* ------------------------------------------------------------------------- */
+//@return false or string if a meta widget zone is found.
+function hu_get_singular_meta_widget_zone( $location ) {
+  //for single post and page, users can set a widget zone for the right and left sidebars
+  //if set, those widget zones will override the global settings
+  //must be singular == is_page || is_single
+  if ( ! is_singular() )
+    return;
+
+  //we might request "primary" instead of "s1"
+  //in this case, normalize the location name
+  $_rosetta = hu_get_widget_zone_rosetta_stone();
+  if ( in_array( $location, $_rosetta) ) {
+    $location = array_search( $location, $_rosetta );
+  }
+
+  $_meta_map = array(
+    's1'   => '_sidebar_primary',
+    's2'   => '_sidebar_secondary'
+  );
+
+  if ( ! isset($_meta_map[$location]) )
+    return;
+
+  wp_reset_postdata();
+  global $post;
+  $meta_zone = get_post_meta(
+    $post->ID,
+    $_meta_map[$location],
+    true
+  );
+
+  return ! $meta_zone ? false : $meta_zone;
+}
+
+
+
+
+//the job of this function is to print a dynamic widget zone if exists
+//if exists but empty, and if the user is in a customization context, let's print a placeholder
+function hu_print_dynamic_sidebars( $_id, $location ) {
+  global $wp_registered_sidebars;
+  $sidebars_widgets = wp_get_sidebars_widgets();
+
+  if ( ! isset($wp_registered_sidebars[$_id]) ) {
+    return;
+  }
+
+
+  if ( hu_is_customize_preview_frame() ) {
+    //is there a meta setting overriding the customizer ?
+    if ( false != hu_get_singular_meta_widget_zone($location) ) {
+      printf('<div class="widget"><div class="hu-placeholder-widget"><h3>%1$s<br/><span class="zone-name">"%2$s"</span> %3$s</h3><br/><p>%4$s</p></div></div>',
+        __('You have already assigned the following widget zone here : ', 'hueman'),
+        $wp_registered_sidebars[$_id]['name'],
+        __('in this post or page options.', 'hueman'),
+        __('You can change or disable this setting by editing the options of the current post / page.', 'hueman')
+      );
+    }
+
+    if ( empty( $sidebars_widgets[ $_id ] ) || ! is_array( $sidebars_widgets[ $_id ] ) ) {
+      printf('<div class="widget"><div class="hu-placeholder-widget"><h3>%1$s<br/><span class="zone-name">"%2$s"</span></h3></div></div>',
+        __('Add widgets to the zone :', 'hueman'),
+        $wp_registered_sidebars[$_id]['name']
+      );
+    }
+  }//end if customizing
+
+  //print it
+  dynamic_sidebar($_id);
+
+}
+
+add_filter('hu_eligible_widget_zones', 'hu_get_widget_zones_in_location', 3, 10);
+add_filter('hu_eligible_widget_zones', 'hu_get_widget_zones_in_context', 3, 20);
+
+
+
+
+
+// 'primary'     => array( 's1' => __('Left Sidebar', 'hueman') ),
+// 'secondary'   => array( 's2' => __('Right Sidebar', 'hueman') ),
+// 'header-ads'  => array( 'header-ads' => __('Header', 'hueman') ),
+// 'footer-ads'  => array( 'footer-ads' => __('Before footer', 'hueman') ),
+// 'footer-1'    => array( 'footer-1' => __('Footer 1', 'hueman') ),
+// 'footer-2'    => array( 'footer-2' => __('Footer 2', 'hueman') ),
+// 'footer-3'    => array( 'footer-3' => __('Footer 3', 'hueman') ),
+// 'footer-4'    => array( 'footer-4' => __('Footer 4', 'hueman') )
+//hook : hu_eligible_widget_zones : 10
+function hu_get_widget_zones_in_location( $_eligible_zones = array() , $location , $_user_option = null) {
+  //what are the zones assigned by the user to this location ?
+  if ( empty( $_user_option ) )
+    return $_eligible_zones;
+
+  foreach ( $_user_option as $key => $_zone ) {
+    $_id = $_zone['id'];
+
+    if( ! array_key_exists('locations', $_zone) ) {
+      if ( hu_is_builtin_widget_zone($_id) ) {
+        $builtin_locations = hu_get_builtin_widget_zones_location();
+        foreach ( $builtin_locations as $_zone_id => $_location_data ) {
+          if ( $location == key($_location_data) )
+            $_eligible_zones[] = $_zone_id;
+        }//foreach
+      }//if
+      continue;
+    }
+
+    //do we have a location match ?
+    if ( isset($_zone['locations']) && in_array($location, $_zone['locations']) )
+      $_eligible_zones[] = $_zone['id'];
+  }//foreach
+
+  return $_eligible_zones;
+}
+
+
+
+//hook : hu_eligible_widget_zones : 20
+function hu_get_widget_zones_in_context( $_eligible_zones = array(), $location, $_user_option = null ) {
+  $_contextualized = array();
+  //context => callback
+  $_map_conditionals = array(
+    'home'              => 'hu_is_home',
+    'blog-page'         => 'hu_is_blogpage',
+    'page'              => 'is_page',
+    'single'            => 'is_single',
+    'archive'           => 'is_archive',
+    'archive-category'  => 'is_category',
+    'search'            => 'is_search',
+    '404'               => 'is_404'
+  );
+
+  foreach ( $_eligible_zones as $_zone_id ) {
+    //BUILT IN ZONES
+    //is a context set for a the built-in zones?
+    //If no specific context option is found yet, then allow by default
+    $_user_allowed_contexts = hu_get_widget_zone_allowed_contexts($_zone_id);
+
+    if ( 'no_option_found' == $_user_allowed_contexts && hu_is_builtin_widget_zone($_zone_id) ) {
+      $_contextualized[] = $_zone_id;
+    }
+    elseif ( is_array($_user_allowed_contexts) && ! empty($_user_allowed_contexts) ) {
+      if ( hu_is_widget_zone_allowed_in_context( $_user_allowed_contexts, $_map_conditionals) )
+        $_contextualized[] = $_zone_id;
+    }
+  }
+
+  return $_contextualized;
+}
+
+//helper
+function hu_is_builtin_widget_zone( $id ) {
+  return array_key_exists( $id, hu_get_builtin_widget_zones_location() );
+}
+
+
+//@id = widget zone id
+//@user_option = array() or null
+//@returns a string 'no_option_found' or an array of allowed contexts
+function hu_get_widget_zone_allowed_contexts( $id, $_user_option = null ) {
+  $_user_option = is_null($_user_option) ? hu_get_option('sidebar-areas') : $_user_option;
+  $allowed_contexts = array();
+  $no_option_found = true;
+  foreach ( $_user_option as $key => $_zone ) {
+
+    if ( $id != $_zone['id'] || ! empty($allowed_contexts) )
+      continue;
+
+    if ( array_key_exists('contexts', $_zone) ) {
+      $allowed_contexts = is_array($_zone['contexts']) ? $_zone['contexts'] : array();
+      $no_option_found = false;
+    }
+  }
+  return $no_option_found ? 'no_option_found' : $allowed_contexts;
+}
+
+
+
+
+
+//helper
+//@contexts = array()
+//@map_conditionals = array()
+function hu_is_widget_zone_allowed_in_context( $_contexts, $_map_conditionals ) {
+  if ( ! is_array($_contexts) )
+    return;
+
+  foreach ($_map_conditionals as $_context_id => $_cb) {
+    if ( ! function_exists($_cb) || ! in_array($_context_id, $_contexts) )
+      continue;
+    if ( true === call_user_func($_cb) )
+      return true;
+  }
+
+  if ( in_array( '_all_', $_contexts ) )
+    return true;
+
+  return false;
+}
+
+
+
+
+
+/* ------------------------------------------------------------------------- *
+ *  Dev mode script
+/* ------------------------------------------------------------------------- */
+//Grunt Live reload script on DEV mode (HU_DEV constant has to be defined. In wp_config for example)
+if ( defined('TC_DEV') && true === TC_DEV && apply_filters('hu_live_reload_in_dev_mode' , true ) )
+  add_action( 'wp_head', 'hu_add_livereload_script' );
+
+/*
+* Writes the livereload script in dev mode (Grunt watch livereload enabled)
+*/
+function hu_add_livereload_script() {
+  ?>
+  <script id="hu-dev-live-reload" type="text/javascript">
+      document.write('<script src="http://'
+          + ('localhost').split(':')[0]
+          + ':35729/livereload.js?snipver=1" type="text/javascript"><\/script>')
+      console.log('When WP_DEBUG mode is enabled, activate the watch Grunt task to enable live reloading. This script can be disabled with the following code to paste in your functions.php file : add_filter("hu_live_reload_in_dev_mode" , "__return_false")');
+  </script>
+  <?php
+}

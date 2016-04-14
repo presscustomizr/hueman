@@ -15,15 +15,41 @@ class AlxPosts extends WP_Widget {
 
 /*  Constructor
 /* ------------------------------------ */
-	function AlxPosts() {
-		parent::__construct( false, 'AlxPosts', array('description' => 'Display posts from a category', 'classname' => 'widget_hu_posts') );;
+	function __construct() {
+		parent::__construct(
+      'alxposts',
+      __('Hueman Posts', 'hueman'),
+      array(
+        'description' => __('Display posts from a category', 'hueman'),
+        'classname' => 'widget_hu_posts'
+      )
+    );
 	}
 
-/*  Widget
-/* ------------------------------------ */
+  public function hu_get_defaults() {
+    return array(
+      'title'       => '',
+      // Posts
+      'posts_thumb'     => 1,
+      'posts_category'  => 1,
+      'posts_date'    => 1,
+      'posts_num'     => '4',
+      'posts_cat_id'    => '0',
+      'posts_orderby'   => 'date',
+      'posts_time'    => '0',
+    );
+  }
+
+
+  /*  Widget
+  /* ------------------------------------ */
 	public function widget($args, $instance) {
 		extract( $args );
-		$instance['title']?NULL:$instance['title']='';
+
+    $defaults = $this -> hu_get_defaults();
+
+    $instance = wp_parse_args( (array) $instance, $defaults );
+
 		$title = apply_filters('widget_title',$instance['title']);
 		$output = $before_widget."\n";
 		if($title)
@@ -104,17 +130,7 @@ class AlxPosts extends WP_Widget {
 /* ------------------------------------ */
 	public function form($instance) {
 		// Default widget settings
-		$defaults = array(
-			'title' 			=> '',
-		// Posts
-			'posts_thumb' 		=> 1,
-			'posts_category'	=> 1,
-			'posts_date'		=> 1,
-			'posts_num' 		=> '4',
-			'posts_cat_id' 		=> '0',
-			'posts_orderby' 	=> 'date',
-			'posts_time' 		=> '0',
-		);
+		$defaults = $this -> hu_get_defaults();
 		$instance = wp_parse_args( (array) $instance, $defaults );
 ?>
 

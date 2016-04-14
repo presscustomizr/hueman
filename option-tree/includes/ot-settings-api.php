@@ -60,7 +60,7 @@ if ( ! class_exists( 'OT_Settings' ) ) {
       $priority = apply_filters( 'ot_admin_menu_priority', 10 );
 
       /* add pages & menu items */
-      add_action( 'admin_menu', array( $this, 'add_page' ), $priority );
+      //add_action( 'admin_menu', array( $this, 'add_page' ), $priority );
 
       /* register sections */
       add_action( 'admin_init', array( $this, 'add_sections' ) );
@@ -76,75 +76,75 @@ if ( ! class_exists( 'OT_Settings' ) ) {
 
     }
 
-    /**
-     * Loads each admin page
-     *
-     * @return    void
-     *
-     * @access    public
-     * @since     2.0
-     */
-    public function add_page() {
+    // /**
+    //  * Loads each admin page
+    //  *
+    //  * @return    void
+    //  *
+    //  * @access    public
+    //  * @since     2.0
+    //  */
+    // public function add_page() {
 
-      /* loop through options */
-      foreach( (array) $this->options as $option ) {
+    //   /* loop through options */
+    //   foreach( (array) $this->options as $option ) {
 
-        /* loop through pages */
-        foreach( (array) $this->get_pages( $option ) as $page ) {
+    //     /* loop through pages */
+    //     foreach( (array) $this->get_pages( $option ) as $page ) {
 
-          /**
-           * Theme Check... stop nagging me about this kind of stuff.
-           * The damn admin pages are required for OT to function, duh!
-           */
-          $theme_check_bs = 'add_menu_page';
-		  $theme_check_bs2 = 'add_submenu_page';
+    //       /**
+    //        * Theme Check... stop nagging me about this kind of stuff.
+    //        * The damn admin pages are required for OT to function, duh!
+    //        */
+    //       $theme_check_bs = 'add_menu_page';
+		  // $theme_check_bs2 = 'add_submenu_page';
 
-          /* load page in WP top level menu */
-          if ( ! isset( $page['parent_slug'] ) || empty( $page['parent_slug'] ) ) {
-            $page_hook = $theme_check_bs(
-              $page['page_title'],
-              $page['menu_title'],
-              $page['capability'],
-              $page['menu_slug'],
-              array( $this, 'display_page' ),
-              $page['icon_url'],
-              $page['position']
-            );
-          /* load page in WP sub menu */
-          } else {
-            $page_hook = $theme_check_bs2(
-              $page['parent_slug'],
-              $page['page_title'],
-              $page['menu_title'],
-              $page['capability'],
-              $page['menu_slug'],
-              array( $this, 'display_page' )
-            );
-          }
+    //       /* load page in WP top level menu */
+    //       if ( ! isset( $page['parent_slug'] ) || empty( $page['parent_slug'] ) ) {
+    //         $page_hook = $theme_check_bs(
+    //           $page['page_title'],
+    //           $page['menu_title'],
+    //           $page['capability'],
+    //           $page['menu_slug'],
+    //           array( $this, 'display_page' ),
+    //           $page['icon_url'],
+    //           $page['position']
+    //         );
+    //       /* load page in WP sub menu */
+    //       } else {
+    //         $page_hook = $theme_check_bs2(
+    //           $page['parent_slug'],
+    //           $page['page_title'],
+    //           $page['menu_title'],
+    //           $page['capability'],
+    //           $page['menu_slug'],
+    //           array( $this, 'display_page' )
+    //         );
+    //       }
 
-          /* only load if not a hidden page */
-          if ( ! isset( $page['hidden_page'] ) ) {
+    //       /* only load if not a hidden page */
+    //       if ( ! isset( $page['hidden_page'] ) ) {
 
-            /* associate $page_hook with page id */
-            $this->page_hook[$page['id']] = $page_hook;
+    //         /* associate $page_hook with page id */
+    //         $this->page_hook[$page['id']] = $page_hook;
 
-            /* add scripts */
-            add_action( 'admin_print_scripts-' . $page_hook, array( $this, 'scripts' ) );
+    //         /* add scripts */
+    //         add_action( 'admin_print_scripts-' . $page_hook, array( $this, 'scripts' ) );
 
-            /* add styles */
-            add_action( 'admin_print_styles-' . $page_hook, array( $this, 'styles' ) );
+    //         /* add styles */
+    //         add_action( 'admin_print_styles-' . $page_hook, array( $this, 'styles' ) );
 
-            /* add contextual help */
-            add_action( 'load-' . $page_hook, array( $this, 'help' ) );
+    //         /* add contextual help */
+    //         add_action( 'load-' . $page_hook, array( $this, 'help' ) );
 
-          }
+    //       }
 
-        }
+    //     }
 
-      }
+    //   }
 
-      return false;
-    }
+    //   return false;
+    // }
 
     /**
      * Loads the scripts

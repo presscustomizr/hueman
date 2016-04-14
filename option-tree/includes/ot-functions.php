@@ -80,8 +80,8 @@ if ( ! function_exists( 'ot_get_option' ) ) {
   function ot_get_option( $option_id, $default = '' ) {
 
     //temporary hack
-    if ( ! apply_filters('use_option_tree' , true ) && class_exists('HU_utils_options') )
-      return HU_utils_options::$inst -> hu_opt( $option_id );
+    if ( ! apply_filters('use_option_tree' , true ) && class_exists('HU_utils') )
+      return HU_utils::$inst -> hu_opt( $option_id );
 
     /* get the saved options */
     $options = get_option( ot_options_id() );

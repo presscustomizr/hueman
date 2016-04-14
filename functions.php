@@ -1,12 +1,12 @@
 <?php
-//Fire Hueman
+//do not remove this
 load_template( get_template_directory() . '/functions/init-core.php' );
 
 /**
-* THE BEST AND SAFEST WAY TO EXTEND THE HUEMAN THEME WITH YOUR OWN CUSTOM CODE IS TO CREATE A CHILD THEME.
-* You can add code here but it will be lost on upgrade. If you use a child theme, you are safe!
+* The best and safest way to extend the Humean WordPress theme with your own custom code is to create a child theme.
+* You can add temporary code snippets and hacks to the current functions.php file, but unlike with a child theme, they will be lost on upgrade.
 *
-* Don't know what a child theme is ? Then you really want to spend 5 minutes learning how to use child themes in WordPress, you won't regret it :) !
+* If you don't know what a child theme is, you really want to spend 5 minutes learning how to use child themes in WordPress, you won't regret it :) !
 * https://codex.wordpress.org/Child_Themes
 *
 */

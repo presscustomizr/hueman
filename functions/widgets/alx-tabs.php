@@ -15,9 +15,48 @@ class AlxTabs extends WP_Widget {
 
 /*  Constructor
 /* ------------------------------------ */
-	function AlxTabs() {
-		parent::__construct( false, 'AlxTabs', array('description' => 'List posts, comments, and/or tags with or without tabs.', 'classname' => 'widget_hu_tabs') );;
+	function __construct() {
+		parent::__construct(
+      'alxtabs',
+      __('Hueman Dynamic Tabs', 'hueman'),
+      array(
+        'description' => __('List posts, comments, and/or tags with or without tabs.', 'hueman'),
+        'classname' => 'widget_hu_tabs'
+      )
+    );
 	}
+
+
+  public function hu_get_defaults() {
+    return array(
+      'title'       => '',
+      'tabs_category'   => 1,
+      'tabs_date'     => 1,
+    // Recent posts
+      'recent_enable'   => 1,
+      'recent_thumbs'   => 1,
+      'recent_cat_id'   => '0',
+      'recent_num'    => '5',
+    // Popular posts
+      'popular_enable'  => 1,
+      'popular_thumbs'  => 1,
+      'popular_cat_id'  => '0',
+      'popular_time'    => '0',
+      'popular_num'     => '5',
+    // Recent comments
+      'comments_enable'   => 1,
+      'comments_avatars'  => 1,
+      'comments_num'    => '5',
+    // Tags
+      'tags_enable'     => 1,
+    // Order
+      'order_recent'    => '1',
+      'order_popular'   => '2',
+      'order_comments'  => '3',
+      'order_tags'    => '4',
+    );
+  }
+
 
 /*  Create tabs-nav
 /* ------------------------------------ */
@@ -47,7 +86,10 @@ class AlxTabs extends WP_Widget {
 /* ------------------------------------ */
 	public function widget($args, $instance) {
 		extract( $args );
-		$instance['title']?NULL:$instance['title']='';
+    $defaults = $this -> hu_get_defaults();
+
+    $instance = wp_parse_args( (array) $instance, $defaults );
+
 		$title = apply_filters('widget_title',$instance['title']);
 		$output = $before_widget."\n";
 		if($title)
@@ -248,33 +290,7 @@ class AlxTabs extends WP_Widget {
 /* ------------------------------------ */
 	public function form($instance) {
 		// Default widget settings
-		$defaults = array(
-			'title' 			=> '',
-			'tabs_category' 	=> 1,
-			'tabs_date' 		=> 1,
-		// Recent posts
-			'recent_enable' 	=> 1,
-			'recent_thumbs' 	=> 1,
-			'recent_cat_id' 	=> '0',
-			'recent_num' 		=> '5',
-		// Popular posts
-			'popular_enable' 	=> 1,
-			'popular_thumbs' 	=> 1,
-			'popular_cat_id' 	=> '0',
-			'popular_time' 		=> '0',
-			'popular_num' 		=> '5',
-		// Recent comments
-			'comments_enable' 	=> 1,
-			'comments_avatars' 	=> 1,
-			'comments_num' 		=> '5',
-		// Tags
-			'tags_enable' 		=> 1,
-		// Order
-			'order_recent' 		=> '1',
-			'order_popular' 	=> '2',
-			'order_comments' 	=> '3',
-			'order_tags' 		=> '4',
-		);
+		$defaults = $this -> hu_get_defaults();
 		$instance = wp_parse_args( (array) $instance, $defaults );
 ?>
 

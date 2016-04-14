@@ -556,6 +556,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
 			        	'themeFolder' 		=> get_template_directory_uri(),
                 //patch for old wp versions which don't trigger preview-ready signal => since WP 4.1
                 'preview_ready_event_exists'   => version_compare( $wp_version, '4.1' , '>=' ),
+                'blogname' => get_bloginfo('name'),
                 'copyright' => sprintf('%1$s &copy; %2$s. %3$s',
                   get_bloginfo('name'),
                   date( 'Y' ),

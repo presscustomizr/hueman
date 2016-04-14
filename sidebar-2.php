@@ -5,9 +5,9 @@
 	<div class="sidebar-content">
 
 		<?php if ( hu_is_checked('sidebar-top') ): ?>
-		<div class="sidebar-top group">
-			<p><?php _e('More','hueman'); ?></p>
-		</div>
+  		<div class="sidebar-top group">
+  			<p><?php _e('More','hueman'); ?></p>
+  		</div>
 		<?php endif; ?>
 
 		<?php if ( hu_get_option( 'post-nav' ) == 's2') { get_template_part('parts/post-nav'); } ?>
