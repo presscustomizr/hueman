@@ -82,6 +82,11 @@
 	.col-3cm.s1-expand .s1 .icon-sidebar-toggle:before,
 	.col-3cr.s1-expand .s1 .icon-sidebar-toggle:before { content: "\f100"; }
 
+  /* icon color is dark because the background is usually lighter in this case */
+  .social-links .social-tooltip:hover {
+    color: #000!important;
+  }
+
 	/* 2 column, content right */
 	.col-2cr .main-inner { background-position: -290px 0!important; padding-left: 50px; }
 	.col-2cr .s1 { margin-left: -50px; }

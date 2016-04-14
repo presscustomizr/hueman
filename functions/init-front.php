@@ -114,13 +114,13 @@ if ( ! function_exists( 'hu_print_social_links' ) ) {
       //So, if the id is not present, let's build it base on the key, like when added to the collection in the customizer
 
       // Put them together
-      printf( '<li><a rel="nofollow" class="social-tooltip" id="%1$s" title="%2$s" href="%3$s" %4$s><i class="fa %5$s" style="color:%6$s"></i></a></li>',
+      printf( '<li><a rel="nofollow" class="social-tooltip" id="%1$s" title="%2$s" href="%3$s" %4$s style="color:%5$s"><i class="fa %6$s"></i></a></li>',
         ! isset( $item['id'] ) ? 'hu_socials_'. $key : $item['id'],
         isset($item['title']) ? esc_attr( $item['title'] ) : '',
         ( isset($item['social-link']) && ! empty( $item['social-link'] ) ) ? esc_url( $item['social-link'] ) : 'javascript:void(0)',
         ( isset($item['social-target']) && false != $item['social-target'] ) ? 'target="_blank"' : '',
-        isset($item['social-icon']) ? esc_attr($item['social-icon']) : '',
-        isset($item['social-color']) ? esc_attr($item['social-color']) : '#000'
+        isset($item['social-color']) ? esc_attr($item['social-color']) : '#000',
+        isset($item['social-icon']) ? esc_attr($item['social-icon']) : ''
       );
     }
     echo '</ul>';
@@ -180,9 +180,9 @@ if ( ! function_exists( 'hu_page_title' ) ) {
 if ( ! function_exists( 'hu_blog_title' ) ) {
 
   function hu_blog_title() {
-    $heading    = esc_attr( hu_get_option('blog-heading') );
+    $heading    =  wp_kses_post( hu_get_option('blog-heading') );
     $heading    = $heading ? $heading : get_bloginfo('name');
-    $subheading = esc_attr( hu_get_option('blog-subheading') );
+    $subheading =  wp_kses_post( hu_get_option('blog-subheading') );
     $subheading = $subheading ? $subheading : __('Blog', 'hueman');
 
     return sprintf('%1$s <span class="hu-blog-subheading">%2$s</span>',

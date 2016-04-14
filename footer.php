@@ -91,7 +91,7 @@
 
             <div id="copyright">
               <?php if ( hu_get_option( 'copyright' ) ) : ?>
-                <p><?php echo esc_attr( hu_get_option( 'copyright' ) ); ?></p>
+                <p><?php echo wp_kses_post( hu_get_option( 'copyright' ) ); ?></p>
               <?php else: ?>
                 <p><?php bloginfo(); ?> &copy; <?php echo date( 'Y' ); ?>. <?php _e( 'All Rights Reserved.', 'hueman' ); ?></p>
               <?php endif; ?>

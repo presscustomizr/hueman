@@ -1311,10 +1311,14 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
             _contexts.push(con);
         }
       );
+      var _locationText = HUControlParams.translatedStrings.locations,
+          _contextText = HUControlParams.translatedStrings.contexts,
+          _notsetText = HUControlParams.translatedStrings.notset;
 
-      _locations = _.isEmpty( _locations ) ? '<span style="    font-weight: bold;">Not set</span>' : _locations.join(', ');
-      _contexts = _.isEmpty( _contexts ) ? '<span style="    font-weight: bold;">Not set</span>' : _contexts.join(', ');
-        _html = '<u>Locations</u> : ' + _locations + ' <strong>|</strong> <u>Contexts</u> : ' + _contexts;
+      _locations = _.isEmpty( _locations ) ? '<span style="font-weight: bold;">' + _notsetText + '</span>' : _locations.join(', ');
+      _contexts = _.isEmpty( _contexts ) ? '<span style="font-weight: bold;">' + _notsetText + '</span>' : _contexts.join(', ');
+
+      _html = '<u>' + _locationText + '</u> : ' + _locations + ' <strong>|</strong> <u>' + _contextText + '</u> : ' + _contexts;
 
       if ( ! $('.hu-zone-infos', $_view ).length ) {
         var $_zone_infos = $('<div/>', {
@@ -1494,6 +1498,8 @@ var HUSocialMethods = HUSocialMethods || {};
     initialize: function( id, options ) {
       api.HUDynamicControl.prototype.initialize.call( this, id, options );
 
+      var control = this;
+
       this.social_icons = [
         '500px',
         'adn',
@@ -1589,6 +1595,8 @@ var HUSocialMethods = HUSocialMethods || {};
         'reddit-alien',
         'reddit-square',
         'renren',
+        'rss',
+        'rss-square',
         'safari',
         'scribd',
         'sellsy',
@@ -1658,10 +1666,10 @@ var HUSocialMethods = HUSocialMethods || {};
       );
       this.model = {
         id : '',
-        title : this._capitalize( this.social_icons[0]) ,
-        'social-icon' : 'fa-' + this.social_icons[0],
+        title :  _.contains(control.social_icons,'rss') ? HUControlParams.translatedStrings.rss : this._capitalize( this.social_icons[0]) ,
+        'social-icon' : 'fa-' + ( _.contains(control.social_icons,'rss') ? 'rss' : control.social_icons[0] ),
         'social-link' : '',
-        'social-color' : '#000',
+        'social-color' : HUControlParams.defaultSocialColor,
         'social-target' : 1
       };
     },
@@ -1671,7 +1679,7 @@ var HUSocialMethods = HUSocialMethods || {};
       title = title || this._capitalize( this.social_icons[0]);
       title = this._truncate(title, 20);
       icon = icon || 'fa-' + this.social_icons[0];
-      color = color || '#000';
+      color = color || HUControlParams.defaultSocialColor;
 
       return '<div><span class="fa ' + icon + '" style="color:' + color + '"></span> ' + title + '</div>';
     },
@@ -1684,7 +1692,7 @@ var HUSocialMethods = HUSocialMethods || {};
       var control     = this,
           _new_model  = _.clone(obj.model),
           _new_title  = control._capitalize( obj.model['social-icon'].replace('fa-', '') ),
-          _new_color  = '#000';
+          _new_color  = HUControlParams.defaultSocialColor;
 
       $('input[data-type="title"]', obj.dom_el ).val( _new_title );
       $('input[data-type="social-link"]', obj.dom_el ).val( '' );
@@ -1739,9 +1747,9 @@ var HUSocialMethods = HUSocialMethods || {};
           return;
 
         $(this).iCheck({
-          checkboxClass: 'icheckbox_flat-green',
+          checkboxClass: 'icheckbox_flat-grey',
           checkedClass: 'checked',
-          radioClass: 'iradio_flat-green',
+          radioClass: 'iradio_flat-grey',
         })
         .on( 'ifChanged', function(e){
           $(this).val( false === $(this).is(':checked') ? 0 : 1 );
@@ -1827,6 +1835,7 @@ var HUSocialMethods = HUSocialMethods || {};
     },
     'featured-posts-enabled' : {
       controls: [
+        'featured-category',
         'featured-posts-count',
         'featured-slideshow',
         'featured-slideshow-speed',
@@ -2016,8 +2025,8 @@ var HUSocialMethods = HUSocialMethods || {};
         return;
 
       $(this).iCheck({
-        checkboxClass: 'icheckbox_flat-green',
-        radioClass: 'iradio_flat-green',
+        checkboxClass: 'icheckbox_flat-grey',
+        radioClass: 'iradio_flat-grey',
       })
       .on( 'ifChanged', function(e){
         $(this).val( false === $(this).is(':checked') ? 0 : 1 );

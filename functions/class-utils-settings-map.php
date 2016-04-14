@@ -533,19 +533,21 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           ),
           'blog-heading' => array(
                 'default'   => get_bloginfo('name'),
+                'control'   => 'HU_controls',
                 'label'     => __( 'Blog Heading', 'hueman'),
                 'type'      => 'text',
                 'section'   => 'content_blog_sec',
-                'notice'    => __( 'Your blog heading', 'hueman'),
-                'transport' => 'postMessage'
+                'notice'    => __( 'Your blog heading. Html is allowed. Note : write a blank space to hide the default content.', 'hueman'),
+                'sanitize_callback' => array( $this, 'hu_sanitize_html_text_input' )
           ),
           'blog-subheading' => array(
                 'default'   => __( 'Blog', 'hueman'),
+                'control'   => 'HU_controls',
                 'label'     => __( 'Blog Sub-Heading', 'hueman'),
                 'type'      => 'text',
                 'section'   => 'content_blog_sec',
-                'notice'    => __( 'Your blog sub-heading', 'hueman'),
-                'transport' => 'postMessage'
+                'notice'    => __( 'Your blog sub-heading. Html is allowed. Note : write a blank space to hide the default content.', 'hueman'),
+                'sanitize_callback' => array( $this, 'hu_sanitize_html_text_input' )
           ),
           'excerpt-length'  =>  array(
                 'default'   => 34,
@@ -797,8 +799,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'     => __( 'Replace the footer copyright text', 'hueman'),
                 'type'      => 'text',
                 'section'   => 'footer_design_sec',
-                'transport' => 'postMessage',
-                'notice'    => __( 'Note : formatting codes are stripped from the copyright text.', 'hueman')
+                'sanitize_callback' => array( $this, 'hu_sanitize_html_text_input' ),
+                'notice'    => __( 'Note : Html is allowed.', 'hueman')
           ),
           'credit' => array(
                 'control'   => 'HU_controls',
@@ -1256,10 +1258,18 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
      * @since Hueman 3.3.0
      */
     function hu_sanitize_textarea( $value) {
-      $value = esc_html( $value);
-      return $value;
+      return esc_html( $value);
     }
 
+
+    /**
+     * adds sanitization callback for input including html
+     * @package Hueman
+     * @since Hueman 3.3.0
+     */
+    function hu_sanitize_html_text_input( $value) {
+      return wp_kses_post( force_balance_tags( $value ) );
+    }
 
 
     /**
@@ -1284,8 +1294,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
      * @since Hueman 3.3.0
      */
     function hu_sanitize_url( $value) {
-      $value = esc_url( $value);
-      return $value;
+      return esc_url( $value);
     }
 
     /**
