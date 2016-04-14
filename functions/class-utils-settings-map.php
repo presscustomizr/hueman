@@ -84,6 +84,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
 
         //CONTENT
          'hu_content_blog_sec',
+         'hu_content_single_sec',
+         'hu_content_thumbnail_sec',
          'hu_content_layout_sec',
          'hu_sidebars_design_sec',
 
@@ -184,6 +186,18 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 //'transport'     => 'postMessage',
                 'notice'        => __('Max-width of the container. If you use 2 sidebars, your container should be at least 1200px.<br /><i>Note: For 720px content (default) use <strong>1380px</strong> for 2 sidebars and <strong>1120px</strong> for 1 sidebar. If you use a combination of both, try something inbetween.</i>', 'hueman')//@todo sprintf and split translations
           ),
+          'sidebar-padding' => array(
+                'default'   => 30,
+                'control'   => 'HU_controls',
+                'label'     => __("Sidebar Width", 'hueman'),
+                'section'   => 'general_design_sec',
+                'type'      => 'select',//@todo create a radio type
+                'choices' => array(
+                  '30'          => __( '30px padding for widgets' , 'hueman' ),
+                  '20'          => __( '20px padding for widgets' , 'hueman' ),
+                ),
+                'notice'    => __( 'Change left and right sidebars padding' , 'hueman')
+          ),
           'color-1' => array(
                 'default'     => '#3b8dbd',
                 'control'     => 'WP_Customize_Color_Control',
@@ -252,14 +266,14 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 //'control'     => 'HU_Body_Background_Control',
                 'control'     => 'WP_Customize_Color_Control',
                 'label'       => __( 'Body Background' , 'hueman' ),
-                'description' => __('Set background color and/or upload your own background image', 'hueman'),
+                'description' => __('Set the website background color', 'hueman'),
                 'section'     => 'general_design_sec',
                 //'type'        => 'hu_multi_input' ,
                 'type'        => 'color',
                 'sanitize_callback'    => array( $this, 'hu_sanitize_bg_color' ),
                 'sanitize_js_callback' => array( $this, 'hu_maybe_hash_bg_hex_color' ),
                 //'transport'   => 'postMessage',
-                'notice'        => __('Set background color and/or upload your own background image.', 'hueman')
+                //'notice'        => __('Set background color and/or upload your own background image.', 'hueman')
           )
       );
     }
@@ -298,9 +312,10 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           'responsive' => array(
                 'default'   => 1,
                 'control'   => 'HU_controls',
-                'label'     => __('Responsive Layout', 'hueman'),
+                'label'     => __('Enable the Mobile Friendly (or Responsive) layout', 'hueman'),
                 'section'   => 'mobiles_sec',
-                'type'      => 'checkbox'
+                'type'      => 'checkbox',
+                'notice'    => __( "Hueman is a <i>mobile friendly</i> WordPress theme out of the box. This means that it will adapt and render nicely on any devices : desktops, laptops, tablets, smartphones. <br/>If you uncheck this box, this adaptive (or reponsive) behaviour will not be working anymore. In most of the cases, you won't need to disable this option, and it is not recommended." , 'hueman' )
           )
       );
     }
@@ -393,7 +408,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 //to keep the selected cropped size
                 'dst_width'  => false,
                 'dst_height'  => false,
-                'notice'    => __('Upload a header image (supported formats : .jpg, .png, .gif, svg, svgz). This will disable header title/logo and description.' , 'hueman')
+                'notice'    => __('Upload a header image (supported formats : .jpg, .png, .gif, svg, svgz). This will disable header title/logo, site description, header ads widget' , 'hueman')
           )
         );
     }
@@ -422,149 +437,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     * PANEL : MAIN CONTENT
     *******************************************************************************************************
     ******************************************************************************************************/
-    /*-----------------------------------------------------------------------------------------------------
-                                   BLOG CONTENT SECTION
-    ------------------------------------------------------------------------------------------------------*/
-    function hu_content_blog_sec() {
-      return array(
-          'blog-heading' => array(
-                'default'   => '',
-                'label'     => __( 'Blog Heading', 'hueman'),
-                'type'      => 'text',
-                'section'   => 'content_blog_sec',
-                'notice'    => __( 'Your blog heading', 'hueman')
-          ),
-          'blog-subheading' => array(
-                'default'   => '',
-                'label'     => __( 'Blog Sub-Heading', 'hueman'),
-                'type'      => 'text',
-                'section'   => 'content_blog_sec',
-                'notice'    => __( 'Your blog sub-heading', 'hueman')
-          ),
-          'excerpt-length'  =>  array(
-                'default'   => 34,
-                'control'   => 'HU_controls' ,
-                'sanitize_callback' => array( $this , 'hu_sanitize_number' ),
-                'label'     => __( "Excerpt Length" , 'hueman' ),
-                'section'   => 'content_blog_sec' ,
-                'type'      => 'number' ,
-                'step'      => 1,
-                'min'       => 0,
-                //'transport' => 'postMessage',
-                'notice'    => __( "Set the excerpt length (in number of words)" , "hueman" ),
-          ),
-          'featured-posts-include' => array(
-                'default'   => 0,
-                'control'   => 'HU_controls',
-                'label'     => __("Featured Posts", 'hueman'),
-                'section'   => 'content_blog_sec',
-                'type'      => 'checkbox',
-                'notice'    => __( 'To show featured posts in the slider AND the content below<br /><i>Usually not recommended</i>' , 'hueman')//@todo sprintf split translation
-          ),
-          'featured-category' => array(
-                'default'   => 0,
-                'control'   => 'HU_controls',
-                'label'     => __("Featured Category", 'hueman'),
-                'section'   => 'content_blog_sec',
-                'type'      => 'select',//@todo create a simple cat picker with select type. => evolve to multipicker? Retrocompat ?
-                'choices'   => $this -> hu_get_the_cat_list(),
-                'notice'    => __( 'By not selecting a category, it will show your latest post(s) from all categories' , 'hueman')
-          ),
-          'featured-posts-count'  =>  array(
-                'default'   => 1,
-                'control'   => 'HU_controls' ,
-                'sanitize_callback' => array( $this , 'hu_sanitize_number' ),
-                'label'     => __( "Featured Post Count" , 'hueman' ),
-                'section'   => 'content_blog_sec' ,
-                'type'      => 'number' ,
-                'step'      => 1,
-                'min'       => 0,
-                //'transport' => 'postMessage',
-                'notice'    => __( "Max number of featured posts to display. <br /><i>Set to 1 and it will show it without any slider script</i><br /><i>Set it to 0 to disable</i>" , "hueman" ),//@todo sprintf split translation
-          ),
-          'featured-slideshow' => array(
-                'default'   => 0,
-                'control'   => 'HU_controls',
-                'label'     => __("Featured Slideshow", 'hueman'),
-                'section'   => 'content_blog_sec',
-                'type'      => 'checkbox',
-                'notice'    => __( 'Enable slideshow of featured posts (automatic animation)' , 'hueman')
-          ),
-          'featured-slideshow-speed'  =>  array(
-                'default'   => 5000,
-                'control'   => 'HU_controls' ,
-                'sanitize_callback' => array( $this , 'hu_sanitize_number' ),
-                'label'     => __( "Featured Slideshow Speed" , 'hueman' ),
-                'section'   => 'content_blog_sec' ,
-                'type'      => 'number' ,
-                'step'      => 500,
-                'min'       => 500,
-                'transport' => 'postMessage',
-                'notice'    => __( "Speed of the automatic slideshow animation" , "hueman" ),//@todo sprintf split translation
-          ),
-          'blog-standard' => array(
-                'default'   => 0,
-                'control'   => 'HU_controls',
-                'label'     => __("Standard Blog List", 'hueman'),
-                'section'   => 'content_blog_sec',
-                'type'      => 'checkbox',
-                'notice'    => __( 'Display one post per row, image beside text' , 'hueman')
-          ),
-          'placeholder' => array(
-                'default'   => 1,
-                'control'   => 'HU_controls',
-                'label'     => __("Thumbnail Placeholder", 'hueman'),
-                'section'   => 'content_blog_sec',
-                'type'      => 'checkbox',
-                'notice'    => __( 'Display featured image placeholders if no featured image is set' , 'hueman')
-          ),
-          'comment-count' => array(
-                'default'   => 1,
-                'control'   => 'HU_controls',
-                'label'     => __("Thumbnail Comment Count", 'hueman'),
-                'section'   => 'content_blog_sec',
-                'type'      => 'checkbox',
-                'notice'    => __( 'Display fComment count on thumbnails' , 'hueman')
-          ),
-          'author-bio' => array(
-                'default'   => 1,
-                'control'   => 'HU_controls',
-                'label'     => __("Single — Author Bio", 'hueman'),
-                'section'   => 'content_blog_sec',
-                'type'      => 'checkbox',
-                'notice'    => __( 'Display post author description, if it exists' , 'hueman')
-          ),
-          'related-posts' => array(
-                'default'   => 'categories',
-                'control'   => 'HU_controls',
-                'label'     => __("Single — Related Posts", 'hueman'),
-                'section'   => 'content_blog_sec',
-                'type'      => 'select',//@todo create a radio type
-                'choices' => array(
-                  '1'           => __( 'Disable' , 'hueman' ),
-                  'categories'  => __( 'Related by categories' , 'hueman' ),
-                  'tags'        => __( 'Related by tags' , 'hueman' )
-                ),
-                'notice'    => __( 'Display randomized related articles below the post' , 'hueman')
-          ),
-          'post-nav' => array(
-                'default'   => 's1',
-                'control'   => 'HU_controls',
-                'label'     => __("Single — Post Navigation", 'hueman'),
-                'section'   => 'content_blog_sec',
-                'type'      => 'select',//@todo create a radio type
-                'choices' => array(
-                  '1'           => __( 'Disable' , 'hueman' ),
-                  's1'          => __( 'Sidebar Primary' , 'hueman' ),
-                  's2'          => __( 'Sidebar Secondary' , 'hueman' ),
-                  'content'     => __( 'Below content' , 'hueman' )
-                ),
-                'notice'    => __( 'Display links to the next and previous article' , 'hueman')
-          ),
-      );
-    }
-
-
 
     /*-----------------------------------------------------------------------------------------------------
                                    CONTENT LAYOUT SECTION
@@ -610,7 +482,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           'layout-archive-category' => array(
                 'default'   => 'inherit',
                 'control'   => 'HU_Customize_Layout_Control',
-                'label'     => __('Archive — Category', 'hueman'),
+                'label'     => __('Archive - Category', 'hueman'),
                 'section'   => 'content_layout_sec',
                 'type'      => 'hu_layouts',//@todo create a radio-image type
                 'choices'   => $this -> hu_get_content_layout_choices(),
@@ -647,6 +519,185 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     }
 
 
+    /*-----------------------------------------------------------------------------------------------------
+                                   BLOG CONTENT SECTION
+    ------------------------------------------------------------------------------------------------------*/
+    function hu_content_blog_sec() {
+      return array(
+          'blog-heading-enabled' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __("Display a custom heading for your blog.", 'hueman'),
+                'section'   => 'content_blog_sec',
+                'type'      => 'checkbox'
+          ),
+          'blog-heading' => array(
+                'default'   => get_bloginfo('name'),
+                'label'     => __( 'Blog Heading', 'hueman'),
+                'type'      => 'text',
+                'section'   => 'content_blog_sec',
+                'notice'    => __( 'Your blog heading', 'hueman'),
+                'transport' => 'postMessage'
+          ),
+          'blog-subheading' => array(
+                'default'   => __( 'Blog', 'hueman'),
+                'label'     => __( 'Blog Sub-Heading', 'hueman'),
+                'type'      => 'text',
+                'section'   => 'content_blog_sec',
+                'notice'    => __( 'Your blog sub-heading', 'hueman'),
+                'transport' => 'postMessage'
+          ),
+          'excerpt-length'  =>  array(
+                'default'   => 34,
+                'control'   => 'HU_controls' ,
+                'sanitize_callback' => array( $this , 'hu_sanitize_number' ),
+                'label'     => __( "Excerpt Length" , 'hueman' ),
+                'section'   => 'content_blog_sec' ,
+                'type'      => 'number' ,
+                'step'      => 1,
+                'min'       => 0,
+                //'transport' => 'postMessage',
+                'notice'    => __( "Set the excerpt length (in number of words)" , "hueman" ),
+          ),
+          'blog-standard' => array(
+                'default'   => 0,
+                'control'   => 'HU_controls',
+                'label'     => __("Display your blog post as a standard list.", 'hueman'),
+                'section'   => 'content_blog_sec',
+                'type'      => 'checkbox',
+                'notice'    => __( 'While the default blog design is a grid of posts, you can check this option and display one post per row, whith the thumbnail beside the text.' , 'hueman')
+          ),
+          'featured-posts-enabled' => array(
+                'default'   => 1,
+                'title'       => __( 'Featured posts', 'customizr' ),
+                'control'   => 'HU_controls',
+                'label'     => __("Feature posts on top of your blog", 'hueman'),
+                'section'   => 'content_blog_sec',
+                'type'      => 'checkbox',
+                'notice'    => __( 'Check this box to display a selection of posts with a slideshow, on top of your blog.' , 'hueman')
+          ),
+          'featured-category' => array(
+                'default'   => 0,
+                'control'   => 'HU_controls',
+                'label'     => __("Select a category to feature", 'hueman'),
+                'section'   => 'content_blog_sec',
+                'type'      => 'select',//@todo create a simple cat picker with select type. => evolve to multipicker? Retrocompat ?
+                'choices'   => $this -> hu_get_the_cat_list(),
+                'notice'    => __( 'If no specific category is selected, the featured posts block will display your latest post(s) from all categories.' , 'hueman')
+          ),
+          'featured-posts-count'  =>  array(
+                'default'   => 1,
+                'control'   => 'HU_controls' ,
+                'sanitize_callback' => array( $this , 'hu_sanitize_number' ),
+                'label'     => __( "Featured Post Count" , 'hueman' ),
+                'section'   => 'content_blog_sec' ,
+                'type'      => 'number' ,
+                'step'      => 1,
+                'min'       => 0,
+                //'transport' => 'postMessage',
+                'notice'    => __( "Max number of featured posts to display. <br /><i>Set to 1 and it will show it without any slider script</i><br /><i>Set it to 0 to disable</i>" , "hueman" ),//@todo sprintf split translation
+          ),
+          'featured-slideshow' => array(
+                'default'   => 0,
+                'control'   => 'HU_controls',
+                'label'     => __("Animate your featured posts with a slideshow", 'hueman'),
+                'section'   => 'content_blog_sec',
+                'type'      => 'checkbox',
+                'notice'    => __( 'Enables the automatic animation of the featured posts carousel.' , 'hueman')
+          ),
+          'featured-slideshow-speed'  =>  array(
+                'default'   => 5000,
+                'control'   => 'HU_controls' ,
+                'sanitize_callback' => array( $this , 'hu_sanitize_number' ),
+                'label'     => __( "Featured Slideshow Speed" , 'hueman' ),
+                'section'   => 'content_blog_sec' ,
+                'type'      => 'number' ,
+                'step'      => 500,
+                'min'       => 500,
+                'transport' => 'postMessage',
+                'notice'    => __( "Speed of the automatic slideshow animation" , "hueman" ),//@todo sprintf split translation
+          ),
+          'featured-posts-include' => array(
+                'default'   => 0,
+                'control'   => 'HU_controls',
+                'label'     => __("Display the featured posts also in the list of posts", 'hueman'),
+                'section'   => 'content_blog_sec',
+                'type'      => 'checkbox',
+                'notice'    => __( 'If this box is checked, your featured posts will be displayed both in the featured slider and in the post list below. Usually not recommended because a given post might appear two times on the same page.' , 'hueman')//@todo sprintf split translation
+          )
+      );
+    }
+
+
+
+    /*-----------------------------------------------------------------------------------------------------
+                                   SINGLE POSTS SECTION
+    ------------------------------------------------------------------------------------------------------*/
+    function hu_content_single_sec() {
+      return array(
+          'author-bio' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __("Single - Author Bio", 'hueman'),
+                'section'   => 'content_single_sec',
+                'type'      => 'checkbox',
+                'notice'    => __( 'Display post author description, if it exists' , 'hueman')
+          ),
+          'related-posts' => array(
+                'default'   => 'categories',
+                'control'   => 'HU_controls',
+                'label'     => __("Single - Related Posts", 'hueman'),
+                'section'   => 'content_single_sec',
+                'type'      => 'select',//@todo create a radio type
+                'choices' => array(
+                  '1'           => __( 'Disable' , 'hueman' ),
+                  'categories'  => __( 'Related by categories' , 'hueman' ),
+                  'tags'        => __( 'Related by tags' , 'hueman' )
+                ),
+                'notice'    => __( 'Display randomized related articles below the post' , 'hueman')
+          ),
+          'post-nav' => array(
+                'default'   => 's1',
+                'control'   => 'HU_controls',
+                'label'     => __("Single - Post Navigation", 'hueman'),
+                'section'   => 'content_single_sec',
+                'type'      => 'select',//@todo create a radio type
+                'choices' => array(
+                  '1'           => __( 'Disable' , 'hueman' ),
+                  's1'          => __( 'Left Sidebar' , 'hueman' ),
+                  's2'          => __( 'Right Sidebar' , 'hueman' ),
+                  'content'     => __( 'Below content' , 'hueman' )
+                ),
+                'notice'    => __( 'Display links to the next and previous article' , 'hueman')
+          )
+        );
+    }
+
+
+    /*-----------------------------------------------------------------------------------------------------
+                                   THUMBNAIL SECTION
+    ------------------------------------------------------------------------------------------------------*/
+    function hu_content_thumbnail_sec() {
+      return array(
+          'placeholder' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __("Thumbnail Placeholder", 'hueman'),
+                'section'   => 'content_thumbnail_sec',
+                'type'      => 'checkbox',
+                'notice'    => __( 'Display featured image placeholders if no featured image is set' , 'hueman')
+          ),
+          'comment-count' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __("Thumbnail Comment Count", 'hueman'),
+                'section'   => 'content_thumbnail_sec',
+                'type'      => 'checkbox',
+                'notice'    => __( 'Display comment count on thumbnails' , 'hueman')
+          )
+        );
+    }
+
 
 
 
@@ -680,20 +731,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                   's2'          => __( 'Hide secondary sidebar' , 'hueman' ),
                   's1-s2'       => __( 'Hide both sidebars' , 'hueman' )
                 ),
-                'notice'    => __('Control how the sidebar content is displayed on smartphone mobile devices (320px)' , 'hueman')
-          ),
-          'sidebar-padding' => array(
-                'default'   => 30,
-                'control'   => 'HU_controls',
-                'label'     => __("Sidebar Width", 'hueman'),
-                'section'   => 'sidebars_design_sec',
-                'type'      => 'select',//@todo create a radio type
-                'choices' => array(
-                  '30'          => __( '280px primary, 200px secondary (30px padding)' , 'hueman' ),
-                  '20'          => __( '300px primary, 220px secondary (20px padding)' , 'hueman' ),
-                ),
-                'notice'    => __( 'Change sidebar content padding and width' , 'hueman')
-          ),
+                'notice'    => __('Control how the sidebar content is displayed on smartphone mobile devices (320px). Note : on smartphones the sidebars are displayed below the content.' , 'hueman')
+          )
       );
     }
 
@@ -758,8 +797,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'     => __( 'Replace the footer copyright text', 'hueman'),
                 'type'      => 'text',
                 'section'   => 'footer_design_sec',
-                'transport' => 'postMessage'
-                //'notice'    => __( 'Replace the footer copyright text', 'hueman')
+                'transport' => 'postMessage',
+                'notice'    => __( 'Note : formatting codes are stripped from the copyright text.', 'hueman')
           ),
           'credit' => array(
                 'control'   => 'HU_controls',
@@ -943,21 +982,22 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
               'priority' => 20,
               'panel'   => 'hu-general-panel'
         ),
+        'social_links_sec'         => array(
+              'title'    => __( 'Social links', 'hueman' ),
+              'priority' => 30,
+              'panel'   => 'hu-general-panel'
+        ),
         'comments_sec'         => array(
               'title'    => __( 'Comments', 'hueman' ),
-              'priority' => 30,
+              'priority' => 40,
               'panel'   => 'hu-general-panel'
         ),
         'mobiles_sec'         => array(
               'title'    => __( 'Mobile devices', 'hueman' ),
-              'priority' => 40,
-              'panel'   => 'hu-general-panel'
-        ),
-        'social_links_sec'         => array(
-              'title'    => __( 'Social links', 'hueman' ),
               'priority' => 50,
               'panel'   => 'hu-general-panel'
         ),
+
 
 
         /*---------------------------------------------------------------------------------------------
@@ -978,22 +1018,31 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         /*---------------------------------------------------------------------------------------------
         -> PANEL : CONTENT
         ----------------------------------------------------------------------------------------------*/
-        'content_blog_sec'         => array(
-              'title'    => __( 'Blog content : heading, slideshow, thumbnails, ...', 'hueman' ),
-              'priority' => 10,
-              'panel'   => 'hu-content-panel'
-        ),
         'content_layout_sec'         => array(
               'title'    => __( 'Layout options for the main content', 'hueman' ),
-              'priority' => 20,
+              'priority' => 10,
               'panel'   => 'hu-content-panel'
         ),
         'sidebars_design_sec'         => array(
               'title'    => __( 'Sidebars : Design and Mobile Settings', 'hueman' ),
+              'priority' => 20,
+              'panel'   => 'hu-content-panel'
+        ),
+        'content_blog_sec'         => array(
+              'title'    => __( 'Blog Design and Content', 'hueman' ),
               'priority' => 30,
               'panel'   => 'hu-content-panel'
         ),
-
+        'content_single_sec'         => array(
+              'title'    => __( 'Single Posts Settings', 'hueman' ),
+              'priority' => 40,
+              'panel'   => 'hu-content-panel'
+        ),
+        'content_thumbnail_sec'         => array(
+              'title'    => __( 'Thumbnails Settings', 'hueman' ),
+              'priority' => 40,
+              'panel'   => 'hu-content-panel'
+        ),
 
         /*---------------------------------------------------------------------------------------------
         -> PANEL : FOOTER
@@ -1097,23 +1146,23 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         ),
         'col-2cl'=> array(
           'src' => get_template_directory_uri() . '/assets/back/img/col-2cl.png',
-          'label' => __( '2 Columns Left' , 'hueman' )
+          'label' => __( '2 Columns - Content Left' , 'hueman' )
         ),
         'col-2cr'=> array(
           'src' => get_template_directory_uri() . '/assets/back/img/col-2cr.png',
-          'label' => __( '2 Columns Right' , 'hueman' )
+          'label' => __( '2 Columns - Content Right' , 'hueman' )
         ),
         'col-3cm'=> array(
           'src' => get_template_directory_uri() . '/assets/back/img/col-3cm.png',
-          'label' => __( '3 Columns Middle' , 'hueman' )
+          'label' => __( '3 Columns - Content Middle' , 'hueman' )
         ),
         'col-3cl'=> array(
           'src' => get_template_directory_uri() . '/assets/back/img/col-3cl.png',
-          'label' => __( '3 Columns Left' , 'hueman' )
+          'label' => __( '3 Columns - Content Left' , 'hueman' )
         ),
         'col-3cr'=> array(
           'src' => get_template_directory_uri() . '/assets/back/img/col-3cr.png',
-          'label' => __( '3 Columns Right' , 'hueman' )
+          'label' => __( '3 Columns - Content Right' , 'hueman' )
         )
       );
       if ( 'global' != $_wot )
@@ -1180,12 +1229,12 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
 
       //return no sidebars if empty
       if ( ! count( $sidebars ) ) {
-        $_to_return['no-sidebars'] = '-- ' . __( 'No Sidebars', 'humean' )  . ' --';
+        $_to_return['no-sidebars'] = '-- ' . __( 'No Sidebars', 'hueman' )  . ' --';
         return $_to_return;
       }
 
       //else populate the array
-      $_to_return[] = '-- ' . __( 'Choose Sidebar', 'humean' ) . ' --';
+      $_to_return[] = '-- ' . __( 'Choose Sidebar', 'hueman' ) . ' --';
 
       foreach ( $sidebars as $id => $sidebar ) {
         $id = esc_attr( $id );

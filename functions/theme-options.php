@@ -1,4 +1,5 @@
 <?php
+//@todo : remove
 
 /*  Initialize the options before anything else.
 /* ------------------------------------ */
@@ -14,28 +15,6 @@ function custom_theme_options() {
 
 	// Custom settings array that will eventually be passed to the OptionTree Settings API Class.
 	$custom_settings = array(
-
-/*  Help pages
-/* ------------------------------------ */
-	'contextual_help' => array(
-      'content'       => array(
-        array(
-          'id'        => 'general_help',
-          'title'     => 'Documentation',
-          'content'   => '
-			<h1>Hueman</h1>
-			<p>Thanks for using this theme! Enjoy.</p>
-			<ul>
-				<li>Read the theme documentation <a target="_blank" href="'.get_template_directory_uri().'/functions/documentation/documentation.html">here</a></li>
-				<li>Download the sample child theme <a href="https://github.com/AlxMedia/hueman-child/archive/master.zip">here</a></li>
-				<li>Feel free to rate/review the theme <a target="_blank" href="http://wordpress.org/support/view/theme-reviews/hueman">here</a></li>
-				<li>If you have theme questions, go <a target="_blank" href="http://wordpress.org/support/theme/hueman">here</a></li>
-				<li>Hueman is on <a target="_blank" href="https://github.com/AlxMedia/hueman">GitHub</a></li>
-			</ul>
-		'
-        )
-      )
-    ),
 
 /*  Admin panel sections
 /* ------------------------------------ */
@@ -978,7 +957,7 @@ function custom_theme_options() {
 				array(
 					'id'		=> 'social-icon',
 					'label'		=> 'Icon Name',
-					'desc'		=> 'Font Awesome icon names [<a href="http://fortawesome.github.io/Font-Awesome/icons/" target="_blank"><strong>View all</strong>]</a>  ',
+					'desc'		=> 'Font Awesome icon names [<a href="'.esc_url("//fortawesome.github.io/Font-Awesome/icons/").'" target="_blank"><strong>View all</strong>]</a>  ',
 					'std'		=> 'fa-',
 					'type'		=> 'text',
 					'choices'	=> array()

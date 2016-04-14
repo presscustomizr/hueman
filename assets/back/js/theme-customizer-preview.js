@@ -52,7 +52,7 @@
         api.preview.send( 'houston-widget-settings', _wpWidgetCustomizerPreviewSettings );
 
         //TEST
-        // console.log('_wpCustomizeSettings', _wpCustomizeSettings, _wpCustomizeSettings.activeSections );
+        //console.log('_wpCustomizeSettings', _wpCustomizeSettings, _wpCustomizeSettings.activeSections );
         // console.log('_wpWidgetCustomizerPreviewSettings', _wpWidgetCustomizerPreviewSettings);
 
 
@@ -93,10 +93,35 @@
   ******************************************/
   $.extend( _setting_cbs, {
     blogname : function(to) {
+      var _hasLogo,
+          _logoSet = api.has( _build_setId('custom-logo') ) ? api( _build_setId('custom-logo') ).get() : '';
+
+      _hasLogo = ( _.isNumber(_logoSet) && _logoSet > 0 ) || ( ! _.isEmpty(_logoSet) && ( false !== _logoSet ) );
+
+      if ( _hasLogo )
+        return;
       $( '.site-title a' ).text( to );
     },
     blogdescription : function(to) {
       $( '.site-description' ).text( to );
+    },
+    'blog-heading' : function(to) {
+      var $_subhead;
+      to = ( _.isEmpty(to) && _.has(HUPreviewParams, 'blogname' ) ) ? HUPreviewParams.blogname : to;
+
+      if ( $( '.page-title h2' ).find('.hu-blog-subheading').length ) {
+        $_subhead = $( '.page-title h2' ).find('.hu-blog-subheading');
+      }
+      $( '.page-title h2' ).text( to + ' ' ).append( $_subhead );
+    },
+    'blog-subheading' : function(to) {
+      to = _.isEmpty(to) ? 'Blog' : to;
+
+      if ( $( '.hu-blog-subheading', '.page-title h2' ).length ) {
+        $( '.hu-blog-subheading', '.page-title h2' ).text( to );
+      } else {
+        $( '.page-title h2' ).append( $('<span>', { class : 'hu-blog-subheading', html : to}) );
+      }
     },
     background_color : function( to ) {
       if ( '#ffffff' == to || '#fff' == to )
@@ -128,7 +153,7 @@
         },
         'social-icon' : function( obj ) {
           var $_el = $( '#'+ obj.model_id, '.social-links' ).find('i'),
-              _classes = $_el.attr('class').split(' '),
+              _classes = ! _.isUndefined( $_el.attr('class') ) ? $_el.attr('class').split(' ') : [],
               _prev = '';
 
           //find the previous class
@@ -140,10 +165,7 @@
           $( '#'+ obj.model_id, '.social-links' ).find('i').removeClass(_prev).addClass( obj.value );
         },
         'social-link' : function( obj ) {
-          if ( ! _isValidURL(obj.value) )
-            return;
-
-          $( '#'+ obj.model_id, '.social-links' ).attr('href', obj.value );
+          $( '#'+ obj.model_id, '.social-links' ).attr('href', ! _isValidURL(obj.value) ? 'javascript:void(0);' : obj.value );
         },
         'social-target' : function( obj ) {
           if ( 0 !== ( obj.value * 1 ) )

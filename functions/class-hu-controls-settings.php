@@ -113,7 +113,7 @@ if ( ! class_exists( 'HU_Customize_Manage_Widgets_Section' ) ) :
       <li id="accordion-section-{{ data.id }}" class="hu-widget-zone-section accordion-section control-section control-section-{{ data.type }}">
       <h3 class="accordion-section-title" tabindex="0">
         {{ data.title }}
-        <span class="screen-reader-text"><?php _e( 'Press return or enter to open this section' ); ?></span>
+        <span class="screen-reader-text"><?php _e( 'Press return or enter to open this section', 'hueman' ); ?></span>
       </h3>
       <ul class="accordion-section-content">
 
@@ -179,8 +179,6 @@ if ( ! class_exists( 'HU_Advanced_Control' ) ) :
     /**
     * Refresh the control parameters passed to the JavaScript via JSON.
     *
-    * @since 3.4.19
-    * @package      Customizr
     *
     * @Override
     * @see WP_Customize_Control::to_json()
@@ -451,17 +449,7 @@ if ( ! class_exists( 'HU_Customize_Widget_Areas_Control' ) ) :
       //let the parent educate us
       parent::__construct($manager, $id, $args );
 
-      $this -> contexts = array(
-        '_all_'             => __('All contexts', 'hueman'),
-        'home'              => __('Home', 'hueman'),
-        'page'              => __('Pages', 'hueman'),
-        'single'            => __('Single Posts', 'hueman'),
-        'archive'           => __('Archives', 'hueman'),
-        'archive-category'  => __('Categories', 'hueman'),
-        'search'            => __('Search Results', 'hueman'),
-        '404'               => __('404 Error Pages', 'hueman'),
-
-      );
+      $this -> contexts = hu_get_contexts_list();
 
       $_default_locations = hu_get_builtin_widget_zones_location();
       //generates the locations for json
@@ -482,7 +470,7 @@ if ( ! class_exists( 'HU_Customize_Widget_Areas_Control' ) ) :
         $default_zones[] = array(
           'id'          => $_data['id'],
           'title'       => $_data['name'],
-          'contexts'    => ['_all_'],
+          'contexts'    => array('_all_'),
           'locations'   => array($_loc),
           'is_builtin'  => true,
           'description' => $_data['description']
@@ -667,7 +655,7 @@ if ( ! class_exists( 'HU_Customize_Socials' ) ) :
           <div class="hu-input">
             <input data-type="social-link" type="text" value="{{ data['social-link'] }}" placeholder="<?php _e('http://...', 'hueman'); ?>"></input>
           </div>
-          <span class="hu-notice"><?php _e('Enter the full url for your icon button. (must include http://)', 'hueman'); ?></span>
+          <span class="hu-notice"><?php _e('Enter the full url of your social profile (must start with "http://").', 'hueman'); ?></span>
         </div>
         <div class="hu-sub-set">
           <div class="customize-control-title"><?php _e('Title', 'hueman'); ?></div>
@@ -923,8 +911,6 @@ endif;
 
 
 /*
- * @since 3.4.19
- * @package      Customizr
 */
 if ( class_exists('WP_Customize_Cropped_Image_Control') && ! class_exists( 'HU_Customize_Cropped_Image_Control' ) ) :
   class HU_Customize_Cropped_Image_Control extends WP_Customize_Cropped_Image_Control {
@@ -938,8 +924,6 @@ if ( class_exists('WP_Customize_Cropped_Image_Control') && ! class_exists( 'HU_C
     /**
     * Refresh the parameters passed to the JavaScript via JSON.
     *
-    * @since 3.4.19
-    * @package      Customizr
     *
     * @Override
     * @see WP_Customize_Control::to_json()

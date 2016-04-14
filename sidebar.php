@@ -10,10 +10,10 @@
 		<div class="sidebar-content">
 
 			<?php if ( hu_is_checked('sidebar-top') ): ?>
-			<div class="sidebar-top group">
-				<p><?php _e('Follow:','hueman'); ?></p>
-				<?php hu_social_links() ; ?>
-			</div>
+  			<div class="sidebar-top group">
+          <p><?php echo hu_has_social_links() ? __('Follow:','hueman') : '&nbsp;' ; ?></p>
+          <?php hu_print_social_links() ; ?>
+  			</div>
 			<?php endif; ?>
 
 			<?php if ( hu_get_option( 'post-nav' ) == 's1') { get_template_part('parts/post-nav'); } ?>

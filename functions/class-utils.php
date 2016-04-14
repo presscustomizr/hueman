@@ -9,8 +9,8 @@
 * @link         http://presscustomizr.com/hueman
 * @license      http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
-if ( ! class_exists( 'HU_utils_options' ) ) :
-  class HU_utils_options {
+if ( ! class_exists( 'HU_utils' ) ) :
+  class HU_utils {
     //Access any method or var of the class with classname::$instance -> var or method():
     static $inst;
     public $default_options;
@@ -57,7 +57,7 @@ if ( ! class_exists( 'HU_utils_options' ) ) :
         set_transient(
           $_trans,
           sprintf('%s|%s' , 1 >= count( $this -> db_options ) ? 'with' : 'before', HUEMAN_VER ),
-          60*60*24*9999
+          60*60*24*3650
         );
       }
     }
@@ -171,6 +171,40 @@ if ( ! class_exists( 'HU_utils_options' ) ) :
     }
 
 
+
+    /**
+    * Get the saved options in customizer Screen, merge them with the default theme options array and return the updated global options array
+    *
+    */
+    function hu_get_theme_options ( $option_group = null ) {
+        //do we have to look in a specific group of option (plugin?)
+        $option_group       = is_null($option_group) ? HU_THEME_OPTIONS : $option_group;
+        $saved              = empty($this -> db_options) ? $this -> hu_cache_db_options() : $this -> db_options;
+        $defaults           = $this -> default_options;
+        $__options          = wp_parse_args( $saved, $defaults );
+        //$__options        = array_intersect_key( $__options, $defaults );
+      return $__options;
+    }
+
+
+
+    /**
+    * Set an option value in the theme option group
+    * @param $option_name : string
+    * @param $option_value : sanitized option value, can be a string, a boolean or an array
+    * @param $option_group : string ( like hu_theme_options )
+    * @return  void
+    *
+    */
+    function hu_set_option( $option_name , $option_value, $option_group = null ) {
+      $option_group           = is_null($option_group) ? HU_THEME_OPTIONS : $option_group;
+      $_options               = $this -> hu_get_theme_options( $option_group );
+      $_options[$option_name] = $option_value;
+
+      update_option( $option_group, $_options );
+    }
+
+
     /**
     * The purpose of this callback is to refresh and store the theme options in a property on each customize preview refresh
     * => preview performance improvement
@@ -196,6 +230,47 @@ if ( ! class_exists( 'HU_utils_options' ) ) :
       $this -> db_options = false === get_option( $opt_group ) ? array() : (array)get_option( $opt_group );
       return $this -> db_options;
     }
+
+
+    /***************************
+    * USER STARTED USING THE THEME
+    ****************************/
+    /**
+    * Returns a boolean
+    * check if user started to use the theme before ( strictly < ) the requested version
+    *
+    */
+    function hu_user_started_before_version( $_ver ) {
+      if ( ! get_transient( 'started_using_hueman' ) )
+        return false;
+
+      $_trans = 'started_using_hueman';
+
+      if ( ! $_ver )
+        return false;
+
+      $_start_version_infos = explode('|', esc_attr( get_transient( $_trans ) ) );
+
+      if ( ! is_array( $_start_version_infos ) )
+        return false;
+
+      switch ( $_start_version_infos[0] ) {
+        //in this case we know exactly what was the starting version (most common case)
+        case 'with':
+          return version_compare( $_start_version_infos[1] , $_ver, '<' );
+        break;
+        //here the user started to use the theme before, we don't know when.
+        //but this was actually before this check was created
+        case 'before':
+          return true;
+        break;
+
+        default :
+          return false;
+        break;
+      }
+    }
+
 
 
 

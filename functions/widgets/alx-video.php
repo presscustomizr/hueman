@@ -15,15 +15,31 @@ class AlxVideo extends WP_Widget {
 
 /*  Constructor
 /* ------------------------------------ */
-	function AlxVideo() {
-		parent::__construct( false, 'AlxVideo', array('description' => 'Display a responsive video by adding a link.', 'classname' => 'widget_hu_video') );;
+	function __construct() {
+		parent::__construct(
+      'alxvideo',
+      __('Hueman Videos', 'hueman'),
+      array(
+        'description' => __('Display a responsive video with a YouTube or Vimeo link.', 'hueman'),
+        'classname' => 'widget_hu_video'
+      )
+    );
 	}
+
+  public function hu_get_defaults() {
+    return array(
+      'title'       => '',
+    // Video
+      'video_url'     => '',
+    );
+  }
+
 
 /*  Widget
 /* ------------------------------------ */
 	public function widget($args, $instance) {
 		extract( $args );
-		$instance['title']?NULL:$instance['title']='';
+		$instance['title'] = isset( $instance['title'] ) ? $instance['title'] : '';
 		$title = apply_filters('widget_title',$instance['title']);
 		$output = $before_widget."\n";
 		if($title)
@@ -61,11 +77,7 @@ class AlxVideo extends WP_Widget {
 /* ------------------------------------ */
 	public function form($instance) {
 		// Default widget settings
-		$defaults = array(
-			'title' 			=> '',
-		// Video
-			'video_url' 		=> '',
-		);
+		$defaults = $this -> hu_get_defaults();
 		$instance = wp_parse_args( (array) $instance, $defaults );
 ?>
 

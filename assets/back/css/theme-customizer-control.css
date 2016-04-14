@@ -21,6 +21,13 @@
   left: 440px;
 }
 
+.in-sub-panel #tc-donate-customizer,
+ .in-sub-panel .tc-cta-wrap {
+   left: -450px;
+   height: 0;
+ }
+
+
 /* RTL*/
 .rtl.wp-customizer .wp-full-overlay.expanded {
   margin-right: 440px;
@@ -44,6 +51,11 @@
 .rtl .accordion-sub-container.control-panel-content {
   right: 440px;
 }
+
+.rtl .in-sub-panel #tc-donate-customizer,
+ .rtl .in-sub-panel .tc-cta-wrap {
+   right: -450px;
+ }
 
 
 @media screen and (max-width: 1400px) {
@@ -99,6 +111,34 @@
     right: -380px;
   }
 }
+
+/* Reponsive buttons and rating footer actions hack
+ * What we do is:
+ * a) stretch heigh and width of the footer-actions
+ * b) sett an higher bottom vallue for the wp-full-overlay-sidebar-content
+ * according with the new footer-actions-height
+ * ( the devices buttons are not visibile for window's width below 1025px
+ */
+ @media screen and (min-width: 980px) {
+   .wp-customizer .expanded #customize-footer-actions {
+     width: 380px;
+   }
+ }
+ @media screen and (min-width: 1025px) {
+   .wp-customizer .expanded #customize-footer-actions {
+     height: 85px;
+     background: inherit;
+   }
+   .wp-customizer #customize-controls .wp-full-overlay-sidebar-content {
+     bottom: 85px;
+   }
+ }
+ @media screen and (min-width: 1401px) {
+   .wp-customizer .expanded #customize-footer-actions {
+     width: 440px;
+   }
+ }
+
 @media screen and (max-width: 979px) {
   .wp-customizer .wp-full-overlay.expanded {
     margin-left: 300px;
@@ -153,6 +193,49 @@
     right: -300px;
   }
 }
+
+/* at max-width 640px the wp-full-overlay-sidebar becomes 100% */
+ @media screen and (max-width: 640px) {
+   .wp-customizer .wp-full-overlay.expanded {
+     margin-left: 0;
+   }
+
+   .in-sub-panel #customize-info,
+   .in-sub-panel #customize-theme-controls > ul > .accordion-section {
+     left: -100%;
+     width: 100%;
+   }
+
+   .in-sub-panel .tc-cta-wrap,
+   .in-sub-panel #tc-donate-customizer,
+   #customize-theme-controls .control-section.current-panel > h3.accordion-section-title {
+     left: -100%;
+   }
+   .accordion-sub-container.control-panel-content {
+     left: 100%;
+   }
+
+   /* RTL */
+   .rtl.wp-customizer .wp-full-overlay.expanded {
+     margin-right: 0;
+   }
+
+   .rtl .in-sub-panel #customize-info,
+   .rtl .in-sub-panel #customize-theme-controls > ul > .accordion-section {
+     right: -100%;
+     width: 100%;
+     left: auto;
+   }
+   .rtl .in-sub-panel #tc-donate-customizer,
+   .rtl .in-sub-panel .tc-cta-wrap,
+   .rtl #customize-theme-controls .control-section.current-panel > h3.accordion-section-title {
+     right: -100%;
+     left: auto;
+   }
+   .rtl .accordion-sub-container.control-panel-content {
+     right: 100%;
+   }
+ }
 
 
 /* PANELS AND SECTIONS TITLES */
@@ -313,7 +396,7 @@ li[id*="customize-control-"] {
 }
 .customize-control-title {
 	color: #555;
-	font-size: 15px;
+	font-size: 14px;
 }
 .hu-customizr-title {
 	/* color: #555; */
@@ -673,12 +756,18 @@ body .select2-container {
 .hu-rate-link {
   position: absolute;
   bottom: 0;
+  left: 40px;
   right: 0;
-  padding: 4px 12px;
+  padding: 4px 12px 4px 0;
   font-size: 10px;
   line-height: 14px;
-  width: 90%;
   text-align: right;
+}
+.rtl .tc-rate-link {
+   text-align: left;
+   left: auto;
+   right: 40px;
+   padding: 4px 0 4px 12px;
 }
 .wp-full-overlay.collapsed .hu-rate-link {
   display: none;
@@ -1070,9 +1159,11 @@ span.select2-results, body .select2-container {
   top: 2px;
   color: #23282d;
 }
+
 /* Socials Specifics */
 .customize-control-hu_socials .select2-container--default .select2-selection--single .select2-selection__rendered {
   padding: 5px;
+  line-height: 16px;
 }
 
 

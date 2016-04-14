@@ -1,0 +1,145 @@
+@font-face {
+  font-family: 'FontAwesome';
+  src:url('../../global/fonts/fontawesome-webfont.eot');
+  src:url('../../global/fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
+      url('../../global/fonts/fontawesome-webfont.woff2') format('woff2'),
+      url('../../global/fonts/fontawesome-webfont.woff') format('woff'),
+      url('../../global/fonts/fontawesome-webfont.ttf') format('truetype'),
+      url('../../global/fonts/fontawesome-webfont.svg#fontawesomeregular') format('svg');
+}
+
+.about-wrap h3 {
+	line-height: 26px;
+}
+#hueman-admin-panel.about-wrap .feature-section {
+		margin-top: 0px;
+    padding: 0;
+}
+.about-wrap .feature-section div {
+	text-align: center;
+}
+
+.about-text.tc-welcome {
+	margin: 1em 0;
+}
+
+.about-wrap .feature-section.three-col img.tc-donate {
+	background: none;
+	border: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	max-width: none;
+	float: none;
+}
+
+
+.images-stagger-right img {
+	float: right;
+	padding-left: 20px;
+}
+
+.images-stagger-left img {
+	float: left;
+	padding-right: 20px;
+}
+
+.tc-follow {
+	margin-bottom: 11px;
+}
+
+.button-primary.review-hueman {
+	margin-top: 9px;
+}
+
+.tc-upgrade-notice {
+	background-color: #FFFFE0;
+	border: 1px solid #E6DB55;
+	padding: 0px;
+	margin: 5px 0px;
+	text-align: center;
+}
+
+.tc-upgrade-notice p {
+	line-height: 1em;
+}
+
+/* ADMIN BAR
+    -------------------------------------------------- */
+h1.need-help-title:before,
+#wpadminbar #wp-admin-bar-tc-hueman-help .ab-item:before, li#wp-admin-bar-tc-hueman-help a:before {
+  font-family: 'FontAwesome';
+  speak: none;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  font-style: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  content: "\f1cd";
+}
+
+#wpadminbar #wp-admin-bar-tc-hueman-help .ab-item:before, li#wp-admin-bar-tc-hueman-help a:before {
+  padding-right: 0px;
+  top: 2px;
+  color: #FFF;
+}
+
+li#wp-admin-bar-tc-hueman-help a {
+	color: #FFF;
+	text-decoration: none;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	background-color: #27CDA5;
+	background-image: -moz-linear-gradient(top, #27CDA5, #1B8D71);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#27CDA5), to(#1B8D71));
+	background-image: -webkit-linear-gradient(top, #27CDA5, #1B8D71);
+	background-image: -o-linear-gradient(top, #27CDA5, #1B8D71);
+	background-image: linear-gradient(to bottom, #27CDA5, #1B8D71);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff9db668' , endColorstr='#ff768d44' , GradientType=0);
+	border-color: #1B8D71 #1B8D71 #4B5A2B;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+
+#wpadminbar .ab-top-menu>li#wp-admin-bar-tc-hueman-help:hover>.ab-item {
+  color: #FFF;
+  background: #1B8D71; /* Old browsers */
+background: -moz-linear-gradient(top,  #1B8D71 1%, #27CDA5 100%, #27CDA5 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#1B8D71), color-stop(100%,#27CDA5), color-stop(100%,#27CDA5)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #1B8D71 1%,#27CDA5 100%,#27CDA5 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #1B8D71 1%,#27CDA5 100%,#27CDA5 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #1B8D71 1%,#27CDA5 100%,#27CDA5 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #1B8D71 1%,#27CDA5 100%,#27CDA5 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1B8D71', endColorstr='#27CDA5',GradientType=0 ); /* IE6-9 */
+}
+
+h1.need-help-title:before {
+	padding-right: 17px;
+	top: 1px;
+	font-size: 1.2em;
+	color:#27CDA5;
+}
+
+#hueman-admin-panel .button-secondary.hueman-help {
+	line-height: 25px;
+	padding-top: 11px;
+	height: 51px;
+	font-size: 20px;
+	font-family: 'georgia';
+	width: 95%;
+	white-space: normal;
+}
+
+.about-wrap .feature-section .tc-follow img {
+	background: none;
+	max-width: none;
+	float: none;
+}
+
+.about-wrap #showcase .feature-section img {
+	border: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
