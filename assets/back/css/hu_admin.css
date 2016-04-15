@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'FontAwesome';
-  src:url('../../global/fonts/fontawesome-webfont.eot');
-  src:url('../../global/fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
-      url('../../global/fonts/fontawesome-webfont.woff2') format('woff2'),
-      url('../../global/fonts/fontawesome-webfont.woff') format('woff'),
-      url('../../global/fonts/fontawesome-webfont.ttf') format('truetype'),
-      url('../../global/fonts/fontawesome-webfont.svg#fontawesomeregular') format('svg');
+  src:url('../../front/fonts/fontawesome-webfont.eot');
+  src:url('../../front/fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
+      url('../../front/fonts/fontawesome-webfont.woff2') format('woff2'),
+      url('../../front/fonts/fontawesome-webfont.woff') format('woff'),
+      url('../../front/fonts/fontawesome-webfont.ttf') format('truetype'),
+      url('../../front/fonts/fontawesome-webfont.svg#fontawesomeregular') format('svg');
 }
 
 .about-wrap h3 {

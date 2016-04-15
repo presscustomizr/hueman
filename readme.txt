@@ -1,4 +1,4 @@
-# Hueman v3.0.11
+# Hueman v3.0.12
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > Hueman is a mobile friendly WordPress theme for blogs, magazines and business websites. It's been designed to beautifully display pictures and text content, and engineered to be easy to use and fast. The Hueman theme helps you attract and retain more visitors, that's why it's already used by 70K+ active websites in the world and has received hundreds of five stars ratings.
@@ -73,12 +73,24 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 # Changelog
+= 3.0.12 April 15th 2016  =
+* fixed : social icon default color is back to rgba(255,255,255,0.7)
+* fixed : added back the feedburner rss feed option in customizer > Global Settings > Site Identity
+* fixed : added back the color-footer option in customizer > Global Settings > General Design Options
+* added : performance option to load the not minified front-end stylesheet
+* improved : performance, don't load js/css files that are not needed in a given context, like flexslider and jqueryplayer
+* improved : moved style.css rules in assets/front/css/dev-common.css
+* improved : performance, group front-end stylesheets style.css, responsive.css and font-awesome.css in one single file to reduce the number of http requests
+* improved : some customizer color settings are now changing without refreshing the page
+* updated : Font Awesome updated to the latest version 4.6.1
+
 = 3.0.11 April 14th 2016  =
 * added translated strings for the customizer
 * added rss social icons, made it the default one
 * fixed hover color for social links not working
 * fixed in customizer, the featured-category visibility when feature posts uncheck
 * improved : safely allow html for the blog heading, subheading and footer copyright
+* changed : customizer style back to wp default for some elements
 
 = 3.0.10 April 13th 2016  =
 * Moved options from the previous admin option ( Appearance > Theme Options ) to the customizer panel. Users settings from a previous version are being preserved an re-used in the customizer.

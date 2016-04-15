@@ -94,8 +94,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
          'hu_footer_design_sec',
 
         //ADVANCED
-         'hu_advanced_feed_sec',
-         'hu_advanced_rec_plugins_sec'
+         'hu_performance_sec'
       );
 
       foreach ( $_settings_sections as $_section_cb ) {
@@ -140,6 +139,16 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'title_tagline',//<= this is a default WP section, not created for the Hueman theme
                 'type'      => 'hu_upload',
                 'sanitize_callback' => array( $this , 'hu_sanitize_number' )
+          ),
+          'rss-feed'  => array(
+                'default'   => '',
+                'control'   =>  'HU_Controls',
+                'label'     =>  __( 'FeedBurner URL' , 'hueman' ),
+                'section'   => 'title_tagline',//<= this is a default WP section, not created for the Hueman theme
+                'type'      => 'text',
+                'sanitize_callback' => array( $this , 'hu_sanitize_url' ),
+                'priority'  => 60,
+                'notice'    => __('Enter your full FeedBurner URL (or any other preferred feed URL) if you wish to use FeedBurner over the standard WordPress feed e.g. http://feeds.feedburner.com/yoururlhere ', 'hueman' )
           )
       );
     }
@@ -218,48 +227,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'sanitize_js_callback' => 'maybe_hash_hex_color',
                 //'transport'   => 'postMessage'
           ),
-          'color-topbar' => array(
-                'default'     => '#26272b',
-                'control'     => 'WP_Customize_Color_Control',
-                'label'       => __( 'Topbar Background' , 'hueman' ),
-                'section'     => 'general_design_sec',
-                'type'        =>  'color' ,
-                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
-                'sanitize_js_callback' => 'maybe_hash_hex_color',
-                //'transport'   => 'postMessage'
-          ),
-          'color-header' => array(
-                'default'     => '#33363b',
-                'control'     => 'WP_Customize_Color_Control',
-                'label'       => __( 'Header Background' , 'hueman' ),
-                'section'     => 'general_design_sec',
-                'type'        =>  'color' ,
-                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
-                'sanitize_js_callback' => 'maybe_hash_hex_color',
-                //'transport'   => 'postMessage'
-          ),
-          'color-header-menu' => array(
-                'default'     => '',
-                'control'     => 'WP_Customize_Color_Control',
-                'label'       => __( 'Header Menu Background' , 'hueman' ),
-                'section'     => 'general_design_sec',
-                'type'        =>  'color' ,
-                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
-                'sanitize_js_callback' => 'maybe_hash_hex_color',
-                //'transport'   => 'postMessage'
-          ),
-          'image-border-radius'  =>  array(
-                'default'       => 0,
-                'control'       => 'HU_controls' ,
-                'sanitize_callback' => array( $this , 'hu_sanitize_number' ),
-                'label'         => __( "Image Border Radius" , 'hueman' ),
-                'section'       => 'general_design_sec' ,
-                'type'          => 'number' ,
-                'step'          => 1,
-                'min'           => 0,
-                //'transport'     => 'postMessage',
-                'notice'        => __('Give your thumbnails and layout images rounded corners', 'hueman')
-          ),
           'body-background' => array(
                 //'default'     => array(),
                 'default'       => '#eaeaea',
@@ -272,12 +239,88 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'type'        => 'color',
                 'sanitize_callback'    => array( $this, 'hu_sanitize_bg_color' ),
                 'sanitize_js_callback' => array( $this, 'hu_maybe_hash_bg_hex_color' ),
-                //'transport'   => 'postMessage',
+                'transport'   => 'postMessage',
                 //'notice'        => __('Set background color and/or upload your own background image.', 'hueman')
+          ),
+          'color-topbar' => array(
+                'default'     => '#26272b',
+                'control'     => 'WP_Customize_Color_Control',
+                'label'       => __( 'Topbar Background' , 'hueman' ),
+                'section'     => 'general_design_sec',
+                'type'        =>  'color' ,
+                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
+                'sanitize_js_callback' => 'maybe_hash_hex_color',
+                'transport'   => 'postMessage'
+          ),
+          'color-header' => array(
+                'default'     => '#33363b',
+                'control'     => 'WP_Customize_Color_Control',
+                'label'       => __( 'Header Background' , 'hueman' ),
+                'section'     => 'general_design_sec',
+                'type'        =>  'color' ,
+                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
+                'sanitize_js_callback' => 'maybe_hash_hex_color',
+                'transport'   => 'postMessage'
+          ),
+          'color-header-menu' => array(
+                'default'     => '#33363b',
+                'control'     => 'WP_Customize_Color_Control',
+                'label'       => __( 'Header Menu Background' , 'hueman' ),
+                'section'     => 'general_design_sec',
+                'type'        =>  'color' ,
+                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
+                'sanitize_js_callback' => 'maybe_hash_hex_color',
+                'transport'   => 'postMessage'
+          ),
+          'color-footer' => array(
+                'default'     => '#33363b',
+                'control'     => 'WP_Customize_Color_Control',
+                'label'       => __( 'Footer Background' , 'hueman' ),
+                'section'     => 'general_design_sec',
+                'type'        =>  'color' ,
+                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
+                'sanitize_js_callback' => 'maybe_hash_hex_color',
+                'transport'   => 'postMessage'
+          ),
+          'image-border-radius'  =>  array(
+                'default'       => 0,
+                'control'       => 'HU_controls' ,
+                'sanitize_callback' => array( $this , 'hu_sanitize_number' ),
+                'label'         => __( "Image Border Radius" , 'hueman' ),
+                'section'       => 'general_design_sec' ,
+                'type'          => 'number' ,
+                'step'          => 1,
+                'min'           => 0,
+                //'transport'     => 'postMessage',
+                'notice'        => __('Give your thumbnails and layout images rounded corners', 'hueman')
           )
       );
     }
 
+
+    /*-----------------------------------------------------------------------------------------------------
+                                   SOCIAL LINKS SECTION
+    ------------------------------------------------------------------------------------------------------*/
+    function hu_social_links_sec() {
+      return array(
+          // 'social-links' => array(
+          //       'default'   => array(),
+          //       'control'   => 'HU_controls',
+          //       'label'     => __('Responsive Layout', 'hueman'),
+          //       'description' => __('Create and organize your social links' , 'hueman'),
+          //       'section'   => 'social_links_sec',
+          //       'type'      => 'dynamic'//@todo create dynamic type
+          // )
+          'social-links' => array(
+                'default'   => array(),//empty array by default
+                'control'   => 'HU_Customize_Socials',
+                'label'     => __('Create and organize your social links', 'hueman'),
+                'section'   => 'social_links_sec',
+                'type'      => 'hu_socials',//@todo create dynamic type
+                'transport' => 'postMessage'
+          )
+      );
+    }
 
     /*-----------------------------------------------------------------------------------------------------
                                    COMMENTS SECTION
@@ -315,37 +358,28 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'     => __('Enable the Mobile Friendly (or Responsive) layout', 'hueman'),
                 'section'   => 'mobiles_sec',
                 'type'      => 'checkbox',
-                'notice'    => __( "Hueman is a <i>mobile friendly</i> WordPress theme out of the box. This means that it will adapt and render nicely on any devices : desktops, laptops, tablets, smartphones. <br/>If you uncheck this box, this adaptive (or reponsive) behaviour will not be working anymore. In most of the cases, you won't need to disable this option, and it is not recommended." , 'hueman' )
+                'notice'    => __( "Hueman is a mobile friendly WordPress theme out of the box. This means that it will adapt and render nicely on any devices : desktops, laptops, tablets, smartphones. <br/>If you uncheck this box, this adaptive (or reponsive) behaviour will not be working anymore. In most of the cases, you won't need to disable this option, and it is not recommended." , 'hueman' )
           )
       );
     }
-
-
 
 
     /*-----------------------------------------------------------------------------------------------------
-                                   SOCIAL LINKS SECTION
+                                   PERFORMANCE SECTION
     ------------------------------------------------------------------------------------------------------*/
-    function hu_social_links_sec() {
+    function hu_performance_sec() {
       return array(
-          // 'social-links' => array(
-          //       'default'   => array(),
-          //       'control'   => 'HU_controls',
-          //       'label'     => __('Responsive Layout', 'hueman'),
-          //       'description' => __('Create and organize your social links' , 'hueman'),
-          //       'section'   => 'social_links_sec',
-          //       'type'      => 'dynamic'//@todo create dynamic type
-          // )
-          'social-links' => array(
-                'default'   => array(),//empty array by default
-                'control'   => 'HU_Customize_Socials',
-                'label'     => __('Create and organize your social links', 'hueman'),
-                'section'   => 'social_links_sec',
-                'type'      => 'hu_socials',//@todo create dynamic type
-                'transport' => 'postMessage'
+          'minified-css' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __('Use a minified stylesheet', 'hueman'),
+                'section'   => 'performance_sec',
+                'type'      => 'checkbox',
+                'notice'    => __( "Unchecking this option is not recommended. Minifying css stylesheets improves performance for your website overall by decreasing the load time." , 'hueman' )
           )
       );
     }
+
 
 
 
@@ -999,6 +1033,11 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
               'priority' => 50,
               'panel'   => 'hu-general-panel'
         ),
+        'performance_sec'         => array(
+              'title'    => __( 'Performances', 'hueman' ),
+              'priority' => 60,
+              'panel'   => 'hu-general-panel'
+        ),
 
 
 
@@ -1058,24 +1097,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
               'title'    => __( 'Footer Advertisement Widget', 'hueman' ),
               'priority' => 20,
               'panel'   => 'hu-footer-panel'
-        ),
-
-
-
-        /*---------------------------------------------------------------------------------------------
-        -> PANEL : ADVANCED
-        ----------------------------------------------------------------------------------------------*/
-        'advanced_rec_plugins_sec'         => array(
-              'title'    => __( 'Recommended Plugins', 'hueman' ),
-              'priority' => 10,
-              'panel'   => 'hu-advanced-panel'
-        ),
-        'advanced_feed_sec'         => array(
-              'title'    => __( 'FeedBurner URL', 'hueman' ),
-              'priority' => 20,
-              'panel'   => 'hu-advanced-panel'
         )
-
 
       );
       return array_merge( $_sections, $_new_sections );

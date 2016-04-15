@@ -602,7 +602,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
 	        	'AjaxUrl'       => admin_url( 'admin-ajax.php' ),
 	        	'HUNonce' 			=> wp_create_nonce( 'hu-customizer-nonce' ),
             'themeName'     => THEMENAME,
-            'defaultSocialColor' => '#000',
+            'defaultSocialColor' => 'rgba(255,255,255,0.7)',
             'translatedStrings'    => array(
               'faviconNote' => __( "Your favicon is currently handled with an old method and will not be properly displayed on all devices. You might consider to re-upload your favicon with the new control below." , 'hueman'),
               'locations' => __('Location(s)', 'hueman'),

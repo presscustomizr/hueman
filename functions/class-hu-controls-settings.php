@@ -700,7 +700,7 @@ if ( ! class_exists( 'HU_Customize_Socials' ) ) :
 
       wp_enqueue_style(
         'font-awesome',
-        sprintf('%1$s/assets/global/fonts/font-awesome.min.css', get_template_directory_uri() ),
+        sprintf('%1$s/assets/front/css/font-awesome.min.css', get_template_directory_uri() ),
         array(),
         HUEMAN_VER,
         $media = 'all'

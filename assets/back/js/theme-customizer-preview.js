@@ -105,36 +105,21 @@
     blogdescription : function(to) {
       $( '.site-description' ).text( to );
     },
-    // 'blog-heading' : function(to) {
-    //   var $_subhead;
-    //   to = ( _.isEmpty(to) && _.has(HUPreviewParams, 'blogname' ) ) ? HUPreviewParams.blogname : to;
-
-    //   if ( $( '.page-title h2' ).find('.hu-blog-subheading').length ) {
-    //     $_subhead = $( '.page-title h2' ).find('.hu-blog-subheading');
-    //   }
-    //   $( '.page-title h2' ).text( to + ' ' ).append( $_subhead );
-    // },
-    // 'blog-subheading' : function(to) {
-    //   to = _.isEmpty(to) ? 'Blog' : to;
-
-    //   if ( $( '.hu-blog-subheading', '.page-title h2' ).length ) {
-    //     $( '.hu-blog-subheading', '.page-title h2' ).text( to );
-    //   } else {
-    //     $( '.page-title h2' ).append( $('<span>', { class : 'hu-blog-subheading', html : to}) );
-    //   }
-    // },
-    background_color : function( to ) {
-      if ( '#ffffff' == to || '#fff' == to )
-        $_body.addClass( 'custom-background-white' );
-      else if ( '' === to )
-        $_body.addClass( 'custom-background-empty' );
-      else
-        $_body.removeClass( 'custom-background-empty custom-background-white' );
+    'body-background' :  function(to) {
+      $('body').css('background-color', to);
     },
-    // copyright : function(to) {
-    //   to = ( _.isEmpty(to) && _.has(HUPreviewParams, 'copyright' ) ) ? HUPreviewParams.copyright : to;
-    //   $( '#footer-bottom #copyright p' ).text( to );
-    // },
+    'color-topbar' : function(to) {
+      $('.search-expand, #nav-topbar.nav-container, #nav-topbar .nav ul').css('background-color', to);
+    },
+    'color-header': function(to) {
+      $('#header').css('background-color', to);
+    },
+    'color-header-menu' : function(to) {
+      $('#nav-header.nav-container, #nav-header .nav ul').css('background-color', to);
+    },
+    'color-footer' : function(to) {
+      $('#footer-bottom').css('background-color', to);
+    },
     credit : function(to) {
       $( '#footer-bottom #credit' ).slideToggle();
     },

@@ -82,13 +82,13 @@
 		<?php $images = hu_post_images(); if ( !empty($images) ): ?>
 		<script type="text/javascript">
 			// Check if first slider image is loaded, and load flexslider on document ready
-			jQuery(document).ready(function(){
-			 var firstImage = jQuery('#flexslider-<?php echo the_ID(); ?>').find('img').filter(':first'),
+			jQuery( function($){
+			 var firstImage = $('#flexslider-<?php echo the_ID(); ?>').find('img').filter(':first'),
 				checkforloaded = setInterval(function() {
 					var image = firstImage.get(0);
 					if (image.complete || image.readyState == 'complete' || image.readyState == 4) {
 						clearInterval(checkforloaded);
-						jQuery('#flexslider-<?php echo the_ID(); ?>').flexslider({
+						$('#flexslider-<?php echo the_ID(); ?>').flexslider({
 							animation: "fade",
 							slideshow: true,
 							directionNav: true,

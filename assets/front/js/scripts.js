@@ -7,10 +7,9 @@
 	Copyright: (c) 2013-2015 Alexander "Alx" Agnarson, 2015 Nicolas GUILLAUME (nikeo)
 */
 
+
+jQuery( function($) {
 "use strict";
-
-jQuery(document).ready(function($) {
-
 /*  Toggle header search
 /* ------------------------------------ */
 	$('.toggle-search').click(function(){

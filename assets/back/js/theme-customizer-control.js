@@ -1734,8 +1734,9 @@ var HUSocialMethods = HUSocialMethods || {};
 
     setupColorPicker : function( obj ) {
       $( 'input[data-type="social-color"]', obj.dom_el ).wpColorPicker( {
+        defaultColor : 'rgba(255,255,255,0.7)',
         change : function( e, o ) {
-          $(this).val($(this).wpColorPicker('color'));
+          $(this).val(o.color.toString());
           $(this).trigger('colorpickerchange');
         }
       });
