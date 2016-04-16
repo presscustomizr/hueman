@@ -1,4 +1,4 @@
-# Hueman v3.0.12
+# Hueman v3.1.0
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > Hueman is a mobile friendly WordPress theme for blogs, magazines and business websites. It's been designed to beautifully display pictures and text content, and engineered to be easy to use and fast. The Hueman theme helps you attract and retain more visitors, that's why it's already used by 70K+ active websites in the world and has received hundreds of five stars ratings.
@@ -82,6 +82,10 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 ## Changelog
+= 3.1.0 April 16th 2016 =
+* fixed : wrong path to the default font Titillium in main stylesheet
+* fixed : child theme stylesheet : style.css is loaded again as a dependency of the parent Hueman theme style, to make it easier to override the main stylesheet rules
+
 = 3.0.12 April 15th 2016  =
 * fixed : social icon default color is back to rgba(255,255,255,0.7)
 * fixed : added back the feedburner rss feed option in customizer > Global Settings > Site Identity

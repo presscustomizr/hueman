@@ -67,9 +67,7 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
      * Render welcome admin page.
      */
       function hu_welcome_panel() {
-
         $is_help        = isset($_GET['help'])  ?  true : false;
-        $_faq_url       = esc_url('hueman.presscustomizr.com/');
         $_support_url   = $this -> support_url;
         $_theme_name    = 'Hueman';
 
@@ -155,7 +153,6 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
 
 
     function hu_render_help_content() {
-
       ob_start();
       ?>
         <div class="changelog">
@@ -177,9 +174,6 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
               <div class="col">
                   <a class="button-secondary hueman-help" title="documentation" href="<?php echo esc_url('docs.presscustomizr.com/article/236-first-steps-with-the-hueman-wordpress-theme') ?>" target="_blank"><?php _e( 'Read the documentation','hueman' ); ?></a>
               </div>
-              <!-- <div class="col">
-                  <a class="button-secondary hueman-help" title="faq" href="<?php echo $_faq_url; ?>" target="_blank"><?php _e( 'Check the FAQ','hueman' ); ?></a>
-               </div> -->
                <div class="last-feature col">
                   <a class="button-secondary hueman-help" title="help" href="<?php echo $this -> support_url; ?>" target="_blank">
                     <?php _e( 'Get help in the support forum','hueman' ); ?>
