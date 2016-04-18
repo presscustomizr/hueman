@@ -20,7 +20,13 @@
 					<div class="<?php echo implode( ' ', apply_filters( 'hu_single_entry_class', array('entry','themeform') ) ) ?>">
 						<div class="entry-inner">
 							<?php the_content(); ?>
-							<?php wp_link_pages(array('before'=>'<div class="post-pages">'.__('Pages:','hueman'),'after'=>'</div>')); ?>
+							<nav class="pagination group">
+							    <?php if ( function_exists('wp_pagenavi') ): ?>
+							        <?php wp_pagenavi( array( 'type' => 'multipart' ) ); ?>
+							    <?php else: ?>
+							        <?php wp_link_pages(array('before'=>'<div class="post-pages">'.__('Pages:','hueman'),'after'=>'</div>')); ?>
+							    <?php endif; ?>
+							</nav><!--/.pagination-->
 						</div>
 
             <?php do_action( 'hu_after_single_entry_inner' ); ?>
