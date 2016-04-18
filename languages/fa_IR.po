@@ -1,0 +1,168 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Hueman\n"
+"POT-Creation-Date: 2015-02-06 14:15+0100\n"
+"PO-Revision-Date: 2016-04-19 00:11+0430\n"
+"Last-Translator: \n"
+"Language-Team: Bersam Karbasion <bersam.k@gmail.com>\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../404.php:14
+msgid ""
+"The page you are trying to reach does not exist, or has been moved. Please "
+"use the menus or the search box to find what you are looking for."
+msgstr ""
+"موردی که به دنبالش بودید، ممکن است که حذف شده باشد یا به آدرسی دیگر منتقل "
+"شده باشد. لطفاً‌ از بخش جستجو کمک بگیرید"
+
+#: ../comments.php:7
+msgid "No Responses"
+msgstr "بدون بازخورد "
+
+#: ../comments.php:7
+msgid "1 Response"
+msgstr "یک بازخورد"
+
+#: ../comments.php:7
+msgid "% Responses"
+msgstr "% بازخورد"
+
+#: ../comments.php:10
+msgid "Comments"
+msgstr "نظرها"
+
+#: ../comments.php:11
+msgid "Pingbacks"
+msgstr "بازتاب: "
+
+#: ../footer.php:76
+msgid "All Rights Reserved."
+msgstr "تمامی حقوق محفوظ می‌باشد."
+
+#: ../footer.php:82
+msgid "Powered by"
+msgstr "با افتخار قدرت‌گرفته از"
+
+#: ../footer.php:82
+msgid "Theme by"
+msgstr "توسط"
+
+#: ../search.php:10
+msgid "For the term"
+msgstr "در این مرحله..."
+
+#: ../search.php:12
+msgid "Please try another search:"
+msgstr "لطفاً با کلماتی دیگر جستجو کنید:"
+
+#: ../searchform.php:3
+msgid "To search type and hit enter"
+msgstr "تایپ کنید و اینتر را فشار دهید"
+
+#: ../sidebar-2.php:5 ../sidebar.php:9
+msgid "Expand Sidebar"
+msgstr "سایدبار"
+
+#: ../sidebar-2.php:11
+msgid "More"
+msgstr "بیشتر بخوانید..."
+
+#: ../sidebar.php:15
+msgid "Follow:"
+msgstr "دنبال کنید:"
+
+#: ../single.php:14
+msgid "by"
+msgstr "توسط"
+
+#: ../single.php:23
+msgid "Pages:"
+msgstr "برگه‌ها:"
+
+#: ../single.php:35
+msgid "Tags:"
+msgstr "برچسب‌ها:"
+
+#: ../functions/widgets/alx-tabs.php:27
+msgid "Recent Posts"
+msgstr "آخرین نوشته‌ها "
+
+#: ../functions/widgets/alx-tabs.php:28
+msgid "Popular Posts"
+msgstr "محبوترین نوشته‌ها "
+
+#: ../functions/widgets/alx-tabs.php:29
+msgid "Recent Comments"
+msgstr "آخرین دیدگاه‌ها "
+
+#: ../functions/widgets/alx-tabs.php:30
+msgid "Tags"
+msgstr "برچسب‌ها "
+
+#: ../functions/widgets/alx-tabs.php:187
+msgid "says:"
+msgstr "می‌گوید:"
+
+#: ../parts/page-title.php:23
+msgid "Search result"
+msgstr "نتیجه جستجو"
+
+#: ../parts/page-title.php:25
+msgid "Search results"
+msgstr "نتایج جستجو"
+
+#: ../parts/page-title.php:31
+msgid "Error 404."
+msgstr "اخطار ۴۰۴، یافت نشد."
+
+#: ../parts/page-title.php:31
+msgid "Page not found!"
+msgstr "چنین برگی یافت نشد!"
+
+#: ../parts/page-title.php:35
+msgid "Author:"
+msgstr "نویسنده:"
+
+#: ../parts/page-title.php:38
+msgid "Category:"
+msgstr "دسته:"
+
+#: ../parts/page-title.php:41
+msgid "Tagged:"
+msgstr "برچسب‌ها:"
+
+#: ../parts/page-title.php:44
+msgid "Daily Archive:"
+msgstr "بایگانی روزانه:"
+
+#: ../parts/page-title.php:47
+msgid "Monthly Archive:"
+msgstr "بایگانی ماهانه:"
+
+#: ../parts/page-title.php:50
+msgid "Yearly Archive:"
+msgstr "بایگانی سالانه:"
+
+#: ../parts/post-nav.php:3
+msgid "Next story"
+msgstr "مطلب بعدی"
+
+#: ../parts/post-nav.php:4
+msgid "Previous story"
+msgstr "مطلب قبلی"
+
+#: ../parts/related-posts.php:6
+msgid "You may also like..."
+msgstr "شما احتمالا این مطالب را نیز دوست دارید..."
+
+#: ../parts/sharrre.php:2
+msgid "Share"
+msgstr "به اشتراک گذاری"
