@@ -19,15 +19,15 @@
 
 		<div class="post-meta group">
 			<p class="post-category"><?php the_category(' / '); ?></p>
-			<p class="post-date"><?php the_time('j M, Y'); ?></p>
+      <?php get_template_part('parts/post-list-author-date'); ?>
 		</div><!--/.post-meta-->
 
-		<h2 class="post-title">
+		<h2 class="post-title entry-title">
 			<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title(); ?>"><?php the_title(); ?></a>
 		</h2><!--/.post-title-->
 
 		<?php if (hu_get_option('excerpt-length') != '0'): ?>
-		<div class="entry excerpt">
+		<div class="entry excerpt entry-summary">
 			<?php the_excerpt(); ?>
 		</div><!--/.entry-->
 		<?php endif; ?>

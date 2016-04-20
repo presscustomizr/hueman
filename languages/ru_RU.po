@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Hueman v3.1.1\n"
-"POT-Creation-Date: 2016-04-20 09:59+0200\n"
-"PO-Revision-Date: 2016-04-20 09:59+0200\n"
+"POT-Creation-Date: 2016-04-20 10:01+0200\n"
+"PO-Revision-Date: 2016-04-20 10:01+0200\n"
 "Last-Translator: \n"
 "Language-Team: Press Customizr\n"
 "Language: fr_FR\n"
@@ -26,38 +26,40 @@ msgid ""
 "The page you are trying to reach does not exist, or has been moved. Please "
 "use the menus or the search box to find what you are looking for."
 msgstr ""
+"Эта страница не существует или была перемещена. Пожалуйста, используйте меню "
+"или форму поиска чтобы найти то, что нужно."
 
 #: comments.php:7
 msgid "No Responses"
-msgstr ""
+msgstr "Комментариев нет"
 
 #: comments.php:7
 msgid "1 Response"
-msgstr ""
+msgstr "1 комментарий"
 
 #: comments.php:7
 msgid "% Responses"
-msgstr ""
+msgstr "Комментариев: %"
 
 #: comments.php:10 functions/class-utils-settings-map.php:1058
 msgid "Comments"
-msgstr ""
+msgstr "Комментарии"
 
 #: comments.php:11
 msgid "Pingbacks"
-msgstr ""
+msgstr "Пинги"
 
 #: footer.php:96 functions/class-admin-customize.php:563
 msgid "All Rights Reserved."
-msgstr ""
+msgstr "Все права защищены."
 
 #: footer.php:102
 msgid "Powered by"
-msgstr ""
+msgstr "Все права защищены."
 
 #: footer.php:102
 msgid "Theme by"
-msgstr ""
+msgstr "Работает на"
 
 #: functions/class-admin-customize.php:113
 msgid "&mdash; Select &mdash;"
@@ -1401,23 +1403,23 @@ msgstr ""
 
 #: functions/widgets/alx-tabs.php:66
 msgid "Recent Posts"
-msgstr ""
+msgstr "Новые записи"
 
 #: functions/widgets/alx-tabs.php:67
 msgid "Popular Posts"
-msgstr ""
+msgstr "Популярные записи"
 
 #: functions/widgets/alx-tabs.php:68
 msgid "Recent Comments"
-msgstr ""
+msgstr "Новые комментарии"
 
 #: functions/widgets/alx-tabs.php:69
 msgid "Tags"
-msgstr ""
+msgstr "Метки"
 
 #: functions/widgets/alx-tabs.php:229
 msgid "says:"
-msgstr ""
+msgstr "написал:"
 
 #: functions/widgets/alx-video.php:21
 msgid "Hueman Videos"
@@ -1429,60 +1431,60 @@ msgstr ""
 
 #: parts/page-title.php:23
 msgid "Search result"
-msgstr ""
+msgstr "материала"
 
 #: parts/page-title.php:25
 msgid "Search results"
-msgstr ""
+msgstr "материал"
 
 #: parts/page-title.php:31
 msgid "Error 404."
-msgstr ""
+msgstr "Ошибка 404."
 
 #: parts/page-title.php:31
 msgid "Page not found!"
-msgstr ""
+msgstr "Страница не найдена!"
 
 #: parts/page-title.php:35
 msgid "Author:"
-msgstr ""
+msgstr "Автор:"
 
 #: parts/page-title.php:38
 msgid "Category:"
-msgstr ""
+msgstr "Рубрика:"
 
 #: parts/page-title.php:41
 msgid "Tagged:"
-msgstr ""
+msgstr "Метки:"
 
 #: parts/page-title.php:44
 msgid "Daily Archive:"
-msgstr ""
+msgstr "Архив по дням:"
 
 #: parts/page-title.php:47
 msgid "Monthly Archive:"
-msgstr ""
+msgstr "Архив по месяцам:"
 
 #: parts/page-title.php:50
 msgid "Yearly Archive:"
-msgstr ""
+msgstr "Архив по годам:"
 
 #: parts/post-list-author-date.php:11 parts/single-author-date.php:8
 #: parts/single-author-date.php:10
 msgid "by"
-msgstr ""
+msgstr "Автор:"
 
 #: parts/post-nav.php:3
 msgid "Next story"
-msgstr ""
+msgstr "Следующая публикация"
 
 #: parts/post-nav.php:4
 msgid "Previous story"
-msgstr ""
+msgstr "Предыдущая публикация"
 
 #: parts/related-posts.php:6
 msgid "You may also like..."
-msgstr ""
+msgstr "Читайте также:"
 
 #: parts/single-author-date.php:16
 msgid "Published"
@@ -1494,32 +1496,35 @@ msgstr ""
 
 #: search.php:10
 msgid "For the term"
-msgstr ""
+msgstr "Для запроса"
 
 #: search.php:12
 msgid "Please try another search:"
-msgstr ""
+msgstr "Пожалуйста, попробуйте другое слово:"
 
 #: searchform.php:3
 msgid "To search type and hit enter"
-msgstr ""
+msgstr "Для поиска введите слово и нажмите enter"
 
 #: sidebar-2.php:3 sidebar.php:8
 msgid "Expand Sidebar"
-msgstr ""
+msgstr "Развернуть боковое меню"
 
 #: sidebar-2.php:9
 msgid "More"
-msgstr ""
+msgstr "Ещё"
 
 #: sidebar.php:14
 msgid "Follow:"
-msgstr ""
+msgstr "Следите за нами:"
 
 #: single.php:29
 msgid "Pages:"
-msgstr ""
+msgstr "Страницы:"
 
 #: single.php:45
 msgid "Tags:"
-msgstr ""
+msgstr "Метки:"
+
+#~ msgid "Share"
+#~ msgstr "Следите за нами:"

@@ -103,20 +103,42 @@ function hu_is_child() {
 }
 
 
+/**
+* Returns a boolean
+* check if user started to use the theme before ( strictly < ) the requested version
+*
+*/
+function hu_user_started_before_version( $_ver ) {
+  if ( ! get_transient( 'started_using_hueman' ) )
+    return false;
 
-/* ------------------------------------------------------------------------- *
- *  Loads and instanciates Utils
-/* ------------------------------------------------------------------------- */
-load_template( get_template_directory() . '/functions/class-utils.php' );
-load_template( get_template_directory() . '/functions/class-utils-settings-map.php' );
-new HU_utils;
-new HU_utils_settings_map;
+  $_trans = 'started_using_hueman';
 
+  if ( ! $_ver )
+    return false;
 
-//note:  $default is never used => to remove
-function hu_get_option( $option_id, $default = '' ) {
-  return HU_utils::$inst -> hu_opt( $option_id );
+  $_start_version_infos = explode('|', esc_attr( get_transient( $_trans ) ) );
+
+  if ( ! is_array( $_start_version_infos ) )
+    return false;
+
+  switch ( $_start_version_infos[0] ) {
+    //in this case we know exactly what was the starting version (most common case)
+    case 'with':
+      return version_compare( $_start_version_infos[1] , $_ver, '<' );
+    break;
+    //here the user started to use the theme before, we don't know when.
+    //but this was actually before this check was created
+    case 'before':
+      return true;
+    break;
+
+    default :
+      return false;
+    break;
+  }
 }
+
 
 
 /* ------------------------------------------------------------------------- *
@@ -185,7 +207,19 @@ if( ! defined( 'HU_WEBSITE' ) )         define( 'HU_WEBSITE' , $hu_base_data['au
 
 
 
+/* ------------------------------------------------------------------------- *
+ *  Loads and instanciates Utils
+/* ------------------------------------------------------------------------- */
+load_template( get_template_directory() . '/functions/class-utils-settings-map.php' );
+new HU_utils_settings_map;
+load_template( get_template_directory() . '/functions/class-utils.php' );
+new HU_utils;
 
+
+//note:  $default is never used => to remove
+function hu_get_option( $option_id, $default = '' ) {
+  return HU_utils::$inst -> hu_opt( $option_id );
+}
 
 
 
@@ -549,10 +583,10 @@ if ( ! function_exists( 'hu_load' ) ) {
 
   function hu_load() {
     // Load theme languages
-    load_theme_textdomain( 'hueman', get_template_directory().'/languages' );
+    load_theme_textdomain( 'hueman', get_stylesheet_directory().'/languages' );
 
     // Load theme options and meta boxes
-    //load_template( get_template_directory() . '/functions/theme-options.php' );
+    // load_template( get_template_directory() . '/functions/theme-options.php' );
     load_template( get_template_directory() . '/functions/init-meta-boxes.php' );
 
     // Load custom widgets
@@ -622,7 +656,7 @@ function hu_get_default_widget_zones() {
     'primary' => array(
       'name' => __( 'Primary', 'hueman' ),
       'id' => 'primary',
-      'description' => __( "Full width widget zone located in the right sidebar", 'hueman'),
+      'description' => __( "Full width widget zone. Located in the left sidebar in a 3 columns layout. Can be on the right of a 2 columns sidebar when content is on the left.", 'hueman'),
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
       'before_title' => '<h3>',
@@ -631,7 +665,7 @@ function hu_get_default_widget_zones() {
     'secondary' => array(
       'name' => __( 'Secondary', 'hueman' ),
       'id' => 'secondary',
-      'description' => __( "Full width widget zone located in the left sidebar", 'hueman'),
+      'description' => __( "Full width widget zone. Located in the right sidebar in a 3 columns layout.", 'hueman'),
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
       'before_title' => '<h3>',
@@ -995,9 +1029,10 @@ if ( is_admin() && ! hu_is_customizing() ) {
   //Update notice
   load_template( get_template_directory() . '/functions/class-admin-update-notification.php' );
   new HU_admin_update_notification;
-
-  load_template( get_template_directory() . '/functions/class-admin-page.php' );
-  new HU_admin_page;
+  if ( hu_is_checked('about-page') ) {
+    load_template( get_template_directory() . '/functions/class-admin-page.php' );
+    new HU_admin_page;
+  }
 }
 
 add_action( 'admin_init' , 'hu_admin_style' );
@@ -1014,7 +1049,7 @@ function hu_admin_style() {
 
 
 function hu_add_help_button() {
-   if ( ! current_user_can( 'edit_theme_options' ) )
+   if ( ! current_user_can( 'edit_theme_options' ) || ! hu_is_checked('help-button') || ! hu_is_checked('about-page') )
     return;
   global $wp_admin_bar;
   $wp_admin_bar->add_menu( array(

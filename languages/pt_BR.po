@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Hueman v3.1.1\n"
-"POT-Creation-Date: 2016-04-20 09:59+0200\n"
-"PO-Revision-Date: 2016-04-20 09:59+0200\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2016-04-20 10:01+0200\n"
+"PO-Revision-Date: 2016-04-20 10:01+0200\n"
+"Last-Translator: Elvis Henrique Pereira <elvishp2006@gmail.com>\n"
 "Language-Team: Press Customizr\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
@@ -26,22 +26,25 @@ msgid ""
 "The page you are trying to reach does not exist, or has been moved. Please "
 "use the menus or the search box to find what you are looking for."
 msgstr ""
+"A página que você está tentando acessar não existe, ou foi movida. Por "
+"favor, utilize os menus ou a caixa de pesquisa para encontrar o que você "
+"está procurando."
 
 #: comments.php:7
 msgid "No Responses"
-msgstr ""
+msgstr "Sem Resultados"
 
 #: comments.php:7
 msgid "1 Response"
-msgstr ""
+msgstr "1 Resultado"
 
 #: comments.php:7
 msgid "% Responses"
-msgstr ""
+msgstr "% Resultados"
 
 #: comments.php:10 functions/class-utils-settings-map.php:1058
 msgid "Comments"
-msgstr ""
+msgstr "Comentários"
 
 #: comments.php:11
 msgid "Pingbacks"
@@ -49,7 +52,7 @@ msgstr ""
 
 #: footer.php:96 functions/class-admin-customize.php:563
 msgid "All Rights Reserved."
-msgstr ""
+msgstr "Todos Direitos Reservados."
 
 #: footer.php:102
 msgid "Powered by"
@@ -1401,15 +1404,15 @@ msgstr ""
 
 #: functions/widgets/alx-tabs.php:66
 msgid "Recent Posts"
-msgstr ""
+msgstr "Posts Recentes"
 
 #: functions/widgets/alx-tabs.php:67
 msgid "Popular Posts"
-msgstr ""
+msgstr "Posts Populares"
 
 #: functions/widgets/alx-tabs.php:68
 msgid "Recent Comments"
-msgstr ""
+msgstr "Comentários Recentes"
 
 #: functions/widgets/alx-tabs.php:69
 msgid "Tags"
@@ -1417,7 +1420,7 @@ msgstr ""
 
 #: functions/widgets/alx-tabs.php:229
 msgid "says:"
-msgstr ""
+msgstr "diz:"
 
 #: functions/widgets/alx-video.php:21
 msgid "Hueman Videos"
@@ -1429,60 +1432,60 @@ msgstr ""
 
 #: parts/page-title.php:23
 msgid "Search result"
-msgstr ""
+msgstr "Resultado de busca"
 
 #: parts/page-title.php:25
 msgid "Search results"
-msgstr ""
+msgstr "Resultados de busca"
 
 #: parts/page-title.php:31
 msgid "Error 404."
-msgstr ""
+msgstr "Erro 404."
 
 #: parts/page-title.php:31
 msgid "Page not found!"
-msgstr ""
+msgstr "Página não encontrada!"
 
 #: parts/page-title.php:35
 msgid "Author:"
-msgstr ""
+msgstr "Autor:"
 
 #: parts/page-title.php:38
 msgid "Category:"
-msgstr ""
+msgstr "Categoria:"
 
 #: parts/page-title.php:41
 msgid "Tagged:"
-msgstr ""
+msgstr "Tag:"
 
 #: parts/page-title.php:44
 msgid "Daily Archive:"
-msgstr ""
+msgstr "Arquivo diário:"
 
 #: parts/page-title.php:47
 msgid "Monthly Archive:"
-msgstr ""
+msgstr "Arquivo Mensal:"
 
 #: parts/page-title.php:50
 msgid "Yearly Archive:"
-msgstr ""
+msgstr "Arquivo Anual:"
 
 #: parts/post-list-author-date.php:11 parts/single-author-date.php:8
 #: parts/single-author-date.php:10
 msgid "by"
-msgstr ""
+msgstr "por"
 
 #: parts/post-nav.php:3
 msgid "Next story"
-msgstr ""
+msgstr "Próximo história"
 
 #: parts/post-nav.php:4
 msgid "Previous story"
-msgstr ""
+msgstr "História anterior"
 
 #: parts/related-posts.php:6
 msgid "You may also like..."
-msgstr ""
+msgstr "Você pode gostar..."
 
 #: parts/single-author-date.php:16
 msgid "Published"
@@ -1494,31 +1497,31 @@ msgstr ""
 
 #: search.php:10
 msgid "For the term"
-msgstr ""
+msgstr "Para o termo"
 
 #: search.php:12
 msgid "Please try another search:"
-msgstr ""
+msgstr "Por favor, tente outra pesquisa:"
 
 #: searchform.php:3
 msgid "To search type and hit enter"
-msgstr ""
+msgstr "Para procurar digite e aperte enter"
 
 #: sidebar-2.php:3 sidebar.php:8
 msgid "Expand Sidebar"
-msgstr ""
+msgstr "Expandir Sidebar"
 
 #: sidebar-2.php:9
 msgid "More"
-msgstr ""
+msgstr "Mais"
 
 #: sidebar.php:14
 msgid "Follow:"
-msgstr ""
+msgstr "Siga:"
 
 #: single.php:29
 msgid "Pages:"
-msgstr ""
+msgstr "Páginas:"
 
 #: single.php:45
 msgid "Tags:"

@@ -23,7 +23,13 @@ if ( ! class_exists( 'HU_utils' ) ) :
       self::$inst =& $this;
 
       //init properties
-      add_action( 'after_setup_theme'       , array( $this , 'hu_init_properties') );
+      //when is_admin, the after_setup_theme is fired too late
+      if ( is_admin() && ! hu_is_customizing() ) {
+        $this -> hu_init_properties();
+      } else {
+        add_action( 'after_setup_theme'       , array( $this , 'hu_init_properties') );
+
+      }
 
       //refresh the theme options right after the _preview_filter when previewing
       add_action( 'customize_preview_init'  , array( $this , 'hu_customize_refresh_db_opt' ) );
@@ -148,7 +154,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
       $_default_val = false;
       if ( $use_default ) {
         $_defaults      = $this -> default_options;
-        if ( isset($_defaults[$option_name]) )
+        if ( is_array($_defaults) && isset($_defaults[$option_name]) )
           $_default_val = $_defaults[$option_name];
         $__options      = wp_parse_args( $_db_options, $_defaults );
       }
@@ -159,7 +165,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
       //ctx retro compat => falls back to default val if ctx like option detected
       //important note : some options like hu_slider are not concerned by ctx
       if ( ! $this -> hu_is_option_excluded_from_ctx( $option_name ) ) {
-        if ( is_array( $_single_opt ) && ! class_exists( 'HU_contx' ) )
+        if ( is_array($_single_opt) && ! class_exists( 'HU_contx' ) )
           $_single_opt = $_default_val;
       }
 
@@ -230,48 +236,6 @@ if ( ! class_exists( 'HU_utils' ) ) :
       $this -> db_options = false === get_option( $opt_group ) ? array() : (array)get_option( $opt_group );
       return $this -> db_options;
     }
-
-
-    /***************************
-    * USER STARTED USING THE THEME
-    ****************************/
-    /**
-    * Returns a boolean
-    * check if user started to use the theme before ( strictly < ) the requested version
-    *
-    */
-    function hu_user_started_before_version( $_ver ) {
-      if ( ! get_transient( 'started_using_hueman' ) )
-        return false;
-
-      $_trans = 'started_using_hueman';
-
-      if ( ! $_ver )
-        return false;
-
-      $_start_version_infos = explode('|', esc_attr( get_transient( $_trans ) ) );
-
-      if ( ! is_array( $_start_version_infos ) )
-        return false;
-
-      switch ( $_start_version_infos[0] ) {
-        //in this case we know exactly what was the starting version (most common case)
-        case 'with':
-          return version_compare( $_start_version_infos[1] , $_ver, '<' );
-        break;
-        //here the user started to use the theme before, we don't know when.
-        //but this was actually before this check was created
-        case 'before':
-          return true;
-        break;
-
-        default :
-          return false;
-        break;
-      }
-    }
-
-
 
 
 

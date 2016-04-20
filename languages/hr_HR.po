@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Hueman v3.1.1\n"
-"POT-Creation-Date: 2016-04-20 09:59+0200\n"
-"PO-Revision-Date: 2016-04-20 09:59+0200\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2016-04-20 10:00+0200\n"
+"PO-Revision-Date: 2016-04-20 10:00+0200\n"
+"Last-Translator: zcuric <zcuric@gmail.com>\n"
 "Language-Team: Press Customizr\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
@@ -25,39 +25,39 @@ msgstr ""
 msgid ""
 "The page you are trying to reach does not exist, or has been moved. Please "
 "use the menus or the search box to find what you are looking for."
-msgstr ""
+msgstr "Stranica ne postoji."
 
 #: comments.php:7
 msgid "No Responses"
-msgstr ""
+msgstr "Nema komentara"
 
 #: comments.php:7
 msgid "1 Response"
-msgstr ""
+msgstr "1 komentar"
 
 #: comments.php:7
 msgid "% Responses"
-msgstr ""
+msgstr "% komentara"
 
 #: comments.php:10 functions/class-utils-settings-map.php:1058
 msgid "Comments"
-msgstr ""
+msgstr "Komentari"
 
 #: comments.php:11
 msgid "Pingbacks"
-msgstr ""
+msgstr "Pingovi"
 
 #: footer.php:96 functions/class-admin-customize.php:563
 msgid "All Rights Reserved."
-msgstr ""
+msgstr "Sva prava pridržana."
 
 #: footer.php:102
 msgid "Powered by"
-msgstr ""
+msgstr "Pogoni: "
 
 #: footer.php:102
 msgid "Theme by"
-msgstr ""
+msgstr "Temu napravio: "
 
 #: functions/class-admin-customize.php:113
 msgid "&mdash; Select &mdash;"
@@ -1401,23 +1401,23 @@ msgstr ""
 
 #: functions/widgets/alx-tabs.php:66
 msgid "Recent Posts"
-msgstr ""
+msgstr "Najnovije objave"
 
 #: functions/widgets/alx-tabs.php:67
 msgid "Popular Posts"
-msgstr ""
+msgstr "Popularne objave"
 
 #: functions/widgets/alx-tabs.php:68
 msgid "Recent Comments"
-msgstr ""
+msgstr "Najnoviji komentari"
 
 #: functions/widgets/alx-tabs.php:69
 msgid "Tags"
-msgstr ""
+msgstr "Oznake"
 
 #: functions/widgets/alx-tabs.php:229
 msgid "says:"
-msgstr ""
+msgstr "kaže:"
 
 #: functions/widgets/alx-video.php:21
 msgid "Hueman Videos"
@@ -1429,60 +1429,60 @@ msgstr ""
 
 #: parts/page-title.php:23
 msgid "Search result"
-msgstr ""
+msgstr "Rezultat pretrage"
 
 #: parts/page-title.php:25
 msgid "Search results"
-msgstr ""
+msgstr "Rezultati pretrage"
 
 #: parts/page-title.php:31
 msgid "Error 404."
-msgstr ""
+msgstr "Greška 404!"
 
 #: parts/page-title.php:31
 msgid "Page not found!"
-msgstr ""
+msgstr "Stranica nije pronađena!"
 
 #: parts/page-title.php:35
 msgid "Author:"
-msgstr ""
+msgstr "Autor"
 
 #: parts/page-title.php:38
 msgid "Category:"
-msgstr ""
+msgstr "Kategorija"
 
 #: parts/page-title.php:41
 msgid "Tagged:"
-msgstr ""
+msgstr "Oznake:"
 
 #: parts/page-title.php:44
 msgid "Daily Archive:"
-msgstr ""
+msgstr "Dnevna arhiva:"
 
 #: parts/page-title.php:47
 msgid "Monthly Archive:"
-msgstr ""
+msgstr "Mjesečna arhiva:"
 
 #: parts/page-title.php:50
 msgid "Yearly Archive:"
-msgstr ""
+msgstr "Godišnja arhiva:"
 
 #: parts/post-list-author-date.php:11 parts/single-author-date.php:8
 #: parts/single-author-date.php:10
 msgid "by"
-msgstr ""
+msgstr "od"
 
 #: parts/post-nav.php:3
 msgid "Next story"
-msgstr ""
+msgstr "Sljedeća objava"
 
 #: parts/post-nav.php:4
 msgid "Previous story"
-msgstr ""
+msgstr "Prethodna objava"
 
 #: parts/related-posts.php:6
 msgid "You may also like..."
-msgstr ""
+msgstr "Možda vam se svidi"
 
 #: parts/single-author-date.php:16
 msgid "Published"
@@ -1494,32 +1494,35 @@ msgstr ""
 
 #: search.php:10
 msgid "For the term"
-msgstr ""
+msgstr "Za termin"
 
 #: search.php:12
 msgid "Please try another search:"
-msgstr ""
+msgstr "Molimo vas, ponovite pretragu:"
 
 #: searchform.php:3
 msgid "To search type and hit enter"
-msgstr ""
+msgstr "Za pretragu, unesite pojam i stisnite enter"
 
 #: sidebar-2.php:3 sidebar.php:8
 msgid "Expand Sidebar"
-msgstr ""
+msgstr "Proširi sidebar:"
 
 #: sidebar-2.php:9
 msgid "More"
-msgstr ""
+msgstr "Više"
 
 #: sidebar.php:14
 msgid "Follow:"
-msgstr ""
+msgstr "Slijedi:"
 
 #: single.php:29
 msgid "Pages:"
-msgstr ""
+msgstr "Stranice:"
 
 #: single.php:45
 msgid "Tags:"
-msgstr ""
+msgstr "Oznake:"
+
+#~ msgid "Share"
+#~ msgstr "Dijeli"

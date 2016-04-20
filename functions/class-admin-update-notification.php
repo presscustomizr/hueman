@@ -45,7 +45,7 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
         $last_update_notice_values = array( "version" => HUEMAN_VER, "display_count" => 0 );
         HU_utils::$inst->hu_set_option( $opt_name, $last_update_notice_values );
         //already user of the theme ?
-        if ( HU_utils::$inst->hu_user_started_before_version( HUEMAN_VER ) )
+        if ( hu_user_started_before_version( HUEMAN_VER ) )
           $show_new_notice = true;
       }
 

@@ -289,11 +289,6 @@ if ( ! function_exists( 'hu_get_featured_post_ids' ) ) {
 
 
 
-
-
-
-
-
 /* ------------------------------------------------------------------------- *
  *  Filters
 /* ------------------------------------------------------------------------- */
@@ -498,8 +493,16 @@ add_action( 'wp_enqueue_scripts', 'hu_styles' );
 if ( ! function_exists( 'hu_pre_get_posts' ) ) {
 
   function hu_pre_get_posts( $query ) {
+    // Is the featured post option enabled ?
+    if ( ! hu_is_checked('featured-posts-enabled') )
+      return;
     // Are we on main query ?
-    if ( !$query->is_main_query() ) return;
+    if ( ! $query->is_main_query() )
+      return;
+    // Are we on the blog page ?
+    if ( ! $query->is_home() )
+      return;
+
     if ( $query->is_home() ) {
 
       // Featured posts enabled

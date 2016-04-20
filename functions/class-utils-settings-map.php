@@ -77,6 +77,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
          'hu_comments_sec',
          'hu_mobiles_sec',
          'hu_social_links_sec',
+         'hu_performance_sec',
+         'hu_admin_sec',
 
         //HEADER
          'hu_header_design_sec',
@@ -93,8 +95,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
          'hu_footer_widget_sec',
          'hu_footer_design_sec',
 
-        //ADVANCED
-         'hu_performance_sec'
       );
 
       foreach ( $_settings_sections as $_section_cb ) {
@@ -376,11 +376,42 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'performance_sec',
                 'type'      => 'checkbox',
                 'notice'    => __( "Unchecking this option is not recommended. Minifying css stylesheets improves performance for your website overall by decreasing the load time." , 'hueman' )
+          ),
+          'structured-data' => array(
+                'default'   => hu_user_started_before_version( '3.1.1' ) ? 0 : 1,
+                'control'   => 'HU_controls',
+                'label'     => __('Use Structured Data Markup for your posts', 'hueman'),
+                'section'   => 'performance_sec',
+                'type'      => 'checkbox',
+                'notice'    => __( '"Structured data markup" is a standard way to annotate your content so machines can understand it. Implementing it will help your website rank higher in search engines.' , 'hueman' )
           )
       );
     }
 
 
+     /*-----------------------------------------------------------------------------------------------------
+                                   ADMIN SETTINGS
+    ------------------------------------------------------------------------------------------------------*/
+    function hu_admin_sec() {
+      return array(
+          'about-page' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __('Display the "About Hueman" page in the "Appearance" admin menu', 'hueman'),
+                'section'   => 'admin_sec',
+                'type'      => 'checkbox',
+                'notice'    => __( 'This page is intended to provide informations about the Hueman theme : changelog, release note, documentation link. It also display informations about your current install that can be useful if you need to report an issue.' , 'hueman' )
+          ),
+          'help-button' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __('Display a Help button in the admin bar', 'hueman'),
+                'section'   => 'admin_sec',
+                'type'      => 'checkbox',
+                'notice'    => __( 'This button links to the "About Hueman" page.' , 'hueman' )
+          )
+      );
+    }
 
 
 
@@ -1034,7 +1065,12 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
               'panel'   => 'hu-general-panel'
         ),
         'performance_sec'         => array(
-              'title'    => __( 'Performances', 'hueman' ),
+              'title'    => __( 'Performances and SEO', 'hueman' ),
+              'priority' => 60,
+              'panel'   => 'hu-general-panel'
+        ),
+        'admin_sec'         => array(
+              'title'    => __( 'Hueman Admin Settings', 'hueman' ),
               'priority' => 60,
               'panel'   => 'hu-general-panel'
         ),

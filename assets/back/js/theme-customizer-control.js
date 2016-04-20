@@ -1854,6 +1854,14 @@ var HUSocialMethods = HUSocialMethods || {};
         return '0' !== to && false !== to && 'off' !== to;
       },
     },
+    'about-page' : {
+      controls: [
+        'help-button'
+      ],
+      callback : function (to) {
+        return '0' !== to && false !== to && 'off' !== to;
+      },
+    },
     'page_for_posts' : {
        controls: [
          'tc_blog_restrict_by_cat'

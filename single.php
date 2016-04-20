@@ -10,8 +10,8 @@
 			<article <?php post_class(); ?>>
 				<div class="post-inner group">
 
-					<h1 class="post-title"><?php the_title(); ?></h1>
-					<p class="post-byline"><?php _e('by','hueman'); ?> <?php the_author_posts_link(); ?> &middot; <?php the_time(get_option('date_format')); ?></p>
+					<h1 class="post-title entry-title"><?php the_title(); ?></h1>
+          <?php get_template_part('parts/single-author-date'); ?>
 
 					<?php if( get_post_format() ) { get_template_part('parts/post-formats'); } ?>
 
@@ -20,7 +20,15 @@
 					<div class="<?php echo implode( ' ', apply_filters( 'hu_single_entry_class', array('entry','themeform') ) ) ?>">
 						<div class="entry-inner">
 							<?php the_content(); ?>
-							<?php wp_link_pages(array('before'=>'<div class="post-pages">'.__('Pages:','hueman'),'after'=>'</div>')); ?>
+							<nav class="pagination group">
+                <?php
+                  //Checks for and uses wp_pagenavi to display page navigation for multi-page posts.
+                  if ( function_exists('wp_pagenavi') )
+                    wp_pagenavi( array( 'type' => 'multipart' ) );
+                  else
+                    wp_link_pages(array('before'=>'<div class="post-pages">'.__('Pages:','hueman'),'after'=>'</div>'));
+                ?>
+              </nav><!--/.pagination-->
 						</div>
 
             <?php do_action( 'hu_after_single_entry_inner' ); ?>

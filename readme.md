@@ -1,4 +1,4 @@
-# Hueman v3.1.0
+# Hueman v3.1.1
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > Hueman is a mobile friendly WordPress theme for blogs, magazines and business websites. It's been designed to beautifully display pictures and text content, and engineered to be easy to use and fast. The Hueman theme helps you attract and retain more visitors, that's why it's already used by 70K+ active websites in the world and has received hundreds of five stars ratings.
@@ -82,9 +82,26 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 ## Changelog
+= 3.1.1 April 18th 2016 =
+* fixed : the option "featured-posts-include" depending on "featured-posts-enabled" was still altering the query even if "featured-posts-enabled" was unchecked in the customizer
+* fixed : Allow child themes to load translation files : By changing the call of the path on load_theme_textdomain from get_template_directory to get_stylesheet_directory we allow the translation of the theme through child themes. Without this, a child theme won’t load their own language files even by hooking a function on after_setup_theme action callng load_theme_textdomain and/or load_child_theme_textdomain.
+* added : New option in customizer > Global Settings > Performances and SEO > Use Structured Data Markup. Implements Google Micro-formats compatibility for author, dates, title, entry content.
+* added : new option in the customizer to control the visibility of the help button and the "About Hueman" admin page
+* updated : single.php for a better compatibility with wp_pagenavi for multi-part posts
+* fixed : better titles for the sidebar metaboxes for the single post and page
+* fixed : primary and secondary widget zone descriptions
+* updated : German translation de_DE
+* updated : Italian translation it_IT
+* updated : Russian translation ru_RU
+* updated : French translation fr_FR
+* added : Turkish translation tr_TR
+* added : Persian translation fa_IR
+
+
 = 3.1.0 April 16th 2016 =
 * fixed : wrong path to the default font Titillium in main stylesheet
 * fixed : child theme stylesheet : style.css is loaded again as a dependency of the parent Hueman theme style, to make it easier to override the main stylesheet rules
+* fixed : php notice undefined var _faq_url in /wp-content/themes/hueman/functions/class-admin-page.php
 
 = 3.0.12 April 15th 2016  =
 * fixed : social icon default color is back to rgba(255,255,255,0.7)

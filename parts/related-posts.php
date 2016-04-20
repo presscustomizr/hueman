@@ -30,12 +30,12 @@
 
 			<div class="related-inner">
 
-				<h4 class="post-title">
+				<h4 class="post-title entry-title">
 					<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title(); ?>"><?php the_title(); ?></a>
 				</h4><!--/.post-title-->
 
 				<div class="post-meta group">
-					<p class="post-date"><?php the_time('j M, Y'); ?></p>
+					<?php get_template_part('parts/post-list-author-date'); ?>
 				</div><!--/.post-meta-->
 
 			</div><!--/.related-inner-->
