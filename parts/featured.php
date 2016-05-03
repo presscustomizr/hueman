@@ -24,14 +24,14 @@ $featured = new WP_Query(
 
 	<script type="text/javascript">
 		// Check if first slider image is loaded, and load flexslider on document ready
-		jQuery(document).ready(function(){
-		 var firstImage = jQuery('#flexslider-featured').find('img').filter(':first'),
+		jQuery(function($){
+		 var firstImage = $('#flexslider-featured').find('img').filter(':first'),
 			checkforloaded = setInterval(function() {
 				var image = firstImage.get(0);
 				if (image.complete || image.readyState == 'complete' || image.readyState == 4) {
 					clearInterval(checkforloaded);
 
-					jQuery('#flexslider-featured').flexslider({
+					$('#flexslider-featured').flexslider({
 						animation: "slide",
 						useCSS: false, // Fix iPad flickering issue
 						directionNav: true,
@@ -39,7 +39,7 @@ $featured = new WP_Query(
 						pauseOnHover: true,
 						animationSpeed: 400,
 						smoothHeight: true,
-						touch: false,
+						touch: <?php echo apply_filters('hu_flexslider_touch_support' , true); ?>,
 						slideshow: <?php echo hu_is_checked('featured-slideshow') ? 'true' : 'false'; ?>,
 						slideshowSpeed: <?php echo hu_get_option('featured-slideshow-speed', 5000); ?>,
 					});

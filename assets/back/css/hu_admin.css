@@ -87,39 +87,26 @@ h1.need-help-title:before,
 }
 
 li#wp-admin-bar-tc-hueman-help a {
-	color: #FFF;
+	color: #FFF!important;
 	text-decoration: none;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-	background-color: #27CDA5;
-	background-image: -moz-linear-gradient(top, #27CDA5, #1B8D71);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#27CDA5), to(#1B8D71));
-	background-image: -webkit-linear-gradient(top, #27CDA5, #1B8D71);
-	background-image: -o-linear-gradient(top, #27CDA5, #1B8D71);
-	background-image: linear-gradient(to bottom, #27CDA5, #1B8D71);
-	background-repeat: repeat-x;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff9db668' , endColorstr='#ff768d44' , GradientType=0);
-	border-color: #1B8D71 #1B8D71 #4B5A2B;
-	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-	filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+	background-color: #82b965;
+  -webkit-transition: background .1s linear;
+  -moz-transition: background .1s linear;
+  -ms-transition: background .1s linear;
+  -o-transition: background .1s linear;
+  transition: background .1s linear;
 }
 
 #wpadminbar .ab-top-menu>li#wp-admin-bar-tc-hueman-help:hover>.ab-item {
   color: #FFF;
-  background: #1B8D71; /* Old browsers */
-background: -moz-linear-gradient(top,  #1B8D71 1%, #27CDA5 100%, #27CDA5 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#1B8D71), color-stop(100%,#27CDA5), color-stop(100%,#27CDA5)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  #1B8D71 1%,#27CDA5 100%,#27CDA5 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  #1B8D71 1%,#27CDA5 100%,#27CDA5 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  #1B8D71 1%,#27CDA5 100%,#27CDA5 100%); /* IE10+ */
-background: linear-gradient(to bottom,  #1B8D71 1%,#27CDA5 100%,#27CDA5 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1B8D71', endColorstr='#27CDA5',GradientType=0 ); /* IE6-9 */
+  background: #6B9C51;
 }
 
 h1.need-help-title:before {
 	padding-right: 17px;
 	top: 1px;
 	font-size: 1.2em;
-	color:#27CDA5;
+	color:#82b965;
 }
 
 #hueman-admin-panel .button-secondary.hueman-help {

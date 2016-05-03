@@ -1,7 +1,5 @@
-<?php
-	$layout = hu_layout_class();
-	if ( $layout != 'col-1c'):
-?>
+<?php $layout = hu_layout_class(); ?>
+<?php if ( $layout != 'col-1c'): ?>
 
 	<div class="sidebar s1">
 
@@ -30,11 +28,10 @@
 
 	</div><!--/.sidebar-->
 
-	<?php if (
-		( $layout == 'col-3cm' ) ||
-		( $layout == 'col-3cl' ) ||
-		( $layout == 'col-3cr' ) )
-		{ get_template_part('sidebar-2'); }
+	<?php
+    if ( in_array( $layout, array('col-3cm', 'col-3cl', 'col-3cr' ) ) ) {
+      get_template_part('sidebar-2');
+    }
 	?>
 
 <?php endif; ?>

@@ -92,7 +92,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
          'hu_sidebars_design_sec',
 
         //FOOTER
-         'hu_footer_widget_sec',
          'hu_footer_design_sec',
 
       );
@@ -485,7 +484,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     function hu_header_widget_sec() {
       return array(
           'header-ads' => array(
-                'default'   => 0,
+                'default'   => 1,
                 'control'   => 'HU_controls',
                 'label'     => __("Display a widget in your header", 'hueman'),
                 'section'   => 'header_widget_sec',
@@ -664,6 +663,14 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 //'transport' => 'postMessage',
                 'notice'    => __( "Max number of featured posts to display. <br /><i>Set to 1 and it will show it without any slider script</i><br /><i>Set it to 0 to disable</i>" , "hueman" ),//@todo sprintf split translation
           ),
+          'featured-posts-full-content' => array(
+                'default'   => 0,
+                'control'   => 'HU_controls',
+                'label'     => __("Display the full post content", 'hueman'),
+                'section'   => 'content_blog_sec',
+                'type'      => 'checkbox',
+                'notice'    => __( 'By default, your featured posts display the first words of their content ( the "excerpt"). Check this box to display the full content.' , 'hueman')
+          ),
           'featured-slideshow' => array(
                 'default'   => 0,
                 'control'   => 'HU_controls',
@@ -811,22 +818,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     * PANEL : FOOTER
     *******************************************************************************************************
     ******************************************************************************************************/
-    /*-----------------------------------------------------------------------------------------------------
-                                  FOOTER ADVERTISEMENT SECTION
-    ------------------------------------------------------------------------------------------------------*/
-    function hu_footer_widget_sec() {
-      return array(
-          'footer-ads' => array(
-                'default'   => 0,
-                'control'   => 'HU_controls',
-                'label'     => __("Display a widget ads area in your footer", 'hueman'),
-                'section'   => 'footer_widget_sec',
-                'type'      => 'checkbox'
-          )
-      );
-    }
-
-
 
     /*-----------------------------------------------------------------------------------------------------
                                   FOOTER DESIGN SECTION
@@ -834,6 +825,14 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     function hu_footer_design_sec() {
       global $wp_version;
       return array(
+          'footer-ads' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __("Display a full width widget area in your footer", 'hueman'),
+                'section'   => 'footer_design_sec',
+                'type'      => 'checkbox',
+                'notice'    => __('This zone is located before the other footer widgets and takes 100% of the width. Very appropriate to display a Google Map or an advertisement banner.', 'hueman')
+          ),
           'footer-widgets' => array(
                 'default'   => '0',
                 'control'   => 'HU_Customize_Layout_Control',
@@ -1127,11 +1126,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         'footer_design_sec'         => array(
               'title'    => __( 'Footer Design : Logo, layout, ...', 'hueman' ),
               'priority' => 10,
-              'panel'   => 'hu-footer-panel'
-        ),
-        'footer_widget_sec'         => array(
-              'title'    => __( 'Footer Advertisement Widget', 'hueman' ),
-              'priority' => 20,
               'panel'   => 'hu-footer-panel'
         )
 

@@ -49,12 +49,14 @@
 
         //send the current context and widgets settings
         api.preview.send( 'context-ready', api.settings.contx );
-        api.preview.send( 'houston-widget-settings', _wpWidgetCustomizerPreviewSettings );
+        api.preview.send(
+          'houston-widget-settings',
+          _.extend( _wpWidgetCustomizerPreviewSettings, { availableWidgetLocations : _.values( api.settings.availableWidgetLocations ) } )
+        );
 
         //TEST
         //console.log('_wpCustomizeSettings', _wpCustomizeSettings, _wpCustomizeSettings.activeSections );
         // console.log('_wpWidgetCustomizerPreviewSettings', _wpWidgetCustomizerPreviewSettings);
-
 
         //settings cb
         _.map( _setting_cbs, function( _cb, _setId ) {
@@ -206,7 +208,8 @@
   * @return boolean
   */
   var _isValidURL = function(_url){
-    var _pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+    //var _pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+    var _pattern = /(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
     return _pattern.test( _url );
   };
 

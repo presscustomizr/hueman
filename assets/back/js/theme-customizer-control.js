@@ -129,6 +129,7 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
   sidebar_insights.create('actives');//will record the refreshed active list of active sidebars sent from the preview
   sidebar_insights.create('inactives');
   sidebar_insights.create('registered');
+  sidebar_insights.create('available_locations');
 
   api.sidebar_insights = sidebar_insights;
   var _old_initialize = api.PreviewFrame.prototype.initialize;
@@ -155,6 +156,7 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
         api.sidebar_insights('inactives').set( _inactives );
         api.sidebar_insights('registered').set( _registered );
         api.sidebar_insights('candidates').set( _candidates );
+        api.sidebar_insights('available_locations').set( data.availableWidgetLocations );//built server side
     });
 
 
@@ -163,21 +165,16 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
     });
 
   };//initialize
-  api.contx('current').callbacks.add( function( e, o) {
-  });
-  api.sidebar_insights('candidates').callbacks.add( function(_candidates) {
-    if ( ! _.isArray(_candidates) )
-      return;
-    _.map( _candidates, function( _sidebar ) {
-      if ( ! _.isObject(_sidebar) )
-        return;
-      if ( api.section.has("sidebar-widgets-" +_sidebar.id ) )
-        return;
-      api.HUWidgetAreasControl.prototype.addWidgetSidebar( {}, _sidebar );
-      if ( _.has( api.sidebar_insights('actives').get(), _sidebar.id ) && api.section.has("sidebar-widgets-" +_sidebar.id ) )
-        api.section( "sidebar-widgets-" +_sidebar.id ).activate();
-    });
-  });
+  api.hu_getDocSearchLink = function( text ) {
+    text = ! _.isString(text) ? '' : text;
+    var _searchtext = text.replace( / /g, '+'),
+        _url = [ HUControlParams.docURL, 'search?query=', _searchtext ].join('');
+    return [
+      '<a href="' + _url + '" title="' + HUControlParams.translatedStrings.readDocumentation + '" target="_blank">',
+      ' ',
+      '<span class="fa fa-question-circle-o"></span>'
+    ].join('');
+  };
 })( wp.customize , jQuery, _);
 var HUBaseControlMethods = HUBaseControlMethods || {};
 
@@ -209,10 +206,13 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
         return _el;
       }
     },
-    addActions : function( event_map, new_event ) {
+    addActions : function( event_map, new_events ) {
       new_event_map = _.clone( this[event_map] );
-      new_event_map.push( new_event );
-      this[event_map] = new_event_map;
+      this[event_map] = _.union( new_event_map, ! _.isArray(new_events) ? [new_events] : new_events );
+    },
+
+    doActions : function( action, $dom_el, obj ) {
+      $dom_el.trigger( action, obj );
     },
     refreshPreview : function( obj ) {
       this.previewer.refresh();
@@ -231,9 +231,8 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
           s_ = (useWordBoundary && isTooLong) ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
       return  isTooLong ? s_ + '...' : s_;
     }
-    }//HUBaseControlMethods
-  );//$.extend
 
+  });//$.extend//HUBaseControlMethods
 })( wp.customize , jQuery, _);var HUDynamicMethods = HUDynamicMethods || {};
 
 (function (api, $, _) {
@@ -242,7 +241,27 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
 
       var control = this;
       api.HUBaseControl.prototype.initialize.call( control, id, options );
-      this.view_event_map = [
+      control.control_event_map = [
+        {
+          trigger   : 'click keydown',
+          selector  : [ '.' + options.params.css_attr.open_pre_add_btn, '.' + options.params.css_attr.cancel_pre_add_btn ].join(','),
+          name      : 'pre_add_model',
+          actions   : ['renderPreModelView','setPreModelViewVisibility'],
+        },
+        {
+          trigger   : 'propertychange change click keyup input colorpickerchange',//colorpickerchange is a custom colorpicker event @see method setupColorPicker => otherwise we don't
+          selector  : [ '.' + options.params.css_attr.pre_add_view_content + ' input[data-type]', '.' + options.params.css_attr.pre_add_view_content + ' select[data-type]'].join(','),
+          name      : 'update_pre_model',
+          actions   : ['updatePreModel' ]
+        },
+        {
+          trigger   : 'click keydown',
+          selector  : '.' + options.params.css_attr.add_new_btn, //'.hu-add-new',
+          name      : 'add_model',
+          actions   : ['closeAllViews', 'addModel'],
+        }
+      ];
+      control.view_event_map = [
         {
           trigger   : 'click keydown',
           selector  : [ '.' + options.params.css_attr.display_alert_btn, '.' + options.params.css_attr.cancel_alert_btn ].join(','),
@@ -253,85 +272,61 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
           trigger   : 'click keydown',
           selector  : '.' + options.params.css_attr.remove_view_btn,
           name      : 'remove_model',
-          actions   : ['removeModel', 'destroyView' ]
+          actions   : ['removeModel']
         },
         {
           trigger   : 'click keydown',
           selector  : [ '.' + options.params.css_attr.edit_view_btn, '.' + options.params.css_attr.view_title ].join(','),
           name      : 'edit_view',
-          actions   : ['renderViewContent', 'setViewVisibility']
-        },
-        {
-          trigger   : 'view_rendered:view_content_event_map',
-          name      : 'view_content_setup',
-          actions   : ['setupViewListeners']
-        },
-
-
+          actions   : ['setViewVisibility']
+        }
       ];
-
-      this.view_content_event_map = [
+      control.view_content_event_map = [
         {
           trigger   : 'propertychange change click keyup input colorpickerchange',//colorpickerchange is a custom colorpicker event @see method setupColorPicker => otherwise we don't
           selector  : 'input[data-type], select[data-type]',
           name      : 'set_input_value',
-          actions   : ['detectInputChange', 'updateModel' ]
+          actions   : 'updateModel'
         }
       ];
-
-
-      this.control_event_map = [
-        {
-          trigger   : 'click keydown',
-          selector  : '.' + options.params.css_attr.add_view_btn, //'.hu-add-new',
-          name      : 'add_model',
-          actions   : ['closeAllViews', 'addModel'],
-        },
-        {
-          trigger   : 'model_added',
-          name      : 'render_view',
-          actions   : ['renderView','writeViewTitle']
-        },
-        {
-          trigger   : 'model_updated',
-          name      : 'update_model_in_collection',
-          actions   : ['updateCollection', 'writeViewTitle', 'sendModel']
-        },
-        {
-          trigger   : 'model_removed',
-          name      : 'remove_model_in_collection',
-          actions   : 'updateCollection'
-        },
-        {
-          trigger   : 'view_rendered:view_event_map',
-          name      : 'setup_view',
-          actions   : [ 'setupViewListeners', 'makeSortable' ]
-        },
-        {
-          trigger   : 'view_rendered:new',
-          name      : 'user_added_view_setup',
-          actions   : ['renderViewContent', 'setViewVisibility']
-        },
-        {
-          trigger   : 'views_sorted',
-          name      : 'sort_collection',
-          actions   : ['sortCollection', 'closeAllViews', 'closeAllAlerts']
-        },
-      ];
-      this.savedModels = api(this.id).get();
-      this.model = { id : '', title : '' };
-      this.collection = [];
+      control.savedModels = api(control.id).get();
+      control.model = { id : '', title : '' };
+      control.modelAddedMessage = HUControlParams.translatedStrings.successMessage;
       $.extend( control, {
         viewAlertEl : 'customize-control-' + options.params.type + '-alert',
+        viewPreAddEl : 'customize-control-' + options.params.type + '-pre-add-view-content',
       } );
-      this.hu_views = new api.Values();
+      control._setupApiValues();
+
+    },//initialize
+    _setupApiValues : function() {
+      var control = this;
+      control.hu_preModel = new api.Values();
+      control.hu_preModel.create('model');
+      control.hu_preModel.create('view_content');
+      control.hu_preModel.create('view_status');
+      control.hu_preModel('view_status').set('closed');
+      control.hu_Model = new api.Values();
+      control.hu_View = new api.Values();
+      control.hu_Collection = new api.Values();
+      control.hu_Collection.create('models');
+      control.hu_Collection('models').set([]);
     },
     ready : function() {
       var control = this;
       api.bind( 'ready', function() {
-        control.setupListeners( control.control_event_map , { dom_el : control.container } );
-        control.fetchSavedCollection();
-        control.listenToCollectionUpdates();
+        control.setupDOMListeners( control.control_event_map , { dom_el : control.container } );
+        control.setupCollectionListeners().fetchSavedCollection();
+        control.hu_Collection('models').callbacks.add( function( to, from ) {
+            api(control.id).set( control.filterCollectionBeforeAjax(to) );
+            var is_model_update = ( _.size(from) == _.size(to) ) && ! _.isEmpty( _.difference(from, to) );
+            if ( 'postMessage' == api(control.id).transport && ! is_model_update )
+              control.previewer.refresh();
+        });
+        control.hu_preModel('model').set(control.getDefaultModel());
+        control.hu_preModel('view_status').callbacks.add( function( to, from ) {
+          control._togglePreModelViewExpansion( to );
+        });
       });
       control.container.trigger('ready');
     },//ready()
@@ -343,38 +338,87 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
 
 (function (api, $, _) {
   $.extend( HUDynamicMethods, {
-    addModel : function( obj, key ) {
-      model =  ( _.has( obj, 'model') && _.has( obj.model, 'id' ) ) ? obj.model : this._initNewModel( obj.model || {} );
-      key   = 'undefined' == typeof(key) ? key : false;
-      this.updateCollection( { model : model }, key );
-      this.container.trigger( 'model_added', { model : model , dom_event : obj.dom_event } );
-      if ( _.has(obj, 'dom_event') && ! _.has(obj.dom_event, 'isTrigger') )
-        this.container.trigger( 'model_added_by_user', { model : model , dom_event : obj.dom_event } );
-      if ( 'postMessage' == api(this.id).transport && _.has( obj, 'dom_event') && ! _.has( obj.dom_event, 'isTrigger' ) )
-        this.previewer.refresh();
 
-    },
-    updateModel : function( obj ) {
-      var control = this;
-      var $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
+    updatePreModel : function(obj) {
+      var control           = this,
+          $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
           _changed_prop     = $_changed_input.attr('data-type'),
           _new_val          = $( $_changed_input, obj.dom_el ).val(),
-          _new_model        = _.clone(obj.model);//initialize it to the current value
+          _new_model        = _.clone(control.hu_preModel('model').get());//initialize it to the current value
+      if ( 'title' == _changed_prop && _.isEmpty(_new_val) ) {
+        _defaultModel = control.getDefaultModel();
+        _new_val = _defaultModel.title;
+      }
+
       _new_model[_changed_prop] = _new_val;
-      control.container.trigger( 'model_updated' , { model : _new_model , changed_prop : _changed_prop } );
-      obj.dom_el.trigger( _changed_prop + ':changed', { model : _new_model } );
+      control.hu_preModel('model').set(_new_model);
+
+      control.doActions(
+        'pre_model:' + _changed_prop + ':changed',
+        control.container,
+        { model : _new_model, dom_el : $('.' + control.css_attr.pre_add_view_content, control.container ) }
+      );
     },
+    addModel : function( obj, key ) {
+      var control = this,
+          model = {},
+          is_added_by_user = _.has(obj, 'dom_event') && ! _.has(obj.dom_event, 'isTrigger');
+      if ( ! _.has( obj, 'model') && _.has(control, 'hu_preModel') ) {
+        model = control.hu_preModel('model').get();
+      } else {
+        model = _.has( obj, 'model') ? obj.model : model;
+      }
+      if ( _.isEmpty(model) )
+        return;
+      model =  ( _.has( model, 'id') && control._isModelIdPossible( model.id) ) ? model : this._initNewModel( model || {} );
+      key   = 'undefined' == typeof(key) ? key : false;
+      control.hu_Model.create(model.id);
+      control.hu_Model(model.id).callbacks.add( function( to, from ) {
+          control.updateCollection( { model : to }, key );
+          control.writeViewTitle( {model:to});
+          if ( ! _.isEmpty(from) || ! _.isUndefined(from) ) {
+            control._sendModel(from, to );
+          }
+      });
+      control.hu_Model(model.id).set(model);
+      if ( is_added_by_user ) {
+        control.setViewVisibility( {model:model}, is_added_by_user );
+        control.closeResetPreModel();
+        control.doActions( 'model_added_by_user' , obj.dom_el, { model : model , dom_event : obj.dom_event } );
+      }
+      if ( 'postMessage' == api(this.id).transport && _.has( obj, 'dom_event') && ! _.has( obj.dom_event, 'isTrigger' ) )
+       control.previewer.refresh();
+    },
+    updateModel : function( obj ) {
+      var control           = this,
+          $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
+          _changed_prop     = $_changed_input.attr('data-type'),
+          _new_val          = $( $_changed_input, obj.dom_el ).val(),
+          _current_model    = control.hu_Model(obj.model.id).get(),
+          _new_model        = _.clone( _current_model );//initialize it to the current value
+      if ( 'title' == _changed_prop && _.isEmpty(_new_val) ) {
+        _defaultModel = control.getDefaultModel();
+        _new_val = _defaultModel.title;
+      }
+      _new_model[_changed_prop] = _new_val;
 
-
+      control.hu_Model(obj.model.id).set(_new_model);
+      control.doActions(
+        _changed_prop + ':changed',
+        obj.dom_el,
+        { model : _new_model }
+      );
+    },
     removeModel : function( obj ) {
       var control = this,
-          _new_collection = _.clone(control.collection);
+          _new_collection = _.clone( control.hu_Collection('models').get() );
 
       _new_collection = _.without( _new_collection, _.findWhere( _new_collection, {id: obj.model.id }) );
-      control.container.trigger( 'model_removed' , { collection : _new_collection, model : _.findWhere( control.collection, {id: obj.model.id }) } );
+      control.hu_Collection('models').set( _new_collection );
     },
     getDefaultModel : function( id ) {
-      return $.extend( _.clone(this.model), { id : id || '' } );
+      var control = this;
+      return $.extend( _.clone(control.model), { id : id || '' } );
     },
     _normalizeModel : function( model, key ) {
       if ( ! _.isObject(model) )
@@ -383,11 +427,15 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
 
       return model;
     },
+    _isModelIdPossible : function( _id ) {
+      var control = this;
+      return ! _.isEmpty(_id) && ! _.findWhere( control.hu_Collection('models').get(), { id : _id });
+    },
     _initNewModel : function( _model , _next_key ) {
       var control = this,
           _new_model = { id : '' },
           _id;
-      _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( control.collection );
+      _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( control.hu_Collection('models').get() );
 
       if ( _.isNumber(_next_key) ) {
         _id = control.params.type + '_' + _next_key;
@@ -401,8 +449,8 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
         _new_model = $.extend( _model, { id : _id } );
       else
         _new_model = this.getDefaultModel( _id );
-      if ( _.has(_new_model, 'id') && ! _.isEmpty( _new_model.id) && ! _.findWhere( control.collection, { id : _id }) ) {
-        _.map( control.model , function( value, property ){
+      if ( _.has(_new_model, 'id') && control._isModelIdPossible(_id) ) {
+        _.map( control.getDefaultModel() , function( value, property ){
           if ( ! _.has(_new_model, property) )
             _new_model[property] = value;
         });
@@ -411,13 +459,24 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
       }
       return control._initNewModel( _new_model, _next_key + 1);
     },
-    sendModel : function( obj ) {
-      var _changed = obj.changed_prop;
-      this.previewer.send( 'sub_setting', {
-        set_id : this.id,
-        model_id : obj.model.id,
-        changed_prop : _changed,
-        value : obj.model[_changed]
+    _sendModel : function( from, to ) {
+      var control = this,
+        _changed_props = [],
+        $view = control.getViewEl(to.id);
+      _.map( from, function( _val, _key ) {
+        if ( _val != to[_key] )
+          _changed_props.push(_key);
+      });
+
+      _.map( _changed_props, function( _prop) {
+        control.previewer.send( 'sub_setting', {
+          set_id : control.id,
+          model_id : to.id,
+          changed_prop : _prop,
+          value : to[_prop]
+        });
+        control.doActions('after_sendModel', $view, { model : to , dom_el: $view, changed_prop : _prop } );
+
       });
     },
   });//$.extend()
@@ -437,28 +496,45 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
         }
         control.addModel( { model : model }, key);
       });
+      return this;
     },
-    listenToCollectionUpdates : function() {
-      var control = this, candidate_for_db;
-      control.container.on('collection_updated', function( e, obj ) {
-        if ( ! _.has(obj, "collection" ) || ! _.isArray(obj.collection) ) {
-          console.log('setting not updated, no valid value provided');
-          return;
-        }
-        candidate_for_db = control.filterCollectionBeforeAjax(obj.collection);
-        api(control.id).set(obj.collection);
-
+    setupCollectionListeners : function() {
+      var control = this;
+      control.hu_Collection('models').callbacks.add( function( to, from ) {
+        var _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
+            _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
+            _model_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
+            _collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && _.isEmpty(_model_updated);
+        if ( ! _.isEmpty(_to_render) && ! control.getViewEl(_to_render.id).length ) {
+          var $view = control.renderView( {model:_to_render} );
+          control.setupViewApiListeners( {model:_to_render, dom_el : $view} );//listener of the hu_View value for expansion state
+          control.setupDOMListeners( control.view_event_map , {model:_to_render, dom_el:$view} );//listeners for the view wrapper
+          control._makeSortable();
+          control.doActions('after_viewSetup', $view, { model : _to_render , dom_el: $view} );
+        }//if
+        if ( ! _.isEmpty(_to_remove) ) {
+          control._destroyView(_to_remove.id);
+          control.hu_Model.remove(_to_remove.id);
+          control.hu_View.remove(_to_remove.id);
+          control.doActions('after_modelRemoved', control.container, { model : _to_remove } );
+        }//if
+        if ( _collection_sorted ) {
+          control.hu_preModel('view_status').set('closed');
+          control.closeAllViews();
+          control.closeAllAlerts();
+        }//if
       });
+      return this;
     },
     filterCollectionBeforeAjax : function(candidate_for_db) {
       return candidate_for_db;
     },
     updateCollection : function( obj, key ) {
-      var _new_collection = _.clone( this.collection ),
-          control = this;
+      var control = this,
+          _current_collection = control.hu_Collection('models').get();
+          _new_collection = _.clone(_current_collection);
       if ( _.has( obj, 'collection' ) ) {
-        control.collection = obj.collection;
-        control.container.trigger( 'collection_updated', { collection : control.collection } );
+        control.hu_Collection('models').set(obj.collection);
         return;
       }
       var _key = ( 'undefined' == typeof(key) ) ? false : key,
@@ -472,7 +548,7 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
       }
       else {
         if ( _.findWhere( _new_collection, { id : model.id } ) ) {
-          _.map( control.collection, function( _model, _ind ) {
+          _.map( _current_collection , function( _model, _ind ) {
             if ( _model.id != model.id )
               return;
             _new_collection[_ind] = model;
@@ -482,16 +558,15 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
           _new_collection.push(model);
         }
       }//else
-      this.collection = _new_collection;
-      this.container.trigger( 'collection_updated', { collection : _new_collection, model : model } );
+      control.hu_Collection('models').set(_new_collection);
     },
-    sortCollection : function( obj ) {
+    _getSortedDOMCollection : function( obj ) {
       var control = this,
+          _old_collection = _.clone( control.hu_Collection('models').get() ),
           _new_collection = [],
           _index = 0;
-
       $( '.' + control.css_attr.inner_view, control.container ).each( function() {
-        var _model = _.findWhere( control.collection, {id: $(this).attr('data-id') });
+        var _model = _.findWhere( _old_collection, {id: $(this).attr('data-id') });
         if ( ! _model )
           return;
 
@@ -500,16 +575,15 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
         _index ++;
       });
       if ( 0 === _new_collection.length )
-        return;
-      control.container.trigger( 'collection_updated', {collection : _new_collection} );
-      if ( 'postMessage' == api(this.id).transport )
-        this.previewer.refresh();
+        return _old_collection;
+      if ( ! _.isEmpty( _.difference( _old_collection, _new_collection ) ) )
+        return _old_collection;
+
+      return _new_collection;
     },
-
-
-    getModel : function(model) {
+    getModel : function(id) {
       var control = this;
-      _model = _.findWhere( control.collection, {id: model.id} );
+      _model = _.findWhere( control.hu_Collection('models').get(), {id:id} );
       if ( false !== _model )
         return _model;
       return model;
@@ -522,15 +596,13 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
   $.extend( HUDynamicMethods, {
     renderView : function( obj ) {
       var control = this,
-          model = _.clone(obj.model),
-          isManuallyAdded = ! _.has( obj.dom_event, 'isTrigger' );
+          model = _.clone(obj.model);
       if ( 0 === $( '#tmpl-' + control.getTemplateEl( 'view', model ) ).length )
-        return this;
-
+        return false;//break the action chain
 
       var view_template = wp.template( control.getTemplateEl( 'view', model ) );
       if ( ! view_template  || ! control.container )
-        return this;
+        return false;//break the action chain
       var $_view_el = $('li[data-id="' + model.id + '"]').length ? $('li[data-id="' + model.id + '"]') : $('<li>', { class : control.css_attr.inner_view, 'data-id' : model.id,  id : model.id } ),
           _refreshed = $('li[data-id="' + model.id + '"]').length ? true : false;
 
@@ -540,35 +612,9 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
       } else {
         $_view_el.html( view_template( model ) );
       }
-      control.hu_views.create(model.id);
-      control.hu_views(model.id).set('closed');
-      control.hu_views(model.id).callbacks.add( function( to, from ) {
-        control._toggleViewExpansion( model.id, to );
-      });
-      var $_dom_el = ( _.has(obj, 'dom_el') && -1 != obj.dom_el.length ) ? obj.dom_el : control.container;
-      $_dom_el.trigger(
-        'view_rendered:view_event_map', {
-          model : model,
-          dom_el : $_view_el,
-          dom_event : obj.dom_event,
-          refreshed : _refreshed
-        }
-      );
-      if ( ! _.has( obj.dom_event, 'isTrigger' ) ) {
-         $_dom_el.trigger(
-          'view_rendered:new', {
-            model : model,
-            dom_el : $_view_el,
-            dom_event : obj.dom_event,
-          }
-        );
-      }
-
-      return this;
+      return $_view_el;
     },
     renderViewContent : function( obj ) {
-      if( _.has(obj, 'dom_el') && ! _.isEmpty( $('.' + this.css_attr.view_content, obj.dom_el ).html() ) )
-        return true;
       var control = this,
           model = _.clone(obj.model);
       if ( 0 === $( '#tmpl-' + control.getTemplateEl( 'view-content', model ) ).length )
@@ -578,70 +624,73 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
       if ( ! view_content_template || ! control.container )
         return this;
       $( view_content_template( model )).appendTo( $('.' + control.css_attr.view_content, obj.dom_el ) );
-      obj.dom_el.trigger(
-        'view_rendered:view_content_event_map', {
-          model : model,
-          dom_el : obj.dom_el,
-          dom_event : obj.dom_event,
-        }
-      );
+
+      control.doActions( 'viewContentRendered' , obj.dom_el, obj );
 
       return this;
     },
-    destroyView : function (obj) {
-      obj.dom_el.fadeOut( {
+    _destroyView : function (model_id) {
+      var $view = this.getViewEl(model_id);
+      $view.fadeOut( {
         duration : 400,
         done : function() {
           $(this).remove();
         }
       });
-      this.hu_views.remove(obj.model.id);
-
-      this.container.trigger( 'view_removed', obj );
-      if ( 'postMessage' == api(this.id).transport )
-        this.previewer.refresh();
     },
     writeViewTitle : function( obj ) {
-      var _model = _.clone(obj.model);
+      var control = this;
+          _model = _.clone(obj.model);
           _title = this._capitalize( _model.title );
       _title = this._truncate(_title, 20);
       $( '.' + this.css_attr.view_title , '#' + obj.model.id ).text(_title );
+      this.doActions('after_writeViewTitle', control.getViewEl(obj.model.id) , obj );
     },
     getViewEl : function( model_id ) {
       var control = this;
       return $( '[data-id = "' + model_id + '"]', control.container );
     },
-    makeSortable : function(obj) {
-      if ( wp.media.isTouchDevice || ! $.fn.sortable )
-        return;
+    setupViewApiListeners : function(obj) {
+      var control = this,
+          $viewContent = $( '.' + control.css_attr.view_content, control.getViewEl(obj.model.id) ),
+          $view = control.getViewEl(obj.model.id);
 
-      var control = this;
-      $( '.' + control.css_attr.views_wrapper, control.container ).sortable( {
-          handle: '.' + control.css_attr.view_header ,
-          update: function( event, ui ) {
-            control.container.trigger( 'views_sorted' );
-          }
+      control.hu_View.create(obj.model.id);
+      control.hu_View(obj.model.id).set('closed');
+      control.hu_View(obj.model.id).callbacks.add( function( to, from ) {
+        if ( ! $.trim( $viewContent.html() ) ) {
+          control.renderViewContent( obj ).setupDOMListeners(
+            control.view_content_event_map,
+            { model : obj.model, dom_el : $view }
+          );
         }
-      );
+        control._toggleViewExpansion( obj.model.id, to );
+      });
     },
-    setViewVisibility : function(obj) {
+    setViewVisibility : function(obj, is_added_by_user ) {
       var control = this;
-
-      if ( "view_rendered:new" == obj.event.trigger ) {
-        control.hu_views(obj.model.id).set( 'expanded' );
+      if ( is_added_by_user ) {
+        control.hu_View(obj.model.id).set( 'expanded_noscroll' );
       } else {
         control.closeAllViews(obj.model.id);
-        control.hu_views(obj.model.id).set( 'expanded' == control.hu_views(obj.model.id).get() ? 'closed' : 'expanded' );
+        control.hu_preModel('view_status').set( 'closed');
+        control.hu_View(obj.model.id).set( 'expanded' == control._getViewState(obj.model.id) ? 'closed' : 'expanded' );
       }
     },
     closeAllViews : function(model_id) {
       var control = this,
-          _filtered_collection = _.filter( _.clone( control.collection ) , function( mod) { return mod.id != model_id; });
+          _current_collection = _.clone( control.hu_Collection('models').get() ),
+          _filtered_collection = _.filter( _current_collection , function( mod) { return mod.id != model_id; } );
 
       _.map( _filtered_collection, function(_model) {
-        if ( control.hu_views.has(_model.id) && 'expanded' == control.hu_views(_model.id).get() )
-          control.hu_views( _model.id).set( 'closed' ); // => will fire the cb _toggleViewExpansion
+        if ( control.hu_View.has(_model.id) && 'expanded' == control._getViewState(_model.id) )
+          control.hu_View( _model.id).set( 'closed' ); // => will fire the cb _toggleViewExpansion
        } );
+    },
+
+
+    _getViewState : function(model_id) {
+      return -1 == this.hu_View(model_id).get().indexOf('expanded') ? 'closed' : 'expanded';
     },
     _toggleViewExpansion : function( model_id, status, duration ) {
       var control = this;
@@ -652,21 +701,49 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
 
             control.getViewEl(model_id).toggleClass('open' , _is_expanded );
             control.closeAllAlerts();
-            $(this).siblings().find('.' + control.css_attr.edit_view_btn).toggleClass('active' , _is_expanded );
-            var $_view_el = control.getViewEl(model_id);
+            var $_edit_icon = $(this).siblings().find('.' + control.css_attr.edit_view_btn);
 
-            setTimeout( function() {
-              if ( 'expanded' == status ) {
-                if ( ( $_view_el.offset().top + $_view_el.height() ) > $(window.top).height() ) {
-                  $('.wp-full-overlay-sidebar-content').animate({
-                      scrollTop:  $_view_el.offset().top - $_view_el.height() - 50
-                  }, 400);
-                }
-              }
-            }, 50);
-
+            $_edit_icon.toggleClass('active' , _is_expanded );
+            if ( _is_expanded )
+              $_edit_icon.removeClass('fa-pencil').addClass('fa-minus-square').attr('title', HUControlParams.translatedStrings.close );
+            else
+              $_edit_icon.removeClass('fa-minus-square').addClass('fa-pencil').attr('title', HUControlParams.translatedStrings.edit );
+            if ( 'expanded' == status )
+              control._adjustScrollExpandedBlock( control.getViewEl(model_id) );
           }//done callback
         } );
+    },
+    _adjustScrollExpandedBlock : function( $_block_el, adjust ) {
+      if ( ! $_block_el.length )
+        return;
+      var control = this,
+           $_controlSection = $( '.accordion-section-content', api.section( control.section() ).container ),
+          _currentScrollTopVal = $_controlSection.scrollTop(),
+          _scrollDownVal,
+          _adjust = adjust || 90;
+
+      setTimeout( function() {
+          if ( ( $_block_el.offset().top + $_block_el.height() + _adjust ) > $(window.top).height() ) {
+            _scrollDownVal = $_block_el.offset().top + $_block_el.height() + _adjust - $(window.top).height();
+            if ( _scrollDownVal > 0 ) {
+              $_controlSection.animate({
+                  scrollTop:  _currentScrollTopVal + _scrollDownVal
+              }, 500);
+            }
+          }
+      }, 50);
+    },
+    _makeSortable : function(obj) {
+      if ( wp.media.isTouchDevice || ! $.fn.sortable )
+        return;
+      var control = this;
+      $( '.' + control.css_attr.views_wrapper, control.container ).sortable( {
+          handle: '.' + control.css_attr.sortable_handle,
+          update: function( event, ui ) {
+            control.hu_Collection('models').set( control._getSortedDOMCollection() );
+          }
+        }
+      );
     },
     closeAllAlerts : function() {
       var control = this;
@@ -687,6 +764,7 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
           $_alert_el = $( '.' + control.css_attr.remove_alert_wrapper, obj.dom_el ),
           $_clicked = obj.dom_event;
       this.closeAllViews();
+      control.hu_preModel('view_status').set( 'closed');
       $('.' + control.css_attr.remove_alert_wrapper, control.container ).not($_alert_el).each( function() {
         if ( $(this).hasClass('open') ) {
           $(this).slideToggle( {
@@ -709,46 +787,96 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
           var _is_open = ! $(this).hasClass('open') && $(this).is(':visible');
           $(this).toggleClass('open' , _is_open );
           $( obj.dom_el ).find('.' + control.css_attr.display_alert_btn).toggleClass( 'active', _is_open );
+          if ( _is_open )
+            control._adjustScrollExpandedBlock( control.getViewEl( obj.model.id ) );
         }
       } );
     },
+    renderPreModelView : function( obj ) {
+      var control = this;
+      if ( ! _.isEmpty( control.hu_preModel('view_content').get() ) )
+        return;
+      if ( ! _.has(control, 'viewPreAddEl') ||  0 === $( '#tmpl-' + control.viewPreAddEl ).length )
+        return this;
+      var pre_add_template = wp.template( control.viewPreAddEl );
+      if ( ! pre_add_template  || ! control.container )
+        return this;
 
+      var $_pre_add_el = $('.' + control.css_attr.pre_add_view_content, control.container );
 
+      $_pre_add_el.prepend( pre_add_template() );
+      control.hu_preModel('view_content').set( pre_add_template() );
+      control.doActions( 'pre_add_view_rendered' , control.container, {model : {}, dom_el : $_pre_add_el});
+    },
+    _getPreModelView : function() {
+      var control = this;
+      return $('.' + control.css_attr.pre_add_view_content, control.container );
+    },
 
+    destroyPreModelView : function() {
+      var control = this;
+      $('.' + control.css_attr.pre_add_view_content, control.container ).find('.hu-sub-set').remove();
+      control.hu_preModel('view_content').set('');
+    },
+    setPreModelViewVisibility : function(obj) {
+      var control = this;
 
+      control.closeAllViews();
+      control.hu_preModel('view_status').set( 'expanded' == control.hu_preModel('view_status').get() ? 'closed' : 'expanded' );
+    },
+    _togglePreModelViewExpansion : function( status) {
+      var control = this,
+        $_pre_add_el = $( '.' + control.css_attr.pre_add_view_content, control.container );
+      $_pre_add_el.slideToggle( {
+        duration : 200,
+        done : function() {
+          var _is_expanded = 'closed' != status,
+              $_btn = $( '.' + control.css_attr.open_pre_add_btn, control.container );
 
-    detectInputChange : function( obj ) {
-      var $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
-          _changed_prop     = $_changed_input.attr('data-type'),
-          _new_val          = $( $_changed_input, obj.dom_el ).val(),
-          _old_val          = _new_val;
-      if ( _.has(obj.model, _changed_prop ) )
-        _old_val = obj.model[_changed_prop];
-      if (  _new_val == _old_val )
-        return false;//Break the action chain and don't update the model
+          $(this).toggleClass('open' , _is_expanded );
+          if ( _is_expanded )
+            $_btn.find('.fa').removeClass('fa-plus-square').addClass('fa-minus-square');
+          else
+            $_btn.find('.fa').removeClass('fa-minus-square').addClass('fa-plus-square');
+          $_btn.toggleClass( 'active', _is_expanded );
+          $( control.container ).toggleClass( control.css_attr.adding_new, _is_expanded );
+          control._adjustScrollExpandedBlock( $(this), 120 );
+        }
+      } );
+    },
+    closeResetPreModel : function() {
+      var control = this;
+      control.toggleSuccessMessage('on');
+      setTimeout( function() {
+          control.hu_preModel('view_status').set( 'closed');
+          control.hu_preModel('model').set(control.getDefaultModel());
+          control.toggleSuccessMessage('off').destroyPreModelView();
+        } , 3000);
+    },
 
-      return true;
+    toggleSuccessMessage : function(status) {
+      var control = this,
+          _message = control.modelAddedMessage,
+          $_pre_add_wrapper = $('.' + control.css_attr.pre_add_wrapper, control.container );
+          $_success_wrapper = $('.' + control.css_attr.pre_add_success, control.container );
+
+      if ( 'on' == status ) {
+        $_success_wrapper.find('p').text(_message);
+        $_success_wrapper.css('z-index', 1000001 )
+          .css('height', $_pre_add_wrapper.height() + 'px' )
+          .css('line-height', $_pre_add_wrapper.height() + 'px');
+      } else {
+         $_success_wrapper.attr('style','');
+      }
+      control.container.toggleClass('hu-model-added', 'on' == status );
+      return this;
     }
-
   });//$.extend()
-
 })( wp.customize, jQuery, _);var HUDynamicMethods = HUDynamicMethods || {};
 
 (function (api, $, _) {
   $.extend( HUDynamicMethods, {
-    setupViewListeners : function(obj) {
-      if ( ! _.has(obj, 'event') || ! _.has(obj.event, 'trigger') || ! _.has( this, obj.event.trigger.split(':')[1] ) ) {
-        console.log('No event map was found in setup view listeners. Event triggered by : ' + obj.event. trigger );
-        return;
-      }
-      var _obj = _.clone(obj),
-          _evt_map = obj.event.trigger.split(':')[1];
-
-      if ( obj.refreshed )
-        return;
-      this.setupListeners( this[_evt_map] , _obj );
-    },
-    setupListeners : function( event_map , obj ) {
+    setupDOMListeners : function( event_map , obj ) {
       var control = this;
       _.map( event_map , function( _event ) {
         obj.dom_el.on( _event.trigger , _event.selector, function( e, event_params ) {
@@ -757,8 +885,8 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
           }
           e.preventDefault(); // Keep this AFTER the key filter above
           var _obj = _.clone(obj);
-          if ( _.has(_obj, 'model') ) {
-            _obj.model = control.getModel( _obj.model );
+          if ( _.has(_obj, 'model') && _.has( _obj.model, 'id') ) {
+            _obj.model = control.getModel( _obj.model.id );
           }
           $.extend( _obj, { event : _event, dom_event : e } );
           $.extend( _obj, event_params );
@@ -1109,48 +1237,57 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
       var control = this;
       control.addActions(
         'control_event_map',
-        {
-            trigger   : 'after_writeViewTitle',
-            actions   : [ 'writeSubtitleInfos' ]
-        }
+        [
+          {
+              trigger   : 'pre_add_view_rendered',
+              actions   : [ 'listenToPreModelViewExpand' ]
+          },
+          {
+              trigger   : 'pre_model:locations:changed',
+              actions   : ['mayBeDisplayPreModelAlert' ]
+          },
+          {
+              trigger   : 'pre_add_view_rendered',
+              name      : 'pre_add_view_rendered',
+              actions   : [ 'setupSelect' ]
+          },
+          {
+              trigger   : 'after_writeViewTitle',
+              actions   : [ 'writeSubtitleInfos' ]
+          },
+          {
+              trigger   : 'after_sendModel',
+              actions   : ['updateSectionTitle','setModelUpdateTimer']
+          },
+          {
+              trigger   : 'model_added_by_user',
+              actions   : ['addWidgetSidebar', 'closePreModelAlert']
+          },
+          {
+              trigger   : 'after_modelRemoved',
+              actions   : ['removeWidgetSidebar']
+          }
+        ]
       );
       control.addActions(
-        'control_event_map',
-        {
-            trigger   : 'before_setupViewListeners',
-            name      : 'before_setupViewListeners',
-            actions   : [ 'setupSelect' ]
-        }
-      );
-      control.addActions(
-        'control_event_map',
-        {
-            trigger   : 'after_sendModel',
-            actions   : ['updateSectionTitle','setModelUpdateTimer']
-        }
-      );
-      control.addActions(
-        'control_event_map',
-        {
-            trigger   : 'model_added_by_user',
-            actions   : ['addWidgetSidebar']
-        }
-      );
-
-      control.addActions(
-        'control_event_map',
-        {
-            trigger   : 'model_removed',
-            actions   : ['removeWidgetSidebar']
-        }
-      );
-
-      control.addActions(
-        'control_event_map',
-        {
-            trigger   : 'widget_zone_created',
-            actions   : ['scrollToNewZone']
-        }
+        'view_event_map', [
+          {
+              trigger   : 'locations:changed',
+              actions   : [ 'mayBeDisplayModelAlert' ]
+          },
+          {
+              trigger   : 'after_viewSetup',
+              actions   : [ 'setupLocationsApiListeners' ]
+          },
+          {
+              trigger   : 'after_viewSetup',
+              actions   : [ 'listenToViewExpand' ]
+          },
+          {
+              trigger   : 'viewContentRendered',
+              actions   : [ 'setupSelect' ]
+          }
+        ]
       );
       control.contexts = _.has( options.params , 'sidebar_contexts') ? options.params.sidebar_contexts : {};
       control.context_match_map = {
@@ -1170,79 +1307,20 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
       control.model = {
         id : '',
         title : 'Widget Zone',
-        contexts : ['_all_'],
+        contexts : _.without( _.keys(control.contexts), '_all_' ),//the server list of contexts is an object, we only need the keys, whitout _all_
         locations : ['s1'],
         description : ''
       };
-      var fixTopMargin = new api.Values();
-      fixTopMargin.create('fixed_for_current_session');
-      fixTopMargin.create('value');
-
-      api.section('sidebars_create_sec').fixTopMargin = fixTopMargin;
-      api.section('sidebars_create_sec').fixTopMargin('fixed_for_current_session').set(false);
-      api.panel('widgets').expanded.callbacks.add( function(expanded) {
-        var _top_margin = api.panel('widgets').container.find( '.control-panel-content' ).css('margin-top');
-        api.section('sidebars_create_sec').fixTopMargin('value').set( _top_margin );
-
-        var _section_content = api.section('sidebars_create_sec').container.find( '.accordion-section-content' ),
-          _panel_content = api.panel('widgets').container.find( '.control-panel-content' ),
-          _set_margins = function() {
-            _section_content.css( 'margin-top', '' );
-            _panel_content.css('margin-top', api.section('sidebars_create_sec').fixTopMargin('value').get() );
-          };
-        api.bind( 'pane-contents-reflowed', _.debounce( function() {
-          _set_margins();
-        }, 150 ) );
-
-      } );
-      api.section('sidebars_create_sec').expanded.callbacks.add( function(expanded) {
-        var section =  api.section('sidebars_create_sec'),
-            container = section.container.closest( '.wp-full-overlay-sidebar-content' ),
-            content = section.container.find( '.accordion-section-content' ),
-            overlay = section.container.closest( '.wp-full-overlay' ),
-            backBtn = section.container.find( '.customize-section-back' ),
-            sectionTitle = section.container.find( '.accordion-section-title' ).first(),
-            headerActionsHeight = $( '#customize-header-actions' ).height(),
-            resizeContentHeight, expand, position, scroll;
-        if ( expanded ) {
-          overlay.removeClass( 'section-open' );
-          content.css( 'height', 'auto' );
-          sectionTitle.attr( 'tabindex', '0' );
-          content.css( 'margin-top', '' );
-          container.scrollTop( 0 );
-        }
-
-        control.closeAllViews();
-
-        content.slideToggle();
+      this.modelAddedMessage = HUControlParams.translatedStrings.widgetZoneAdded;
+      this.setExpansionsCallbacks();
+      this.listenToSidebarInsights();
+      control.hu_preModel.create('location_alert_view_state');
+      control.hu_preModel('location_alert_view_state').set('closed');
+      control.hu_preModel('location_alert_view_state').callbacks.add( function( to, from ) {
+        var $view = control._getPreModelView();
+        control._toggleLocationAlertExpansion( $view, to );
       });
-      api.sidebar_insights('registered').callbacks.add( function( _registered_zones ) {
-        _.map(control.collection, function( _model ) {
-          if ( ! control.getViewEl(_model.id).length )
-            return;
-
-          control.getViewEl(_model.id).css('display' , _.contains( _registered_zones, _model.id ) ? 'block' : 'none' );
-        });
-      });
-
-      api.sidebar_insights('inactives').callbacks.add( function( _inactives_zones ) {
-        _.map(control.collection, function( _model ) {
-          if ( ! control.getViewEl(_model.id).length )
-            return;
-
-          if ( _.contains( _inactives_zones, _model.id ) ) {
-            control.getViewEl( _model.id ).addClass('inactive');
-            if ( ! control.getViewEl( _model.id ).find('.hu-inactive-alert').length )
-              control.getViewEl( _model.id ).find('.hu-view-title').prepend('<span class="hu-inactive-alert">[inactive] </span>');
-          }
-          else {
-            control.getViewEl( _model.id ).removeClass('inactive');
-            if ( control.getViewEl( _model.id ).find('.hu-inactive-alert').length )
-              control.getViewEl( _model.id ).find('.hu-inactive-alert').remove();
-          }
-        });
-      });
-
+      control.hu_viewLocationAlert = new api.Values();
     },//initialize
     getTemplateEl : function( type, model ) {
       var control = this, _el;
@@ -1273,17 +1351,6 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
         return _el;
       }
     },
-    listenToCollectionUpdates : function() {
-      var control = this;
-      control.container.on('collection_updated', function( e, obj ) {
-        if ( ! _.has(obj, "collection" ) || ! _.isArray(obj.collection) ) {
-          console.log('setting not updated, no valid value provided');
-          return;
-        }
-        api(control.id).set(obj.collection);
-
-      });
-    },
     writeSubtitleInfos : function(obj) {
       var control = this,
           _model = _.clone(obj.model),
@@ -1302,15 +1369,18 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
             _locations.push(loc);
         }
       );
-
       _model.contexts =_.isString(_model.contexts) ? [_model.contexts] : _model.contexts;
-      _.map( _model.contexts, function( con ) {
-          if ( _.has( control.contexts , con ) )
-            _contexts.push(control.contexts[con]);
-          else
-            _contexts.push(con);
-        }
-      );
+      if ( control._hasModelAllContexts(_model.id) ) {
+        _contexts.push(control.contexts._all_);
+      } else {
+        _.map( _model.contexts, function( con ) {
+            if ( _.has( control.contexts , con ) )
+              _contexts.push(control.contexts[con]);
+            else
+              _contexts.push(con);
+          }
+        );
+      }
       var _locationText = HUControlParams.translatedStrings.locations,
           _contextText = HUControlParams.translatedStrings.contexts,
           _notsetText = HUControlParams.translatedStrings.notset;
@@ -1322,65 +1392,158 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
 
       if ( ! $('.hu-zone-infos', $_view ).length ) {
         var $_zone_infos = $('<div/>', {
-          class : 'hu-zone-infos',
+          class : [ 'hu-zone-infos' , control.css_attr.sortable_handle ].join(' '),
           html : _html
         });
         $( '.' + control.css_attr.view_buttons, $_view ).after($_zone_infos);
       } else {
         $('.hu-zone-infos', $_view ).html(_html);
       }
-
-    },
-    scrollToNewZone  : function( obj ) {
-      var $_view_el = this.getViewEl(obj.model.id);
-
-      $('.wp-full-overlay-sidebar-content').animate({
-            scrollTop:  $_view_el.offset().top - $_view_el.height()
-      }, 700);
-
-    },
-    getDefaultModel : function(id) {
+    },//writeSubtitleInfos
+    _hasModelAllContexts : function( id ) {
       var control = this,
-          _default = _.clone( control.model ),
-          _default_contexts = _default.contexts;
-      return $.extend( _default, {
-          title : 'Widget Zone ' +  ( _.size(control.collection)*1 + 1 ),
-          contexts : control._getMatchingContexts( _default_contexts )
-        });
+          model = control.getModel(id),
+          controlContexts = _.keys(control.contexts);
+
+      if ( ! _.has(model, 'contexts') )
+        return;
+
+      if ( _.contains( model.contexts, '_all_') )
+        return true;
+      return _.isEmpty( _.difference( _.without(controlContexts, '_all_') , model.contexts ) );
     },
     _getMatchingContexts : function( defaults ) {
       var control = this,
-          _current = api.contx('current').get(),
+          _current = api.contx('current').get() || {},
           _matched = _.filter(control.context_match_map, function( hu, wp ) { return true === _current[wp]; });
 
       return _.isEmpty( _matched ) ? defaults : _matched;
 
     },
+    listenToViewExpand : function(obj) {
+      var control = this;
+      control.hu_View(obj.model.id).callbacks.add( function( to, from ) {
+        if ( -1 == to.indexOf('expanded') )//can take the expanded_noscroll value !
+          return;
 
+        var $view = control.getViewEl( obj.model.id );
+        control._setupLocationSelect( obj.model.id, $view, true );//true for refresh
+        control.mayBeDisplayModelAlert( obj );
+      });
+    },
+    listenToPreModelViewExpand : function(obj) {
+      var control = this;
+      control.hu_preModel('view_status').callbacks.add( function( to, from ) {
+        if ( 'expanded' != to )
+          return;
+        control._setupLocationSelect( obj.model.id, obj.dom_el , true );//true for refresh
+        control.mayBeDisplayPreModelAlert( obj );
+      });
+    },
+    setupLocationsApiListeners : function(obj) {
+      var control = this;
+      control.hu_viewLocationAlert.create(obj.model.id);
+      control.hu_viewLocationAlert(obj.model.id).set('closed');
+      control.hu_viewLocationAlert(obj.model.id).callbacks.add( function( to, from ) {
+        var $view = control.getViewEl(obj.model.id);
+        control._toggleLocationAlertExpansion( $view , to );
+      });
+    },
+    mayBeDisplayPreModelAlert : function(obj) {
+      var control = this,
+          _selected_locations = $('select[data-type="locations"]', obj.dom_el ).val(),
+          available_locs = api.sidebar_insights('available_locations').get(),
+          _unavailable = _.filter( _selected_locations, function( loc ) {
+            return ! _.contains(available_locs, loc);
+          });
+      control.hu_preModel('location_alert_view_state').set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
+
+    },
+    mayBeDisplayModelAlert : function(obj) {
+      var control = this,
+          _selected_locations = $('select[data-type="locations"]', obj.dom_el ).val(),
+          available_locs = api.sidebar_insights('available_locations').get(),
+          _unavailable = _.filter( _selected_locations, function( loc ) {
+            return ! _.contains(available_locs, loc);
+          });
+      control.hu_viewLocationAlert(obj.model.id).set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
+    },
+
+    _toggleLocationAlertExpansion : function($view, to) {
+      var $_alert_el = $view.find('.hu-location-alert');
+
+      if ( ! $_alert_el.length ) {
+        var _html = [
+          '<span>' + HUControlParams.translatedStrings.locationWarning + '</span>',
+          api.hu_getDocSearchLink( HUControlParams.translatedStrings.locationWarning ),
+        ].join('');
+
+        $_alert_el = $('<div/>', {
+          class:'hu-location-alert',
+          html:_html,
+          style:"display:none"
+        });
+
+        $('select[data-type="locations"]', $view ).closest('div').after($_alert_el);
+      }
+      $_alert_el.slideToggle( {
+        duration : 400
+      });
+    },
+    closePreModelAlert : function() {
+      this.hu_preModel('location_alert_view_state').set('closed');
+    },
     setupSelect : function( obj ) {
+      this._setupContextSelect( obj.model, obj.dom_el );
+      this._setupLocationSelect( obj.model, obj.dom_el );
+    },
+    _setupContextSelect : function( model, $view ) {
       var control = this;
       _.map( control.contexts, function( title, key ) {
         var _attributes = {
               value : key,
               html: title
             };
-        if ( key == obj.model.contexts || _.contains( obj.model.contexts, key ) )
+        if ( key == model.contexts || _.contains( model.contexts, key ) )
           $.extend( _attributes, { selected : "selected" } );
 
-        $( 'select[data-type="contexts"]', obj.dom_el ).append( $('<option>', _attributes) );
+        $( 'select[data-type="contexts"]', $view ).append( $('<option>', _attributes) );
       });
-      _.map( control.locations, function( title, key ) {
-        var _attributes = {
-              value : key,
-              html: title
-            };
+      $( 'select[data-type="contexts"]', $view ).select2();
+    },
+    _setupLocationSelect : function( model, $view, refresh ) {
+      var control = this;
+          available_locs = api.sidebar_insights('available_locations').get();
+      if ( ! $( 'select[data-type="locations"]', $view ).children().length ) {
+        _.map( control.locations, function( title, key ) {
+          var _attributes = {
+                value : key,
+                html: title
+              };
 
-        if ( key == obj.model.locations || _.contains( obj.model.locations, key ) )
-          $.extend( _attributes, { selected : "selected" } );
+          if ( key == model.locations || _.contains( model.locations, key ) )
+            $.extend( _attributes, { selected : "selected" } );
 
-        $( 'select[data-type="locations"]', obj.dom_el ).append( $('<option>', _attributes) );
+          $( 'select[data-type="locations"]', $view ).append( $('<option>', _attributes) );
+        });
+      }//if
+
+      function setAvailability( state ) {
+        if (! state.id) { return state.text; }
+        if (  _.contains(available_locs, state.element.value) ) { return state.text; }
+        var $state = $(
+          '<span class="hu-unavailable-location fa fa-ban" title="' + HUControlParams.translatedStrings.unavailableLocation + '">&nbsp;&nbsp;' + state.text + '</span>'
+        );
+        return $state;
+      }
+
+      if ( refresh ) {
+        $( 'select[data-type="locations"]', $view ).select2( "destroy" );
+      }
+      $( 'select[data-type="locations"]', $view ).select2( {
+        templateResult: setAvailability,
+        templateSelection: setAvailability
       });
-      $( 'select[data-type="contexts"], select[data-type="locations"]', obj.dom_el ).select2();
     },
     setModelUpdateTimer : function(obj) {
       var control = this;
@@ -1468,24 +1631,143 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
 
     },//addWidgetSidebar
     removeWidgetSidebar : function(obj) {
-      api.Widgets.registeredSidebars.remove( obj.model.id );
-      if ( api.section.has("sidebar-widgets-" + obj.model.id) ) {
-        api.section("sidebar-widgets-" + obj.model.id).container.remove();
-        api.section.remove( "sidebar-widgets-" + obj.model.id );
-        delete api.settings.sections[ "sidebar-widgets-" + obj.model.id ];
+      var model = obj.model;
+      api.Widgets.registeredSidebars.remove( model.id );
+      if ( api.section.has("sidebar-widgets-" + model.id) ) {
+        api.section("sidebar-widgets-" + model.id).container.remove();
+        api.section.remove( "sidebar-widgets-" + model.id );
+        delete api.settings.sections[ "sidebar-widgets-" + model.id ];
       }
-      if ( api.has('sidebars_widgets['+obj.model.id+']') ) {
-        api.remove( 'sidebars_widgets['+obj.model.id+']' );
-        delete api.settings.settings['sidebars_widgets['+obj.model.id+']'];
+      if ( api.has('sidebars_widgets['+model.id+']') ) {
+        api.remove( 'sidebars_widgets['+model.id+']' );
+        delete api.settings.settings['sidebars_widgets['+model.id+']'];
       }
-      if ( api.control.has('sidebars_widgets['+obj.model.id+']') ) {
-        api.control( 'sidebars_widgets['+obj.model.id+']' ).container.remove();
-        api.control.remove( 'sidebars_widgets['+obj.model.id+']' );
-        delete api.settings.controls['sidebars_widgets['+obj.model.id+']'];
+      if ( api.control.has('sidebars_widgets['+model.id+']') ) {
+        api.control( 'sidebars_widgets['+model.id+']' ).container.remove();
+        api.control.remove( 'sidebars_widgets['+model.id+']' );
+        delete api.settings.controls['sidebars_widgets['+model.id+']'];
       }
-      this.container.trigger('widget_zone_removed', { model : obj.model, section_id : "sidebar-widgets-" + obj.model.id , setting_id : 'sidebars_widgets['+obj.model.id+']' });
-    }
+      this.container.trigger('widget_zone_removed', { model : obj.model, section_id : "sidebar-widgets-" + model.id , setting_id : 'sidebars_widgets['+model.id+']' });
+    },
+    setExpansionsCallbacks : function() {
+      var control = this;
+      var fixTopMargin = new api.Values();
+      fixTopMargin.create('fixed_for_current_session');
+      fixTopMargin.create('value');
 
+      api.section('sidebars_create_sec').fixTopMargin = fixTopMargin;
+      api.section('sidebars_create_sec').fixTopMargin('fixed_for_current_session').set(false);
+      api.panel('widgets').expanded.callbacks.add( function(expanded) {
+        var _top_margin = api.panel('widgets').container.find( '.control-panel-content' ).css('margin-top');
+        api.section('sidebars_create_sec').fixTopMargin('value').set( _top_margin );
+
+        var _section_content = api.section('sidebars_create_sec').container.find( '.accordion-section-content' ),
+          _panel_content = api.panel('widgets').container.find( '.control-panel-content' ),
+          _set_margins = function() {
+            _section_content.css( 'margin-top', '' );
+            _panel_content.css('margin-top', api.section('sidebars_create_sec').fixTopMargin('value').get() );
+          };
+        api.bind( 'pane-contents-reflowed', _.debounce( function() {
+          _set_margins();
+        }, 150 ) );
+
+      } );
+      api.panel('widgets').expanded.callbacks.add( function(expanded) {
+        control.closeAllViews();
+        control.hu_preModel('view_status').set('closed');
+      } );
+      api.section('sidebars_create_sec').expanded.callbacks.add( function(expanded) {
+        var section =  api.section('sidebars_create_sec'),
+            container = section.container.closest( '.wp-full-overlay-sidebar-content' ),
+            content = section.container.find( '.accordion-section-content' ),
+            overlay = section.container.closest( '.wp-full-overlay' ),
+            backBtn = section.container.find( '.customize-section-back' ),
+            sectionTitle = section.container.find( '.accordion-section-title' ).first(),
+            headerActionsHeight = $( '#customize-header-actions' ).height(),
+            resizeContentHeight, expand, position, scroll;
+        if ( expanded ) {
+          overlay.removeClass( 'section-open' );
+          content.css( 'height', 'auto' );
+          sectionTitle.attr( 'tabindex', '0' );
+          content.css( 'margin-top', '' );
+          container.scrollTop( 0 );
+        }
+
+        control.closeAllViews();
+
+        content.slideToggle();
+      });
+    },//setExpansionsCallbacks()
+    listenToSidebarInsights : function() {
+      var control = this;
+      api.sidebar_insights('registered').callbacks.add( function( _registered_zones ) {
+        var _current_collection = _.clone( control.hu_Collection('models').get() );
+        _.map(_current_collection, function( _model ) {
+          if ( ! control.getViewEl(_model.id).length )
+            return;
+
+          control.getViewEl(_model.id).css('display' , _.contains( _registered_zones, _model.id ) ? 'block' : 'none' );
+        });
+      });
+      api.sidebar_insights('inactives').callbacks.add( function( _inactives_zones ) {
+        var _current_collection = _.clone( control.hu_Collection('models').get() );
+        _.map(_current_collection, function( _model ) {
+          if ( ! control.getViewEl(_model.id).length )
+            return;
+
+          if ( _.contains( _inactives_zones, _model.id ) ) {
+            control.getViewEl( _model.id ).addClass('inactive');
+            if ( ! control.getViewEl( _model.id ).find('.hu-inactive-alert').length )
+              control.getViewEl( _model.id ).find('.hu-view-title').append(
+                $('<span/>', {class : "hu-inactive-alert", html : " [ " + HUControlParams.translatedStrings.inactiveWidgetZone + " ]" })
+              );
+          }
+          else {
+            control.getViewEl( _model.id ).removeClass('inactive');
+            if ( control.getViewEl( _model.id ).find('.hu-inactive-alert').length )
+              control.getViewEl( _model.id ).find('.hu-inactive-alert').remove();
+          }
+        });
+      });
+      api.sidebar_insights('candidates').callbacks.add( function(_candidates) {
+        if ( ! _.isArray(_candidates) )
+          return;
+        _.map( _candidates, function( _sidebar ) {
+          if ( ! _.isObject(_sidebar) )
+            return;
+          if ( api.section.has("sidebar-widgets-" +_sidebar.id ) )
+            return;
+          api.HUWidgetAreasControl.prototype.addWidgetSidebar( {}, _sidebar );
+          if ( _.has( api.sidebar_insights('actives').get(), _sidebar.id ) && api.section.has("sidebar-widgets-" +_sidebar.id ) )
+            api.section( "sidebar-widgets-" +_sidebar.id ).activate();
+        });
+      });
+    },//listenToSidebarInsights()
+    _adjustScrollExpandedBlock : function( $_block_el, adjust ) {
+      if ( ! $_block_el.length )
+        return;
+      var control = this,
+          _currentScrollTopVal = $('.wp-full-overlay-sidebar-content').scrollTop(),
+          _scrollDownVal,
+          _adjust = adjust || 90;
+      setTimeout( function() {
+          if ( ( $_block_el.offset().top + $_block_el.height() + _adjust ) > $(window.top).height() ) {
+            _scrollDownVal = $_block_el.offset().top + $_block_el.height() + _adjust - $(window.top).height();
+            $('.wp-full-overlay-sidebar-content').animate({
+                scrollTop:  _currentScrollTopVal + _scrollDownVal
+            }, 600);
+          }
+      }, 50);
+    },
+    getDefaultModel : function(id) {
+      var control = this,
+          _current_collection = control.hu_Collection('models').get(),
+          _default = _.clone( control.model ),
+          _default_contexts = _default.contexts;
+      return $.extend( _default, {
+          title : 'Widget Zone ' +  ( _.size(_current_collection)*1 + 1 )
+        });
+    },
 
   });//$.extend()
 
@@ -1650,33 +1932,45 @@ var HUSocialMethods = HUSocialMethods || {};
       ];
       this.addActions(
         'control_event_map',
-        {
-            trigger   : 'after_renderViewContent',
-            name      : 'after_renderViewContent',
-            actions   : [ 'setupSelect', 'setupColorPicker', 'setupIcheck' ]
-        }
+        [
+          {
+              trigger   : 'pre_add_view_rendered',
+              actions   : [ 'setupSelect' ]
+          },
+          {
+              trigger   : 'pre_model:social-icon:changed',
+              actions   : [ 'updatePreModelTitle' ]
+          }
+        ]
       );
 
       this.addActions(
         'view_event_map',
-        {
-            trigger   : 'social-icon:changed',
-            actions   : [ 'updateViewInputs' ]
-        }
+        [
+          {
+              trigger   : 'viewContentRendered',
+              actions   : [ 'setupSelect', 'setupColorPicker', 'setupIcheck' ]
+          },
+          {
+              trigger   : 'social-icon:changed',
+              actions   : [ 'updateModelInputs' ]
+          }
+        ]
       );
       this.model = {
         id : '',
-        title :  _.contains(control.social_icons,'rss') ? HUControlParams.translatedStrings.rss : this._capitalize( this.social_icons[0]) ,
-        'social-icon' : 'fa-' + ( _.contains(control.social_icons,'rss') ? 'rss' : control.social_icons[0] ),
+        title : '' ,
+        'social-icon' : '',
         'social-link' : '',
         'social-color' : HUControlParams.defaultSocialColor,
         'social-target' : 1
       };
-    },
+      this.modelAddedMessage = HUControlParams.translatedStrings.socialLinkAdded;
+    },//initialize
 
 
     _buildTitle : function( title, icon, color ) {
-      title = title || this._capitalize( this.social_icons[0]);
+      title = title || ( 'string' === typeof(icon) ? this._capitalize( icon.replace( 'fa-', '') ) : '' );
       title = this._truncate(title, 20);
       icon = icon || 'fa-' + this.social_icons[0];
       color = color || HUControlParams.defaultSocialColor;
@@ -1684,15 +1978,18 @@ var HUSocialMethods = HUSocialMethods || {};
       return '<div><span class="fa ' + icon + '" style="color:' + color + '"></span> ' + title + '</div>';
     },
     writeViewTitle : function( obj ) {
+      var _title = this._capitalize( obj.model['social-icon'].replace('fa-', '') );
+
       $( '.' + this.css_attr.view_title , '#' + obj.model.id ).html(
-        this._buildTitle( obj.model.title, obj.model['social-icon'], obj.model['social-color'] )
+        this._buildTitle( _title, obj.model['social-icon'], obj.model['social-color'] )
       );
     },
-    updateViewInputs : function( obj ) {
+    updateModelInputs : function( obj ) {
       var control     = this,
-          _new_model  = _.clone(obj.model),
+          _new_model  = _.clone( obj.model ),
           _new_title  = control._capitalize( obj.model['social-icon'].replace('fa-', '') ),
           _new_color  = HUControlParams.defaultSocialColor;
+      _new_title = [ HUControlParams.translatedStrings.followUs, _new_title].join(' ');
 
       $('input[data-type="title"]', obj.dom_el ).val( _new_title );
       $('input[data-type="social-link"]', obj.dom_el ).val( '' );
@@ -1700,14 +1997,25 @@ var HUSocialMethods = HUSocialMethods || {};
       _new_model.title = _new_title;
       _new_model['social-link'] = '';
       _new_model['social-color'] = _new_color;
-      control.container.trigger( 'model_updated' , { model : _new_model , changed_prop : 'title' } );
+
+      control.hu_Model(obj.model.id).set(_new_model);
+    },
+    updatePreModelTitle : function(obj) {
+      var control = this,
+          _new_title  = control._capitalize( obj.model['social-icon'].replace('fa-', '') ),
+          _new_model = control.hu_preModel('model').get();
+      _new_model.title = [ HUControlParams.translatedStrings.followUs, _new_title].join(' ');
+      control.hu_preModel('model').set(_new_model);
     },
 
 
+
+
     setupSelect : function( obj ) {
-      var control = this;
-      _.map( control.social_icons, function( icon_name ) {
-        var _value = 'fa-' + icon_name.toLowerCase(),
+      var control = this,
+          socialList = _.union( [HUControlParams.translatedStrings.selectSocialIcon], control.social_icons);
+      _.map( socialList , function( icon_name, k ) {
+        var _value = ( 0 === k ) ? '' : 'fa-' + icon_name.toLowerCase(),
             _attributes = {
               value : _value,
               html: control._capitalize(icon_name)
@@ -1733,12 +2041,16 @@ var HUSocialMethods = HUSocialMethods || {};
 
 
     setupColorPicker : function( obj ) {
+      var control = this;
       $( 'input[data-type="social-color"]', obj.dom_el ).wpColorPicker( {
         defaultColor : 'rgba(255,255,255,0.7)',
         change : function( e, o ) {
           $(this).val(o.color.toString());
           $(this).trigger('colorpickerchange');
         }
+      });
+      $( 'input[data-type="social-color"]', obj.dom_el ).closest('div').on('click keydown', function() {
+        control._adjustScrollExpandedBlock( obj.dom_el );
       });
     },
 
@@ -1838,6 +2150,7 @@ var HUSocialMethods = HUSocialMethods || {};
       controls: [
         'featured-category',
         'featured-posts-count',
+        'featured-posts-full-content',
         'featured-slideshow',
         'featured-slideshow-speed',
         'featured-posts-include'

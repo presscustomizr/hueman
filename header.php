@@ -46,16 +46,16 @@
             <?php if ( hu_is_checked('site-description') ): ?><p class="site-description"><?php bloginfo( 'description' ); ?></p><?php endif; ?>
 
             <?php if ( hu_is_checked('header-ads') ): ?>
-              <div id="header-ads">
+              <div id="header-widgets">
                 <?php hu_print_widgets_in_location( 'header-ads' ); ?>
               </div><!--/#header-ads-->
             <?php endif; ?>
 
           </div>
 
-        <?php else :  //@fromfull to keep ?>
+        <?php else :  ?>
             <a href="<?php echo home_url('/'); ?>" rel="home">
-              <img class="site-image" src="<?php echo hu_get_img_src('header-image'); ?>" alt="<?php get_bloginfo('name'); ?>">
+              <img class="site-image" src="<?php echo hu_get_img_src('header-image'); ?>" alt="<?php echo get_bloginfo('name'); ?>">
             </a>
         <?php endif; ?>
 

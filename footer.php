@@ -6,11 +6,18 @@
   <footer id="footer">
 
     <?php if ( hu_is_checked('footer-ads') ) : ?>
-      <section class="container" id="footer-ads">
-        <div class="container-inner">
-          <?php hu_print_widgets_in_location('footer-ads' ); ?>
-        </div><!--/.container-inner-->
-      </section><!--/.container-->
+      <?php
+        ob_start();
+        hu_print_widgets_in_location( 'footer-ads' );
+        $full_width_widget_html = ob_get_contents();
+      ?>
+      <?php if ( ! empty($full_width_widget_html) ) : ob_end_clean(); ?>
+        <section class="container" id="footer-full-width-widget">
+          <div class="container-inner">
+            <?php hu_print_widgets_in_location( 'footer-ads' ); ?>
+          </div><!--/.container-inner-->
+        </section><!--/.container-->
+      <?php endif; ?>
     <?php endif; ?>
 
     <?php // footer widgets

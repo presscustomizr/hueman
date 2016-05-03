@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman v3.1.1\n"
-"POT-Creation-Date: 2016-04-20 09:59+0200\n"
-"PO-Revision-Date: 2016-04-20 09:59+0200\n"
+"Project-Id-Version: Hueman v3.1.2\n"
+"POT-Creation-Date: 2016-05-03 14:31+0200\n"
+"PO-Revision-Date: 2016-05-03 14:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: Press Customizr\n"
-"Language: fr_FR\n"
+"Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -39,7 +39,7 @@ msgstr ""
 msgid "% Responses"
 msgstr ""
 
-#: comments.php:10 functions/class-utils-settings-map.php:1058
+#: comments.php:10 functions/class-utils-settings-map.php:1057
 msgid "Comments"
 msgstr ""
 
@@ -47,160 +47,63 @@ msgstr ""
 msgid "Pingbacks"
 msgstr ""
 
-#: footer.php:96 functions/class-admin-customize.php:563
+#: footer.php:103 functions/customizer/class-admin-customize.php:601
 msgid "All Rights Reserved."
 msgstr ""
 
-#: footer.php:102
+#: footer.php:109
 msgid "Powered by"
 msgstr ""
 
-#: footer.php:102
+#: footer.php:109
 msgid "Theme by"
 msgstr ""
 
-#: functions/class-admin-customize.php:113
-msgid "&mdash; Select &mdash;"
-msgstr ""
-
-#: functions/class-admin-customize.php:150
-msgid "Assign menus to locations"
-msgstr ""
-
-#: functions/class-admin-customize.php:160
-#, php-format
-msgid ""
-"You haven't created any menu yet. %s or check the %s to learn more about "
-"menus."
-msgstr ""
-
-#: functions/class-admin-customize.php:161
-msgid "Create a new menu now"
-msgstr ""
-
-#: functions/class-admin-customize.php:162
-msgid "WordPress documentation"
-msgstr ""
-
-#: functions/class-admin-customize.php:178
-msgid "SITE ICON"
-msgstr ""
-
-#: functions/class-admin-customize.php:226
-msgid "Create And Order Widget Areas"
-msgstr ""
-
-#: functions/class-admin-customize.php:229
-#: functions/class-admin-customize.php:256
-msgid ""
-"You must save changes for the new areas to appear below. <br /><i>Warning: "
-"Make sure each area has a unique ID.</i>"
-msgstr ""
-
-#: functions/class-admin-customize.php:253
-msgid "Create And Manage Widget Areas"
-msgstr ""
-
-#: functions/class-admin-customize.php:263
-msgid "Create and manage widget zones"
-msgstr ""
-
-#: functions/class-admin-customize.php:285
-msgid "Dynamic Sidebars and Widgets"
-msgstr ""
-
-#: functions/class-admin-customize.php:607
-msgid ""
-"Your favicon is currently handled with an old method and will not be "
-"properly displayed on all devices. You might consider to re-upload your "
-"favicon with the new control below."
-msgstr ""
-
-#: functions/class-admin-customize.php:608
-#: functions/class-hu-controls-settings.php:530
-#: functions/class-hu-controls-settings.php:574
-msgid "Location(s)"
-msgstr ""
-
-#: functions/class-admin-customize.php:609
-#: functions/class-hu-controls-settings.php:537
-#: functions/class-hu-controls-settings.php:581
-msgid "Context(s)"
-msgstr ""
-
-#: functions/class-admin-customize.php:610
-msgid "Not set"
-msgstr ""
-
-#: functions/class-admin-customize.php:611
-msgid "Rss"
-msgstr ""
-
-#: functions/class-admin-customize.php:649
-msgid "If you like"
-msgstr ""
-
-#: functions/class-admin-customize.php:650
-msgid "the Hueman theme"
-msgstr ""
-
-#: functions/class-admin-customize.php:651
-msgid "we would love to receive a"
-msgstr ""
-
-#: functions/class-admin-customize.php:653
-msgid "Review the Hueman theme"
-msgstr ""
-
-#: functions/class-admin-customize.php:655
-msgid "rating. Thanks :) !"
-msgstr ""
-
-#: functions/class-admin-page.php:35
+#: functions/admin/class-admin-page.php:35
 #, php-format
 msgid ""
 "<h2>As per the WordPress themes guidelines (%1$s), all the Hueman theme "
 "options have been moved to the %2$s.</h2>"
 msgstr ""
 
-#: functions/class-admin-page.php:36
+#: functions/admin/class-admin-page.php:36
 msgid "more informations here"
 msgstr ""
 
-#: functions/class-admin-page.php:37
+#: functions/admin/class-admin-page.php:37
 msgid "customizer"
 msgstr ""
 
-#: functions/class-admin-page.php:40
+#: functions/admin/class-admin-page.php:40
 msgid ""
 "All your previous options have been kept and are available in the customizer "
 "options panel."
 msgstr ""
 
-#: functions/class-admin-page.php:53
+#: functions/admin/class-admin-page.php:53
 msgid "About Hueman"
 msgstr ""
 
-#: functions/class-admin-page.php:81
+#: functions/admin/class-admin-page.php:81
 msgid "Need help with"
 msgstr ""
 
-#: functions/class-admin-page.php:86
+#: functions/admin/class-admin-page.php:86
 msgid "Welcome to"
 msgstr ""
 
-#: functions/class-admin-page.php:103
+#: functions/admin/class-admin-page.php:103
 msgid "Thank you for using the Hueman WordPress theme for your website."
 msgstr ""
 
-#: functions/class-admin-page.php:104
+#: functions/admin/class-admin-page.php:104
 #, php-format
 msgid ""
 "Hueman %s has more features, is safer and more stable than ever to help you "
 "designing an awesome webdesign."
 msgstr ""
 
-#: functions/class-admin-page.php:105
+#: functions/admin/class-admin-page.php:105
 #, php-format
 msgid ""
 "Since version 3.0+, all the options have been moved to the %s, allowing you "
@@ -209,59 +112,59 @@ msgid ""
 "all your previous settings in the customizer."
 msgstr ""
 
-#: functions/class-admin-page.php:106
+#: functions/admin/class-admin-page.php:106
 msgid "customizer panel"
 msgstr ""
 
-#: functions/class-admin-page.php:108
+#: functions/admin/class-admin-page.php:108
 #, php-format
 msgid ""
 "For more informations about this new version of the theme, %s or check the "
 "changelog below"
 msgstr ""
 
-#: functions/class-admin-page.php:109
+#: functions/admin/class-admin-page.php:109
 msgid "read the latest release notes"
 msgstr ""
 
-#: functions/class-admin-page.php:114
+#: functions/admin/class-admin-page.php:114
 #, php-format
 msgid "The best way to start with %s is to read the %s and visit the %s."
 msgstr ""
 
-#: functions/class-admin-page.php:116
+#: functions/admin/class-admin-page.php:116
 msgid "getting started guide"
 msgstr ""
 
-#: functions/class-admin-page.php:117
+#: functions/admin/class-admin-page.php:117
 msgid "demo website"
 msgstr ""
 
-#: functions/class-admin-page.php:131
+#: functions/admin/class-admin-page.php:131
 #, php-format
 msgid ""
 "You are using a child theme of Hueman %1$s : always check the %2$s after "
 "upgrading to see if a function or a template has been deprecated."
 msgstr ""
 
-#: functions/class-admin-page.php:147
+#: functions/admin/class-admin-page.php:147
 msgid "Go to Dashboard &rarr; Home"
 msgstr ""
 
-#: functions/class-admin-page.php:147
+#: functions/admin/class-admin-page.php:147
 msgid "Go to Dashboard"
 msgstr ""
 
-#: functions/class-admin-page.php:162
+#: functions/admin/class-admin-page.php:162
 #, php-format
 msgid "The best way to start is to read the %s."
 msgstr ""
 
-#: functions/class-admin-page.php:163
+#: functions/admin/class-admin-page.php:163
 msgid "documentation"
 msgstr ""
 
-#: functions/class-admin-page.php:167
+#: functions/admin/class-admin-page.php:167
 msgid ""
 "If you don't find an answer to your question in the documentation, don't "
 "panic :) ! The Hueman theme is used by a large number of webmasters "
@@ -269,249 +172,113 @@ msgid ""
 "with the theme, chances are that it's already been reported and fixed in the"
 msgstr ""
 
-#: functions/class-admin-page.php:169
+#: functions/admin/class-admin-page.php:169
 msgid "support forum"
 msgstr ""
 
-#: functions/class-admin-page.php:175
+#: functions/admin/class-admin-page.php:175
 msgid "Read the documentation"
 msgstr ""
 
-#: functions/class-admin-page.php:179
+#: functions/admin/class-admin-page.php:179
 msgid "Get help in the support forum"
 msgstr ""
 
-#: functions/class-admin-page.php:239
+#: functions/admin/class-admin-page.php:239
 #, php-format
 msgid "Changelog in version %1$s"
 msgstr ""
 
-#: functions/class-admin-page.php:261
+#: functions/admin/class-admin-page.php:261
 msgid "System Informations"
 msgstr ""
 
-#: functions/class-admin-page.php:262
+#: functions/admin/class-admin-page.php:262
 msgid "Please include the following informations when posting support requests"
 msgstr ""
 
-#: functions/class-admin-page.php:263
+#: functions/admin/class-admin-page.php:263
 msgid ""
 "To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C "
 "(Mac)."
 msgstr ""
 
-#: functions/class-admin-update-notification.php:85
+#: functions/admin/class-admin-update-notification.php:85
 msgid "Good, you've just upgraded to"
 msgstr ""
 
-#: functions/class-admin-update-notification.php:87
+#: functions/admin/class-admin-update-notification.php:87
 msgid "version"
 msgstr ""
 
-#: functions/class-admin-update-notification.php:96
+#: functions/admin/class-admin-update-notification.php:96
 msgid "We'd like to introduce the new features we've been working on."
 msgstr ""
 
-#: functions/class-admin-update-notification.php:98
+#: functions/admin/class-admin-update-notification.php:98
 msgid "Read the latest release notes"
 msgstr ""
 
-#: functions/class-admin-update-notification.php:100
+#: functions/admin/class-admin-update-notification.php:100
 msgid "Visit the demo"
 msgstr ""
 
-#: functions/class-admin-update-notification.php:106
+#: functions/admin/class-admin-update-notification.php:106
 msgid "I already know what's new thanks !"
 msgstr ""
 
-#: functions/class-admin-update-notification.php:107
+#: functions/admin/class-admin-update-notification.php:107
 msgid "close"
 msgstr ""
 
-#: functions/class-hu-controls-settings.php:116
-msgid "Press return or enter to open this section"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:258
-msgid "Color"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:265
-msgid "Repeat"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:272
-msgid "Background attachment"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:279
-msgid "Background position"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:286
-msgid "Background size"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:293
-msgid "Background Image"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:395
-#: functions/class-hu-controls-settings.php:504
-msgid "Edit"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:395
-#: functions/class-hu-controls-settings.php:1246
-msgid "Remove"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:408
-msgid "Are you sure you want to remove : <strong>{{ data.title }} ?</strong>"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:409
-msgid "Yes"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:409
-msgid "No"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:518
-#: functions/class-hu-controls-settings.php:561
-msgid "Name"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:524
-#: functions/class-hu-controls-settings.php:568
-msgid "id"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:526
-#: functions/class-hu-controls-settings.php:570
-msgid "unique id"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:531
-#: functions/class-hu-controls-settings.php:575
-msgid ""
-"Select the pre-defined location(s) in which you will embed this widget zone."
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:538
-msgid "Pick the contexts where this widget area will be displayed."
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:563
-msgid "Enter a name"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:565
-msgid "Personalizing the name of the widget zone will help you identify it."
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:582
-msgid "Pick the context(s) where this widget area will be displayed."
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:641
-msgid "Id"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:647
-msgid "Social icon"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:654
-msgid "Social link"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:656
-msgid "http://..."
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:658
-msgid ""
-"Enter the full url of your social profile (must start with \"http://\")."
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:661
-msgid "Title"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:665
-msgid "This is the text displayed on mouse over."
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:669
-msgid "Icon color"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:673
-msgid "Set a unique color for your icon."
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:680
-msgid "Link target"
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:684
-msgid "Check this option to open the link in a another tab of the browser."
-msgstr ""
-
-#: functions/class-hu-controls-settings.php:1245
-msgid "Upload"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:137
+#: functions/class-utils-settings-map.php:136
 msgid "Favicon Upload (supported formats : .ico, .png, .gif)"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:138
+#: functions/class-utils-settings-map.php:137
 msgid "FAVICON"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:146
+#: functions/class-utils-settings-map.php:145
 msgid "FeedBurner URL"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:151
+#: functions/class-utils-settings-map.php:150
 msgid ""
 "Enter your full FeedBurner URL (or any other preferred feed URL) if you wish "
 "to use FeedBurner over the standard WordPress feed e.g. http://feeds."
 "feedburner.com/yoururlhere "
 msgstr ""
 
-#: functions/class-utils-settings-map.php:164
+#: functions/class-utils-settings-map.php:163
 msgid "Dynamic Styles"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:167
+#: functions/class-utils-settings-map.php:166
 msgid "Turn on to use the styling options below"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:172
+#: functions/class-utils-settings-map.php:171
 msgid "Boxed Layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:175
+#: functions/class-utils-settings-map.php:174
 msgid "Use a boxed layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:180
+#: functions/class-utils-settings-map.php:179
 msgid "Font"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:184
+#: functions/class-utils-settings-map.php:183
 msgid "Select a font for your website"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:190
+#: functions/class-utils-settings-map.php:189
 msgid "Website Max-width"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:196
+#: functions/class-utils-settings-map.php:195
 msgid ""
 "Max-width of the container. If you use 2 sidebars, your container should be "
 "at least 1200px.<br /><i>Note: For 720px content (default) use "
@@ -519,87 +286,87 @@ msgid ""
 "sidebar. If you use a combination of both, try something inbetween.</i>"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:201
+#: functions/class-utils-settings-map.php:200
 msgid "Sidebar Width"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:205
+#: functions/class-utils-settings-map.php:204
 msgid "30px padding for widgets"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:206
+#: functions/class-utils-settings-map.php:205
 msgid "20px padding for widgets"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:208
+#: functions/class-utils-settings-map.php:207
 msgid "Change left and right sidebars padding"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:213
+#: functions/class-utils-settings-map.php:212
 msgid "Primary Color"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:223
+#: functions/class-utils-settings-map.php:222
 msgid "Secondary Color"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:235
+#: functions/class-utils-settings-map.php:234
 msgid "Body Background"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:236
+#: functions/class-utils-settings-map.php:235
 msgid "Set the website background color"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:248
+#: functions/class-utils-settings-map.php:247
 msgid "Topbar Background"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:258
+#: functions/class-utils-settings-map.php:257
 msgid "Header Background"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:268
+#: functions/class-utils-settings-map.php:267
 msgid "Header Menu Background"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:278
+#: functions/class-utils-settings-map.php:277
 msgid "Footer Background"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:289
+#: functions/class-utils-settings-map.php:288
 msgid "Image Border Radius"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:295
+#: functions/class-utils-settings-map.php:294
 msgid "Give your thumbnails and layout images rounded corners"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:317
+#: functions/class-utils-settings-map.php:316
 msgid "Create and organize your social links"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:333
+#: functions/class-utils-settings-map.php:332
 msgid "Posts Comments"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:336
+#: functions/class-utils-settings-map.php:335
 msgid "Comments on posts"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:341
+#: functions/class-utils-settings-map.php:340
 msgid "Pages Comments"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:344
+#: functions/class-utils-settings-map.php:343
 msgid "Comments on pages"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:358
+#: functions/class-utils-settings-map.php:357
 msgid "Enable the Mobile Friendly (or Responsive) layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:361
+#: functions/class-utils-settings-map.php:360
 msgid ""
 "Hueman is a mobile friendly WordPress theme out of the box. This means that "
 "it will adapt and render nicely on any devices : desktops, laptops, tablets, "
@@ -608,447 +375,464 @@ msgid ""
 "to disable this option, and it is not recommended."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:375
+#: functions/class-utils-settings-map.php:374
 msgid "Use a minified stylesheet"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:378
+#: functions/class-utils-settings-map.php:377
 msgid ""
 "Unchecking this option is not recommended. Minifying css stylesheets "
 "improves performance for your website overall by decreasing the load time."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:383
+#: functions/class-utils-settings-map.php:382
 msgid "Use Structured Data Markup for your posts"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:386
+#: functions/class-utils-settings-map.php:385
 msgid ""
 "\"Structured data markup\" is a standard way to annotate your content so "
 "machines can understand it. Implementing it will help your website rank "
 "higher in search engines."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:400
+#: functions/class-utils-settings-map.php:399
 msgid "Display the \"About Hueman\" page in the \"Appearance\" admin menu"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:403
+#: functions/class-utils-settings-map.php:402
 msgid ""
 "This page is intended to provide informations about the Hueman theme : "
 "changelog, release note, documentation link. It also display informations "
 "about your current install that can be useful if you need to report an issue."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:408
+#: functions/class-utils-settings-map.php:407
 msgid "Display a Help button in the admin bar"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:411
+#: functions/class-utils-settings-map.php:410
 msgid "This button links to the \"About Hueman\" page."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:431
+#: functions/class-utils-settings-map.php:430
 msgid "Custom Header Logo"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:442
-#: functions/class-utils-settings-map.php:859
+#: functions/class-utils-settings-map.php:441
+#: functions/class-utils-settings-map.php:858
 msgid ""
 "Upload your custom logo image. Supported formats : .jpg, .png, .gif, svg, "
 "svgz"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:448
+#: functions/class-utils-settings-map.php:447
 msgid "Header Logo Image Max-height"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:454
+#: functions/class-utils-settings-map.php:453
 msgid ""
 "Your logo image should have the double height of this to be high resolution"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:459
+#: functions/class-utils-settings-map.php:458
 msgid "Display your site's description (tagline)"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:462
+#: functions/class-utils-settings-map.php:461
 msgid "The description that appears next to your logo"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:466
+#: functions/class-utils-settings-map.php:465
 msgid "Header Image"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:476
+#: functions/class-utils-settings-map.php:475
 msgid ""
 "Upload a header image (supported formats : .jpg, .png, .gif, svg, svgz). "
 "This will disable header title/logo, site description, header ads widget"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:490
+#: functions/class-utils-settings-map.php:489
 msgid "Display a widget in your header"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:493
+#: functions/class-utils-settings-map.php:492
 msgid ""
 "Header widget area, perfect to insert advertisements. Note : this feature is "
 "not available when a header image is being displayed."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:514
+#: functions/class-utils-settings-map.php:513
 msgid "Global Layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:518
+#: functions/class-utils-settings-map.php:517
 msgid "Other layouts will override this option if they are set"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:523 functions/init-core.php:751
+#: functions/class-utils-settings-map.php:522 functions/init-core.php:751
 msgid "Home"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:527
+#: functions/class-utils-settings-map.php:526
 msgid "[ <strong>is_home</strong> ] Posts homepage layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:532
+#: functions/class-utils-settings-map.php:531
 msgid "Single"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:536
+#: functions/class-utils-settings-map.php:535
 msgid ""
 "[ <strong>is_single</strong> ] Single post layout - If a post has a set "
 "layout, it will override this."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:541
+#: functions/class-utils-settings-map.php:540
 msgid "Archive"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:545
+#: functions/class-utils-settings-map.php:544
 msgid ""
 "[ <strong>is_archive</strong> ] Category, date, tag and author archive layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:550
+#: functions/class-utils-settings-map.php:549
 msgid "Archive - Category"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:554
+#: functions/class-utils-settings-map.php:553
 msgid "[ <strong>is_category</strong> ] Category archive layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:559
+#: functions/class-utils-settings-map.php:558
 msgid "Search"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:563
+#: functions/class-utils-settings-map.php:562
 msgid "[ <strong>is_search</strong> ] Search page layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:568
+#: functions/class-utils-settings-map.php:567
 msgid "Error 404"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:572
+#: functions/class-utils-settings-map.php:571
 msgid "[ <strong>is_404</strong> ] Error 404 page layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:577
+#: functions/class-utils-settings-map.php:576
 msgid "Default Page"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:581
+#: functions/class-utils-settings-map.php:580
 msgid ""
 "[ <strong>is_page</strong> ] Default page layout - If a page has a set "
 "layout, it will override this."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:595
+#: functions/class-utils-settings-map.php:594
 msgid "Display a custom heading for your blog."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:602
+#: functions/class-utils-settings-map.php:601
 msgid "Blog Heading"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:605
+#: functions/class-utils-settings-map.php:604
 msgid ""
 "Your blog heading. Html is allowed. Note : write a blank space to hide the "
 "default content."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:609 functions/init-front.php:186
+#: functions/class-utils-settings-map.php:608 functions/init-front.php:219
 msgid "Blog"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:611
+#: functions/class-utils-settings-map.php:610
 msgid "Blog Sub-Heading"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:614
+#: functions/class-utils-settings-map.php:613
 msgid ""
 "Your blog sub-heading. Html is allowed. Note : write a blank space to hide "
 "the default content."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:621
+#: functions/class-utils-settings-map.php:620
 msgid "Excerpt Length"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:627
+#: functions/class-utils-settings-map.php:626
 msgid "Set the excerpt length (in number of words)"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:632
+#: functions/class-utils-settings-map.php:631
 msgid "Display your blog post as a standard list."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:635
+#: functions/class-utils-settings-map.php:634
 msgid ""
 "While the default blog design is a grid of posts, you can check this option "
 "and display one post per row, whith the thumbnail beside the text."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:639
+#: functions/class-utils-settings-map.php:638
 msgid "Featured posts"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:641
+#: functions/class-utils-settings-map.php:640
 msgid "Feature posts on top of your blog"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:644
+#: functions/class-utils-settings-map.php:643
 msgid ""
 "Check this box to display a selection of posts with a slideshow, on top of "
 "your blog."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:649
+#: functions/class-utils-settings-map.php:648
 msgid "Select a category to feature"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:653
+#: functions/class-utils-settings-map.php:652
 msgid ""
 "If no specific category is selected, the featured posts block will display "
 "your latest post(s) from all categories."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:659
+#: functions/class-utils-settings-map.php:658
 msgid "Featured Post Count"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:665
+#: functions/class-utils-settings-map.php:664
 msgid ""
 "Max number of featured posts to display. <br /><i>Set to 1 and it will show "
 "it without any slider script</i><br /><i>Set it to 0 to disable</i>"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:670
+#: functions/class-utils-settings-map.php:669
+msgid "Display the full post content"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:672
+msgid ""
+"By default, your featured posts display the first words of their content "
+"( the \"excerpt\"). Check this box to display the full content."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:677
 msgid "Animate your featured posts with a slideshow"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:673
+#: functions/class-utils-settings-map.php:680
 msgid "Enables the automatic animation of the featured posts carousel."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:679
+#: functions/class-utils-settings-map.php:686
 msgid "Featured Slideshow Speed"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:685
+#: functions/class-utils-settings-map.php:692
 msgid "Speed of the automatic slideshow animation"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:690
+#: functions/class-utils-settings-map.php:697
 msgid "Display the featured posts also in the list of posts"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:693
+#: functions/class-utils-settings-map.php:700
 msgid ""
 "If this box is checked, your featured posts will be displayed both in the "
 "featured slider and in the post list below. Usually not recommended because "
 "a given post might appear two times on the same page."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:708
+#: functions/class-utils-settings-map.php:715
 msgid "Single - Author Bio"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:711
+#: functions/class-utils-settings-map.php:718
 msgid "Display post author description, if it exists"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:716
+#: functions/class-utils-settings-map.php:723
 msgid "Single - Related Posts"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:720
-#: functions/class-utils-settings-map.php:733
-#: functions/class-utils-settings-map.php:1251
+#: functions/class-utils-settings-map.php:727
+#: functions/class-utils-settings-map.php:740
+#: functions/class-utils-settings-map.php:1245
 msgid "Disable"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:721
+#: functions/class-utils-settings-map.php:728
 msgid "Related by categories"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:722
+#: functions/class-utils-settings-map.php:729
 msgid "Related by tags"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:724
+#: functions/class-utils-settings-map.php:731
 msgid "Display randomized related articles below the post"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:729
+#: functions/class-utils-settings-map.php:736
 msgid "Single - Post Navigation"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:734
+#: functions/class-utils-settings-map.php:741
 msgid "Left Sidebar"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:735
+#: functions/class-utils-settings-map.php:742
 msgid "Right Sidebar"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:736
+#: functions/class-utils-settings-map.php:743
 msgid "Below content"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:738
+#: functions/class-utils-settings-map.php:745
 msgid "Display links to the next and previous article"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:752
+#: functions/class-utils-settings-map.php:759
 msgid "Thumbnail Placeholder"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:755
+#: functions/class-utils-settings-map.php:762
 msgid "Display featured image placeholders if no featured image is set"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:760
+#: functions/class-utils-settings-map.php:767
 msgid "Thumbnail Comment Count"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:763
+#: functions/class-utils-settings-map.php:770
 msgid "Display comment count on thumbnails"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:784
+#: functions/class-utils-settings-map.php:791
 msgid "Sidebar Top Boxes"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:787
+#: functions/class-utils-settings-map.php:794
 msgid "Display boxes at the top of the sidebars"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:792
+#: functions/class-utils-settings-map.php:799
 msgid "Mobile Sidebar Content"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:796
+#: functions/class-utils-settings-map.php:803
 msgid "Display both sidebars"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:797
+#: functions/class-utils-settings-map.php:804
 msgid "Hide primary sidebar"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:798
+#: functions/class-utils-settings-map.php:805
 msgid "Hide secondary sidebar"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:799
+#: functions/class-utils-settings-map.php:806
 msgid "Hide both sidebars"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:801
+#: functions/class-utils-settings-map.php:808
 msgid ""
 "Control how the sidebar content is displayed on smartphone mobile devices "
 "(320px). Note : on smartphones the sidebars are displayed below the content."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:822
-msgid "Display a widget ads area in your footer"
+#: functions/class-utils-settings-map.php:831
+msgid "Display a full width widget area in your footer"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:840
+#: functions/class-utils-settings-map.php:834
+#, php-format
+msgid ""
+"This zone is located before the other footer widgets and takes 100% of the "
+"width. Very appropriate to display a Google Map or an advertisement banner."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:839
 msgid "Select columns to enable footer widgets"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:844
+#: functions/class-utils-settings-map.php:843
 msgid "Recommended number of columns : 3"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:848
+#: functions/class-utils-settings-map.php:847
 msgid "Upload your custom logo image"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:864
+#: functions/class-utils-settings-map.php:863
 msgid "Replace the footer copyright text"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:868
+#: functions/class-utils-settings-map.php:867
 msgid "Note : Html is allowed."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:873
+#: functions/class-utils-settings-map.php:872
 msgid "Footer credit text"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:908
+#: functions/class-utils-settings-map.php:907
 msgid "Global settings"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:909
+#: functions/class-utils-settings-map.php:908
 msgid "General settings for the Hueman theme : design, comments, mobile, ..."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:914 functions/init-core.php:769
+#: functions/class-utils-settings-map.php:913
 msgid "Header"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:915
+#: functions/class-utils-settings-map.php:914
 msgid "Header settings for the Hueman theme."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:920
+#: functions/class-utils-settings-map.php:919
 msgid "Content"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:921
+#: functions/class-utils-settings-map.php:920
 msgid "Content settings for the Hueman theme."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:926
+#: functions/class-utils-settings-map.php:925
 msgid "Sidebars"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:927
+#: functions/class-utils-settings-map.php:926
 msgid "Sidebars settings for the Hueman theme."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:932
+#: functions/class-utils-settings-map.php:931
 msgid "Footer"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:933
+#: functions/class-utils-settings-map.php:932
 msgid "Footer settings for the Hueman theme."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:938
+#: functions/class-utils-settings-map.php:937
 msgid "Advanced options"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:939
+#: functions/class-utils-settings-map.php:938
 msgid "Advanced settings for the Hueman theme."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1014
+#: functions/class-utils-settings-map.php:1013
 #, php-format
 msgid "Your theme supports %s menu. Select which menu you would like to use."
 msgid_plural ""
@@ -1056,142 +840,448 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: functions/class-utils-settings-map.php:1017
-#: functions/class-utils-settings-map.php:1025
+#: functions/class-utils-settings-map.php:1016
+#: functions/class-utils-settings-map.php:1024
 #, php-format
 msgid "You can create new menu and edit your menu's content %s."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1020
+#: functions/class-utils-settings-map.php:1019
 msgid "on the Menus screen in the Appearance section"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1021
-#: functions/class-utils-settings-map.php:1029
+#: functions/class-utils-settings-map.php:1020
+#: functions/class-utils-settings-map.php:1028
 msgid "create/edit menus"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1028
+#: functions/class-utils-settings-map.php:1027
 msgid "in the menu panel"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1034
+#: functions/class-utils-settings-map.php:1033
 msgid ""
 "If a menu location has no menu assigned to it, a default page menu will be "
 "used."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1043
+#: functions/class-utils-settings-map.php:1042
 msgid "Site Identity : Title, Tagline and Site Icon"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1048
+#: functions/class-utils-settings-map.php:1047
 msgid "General Design Options : Font, Colors, ..."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1053
+#: functions/class-utils-settings-map.php:1052
 msgid "Social links"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1063
+#: functions/class-utils-settings-map.php:1062
 msgid "Mobile devices"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1068
+#: functions/class-utils-settings-map.php:1067
 msgid "Performances and SEO"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1073
+#: functions/class-utils-settings-map.php:1072
 msgid "Hueman Admin Settings"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1084
+#: functions/class-utils-settings-map.php:1083
 msgid "Header Design : logo, background, ..."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1089
+#: functions/class-utils-settings-map.php:1088
 msgid "Header Advertisement Widget"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1099
+#: functions/class-utils-settings-map.php:1098
 msgid "Layout options for the main content"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1104
+#: functions/class-utils-settings-map.php:1103
 msgid "Sidebars : Design and Mobile Settings"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1109
+#: functions/class-utils-settings-map.php:1108
 msgid "Blog Design and Content"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1114
+#: functions/class-utils-settings-map.php:1113
 msgid "Single Posts Settings"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1119
+#: functions/class-utils-settings-map.php:1118
 msgid "Thumbnails Settings"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1128
+#: functions/class-utils-settings-map.php:1127
 msgid "Footer Design : Logo, layout, ..."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1133
-msgid "Footer Advertisement Widget"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1186
+#: functions/class-utils-settings-map.php:1180
 msgid "Choose one "
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1205
-#: functions/class-utils-settings-map.php:1255
+#: functions/class-utils-settings-map.php:1199
+#: functions/class-utils-settings-map.php:1249
 msgid "1 Column"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1209
+#: functions/class-utils-settings-map.php:1203
 msgid "2 Columns - Content Left"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1213
+#: functions/class-utils-settings-map.php:1207
 msgid "2 Columns - Content Right"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1217
+#: functions/class-utils-settings-map.php:1211
 msgid "3 Columns - Content Middle"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1221
+#: functions/class-utils-settings-map.php:1215
 msgid "3 Columns - Content Left"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1225
+#: functions/class-utils-settings-map.php:1219
 msgid "3 Columns - Content Right"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1233
+#: functions/class-utils-settings-map.php:1227
 msgid "Inherit Global Layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1259
+#: functions/class-utils-settings-map.php:1253
 msgid "2 Columns"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1263
+#: functions/class-utils-settings-map.php:1257
 msgid "3 Columns"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1267
+#: functions/class-utils-settings-map.php:1261
 msgid "4 Columns"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1292
+#: functions/class-utils-settings-map.php:1286
 msgid "No Sidebars"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1297
+#: functions/class-utils-settings-map.php:1291
 msgid "Choose Sidebar"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:142
+msgid "&mdash; Select &mdash;"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:179
+msgid "Assign menus to locations"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:189
+#, php-format
+msgid ""
+"You haven't created any menu yet. %s or check the %s to learn more about "
+"menus."
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:190
+msgid "Create a new menu now"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:191
+msgid "WordPress documentation"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:207
+msgid "SITE ICON"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:264
+msgid "Create And Order Widget Areas"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:267
+#: functions/customizer/class-admin-customize.php:294
+msgid ""
+"You must save changes for the new areas to appear below. <br /><i>Warning: "
+"Make sure each area has a unique ID.</i>"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:291
+msgid "Create And Manage Widget Areas"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:301
+msgid "Create and manage widget zones"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:323
+msgid "Dynamic Sidebars and Widgets"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:646
+#: functions/customizer/controls/class-hu-dynamic-control.php:90
+#: functions/customizer/controls/class-hu-widget-areas-control.php:100
+msgid "Edit"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:647
+msgid "Close"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:648
+msgid ""
+"Your favicon is currently handled with an old method and will not be "
+"properly displayed on all devices. You might consider to re-upload your "
+"favicon with the new control below."
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:649
+#: functions/customizer/controls/class-hu-widget-areas-control.php:77
+#: functions/customizer/controls/class-hu-widget-areas-control.php:126
+#: functions/customizer/controls/class-hu-widget-areas-control.php:170
+msgid "Location(s)"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:650
+#: functions/customizer/controls/class-hu-widget-areas-control.php:133
+#: functions/customizer/controls/class-hu-widget-areas-control.php:177
+msgid "Context(s)"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:651
+msgid "Not set"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:652
+msgid "Rss"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:653
+msgid "Select a social icon"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:654
+msgid "Follow us on"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:655
+msgid "Done !"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:656
+msgid "New Social Link created ! Scroll down to edit it."
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:657
+msgid "New Widget Zone created ! Scroll down to edit it."
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:658
+msgid "Inactive in current context/location"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:659
+msgid "Unavailable location. Some settings must be changed."
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:660
+msgid "A selected location is not available with the current settings."
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:661
+msgid "Learn more about this in the documentation"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:699
+msgid "If you like"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:700
+msgid "the Hueman theme"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:701
+msgid "we would love to receive a"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:703
+msgid "Review the Hueman theme"
+msgstr ""
+
+#: functions/customizer/class-admin-customize.php:705
+msgid "rating. Thanks :) !"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-background-control.php:64
+msgid "Color"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-background-control.php:71
+msgid "Repeat"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-background-control.php:78
+msgid "Background attachment"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-background-control.php:85
+msgid "Background position"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-background-control.php:92
+msgid "Background size"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-background-control.php:99
+msgid "Background Image"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-dynamic-control.php:60
+msgid "Add New"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-dynamic-control.php:65
+msgid "Cancel"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-dynamic-control.php:65
+msgid "Add it"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-dynamic-control.php:90
+#: functions/customizer/controls/class-hu-upload-control.php:68
+msgid "Remove"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-dynamic-control.php:103
+msgid "Are you sure you want to remove : <strong>{{ data.title }} ?</strong>"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-dynamic-control.php:104
+msgid "Yes"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-dynamic-control.php:104
+msgid "No"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-socials-control.php:28
+msgid "Select an icon"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-socials-control.php:34
+msgid "Social link url"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-socials-control.php:36
+#: functions/customizer/controls/class-hu-socials-control.php:74
+msgid "http://..."
+msgstr ""
+
+#: functions/customizer/controls/class-hu-socials-control.php:38
+msgid "Enter the full url of your social profile (must be valid url)."
+msgstr ""
+
+#: functions/customizer/controls/class-hu-socials-control.php:59
+msgid "Id"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-socials-control.php:65
+msgid "Social icon"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-socials-control.php:72
+msgid "Social link"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-socials-control.php:76
+msgid "Enter the full url of your social profile (must be a valid url)."
+msgstr ""
+
+#: functions/customizer/controls/class-hu-socials-control.php:79
+msgid "Title"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-socials-control.php:81
+msgid "Enter a title"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-socials-control.php:83
+msgid "This is the text displayed on mouse over."
+msgstr ""
+
+#: functions/customizer/controls/class-hu-socials-control.php:87
+msgid "Icon color"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-socials-control.php:91
+msgid "Set a unique color for your icon."
+msgstr ""
+
+#: functions/customizer/controls/class-hu-socials-control.php:98
+msgid "Link target"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-socials-control.php:102
+msgid "Check this option to open the link in a another tab of the browser."
+msgstr ""
+
+#: functions/customizer/controls/class-hu-upload-control.php:67
+msgid "Upload"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-widget-areas-control.php:70
+#: functions/customizer/controls/class-hu-widget-areas-control.php:120
+#: functions/customizer/controls/class-hu-widget-areas-control.php:163
+msgid "Name"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-widget-areas-control.php:72
+msgid "Give it a name"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-widget-areas-control.php:74
+#: functions/customizer/controls/class-hu-widget-areas-control.php:167
+msgid "Personalizing the name of the widget zone will help you identify it."
+msgstr ""
+
+#: functions/customizer/controls/class-hu-widget-areas-control.php:78
+#: functions/customizer/controls/class-hu-widget-areas-control.php:127
+#: functions/customizer/controls/class-hu-widget-areas-control.php:171
+msgid ""
+"Select the pre-defined location(s) in which you will embed this widget zone."
+msgstr ""
+
+#: functions/customizer/controls/class-hu-widget-areas-control.php:114
+#: functions/customizer/controls/class-hu-widget-areas-control.php:157
+msgid "id"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-widget-areas-control.php:116
+#: functions/customizer/controls/class-hu-widget-areas-control.php:159
+msgid "unique id"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-widget-areas-control.php:134
+msgid "Pick the contexts where this widget area will be displayed."
+msgstr ""
+
+#: functions/customizer/controls/class-hu-widget-areas-control.php:165
+msgid "Enter a name"
+msgstr ""
+
+#: functions/customizer/controls/class-hu-widget-areas-control.php:178
+msgid "Pick the context(s) where this widget area will be displayed."
+msgstr ""
+
+#: functions/customizer/sections/class-hu-widgets-section.php:36
+msgid "Press return or enter to open this section"
 msgstr ""
 
 #: functions/init-core.php:169
@@ -1217,48 +1307,56 @@ msgid ""
 "Full width widget zone. Located in the right sidebar in a 3 columns layout."
 msgstr ""
 
-#: functions/init-core.php:675
-msgid "Header Ads"
-msgstr ""
-
-#: functions/init-core.php:684
-msgid "Footer Ads"
-msgstr ""
-
-#: functions/init-core.php:686
-msgid "Footer ads area"
-msgstr ""
-
-#: functions/init-core.php:693 functions/init-core.php:771
+#: functions/init-core.php:675 functions/init-core.php:769
 msgid "Footer 1"
 msgstr ""
 
-#: functions/init-core.php:695
+#: functions/init-core.php:677
 msgid "Widgetized footer 1"
 msgstr ""
 
-#: functions/init-core.php:702 functions/init-core.php:772
+#: functions/init-core.php:684 functions/init-core.php:770
 msgid "Footer 2"
 msgstr ""
 
-#: functions/init-core.php:704
+#: functions/init-core.php:686
 msgid "Widgetized footer 2"
 msgstr ""
 
-#: functions/init-core.php:711 functions/init-core.php:773
+#: functions/init-core.php:693 functions/init-core.php:771
 msgid "Footer 3"
 msgstr ""
 
-#: functions/init-core.php:713
+#: functions/init-core.php:695
 msgid "Widgetized footer 3"
 msgstr ""
 
-#: functions/init-core.php:720 functions/init-core.php:774
+#: functions/init-core.php:702 functions/init-core.php:772
 msgid "Footer 4"
 msgstr ""
 
-#: functions/init-core.php:722
+#: functions/init-core.php:704
 msgid "Widgetized footer 4"
+msgstr ""
+
+#: functions/init-core.php:710 functions/init-core.php:773
+msgid "Header (next to logo / title)"
+msgstr ""
+
+#: functions/init-core.php:712
+msgid "The Header Widget Zone is located next to your logo or site title."
+msgstr ""
+
+#: functions/init-core.php:719 functions/init-core.php:774
+msgid "Footer Full Width"
+msgstr ""
+
+#: functions/init-core.php:721
+#, php-format
+msgid ""
+"The Footer Widget Zone is located before the other footer widgets and takes "
+"100% of the width. Very appropriate to display a Google Map or an "
+"advertisement banner."
 msgstr ""
 
 #: functions/init-core.php:750
@@ -1301,15 +1399,11 @@ msgstr ""
 msgid "Secondary Sidebar (on the right in a 3 columns layout)"
 msgstr ""
 
-#: functions/init-core.php:770
-msgid "Before footer"
-msgstr ""
-
-#: functions/init-core.php:1058
+#: functions/init-core.php:1097
 msgid "Help"
 msgstr ""
 
-#: functions/init-core.php:1061
+#: functions/init-core.php:1100
 msgid "Need help with the Hueman theme ? Click here!"
 msgstr ""
 
@@ -1325,21 +1419,21 @@ msgid ""
 "strong>."
 msgstr ""
 
-#: functions/init-front.php:713
+#: functions/init-front.php:115
 msgid "You have already assigned the following widget zone here : "
 msgstr ""
 
-#: functions/init-front.php:715
+#: functions/init-front.php:117
 msgid "in this post or page options."
 msgstr ""
 
-#: functions/init-front.php:716
+#: functions/init-front.php:118
 msgid ""
 "You can change or disable this setting by editing the options of the current "
 "post / page."
 msgstr ""
 
-#: functions/init-front.php:722
+#: functions/init-front.php:124
 msgid "Add widgets to the zone :"
 msgstr ""
 
@@ -1427,43 +1521,43 @@ msgstr ""
 msgid "Display a responsive video with a YouTube or Vimeo link."
 msgstr ""
 
-#: parts/page-title.php:23
+#: parts/page-title.php:22
 msgid "Search result"
 msgstr ""
 
-#: parts/page-title.php:25
+#: parts/page-title.php:24
 msgid "Search results"
 msgstr ""
 
-#: parts/page-title.php:31
+#: parts/page-title.php:30
 msgid "Error 404."
 msgstr ""
 
-#: parts/page-title.php:31
+#: parts/page-title.php:30
 msgid "Page not found!"
 msgstr ""
 
-#: parts/page-title.php:35
+#: parts/page-title.php:34
 msgid "Author:"
 msgstr ""
 
-#: parts/page-title.php:38
+#: parts/page-title.php:37
 msgid "Category:"
 msgstr ""
 
-#: parts/page-title.php:41
+#: parts/page-title.php:40
 msgid "Tagged:"
 msgstr ""
 
-#: parts/page-title.php:44
+#: parts/page-title.php:43
 msgid "Daily Archive:"
 msgstr ""
 
-#: parts/page-title.php:47
+#: parts/page-title.php:46
 msgid "Monthly Archive:"
 msgstr ""
 
-#: parts/page-title.php:50
+#: parts/page-title.php:49
 msgid "Yearly Archive:"
 msgstr ""
 
@@ -1504,7 +1598,7 @@ msgstr ""
 msgid "To search type and hit enter"
 msgstr ""
 
-#: sidebar-2.php:3 sidebar.php:8
+#: sidebar-2.php:3 sidebar.php:6
 msgid "Expand Sidebar"
 msgstr ""
 
@@ -1512,7 +1606,7 @@ msgstr ""
 msgid "More"
 msgstr ""
 
-#: sidebar.php:14
+#: sidebar.php:12
 msgid "Follow:"
 msgstr ""
 

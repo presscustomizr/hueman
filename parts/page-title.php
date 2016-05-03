@@ -1,8 +1,7 @@
 <div class="page-title pad group">
 
-	<?php if ( is_home() ) : ?>
+	<?php if ( is_home() && hu_is_checked('blog-heading-enabled') ) : ?>
 		<h2><?php echo hu_blog_title(); ?></h2>
-
 	<?php elseif ( is_single() ): ?>
 		<ul class="meta-single group">
 			<li class="category"><?php the_category(' <span>/</span> '); ?></li>
@@ -17,7 +16,7 @@
 	<?php elseif ( is_search() ): ?>
 		<h1>
 			<?php if ( have_posts() ): ?><i class="fa fa-search"></i><?php endif; ?>
-			<?php if ( !have_posts() ): ?><i class="fa fa-exclamation-circle"></i><?php endif; ?>
+			<?php if ( ! have_posts() ): ?><i class="fa fa-exclamation-circle"></i><?php endif; ?>
 			<?php $search_results=$wp_query->found_posts;
 				if ($search_results==1) {
 					echo $search_results.' '.__('Search result','hueman');
@@ -50,7 +49,9 @@
 		<h1><i class="fa fa-calendar"></i><?php _e('Yearly Archive:','hueman'); ?> <span><?php echo get_the_time('Y'); ?></span></h1>
 
 	<?php else: ?>
-		<h2><?php the_title(); ?></h2>
+    <?php if ( ! is_home() && ! hu_is_checked('blog-heading-enabled') ) : ?>
+		  <h2><?php the_title(); ?></h2>
+    <?php endif; ?>
 
 	<?php endif; ?>
 

@@ -650,7 +650,7 @@ add_action( 'after_setup_theme', 'hu_setup' );
 
 /*  Register sidebars
 /* ------------------------------------ */
-
+//@return the array of built-in widget zones
 function hu_get_default_widget_zones() {
   return array(
     'primary' => array(
@@ -666,24 +666,6 @@ function hu_get_default_widget_zones() {
       'name' => __( 'Secondary', 'hueman' ),
       'id' => 'secondary',
       'description' => __( "Full width widget zone. Located in the right sidebar in a 3 columns layout.", 'hueman'),
-      'before_widget' => '<div id="%1$s" class="widget %2$s">',
-      'after_widget' => '</div>',
-      'before_title' => '<h3>',
-      'after_title' => '</h3>'
-    ),
-    'header-ads' => array(
-      'name' => __( 'Header Ads', 'hueman' ),
-      'id' => 'header-ads',
-      'description' => "Header ads area",
-      'before_widget' => '<div id="%1$s" class="widget %2$s">',
-      'after_widget' => '</div>',
-      'before_title' => '<h3>',
-      'after_title' => '</h3>'
-    ),
-    'footer-ads' => array(
-      'name' => __( 'Footer Ads', 'hueman'),
-      'id' => 'footer-ads',
-      'description' => __( "Footer ads area", 'hueman'),
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
       'before_title' => '<h3>',
@@ -723,6 +705,24 @@ function hu_get_default_widget_zones() {
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
       'before_title' => '<h3>','after_title' => '</h3>'
+    ),
+    'header-ads' => array(
+      'name' => __( 'Header (next to logo / title)', 'hueman' ),
+      'id' => 'header-ads',
+      'description' => __( "The Header Widget Zone is located next to your logo or site title.", 'hueman'),
+      'before_widget' => '<div id="%1$s" class="widget %2$s">',
+      'after_widget' => '</div>',
+      'before_title' => '<h3>',
+      'after_title' => '</h3>'
+    ),
+    'footer-ads' => array(
+      'name' => __('Footer Full Width', 'hueman'),
+      'id' => 'footer-ads',
+      'description' => __( "The Footer Widget Zone is located before the other footer widgets and takes 100% of the width. Very appropriate to display a Google Map or an advertisement banner.", 'hueman'),
+      'before_widget' => '<div id="%1$s" class="widget %2$s">',
+      'after_widget' => '</div>',
+      'before_title' => '<h3>',
+      'after_title' => '</h3>'
     )
   );
 }
@@ -766,12 +766,12 @@ function hu_get_builtin_widget_zones_location() {
   return array(
     'primary'     => array( 's1' => __('Primary Sidebar (on the left in a 3 columns layout)', 'hueman') ),
     'secondary'   => array( 's2' => __('Secondary Sidebar (on the right in a 3 columns layout)', 'hueman') ),
-    'header-ads'  => array( 'header-ads' => __('Header', 'hueman') ),
-    'footer-ads'  => array( 'footer-ads' => __('Before footer', 'hueman') ),
     'footer-1'    => array( 'footer-1' => __('Footer 1', 'hueman') ),
     'footer-2'    => array( 'footer-2' => __('Footer 2', 'hueman') ),
     'footer-3'    => array( 'footer-3' => __('Footer 3', 'hueman') ),
-    'footer-4'    => array( 'footer-4' => __('Footer 4', 'hueman') )
+    'footer-4'    => array( 'footer-4' => __('Footer 4', 'hueman') ),
+    'header-ads'  => array( 'header-ads' => __('Header (next to logo / title)', 'hueman') ),
+    'footer-ads'  => array( 'footer-ads' => __('Footer Full Width', 'hueman') )
   );
 }
 
@@ -780,21 +780,23 @@ if ( ! function_exists( 'hu_maybe_register_builtin_widget_zones' ) ) :
 
   function hu_maybe_register_builtin_widget_zones() {
     $_map = hu_get_default_widget_zones();
-
     //when customizing, widgets_init is too early.
     //Therefore, we need to access the customized data from the post global.
     $customized       = array();
-    $_has_header_ads  = hu_is_checked('header-ads');
-    $_has_footer_ads  = hu_is_checked('footer-ads');
-    $_footer_widgets  = intval ( hu_get_option('footer-widgets') );
-
     if ( hu_is_customizing() && isset($_POST['customized']) ) {
       $_json = json_decode( wp_unslash( $_POST['customized'] ), true );
       if ( ! empty( $_json ) )
         $customized = $_json;
     }
 
+    //Default conditions.
+    //Will apply on front-end and admin
+    $_has_header_ads    = hu_is_checked('header-ads');
+    $_has_footer_ads    = hu_is_checked('footer-ads');
+    $_footer_widgets    = intval ( hu_get_option('footer-widgets') );
 
+
+    //When customizing, use the customized option
     if ( isset($customized[ HU_THEME_OPTIONS . '[header-ads]']) ) {
       $_has_header_ads = hu_booleanize_checkbox_val( $customized[HU_THEME_OPTIONS . '[header-ads]'] );
     }
@@ -808,9 +810,9 @@ if ( ! function_exists( 'hu_maybe_register_builtin_widget_zones' ) ) :
     }
 
     //right and left sidebar default widget zones
+    //They are always registered because on front end, they can depend on post_metas which are not accessible at this point ( 'widget_init' is too early )
     register_sidebar( $_map['primary'] );
     register_sidebar( $_map['secondary'] );
-
 
     if ( $_has_header_ads )
       register_sidebar( $_map['header-ads'] );
@@ -827,6 +829,43 @@ if ( ! function_exists( 'hu_maybe_register_builtin_widget_zones' ) ) :
   }
 endif;
 add_action( 'widgets_init', 'hu_maybe_register_builtin_widget_zones' );
+
+
+
+//helper
+//must be fired after 'wp' to have access to the $wp_query
+//"real" because left and right sidebars are always registered
+//@return array of locations
+function hu_get_available_widget_loc() {
+  $_available       = array();
+  $_footer_widgets  = intval ( hu_get_option('footer-widgets') );
+  $layout           = hu_layout_class();
+
+  if ( hu_is_checked('header-ads') )
+    $_available[] = 'header-ads';
+  if ( hu_is_checked('footer-ads') )
+    $_available[] = 'footer-ads';
+  if ( $_footer_widgets >= 1 )
+    $_available[] = 'footer-1';
+  if ( $_footer_widgets >= 2 )
+    $_available[] = 'footer-2';
+  if ( $_footer_widgets >= 3 )
+    $_available[] = 'footer-3';
+  if ( $_footer_widgets >= 4 )
+    $_available[] = 'footer-4';
+
+  //for left and right sidebar, it depends on the $layout class computed with options and post_metas
+  if ( $layout != 'col-1c' )
+    $_available[] = 's1';
+  if ( in_array( $layout, array('col-3cm', 'col-3cm', 'col-3cr' ) ) )
+    $_available[] = 's2';
+
+  return $_available;
+}
+
+
+
+
 
 
 
@@ -1015,7 +1054,7 @@ add_filter( 'widget_text', 'do_shortcode' );
  *  Loads and instanciates customizer related classes
 /* ------------------------------------------------------------------------- */
 if ( hu_is_customizing() ) {
-  load_template( get_template_directory() . '/functions/class-admin-customize.php' );
+  load_template( get_template_directory() . '/functions/customizer/class-admin-customize.php' );
   new HU_customize;
 }
 
@@ -1027,10 +1066,10 @@ if ( hu_is_customizing() ) {
 /* ------------------------------------------------------------------------- */
 if ( is_admin() && ! hu_is_customizing() ) {
   //Update notice
-  load_template( get_template_directory() . '/functions/class-admin-update-notification.php' );
+  load_template( get_template_directory() . '/functions/admin/class-admin-update-notification.php' );
   new HU_admin_update_notification;
   if ( hu_is_checked('about-page') ) {
-    load_template( get_template_directory() . '/functions/class-admin-page.php' );
+    load_template( get_template_directory() . '/functions/admin/class-admin-page.php' );
     new HU_admin_page;
   }
 }

@@ -89,7 +89,7 @@
 					if (image.complete || image.readyState == 'complete' || image.readyState == 4) {
 						clearInterval(checkforloaded);
 						$('#flexslider-<?php echo the_ID(); ?>').flexslider({
-							animation: "fade",
+							animation: '<?php echo wp_is_mobile() ? "slide" : "fade"; ?>',
 							slideshow: true,
 							directionNav: true,
 							controlNav: true,
@@ -97,7 +97,7 @@
 							slideshowSpeed: 7000,
 							animationSpeed: 600,
 							smoothHeight: true,
-							touch: false
+							touch: <?php echo apply_filters('hu_flexslider_touch_support' , true); ?>
 						});
 					}
 				}, 20);

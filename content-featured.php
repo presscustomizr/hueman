@@ -6,7 +6,7 @@
 				<?php if ( has_post_thumbnail() ): ?>
 					<?php the_post_thumbnail('thumb-large'); // only difference to content.php ?>
 				<?php elseif ( hu_is_checked('placeholder') ): ?>
-					<img src="<?php echo get_template_directory_uri(); ?>/assets/front/img/thumb-medium.png" alt="<?php the_title(); ?>" />
+					<?php hu_print_placeholder_thumb(); ?>
 				<?php endif; ?>
 				<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon"><i class="fa fa-play"></i></span>'; ?>
 				<?php if ( has_post_format('audio') && !is_sticky() ) echo'<span class="thumb-icon"><i class="fa fa-volume-up"></i></span>'; ?>
@@ -26,11 +26,15 @@
 			<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title(); ?>"><?php the_title(); ?></a>
 		</h2><!--/.post-title-->
 
-		<?php if (hu_get_option('excerpt-length') != '0'): ?>
-		<div class="entry excerpt entry-summary">
-			<?php the_excerpt(); ?>
-		</div><!--/.entry-->
-		<?php endif; ?>
+		<?php if ( ! hu_is_checked('featured-posts-full-content') ) : ?>
+  		<div class="entry excerpt entry-summary">
+  			<?php if ( hu_get_option('excerpt-length') != '0' ) { the_excerpt(); } ?>
+  		</div><!--/.entry-->
+		<?php else : ?>
+      <div class="entry excerpt">
+        <?php the_content() ?>
+      </div><!--/.entry-->
+    <?php endif; ?>
 
 	</div><!--/.post-inner-->
 </article><!--/.post-->

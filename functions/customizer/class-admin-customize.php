@@ -17,6 +17,10 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
     function __construct () {
       self::$instance =& $this;
+
+      //v3.1.2 option update : registered sidebar names have changed
+      $this -> hu_update_widget_database_option();
+
   		//add control class
   		add_action ( 'customize_register'				                , array( $this , 'hu_augment_customizer' ),10,1);
 
@@ -45,17 +49,41 @@ if ( ! class_exists( 'HU_customize' ) ) :
       add_action( 'customize_controls_print_footer_scripts'  , array( $this, 'hu_print_js_templates' ) );
     }
 
+    //updates the names of the built-in widget zones for users who installed the theme before v3.1.2
+    function hu_update_widget_database_option() {
+      if ( ! hu_user_started_before_version('3.1.2') )
+        return;
+
+      $_options             = get_option('hu_theme_options');
+      $_update_widget_areas = array();
+
+      if ( ! isset($_options['sidebar-areas']) || ! is_array($_options['sidebar-areas']) )
+        return;
+
+      $_zones   = hu_get_default_widget_zones();
+      foreach ( $_options['sidebar-areas'] as $key => $data ) {
+        if ( ! array_key_exists($data['id'], $_zones) )
+          continue;
+        $_id = $data['id'];
+        $_options['sidebar-areas'][$key]['title'] = $_zones[$_id]['name'];
+      }
+
+      update_option('hu_theme_options', $_options );
+    }
 
     //hook : customize_preview_init
     function hu_add_preview_footer_action() {
       add_action( 'wp_footer', array( $this, 'hu_add_customize_preview_data' ), 20 );
     }
 
+
     //hook : wp_footer in the preview frame
     function hu_add_customize_preview_data() {
       global $wp_query, $wp_customize;
 
-      $_export = array();
+      $_contexts = array();
+      $_available_locations = hu_get_available_widget_loc();
+
       //export only the conditional tags
       foreach( (array)$wp_query as $prop => $val ) {
         if (  false === strpos($prop, 'is_') )
@@ -63,18 +91,19 @@ if ( ! class_exists( 'HU_customize' ) ) :
         if ( 'is_home' == $prop )
           $val = hu_is_home();
 
-        $_export[$prop] = $val;
+        $_contexts[$prop] = $val;
       }
-
 
       ?>
         <script type="text/javascript" id="hu-customizer-data">
           (function ( _export ){
-            _export.contx = <?php echo wp_json_encode( $_export ) ?>;
+            _export.contx = <?php echo wp_json_encode( $_contexts ) ?>;
+            _export.availableWidgetLocations = <?php echo wp_json_encode( $_available_locations ) ?>;
           })( _wpCustomizeSettings );
         </script>
       <?php
     }
+
 
 
 
@@ -186,15 +215,24 @@ if ( ! class_exists( 'HU_customize' ) ) :
 		* @since Hueman 3.0
 		*/
 		function hu_augment_customizer( $manager ) {
-      //loads custom settings and controls classes
-      //- TC_Customize_Setting extends WP_Customize_Setting => to override the value() method
-      //- TC_controls extends WP_Customize_Control => overrides the render() method
-      //- TC_Customize_Cropped_Image_Control extends WP_Customize_Cropped_Image_Control => introduced in v3.4.19, uses a js template to render the control
-      //- TC_Customize_Upload_Control extends WP_Customize_Control => old upload control used until v3.4.18, still used if current version of WP is < 4.3
-      //- TC_Customize_Multipicker_Control extends TC_controls => used for multiple cat picker for example
-      //- TC_Customize_Multipicker_Categories_Control extends TC_Customize_Multipicker_Control => extends the multipicker
-      //- TC_Walker_CategoryDropdown_Multipicker extends Walker_CategoryDropdown => needed for the multipicker to allow more than one "selected" attribute
-			locate_template( 'functions/class-hu-controls-settings.php' , $load = true, $require_once = true );
+      $_classes = array(
+        'controls/class-hu-base-advanced-control.php',
+        'controls/class-hu-base-control.php',
+        'controls/class-hu-cropped-image-control.php',
+        'controls/class-hu-dynamic-control.php',
+        'controls/class-hu-layout-control.php',
+        'controls/class-hu-multipicker-control.php',
+        'controls/class-hu-socials-control.php',
+        'controls/class-hu-upload-control.php',
+        'controls/class-hu-widget-areas-control.php',
+
+        'sections/class-hu-widgets-section.php',
+
+        'settings/class-hu-settings.php'
+      );
+      foreach ($_classes as $_path) {
+        locate_template( 'functions/customizer/' . $_path , $load = true, $require_once = true );
+      }
 
       //Registered types are eligible to be rendered via JS and created dynamically.
       if ( class_exists('HU_Customize_Cropped_Image_Control') )
@@ -600,15 +638,27 @@ if ( ! class_exists( 'HU_customize' ) ) :
         apply_filters('hu_js_customizer_control_params' ,
 	        array(
 	        	'AjaxUrl'       => admin_url( 'admin-ajax.php' ),
+            'docURL'        => esc_url('docs.presscustomizr.com/'),
 	        	'HUNonce' 			=> wp_create_nonce( 'hu-customizer-nonce' ),
             'themeName'     => THEMENAME,
             'defaultSocialColor' => 'rgba(255,255,255,0.7)',
             'translatedStrings'    => array(
+              'edit' => __('Edit', 'hueman'),
+              'close' => __('Close', 'hueman'),
               'faviconNote' => __( "Your favicon is currently handled with an old method and will not be properly displayed on all devices. You might consider to re-upload your favicon with the new control below." , 'hueman'),
               'locations' => __('Location(s)', 'hueman'),
               'contexts' => __('Context(s)', 'hueman'),
               'notset' => __('Not set', 'hueman'),
-              'rss' => __('Rss', 'hueman')
+              'rss' => __('Rss', 'hueman'),
+              'selectSocialIcon' => __('Select a social icon', 'hueman'),
+              'followUs' => __('Follow us on', 'hueman'),
+              'successMessage' => __('Done !', 'hueman'),
+              'socialLinkAdded' => __('New Social Link created ! Scroll down to edit it.', 'hueman'),
+              'widgetZoneAdded' => __('New Widget Zone created ! Scroll down to edit it.', 'hueman'),
+              'inactiveWidgetZone' => __('Inactive in current context/location', 'hueman'),
+              'unavailableLocation' => __('Unavailable location. Some settings must be changed.', 'hueman'),
+              'locationWarning' => __('A selected location is not available with the current settings.', 'hueman'),
+              'readDocumentation' => __('Learn more about this in the documentation', 'hueman')
             )
 	        )
 	      )

@@ -2,11 +2,7 @@
 
 <section class="content">
 
-	<?php
-    if ( hu_is_checked('blog-heading-enabled') && is_home() ) {
-      get_template_part('parts/page-title');
-    }
-  ?>
+	<?php get_template_part('parts/page-title'); ?>
 
 	<div class="pad group">
 

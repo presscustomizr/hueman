@@ -17,7 +17,7 @@
 					<?php if ( has_post_thumbnail() ): ?>
 						<?php the_post_thumbnail('thumb-medium'); ?>
 					<?php elseif ( hu_is_checked('placeholder') ): ?>
-						<img src="<?php echo get_template_directory_uri(); ?>/assets/front/img/thumb-medium.png" alt="<?php the_title(); ?>" />
+						<?php hu_print_placeholder_thumb(); ?>
 					<?php endif; ?>
 					<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fa fa-play"></i></span>'; ?>
 					<?php if ( has_post_format('audio') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fa fa-volume-up"></i></span>'; ?>

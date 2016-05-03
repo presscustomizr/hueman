@@ -1,4 +1,4 @@
-# Hueman v3.1.1
+# Hueman v3.1.2
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > Hueman is a mobile friendly WordPress theme for blogs, magazines and business websites. It's been designed to beautifully display pictures and text content, and engineered to be easy to use and fast. The Hueman theme helps you attract and retain more visitors, that's why it's already used by 70K+ active websites in the world and has received hundreds of five stars ratings.
@@ -82,6 +82,21 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 ## Changelog
+= 3.1.2 May 3rd 2016 =
+* fixed : Language Label in Translation Files
+* fixed : the author name links to the post itself
+* fixed : Featured post slider controls (arrows) overflow content container when blog heading is disabled
+* fixed : Header image alt attribute is empty.
+* fixed : Change Default Widget Names and CSS id properties. Could be in collision with some plugins
+* added : Featured posts : new option to display the full content (instead of the excerpt) of the featured posts. Modified template : content-featured.php.
+* added : Featured posts : swipe gesture supported on mobile devices like tablets and smartphones
+* added : Customizer : Pre setup step when adding a new widget zone or social icons.
+* improved : Customizer user interface have been improved for the social links and the widget zones. It's now easier to drag, edit and remove items.
+* improved : Introduced a pluggable function ( hu_print_placeholder_thumb() )to print the placeholder thumbnail. Modified templates : content-featured.php, content.php, parts/related-posts.php
+* updated : jQuery FlexSider to v2.6.0 (latest). Support swipe touch navigation
+* changed : Header widget and full width footer widget are now enabled by default
+* changed : The footer-ads option has been moved in the Footer Design section. The title and description of this setting have been clarified.
+
 = 3.1.1 April 18th 2016 =
 * fixed : the option "featured-posts-include" depending on "featured-posts-enabled" was still altering the query even if "featured-posts-enabled" was unchecked in the customizer
 * fixed : Allow child themes to load translation files : By changing the call of the path on load_theme_textdomain from get_template_directory to get_stylesheet_directory we allow the translation of the theme through child themes. Without this, a child theme won’t load their own language files even by hooking a function on after_setup_theme action callng load_theme_textdomain and/or load_child_theme_textdomain.

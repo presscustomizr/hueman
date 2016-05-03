@@ -97,6 +97,39 @@ if ( ! function_exists('hu_print_widgets_in_location') ) {
 }//endif
 
 
+//the job of this function is to print a dynamic widget zone if exists
+//if exists but empty, and if the user is in a customization context, let's print a placeholder
+function hu_print_dynamic_sidebars( $_id, $location ) {
+  global $wp_registered_sidebars;
+  $sidebars_widgets = wp_get_sidebars_widgets();
+
+  if ( ! isset($wp_registered_sidebars[$_id]) ) {
+    return;
+  }
+
+
+  if ( hu_is_customize_preview_frame() ) {
+    //is there a meta setting overriding the customizer ?
+    if ( false != hu_get_singular_meta_widget_zone($location) ) {
+      printf('<div class="widget"><div class="hu-placeholder-widget"><h3>%1$s<br/><span class="zone-name">"%2$s"</span> %3$s</h3><br/><p>%4$s</p></div></div>',
+        __('You have already assigned the following widget zone here : ', 'hueman'),
+        $wp_registered_sidebars[$_id]['name'],
+        __('in this post or page options.', 'hueman'),
+        __('You can change or disable this setting by editing the options of the current post / page.', 'hueman')
+      );
+    }
+
+    if ( empty( $sidebars_widgets[ $_id ] ) || ! is_array( $sidebars_widgets[ $_id ] ) ) {
+      printf('<div class="widget"><div class="hu-placeholder-widget"><h3>%1$s<br/><span class="zone-name">"%2$s"</span></h3></div></div>',
+        __('Add widgets to the zone :', 'hueman'),
+        $wp_registered_sidebars[$_id]['name']
+      );
+    }
+  }//end if customizing
+
+  //print it
+  dynamic_sidebar($_id);
+}
 
 
 /*  Social links
@@ -287,6 +320,20 @@ if ( ! function_exists( 'hu_get_featured_post_ids' ) ) {
 
 }
 
+
+/*  Echoes the <img> tag of the placeholder thumbnail
+*   the src property can be filtered
+/* ------------------------------------ */
+if ( ! function_exists( 'hu_print_placeholder_thumb' ) ) {
+
+  function hu_print_placeholder_thumb() {
+    printf( '<img src="%1$s" alt="%2$s" />',
+      apply_filters( 'hu_placeholder_thumb_src' , get_template_directory_uri() . '/assets/front/img/thumb-medium.png' ),
+      get_the_title()
+    );
+  }
+
+}
 
 
 /* ------------------------------------------------------------------------- *
@@ -692,43 +739,6 @@ function hu_get_singular_meta_widget_zone( $location ) {
   return ! $meta_zone ? false : $meta_zone;
 }
 
-
-
-
-//the job of this function is to print a dynamic widget zone if exists
-//if exists but empty, and if the user is in a customization context, let's print a placeholder
-function hu_print_dynamic_sidebars( $_id, $location ) {
-  global $wp_registered_sidebars;
-  $sidebars_widgets = wp_get_sidebars_widgets();
-
-  if ( ! isset($wp_registered_sidebars[$_id]) ) {
-    return;
-  }
-
-
-  if ( hu_is_customize_preview_frame() ) {
-    //is there a meta setting overriding the customizer ?
-    if ( false != hu_get_singular_meta_widget_zone($location) ) {
-      printf('<div class="widget"><div class="hu-placeholder-widget"><h3>%1$s<br/><span class="zone-name">"%2$s"</span> %3$s</h3><br/><p>%4$s</p></div></div>',
-        __('You have already assigned the following widget zone here : ', 'hueman'),
-        $wp_registered_sidebars[$_id]['name'],
-        __('in this post or page options.', 'hueman'),
-        __('You can change or disable this setting by editing the options of the current post / page.', 'hueman')
-      );
-    }
-
-    if ( empty( $sidebars_widgets[ $_id ] ) || ! is_array( $sidebars_widgets[ $_id ] ) ) {
-      printf('<div class="widget"><div class="hu-placeholder-widget"><h3>%1$s<br/><span class="zone-name">"%2$s"</span></h3></div></div>',
-        __('Add widgets to the zone :', 'hueman'),
-        $wp_registered_sidebars[$_id]['name']
-      );
-    }
-  }//end if customizing
-
-  //print it
-  dynamic_sidebar($_id);
-
-}
 
 add_filter('hu_eligible_widget_zones', 'hu_get_widget_zones_in_location', 3, 10);
 add_filter('hu_eligible_widget_zones', 'hu_get_widget_zones_in_context', 3, 20);

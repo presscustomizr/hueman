@@ -358,6 +358,25 @@ li[id*="customize-control-"] {
   margin-left: 0;
 }
 
+/* Placeholders Styling for inputs */
+input::-webkit-input-placeholder {
+   color:#9A9A9A;
+   font-style: italic;
+}
+input:-moz-placeholder { /* Firefox 18- */
+   color: #9A9A9A;
+   font-style: italic;
+}
+input::-moz-placeholder {  /* Firefox 19+ */
+   color: #9A9A9A;
+   font-style: italic;
+}
+input:-ms-input-placeholder {
+   color: #9A9A9A;
+   font-style: italic;
+}
+
+
 .hu-customizr-title {
 	/* color: #555; */
 	text-transform: uppercase;
@@ -390,7 +409,7 @@ i.hu-notice {
 }
 span.hu-notice {
 	color: #313131;
-	font-size:13px;
+	font-size:12px;
 	font-style: italic;
 	clear: both;
 	display: block;
@@ -791,13 +810,14 @@ body .select2-container {
 /*******************************************************************
 * DYNAMIC CONTROLS : sidebars, socials, ...
 ********************************************************************/
-.hu-add-new {
+.hu-open-pre-add-new {
   display: block;
   float: left;
   margin: 2% 2% 0%;
   width: 99%;
   padding: 2%;
   background: #3b8dbd;
+  opacity: 1;
   color: #fff;
   font-size: 16px;
   cursor: pointer;
@@ -810,7 +830,18 @@ body .select2-container {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -ms-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
  }
+
+.hu-open-pre-add-new.active {
+  background: #646464;
+  opacity: 0.5;
+  border-radius: 3px 3px 0 0;
+}
 
 .hu-inner-view {
   padding: 0%;
@@ -844,13 +875,16 @@ body .select2-container {
   opacity: 0.6;
 }
 
+.hu-sortable-handle {
+  cursor: move;
+}
+
 .hu-inner-view .hu-view-header {
   position: relative;
   background: #dfdfdf;
   color: white;
   float: left;
   width: 98%;
-  cursor: move;
     -webkit-transition: background .1s ease-in-out;
   -moz-transition: background .1s ease-in-out;
   -ms-transition: background .1s ease-in-out;
@@ -861,7 +895,7 @@ body .select2-container {
 
 /* sidebar specifics */
 .customize-control-hu_sidebars .hu-inner-view .hu-custom-model {
-  background: #00a0d2;
+  background: #3b8dbd;
 }
 .customize-control-hu_sidebars .hu-inner-view .hu-custom-model:hover {
   background: #aaa;
@@ -890,6 +924,12 @@ body .select2-container {
   font-size: 17px;
   color: #000;
   padding: 7px;
+  width: 67%;
+}
+
+.hu-inactive-alert {
+  font-size: 12px;
+  font-style: italic;
 }
 /* sidebar specifics */
 .customize-control-hu_sidebars .hu-view-title {
@@ -911,13 +951,19 @@ body .select2-container {
 }
 .hu-view-buttons a {
   font-size: 17px;
-  padding: 7px;
+  padding: 7px 5px;
   color: #777;
   -webkit-transition: color .1s ease-in-out;
   -moz-transition: color .1s ease-in-out;
   -ms-transition: color .1s ease-in-out;
   -o-transition: color .1s ease-in-out;
   transition: color .1s ease-in-out;
+}
+.hu-view-buttons a:active, .hu-view-buttons a:focus {
+  outline: none;
+  outline: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 /* sidebar specifics */
 .customize-control-hu_sidebars .hu-view-buttons a {
@@ -938,7 +984,7 @@ body .select2-container {
 
 /* sidebar specifics */
 .customize-control-hu_sidebars .hu-edit-view:hover, .customize-control-hu_sidebars .hu-view-buttons .hu-edit-view.active {
-  color: #555;
+  color: #000000;
 }
 .customize-control-hu_sidebars .hu-builtin-model .hu-edit-view:hover, .customize-control-hu_sidebars .hu-builtin-model .hu-edit-view.active {
   color: #00a0d2;
@@ -977,7 +1023,7 @@ body .select2-container {
   float: left;
   width: 40%;
   padding: 1px 0;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .hu-view-title .fa {
@@ -1005,6 +1051,84 @@ body .select2-container {
   padding: 5px;
   margin: 0px;
 }
+
+/* pre add dialog */
+.hu-pre-add-wrapper {
+  position: relative;
+  float: left;
+  width: 100%;
+}
+
+.hu-adding-new .hu-views-wrapper {
+  opacity: 0.6;
+}
+
+.hu-pre-add-view-content {
+  display: none;
+  padding: 3%;
+  border: 1px solid #00a0d2;
+  border-top: none;
+  margin: 0 0 0 2%;
+  float: left;
+  width: 92%;
+  background: #eee;
+  -webkit-border-radius: 0px 0px 3px 3px;
+  -moz-border-radius: 0px 0px 3px 3px;
+  border-radius: 0px 0px 3px 3px;
+  position: relative;
+  opacity: 1;
+  -webkit-transition: opacity .2s linear;
+  -moz-transition: opacity .2s linear;
+  -ms-transition: opacity .2s linear;
+  -o-transition: opacity .2s linear;
+  transition: opacity .2s linear;
+}
+
+.hu-model-added .hu-pre-add-view-content {
+  opacity: 0.2;
+}
+
+.hu-pre-add-wrapper .hu-add-new {
+  background: #3b8dbd;
+  color: #fff;
+  -webkit-transition: background .5s linear;
+  -moz-transition: background .5s linear;
+  -ms-transition: background .5s linear;
+  -o-transition: background .5s linear;
+  transition: background .5s linear;
+  float: right;
+  border: none;
+}
+
+.hu-add-success {
+  width: 100%;
+  margin: 0 0 0 2%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 25px;
+  text-align: center;
+  opacity: 0;
+  -webkit-transition: opacity .1s linear;
+  -moz-transition: opacity .1s linear;
+  -ms-transition: opacity .1s linear;
+  -o-transition: opacity .1s linear;
+  transition: opacity .1s linear;
+}
+.hu-model-added .hu-add-success {
+  opacity: 1;
+}
+
+.hu-add-success p {
+  vertical-align: middle;
+  display: inline-block;
+  line-height: 35px;
+  margin: 0;
+  font-size: 25px;
+  color: #82b965;
+  padding: 0 3%;
+}
+
 
 /* WIDGETS ZONE SPECIFICS */
 .hu-widget-zone-section {
@@ -1037,8 +1161,21 @@ body .select2-container {
 #customize-theme-controls .hu-widget-zone-section.open .accordion-section-title:after {
   content: "\f077";
 }
-
-
+.hu-unavailable-location {
+  opacity: 0.7;
+}
+.hu-location-alert {
+  float: left;
+  width: 100%;
+  padding: 1% 0;
+  margin: 1% 0;
+  text-align: center;
+  border: 1px solid orange;
+  background: #FEE5B6;
+  color: #000;
+  font-size: 11px;
+  font-style: italic;
+}
 /* LAYOUT SELECTION SPECIFICS */
 .hu-layout-img {
   height: 26px;
