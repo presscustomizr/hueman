@@ -147,8 +147,8 @@ if ( ! function_exists( 'hu_print_social_links' ) ) {
       //So, if the id is not present, let's build it base on the key, like when added to the collection in the customizer
 
       // Put them together
-      printf( '<li><a rel="nofollow" class="social-tooltip" id="%1$s" title="%2$s" href="%3$s" %4$s style="color:%5$s"><i class="fa %6$s"></i></a></li>',
-        ! isset( $item['id'] ) ? 'hu_socials_'. $key : $item['id'],
+      printf( '<li><a rel="nofollow" class="social-tooltip" %1$s title="%2$s" href="%3$s" %4$s style="color:%5$s"><i class="fa %6$s"></i></a></li>',
+        ! hu_is_customizing() ? '' : sprintf( 'data-model-id="%1$s"', ! isset( $item['id'] ) ? 'hu_socials_'. $key : $item['id'] ),
         isset($item['title']) ? esc_attr( $item['title'] ) : '',
         ( isset($item['social-link']) && ! empty( $item['social-link'] ) ) ? esc_url( $item['social-link'] ) : 'javascript:void(0)',
         ( isset($item['social-target']) && false != $item['social-target'] ) ? 'target="_blank"' : '',

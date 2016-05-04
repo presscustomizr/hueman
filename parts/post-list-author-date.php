@@ -8,9 +8,9 @@
 </p>
 
 <?php if ( hu_is_checked('structured-data') ) : ?>
-  <p class="post-byline" style="display:none"><?php _e('by','hueman'); ?>
+  <p class="post-byline" style="display:none">&nbsp;<?php _e('by','hueman'); ?>
     <span class="vcard author">
-      <span class="fn"><a href="<?php echo get_the_author_link(); ?>" rel="author"><?php the_author() ?></a></span>
+      <span class="fn"><?php the_author_posts_link(); ?></span>
     </span> &middot; Published <span class="published"><?php the_date('F j, Y'); ?></span>
     <?php if( get_the_modified_date() != get_the_date() ) : ?> &middot; Last modified <span class="updated"><?php the_modified_date('F j, Y'); ?></span><?php endif; ?>
   </p>

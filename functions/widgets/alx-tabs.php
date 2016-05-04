@@ -76,7 +76,12 @@ class AlxTabs extends WP_Widget {
 		);
 		$output = sprintf('<ul class="alx-tabs-nav group tab-count-%s">', $count);
 		foreach ( $tabs as $tab ) {
-			$output .= sprintf('<li class="alx-tab tab-%1$s"><a href="#tab-%2$s" title="%4$s"><i class="%3$s"></i><span>%4$s</span></a></li>',$tab, $tab, $icons[$tab], $titles[$tab]);
+			$output .= sprintf('<li class="alx-tab tab-%1$s"><a href="#tab-%2$s" title="%4$s"><i class="%3$s"></i><span>%4$s</span></a></li>',
+        $tab,
+        $tab . '-' . $this -> number,
+        $icons[$tab],
+        $titles[$tab]
+      );
 		}
 		$output .= '</ul>';
 		return $output;
@@ -124,7 +129,7 @@ class AlxTabs extends WP_Widget {
 			<?php $recent=new WP_Query(); ?>
 			<?php $recent->query('showposts='.$instance["recent_num"].'&cat='.$instance["recent_cat_id"].'&ignore_sticky_posts=1');?>
 
-			<ul id="tab-recent" class="alx-tab group <?php if($instance['recent_thumbs']) { echo 'thumbs-enabled'; } ?>">
+			<ul id="tab-recent-<?php echo $this -> number ?>" class="alx-tab group <?php if($instance['recent_thumbs']) { echo 'thumbs-enabled'; } ?>">
 				<?php while ($recent->have_posts()): $recent->the_post(); ?>
 				<li>
 
@@ -174,7 +179,7 @@ class AlxTabs extends WP_Widget {
 					),
 				) );
 			?>
-			<ul id="tab-popular" class="alx-tab group <?php if($instance['popular_thumbs']) { echo 'thumbs-enabled'; } ?>">
+			<ul id="tab-popular-<?php echo $this -> number ?>" class="alx-tab group <?php if($instance['popular_thumbs']) { echo 'thumbs-enabled'; } ?>">
 
 				<?php while ( $popular->have_posts() ): $popular->the_post(); ?>
 				<li>
@@ -212,7 +217,7 @@ class AlxTabs extends WP_Widget {
 
 			<?php $comments = get_comments(array('number'=>$instance["comments_num"],'status'=>'approve','post_status'=>'publish')); ?>
 
-			<ul id="tab-comments" class="alx-tab group <?php if($instance['comments_avatars']) { echo 'avatars-enabled'; } ?>">
+			<ul id="tab-comments-<?php echo $this -> number ?>" class="alx-tab group <?php if($instance['comments_avatars']) { echo 'avatars-enabled'; } ?>">
 				<?php foreach ($comments as $comment): ?>
 				<li>
 
@@ -239,7 +244,7 @@ class AlxTabs extends WP_Widget {
 
 		<?php if($instance['tags_enable']) { // Tags enabled? ?>
 
-			<ul id="tab-tags" class="alx-tab group">
+			<ul id="tab-tags-<?php echo $this -> number ?>" class="alx-tab group">
 				<li>
 					<?php wp_tag_cloud(); ?>
 				</li>

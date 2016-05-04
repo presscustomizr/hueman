@@ -133,10 +133,10 @@
   $.extend( _subsetting_cbs, {
     'social-links' : {
         'title' : function( obj ) {
-          $( '#'+ obj.model_id, '.social-links' ).attr('title', obj.value );
+          $( '[data-model-id="'+ obj.model_id +'"]', '.social-links' ).attr('title', obj.value );
         },
         'social-color' : function( obj ) {
-          $( '#'+ obj.model_id, '.social-links' ).css('color', obj.value );
+          $( '[data-model-id="'+ obj.model_id +'"]', '.social-links' ).css('color', obj.value );
         },
         'social-icon' : function( obj ) {
           var $_el = $( '#'+ obj.model_id, '.social-links' ).find('i'),
@@ -149,16 +149,16 @@
               _prev = _c;
           });
 
-          $( '#'+ obj.model_id, '.social-links' ).find('i').removeClass(_prev).addClass( obj.value );
+          $( '[data-model-id="'+ obj.model_id +'"]', '.social-links' ).find('i').removeClass(_prev).addClass( obj.value );
         },
         'social-link' : function( obj ) {
-          $( '#'+ obj.model_id, '.social-links' ).attr('href', ! _isValidURL(obj.value) ? 'javascript:void(0);' : obj.value );
+          $( '[data-model-id="'+ obj.model_id +'"]', '.social-links' ).attr('href', ! _isValidURL(obj.value) ? 'javascript:void(0);' : obj.value );
         },
         'social-target' : function( obj ) {
           if ( 0 !== ( obj.value * 1 ) )
-            $( '#'+ obj.model_id, '.social-links' ).attr('target', "_blank");
+            $( '[data-model-id="'+ obj.model_id +'"]', '.social-links' ).attr('target', "_blank");
           else
-            $( '#'+ obj.model_id, '.social-links' ).removeAttr('target');
+            $( '[data-model-id="'+ obj.model_id +'"]', '.social-links' ).removeAttr('target');
 
         },
     }
