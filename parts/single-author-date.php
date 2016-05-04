@@ -9,7 +9,7 @@
 
 <p class="post-byline"><?php _e('by','hueman'); ?>
    <span class="vcard author">
-     <span class="fn"><a href="<?php echo get_the_author_link(); ?>" rel="author"><?php the_author() ?></a></span>
+     <span class="fn"><?php the_author_posts_link(); ?></span>
    </span> &middot;
     <?php if ( hu_is_checked('structured-data') ) : ?>
           <?php if( get_the_modified_date() != get_the_date() || get_the_modified_time() != get_the_time() ) : ?>
