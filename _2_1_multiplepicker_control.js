@@ -1,4 +1,4 @@
-var TCMultiplePickerMethods = TCMultiplePickerMethods || {};
+var CZRMultiplePickerMethods = CZRMultiplePickerMethods || {};
 
 (function (api, $, _) {
   /* Multiple Picker */
@@ -7,7 +7,7 @@ var TCMultiplePickerMethods = TCMultiplePickerMethods || {};
    * @augments wp.customize.Control
    * @augments wp.customize.Class
    */
-  $.extend( TCMultiplePickerMethods , {
+  $.extend( CZRMultiplePickerMethods , {
     ready: function() {
       var control  = this,
           _select  = this.container.find('select');

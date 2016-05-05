@@ -1,13 +1,13 @@
-//extends api.HUDynamicControl
+//extends api.CZRDynamicControl
 
-var HUSocialMethods = HUSocialMethods || {};
+var CZRSocialMethods = CZRSocialMethods || {};
 
 (function (api, $, _) {
-  $.extend( HUSocialMethods, {
+  $.extend( CZRSocialMethods, {
     initialize: function( id, options ) {
 
       //run the parent initialize
-      api.HUDynamicControl.prototype.initialize.call( this, id, options );
+      api.CZRDynamicControl.prototype.initialize.call( this, id, options );
 
       var control = this;
 
@@ -162,7 +162,7 @@ var HUSocialMethods = HUSocialMethods || {};
 
 
       //add the new property to the the parent
-      //api.HUDynamicControl.prototype.initialize.apply( this, arguments );
+      //api.CZRDynamicControl.prototype.initialize.apply( this, arguments );
 
       //adds specific actions for this control
       this.addActions(
@@ -247,7 +247,7 @@ var HUSocialMethods = HUSocialMethods || {};
       _new_model['social-link'] = '';
       _new_model['social-color'] = _new_color;
 
-      control.hu_Model(obj.model.id).set(_new_model);
+      control.czr_Model(obj.model.id).set(_new_model);
     },
 
 
@@ -255,9 +255,9 @@ var HUSocialMethods = HUSocialMethods || {};
     updatePreModelTitle : function(obj) {
       var control = this,
           _new_title  = control._capitalize( obj.model['social-icon'].replace('fa-', '') ),
-          _new_model = control.hu_preModel('model').get();
+          _new_model = control.czr_preModel('model').get();
       _new_model.title = [ serverControlParams.translatedStrings.followUs, _new_title].join(' ');
-      control.hu_preModel('model').set(_new_model);
+      control.czr_preModel('model').set(_new_model);
     },
 
 

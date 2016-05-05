@@ -1,4 +1,4 @@
-var TCCroppedImageMethods = TCCroppedImageMethods || {};
+var CZRCroppedImageMethods = CZRCroppedImageMethods || {};
 
 (function (api, $, _) {
   /* IMAGE UPLOADER CONTROL IN THE CUSTOMIZER */
@@ -7,7 +7,7 @@ var TCCroppedImageMethods = TCCroppedImageMethods || {};
     return;
 
 
-    /* TCCustomizeImage Cropper */
+    /* CZRCustomizeImage Cropper */
     /**
     * Custom version of:
     * wp.media.controller.CustomizeImageCropper (wp-includes/js/media-views.js)
@@ -21,7 +21,7 @@ var TCCroppedImageMethods = TCCroppedImageMethods || {};
     * @augments wp.media.controller.State
     * @augments Backbone.Model
     */
-    wp.media.controller.TCCustomizeImageCropper = wp.media.controller.Cropper.extend({
+    wp.media.controller.CZRCustomizeImageCropper = wp.media.controller.Cropper.extend({
       doCrop: function( attachment ) {
         var cropDetails = attachment.get( 'cropDetails' ),
             control = this.get( 'control' );
@@ -41,11 +41,11 @@ var TCCroppedImageMethods = TCCroppedImageMethods || {};
 
 
 
-    /* TCCroppedImageControl */
-    $.extend( TCCroppedImageMethods , {
+    /* CZRCroppedImageControl */
+    $.extend( CZRCroppedImageMethods , {
       /**
       * Create a media modal select frame, and store it so the instance can be reused when needed.
-      * TC: We don't want to crop svg (cropping fails), gif (animated gifs become static )
+      * CZR: We don't want to crop svg (cropping fails), gif (animated gifs become static )
       * @Override
       * We need to override this in order to use our ImageCropper custom extension of wp.media.controller.Cropper
       *
@@ -70,7 +70,7 @@ var TCCroppedImageMethods = TCCroppedImageMethods || {};
                     suggestedWidth: this.params.width,
                     suggestedHeight: this.params.height
                 }),
-                new wp.media.controller.TCCustomizeImageCropper({
+                new wp.media.controller.CZRCustomizeImageCropper({
                     imgSelectOptions: this.calculateImageSelectOptions,
                     control: this
                 })
@@ -86,7 +86,7 @@ var TCCroppedImageMethods = TCCroppedImageMethods || {};
       * After an image is selected in the media modal, switch to the cropper
       * state if the image isn't the right size.
       *
-      * TC: We don't want to crop svg (cropping fails), gif (animated gifs become static )
+      * CZR: We don't want to crop svg (cropping fails), gif (animated gifs become static )
       * @Override
       * See api.CroppedImageControl:onSelect() ( wp-admin/js/customize-controls.js )
       */

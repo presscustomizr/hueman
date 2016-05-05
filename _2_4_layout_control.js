@@ -1,4 +1,4 @@
-var HULayoutSelectMethods = HULayoutSelectMethods || {};
+var CZRLayoutSelectMethods = CZRLayoutSelectMethods || {};
 
 (function (api, $, _) {
   /* Multiple Picker */
@@ -7,7 +7,7 @@ var HULayoutSelectMethods = HULayoutSelectMethods || {};
    * @augments wp.customize.Control
    * @augments wp.customize.Class
    */
-  $.extend( HULayoutSelectMethods , {
+  $.extend( CZRLayoutSelectMethods , {
     ready: function() {
       this.setupSelect();
     },

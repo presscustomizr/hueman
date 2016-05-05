@@ -1,8 +1,8 @@
-var HUDynamicMethods = HUDynamicMethods || {};
+var CZRDynamicMethods = CZRDynamicMethods || {};
 
 
 (function (api, $, _) {
-  $.extend( HUDynamicMethods, {
+  $.extend( CZRDynamicMethods, {
     //////////////////////////////////
     ///COLLECTION//
     //////////////////////////////////
@@ -32,7 +32,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
     setupCollectionListeners : function() {
       var control = this;
       //add a listener on change
-      control.hu_Collection('models').callbacks.add( function( to, from ) {
+      control.czr_Collection('models').callbacks.add( function( to, from ) {
         var _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
             _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
             _model_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
@@ -43,7 +43,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
           //Render model's view
           var $view = control.renderView( {model:_to_render} );
           //setup
-          control.setupViewApiListeners( {model:_to_render, dom_el : $view} );//listener of the hu_View value for expansion state
+          control.setupViewApiListeners( {model:_to_render, dom_el : $view} );//listener of the czr_View value for expansion state
           control.setupDOMListeners( control.view_event_map , {model:_to_render, dom_el:$view} );//listeners for the view wrapper
           control._makeSortable();
 
@@ -56,8 +56,8 @@ var HUDynamicMethods = HUDynamicMethods || {};
           //destroy the DOM el
           control._destroyView(_to_remove.id);
           //remove the values
-          control.hu_Model.remove(_to_remove.id);
-          control.hu_View.remove(_to_remove.id);
+          control.czr_Model.remove(_to_remove.id);
+          control.czr_View.remove(_to_remove.id);
 
           //hook here
           control.doActions('after_modelRemoved', control.container, { model : _to_remove } );
@@ -65,7 +65,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
 
         //SORTED COLLECTION
         if ( _collection_sorted ) {
-          control.hu_preModel('view_status').set('closed');
+          control.czr_preModel('view_status').set('closed');
           control.closeAllViews();
           control.closeAllAlerts();
         }//if
@@ -85,14 +85,14 @@ var HUDynamicMethods = HUDynamicMethods || {};
     //@parama key is an integer OPTIONAL
     updateCollection : function( obj, key ) {
       var control = this,
-          _current_collection = control.hu_Collection('models').get();
+          _current_collection = control.czr_Collection('models').get();
           _new_collection = _.clone(_current_collection);
 
       //if a collection is provided in the passed obj then simply refresh the collection
       //=> typically used when reordering the collection item with sortable or when a model is removed
       if ( _.has( obj, 'collection' ) ) {
         //reset the collection
-        control.hu_Collection('models').set(obj.collection);
+        control.czr_Collection('models').set(obj.collection);
         return;
       }
 
@@ -135,7 +135,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
       }//else
 
       //updates the collection value
-      control.hu_Collection('models').set(_new_collection);
+      control.czr_Collection('models').set(_new_collection);
     },
 
 
@@ -143,7 +143,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
     //@returns a sorted collection as an array of model objects
     _getSortedDOMCollection : function( obj ) {
       var control = this,
-          _old_collection = _.clone( control.hu_Collection('models').get() ),
+          _old_collection = _.clone( control.czr_Collection('models').get() ),
           _new_collection = [],
           _index = 0;
 
@@ -175,7 +175,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
     //takes a model unique id as param
     getModel : function(id) {
       var control = this;
-      _model = _.findWhere( control.hu_Collection('models').get(), {id:id} );
+      _model = _.findWhere( control.czr_Collection('models').get(), {id:id} );
       if ( false !== _model )
         return _model;
       return model;

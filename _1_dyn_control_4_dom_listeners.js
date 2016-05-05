@@ -1,7 +1,7 @@
-var HUDynamicMethods = HUDynamicMethods || {};
+var CZRDynamicMethods = CZRDynamicMethods || {};
 
 (function (api, $, _) {
-  $.extend( HUDynamicMethods, {
+  $.extend( CZRDynamicMethods, {
     //////////////////////////////////////////////////
     /// DOM LISTENERS
     //////////////////////////////////////////////////

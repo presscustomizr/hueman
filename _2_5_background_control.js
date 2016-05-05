@@ -1,6 +1,6 @@
-var HUBackgroundMethods = HUBackgroundMethods || {};
+var CZRBackgroundMethods = CZRBackgroundMethods || {};
 
-//@augments HUBaseControl
+//@augments CZRBaseControl
 (function (api, $, _) {
   /* Multiple Picker */
   /**
@@ -8,10 +8,10 @@ var HUBackgroundMethods = HUBackgroundMethods || {};
    * @augments wp.customize.Control
    * @augments wp.customize.Class
    */
-  $.extend( HUBackgroundMethods , {
+  $.extend( CZRBackgroundMethods , {
     initialize: function( id, options ) {
       var control = this;
-      api.HUBaseControl.prototype.initialize.call( control, id, options );
+      api.CZRBaseControl.prototype.initialize.call( control, id, options );
     },
 
     ready: function() {

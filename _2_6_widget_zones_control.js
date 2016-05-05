@@ -1,12 +1,12 @@
-//extends api.HUDynamicControl
+//extends api.CZRDynamicControl
 
-var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
+var CZRWidgetAreasMethods = CZRWidgetAreasMethods || {};
 
 (function (api, $, _) {
-  $.extend( HUWidgetAreasMethods, {
+  $.extend( CZRWidgetAreasMethods, {
     initialize: function( id, options ) {
       //run the parent initialize
-      api.HUDynamicControl.prototype.initialize.call( this, id, options );
+      api.CZRDynamicControl.prototype.initialize.call( this, id, options );
 
       var control = this;
       //adds control specific actions
@@ -100,9 +100,9 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
       //declares a default model
       control.model = {
         id : '',
-        title : 'Widget Zone',
+        title : serverControlParams.translatedStrings.widgetZone,
         contexts : _.without( _.keys(control.contexts), '_all_' ),//the server list of contexts is an object, we only need the keys, whitout _all_
-        locations : ['s1'],
+        locations : [ serverControlParams.defaultWidgetLocation ],
         description : ''
       };
 
@@ -116,17 +116,17 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
       this.listenToSidebarInsights();
 
       //AVAILABLE LOCATIONS FOR THE PRE MODEL
-      //1) add an observable value to control.hu_preModel to handle the alert visibility
-      control.hu_preModel.create('location_alert_view_state');
-      control.hu_preModel('location_alert_view_state').set('closed');
+      //1) add an observable value to control.czr_preModel to handle the alert visibility
+      control.czr_preModel.create('location_alert_view_state');
+      control.czr_preModel('location_alert_view_state').set('closed');
       //2) add state listeners
-      control.hu_preModel('location_alert_view_state').callbacks.add( function( to, from ) {
+      control.czr_preModel('location_alert_view_state').callbacks.add( function( to, from ) {
         var $view = control._getPreModelView();
         control._toggleLocationAlertExpansion( $view, to );
       });
 
       //AVAILABLE VALUES FOR THE MODELS
-      control.hu_viewLocationAlert = new api.Values();
+      control.czr_viewLocationAlert = new api.Values();
     },//initialize
 
 
@@ -284,7 +284,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
     listenToViewExpand : function(obj) {
       var control = this;
       //add a state listener on expansion change
-      control.hu_View(obj.model.id).callbacks.add( function( to, from ) {
+      control.czr_View(obj.model.id).callbacks.add( function( to, from ) {
         if ( -1 == to.indexOf('expanded') )//can take the expanded_noscroll value !
           return;
 
@@ -300,7 +300,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
     listenToPreModelViewExpand : function(obj) {
       var control = this;
       //add state listener on pre model view
-      control.hu_preModel('view_status').callbacks.add( function( to, from ) {
+      control.czr_preModel('view_status').callbacks.add( function( to, from ) {
         if ( 'expanded' != to )
           return;
         //refresh the location list
@@ -316,11 +316,11 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
     //fired on 'after_setupViewApiListeners'
     setupLocationsApiListeners : function(obj) {
       var control = this;
-      control.hu_viewLocationAlert.create(obj.model.id);
-      control.hu_viewLocationAlert(obj.model.id).set('closed');
+      control.czr_viewLocationAlert.create(obj.model.id);
+      control.czr_viewLocationAlert(obj.model.id).set('closed');
 
       //add a state listener on expansion change
-      control.hu_viewLocationAlert(obj.model.id).callbacks.add( function( to, from ) {
+      control.czr_viewLocationAlert(obj.model.id).callbacks.add( function( to, from ) {
         var $view = control.getViewEl(obj.model.id);
         control._toggleLocationAlertExpansion( $view , to );
       });
@@ -337,7 +337,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
           });
       //if one of the selected location is not included in the available_locs, display an alert
       //Are we in a pre model case? let's check on what has triggered this action to know it
-      control.hu_preModel('location_alert_view_state').set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
+      control.czr_preModel('location_alert_view_state').set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
 
     },
 
@@ -350,7 +350,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
           _unavailable = _.filter( _selected_locations, function( loc ) {
             return ! _.contains(available_locs, loc);
           });
-      control.hu_viewLocationAlert(obj.model.id).set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
+      control.czr_viewLocationAlert(obj.model.id).set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
     },
 
     _toggleLocationAlertExpansion : function($view, to) {
@@ -359,7 +359,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
       if ( ! $_alert_el.length ) {
         var _html = [
           '<span>' + serverControlParams.translatedStrings.locationWarning + '</span>',
-          api.hu_getDocSearchLink( serverControlParams.translatedStrings.locationWarning ),
+          api.czr_getDocSearchLink( serverControlParams.translatedStrings.locationWarning ),
         ].join('');
 
         $_alert_el = $('<div/>', {
@@ -377,7 +377,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
 
     //always fired on 'model_added_by_user'
     closePreModelAlert : function() {
-      this.hu_preModel('location_alert_view_state').set('closed');
+      this.czr_preModel('location_alert_view_state').set('closed');
     },
 
 
@@ -562,10 +562,10 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
 
 
       //ADD the new sidebar to the existing collection
-      //Clone the primary sidebar
+      //Clone the serverControlParams.defaultWidgetSidebar sidebar
       var _model        = ! _.isEmpty(obj) ? _.clone(obj.model) : sidebar_data;
           _new_sidebar  = _.isEmpty(obj) ? sidebar_data : $.extend(
-            _.clone( _.findWhere( api.Widgets.data.registeredSidebars, { id: "primary" } ) ),
+            _.clone( _.findWhere( api.Widgets.data.registeredSidebars, { id: serverControlParams.defaultWidgetSidebar } ) ),
             {
               name : _model.title,
               id : _model.id
@@ -576,18 +576,18 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
       api.Widgets.registeredSidebars.add( _new_sidebar );
 
       //test if added:
-      //api.Widgets.registeredSidebars.get('hu_sidebars_8');
+      //api.Widgets.registeredSidebars.get('czr_sidebars_8');
 
 
       //ADD the sidebar section
       var _params = $.extend(
-        _.clone( api.section("sidebar-widgets-primary").params ),
+        _.clone( api.section( "sidebar-widgets-" + serverControlParams.defaultWidgetSidebar ).params ),
         {
           id : "sidebar-widgets-" + _model.id,
           instanceNumber: _.max(api.settings.sections, function(sec){ return sec.instanceNumber; }).instanceNumber + 1,
           sidebarId: _new_sidebar.id,
           title: _new_sidebar.name,
-          description : 'undefined' != typeof(sidebar_data) ? sidebar_data.description : api.section("sidebar-widgets-primary").params.description,
+          description : 'undefined' != typeof(sidebar_data) ? sidebar_data.description : api.section( "sidebar-widgets-" + serverControlParams.defaultWidgetSidebar ).params.description,
           //always set the new priority to the maximum + 1 ( sidebars_create_sec is excluded from this calculation because it must always be at the bottom )
           priority: _.max( _.omit( api.settings.sections, 'sidebars_create_sec'), function(sec){ return sec.instanceNumber; }).priority + 1,
         }
@@ -599,10 +599,10 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
       api.settings.sections[ _params.id ] = _params.id;
 
       //ADD A SETTING
-      //Clone the primary sidebar widget area setting
+      //Clone the serverControlParams.defaultWidgetSidebar sidebar widget area setting
       var _new_set_id = 'sidebars_widgets['+_model.id+']',
           _new_set    = $.extend(
-            _.clone( api.settings.settings['sidebars_widgets[primary]'] ),
+            _.clone( api.settings.settings['sidebars_widgets[' + serverControlParams.defaultWidgetSidebar + ']'] ),
             {
               value:[]
             }
@@ -622,17 +622,17 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
 
       //ADD A CONTROL
       var _cloned_control = $.extend(
-            _.clone( api.settings.controls['sidebars_widgets[primary]'] ),
+            _.clone( api.settings.controls['sidebars_widgets[' + serverControlParams.defaultWidgetSidebar + ']'] ),
             {
               settings : { default : _new_set_id }
             }),
           _new_control = {};
 
 
-      //replace 'primary' by the new sidebar id
+      //replace  serverControlParams.defaultWidgetSidebar  by the new sidebar id
       _.map( _cloned_control, function( param, key ) {
         if ( 'string' == typeof(param) ) {
-          param = param.replace('primary', _model.id );
+          param = param.replace( serverControlParams.defaultWidgetSidebar , _model.id );
         }
         _new_control[key] = param;
       });
@@ -737,7 +737,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
       //Close all views on widget panl expansion/clos
       api.panel('widgets').expanded.callbacks.add( function(expanded) {
         control.closeAllViews();
-        control.hu_preModel('view_status').set('closed');
+        control.czr_preModel('view_status').set('closed');
       } );
 
 
@@ -780,7 +780,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
 
       //VISIBILITY BASED ON THE SIDEBAR INSIGHTS
       api.sidebar_insights('registered').callbacks.add( function( _registered_zones ) {
-        var _current_collection = _.clone( control.hu_Collection('models').get() );
+        var _current_collection = _.clone( control.czr_Collection('models').get() );
         _.map(_current_collection, function( _model ) {
           if ( ! control.getViewEl(_model.id).length )
             return;
@@ -791,7 +791,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
 
       //OPACITY SIDEBAR INSIGHTS BASED
       api.sidebar_insights('inactives').callbacks.add( function( _inactives_zones ) {
-        var _current_collection = _.clone( control.hu_Collection('models').get() );
+        var _current_collection = _.clone( control.czr_Collection('models').get() );
         _.map(_current_collection, function( _model ) {
           if ( ! control.getViewEl(_model.id).length )
             return;
@@ -825,7 +825,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
             return;
 
           //access the registration method statically
-          api.HUWidgetAreasControl.prototype.addWidgetSidebar( {}, _sidebar );
+          api.CZRWidgetAreasControl.prototype.addWidgetSidebar( {}, _sidebar );
           //activate it if so
           if ( _.has( api.sidebar_insights('actives').get(), _sidebar.id ) && api.section.has("sidebar-widgets-" +_sidebar.id ) )
             api.section( "sidebar-widgets-" +_sidebar.id ).activate();
@@ -868,7 +868,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
     //=> add a dynamic title
     getDefaultModel : function(id) {
       var control = this,
-          _current_collection = control.hu_Collection('models').get(),
+          _current_collection = control.czr_Collection('models').get(),
           _default = _.clone( control.model ),
           _default_contexts = _default.contexts;
       return $.extend( _default, {

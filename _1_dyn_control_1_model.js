@@ -1,8 +1,8 @@
-var HUDynamicMethods = HUDynamicMethods || {};
+var CZRDynamicMethods = CZRDynamicMethods || {};
 
 
 (function (api, $, _) {
-  $.extend( HUDynamicMethods, {
+  $.extend( CZRDynamicMethods, {
 
     updatePreModel : function(obj) {
       //get the changed property and val
@@ -11,7 +11,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
           $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
           _changed_prop     = $_changed_input.attr('data-type'),
           _new_val          = $( $_changed_input, obj.dom_el ).val(),
-          _new_model        = _.clone(control.hu_preModel('model').get());//initialize it to the current value
+          _new_model        = _.clone(control.czr_preModel('model').get());//initialize it to the current value
 
       //make sure the title has not been emptied. If so, replace it with the default title.
       if ( 'title' == _changed_prop && _.isEmpty(_new_val) ) {
@@ -22,7 +22,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
       _new_model[_changed_prop] = _new_val;
 
       //set the new val to preModel Value()
-      control.hu_preModel('model').set(_new_model);
+      control.czr_preModel('model').set(_new_model);
 
       control.doActions(
         'pre_model:' + _changed_prop + ':changed',
@@ -45,8 +45,8 @@ var HUDynamicMethods = HUDynamicMethods || {};
           is_added_by_user = _.has(obj, 'dom_event') && ! _.has(obj.dom_event, 'isTrigger');
 
       //Are we in a pre model case ?
-      if ( ! _.has( obj, 'model') && _.has(control, 'hu_preModel') ) {
-        model = control.hu_preModel('model').get();
+      if ( ! _.has( obj, 'model') && _.has(control, 'czr_preModel') ) {
+        model = control.czr_preModel('model').get();
       } else {
         //else do we have a model?
         model = _.has( obj, 'model') ? obj.model : model;
@@ -61,9 +61,9 @@ var HUDynamicMethods = HUDynamicMethods || {};
       //create an observable value for this model id
       //set the callbacks
       //create the Value of this model
-      control.hu_Model.create(model.id);
+      control.czr_Model.create(model.id);
       //add a listener on change
-      control.hu_Model(model.id).callbacks.add( function( to, from ) {
+      control.czr_Model(model.id).callbacks.add( function( to, from ) {
           //push the new model to the collection
           control.updateCollection( { model : to }, key );
           //Always update the view title
@@ -75,7 +75,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
       });
 
       //set the value
-      control.hu_Model(model.id).set(model);
+      control.czr_Model(model.id).set(model);
 
 
       //if a model is manually added : open it and trigger a specific event
@@ -109,7 +109,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
           $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
           _changed_prop     = $_changed_input.attr('data-type'),
           _new_val          = $( $_changed_input, obj.dom_el ).val(),
-          _current_model    = control.hu_Model(obj.model.id).get(),
+          _current_model    = control.czr_Model(obj.model.id).get(),
           _new_model        = _.clone( _current_model );//initialize it to the current value
 
       //make sure the title has not been emptied. If so, replace it with the default title.
@@ -121,7 +121,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
       //set the new val to the changed property
       _new_model[_changed_prop] = _new_val;
 
-      control.hu_Model(obj.model.id).set(_new_model);
+      control.czr_Model(obj.model.id).set(_new_model);
 
       //say it to the current view
       control.doActions(
@@ -138,12 +138,12 @@ var HUDynamicMethods = HUDynamicMethods || {};
     //fired on click dom event
     removeModel : function( obj ) {
       var control = this,
-          _new_collection = _.clone( control.hu_Collection('models').get() );
+          _new_collection = _.clone( control.czr_Collection('models').get() );
 
       _new_collection = _.without( _new_collection, _.findWhere( _new_collection, {id: obj.model.id }) );
 
       //say it
-      control.hu_Collection('models').set( _new_collection );
+      control.czr_Collection('models').set( _new_collection );
     },
 
 
@@ -184,7 +184,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
     //@return bool
     _isModelIdPossible : function( _id ) {
       var control = this;
-      return ! _.isEmpty(_id) && ! _.findWhere( control.hu_Collection('models').get(), { id : _id });
+      return ! _.isEmpty(_id) && ! _.findWhere( control.czr_Collection('models').get(), { id : _id });
     },
 
     //the job of this function is to return a new model ready to be added to the collection
@@ -196,7 +196,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
           _id;
 
       //get the next available key of the collection
-      _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( control.hu_Collection('models').get() );
+      _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( control.czr_Collection('models').get() );
 
       if ( _.isNumber(_next_key) ) {
         _id = control.params.type + '_' + _next_key;

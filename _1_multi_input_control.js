@@ -1,11 +1,11 @@
-var HUMultiInputMethods = HUMultiInputMethods || {};
+var CZRMultiInputMethods = CZRMultiInputMethods || {};
 
 (function (api, $, _) {
 
-  $.extend( HUMultiInputMethods , {
+  $.extend( CZRMultiInputMethods , {
     initialize: function( id, options ) {
       var control = this;
-      api.HUBaseControl.prototype.initialize.call( control, id, options );
+      api.CZRBaseControl.prototype.initialize.call( control, id, options );
       control.model = api(control.id).get();
     },
 

@@ -116,7 +116,7 @@
   /*****************************************************************************
   * ADD SOME HELPERS AND PROPERTIES TO THE ALWAYS ACCESSIBLE API OBJECT.
   *****************************************************************************/
-  api.hu_getDocSearchLink = function( text ) {
+  api.czr_getDocSearchLink = function( text ) {
     text = ! _.isString(text) ? '' : text;
     var _searchtext = text.replace( / /g, '+'),
         _url = [ serverControlParams.docURL, 'search?query=', _searchtext ].join('');
@@ -128,7 +128,7 @@
   };
 
 
-  api.hu_wp_builtin_settings = [
+  api.czr_wp_builtin_settings = [
     'page_for_posts',
     'show_on_front',
     'blogname',
@@ -139,8 +139,8 @@
   * @return string
   * simple helper to build the setting id name
   */
-  api.hu_build_setId = function ( name ) {
-    if ( _.has( api.hu_wp_builtin_settings, name ) )
+  api.czr_build_setId = function ( name ) {
+    if ( _.has( api.czr_wp_builtin_settings, name ) )
       return name;
     return -1 == name.indexOf( serverControlParams.themeOptions ) ? [ serverControlParams.themeOptions +'[' , name  , ']' ].join('') : name;
   };
@@ -171,10 +171,10 @@
 //define a set of methods, mostly helpers, to extend the base WP control class
 //this will become our base constructor for main complex controls
 //EARLY SETUP
-var HUBaseControlMethods = HUBaseControlMethods || {};
+var CZRBaseControlMethods = CZRBaseControlMethods || {};
 
 (function (api, $, _) {
-  $.extend( HUBaseControlMethods, {
+  $.extend( CZRBaseControlMethods, {
 
     initialize: function( id, options ) {
       var control = this;
@@ -241,5 +241,5 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
       return  isTooLong ? s_ + '...' : s_;
     }
 
-  });//$.extend//HUBaseControlMethods
+  });//$.extend//CZRBaseControlMethods
 })( wp.customize , jQuery, _);

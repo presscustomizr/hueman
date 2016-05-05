@@ -1,4 +1,4 @@
-var TCUploadMethods = TCUploadMethods || {};
+var CZRUploadMethods = CZRUploadMethods || {};
 
 (function (api, $, _) {
   /**
@@ -6,7 +6,7 @@ var TCUploadMethods = TCUploadMethods || {};
    * @augments wp.customize.Control
    * @augments wp.customize.Class
    */
-  $.extend( TCUploadMethods, {
+  $.extend( CZRUploadMethods, {
     ready: function() {
       var control = this;
 

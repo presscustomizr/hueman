@@ -1,6 +1,6 @@
-var HUDynamicMethods = HUDynamicMethods || {};
+var CZRDynamicMethods = CZRDynamicMethods || {};
 /* Dynamic Controls */
-//@augments HUBaseControl
+//@augments CZRBaseControl
 /* //=> all html input have data-type attribute corresponding to the ones stored in the model
 /**
  * @constructor
@@ -14,7 +14,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
  */
 
 (function (api, $, _) {
-  $.extend( HUDynamicMethods, {
+  $.extend( CZRDynamicMethods, {
 
     //EARLY SETUP
     initialize: function( id, options ) {
@@ -23,7 +23,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
       var control = this;
 
       //run the parent initialize
-      api.HUBaseControl.prototype.initialize.call( control, id, options );
+      api.CZRBaseControl.prototype.initialize.call( control, id, options );
 
 
 
@@ -129,25 +129,25 @@ var HUDynamicMethods = HUDynamicMethods || {};
     _setupApiValues : function() {
       var control = this;
       //PRE MODEL
-      //hu_preModel stores the expansion state and the value of the preModel
-      control.hu_preModel = new api.Values();
+      //czr_preModel stores the expansion state and the value of the preModel
+      control.czr_preModel = new api.Values();
        //create observable pre-model values
-      control.hu_preModel.create('model');
-      control.hu_preModel.create('view_content');
-      control.hu_preModel.create('view_status');
-      control.hu_preModel('view_status').set('closed');
+      control.czr_preModel.create('model');
+      control.czr_preModel.create('view_content');
+      control.czr_preModel.create('view_status');
+      control.czr_preModel('view_status').set('closed');
 
-      //hu_model stores the each model value => one value by created by model.id
-      control.hu_Model = new api.Values();
+      //czr_model stores the each model value => one value by created by model.id
+      control.czr_Model = new api.Values();
 
-      //hu_View stores the current expansion status of a given view => one value by created by model.id
-      //hu_View can take 3 values : expanded, expanded_noscroll (=> used on view creation), closed
-      control.hu_View = new api.Values();
+      //czr_View stores the current expansion status of a given view => one value by created by model.id
+      //czr_View can take 3 values : expanded, expanded_noscroll (=> used on view creation), closed
+      control.czr_View = new api.Values();
 
-      //hu_collection stores the model collection
-      control.hu_Collection = new api.Values();
-      control.hu_Collection.create('models');
-      control.hu_Collection('models').set([]);
+      //czr_collection stores the model collection
+      control.czr_Collection = new api.Values();
+      control.czr_Collection.create('models');
+      control.czr_Collection('models').set([]);
     },
 
 
@@ -168,7 +168,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
         //on init : populate the collection and setup the listener of the collection value
         control.setupCollectionListeners().fetchSavedCollection();
         //Now set the setting value (the saved collection has been rendered at this point)
-        control.hu_Collection('models').callbacks.add( function( to, from ) {
+        control.czr_Collection('models').callbacks.add( function( to, from ) {
             //say it to the api
             api(control.id).set( control.filterCollectionBeforeAjax(to) );
 
@@ -181,9 +181,9 @@ var HUDynamicMethods = HUDynamicMethods || {};
         });
 
         //PRE ADD MODEL SETUP
-        control.hu_preModel('model').set(control.getDefaultModel());
+        control.czr_preModel('model').set(control.getDefaultModel());
         //add state listeners
-        control.hu_preModel('view_status').callbacks.add( function( to, from ) {
+        control.czr_preModel('view_status').callbacks.add( function( to, from ) {
           control._togglePreModelViewExpansion( to );
         });
       });

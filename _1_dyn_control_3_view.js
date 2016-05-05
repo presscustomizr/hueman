@@ -1,7 +1,7 @@
-var HUDynamicMethods = HUDynamicMethods || {};
+var CZRDynamicMethods = CZRDynamicMethods || {};
 
 (function (api, $, _) {
-  $.extend( HUDynamicMethods, {
+  $.extend( CZRDynamicMethods, {
     //////////////////////////////////////////////////
     /// VIEWS
     //////////////////////////////////////////////////
@@ -114,11 +114,11 @@ var HUDynamicMethods = HUDynamicMethods || {};
           $viewContent = $( '.' + control.css_attr.view_content, control.getViewEl(obj.model.id) ),
           $view = control.getViewEl(obj.model.id);
 
-      control.hu_View.create(obj.model.id);
-      control.hu_View(obj.model.id).set('closed');
+      control.czr_View.create(obj.model.id);
+      control.czr_View(obj.model.id).set('closed');
 
       //add a state listener on state change
-      control.hu_View(obj.model.id).callbacks.add( function( to, from ) {
+      control.czr_View(obj.model.id).callbacks.add( function( to, from ) {
         //render and setup view content if needed
         if ( ! $.trim( $viewContent.html() ) ) {
           control.renderViewContent( obj ).setupDOMListeners(
@@ -157,11 +157,11 @@ var HUDynamicMethods = HUDynamicMethods || {};
     setViewVisibility : function(obj, is_added_by_user ) {
       var control = this;
       if ( is_added_by_user ) {
-        control.hu_View(obj.model.id).set( 'expanded_noscroll' );
+        control.czr_View(obj.model.id).set( 'expanded_noscroll' );
       } else {
         control.closeAllViews(obj.model.id);
-        control.hu_preModel('view_status').set( 'closed');
-        control.hu_View(obj.model.id).set( 'expanded' == control._getViewState(obj.model.id) ? 'closed' : 'expanded' );
+        control.czr_preModel('view_status').set( 'closed');
+        control.czr_View(obj.model.id).set( 'expanded' == control._getViewState(obj.model.id) ? 'closed' : 'expanded' );
       }
     },
 
@@ -170,21 +170,21 @@ var HUDynamicMethods = HUDynamicMethods || {};
     //fired on views_sorted
     closeAllViews : function(model_id) {
       var control = this,
-          _current_collection = _.clone( control.hu_Collection('models').get() ),
+          _current_collection = _.clone( control.czr_Collection('models').get() ),
           _filtered_collection = _.filter( _current_collection , function( mod) { return mod.id != model_id; } );
 
       _.map( _filtered_collection, function(_model) {
-        if ( control.hu_View.has(_model.id) && 'expanded' == control._getViewState(_model.id) )
-          control.hu_View( _model.id).set( 'closed' ); // => will fire the cb _toggleViewExpansion
+        if ( control.czr_View.has(_model.id) && 'expanded' == control._getViewState(_model.id) )
+          control.czr_View( _model.id).set( 'closed' ); // => will fire the cb _toggleViewExpansion
        } );
     },
 
 
     _getViewState : function(model_id) {
-      return -1 == this.hu_View(model_id).get().indexOf('expanded') ? 'closed' : 'expanded';
+      return -1 == this.czr_View(model_id).get().indexOf('expanded') ? 'closed' : 'expanded';
     },
 
-    //callback of hu_View() instance on change
+    //callback of czr_View() instance on change
     _toggleViewExpansion : function( model_id, status, duration ) {
       var control = this;
       //slide Toggle and toggle the 'open' class
@@ -250,7 +250,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
       $( '.' + control.css_attr.views_wrapper, control.container ).sortable( {
           handle: '.' + control.css_attr.sortable_handle,
           update: function( event, ui ) {
-            control.hu_Collection('models').set( control._getSortedDOMCollection() );
+            control.czr_Collection('models').set( control._getSortedDOMCollection() );
           }
         }
       );
@@ -288,7 +288,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
 
       //first close all open views
       this.closeAllViews();
-      control.hu_preModel('view_status').set( 'closed');
+      control.czr_preModel('view_status').set( 'closed');
 
       //then close any other open remove alert in the control containuer
       $('.' + control.css_attr.remove_alert_wrapper, control.container ).not($_alert_el).each( function() {
@@ -349,7 +349,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
       var control = this;
 
       //is this view already rendered ?
-      if ( ! _.isEmpty( control.hu_preModel('view_content').get() ) )
+      if ( ! _.isEmpty( control.czr_preModel('view_content').get() ) )
         return;
 
       //do we have view template script?
@@ -368,7 +368,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
       $_pre_add_el.prepend( pre_add_template() );
 
       //store it
-      control.hu_preModel('view_content').set( pre_add_template() );
+      control.czr_preModel('view_content').set( pre_add_template() );
 
       //say it to the control
       control.doActions( 'pre_add_view_rendered' , control.container, {model : {}, dom_el : $_pre_add_el});
@@ -383,7 +383,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
     destroyPreModelView : function() {
       var control = this;
       $('.' + control.css_attr.pre_add_view_content, control.container ).find('.czr-sub-set').remove();
-      control.hu_preModel('view_content').set('');
+      control.czr_preModel('view_content').set('');
     },
 
      //toggles the visibility of the Remove View Block
@@ -392,11 +392,11 @@ var HUDynamicMethods = HUDynamicMethods || {};
       var control = this;
 
       control.closeAllViews();
-      control.hu_preModel('view_status').set( 'expanded' == control.hu_preModel('view_status').get() ? 'closed' : 'expanded' );
+      control.czr_preModel('view_status').set( 'expanded' == control.czr_preModel('view_status').get() ? 'closed' : 'expanded' );
     },
 
 
-    //callback of hu_preModel('view') instance on change
+    //callback of czr_preModel('view') instance on change
     _togglePreModelViewExpansion : function( status) {
       var control = this,
         $_pre_add_el = $( '.' + control.css_attr.pre_add_view_content, control.container );
@@ -431,8 +431,8 @@ var HUDynamicMethods = HUDynamicMethods || {};
       var control = this;
       control.toggleSuccessMessage('on');
       setTimeout( function() {
-          control.hu_preModel('view_status').set( 'closed');
-          control.hu_preModel('model').set(control.getDefaultModel());
+          control.czr_preModel('view_status').set( 'closed');
+          control.czr_preModel('model').set(control.getDefaultModel());
           control.toggleSuccessMessage('off').destroyPreModelView();
         } , 3000);
     },

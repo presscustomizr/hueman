@@ -5,12 +5,12 @@
 
 
   api.bind( 'ready' , function() {
-    api.hu_visibilities = new api.HU_visibilities();
+    api.czr_visibilities = new api.CZR_visibilities();
   } );
 
 
 
-  api.HU_visibilities = api.Class.extend( {
+  api.CZR_visibilities = api.Class.extend( {
           controlDeps : {},
 
           initialize: function() {
@@ -95,29 +95,6 @@
                     callback : function (to) {
                       return '0' !== to && false !== to && 'off' !== to;
                     },
-                  },
-                  //we have to show restrict blog/home posts when
-                  //1. show page on front and a page of posts is selected
-                  //2, show posts on front
-                  'page_for_posts' : {
-                     controls: [
-                       'tc_blog_restrict_by_cat'
-                     ],
-                     callback : function (to) {
-                       return '0' !== to;
-                     },
-                  },
-                  'show_on_front' : {
-                    controls: [
-                      'tc_blog_restrict_by_cat'
-                    ],
-                    callback : function (to) {
-                      if ( 'posts' == to )
-                        return true;
-                      if ( 'page' == to )
-                        return '0' !== api( api.hu_build_setId('page_for_posts') ).get() ;
-                      return false;
-                    },
                   }
                 };
           },
@@ -184,7 +161,7 @@
                     _id     = _cross.master,
                     _cb     = _cross.callback;
 
-                _id = api.hu_build_setId(_id);
+                _id = api.czr_build_setId(_id);
                 //if _cb returns true => show
                 return _cb( api.instance(_id).get() );
               },
@@ -195,7 +172,7 @@
           */
           _prepare_visibilities : function( setId, o ) {
                 var self = this;
-                api( api.hu_build_setId(setId) , function (setting) {
+                api( api.czr_build_setId(setId) , function (setting) {
                   var _params = {
                     setting   : setting,
                     setId : setId,
@@ -211,7 +188,7 @@
 
           _set_single_dependant_control_visibility : function( depSetId , _params ) {
                 var self = this;
-                api.control( api.hu_build_setId(depSetId) , function (control) {
+                api.control( api.czr_build_setId(depSetId) , function (control) {
                   var _visibility = function (to) {
                     var _action   = self._get_visibility_action( _params.setId , depSetId ),
                         _callback = self._get_visibility_cb( _params.setId , _action ),
@@ -253,7 +230,7 @@
                 //1) WP version < 4.3 where site icon has been introduced
                 //2) User had not defined a favicon
                 //3) User has already set WP site icon
-                if ( ! api.has('site_icon') || ! api.control('site_icon') || ( api.has(api.hu_build_setId('favicon')) && 0 === + api( api.hu_build_setId('favicon') ).get() ) || + api('site_icon').get() > 0 )
+                if ( ! api.has('site_icon') || ! api.control('site_icon') || ( api.has(api.czr_build_setId('favicon')) && 0 === + api( api.czr_build_setId('favicon') ).get() ) || + api('site_icon').get() > 0 )
                   return;
 
                 var _oldDes     = api.control('site_icon').params.description;
@@ -268,8 +245,8 @@
                     //reset the description to default
                     api.control('site_icon').container.find('.description').text(_oldDes);
                     //reset the previous favicon setting
-                    if ( api.has( api.hu_build_setId('favicon') ) )
-                      api( api.hu_build_setId('favicon') ).set("");
+                    if ( api.has( api.czr_build_setId('favicon') ) )
+                      api( api.czr_build_setId('favicon') ).set("");
                   }
                   else {
                     self._printFaviconNote(_newDes );
@@ -282,6 +259,6 @@
                 api.control('site_icon').container.find('.description').html(_newDes);
           }
     }
-  );//api.Class.extend() //api.HU_visibilities
+  );//api.Class.extend() //api.CZR_visibilities
 
 })( wp.customize, jQuery, _);

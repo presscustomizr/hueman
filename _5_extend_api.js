@@ -6,33 +6,33 @@
    * @augments wp.customize.Control
    * @augments wp.customize.Class
    */
-  api.HUBaseControl           = api.Control.extend( HUBaseControlMethods || {} );
-  api.HUDynamicControl        = api.HUBaseControl.extend( HUDynamicMethods || {} );
-  api.HUMultiInputControl     = api.HUBaseControl.extend( HUMultiInputMethods || {} );
+  api.CZRBaseControl           = api.Control.extend( CZRBaseControlMethods || {} );
+  api.CZRDynamicControl        = api.CZRBaseControl.extend( CZRDynamicMethods || {} );
+  api.CZRMultiInputControl     = api.CZRBaseControl.extend( CZRMultiInputMethods || {} );
 
-  //api.HUBackgroundControl     = api.HUMultiInputControl.extend( HUBackgroundMethods || {} );
+  //api.CZRBackgroundControl     = api.CZRMultiInputControl.extend( CZRBackgroundMethods || {} );
 
-  api.HUWidgetAreasControl    = api.HUDynamicControl.extend( HUWidgetAreasMethods || {} );
-  api.HUSocialControl         = api.HUDynamicControl.extend( HUSocialMethods || {} );
+  api.CZRWidgetAreasControl    = api.CZRDynamicControl.extend( CZRWidgetAreasMethods || {} );
+  api.CZRSocialControl         = api.CZRDynamicControl.extend( CZRSocialMethods || {} );
 
-  api.TCUploadControl         = api.Control.extend( TCUploadMethods || {} );
-  api.HULayoutControl         = api.Control.extend( HULayoutSelectMethods || {} );
-  api.TCMultiplePickerControl = api.Control.extend( TCMultiplePickerMethods || {} );
+  api.CZRUploadControl         = api.Control.extend( CZRUploadMethods || {} );
+  api.CZRLayoutControl         = api.Control.extend( CZRLayoutSelectMethods || {} );
+  api.CZRMultiplePickerControl = api.Control.extend( CZRMultiplePickerMethods || {} );
 
   $.extend( api.controlConstructor, {
-    hu_upload     : api.TCUploadControl,
-    hu_sidebars   : api.HUWidgetAreasControl,
-    hu_socials    : api.HUSocialControl,
-    tc_multiple_picker : api.TCMultiplePickerControl,
-    hu_layouts    : api.HULayoutControl,
-    hu_multi_input : api.HUMultiInputControl
+    czr_upload     : api.CZRUploadControl,
+    czr_sidebars   : api.CZRWidgetAreasControl,
+    czr_socials    : api.CZRSocialControl,
+    czr_multiple_picker : api.CZRMultiplePickerControl,
+    czr_layouts    : api.CZRLayoutControl,
+    czr_multi_input : api.CZRMultiInputControl
   });
 
   if ( 'function' == typeof api.CroppedImageControl ) {
-    api.TCCroppedImageControl   = api.CroppedImageControl.extend( TCCroppedImageMethods || {} );
+    api.CZRCroppedImageControl   = api.CroppedImageControl.extend( CZRCroppedImageMethods || {} );
 
     $.extend( api.controlConstructor, {
-      hu_cropped_image : api.TCCroppedImageControl
+      czr_cropped_image : api.CZRCroppedImageControl
     });
   }
 
