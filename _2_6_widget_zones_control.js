@@ -107,7 +107,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
       };
 
       //overrides the default success message
-      this.modelAddedMessage = HUControlParams.translatedStrings.widgetZoneAdded;
+      this.modelAddedMessage = serverControlParams.translatedStrings.widgetZoneAdded;
 
       //bind actions on widget panel expansion and widget zone section expansion
       this.setExpansionsCallbacks();
@@ -213,9 +213,9 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
       }
 
       //Translated strings
-      var _locationText = HUControlParams.translatedStrings.locations,
-          _contextText = HUControlParams.translatedStrings.contexts,
-          _notsetText = HUControlParams.translatedStrings.notset;
+      var _locationText = serverControlParams.translatedStrings.locations,
+          _contextText = serverControlParams.translatedStrings.contexts,
+          _notsetText = serverControlParams.translatedStrings.notset;
 
       _locations = _.isEmpty( _locations ) ? '<span style="font-weight: bold;">' + _notsetText + '</span>' : _locations.join(', ');
       _contexts = _.isEmpty( _contexts ) ? '<span style="font-weight: bold;">' + _notsetText + '</span>' : _contexts.join(', ');
@@ -358,8 +358,8 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
 
       if ( ! $_alert_el.length ) {
         var _html = [
-          '<span>' + HUControlParams.translatedStrings.locationWarning + '</span>',
-          api.hu_getDocSearchLink( HUControlParams.translatedStrings.locationWarning ),
+          '<span>' + serverControlParams.translatedStrings.locationWarning + '</span>',
+          api.hu_getDocSearchLink( serverControlParams.translatedStrings.locationWarning ),
         ].join('');
 
         $_alert_el = $('<div/>', {
@@ -437,7 +437,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
         if (! state.id) { return state.text; }
         if (  _.contains(available_locs, state.element.value) ) { return state.text; }
         var $state = $(
-          '<span class="hu-unavailable-location fa fa-ban" title="' + HUControlParams.translatedStrings.unavailableLocation + '">&nbsp;&nbsp;' + state.text + '</span>'
+          '<span class="hu-unavailable-location fa fa-ban" title="' + serverControlParams.translatedStrings.unavailableLocation + '">&nbsp;&nbsp;' + state.text + '</span>'
         );
         return $state;
       }
@@ -800,7 +800,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
             control.getViewEl( _model.id ).addClass('inactive');
             if ( ! control.getViewEl( _model.id ).find('.hu-inactive-alert').length )
               control.getViewEl( _model.id ).find('.hu-view-title').append(
-                $('<span/>', {class : "hu-inactive-alert", html : " [ " + HUControlParams.translatedStrings.inactiveWidgetZone + " ]" })
+                $('<span/>', {class : "hu-inactive-alert", html : " [ " + serverControlParams.translatedStrings.inactiveWidgetZone + " ]" })
               );
           }
           else {

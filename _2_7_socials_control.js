@@ -200,12 +200,12 @@ var HUSocialMethods = HUSocialMethods || {};
         title : '' ,
         'social-icon' : '',
         'social-link' : '',
-        'social-color' : HUControlParams.defaultSocialColor,
+        'social-color' : serverControlParams.defaultSocialColor,
         'social-target' : 1
       };
 
       //overrides the default success message
-      this.modelAddedMessage = HUControlParams.translatedStrings.socialLinkAdded;
+      this.modelAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
     },//initialize
 
 
@@ -213,7 +213,7 @@ var HUSocialMethods = HUSocialMethods || {};
       title = title || ( 'string' === typeof(icon) ? this._capitalize( icon.replace( 'fa-', '') ) : '' );
       title = this._truncate(title, 20);
       icon = icon || 'fa-' + this.social_icons[0];
-      color = color || HUControlParams.defaultSocialColor;
+      color = color || serverControlParams.defaultSocialColor;
 
       return '<div><span class="fa ' + icon + '" style="color:' + color + '"></span> ' + title + '</div>';
     },
@@ -234,9 +234,9 @@ var HUSocialMethods = HUSocialMethods || {};
       var control     = this,
           _new_model  = _.clone( obj.model ),
           _new_title  = control._capitalize( obj.model['social-icon'].replace('fa-', '') ),
-          _new_color  = HUControlParams.defaultSocialColor;
+          _new_color  = serverControlParams.defaultSocialColor;
       //add text follow us... to the title
-      _new_title = [ HUControlParams.translatedStrings.followUs, _new_title].join(' ');
+      _new_title = [ serverControlParams.translatedStrings.followUs, _new_title].join(' ');
 
       $('input[data-type="title"]', obj.dom_el ).val( _new_title );
       $('input[data-type="social-link"]', obj.dom_el ).val( '' );
@@ -256,7 +256,7 @@ var HUSocialMethods = HUSocialMethods || {};
       var control = this,
           _new_title  = control._capitalize( obj.model['social-icon'].replace('fa-', '') ),
           _new_model = control.hu_preModel('model').get();
-      _new_model.title = [ HUControlParams.translatedStrings.followUs, _new_title].join(' ');
+      _new_model.title = [ serverControlParams.translatedStrings.followUs, _new_title].join(' ');
       control.hu_preModel('model').set(_new_model);
     },
 
@@ -265,7 +265,7 @@ var HUSocialMethods = HUSocialMethods || {};
 
     setupSelect : function( obj ) {
       var control = this,
-          socialList = _.union( [HUControlParams.translatedStrings.selectSocialIcon], control.social_icons);
+          socialList = _.union( [serverControlParams.translatedStrings.selectSocialIcon], control.social_icons);
 
       //generates the options
       _.map( socialList , function( icon_name, k ) {

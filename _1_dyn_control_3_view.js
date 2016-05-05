@@ -204,9 +204,9 @@ var HUDynamicMethods = HUDynamicMethods || {};
 
             $_edit_icon.toggleClass('active' , _is_expanded );
             if ( _is_expanded )
-              $_edit_icon.removeClass('fa-pencil').addClass('fa-minus-square').attr('title', HUControlParams.translatedStrings.close );
+              $_edit_icon.removeClass('fa-pencil').addClass('fa-minus-square').attr('title', serverControlParams.translatedStrings.close );
             else
-              $_edit_icon.removeClass('fa-minus-square').addClass('fa-pencil').attr('title', HUControlParams.translatedStrings.edit );
+              $_edit_icon.removeClass('fa-minus-square').addClass('fa-pencil').attr('title', serverControlParams.translatedStrings.edit );
 
             //scroll to the currently expanded view
             if ( 'expanded' == status )

@@ -119,9 +119,9 @@
   api.hu_getDocSearchLink = function( text ) {
     text = ! _.isString(text) ? '' : text;
     var _searchtext = text.replace( / /g, '+'),
-        _url = [ HUControlParams.docURL, 'search?query=', _searchtext ].join('');
+        _url = [ serverControlParams.docURL, 'search?query=', _searchtext ].join('');
     return [
-      '<a href="' + _url + '" title="' + HUControlParams.translatedStrings.readDocumentation + '" target="_blank">',
+      '<a href="' + _url + '" title="' + serverControlParams.translatedStrings.readDocumentation + '" target="_blank">',
       ' ',
       '<span class="fa fa-question-circle-o"></span>'
     ].join('');

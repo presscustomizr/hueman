@@ -1,7 +1,7 @@
 (function (api, $, _) {
 
   var $_nav_section_container,
-      translatedStrings = HUControlParams.translatedStrings || {};
+      translatedStrings = serverControlParams.translatedStrings || {};
 
 
   api.bind( 'ready' , function() {

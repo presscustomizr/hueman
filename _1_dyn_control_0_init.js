@@ -108,7 +108,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
       control.model = { id : '', title : '' };
 
       //default success message when model added
-      control.modelAddedMessage = HUControlParams.translatedStrings.successMessage;
+      control.modelAddedMessage = serverControlParams.translatedStrings.successMessage;
 
       //extend the control with new template Selectors
       $.extend( control, {
