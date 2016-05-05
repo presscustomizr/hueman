@@ -1,0 +1,1729 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Hueman v3.1.3\n"
+"POT-Creation-Date: 2016-05-05 16:02+0200\n"
+"PO-Revision-Date: 2016-05-05 16:02+0200\n"
+"Last-Translator: \n"
+"Language-Team: Press Customizr\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.5\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: assets\n"
+"X-Poedit-SearchPathExcluded-1: node_modules\n"
+"X-Poedit-SearchPathExcluded-2: grunt-tasks-config\n"
+"X-Poedit-SearchPathExcluded-3: option-tree\n"
+"X-Poedit-SearchPathExcluded-4: build\n"
+
+#: 404.php:14
+msgid ""
+"The page you are trying to reach does not exist, or has been moved. Please "
+"use the menus or the search box to find what you are looking for."
+msgstr ""
+"Laman yang Anda cari tidak ditemukan atau sudah dihapus. Silahkan gunakan "
+"Menu atau Kotak Pencarian untuk menemukan yang Anda mau."
+
+#: comments.php:7
+msgid "No Responses"
+msgstr "Tidak Ada Respon"
+
+#: comments.php:7
+msgid "1 Response"
+msgstr "1 Respon"
+
+#: comments.php:7
+msgid "% Responses"
+msgstr "% Respon"
+
+#: comments.php:10 functions/class-utils-settings-map.php:1058
+msgid "Comments"
+msgstr "Komentar"
+
+#: comments.php:11
+msgid "Pingbacks"
+msgstr "Pingback"
+
+#: footer.php:103 functions/customizer/class-admin-customize.php:597
+msgid "All Rights Reserved."
+msgstr "Hak Cipta Terdaftar."
+
+#: footer.php:109
+msgid "Powered by"
+msgstr "Didukung Oleh"
+
+#: footer.php:109
+msgid "Theme by"
+msgstr "Tema Oleh"
+
+#: functions/admin/class-admin-page.php:35
+#, php-format
+msgid ""
+"<h2>As per the WordPress themes guidelines (%1$s), all the Hueman theme "
+"options have been moved to the %2$s.</h2>"
+msgstr ""
+"<h2>Sesuai panduan tema Wordpress (%1$s), seluruh pengaturan tema Hueman "
+"sudah dipindahkan ke %2$s.</h2>"
+
+#: functions/admin/class-admin-page.php:36
+msgid "more informations here"
+msgstr "informasi lebih lanjut disini"
+
+#: functions/admin/class-admin-page.php:37
+msgid "customizer"
+msgstr "customizer"
+
+#: functions/admin/class-admin-page.php:40
+msgid ""
+"All your previous options have been kept and are available in the customizer "
+"options panel."
+msgstr ""
+"Semua pengaturan Anda sebelumnya sudah diingat dan tersedia di panel opsi "
+"kustomisasi."
+
+#: functions/admin/class-admin-page.php:53
+msgid "About Hueman"
+msgstr "Tentang Hueman"
+
+#: functions/admin/class-admin-page.php:81
+msgid "Need help with"
+msgstr "Perlu bantuan dengan"
+
+#: functions/admin/class-admin-page.php:86
+msgid "Welcome to"
+msgstr "Selamat datang di"
+
+#: functions/admin/class-admin-page.php:103
+msgid "Thank you for using the Hueman WordPress theme for your website."
+msgstr ""
+"Terimakasih telah menggunakan tema Wordpress Hueman untuk website Anda."
+
+#: functions/admin/class-admin-page.php:104
+#, php-format
+msgid ""
+"Hueman %s has more features, is safer and more stable than ever to help you "
+"designing an awesome webdesign."
+msgstr ""
+"%s Hueman memiliki banyak fitur, lebih aman dan stabil maka dapat membantu "
+"Anda mendesain web dengan luar biasa."
+
+#: functions/admin/class-admin-page.php:105
+#, php-format
+msgid ""
+"Since version 3.0+, all the options have been moved to the %s, allowing you "
+"to design your website safely and in live preview before publishing the "
+"changes. If you just upgraded from a lower version, you'll be able to find "
+"all your previous settings in the customizer."
+msgstr ""
+"Sejak versi 3.0+, semua pengaturan sudah dipindahkan ke %s, memungkinkan "
+"Anda mendesain web Anda dengan aman dan live preview sebelum mempublikasikan "
+"perubahan. Jika Anda baru saja upgrade dari versi sebelumnya, Anda dapat "
+"temukan pengaturan Anda sebelumnya di kustomisasi."
+
+#: functions/admin/class-admin-page.php:106
+msgid "customizer panel"
+msgstr "panel kustomisasi"
+
+#: functions/admin/class-admin-page.php:108
+#, php-format
+msgid ""
+"For more informations about this new version of the theme, %s or check the "
+"changelog below"
+msgstr ""
+"Untuk infromasi lebih lanjut tentang versi terbaru tema ini, %s atau cek "
+"catatan perubahan dibawah"
+
+#: functions/admin/class-admin-page.php:109
+msgid "read the latest release notes"
+msgstr "baca catatan rilis terbaru"
+
+#: functions/admin/class-admin-page.php:114
+#, php-format
+msgid "The best way to start with %s is to read the %s and visit the %s."
+msgstr "Cara tepat untuk memulai %s adalah membaca %s dan kunjungi %s."
+
+#: functions/admin/class-admin-page.php:116
+msgid "getting started guide"
+msgstr "dapatkan panduan permulaan"
+
+#: functions/admin/class-admin-page.php:117
+msgid "demo website"
+msgstr "demo website"
+
+#: functions/admin/class-admin-page.php:131
+#, php-format
+msgid ""
+"You are using a child theme of Hueman %1$s : always check the %2$s after "
+"upgrading to see if a function or a template has been deprecated."
+msgstr ""
+"Anda menggunakan anak tema dari Hueman %1$s : selalu cek %2$s setelah "
+"upgrade untuk melihat jika saja function atau template sudah usang."
+
+#: functions/admin/class-admin-page.php:147
+msgid "Go to Dashboard &rarr; Home"
+msgstr "Pergi ke Dasbor &rarr; Beranda"
+
+#: functions/admin/class-admin-page.php:147
+msgid "Go to Dashboard"
+msgstr "Pergi ke Dasbor"
+
+#: functions/admin/class-admin-page.php:162
+#, php-format
+msgid "The best way to start is to read the %s."
+msgstr "Cara tepat untuk memulai adalah membaca %s."
+
+#: functions/admin/class-admin-page.php:163
+msgid "documentation"
+msgstr "dokumentasi"
+
+#: functions/admin/class-admin-page.php:167
+msgid ""
+"If you don't find an answer to your question in the documentation, don't "
+"panic :) ! The Hueman theme is used by a large number of webmasters "
+"constantly reporting bugs and potential issues. If you encounter a problem "
+"with the theme, chances are that it's already been reported and fixed in the"
+msgstr ""
+"Jika Anda tidak menemukan jawaban atas pertanyaan Anda di dokumentasi, "
+"jangan panik :) ! Tema Hueman digunakan oleh banyak webmaster yang selalu "
+"melaporkan bug dan masalah potensial. Jika Anda menemukan masalah dengan "
+"tema, pastikan sudah dilaporkan dan dipulihkan di"
+
+#: functions/admin/class-admin-page.php:169
+msgid "support forum"
+msgstr "forum bantuan"
+
+#: functions/admin/class-admin-page.php:175
+msgid "Read the documentation"
+msgstr "Baca dokumentasi"
+
+#: functions/admin/class-admin-page.php:179
+msgid "Get help in the support forum"
+msgstr "Dapatkan bantuan di forum bantuan"
+
+#: functions/admin/class-admin-page.php:239
+#, php-format
+msgid "Changelog in version %1$s"
+msgstr "Catatan perubahan pada versi %1$s"
+
+#: functions/admin/class-admin-page.php:261
+msgid "System Informations"
+msgstr "Informasi Sistem"
+
+#: functions/admin/class-admin-page.php:262
+msgid "Please include the following informations when posting support requests"
+msgstr "Harap masukkan infromasi ini ketika membuat post permintaan bantuan"
+
+#: functions/admin/class-admin-page.php:263
+msgid ""
+"To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C "
+"(Mac)."
+msgstr ""
+"Untuk menyalin informasi sistem, klik dibawah ini kemudian tekan Ctrl + C "
+"(PC) atau Cmd + C (Mac)."
+
+#: functions/admin/class-admin-update-notification.php:85
+msgid "Good, you've just upgraded to"
+msgstr "Bagus, Anda baru saja upgrade ke"
+
+#: functions/admin/class-admin-update-notification.php:87
+msgid "version"
+msgstr "versi"
+
+#: functions/admin/class-admin-update-notification.php:96
+msgid "We'd like to introduce the new features we've been working on."
+msgstr "Kami ingin memperkenalkan fitur baru yang telah kami selesaikan."
+
+#: functions/admin/class-admin-update-notification.php:98
+msgid "Read the latest release notes"
+msgstr "Bada catatan rilis terbaru"
+
+#: functions/admin/class-admin-update-notification.php:100
+msgid "Visit the demo"
+msgstr "Kunjungi demo"
+
+#: functions/admin/class-admin-update-notification.php:106
+msgid "I already know what's new thanks !"
+msgstr "Saya sudah tahu apa saja yang baru, terimakasih !"
+
+#: functions/admin/class-admin-update-notification.php:107
+msgid "close"
+msgstr "tutup"
+
+#: functions/class-utils-settings-map.php:136
+msgid "Favicon Upload (supported formats : .ico, .png, .gif)"
+msgstr "Unggah Favicon (format : .ico, .png, .gif)"
+
+#: functions/class-utils-settings-map.php:137
+msgid "FAVICON"
+msgstr "FAVICON"
+
+#: functions/class-utils-settings-map.php:145
+msgid "FeedBurner URL"
+msgstr "URL FeedBurner"
+
+#: functions/class-utils-settings-map.php:150
+msgid ""
+"Enter your full FeedBurner URL (or any other preferred feed URL) if you wish "
+"to use FeedBurner over the standard WordPress feed e.g. http://feeds."
+"feedburner.com/yoururlhere "
+msgstr ""
+"Masukkan URL lengkap FeedBurner Anda (atau URL langganan lainnya) jika Anda "
+"ingin menggunakan FeedBurner daripada langganan standar Wordpress misalnya "
+"http://feed.feedburner.com/riobermano"
+
+#: functions/class-utils-settings-map.php:163
+msgid "Dynamic Styles"
+msgstr "Gaya Dinamis"
+
+#: functions/class-utils-settings-map.php:166
+msgid "Turn on to use the styling options below"
+msgstr "Nyalakan untuk menggunakan opsi gaya dibawah"
+
+#: functions/class-utils-settings-map.php:171
+msgid "Boxed Layout"
+msgstr "Layout Kotak"
+
+#: functions/class-utils-settings-map.php:174
+msgid "Use a boxed layout"
+msgstr "Gunakan Layout Kotak"
+
+#: functions/class-utils-settings-map.php:179
+msgid "Font"
+msgstr "Font"
+
+#: functions/class-utils-settings-map.php:183
+msgid "Select a font for your website"
+msgstr "Pilih font untuk website Anda"
+
+#: functions/class-utils-settings-map.php:189
+msgid "Website Max-width"
+msgstr "Lebar maksimal website"
+
+#: functions/class-utils-settings-map.php:195
+msgid ""
+"Max-width of the container. If you use 2 sidebars, your container should be "
+"at least 1200px.<br /><i>Note: For 720px content (default) use "
+"<strong>1380px</strong> for 2 sidebars and <strong>1120px</strong> for 1 "
+"sidebar. If you use a combination of both, try something inbetween.</i>"
+msgstr ""
+"Lebar maks container. Jika Anda menggunakan 2 sidebar, container Anda harus "
+"sedikitnya 1200px.<br/><i>Catatan: Untuk konten 720px  (default) gunakan "
+"<strong>1380px</strong> untuk 2 sidebar dan <strong>11120px</strong>untuk "
+"1sidebar. Jika Anda menggunakan kombinasi keduanya, coba sesuatu diantaranya."
+"</i>"
+
+#: functions/class-utils-settings-map.php:200
+msgid "Sidebar Width"
+msgstr "Lebar Sidebar"
+
+#: functions/class-utils-settings-map.php:204
+msgid "30px padding for widgets"
+msgstr "30px padding untuk widget"
+
+#: functions/class-utils-settings-map.php:205
+msgid "20px padding for widgets"
+msgstr "20px padding untuk widget"
+
+#: functions/class-utils-settings-map.php:207
+msgid "Change left and right sidebars padding"
+msgstr "Ubah padding sidebar kiri dan kanan"
+
+#: functions/class-utils-settings-map.php:212
+msgid "Primary Color"
+msgstr "Warna Utama"
+
+#: functions/class-utils-settings-map.php:222
+msgid "Secondary Color"
+msgstr "Warna Kedua"
+
+#: functions/class-utils-settings-map.php:234
+msgid "Body Background"
+msgstr "Background Body"
+
+#: functions/class-utils-settings-map.php:235
+msgid "Set the website background color"
+msgstr "Atur warna background website"
+
+#: functions/class-utils-settings-map.php:247
+msgid "Topbar Background"
+msgstr "Background Bar Atas"
+
+#: functions/class-utils-settings-map.php:257
+msgid "Header Background"
+msgstr "Background Header"
+
+#: functions/class-utils-settings-map.php:267
+msgid "Header Menu Background"
+msgstr "Background Menu Header"
+
+#: functions/class-utils-settings-map.php:277
+msgid "Footer Background"
+msgstr "Background Footer"
+
+#: functions/class-utils-settings-map.php:288
+msgid "Image Border Radius"
+msgstr "Radius Border Gambar"
+
+#: functions/class-utils-settings-map.php:294
+msgid "Give your thumbnails and layout images rounded corners"
+msgstr "Berikan thumbnail Anda dan gambar layout ujungnya melingkar"
+
+#: functions/class-utils-settings-map.php:316
+msgid "Create and organize your social links"
+msgstr "Buat dan organisir link medsos Anda"
+
+#: functions/class-utils-settings-map.php:333
+msgid "Posts Comments"
+msgstr "Kirim Komentar"
+
+#: functions/class-utils-settings-map.php:336
+msgid "Comments on posts"
+msgstr "Komentar pada post"
+
+#: functions/class-utils-settings-map.php:341
+msgid "Pages Comments"
+msgstr "Komentar Laman"
+
+#: functions/class-utils-settings-map.php:344
+msgid "Comments on pages"
+msgstr "Komentar pada laman"
+
+#: functions/class-utils-settings-map.php:358
+msgid "Enable the Mobile Friendly (or Responsive) layout"
+msgstr "Nyalakan Mobile Friendly (atau responsive) layout"
+
+#: functions/class-utils-settings-map.php:361
+msgid ""
+"Hueman is a mobile friendly WordPress theme out of the box. This means that "
+"it will adapt and render nicely on any devices : desktops, laptops, tablets, "
+"smartphones. <br/>If you uncheck this box, this adaptive (or reponsive) "
+"behaviour will not be working anymore. In most of the cases, you won't need "
+"to disable this option, and it is not recommended."
+msgstr ""
+"Hueman adalah tema Wordpress yang mobile friendly. Artinya akan beradaptasi "
+"dan render dengan baik di perangkat apapun : desktop, laptop, tablet, hp.<br/"
+">Jika Anda tidak centang kotak ini, responsive ini tidak akan berfungsi. "
+"Pada beberapa kasus yang ada, rekomendasi kami sebaiknya Anda nyalakan opsi "
+"ini."
+
+#: functions/class-utils-settings-map.php:375
+msgid "Use a minified stylesheet"
+msgstr "Gunakan minified stylesheet"
+
+#: functions/class-utils-settings-map.php:378
+msgid ""
+"Unchecking this option is not recommended. Minifying css stylesheets "
+"improves performance for your website overall by decreasing the load time."
+msgstr ""
+"Menghapus centang di kotak ini tidak disarankan. Minifying css stylesheets "
+"mengimprof performa untuk website Anda keseluruhan dengan menurunkan waktu "
+"loading."
+
+#: functions/class-utils-settings-map.php:383
+msgid "Use Structured Data Markup for your posts"
+msgstr "Gunakan Structured Data Markup untuk post Anda"
+
+#: functions/class-utils-settings-map.php:386
+msgid ""
+"\"Structured data markup\" is a standard way to annotate your content so "
+"machines can understand it. Implementing it will help your website rank "
+"higher in search engines."
+msgstr ""
+"\"Structured data markup\" adalah cara standar untuk menganotasi konten Anda "
+"sehingga dapat dipahami mesin pencari. Mengimplementasikan ini akan membantu "
+"ranking website Anda meningkat di mesin pencari."
+
+#: functions/class-utils-settings-map.php:400
+msgid "Display the \"About Hueman\" page in the \"Appearance\" admin menu"
+msgstr "Tampilkan laman \"Tentang Hueman\" di menu \"Tampilan\" admin"
+
+#: functions/class-utils-settings-map.php:403
+msgid ""
+"This page is intended to provide informations about the Hueman theme : "
+"changelog, release note, documentation link. It also display informations "
+"about your current install that can be useful if you need to report an issue."
+msgstr ""
+"Laman ini dimaksudkan untuk memberikan informasi tentang tema Hueman : "
+"perubahan, nota rilis, link dokumentasi. Juga menampilkan informasi tentang "
+"pemasangan terbaru Anda yang dapat berguna jika Anda ingin melaporkan "
+"masalah."
+
+#: functions/class-utils-settings-map.php:408
+msgid "Display a Help button in the admin bar"
+msgstr "Tampilkan tombol Bantuan di admin bar"
+
+#: functions/class-utils-settings-map.php:411
+msgid "This button links to the \"About Hueman\" page."
+msgstr "Link tombol ini menuju laman \"Tentang Hueman\"."
+
+#: functions/class-utils-settings-map.php:431
+msgid "Custom Header Logo"
+msgstr "Kustom Logo Header"
+
+#: functions/class-utils-settings-map.php:442
+#: functions/class-utils-settings-map.php:859
+msgid ""
+"Upload your custom logo image. Supported formats : .jpg, .png, .gif, svg, "
+"svgz"
+msgstr "Unggah gambar logo kustom Anda. Format : .jpg, .png, .gif, .svg, .svgz"
+
+#: functions/class-utils-settings-map.php:448
+msgid "Header Logo Image Max-height"
+msgstr "Maks Tinggi Gambar Logo Header"
+
+#: functions/class-utils-settings-map.php:454
+msgid ""
+"Your logo image should have the double height of this to be high resolution"
+msgstr ""
+"Gambar logo Anda harus memiliki tinggi double untuk mencapai resolusi tinggi"
+
+#: functions/class-utils-settings-map.php:459
+msgid "Display your site's description (tagline)"
+msgstr "Tampilkan website deskripsi Anda (tagline)"
+
+#: functions/class-utils-settings-map.php:462
+msgid "The description that appears next to your logo"
+msgstr "Deskripsi muncul setelah logo Anda"
+
+#: functions/class-utils-settings-map.php:466
+msgid "Header Image"
+msgstr "Gambar Header"
+
+#: functions/class-utils-settings-map.php:476
+msgid ""
+"Upload a header image (supported formats : .jpg, .png, .gif, svg, svgz). "
+"This will disable header title/logo, site description, header ads widget"
+msgstr ""
+"Unggah gambar header (format : .jpg, .png, .gif, .svg, .svgz). Ini akan "
+"menutup judul/logo header, deskripsi situs, widget iklan header"
+
+#: functions/class-utils-settings-map.php:490
+msgid "Display a widget in your header"
+msgstr "Tampilkan widget di header Anda"
+
+#: functions/class-utils-settings-map.php:493
+msgid ""
+"Header widget area, perfect to insert advertisements. Note : this feature is "
+"not available when a header image is being displayed."
+msgstr ""
+"area widget header, cocok untuk memasukkan iklan. Catatan : fitur ini tidak "
+"tersedia ketika gambar header ditampilkan."
+
+#: functions/class-utils-settings-map.php:514
+msgid "Global Layout"
+msgstr "Layout Umum"
+
+#: functions/class-utils-settings-map.php:518
+msgid "Other layouts will override this option if they are set"
+msgstr "Layout lain akan menimpa opsi ini jika mereka diatur"
+
+#: functions/class-utils-settings-map.php:523 functions/init-core.php:751
+msgid "Home"
+msgstr "Beranda"
+
+#: functions/class-utils-settings-map.php:527
+msgid "[ <strong>is_home</strong> ] Posts homepage layout"
+msgstr "[ <strong>is_home</strong> ] Layout post beranda"
+
+#: functions/class-utils-settings-map.php:532
+msgid "Single"
+msgstr "Tunggal"
+
+#: functions/class-utils-settings-map.php:536
+msgid ""
+"[ <strong>is_single</strong> ] Single post layout - If a post has a set "
+"layout, it will override this."
+msgstr ""
+"[ <strong>is_single</strong> ] Layout post tunggal - Jika memiliki "
+"pengaturan layout khusus, akan mengabaikan ini."
+
+#: functions/class-utils-settings-map.php:541
+msgid "Archive"
+msgstr "Arsip"
+
+#: functions/class-utils-settings-map.php:545
+msgid ""
+"[ <strong>is_archive</strong> ] Category, date, tag and author archive layout"
+msgstr ""
+"[ <strong>is_archive</strong> ] Layout kategori, tanggal, tag dan arsip "
+"penulis"
+
+#: functions/class-utils-settings-map.php:550
+msgid "Archive - Category"
+msgstr "Arsip - Kategori"
+
+#: functions/class-utils-settings-map.php:554
+msgid "[ <strong>is_category</strong> ] Category archive layout"
+msgstr "[ <strong>is_category</strong> ] Layout kategori arsip"
+
+#: functions/class-utils-settings-map.php:559
+msgid "Search"
+msgstr "Cari"
+
+#: functions/class-utils-settings-map.php:563
+msgid "[ <strong>is_search</strong> ] Search page layout"
+msgstr "[ <strong>is_search</strong> ] Layout laman pencarian"
+
+#: functions/class-utils-settings-map.php:568
+msgid "Error 404"
+msgstr "Error 404"
+
+#: functions/class-utils-settings-map.php:572
+msgid "[ <strong>is_404</strong> ] Error 404 page layout"
+msgstr "[ <strong>is_404</strong> ] Layout laman error 404"
+
+#: functions/class-utils-settings-map.php:577
+msgid "Default Page"
+msgstr "Laman Default"
+
+#: functions/class-utils-settings-map.php:581
+msgid ""
+"[ <strong>is_page</strong> ] Default page layout - If a page has a set "
+"layout, it will override this."
+msgstr ""
+"[ <strong>is_page</strong> ] Layout laman default - Jika laman memiliki "
+"pengaturan khusu, akan mengabaikan ini."
+
+#: functions/class-utils-settings-map.php:595
+msgid "Display a custom heading for your blog."
+msgstr "Tampilkan heading kustom untuk blog Anda"
+
+#: functions/class-utils-settings-map.php:602
+msgid "Blog Heading"
+msgstr "Blog Heading"
+
+#: functions/class-utils-settings-map.php:605
+msgid ""
+"Your blog heading. Html is allowed. Note : write a blank space to hide the "
+"default content."
+msgstr ""
+"Heading blog Anda. HTML diperbolehkan. Catatan : kosongkan untuk "
+"menyembunyikan konten default."
+
+#: functions/class-utils-settings-map.php:609 functions/init-front.php:219
+msgid "Blog"
+msgstr "Blog"
+
+#: functions/class-utils-settings-map.php:611
+msgid "Blog Sub-Heading"
+msgstr "Blog Sub-Heading"
+
+#: functions/class-utils-settings-map.php:614
+msgid ""
+"Your blog sub-heading. Html is allowed. Note : write a blank space to hide "
+"the default content."
+msgstr ""
+"Sub-heading blog Anda. HTML diperbolehkan. Catatan : Kosongkan untuk "
+"menyembunyikan konten default."
+
+#: functions/class-utils-settings-map.php:621
+msgid "Excerpt Length"
+msgstr "Panjang Kutipan"
+
+#: functions/class-utils-settings-map.php:627
+msgid "Set the excerpt length (in number of words)"
+msgstr "Atur panjang kutipan (dalam jumlah kata)"
+
+#: functions/class-utils-settings-map.php:632
+msgid "Display your blog post as a standard list."
+msgstr "Tampilkan post blog Anda sebagai daftar standar."
+
+#: functions/class-utils-settings-map.php:635
+msgid ""
+"While the default blog design is a grid of posts, you can check this option "
+"and display one post per row, whith the thumbnail beside the text."
+msgstr ""
+"Ketika desain default blog merupakan grid, Anda dapat centang kotak ini dan "
+"menampilkan satu post perbaris, dengan thumbnail disamping tulisan."
+
+#: functions/class-utils-settings-map.php:639
+msgid "Featured posts"
+msgstr "Featured posts"
+
+#: functions/class-utils-settings-map.php:641
+msgid "Feature posts on top of your blog"
+msgstr "Fiturkan post teratas di blog Anda"
+
+#: functions/class-utils-settings-map.php:644
+msgid ""
+"Check this box to display a selection of posts with a slideshow, on top of "
+"your blog."
+msgstr ""
+"Centang kotak ini untuk menampilkan post pilihan dengan slideshow, teratas "
+"di blog Anda."
+
+#: functions/class-utils-settings-map.php:649
+msgid "Select a category to feature"
+msgstr "Pilih kategori yang ingin di fiturkan"
+
+#: functions/class-utils-settings-map.php:653
+msgid ""
+"If no specific category is selected, the featured posts block will display "
+"your latest post(s) from all categories."
+msgstr ""
+"Jika tidak ada kategori ditentukan, blok featured post akan menampilkan post "
+"terakhir Anda dari semua kategori."
+
+#: functions/class-utils-settings-map.php:659
+msgid "Featured Post Count"
+msgstr "Jumlah Featured Post"
+
+#: functions/class-utils-settings-map.php:665
+msgid ""
+"Max number of featured posts to display. <br /><i>Set to 1 and it will show "
+"it without any slider script</i><br /><i>Set it to 0 to disable</i>"
+msgstr ""
+"Jumlah maks featured post yang ditampilkan.<br/><i>Atur ke 1 dan akan "
+"menampilkan tanpa slideshow</i><br/><i>Atur ke 0 untuk meniadakan</i>"
+
+#: functions/class-utils-settings-map.php:670
+msgid "Display the full post content"
+msgstr "Tampilkan konten post penuh"
+
+#: functions/class-utils-settings-map.php:673
+msgid ""
+"By default, your featured posts display the first words of their content "
+"( the \"excerpt\"). Check this box to display the full content."
+msgstr ""
+"Secara defaultnya, featured post Anda menampilkan kata pertama pada konten "
+"tersebut (\"kutipan\"). Centang kotak ini untuk menampilkan full konten."
+
+#: functions/class-utils-settings-map.php:678
+msgid "Animate your featured posts with a slideshow"
+msgstr "Animasikan featured post Anda dengan slideshow"
+
+#: functions/class-utils-settings-map.php:681
+msgid "Enables the automatic animation of the featured posts carousel."
+msgstr "Nyalakan animasi carosel otomatis featured post."
+
+#: functions/class-utils-settings-map.php:687
+msgid "Featured Slideshow Speed"
+msgstr "Kecepatan Featured Slideshow"
+
+#: functions/class-utils-settings-map.php:693
+msgid "Speed of the automatic slideshow animation"
+msgstr "Atur kecepatan animasi slideshow otomatis"
+
+#: functions/class-utils-settings-map.php:698
+msgid "Display the featured posts also in the list of posts"
+msgstr "Tampilkan featured post juga di daftar post"
+
+#: functions/class-utils-settings-map.php:701
+msgid ""
+"If this box is checked, your featured posts will be displayed both in the "
+"featured slider and in the post list below. Usually not recommended because "
+"a given post might appear two times on the same page."
+msgstr ""
+"Jika kotak ini dicentang, featured post Anda akan tampil di featured slider "
+"dan di daftar post dibawah. Biasanya tidak disarankan karena post tersebut "
+"mungkin muncul 2x di laman yang sama."
+
+#: functions/class-utils-settings-map.php:716
+msgid "Single - Author Bio"
+msgstr "Tunggal - Bio Penulis"
+
+#: functions/class-utils-settings-map.php:719
+msgid "Display post author description, if it exists"
+msgstr "Tampilkan deskripsi penulis post, jika ada"
+
+#: functions/class-utils-settings-map.php:724
+msgid "Single - Related Posts"
+msgstr "Tunggal - Post Terkait"
+
+#: functions/class-utils-settings-map.php:728
+#: functions/class-utils-settings-map.php:741
+#: functions/class-utils-settings-map.php:1246
+msgid "Disable"
+msgstr "Tiadakan"
+
+#: functions/class-utils-settings-map.php:729
+msgid "Related by categories"
+msgstr "Terkait berdasarkan kategori"
+
+#: functions/class-utils-settings-map.php:730
+msgid "Related by tags"
+msgstr "Terkait berdasarkan tag"
+
+#: functions/class-utils-settings-map.php:732
+msgid "Display randomized related articles below the post"
+msgstr "Tampilkan secara acak artikel terkait dibawah post"
+
+#: functions/class-utils-settings-map.php:737
+msgid "Single - Post Navigation"
+msgstr "Tunggal - Navigasi Post"
+
+#: functions/class-utils-settings-map.php:742
+msgid "Left Sidebar"
+msgstr "Sidebar Kiri"
+
+#: functions/class-utils-settings-map.php:743
+msgid "Right Sidebar"
+msgstr "Sidebar Kanan"
+
+#: functions/class-utils-settings-map.php:744
+msgid "Below content"
+msgstr "Dibawah Konten"
+
+#: functions/class-utils-settings-map.php:746
+msgid "Display links to the next and previous article"
+msgstr "Tampilkan link ke artikel sebelum dan selanjutnya"
+
+#: functions/class-utils-settings-map.php:760
+msgid "Thumbnail Placeholder"
+msgstr "Thumbnail Placeholder"
+
+#: functions/class-utils-settings-map.php:763
+msgid "Display featured image placeholders if no featured image is set"
+msgstr ""
+"Tampilkan placeholder featured image jika featured image tidak ada yang "
+"diatur"
+
+#: functions/class-utils-settings-map.php:768
+msgid "Thumbnail Comment Count"
+msgstr "Thumbnail Jumlah Komentar"
+
+#: functions/class-utils-settings-map.php:771
+msgid "Display comment count on thumbnails"
+msgstr "Tampilkan jumlah komentar di thumbnail"
+
+#: functions/class-utils-settings-map.php:792
+msgid "Sidebar Top Boxes"
+msgstr "Kotak Atas Sidebar"
+
+#: functions/class-utils-settings-map.php:795
+msgid "Display boxes at the top of the sidebars"
+msgstr "Tampilkan kotak di atas dari sidebar"
+
+#: functions/class-utils-settings-map.php:800
+msgid "Mobile Sidebar Content"
+msgstr "Konten Mobile Sidebar"
+
+#: functions/class-utils-settings-map.php:804
+msgid "Display both sidebars"
+msgstr "Tampilkan kedua sidebar"
+
+#: functions/class-utils-settings-map.php:805
+msgid "Hide primary sidebar"
+msgstr "Sembunyikan sidebar utama"
+
+#: functions/class-utils-settings-map.php:806
+msgid "Hide secondary sidebar"
+msgstr "Sembunyikan sidebar kedua"
+
+#: functions/class-utils-settings-map.php:807
+msgid "Hide both sidebars"
+msgstr "Sembunyikan kedua sidebar"
+
+#: functions/class-utils-settings-map.php:809
+msgid ""
+"Control how the sidebar content is displayed on smartphone mobile devices "
+"(320px). Note : on smartphones the sidebars are displayed below the content."
+msgstr ""
+"Atur bagaimana sidebar ditampilkan di perangkat mobile (320px). Catatan : "
+"pada hp sidebar akan ditampilkan dibawah konten."
+
+#: functions/class-utils-settings-map.php:832
+msgid "Display a full width widget area in your footer"
+msgstr "Tampilkan lebar penuh widget di footer"
+
+#: functions/class-utils-settings-map.php:835
+#, php-format
+msgid ""
+"This zone is located before the other footer widgets and takes 100% of the "
+"width. Very appropriate to display a Google Map or an advertisement banner."
+msgstr ""
+"Zona ini ditempatkan sebelum widget footer lainnya dan menjadi 100% lebar. "
+"Sangat cocok untuk menampilkan Peta Google atau baner iklan."
+
+#: functions/class-utils-settings-map.php:840
+msgid "Select columns to enable footer widgets"
+msgstr "Pilih kolom untuk mengadakan widget footer"
+
+#: functions/class-utils-settings-map.php:844
+msgid "Recommended number of columns : 3"
+msgstr "Disarankan : 3 kolom"
+
+#: functions/class-utils-settings-map.php:848
+msgid "Upload your custom logo image"
+msgstr "Unggah gambar logo kustom Anda"
+
+#: functions/class-utils-settings-map.php:864
+msgid "Replace the footer copyright text"
+msgstr "Timpa tulisan copyright footer"
+
+#: functions/class-utils-settings-map.php:868
+msgid "Note : Html is allowed."
+msgstr "Catatan : HTML diperbolehkan."
+
+#: functions/class-utils-settings-map.php:873
+msgid "Footer credit text"
+msgstr "Tulisan kredit footer"
+
+#: functions/class-utils-settings-map.php:908
+msgid "Global settings"
+msgstr "Pengaturan umum"
+
+#: functions/class-utils-settings-map.php:909
+msgid "General settings for the Hueman theme : design, comments, mobile, ..."
+msgstr "Pengaturan umum untuk tema Hueman : desain, komentar, mobile, ..."
+
+#: functions/class-utils-settings-map.php:914
+msgid "Header"
+msgstr "Header"
+
+#: functions/class-utils-settings-map.php:915
+msgid "Header settings for the Hueman theme."
+msgstr "Pengaturan header untuk tema Hueman."
+
+#: functions/class-utils-settings-map.php:920
+msgid "Content"
+msgstr "Konten"
+
+#: functions/class-utils-settings-map.php:921
+msgid "Content settings for the Hueman theme."
+msgstr "Pengaturan konten untuk tema Hueman."
+
+#: functions/class-utils-settings-map.php:926
+msgid "Sidebars"
+msgstr "Sidebar"
+
+#: functions/class-utils-settings-map.php:927
+msgid "Sidebars settings for the Hueman theme."
+msgstr "Pengaturan sidebar untuk tema Hueman."
+
+#: functions/class-utils-settings-map.php:932
+msgid "Footer"
+msgstr "Footer"
+
+#: functions/class-utils-settings-map.php:933
+msgid "Footer settings for the Hueman theme."
+msgstr "Pengaturan footer untuk tema Hueman."
+
+#: functions/class-utils-settings-map.php:938
+msgid "Advanced options"
+msgstr "Pengaturan lanjutan"
+
+#: functions/class-utils-settings-map.php:939
+msgid "Advanced settings for the Hueman theme."
+msgstr "Pengaturan lanjutan untuk tema Hueman."
+
+#: functions/class-utils-settings-map.php:1014
+#, php-format
+msgid "Your theme supports %s menu. Select which menu you would like to use."
+msgid_plural ""
+"Your theme supports %s menus. Select which menu appears in each location."
+msgstr[0] "Tema Anda mendukung %s menu. Pilih menu mana yang ingin digunakan."
+msgstr[1] ""
+"Tema Anda mendukung %s menu. Pilih menu mana yang ingin tampil disetiap "
+"lokasi."
+
+#: functions/class-utils-settings-map.php:1017
+#: functions/class-utils-settings-map.php:1025
+#, php-format
+msgid "You can create new menu and edit your menu's content %s."
+msgstr "Anda dapat membuat menu baru dan edit konten menu %s."
+
+#: functions/class-utils-settings-map.php:1020
+msgid "on the Menus screen in the Appearance section"
+msgstr "pada layar Menu di bagian Tampilan"
+
+#: functions/class-utils-settings-map.php:1021
+#: functions/class-utils-settings-map.php:1029
+msgid "create/edit menus"
+msgstr "buat/edit menu"
+
+#: functions/class-utils-settings-map.php:1028
+msgid "in the menu panel"
+msgstr "di panel menu"
+
+#: functions/class-utils-settings-map.php:1034
+msgid ""
+"If a menu location has no menu assigned to it, a default page menu will be "
+"used."
+msgstr ""
+"jika lokasi menu tidak memiliki menu yang diterapkan, laman menu default "
+"akan digunakan."
+
+#: functions/class-utils-settings-map.php:1043
+msgid "Site Identity : Title, Tagline and Site Icon"
+msgstr "Identitas Situs : Judul, Tagline dan Ikon Situs"
+
+#: functions/class-utils-settings-map.php:1048
+msgid "General Design Options : Font, Colors, ..."
+msgstr "Opsi Desain Umum : Font, Warna, ..."
+
+#: functions/class-utils-settings-map.php:1053
+msgid "Social links"
+msgstr "Link Medsos"
+
+#: functions/class-utils-settings-map.php:1063
+msgid "Mobile devices"
+msgstr "Perangkat hp"
+
+#: functions/class-utils-settings-map.php:1068
+msgid "Performances and SEO"
+msgstr "Performa dan SEO"
+
+#: functions/class-utils-settings-map.php:1073
+msgid "Hueman Admin Settings"
+msgstr "Pengaturan Admin Hueman"
+
+#: functions/class-utils-settings-map.php:1084
+msgid "Header Design : logo, background, ..."
+msgstr "Desain Header : logo, background, ..."
+
+#: functions/class-utils-settings-map.php:1089
+msgid "Header Advertisement Widget"
+msgstr "Widget Iklan Header"
+
+#: functions/class-utils-settings-map.php:1099
+msgid "Layout options for the main content"
+msgstr "Opsi layout untuk konten utama"
+
+#: functions/class-utils-settings-map.php:1104
+msgid "Sidebars : Design and Mobile Settings"
+msgstr "Sidebar : Desain dan Pengaturan Mobile"
+
+#: functions/class-utils-settings-map.php:1109
+msgid "Blog Design and Content"
+msgstr "Desain Blog dan Konten"
+
+#: functions/class-utils-settings-map.php:1114
+msgid "Single Posts Settings"
+msgstr "Pengaturan Post Tunggal"
+
+#: functions/class-utils-settings-map.php:1119
+msgid "Thumbnails Settings"
+msgstr "Pengaturan Thumbnail"
+
+#: functions/class-utils-settings-map.php:1128
+msgid "Footer Design : Logo, layout, ..."
+msgstr "Desain Footer : Logo, Layout, ..."
+
+#: functions/class-utils-settings-map.php:1181
+msgid "Choose one "
+msgstr "Pilih"
+
+#: functions/class-utils-settings-map.php:1200
+#: functions/class-utils-settings-map.php:1250
+msgid "1 Column"
+msgstr "1 Kolom"
+
+#: functions/class-utils-settings-map.php:1204
+msgid "2 Columns - Content Left"
+msgstr "2 Kolom - Konten Kiri"
+
+#: functions/class-utils-settings-map.php:1208
+msgid "2 Columns - Content Right"
+msgstr "2 Kolom - Konten Kanan"
+
+#: functions/class-utils-settings-map.php:1212
+msgid "3 Columns - Content Middle"
+msgstr "3 Kolom - Konten Tengah"
+
+#: functions/class-utils-settings-map.php:1216
+msgid "3 Columns - Content Left"
+msgstr "3 Kolom - Konten Kiri"
+
+#: functions/class-utils-settings-map.php:1220
+msgid "3 Columns - Content Right"
+msgstr "3 Kolom - Konten Kanan"
+
+#: functions/class-utils-settings-map.php:1228
+msgid "Inherit Global Layout"
+msgstr "Layout Umum Inherit"
+
+#: functions/class-utils-settings-map.php:1254
+msgid "2 Columns"
+msgstr "2 Kolom"
+
+#: functions/class-utils-settings-map.php:1258
+msgid "3 Columns"
+msgstr "3 Kolom"
+
+#: functions/class-utils-settings-map.php:1262
+msgid "4 Columns"
+msgstr "4 Kolom"
+
+#: functions/class-utils-settings-map.php:1287
+msgid "No Sidebars"
+msgstr "Tanpa Sidebar"
+
+#: functions/class-utils-settings-map.php:1292
+msgid "Choose Sidebar"
+msgstr "Pilih Sidebar"
+
+#: functions/customizer/class-admin-customize.php:138
+msgid "&mdash; Select &mdash;"
+msgstr "&mdash; Pilih  &mdash;"
+
+#: functions/customizer/class-admin-customize.php:175
+msgid "Assign menus to locations"
+msgstr "Susun menu ke lokasi"
+
+#: functions/customizer/class-admin-customize.php:185
+#, php-format
+msgid ""
+"You haven't created any menu yet. %s or check the %s to learn more about "
+"menus."
+msgstr ""
+"Anda belum membuat menu apapun. %s atau cek %s untuk mempelajari tentang "
+"menu."
+
+#: functions/customizer/class-admin-customize.php:186
+msgid "Create a new menu now"
+msgstr "Buatlah menu sekarang"
+
+#: functions/customizer/class-admin-customize.php:187
+msgid "WordPress documentation"
+msgstr "Dokumentasi Wordpress"
+
+#: functions/customizer/class-admin-customize.php:203
+msgid "SITE ICON"
+msgstr "IKON SITUS"
+
+#: functions/customizer/class-admin-customize.php:260
+msgid "Create And Order Widget Areas"
+msgstr "Buat dan Susun Area Widget"
+
+#: functions/customizer/class-admin-customize.php:263
+#: functions/customizer/class-admin-customize.php:290
+msgid ""
+"You must save changes for the new areas to appear below. <br /><i>Warning: "
+"Make sure each area has a unique ID.</i>"
+msgstr ""
+"Anda harus menyimpan perubahan untuk area baru muncul dibawah.<br/"
+"><i>Peringatan: Pastikan setiap area memiliki ID unik.</i>"
+
+#: functions/customizer/class-admin-customize.php:287
+msgid "Create And Manage Widget Areas"
+msgstr "Buat dan Kelola Area Widget"
+
+#: functions/customizer/class-admin-customize.php:297
+msgid "Create and manage widget zones"
+msgstr "Buat dan kelola zona widget"
+
+#: functions/customizer/class-admin-customize.php:319
+msgid "Dynamic Sidebars and Widgets"
+msgstr "Sidebar dan Widget Dinamis"
+
+#: functions/customizer/class-admin-customize.php:642
+#: functions/customizer/controls/class-hu-dynamic-control.php:90
+#: functions/customizer/controls/class-hu-widget-areas-control.php:100
+msgid "Edit"
+msgstr "Edit"
+
+#: functions/customizer/class-admin-customize.php:643
+msgid "Close"
+msgstr "Tutup"
+
+#: functions/customizer/class-admin-customize.php:644
+msgid ""
+"Your favicon is currently handled with an old method and will not be "
+"properly displayed on all devices. You might consider to re-upload your "
+"favicon with the new control below."
+msgstr ""
+"Favicon Anda diatur dengan metode lama dan tidak akan muncul sempurna pada "
+"semua perangkat. Pertimbangkan untuk mengunggah ulang favicon Anda dengan "
+"kontrol baru dibawah."
+
+#: functions/customizer/class-admin-customize.php:645
+#: functions/customizer/controls/class-hu-widget-areas-control.php:77
+#: functions/customizer/controls/class-hu-widget-areas-control.php:126
+#: functions/customizer/controls/class-hu-widget-areas-control.php:170
+msgid "Location(s)"
+msgstr "Lokasi"
+
+#: functions/customizer/class-admin-customize.php:646
+#: functions/customizer/controls/class-hu-widget-areas-control.php:133
+#: functions/customizer/controls/class-hu-widget-areas-control.php:177
+msgid "Context(s)"
+msgstr "Konteks"
+
+#: functions/customizer/class-admin-customize.php:647
+msgid "Not set"
+msgstr "Tidak di Atur"
+
+#: functions/customizer/class-admin-customize.php:648
+msgid "Rss"
+msgstr "Rss"
+
+#: functions/customizer/class-admin-customize.php:649
+msgid "Select a social icon"
+msgstr "Pilih ikon medsos"
+
+#: functions/customizer/class-admin-customize.php:650
+msgid "Follow us on"
+msgstr "Ikuti kami di"
+
+#: functions/customizer/class-admin-customize.php:651
+msgid "Done !"
+msgstr "Selesai !"
+
+#: functions/customizer/class-admin-customize.php:652
+msgid "New Social Link created ! Scroll down to edit it."
+msgstr "Link baru medsos sudah dibuat ! Gulir kebawah untuk mengeditnya."
+
+#: functions/customizer/class-admin-customize.php:653
+msgid "New Widget Zone created ! Scroll down to edit it."
+msgstr "Zona Baru Widget sudah dibuat ! Gulir kebawah untuk mengeditnya."
+
+#: functions/customizer/class-admin-customize.php:654
+msgid "Inactive in current context/location"
+msgstr "Tidak aktif di lokasi/konteks baru"
+
+#: functions/customizer/class-admin-customize.php:655
+msgid "Unavailable location. Some settings must be changed."
+msgstr "Lokasi tidak tersedia. Beberapa pengaturan harus diubah."
+
+#: functions/customizer/class-admin-customize.php:656
+msgid "A selected location is not available with the current settings."
+msgstr "Lokasi terpilih tidak tersedia dengan pengaturan baru."
+
+#: functions/customizer/class-admin-customize.php:657
+msgid "Learn more about this in the documentation"
+msgstr "Pelajari tentang ini di dokumentasi"
+
+#: functions/customizer/class-admin-customize.php:679
+msgid "If you like"
+msgstr "Jika Anda suka"
+
+#: functions/customizer/class-admin-customize.php:680
+msgid "the Hueman theme"
+msgstr "tema Hueman"
+
+#: functions/customizer/class-admin-customize.php:681
+msgid "we would love to receive a"
+msgstr "kami senang menerima"
+
+#: functions/customizer/class-admin-customize.php:683
+msgid "Review the Hueman theme"
+msgstr "Ulas tema Hueman"
+
+#: functions/customizer/class-admin-customize.php:685
+msgid "rating. Thanks :) !"
+msgstr "rating. Terimakasih :) !"
+
+#: functions/customizer/controls/class-hu-background-control.php:64
+msgid "Color"
+msgstr "Warna"
+
+#: functions/customizer/controls/class-hu-background-control.php:71
+msgid "Repeat"
+msgstr "Ulangi"
+
+#: functions/customizer/controls/class-hu-background-control.php:78
+msgid "Background attachment"
+msgstr "Lampiran background"
+
+#: functions/customizer/controls/class-hu-background-control.php:85
+msgid "Background position"
+msgstr "Posisi background"
+
+#: functions/customizer/controls/class-hu-background-control.php:92
+msgid "Background size"
+msgstr "Ukuran background"
+
+#: functions/customizer/controls/class-hu-background-control.php:99
+msgid "Background Image"
+msgstr "Gambar Background"
+
+#: functions/customizer/controls/class-hu-dynamic-control.php:60
+msgid "Add New"
+msgstr "Tambah Baru"
+
+#: functions/customizer/controls/class-hu-dynamic-control.php:65
+msgid "Cancel"
+msgstr "Batal"
+
+#: functions/customizer/controls/class-hu-dynamic-control.php:65
+msgid "Add it"
+msgstr "Tambahkan"
+
+#: functions/customizer/controls/class-hu-dynamic-control.php:90
+#: functions/customizer/controls/class-hu-upload-control.php:68
+msgid "Remove"
+msgstr "Singkirkan"
+
+#: functions/customizer/controls/class-hu-dynamic-control.php:103
+msgid "Are you sure you want to remove : <strong>{{ data.title }} ?</strong>"
+msgstr ""
+"Apakah Anda yakin ingin menyingkirkan : <strong>{{ data.title }} ?</strong>"
+
+#: functions/customizer/controls/class-hu-dynamic-control.php:104
+msgid "Yes"
+msgstr "Ya"
+
+#: functions/customizer/controls/class-hu-dynamic-control.php:104
+msgid "No"
+msgstr "Tidak"
+
+#: functions/customizer/controls/class-hu-socials-control.php:28
+msgid "Select an icon"
+msgstr "Pilih ikon"
+
+#: functions/customizer/controls/class-hu-socials-control.php:34
+msgid "Social link url"
+msgstr "Url link medsos"
+
+#: functions/customizer/controls/class-hu-socials-control.php:36
+#: functions/customizer/controls/class-hu-socials-control.php:74
+msgid "http://..."
+msgstr "http://..."
+
+#: functions/customizer/controls/class-hu-socials-control.php:38
+msgid "Enter the full url of your social profile (must be valid url)."
+msgstr "Masukkan url full dari profil medsos Anda (harus valid)."
+
+#: functions/customizer/controls/class-hu-socials-control.php:59
+msgid "Id"
+msgstr "Id"
+
+#: functions/customizer/controls/class-hu-socials-control.php:65
+msgid "Social icon"
+msgstr "Ikon medsos"
+
+#: functions/customizer/controls/class-hu-socials-control.php:72
+msgid "Social link"
+msgstr "Link medsos"
+
+#: functions/customizer/controls/class-hu-socials-control.php:76
+msgid "Enter the full url of your social profile (must be a valid url)."
+msgstr "Enter the full url of your social profile (must be valid url)."
+
+#: functions/customizer/controls/class-hu-socials-control.php:79
+msgid "Title"
+msgstr "Judul"
+
+#: functions/customizer/controls/class-hu-socials-control.php:81
+msgid "Enter a title"
+msgstr "Masukkan judul"
+
+#: functions/customizer/controls/class-hu-socials-control.php:83
+msgid "This is the text displayed on mouse over."
+msgstr "Ini adalah tulisan yang tampil saat disentuh mouse."
+
+#: functions/customizer/controls/class-hu-socials-control.php:87
+msgid "Icon color"
+msgstr "Warna ikon"
+
+#: functions/customizer/controls/class-hu-socials-control.php:91
+msgid "Set a unique color for your icon."
+msgstr "Atur warna unik untuk ikon Anda."
+
+#: functions/customizer/controls/class-hu-socials-control.php:98
+msgid "Link target"
+msgstr "Target link"
+
+#: functions/customizer/controls/class-hu-socials-control.php:102
+msgid "Check this option to open the link in a another tab of the browser."
+msgstr "Centang opsi ini untuk membuka link di tab baru browser."
+
+#: functions/customizer/controls/class-hu-upload-control.php:67
+msgid "Upload"
+msgstr "Unggah"
+
+#: functions/customizer/controls/class-hu-widget-areas-control.php:70
+#: functions/customizer/controls/class-hu-widget-areas-control.php:120
+#: functions/customizer/controls/class-hu-widget-areas-control.php:163
+msgid "Name"
+msgstr "Nama"
+
+#: functions/customizer/controls/class-hu-widget-areas-control.php:72
+msgid "Give it a name"
+msgstr "Berikan nama"
+
+#: functions/customizer/controls/class-hu-widget-areas-control.php:74
+#: functions/customizer/controls/class-hu-widget-areas-control.php:167
+msgid "Personalizing the name of the widget zone will help you identify it."
+msgstr ""
+"Mempersonalisasikan nama sebuah zona widget akan membantu memberi identitas."
+
+#: functions/customizer/controls/class-hu-widget-areas-control.php:78
+#: functions/customizer/controls/class-hu-widget-areas-control.php:127
+#: functions/customizer/controls/class-hu-widget-areas-control.php:171
+msgid ""
+"Select the pre-defined location(s) in which you will embed this widget zone."
+msgstr ""
+"Pilih lokasi yang telah ditetapkan di manakah Anda ingin sematkan zona "
+"widget ini."
+
+#: functions/customizer/controls/class-hu-widget-areas-control.php:114
+#: functions/customizer/controls/class-hu-widget-areas-control.php:157
+msgid "id"
+msgstr "id"
+
+#: functions/customizer/controls/class-hu-widget-areas-control.php:116
+#: functions/customizer/controls/class-hu-widget-areas-control.php:159
+msgid "unique id"
+msgstr "id unik"
+
+#: functions/customizer/controls/class-hu-widget-areas-control.php:134
+msgid "Pick the contexts where this widget area will be displayed."
+msgstr "Pilih konteks dimana widget area ini akan ditampilkan."
+
+#: functions/customizer/controls/class-hu-widget-areas-control.php:165
+msgid "Enter a name"
+msgstr "Masukkan nama"
+
+#: functions/customizer/controls/class-hu-widget-areas-control.php:178
+msgid "Pick the context(s) where this widget area will be displayed."
+msgstr "Pilih konteks dimana area widget ini akan ditampilkan."
+
+#: functions/customizer/sections/class-hu-widgets-section.php:36
+msgid "Press return or enter to open this section"
+msgstr "Tekan kembali atau enter untuk membuka bagian ini"
+
+#: functions/init-core.php:169
+msgid "Theme Options [OLD]"
+msgstr "Opsi Tema [OLD]"
+
+#: functions/init-core.php:657
+msgid "Primary"
+msgstr "Utama"
+
+#: functions/init-core.php:659
+msgid ""
+"Full width widget zone. Located in the left sidebar in a 3 columns layout. "
+"Can be on the right of a 2 columns sidebar when content is on the left."
+msgstr ""
+"Zona widget lebar penuh. DItempatkan di sidebar kiri pada layout 3 kolom. "
+"Bisa saja jadi dikanan dari 2 kolom ketika konten berada dikiri."
+
+#: functions/init-core.php:666
+msgid "Secondary"
+msgstr "Kedua"
+
+#: functions/init-core.php:668
+msgid ""
+"Full width widget zone. Located in the right sidebar in a 3 columns layout."
+msgstr "Zona widget lebar penuh. Ditempatkan dikanan pada layout 3 kolom."
+
+#: functions/init-core.php:675 functions/init-core.php:769
+msgid "Footer 1"
+msgstr "Footer 1"
+
+#: functions/init-core.php:677
+msgid "Widgetized footer 1"
+msgstr "Footer 1"
+
+#: functions/init-core.php:684 functions/init-core.php:770
+msgid "Footer 2"
+msgstr "Footer 2"
+
+#: functions/init-core.php:686
+msgid "Widgetized footer 2"
+msgstr "Widgetized footer 2"
+
+#: functions/init-core.php:693 functions/init-core.php:771
+msgid "Footer 3"
+msgstr "Footer 3"
+
+#: functions/init-core.php:695
+msgid "Widgetized footer 3"
+msgstr "Widgetized footer 3"
+
+#: functions/init-core.php:702 functions/init-core.php:772
+msgid "Footer 4"
+msgstr "Footer 4"
+
+#: functions/init-core.php:704
+msgid "Widgetized footer 4"
+msgstr "Widgetized footer 4"
+
+#: functions/init-core.php:710 functions/init-core.php:773
+msgid "Header (next to logo / title)"
+msgstr "Header (setelah logo / judul)"
+
+#: functions/init-core.php:712
+msgid "The Header Widget Zone is located next to your logo or site title."
+msgstr "Zona Wirdget Header ditempatkan setelah logo atau judul situs."
+
+#: functions/init-core.php:719 functions/init-core.php:774
+msgid "Footer Full Width"
+msgstr "Footer Lebar Penuh"
+
+#: functions/init-core.php:721
+#, php-format
+msgid ""
+"The Footer Widget Zone is located before the other footer widgets and takes "
+"100% of the width. Very appropriate to display a Google Map or an "
+"advertisement banner."
+msgstr ""
+"Zona Widget Footer ditempatkan sebelum widget footer lain dan menjadi 100% "
+"penuh. Sangat cocok untuk menampilkan Peta Google atau banner iklan."
+
+#: functions/init-core.php:750
+msgid "All contexts"
+msgstr "Semua konteks"
+
+#: functions/init-core.php:752
+msgid "Blog Page"
+msgstr "Laman Blog"
+
+#: functions/init-core.php:753
+msgid "Pages"
+msgstr "Laman"
+
+#: functions/init-core.php:754
+msgid "Single Posts"
+msgstr "Post Tunggal"
+
+#: functions/init-core.php:755
+msgid "Archives"
+msgstr "Arsip"
+
+#: functions/init-core.php:756
+msgid "Categories"
+msgstr "Kategori"
+
+#: functions/init-core.php:757
+msgid "Search Results"
+msgstr "Hasil Pencarian"
+
+#: functions/init-core.php:758
+msgid "404 Error Pages"
+msgstr "Laman Error 404"
+
+#: functions/init-core.php:767
+msgid "Primary Sidebar (on the left in a 3 columns layout)"
+msgstr "Sidebar Utama (dikiri pada layout 3 kolom)"
+
+#: functions/init-core.php:768
+msgid "Secondary Sidebar (on the right in a 3 columns layout)"
+msgstr "Sidebar Kedua (dikanan pada layout 3 kolom)"
+
+#: functions/init-core.php:1097
+msgid "Help"
+msgstr "Bantuan"
+
+#: functions/init-core.php:1100
+msgid "Need help with the Hueman theme ? Click here!"
+msgstr "Butuh bantuan untuk tema Hueman? Klik disini!"
+
+#: functions/init-front.php:87
+msgid "No widget zones available in this sidebar."
+msgstr "Tidak ada zona widget tersedia di sidebar ini."
+
+#: functions/init-front.php:88
+msgid ""
+"You can add Widget Areas here from the customizer, in the <strong>Dynamic "
+"Sidebars and Widgets</strong> panel, or you can change the layout to remove "
+"this sidebar in <strong>Content &raquo; Layout Options for the main content</"
+"strong>."
+msgstr ""
+"Anda dapat menambahkan Area Widget disini dari penyesuaian, di panel "
+"<strong>Sidebar dan Widget Dinamis</strong> atau Anda dapat merubah layout "
+"untuk menyingkirkan sidebar ini di <strong>Opsi Konten &raquo; Layout untuk "
+"konten utama</strong>."
+
+#: functions/init-front.php:115
+msgid "You have already assigned the following widget zone here : "
+msgstr "Anda sudah menerapkan zona berikut disini :"
+
+#: functions/init-front.php:117
+msgid "in this post or page options."
+msgstr "di opsi post atau laman ini."
+
+#: functions/init-front.php:118
+msgid ""
+"You can change or disable this setting by editing the options of the current "
+"post / page."
+msgstr ""
+"Anda dapat ubah atau meniadakan pengaturan ini dengan mengedit opsi dari "
+"post / laman sekarang."
+
+#: functions/init-front.php:124
+msgid "Add widgets to the zone :"
+msgstr "Tambahkan widget ke zona :"
+
+#: functions/init-meta-boxes.php:30
+msgid "Select a widget zone for the primary sidebar."
+msgstr "Pilih zona widget untuk sidebar utama."
+
+#: functions/init-meta-boxes.php:30
+msgid ""
+"Notes : 1)This will override any default settings of the customizer options "
+"panel. 2) The primary sidebar is placed on the left in a 3 columns layout. "
+"It can be on the right in a 2 columns layout, when the content is on the "
+"left."
+msgstr ""
+"Catatan : 1)Ini akan menimpa pengaturan default dari panel opsi kustomisasi. "
+"2)Sidebar utama ditempatkan disisi kiri pada layout 3 kolom. Bisa saja "
+"disisi kanan pada layout 2 kolom, ketika konten berada dikiri."
+
+#: functions/init-meta-boxes.php:36
+msgid "Select a widget zone for the secondary sidebar."
+msgstr "Pilih zona widget untuk sidebar kedua."
+
+#: functions/init-meta-boxes.php:36
+msgid ""
+"Notes : 1)This will override any default settings of the customizer options "
+"panel. 2) The secondary sidebar is placed on the right in a 3 columns layout."
+msgstr ""
+"Catatan: 1)Ini akan mmenimpa pengaturan default dari panel opsi kustomisasi. "
+"2)Sidebar kedua ditempatkan disisi kanan pada layout 3 kolom."
+
+#: functions/init-meta-boxes.php:42
+msgid "Select a layout for this page."
+msgstr "Pilih layout untuk laman ini."
+
+#: functions/init-meta-boxes.php:42 functions/init-meta-boxes.php:97
+#: functions/init-meta-boxes.php:103
+msgid ""
+"This will override any default settings of the customizer options panel."
+msgstr "Ini akan menimpa pengaturan default dari panel opsi kustomisasi."
+
+#: functions/init-meta-boxes.php:97
+msgid "Select a widget zone for the left sidebar."
+msgstr "Pilih zona widget untuk sidebar kiri."
+
+#: functions/init-meta-boxes.php:103
+msgid "Select a widget zone for the right sidebar."
+msgstr "Pilih zona widget untuk sidebar kanan."
+
+#: functions/widgets/alx-posts.php:21
+msgid "Hueman Posts"
+msgstr "Hueman Post"
+
+#: functions/widgets/alx-posts.php:23
+msgid "Display posts from a category"
+msgstr "Tampilkan post dari kategori"
+
+#: functions/widgets/alx-tabs.php:21
+msgid "Hueman Dynamic Tabs"
+msgstr "Tab Dinamis Hueman"
+
+#: functions/widgets/alx-tabs.php:23
+msgid "List posts, comments, and/or tags with or without tabs."
+msgstr "Daftar post, komentar, dan/atau tag dengan atau tanpa tab."
+
+#: functions/widgets/alx-tabs.php:66
+msgid "Recent Posts"
+msgstr "Post Terbaru"
+
+#: functions/widgets/alx-tabs.php:67
+msgid "Popular Posts"
+msgstr "Post Terlaris"
+
+#: functions/widgets/alx-tabs.php:68
+msgid "Recent Comments"
+msgstr "Komentar Terbaru"
+
+#: functions/widgets/alx-tabs.php:69
+msgid "Tags"
+msgstr "Tag"
+
+#: functions/widgets/alx-tabs.php:234
+msgid "says:"
+msgstr "mengatakan:"
+
+#: functions/widgets/alx-video.php:21
+msgid "Hueman Videos"
+msgstr "Hueman Video"
+
+#: functions/widgets/alx-video.php:23
+msgid "Display a responsive video with a YouTube or Vimeo link."
+msgstr "Tampilkan video responsive dari YouTube atau Vimeo."
+
+#: parts/page-title.php:22
+msgid "Search result"
+msgstr "Hasil pencarian"
+
+#: parts/page-title.php:24
+msgid "Search results"
+msgstr "Hasil pencarian"
+
+#: parts/page-title.php:30
+msgid "Error 404."
+msgstr "Error 404."
+
+#: parts/page-title.php:30
+msgid "Page not found!"
+msgstr "Laman tidak ditemukan"
+
+#: parts/page-title.php:34
+msgid "Author:"
+msgstr "Penulis:"
+
+#: parts/page-title.php:37
+msgid "Category:"
+msgstr "Kategori"
+
+#: parts/page-title.php:40
+msgid "Tagged:"
+msgstr "Di tag:"
+
+#: parts/page-title.php:43
+msgid "Daily Archive:"
+msgstr "Arsip Harian:"
+
+#: parts/page-title.php:46
+msgid "Monthly Archive:"
+msgstr "Arsip Bulanan:"
+
+#: parts/page-title.php:49
+msgid "Yearly Archive:"
+msgstr "ARsip Tahunan:"
+
+#: parts/post-list-author-date.php:11 parts/single-author-date.php:8
+#: parts/single-author-date.php:10
+msgid "by"
+msgstr "oleh"
+
+#: parts/post-nav.php:3
+msgid "Next story"
+msgstr "Post selanjutnya"
+
+#: parts/post-nav.php:4
+msgid "Previous story"
+msgstr "Post sebelumnya"
+
+#: parts/related-posts.php:6
+msgid "You may also like..."
+msgstr "Mungkin Anda juga menyukai"
+
+#: parts/single-author-date.php:16
+msgid "Published"
+msgstr "Dipublikasikan"
+
+#: parts/single-author-date.php:17
+msgid "Updated"
+msgstr "Di update"
+
+#: search.php:10
+msgid "For the term"
+msgstr "Untuk kata kunci"
+
+#: search.php:12
+msgid "Please try another search:"
+msgstr "Silahkan coba pencarian lain:"
+
+#: searchform.php:3
+msgid "To search type and hit enter"
+msgstr "Tulis dan Tekan Enter"
+
+#: sidebar-2.php:3 sidebar.php:6
+msgid "Expand Sidebar"
+msgstr "Buka Sidebar"
+
+#: sidebar-2.php:9
+msgid "More"
+msgstr "Lain - Lain"
+
+#: sidebar.php:12
+msgid "Follow:"
+msgstr "Ikuti"
+
+#: single.php:29
+msgid "Pages:"
+msgstr "Laman:"
+
+#: single.php:45
+msgid "Tags:"
+msgstr "Tag:"
