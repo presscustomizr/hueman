@@ -52,7 +52,7 @@ var HUMultiInputMethods = HUMultiInputMethods || {};
 
       //if the view has already been rendered, the view element exists, we simply need to remove its html content and append the new one
       //if not, then we need to render the view element and append the view html content to it
-      var $_view_el = $('.' + control.css_attr.multi_input_wrapper, control.container).find('[data-input-type="upload"]' ).find('.hu-input');
+      var $_view_el = $('.' + control.css_attr.multi_input_wrapper, control.container).find('[data-input-type="upload"]' ).find('.czr-input');
 
 
       if ( ! $_view_el.length )

@@ -26,7 +26,7 @@ var HULayoutSelectMethods = HULayoutSelectMethods || {};
             _src = _layout_data.src,
             _title = _layout_data.label,
             $state = $(
-          '<img src="' + _src +'" class="hu-layout-img" title="' + _title + '" /><span class="hu-layout-title">' + _title + '</span>'
+          '<img src="' + _src +'" class="czr-layout-img" title="' + _title + '" /><span class="czr-layout-title">' + _title + '</span>'
         );
         return $state;
       }
@@ -39,7 +39,6 @@ var HULayoutSelectMethods = HULayoutSelectMethods || {};
           templateResult: addImg,
           templateSelection: addImg,
           minimumResultsForSearch: Infinity
-          //dropdownParent : $('#customize-control-hu_theme_options-social-links')
       });
     },
   });//$.extend

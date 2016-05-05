@@ -292,7 +292,6 @@ var HUSocialMethods = HUSocialMethods || {};
       $( 'select[data-type="social-icon"]', obj.dom_el ).select2( {
           templateResult: addIcon,
           templateSelection: addIcon
-          //dropdownParent : $('#customize-control-hu_theme_options-social-links')
       });
     },
 

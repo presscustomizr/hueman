@@ -382,7 +382,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
 
     destroyPreModelView : function() {
       var control = this;
-      $('.' + control.css_attr.pre_add_view_content, control.container ).find('.hu-sub-set').remove();
+      $('.' + control.css_attr.pre_add_view_content, control.container ).find('.czr-sub-set').remove();
       control.hu_preModel('view_content').set('');
     },
 
@@ -454,7 +454,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
       } else {
          $_success_wrapper.attr('style','');
       }
-      control.container.toggleClass('hu-model-added', 'on' == status );
+      control.container.toggleClass('czr-model-added', 'on' == status );
       return this;
     }
   });//$.extend()

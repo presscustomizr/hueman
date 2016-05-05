@@ -48,7 +48,7 @@ var HUDynamicMethods = HUDynamicMethods || {};
         //add new model
         {
           trigger   : 'click keydown',
-          selector  : '.' + options.params.css_attr.add_new_btn, //'.hu-add-new',
+          selector  : '.' + options.params.css_attr.add_new_btn, //'.czr-add-new',
           name      : 'add_model',
           actions   : ['closeAllViews', 'addModel'],
         }

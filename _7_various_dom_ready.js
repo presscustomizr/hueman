@@ -19,15 +19,6 @@
     //    console.log('AJAX COMPLETE', e, o);
     // });
 
-    /* GRID */
-    var _build_setId = function ( name ) {
-      return -1 == name.indexOf( 'hu_theme_options') ? [ 'hu_theme_options[' , name  , ']' ].join('') : name;
-    };
-
-    var _build_control_id = function( _control ) {
-      return [ '#' , 'customize-control-hu_theme_options-', _control ].join('');
-    };
-
 
     /* RECENTER CURRENT SECTIONS */
     $('.accordion-section').not('.control-panel').click( function () {
@@ -95,8 +86,8 @@
     }
 
     /* ADD text to the content panel title */
-    if ( $('#accordion-panel-hu-content-panel').find('.accordion-section-title').first().length ) {
-      $('#accordion-panel-hu-content-panel').find('.accordion-section-title').first().append(
+    if ( $('#accordion-panel-czr-content-panel').find('.accordion-section-title').first().length ) {
+      $('#accordion-panel-czr-content-panel').find('.accordion-section-title').first().append(
         $('<span/>', { html : ' ( Home, Blog, Layout, Sidebars, Slideshows, ... )' } ).css('font-style', 'italic').css('font-size', '14px')
       );
     }

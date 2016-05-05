@@ -228,14 +228,14 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
 
       _html = '<u>' + _locationText + '</u> : ' + _locations + ' <strong>|</strong> <u>' + _contextText + '</u> : ' + _contexts;
 
-      if ( ! $('.hu-zone-infos', $_view ).length ) {
+      if ( ! $('.czr-zone-infos', $_view ).length ) {
         var $_zone_infos = $('<div/>', {
-          class : [ 'hu-zone-infos' , control.css_attr.sortable_handle ].join(' '),
+          class : [ 'czr-zone-infos' , control.css_attr.sortable_handle ].join(' '),
           html : _html
         });
         $( '.' + control.css_attr.view_buttons, $_view ).after($_zone_infos);
       } else {
-        $('.hu-zone-infos', $_view ).html(_html);
+        $('.czr-zone-infos', $_view ).html(_html);
       }
     },//writeSubtitleInfos
 
@@ -354,7 +354,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
     },
 
     _toggleLocationAlertExpansion : function($view, to) {
-      var $_alert_el = $view.find('.hu-location-alert');
+      var $_alert_el = $view.find('.czr-location-alert');
 
       if ( ! $_alert_el.length ) {
         var _html = [
@@ -363,7 +363,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
         ].join('');
 
         $_alert_el = $('<div/>', {
-          class:'hu-location-alert',
+          class:'czr-location-alert',
           html:_html,
           style:"display:none"
         });
@@ -437,7 +437,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
         if (! state.id) { return state.text; }
         if (  _.contains(available_locs, state.element.value) ) { return state.text; }
         var $state = $(
-          '<span class="hu-unavailable-location fa fa-ban" title="' + serverControlParams.translatedStrings.unavailableLocation + '">&nbsp;&nbsp;' + state.text + '</span>'
+          '<span class="czr-unavailable-location fa fa-ban" title="' + serverControlParams.translatedStrings.unavailableLocation + '">&nbsp;&nbsp;' + state.text + '</span>'
         );
         return $state;
       }
@@ -798,15 +798,15 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
 
           if ( _.contains( _inactives_zones, _model.id ) ) {
             control.getViewEl( _model.id ).addClass('inactive');
-            if ( ! control.getViewEl( _model.id ).find('.hu-inactive-alert').length )
-              control.getViewEl( _model.id ).find('.hu-view-title').append(
-                $('<span/>', {class : "hu-inactive-alert", html : " [ " + serverControlParams.translatedStrings.inactiveWidgetZone + " ]" })
+            if ( ! control.getViewEl( _model.id ).find('.czr-inactive-alert').length )
+              control.getViewEl( _model.id ).find('.czr-view-title').append(
+                $('<span/>', {class : "czr-inactive-alert", html : " [ " + serverControlParams.translatedStrings.inactiveWidgetZone + " ]" })
               );
           }
           else {
             control.getViewEl( _model.id ).removeClass('inactive');
-            if ( control.getViewEl( _model.id ).find('.hu-inactive-alert').length )
-              control.getViewEl( _model.id ).find('.hu-inactive-alert').remove();
+            if ( control.getViewEl( _model.id ).find('.czr-inactive-alert').length )
+              control.getViewEl( _model.id ).find('.czr-inactive-alert').remove();
           }
         });
       });
