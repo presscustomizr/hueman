@@ -142,7 +142,7 @@
   api.hu_build_setId = function ( name ) {
     if ( _.has( api.hu_wp_builtin_settings, name ) )
       return name;
-    return -1 == name.indexOf( 'hu_theme_options') ? [ 'hu_theme_options[' , name  , ']' ].join('') : name;
+    return -1 == name.indexOf( serverControlParams.themeOptions ) ? [ serverControlParams.themeOptions +'[' , name  , ']' ].join('') : name;
   };
 
   //react to a contx change
