@@ -186,7 +186,7 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
   api.hu_build_setId = function ( name ) {
     if ( _.has( api.hu_wp_builtin_settings, name ) )
       return name;
-    return -1 == name.indexOf( 'hu_theme_options') ? [ 'hu_theme_options[' , name  , ']' ].join('') : name;
+    return -1 == name.indexOf( serverControlParams.themeOptions ) ? [ serverControlParams.themeOptions +'[' , name  , ']' ].join('') : name;
   };
 })( wp.customize , jQuery, _);
 var HUBaseControlMethods = HUBaseControlMethods || {};
@@ -269,7 +269,7 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
         },
         {
           trigger   : 'click keydown',
-          selector  : '.' + options.params.css_attr.add_new_btn, //'.hu-add-new',
+          selector  : '.' + options.params.css_attr.add_new_btn, //'.czr-add-new',
           name      : 'add_model',
           actions   : ['closeAllViews', 'addModel'],
         }
@@ -828,7 +828,7 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
 
     destroyPreModelView : function() {
       var control = this;
-      $('.' + control.css_attr.pre_add_view_content, control.container ).find('.hu-sub-set').remove();
+      $('.' + control.css_attr.pre_add_view_content, control.container ).find('.czr-sub-set').remove();
       control.hu_preModel('view_content').set('');
     },
     setPreModelViewVisibility : function(obj) {
@@ -881,7 +881,7 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
       } else {
          $_success_wrapper.attr('style','');
       }
-      control.container.toggleClass('hu-model-added', 'on' == status );
+      control.container.toggleClass('czr-model-added', 'on' == status );
       return this;
     }
   });//$.extend()
@@ -983,7 +983,7 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
       var view_template = wp.template( 'customize-control-media-content' );
       if ( ! view_template  || ! control.container )
         return this;
-      var $_view_el = $('.' + control.css_attr.multi_input_wrapper, control.container).find('[data-input-type="upload"]' ).find('.hu-input');
+      var $_view_el = $('.' + control.css_attr.multi_input_wrapper, control.container).find('[data-input-type="upload"]' ).find('.czr-input');
 
 
       if ( ! $_view_el.length )
@@ -1188,7 +1188,7 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
             _src = _layout_data.src,
             _title = _layout_data.label,
             $state = $(
-          '<img src="' + _src +'" class="hu-layout-img" title="' + _title + '" /><span class="hu-layout-title">' + _title + '</span>'
+          '<img src="' + _src +'" class="czr-layout-img" title="' + _title + '" /><span class="czr-layout-title">' + _title + '</span>'
         );
         return $state;
       }
@@ -1226,7 +1226,7 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
             _src = _layout_data.src,
             _title = _layout_data.label,
             $state = $(
-          '<img src="' + _src +'" class="hu-layout-img" title="' + _title + '" /><span class="hu-layout-title">' + _title + '</span>'
+          '<img src="' + _src +'" class="czr-layout-img" title="' + _title + '" /><span class="czr-layout-title">' + _title + '</span>'
         );
         return $state;
       }
@@ -1403,14 +1403,14 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
 
       _html = '<u>' + _locationText + '</u> : ' + _locations + ' <strong>|</strong> <u>' + _contextText + '</u> : ' + _contexts;
 
-      if ( ! $('.hu-zone-infos', $_view ).length ) {
+      if ( ! $('.czr-zone-infos', $_view ).length ) {
         var $_zone_infos = $('<div/>', {
-          class : [ 'hu-zone-infos' , control.css_attr.sortable_handle ].join(' '),
+          class : [ 'czr-zone-infos' , control.css_attr.sortable_handle ].join(' '),
           html : _html
         });
         $( '.' + control.css_attr.view_buttons, $_view ).after($_zone_infos);
       } else {
-        $('.hu-zone-infos', $_view ).html(_html);
+        $('.czr-zone-infos', $_view ).html(_html);
       }
     },//writeSubtitleInfos
     _hasModelAllContexts : function( id ) {
@@ -1483,7 +1483,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
     },
 
     _toggleLocationAlertExpansion : function($view, to) {
-      var $_alert_el = $view.find('.hu-location-alert');
+      var $_alert_el = $view.find('.czr-location-alert');
 
       if ( ! $_alert_el.length ) {
         var _html = [
@@ -1492,7 +1492,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
         ].join('');
 
         $_alert_el = $('<div/>', {
-          class:'hu-location-alert',
+          class:'czr-location-alert',
           html:_html,
           style:"display:none"
         });
@@ -1545,7 +1545,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
         if (! state.id) { return state.text; }
         if (  _.contains(available_locs, state.element.value) ) { return state.text; }
         var $state = $(
-          '<span class="hu-unavailable-location fa fa-ban" title="' + serverControlParams.translatedStrings.unavailableLocation + '">&nbsp;&nbsp;' + state.text + '</span>'
+          '<span class="czr-unavailable-location fa fa-ban" title="' + serverControlParams.translatedStrings.unavailableLocation + '">&nbsp;&nbsp;' + state.text + '</span>'
         );
         return $state;
       }
@@ -1730,15 +1730,15 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
 
           if ( _.contains( _inactives_zones, _model.id ) ) {
             control.getViewEl( _model.id ).addClass('inactive');
-            if ( ! control.getViewEl( _model.id ).find('.hu-inactive-alert').length )
-              control.getViewEl( _model.id ).find('.hu-view-title').append(
-                $('<span/>', {class : "hu-inactive-alert", html : " [ " + serverControlParams.translatedStrings.inactiveWidgetZone + " ]" })
+            if ( ! control.getViewEl( _model.id ).find('.czr-inactive-alert').length )
+              control.getViewEl( _model.id ).find('.czr-view-title').append(
+                $('<span/>', {class : "czr-inactive-alert", html : " [ " + serverControlParams.translatedStrings.inactiveWidgetZone + " ]" })
               );
           }
           else {
             control.getViewEl( _model.id ).removeClass('inactive');
-            if ( control.getViewEl( _model.id ).find('.hu-inactive-alert').length )
-              control.getViewEl( _model.id ).find('.hu-inactive-alert').remove();
+            if ( control.getViewEl( _model.id ).find('.czr-inactive-alert').length )
+              control.getViewEl( _model.id ).find('.czr-inactive-alert').remove();
           }
         });
       });
@@ -2343,13 +2343,6 @@ var HUSocialMethods = HUSocialMethods || {};
 (function (wp, $) {
   $( function($) {
     var api = wp.customize || api;
-    var _build_setId = function ( name ) {
-      return -1 == name.indexOf( 'hu_theme_options') ? [ 'hu_theme_options[' , name  , ']' ].join('') : name;
-    };
-
-    var _build_control_id = function( _control ) {
-      return [ '#' , 'customize-control-hu_theme_options-', _control ].join('');
-    };
     $('.accordion-section').not('.control-panel').click( function () {
       _recenter_current_section($(this));
     });
@@ -2391,8 +2384,8 @@ var HUSocialMethods = HUSocialMethods || {};
         $('<span/>', {class:'fa fa-magic'} )
       );
     }
-    if ( $('#accordion-panel-hu-content-panel').find('.accordion-section-title').first().length ) {
-      $('#accordion-panel-hu-content-panel').find('.accordion-section-title').first().append(
+    if ( $('#accordion-panel-czr-content-panel').find('.accordion-section-title').first().length ) {
+      $('#accordion-panel-czr-content-panel').find('.accordion-section-title').first().append(
         $('<span/>', { html : ' ( Home, Blog, Layout, Sidebars, Slideshows, ... )' } ).css('font-style', 'italic').css('font-size', '14px')
       );
     }

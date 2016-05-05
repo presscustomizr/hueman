@@ -54,7 +54,7 @@ if ( ! class_exists( 'HU_Customize_Upload_Control' ) ) :
       do_action( '__before_setting_control' , $this -> id );
       ?>
       <?php if ( isset( $this->title) ) : ?>
-        <h3 class="hu-customizr-title"><?php echo esc_html( $this->title); ?></h3>
+        <h3 class="czr-customizr-title"><?php echo esc_html( $this->title); ?></h3>
       <?php endif; ?>
       <label>
         <?php if ( ! empty( $this->label ) ) : ?>
@@ -64,11 +64,11 @@ if ( ! class_exists( 'HU_Customize_Upload_Control' ) ) :
           <span class="description customize-control-description"><?php echo $this->description; ?></span>
         <?php endif; ?>
         <div>
-          <a href="#" class="button-secondary hu-upload"><?php _e( 'Upload' , 'hueman'  ); ?></a>
+          <a href="#" class="button-secondary czr-upload"><?php _e( 'Upload' , 'hueman'  ); ?></a>
           <a href="#" class="remove"><?php _e( 'Remove' , 'hueman'  ); ?></a>
         </div>
         <?php if(!empty( $this -> notice)) : ?>
-          <span class="hu-notice"><?php echo $this -> notice; ?></span>
+          <span class="czr-notice"><?php echo $this -> notice; ?></span>
         <?php endif; ?>
       </label>
       <?php

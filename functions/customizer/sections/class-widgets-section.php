@@ -30,7 +30,7 @@ if ( ! class_exists( 'HU_Customize_Manage_Widgets_Section' ) ) :
   public function hu_render_widget_zone_template() {
     ?>
     <script type="text/html" id="tmpl-customize-section-<?php echo $this->type; ?>">
-      <li id="accordion-section-{{ data.id }}" class="hu-widget-zone-section accordion-section control-section control-section-{{ data.type }}">
+      <li id="accordion-section-{{ data.id }}" class="czr-widget-zone-section accordion-section control-section control-section-{{ data.type }}">
       <h3 class="accordion-section-title" tabindex="0">
         {{ data.title }}
         <span class="screen-reader-text"><?php _e( 'Press return or enter to open this section', 'hueman' ); ?></span>

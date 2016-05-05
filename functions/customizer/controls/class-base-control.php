@@ -23,17 +23,17 @@ if ( ! class_exists( 'HU_controls' ) ) :
 
         switch ( $this -> type) {
             case 'hr':
-              echo '<hr class="hu-customizer-separator" />';
+              echo '<hr class="czr-customizer-separator" />';
             break;
 
 
             case 'title' :
               ?>
               <?php if (isset( $this->title)) : ?>
-              <h3 class="hu-customizr-title"><?php echo esc_html( $this->title); ?></h3>
+              <h3 class="czr-customizr-title"><?php echo esc_html( $this->title); ?></h3>
               <?php endif; ?>
               <?php if (isset( $this->notice)) : ?>
-              <i class="hu-notice"><?php echo $this -> notice ?></i>
+              <i class="czr-notice"><?php echo $this -> notice ?></i>
              <?php endif; ?>
 
             <?php
@@ -44,13 +44,13 @@ if ( ! class_exists( 'HU_controls' ) ) :
                 return;
               ?>
               <?php if (!empty( $this->title)) : ?>
-                <h3 class="hu-customizr-title"><?php echo esc_html( $this->title); ?></h3>
+                <h3 class="czr-customizr-title"><?php echo esc_html( $this->title); ?></h3>
               <?php endif; ?>
               <label>
                 <span class="customize-control-title"><?php echo $this->label; ?></span>
                 <?php $this -> hu_print_select_control( '' ) ?>
                 <?php if(!empty( $this -> notice)) : ?>
-                  <span class="hu-notice"><?php echo $this -> notice ?></span>
+                  <span class="czr-notice"><?php echo $this -> notice ?></span>
                 <?php endif; ?>
               </label>
               <?php
@@ -61,13 +61,13 @@ if ( ! class_exists( 'HU_controls' ) ) :
             case 'number':
               ?>
               <?php if (isset( $this->title)) : ?>
-                <h3 class="hu-customizr-title"><?php echo esc_html( $this->title); ?></h3>
+                <h3 class="czr-customizr-title"><?php echo esc_html( $this->title); ?></h3>
               <?php endif; ?>
               <label>
-                <span class="hu-number-label customize-control-title"><?php echo $this->label ?></span>
-                <input <?php $this->link() ?> type="number" step="<?php echo $this-> step ?>" min="<?php echo $this-> min ?>" id="posts_per_page" value="<?php echo $this->value() ?>" class="hu-number-input small-text">
+                <span class="czr-number-label customize-control-title"><?php echo $this->label ?></span>
+                <input <?php $this->link() ?> type="number" step="<?php echo $this-> step ?>" min="<?php echo $this-> min ?>" id="posts_per_page" value="<?php echo $this->value() ?>" class="czr-number-input small-text">
                 <?php if(!empty( $this -> notice)) : ?>
-                  <span class="hu-notice"><?php echo $this-> notice ?></span>
+                  <span class="czr-notice"><?php echo $this-> notice ?></span>
                 <?php endif; ?>
               </label>
               <?php
@@ -76,17 +76,17 @@ if ( ! class_exists( 'HU_controls' ) ) :
             case 'checkbox':
               ?>
               <?php if (isset( $this->title)) : ?>
-                <h3 class="hu-customizr-title"><?php echo esc_html( $this->title); ?></h3>
+                <h3 class="czr-customizr-title"><?php echo esc_html( $this->title); ?></h3>
               <?php endif; ?>
               <?php
-                    printf('<div class="hu-check-label"><label><span class="customize-control-title">%1$s</span></label></div>',
+                    printf('<div class="czr-check-label"><label><span class="customize-control-title">%1$s</span></label></div>',
                     $this->label
                   );
               ?>
               <input <?php $this->link(); ?> type="checkbox" value="<?php echo esc_attr( $this->value() ); ?>"  <?php hu_checked( $this->value() ); ?> />
 
               <?php if(!empty( $this -> notice)) : ?>
-               <span class="hu-notice"><?php echo $this-> notice ?></span>
+               <span class="czr-notice"><?php echo $this-> notice ?></span>
               <?php endif; ?>
               <?php
             break;
@@ -94,12 +94,12 @@ if ( ! class_exists( 'HU_controls' ) ) :
             case 'textarea':
               ?>
               <?php if (isset( $this->title)) : ?>
-                <h3 class="hu-customizr-title"><?php echo esc_html( $this->title); ?></h3>
+                <h3 class="czr-customizr-title"><?php echo esc_html( $this->title); ?></h3>
               <?php endif; ?>
               <label>
                 <span class="customize-control-title"><?php echo $this->label; ?></span>
                 <?php if(!empty( $this -> notice)) : ?>
-                  <span class="hu-notice"><?php echo $this-> notice; ?></span>
+                  <span class="czr-notice"><?php echo $this-> notice; ?></span>
                 <?php endif; ?>
                 <textarea class="widefat" rows="3" cols="10" <?php $this->link(); ?>><?php echo esc_html( $this->value() ); ?></textarea>
               </label>
@@ -110,7 +110,7 @@ if ( ! class_exists( 'HU_controls' ) ) :
             case 'email':
               ?>
               <?php if (isset( $this->title)) : ?>
-              <h3 class="hu-customizr-title"><?php echo esc_html( $this->title); ?></h3>
+              <h3 class="czr-customizr-title"><?php echo esc_html( $this->title); ?></h3>
               <?php endif; ?>
               <?php
               printf('<label><span class="customize-control-title %1$s">%2$s</span><input type="text" value="%3$s" %4$s /></label>',
@@ -126,7 +126,7 @@ if ( ! class_exists( 'HU_controls' ) ) :
               global $wp_version;
               ?>
               <?php if (isset( $this->title)) : ?>
-                <h3 class="hu-customizr-title"><?php echo esc_html( $this->title); ?></h3>
+                <h3 class="czr-customizr-title"><?php echo esc_html( $this->title); ?></h3>
               <?php endif; ?>
               <label>
                 <?php if ( ! empty( $this->label ) ) : ?>
@@ -141,7 +141,7 @@ if ( ! class_exists( 'HU_controls' ) ) :
                   <input type="<?php echo esc_attr( $this->type ); ?>" <?php $this->input_attrs(); ?> value="<?php echo esc_attr( $this->value() ); ?>" <?php $this->link(); ?> />
                 <?php endif; ?>
                 <?php if(!empty( $this -> notice)) : ?>
-                  <span class="hu-notice"><?php echo $this-> notice; ?></span>
+                  <span class="czr-notice"><?php echo $this-> notice; ?></span>
                 <?php endif; ?>
               </label>
               <?php

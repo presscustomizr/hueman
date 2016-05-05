@@ -91,7 +91,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
       }
 
       ?>
-        <script type="text/javascript" id="hu-customizer-data">
+        <script type="text/javascript" id="czr-customizer-data">
           (function ( _export ){
             _export.contx = <?php echo wp_json_encode( $_contexts ) ?>;
             _export.availableWidgetLocations = <?php echo wp_json_encode( $_available_locations ) ?>;
@@ -200,7 +200,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
     * Display a title for the favicon control, after the logo
     */
     function hu_add_favicon_title($set_id) {
-      printf( '<h3 class="hu-hueman-title">%s</h3>', __( 'SITE ICON' , 'hueman') );
+      printf( '<h3 class="czr-hueman-title">%s</h3>', __( 'SITE ICON' , 'hueman') );
     }
 
 
@@ -212,19 +212,19 @@ if ( ! class_exists( 'HU_customize' ) ) :
 		*/
 		function hu_augment_customizer( $manager ) {
       $_classes = array(
-        'controls/class-hu-base-advanced-control.php',
-        'controls/class-hu-base-control.php',
-        'controls/class-hu-cropped-image-control.php',
-        'controls/class-hu-dynamic-control.php',
-        'controls/class-hu-layout-control.php',
-        'controls/class-hu-multipicker-control.php',
-        'controls/class-hu-socials-control.php',
-        'controls/class-hu-upload-control.php',
-        'controls/class-hu-widget-areas-control.php',
+        'controls/class-base-advanced-control.php',
+        'controls/class-base-control.php',
+        'controls/class-cropped-image-control.php',
+        'controls/class-dynamic-control.php',
+        'controls/class-layout-control.php',
+        'controls/class-multipicker-control.php',
+        'controls/class-socials-control.php',
+        'controls/class-upload-control.php',
+        'controls/class-widget-areas-control.php',
 
-        'sections/class-hu-widgets-section.php',
+        'sections/class-widgets-section.php',
 
-        'settings/class-hu-settings.php'
+        'settings/class-settings.php'
       );
       foreach ($_classes as $_path) {
         locate_template( 'functions/customizer/' . $_path , $load = true, $require_once = true );
@@ -299,7 +299,6 @@ if ( ! class_exists( 'HU_customize' ) ) :
               'panel'    => 'widgets',
               'section_class' => 'HU_Customize_Manage_Widgets_Section',
               'type' => 'widget_zones_management'
-              //'panel'   => 'hu-sidebars-panel'
             )
 
         )//add_section
@@ -671,7 +670,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
       ?>
       <script id="rate-tpl" type="text/template" >
         <?php
-          printf( '<span class="hu-rate-link">%1$s %2$s, <br/>%3$s <a href="%4$s" title="%5$s" class="hu-stars" target="_blank">%6$s</a> %7$s</span>',
+          printf( '<span class="czr-rate-link">%1$s %2$s, <br/>%3$s <a href="%4$s" title="%5$s" class="czr-stars" target="_blank">%6$s</a> %7$s</span>',
             __( 'If you like' , 'hueman' ),
             __( 'the Hueman theme' , 'hueman'),
             __( 'we would love to receive a' , 'hueman' ),
@@ -683,15 +682,18 @@ if ( ! class_exists( 'HU_customize' ) ) :
         ?>
       </script>
       <script id="rate-theme" type="text/javascript">
-        /* CONTRIBUTION TO HUEMAN */
-        _render_rate_czr();
+        (function (wp, $) {
+          $( function($) {
+            _render_rate_czr();
 
-        function _render_rate_czr() {
-          var _cta = _.template(
-                $( "script#rate-tpl" ).html()
-            );
-            $('#customize-footer-actions').append( _cta() );
-          }
+            function _render_rate_czr() {
+              var _cta = _.template(
+                    $( "script#rate-tpl" ).html()
+              );
+              $('#customize-footer-actions').append( _cta() );
+            }
+          });
+        })(wp, jQuery)
       </script>
       <?php
     }

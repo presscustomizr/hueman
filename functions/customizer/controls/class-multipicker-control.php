@@ -25,14 +25,14 @@ if ( ! class_exists( 'HU_Customize_Multipicker_Control' ) ) :
       //start rendering
       if (!empty( $this->title)) :
     ?>
-        <h3 class="hu-customizr-title"><?php echo esc_html( $this->title); ?></h3>
+        <h3 class="czr-customizr-title"><?php echo esc_html( $this->title); ?></h3>
       <?php endif; ?>
 
       <label>
         <span class="customize-control-title"><?php echo $this->label; ?></span>
         <?php echo $dropdown; ?>
         <?php if(!empty( $this -> notice)) : ?>
-          <span class="hu-notice"><?php echo $this -> notice ?></span>
+          <span class="czr-notice"><?php echo $this -> notice ?></span>
          <?php endif; ?>
       </label>
     <?php

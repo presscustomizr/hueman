@@ -66,17 +66,17 @@ if ( ! class_exists( 'HU_Customize_Widget_Areas_Control' ) ) :
       $css_attr = $this -> css_attr
       ?>
       <script type="text/html" id="tmpl-customize-control-<?php echo $this->type; ?>-pre-add-view-content">
-        <div class="hu-sub-set">
+        <div class="czr-sub-set">
           <div class="customize-control-title"><?php _e('Name', 'hueman'); ?></div>
-          <div class="hu-input">
+          <div class="czr-input">
             <input data-type="title" type="text" value="" placeholder="<?php _e('Give it a name', 'hueman'); ?>"></input>
           </div>
-          <span class="hu-notice"><?php _e('Personalizing the name of the widget zone will help you identify it.', 'hueman'); ?></span>
+          <span class="czr-notice"><?php _e('Personalizing the name of the widget zone will help you identify it.', 'hueman'); ?></span>
         </div>
-        <div class="hu-sub-set width-100">
+        <div class="czr-sub-set width-100">
           <div class="customize-control-title"><?php _e('Location(s)', 'hueman'); ?></div>
-          <span class="hu-notice"><?php _e('Select the pre-defined location(s) in which you will embed this widget zone.', 'hueman'); ?></span>
-          <div class="hu-input">
+          <span class="czr-notice"><?php _e('Select the pre-defined location(s) in which you will embed this widget zone.', 'hueman'); ?></span>
+          <div class="czr-input">
             <select data-type="locations" class="js-example-basic-multiple" multiple="multiple"></select>
           </div>
         </div>
@@ -95,7 +95,7 @@ if ( ! class_exists( 'HU_Customize_Widget_Areas_Control' ) ) :
       ?>
         <script type="text/html" id="tmpl-customize-control-<?php echo $this->type; ?>-view-reduced">
 
-            <div class="<?php echo $css_attr['view_header']; ?> hu-builtin-model">
+            <div class="<?php echo $css_attr['view_header']; ?> czr-builtin-model">
               <div class="<?php echo $css_attr['view_title']; ?> <?php echo $css_attr['sortable_handle']; ?>"><h4>{{ data.title }}</h4></div>
               <div class="<?php echo $css_attr['view_buttons']; ?>"><a title="<?php _e('Edit', 'hueman'); ?>" href="javascript:void(0);" class="fa fa-pencil <?php echo $css_attr['edit_view_btn']; ?>"></a></div>
             </div>
@@ -110,29 +110,29 @@ if ( ! class_exists( 'HU_Customize_Widget_Areas_Control' ) ) :
       //only the contexts and the locations can be set.
       ?>
         <script type="text/html" id="tmpl-customize-control-<?php echo $this->type; ?>-view-content-reduced">
-          <div class="hu-sub-set">
+          <div class="czr-sub-set">
             <div class="customize-control-title"><?php _e('id', 'hueman'); ?></div>
-            <div class="hu-input">
+            <div class="czr-input">
               <span><?php _e('unique id', 'hueman')?> : {{ data.id }}</span>
             </div>
           </div>
-          <div class="hu-sub-set">
+          <div class="czr-sub-set">
             <div class="customize-control-title"><?php _e('Name', 'hueman'); ?></div>
-            <div class="hu-input">
+            <div class="czr-input">
               <span>{{ data.title }}</span>
             </div>
           </div>
-          <div class="hu-sub-set width-100">
+          <div class="czr-sub-set width-100">
             <div class="customize-control-title"><?php _e('Location(s)', 'hueman'); ?></div>
-            <span class="hu-notice"><?php _e('Select the pre-defined location(s) in which you will embed this widget zone.', 'hueman'); ?></span>
-            <div class="hu-input">
+            <span class="czr-notice"><?php _e('Select the pre-defined location(s) in which you will embed this widget zone.', 'hueman'); ?></span>
+            <div class="czr-input">
               <select data-type="locations" class="js-example-basic-multiple" multiple="multiple"></select>
             </div>
           </div>
-          <div class="hu-sub-set width-100">
+          <div class="czr-sub-set width-100">
             <div class="customize-control-title"><?php _e('Context(s)', 'hueman'); ?></div>
-            <span class="hu-notice"><?php _e('Pick the contexts where this widget area will be displayed.', 'hueman'); ?></span>
-            <div class="hu-input">
+            <span class="czr-notice"><?php _e('Pick the contexts where this widget area will be displayed.', 'hueman'); ?></span>
+            <div class="czr-input">
               <select data-type="contexts" class="js-example-basic-multiple" multiple="multiple"></select>
             </div>
           </div>
@@ -153,30 +153,30 @@ if ( ! class_exists( 'HU_Customize_Widget_Areas_Control' ) ) :
       ?>
 
       <script type="text/html" id="tmpl-customize-control-<?php echo $this->type; ?>-view-content">
-        <div class="hu-sub-set">
+        <div class="czr-sub-set">
           <div class="customize-control-title"><?php _e('id', 'hueman'); ?></div>
-          <div class="hu-input">
+          <div class="czr-input">
             <span><?php _e('unique id', 'hueman')?> : {{ data.id }}</span>
           </div>
         </div>
-        <div class="hu-sub-set">
+        <div class="czr-sub-set">
           <div class="customize-control-title"><?php _e('Name', 'hueman'); ?></div>
-          <div class="hu-input">
+          <div class="czr-input">
             <input data-type="title" type="text" value="{{ data.title }}" placeholder="<?php _e('Enter a name', 'hueman'); ?>"></input>
           </div>
-          <span class="hu-notice"><?php _e('Personalizing the name of the widget zone will help you identify it.', 'hueman'); ?></span>
+          <span class="czr-notice"><?php _e('Personalizing the name of the widget zone will help you identify it.', 'hueman'); ?></span>
         </div>
-        <div class="hu-sub-set width-100">
+        <div class="czr-sub-set width-100">
           <div class="customize-control-title"><?php _e('Location(s)', 'hueman'); ?></div>
-          <span class="hu-notice"><?php _e('Select the pre-defined location(s) in which you will embed this widget zone.', 'hueman'); ?></span>
-          <div class="hu-input">
+          <span class="czr-notice"><?php _e('Select the pre-defined location(s) in which you will embed this widget zone.', 'hueman'); ?></span>
+          <div class="czr-input">
             <select data-type="locations" class="js-example-basic-multiple" multiple="multiple"></select>
           </div>
         </div>
-        <div class="hu-sub-set width-100">
+        <div class="czr-sub-set width-100">
           <div class="customize-control-title"><?php _e('Context(s)', 'hueman'); ?></div>
-          <span class="hu-notice"><?php _e('Pick the context(s) where this widget area will be displayed.', 'hueman'); ?></span>
-          <div class="hu-input">
+          <span class="czr-notice"><?php _e('Pick the context(s) where this widget area will be displayed.', 'hueman'); ?></span>
+          <div class="czr-input">
             <select data-type="contexts" class="js-example-basic-multiple" multiple="multiple"></select>
           </div>
         </div>

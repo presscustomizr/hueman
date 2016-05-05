@@ -18,13 +18,13 @@ if ( ! class_exists( 'HU_Customize_Layout_Control' ) ) :
 
       ?>
       <?php if (!empty( $this->title)) : ?>
-        <h3 class="hu-customizr-title"><?php echo esc_html( $this->title); ?></h3>
+        <h3 class="czr-customizr-title"><?php echo esc_html( $this->title); ?></h3>
       <?php endif; ?>
       <label>
         <span class="customize-control-title"><?php echo $this->label; ?></span>
         <?php $this -> hu_print_select_control( 'no-selecter-js' ); //no-selecter-js : we don't want the default selecter $ plugin fired for this control ?>
         <?php if(!empty( $this -> notice)) : ?>
-          <span class="hu-notice"><?php echo $this -> notice ?></span>
+          <span class="czr-notice"><?php echo $this -> notice ?></span>
         <?php endif; ?>
       </label>
       <?php

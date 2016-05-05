@@ -53,11 +53,11 @@ if ( class_exists('WP_Customize_Cropped_Image_Control') && ! class_exists( 'HU_C
     public function content_template() {
     ?>
     <# if ( data.title ) { #>
-        <h3 class="hu-customizr-title">{{{ data.title }}}</h3>
+        <h3 class="czr-customizr-title">{{{ data.title }}}</h3>
       <# } #>
         <?php parent::content_template(); ?>
       <# if ( data.notice ) { #>
-        <span class="hu-notice">{{{ data.notice }}}</span>
+        <span class="czr-notice">{{{ data.notice }}}</span>
       <# } #>
     <?php
     }

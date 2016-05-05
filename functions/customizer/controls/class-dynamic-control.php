@@ -85,7 +85,7 @@ if ( ! class_exists( 'HU_Customize_Dynamic_Control' ) ) :
 
       <script type="text/html" id="tmpl-customize-control-<?php echo $this->type; ?>-view">
 
-          <div class="<?php echo $css_attr['view_header']; ?> hu-custom-model">
+          <div class="<?php echo $css_attr['view_header']; ?> czr-custom-model">
             <div class="<?php echo $css_attr['view_title']; ?> <?php echo $css_attr['sortable_handle']; ?>"><h4>{{ data.title }}</h4></div>
             <div class="<?php echo $css_attr['view_buttons']; ?>"><a title="<?php _e('Edit', 'hueman'); ?>" href="javascript:void(0);" class="fa fa-pencil <?php echo $css_attr['edit_view_btn']; ?>"></a>&nbsp;<a title="<?php _e('Remove', 'hueman'); ?>" href="javascript:void(0);" class="fa fa-trash <?php echo $css_attr['display_alert_btn']; ?>"></a></div>
             <div class="<?php echo $css_attr['remove_alert_wrapper']; ?>"></div>

@@ -10,30 +10,30 @@ if ( ! class_exists( 'HU_Advanced_Control' ) ) :
     //it is passed to the controls with the json() method
     //=> the idea is to declare them in one place, instead of rewriting them into the js template and dom handlers
     public $css_attr = array(
-      'multi_input_wrapper' => 'hu-multi-input-wrapper',
-      'views_wrapper'     => 'hu-views-wrapper',
-      'inner_view'        => 'hu-inner-view',
-      'view_content'      => 'hu-view-content',
-      'view_header'       => 'hu-view-header',
-      'view_title'        => 'hu-view-title',
-      'view_buttons'      => 'hu-view-buttons',
-      'sortable_handle'   => 'hu-sortable-handle',
+      'multi_input_wrapper' => 'czr-multi-input-wrapper',
+      'views_wrapper'     => 'czr-views-wrapper',
+      'inner_view'        => 'czr-inner-view',
+      'view_content'      => 'czr-view-content',
+      'view_header'       => 'czr-view-header',
+      'view_title'        => 'czr-view-title',
+      'view_buttons'      => 'czr-view-buttons',
+      'sortable_handle'   => 'czr-sortable-handle',
 
       //remove dialog
-      'display_alert_btn' => 'hu-display-alert',
-      'remove_alert_wrapper'   => 'hu-remove-alert-wrapper',
-      'cancel_alert_btn'  => 'hu-cancel-button',
-      'remove_view_btn'        => 'hu-remove-button',
+      'display_alert_btn' => 'czr-display-alert',
+      'remove_alert_wrapper'   => 'czr-remove-alert-wrapper',
+      'cancel_alert_btn'  => 'czr-cancel-button',
+      'remove_view_btn'        => 'czr-remove-button',
 
-      'edit_view_btn'     => 'hu-edit-view',
+      'edit_view_btn'     => 'czr-edit-view',
       //pre add dialog
-      'open_pre_add_btn'      => 'hu-open-pre-add-new',
-      'adding_new'        => 'hu-adding-new',
-      'pre_add_wrapper'   => 'hu-pre-add-wrapper',
-      'pre_add_view_content'   => 'hu-pre-add-view-content',
-      'cancel_pre_add_btn'  => 'hu-cancel-add-new',
-      'add_new_btn'       => 'hu-add-new',
-      'pre_add_success'   => 'hu-add-success'
+      'open_pre_add_btn'      => 'czr-open-pre-add-new',
+      'adding_new'        => 'czr-adding-new',
+      'pre_add_wrapper'   => 'czr-pre-add-wrapper',
+      'pre_add_view_content'   => 'czr-pre-add-view-content',
+      'cancel_pre_add_btn'  => 'czr-cancel-add-new',
+      'add_new_btn'       => 'czr-add-new',
+      'pre_add_success'   => 'czr-add-success'
     );
 
 

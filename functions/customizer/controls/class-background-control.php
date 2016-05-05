@@ -60,44 +60,44 @@ if ( ! class_exists( 'HU_Body_Background_Control' ) ) :
     function hu_print_view_content_template() {
       ?>
       <script type="text/html" id="tmpl-customize-control-<?php echo $this->type; ?>-view-content">
-        <div class="hu-sub-set">
+        <div class="czr-sub-set">
           <div class="customize-control-title"><?php _e('Color', 'hueman'); ?></div>
-          <div class="hu-input" data-input-type="color">
+          <div class="czr-input" data-input-type="color">
             <input data-type="background-color" type="text" value="{{ data['background-color'] }}"></input>
           </div>
         </div>
 
-        <div class="hu-sub-set" data-input-type="select">
+        <div class="czr-sub-set" data-input-type="select">
           <div class="customize-control-title"><?php _e('Repeat', 'hueman'); ?></div>
-          <div class="hu-input">
+          <div class="czr-input">
             <select data-type="background-repeat"></select>
           </div>
         </div>
 
-        <div class="hu-sub-set" data-input-type="select">
+        <div class="czr-sub-set" data-input-type="select">
           <div class="customize-control-title"><?php _e('Background attachment', 'hueman'); ?></div>
-          <div class="hu-input">
+          <div class="czr-input">
             <select data-type="background-attachment"></select>
           </div>
         </div>
 
-        <div class="hu-sub-set" data-input-type="select">
+        <div class="czr-sub-set" data-input-type="select">
           <div class="customize-control-title"><?php _e('Background position', 'hueman'); ?></div>
-          <div class="hu-input">
+          <div class="czr-input">
             <select data-type="background-position"></select>
           </div>
         </div>
 
-        <div class="hu-sub-set" data-input-type="text">
+        <div class="czr-sub-set" data-input-type="text">
           <div class="customize-control-title"><?php _e('Background size', 'hueman'); ?></div>
-          <div class="hu-input">
+          <div class="czr-input">
             <input data-type="background-size" type="text" value="{{ data['background-size'] }}"></input>
           </div>
         </div>
 
-        <div class="hu-sub-set" data-input-type="upload">
+        <div class="czr-sub-set" data-input-type="upload">
           <div class="customize-control-title"><?php _e('Background Image', 'hueman'); ?></div>
-          <div class="hu-input">
+          <div class="czr-input">
             <input data-type="background-image" type="hidden" value="{{ data['background-image'] }}"></input>
           </div>
         </div>
