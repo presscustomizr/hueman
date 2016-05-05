@@ -175,6 +175,19 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
       '<span class="fa fa-question-circle-o"></span>'
     ].join('');
   };
+
+
+  api.hu_wp_builtin_settings = [
+    'page_for_posts',
+    'show_on_front',
+    'blogname',
+    'blogdescription'
+  ];
+  api.hu_build_setId = function ( name ) {
+    if ( _.has( api.hu_wp_builtin_settings, name ) )
+      return name;
+    return -1 == name.indexOf( 'hu_theme_options') ? [ 'hu_theme_options[' , name  , ']' ].join('') : name;
+  };
 })( wp.customize , jQuery, _);
 var HUBaseControlMethods = HUBaseControlMethods || {};
 
@@ -2108,211 +2121,223 @@ var HUSocialMethods = HUSocialMethods || {};
   var $_nav_section_container,
       translatedStrings = HUControlParams.translatedStrings || {};
 
+
   api.bind( 'ready' , function() {
-    _setControlVisibilities();
+    api.hu_visibilities = new api.HU_visibilities();
   } );
-  var _setControlVisibilities = function() {
-    _.map( _controlDependencies , function( opts , setId ) {
-      _prepare_visibilities( setId, opts );
-    });
-    _handleFaviconNote();
-  };
-  var _controlDependencies = {
-    'dynamic-styles' : {
-      controls: [
-        'boxed',
-        'font',
-        'container-width',
-        'sidebar-padding',
-        'color-1',
-        'color-2',
-        'color-topbar',
-        'color-header',
-        'color-header-menu',
-        'image-border-radius',
-        'body-background',
 
-      ],
-      callback : function (to) {
-        return '0' !== to && false !== to && 'off' !== to;
-      },
-    },
-    'blog-heading-enabled' : {
-      controls: [
-        'blog-heading',
-        'blog-subheading'
-      ],
-      callback : function (to) {
-        return '0' !== to && false !== to && 'off' !== to;
-      },
-    },
-    'featured-posts-enabled' : {
-      controls: [
-        'featured-category',
-        'featured-posts-count',
-        'featured-posts-full-content',
-        'featured-slideshow',
-        'featured-slideshow-speed',
-        'featured-posts-include'
-      ],
-      callback : function (to) {
-        return '0' !== to && false !== to && 'off' !== to;
-      },
-    },
-    'featured-slideshow' : {
-      controls: [
-        'featured-slideshow-speed'
-      ],
-      callback : function (to) {
-        return '0' !== to && false !== to && 'off' !== to;
-      },
-    },
-    'about-page' : {
-      controls: [
-        'help-button'
-      ],
-      callback : function (to) {
-        return '0' !== to && false !== to && 'off' !== to;
-      },
-    },
-    'page_for_posts' : {
-       controls: [
-         'tc_blog_restrict_by_cat'
-       ],
-       callback : function (to) {
-         return '0' !== to;
-       },
-    },
-    'show_on_front' : {
-      controls: [
-        'tc_blog_restrict_by_cat'
-      ],
-      callback : function (to) {
-        if ( 'posts' == to )
-          return true;
-        if ( 'page' == to )
-          return '0' !== api( _build_setId('page_for_posts') ).get() ;
-        return false;
-      },
+
+
+  api.HU_visibilities = api.Class.extend( {
+          controlDeps : {},
+
+          initialize: function() {
+                var self = this;
+                this.controlDeps = _.extend( this.controlDeps, this._getControlDeps() );
+                this._setControlVisibilities();
+                this._handleFaviconNote();
+
+          },
+          _setControlVisibilities : function() {
+                var self = this;
+                _.map( self.controlDeps , function( opts , setId ) {
+                  self._prepare_visibilities( setId, opts );
+                });
+          },
+          _getControlDeps : function() {
+                return {
+                  'dynamic-styles' : {
+                    controls: [
+                      'boxed',
+                      'font',
+                      'container-width',
+                      'sidebar-padding',
+                      'color-1',
+                      'color-2',
+                      'color-topbar',
+                      'color-header',
+                      'color-header-menu',
+                      'image-border-radius',
+                      'body-background',
+
+                    ],
+                    callback : function (to) {
+                      return '0' !== to && false !== to && 'off' !== to;
+                    },
+                  },
+                  'blog-heading-enabled' : {
+                    controls: [
+                      'blog-heading',
+                      'blog-subheading'
+                    ],
+                    callback : function (to) {
+                      return '0' !== to && false !== to && 'off' !== to;
+                    },
+                  },
+                  'featured-posts-enabled' : {
+                    controls: [
+                      'featured-category',
+                      'featured-posts-count',
+                      'featured-posts-full-content',
+                      'featured-slideshow',
+                      'featured-slideshow-speed',
+                      'featured-posts-include'
+                    ],
+                    callback : function (to) {
+                      return '0' !== to && false !== to && 'off' !== to;
+                    },
+                  },
+                  'featured-slideshow' : {
+                    controls: [
+                      'featured-slideshow-speed'
+                    ],
+                    callback : function (to) {
+                      return '0' !== to && false !== to && 'off' !== to;
+                    },
+                  },
+                  'about-page' : {
+                    controls: [
+                      'help-button'
+                    ],
+                    callback : function (to) {
+                      return '0' !== to && false !== to && 'off' !== to;
+                    },
+                  },
+                  'page_for_posts' : {
+                     controls: [
+                       'tc_blog_restrict_by_cat'
+                     ],
+                     callback : function (to) {
+                       return '0' !== to;
+                     },
+                  },
+                  'show_on_front' : {
+                    controls: [
+                      'tc_blog_restrict_by_cat'
+                    ],
+                    callback : function (to) {
+                      if ( 'posts' == to )
+                        return true;
+                      if ( 'page' == to )
+                        return '0' !== api( api.hu_build_setId('page_for_posts') ).get() ;
+                      return false;
+                    },
+                  }
+                };
+          },
+          _get_dependants : function( setId ) {
+                if ( ! this.controlDeps[setId] )
+                  return [];
+                var _dependants = this.controlDeps[setId];
+
+                if ( _dependants.show && _dependants.hide )
+                  return _.union(_dependants.show.controls , _dependants.hide.controls);
+                if ( _dependants.show && ! _dependants.hide )
+                  return _dependants.show.controls;
+                if ( ! _dependants.show && _dependants.hide )
+                  return _dependants.hide.controls;
+
+                return _dependants.controls;
+          },
+          _get_visibility_action : function ( setId , depSetId ) {
+                if ( ! this.controlDeps[setId] )
+                  return 'both';
+                var _dependants = this.controlDeps[setId];
+                if ( _dependants.show && -1 != _.indexOf( _dependants.show.controls, depSetId ) )
+                  return 'show';
+                if ( _dependants.hide && -1 != _.indexOf( _dependants.hide.controls, depSetId ) )
+                  return 'hide';
+                return 'both';
+          },
+
+
+          _get_visibility_cb : function( setId , _action ) {
+                if ( ! this.controlDeps[setId] )
+                  return;
+                var _dependants = this.controlDeps[setId];
+                if ( ! _dependants[_action] )
+                  return _dependants.callback;
+                return (_dependants[_action]).callback;
+          },
+
+
+          _check_cross_dependant : function( setId, depSetId ) {
+                if ( ! this.controlDeps[setId] )
+                  return true;
+                var _dependants = this.controlDeps[setId];
+                if ( ! _dependants.cross || ! _dependants.cross[depSetId] )
+                  return true;
+                var _cross  = _dependants.cross[depSetId],
+                    _id     = _cross.master,
+                    _cb     = _cross.callback;
+
+                _id = api.hu_build_setId(_id);
+                return _cb( api.instance(_id).get() );
+              },
+          _prepare_visibilities : function( setId, o ) {
+                var self = this;
+                api( api.hu_build_setId(setId) , function (setting) {
+                  var _params = {
+                    setting   : setting,
+                    setId : setId,
+                    controls  : self._get_dependants(setId),
+                  };
+                  _.map( _params.controls , function( depSetId ) {
+                    self._set_single_dependant_control_visibility( depSetId , _params);
+                  } );
+                });
+          },
+
+
+
+          _set_single_dependant_control_visibility : function( depSetId , _params ) {
+                var self = this;
+                api.control( api.hu_build_setId(depSetId) , function (control) {
+                  var _visibility = function (to) {
+                    var _action   = self._get_visibility_action( _params.setId , depSetId ),
+                        _callback = self._get_visibility_cb( _params.setId , _action ),
+                        _bool     = false;
+
+                    if ( 'show' == _action && _callback(to, depSetId, _params.setId ) )
+                      _bool = true;
+                    if ( 'hide' == _action && _callback(to, depSetId, _params.setId ) )
+                      _bool = false;
+                    if ( 'both' == _action )
+                      _bool = _callback(to, depSetId, _params.setId );
+                    _bool = self._check_cross_dependant( _params.setId, depSetId ) && _bool;
+                    control.container.toggle( _bool );
+                  };//_visibility()
+
+
+
+                  _visibility( _params.setting.get() );
+                  _params.setting.bind( _visibility );
+                });
+          },
+          _handleFaviconNote : function() {
+                var self = this;
+                if ( ! api.has('site_icon') || ! api.control('site_icon') || ( api.has(api.hu_build_setId('favicon')) && 0 === + api( api.hu_build_setId('favicon') ).get() ) || + api('site_icon').get() > 0 )
+                  return;
+
+                var _oldDes     = api.control('site_icon').params.description;
+                    _newDes     = ['<strong>' , translatedStrings.faviconNote || '' , '</strong><br/><br/>' ].join('') + _oldDes;
+                self._printFaviconNote(_newDes );
+                api('site_icon').callbacks.add( function(to) {
+                  if ( +to > 0 ) {
+                    api.control('site_icon').container.find('.description').text(_oldDes);
+                    if ( api.has( api.hu_build_setId('favicon') ) )
+                      api( api.hu_build_setId('favicon') ).set("");
+                  }
+                  else {
+                    self._printFaviconNote(_newDes );
+                  }
+                });
+          },
+          _printFaviconNote : function( _newDes ) {
+                api.control('site_icon').container.find('.description').html(_newDes);
+          }
     }
-  };
-
-  var wp_builtin_settings = [
-    'page_for_posts',
-    'show_on_front',
-    'blogname',
-    'blogdescription'
-  ];
-  var _build_setId = function ( name ) {
-    if ( _.has( wp_builtin_settings, name ) )
-      return name;
-    return -1 == name.indexOf( 'hu_theme_options') ? [ 'hu_theme_options[' , name  , ']' ].join('') : name;
-  };
-  var _get_dependants = function( setId ) {
-    if ( ! _controlDependencies[setId] )
-      return [];
-    var _dependants = _controlDependencies[setId];
-
-    if ( _dependants.show && _dependants.hide )
-      return _.union(_dependants.show.controls , _dependants.hide.controls);
-    if ( _dependants.show && ! _dependants.hide )
-      return _dependants.show.controls;
-    if ( ! _dependants.show && _dependants.hide )
-      return _dependants.hide.controls;
-
-    return _dependants.controls;
-  };
-  var _get_visibility_action = function ( setId , depSetId ) {
-    if ( ! _controlDependencies[setId] )
-      return 'both';
-    var _dependants = _controlDependencies[setId];
-    if ( _dependants.show && -1 != _.indexOf( _dependants.show.controls, depSetId ) )
-      return 'show';
-    if ( _dependants.hide && -1 != _.indexOf( _dependants.hide.controls, depSetId ) )
-      return 'hide';
-    return 'both';
-  };
-
-
-  var _get_visibility_cb = function( setId , _action ) {
-    if ( ! _controlDependencies[setId] )
-      return;
-    var _dependants = _controlDependencies[setId];
-    if ( ! _dependants[_action] )
-      return _dependants.callback;
-    return (_dependants[_action]).callback;
-  };
-
-
-  var _check_cross_dependant = function( setId, depSetId ) {
-    if ( ! _controlDependencies[setId] )
-      return true;
-    var _dependants = _controlDependencies[setId];
-    if ( ! _dependants.cross || ! _dependants.cross[depSetId] )
-      return true;
-    var _cross  = _dependants.cross[depSetId],
-        _id     = _cross.master,
-        _cb     = _cross.callback;
-
-    _id = _build_setId(_id);
-    return _cb( api.instance(_id).get() );
-  };
-  var _prepare_visibilities = function( setId, o ) {
-    api( _build_setId(setId) , function (setting) {
-      var _params = {
-        setting   : setting,
-        setId : setId,
-        controls  : _get_dependants(setId),
-      };
-      _.map( _params.controls , function( depSetId ) {
-        _set_single_dependant_control_visibility( depSetId , _params);
-      } );
-    });
-  };
-  var _set_single_dependant_control_visibility = function( depSetId , _params ) {
-    api.control( _build_setId(depSetId) , function (control) {
-      var _visibility = function (to) {
-        var _action   = _get_visibility_action( _params.setId , depSetId ),
-            _callback = _get_visibility_cb( _params.setId , _action ),
-            _bool     = false;
-
-        if ( 'show' == _action && _callback(to, depSetId, _params.setId ) )
-          _bool = true;
-        if ( 'hide' == _action && _callback(to, depSetId, _params.setId ) )
-          _bool = false;
-        if ( 'both' == _action )
-          _bool = _callback(to, depSetId, _params.setId );
-        _bool = _check_cross_dependant( _params.setId, depSetId ) && _bool;
-        control.container.toggle( _bool );
-      };//_visibility()
-
-
-
-      _visibility( _params.setting.get() );
-      _params.setting.bind( _visibility );
-    });
-  };
-  var _handleFaviconNote = function() {
-    if ( ! api.has('site_icon') || ! api.control('site_icon') || ( api.has(_build_setId('favicon')) && 0 === + api( _build_setId('favicon') ).get() ) || + api('site_icon').get() > 0 )
-      return;
-
-    var _oldDes     = api.control('site_icon').params.description;
-        _newDes     = ['<strong>' , translatedStrings.faviconNote || '' , '</strong><br/><br/>' ].join('') + _oldDes;
-    _printFaviconNote(_newDes );
-    api('site_icon').callbacks.add( function(to) {
-      if ( +to > 0 ) {
-        api.control('site_icon').container.find('.description').text(_oldDes);
-        if ( api.has( _build_setId('favicon') ) )
-          api( _build_setId('favicon') ).set("");
-      }
-      else {
-        _printFaviconNote(_newDes );
-      }
-    });
-  };
-  var _printFaviconNote = function( _newDes ) {
-    api.control('site_icon').container.find('.description').html(_newDes);
-  };
+  );//api.Class.extend() //api.HU_visibilities
 
 })( wp.customize, jQuery, _);//DOM READY :
 (function (wp, $) {
