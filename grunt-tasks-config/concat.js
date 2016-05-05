@@ -12,7 +12,7 @@ module.exports = {
   },
 	admin_control_js:{
 		src: [
-      '<%= paths.global_js %>oldBrowserCompat.js',
+      '<%= paths.global_js %>oldBrowserCompat.min.js',
       '<%= paths.admin_js %>lib/icheck.min.js',
       '<%= paths.admin_js %>lib/selecter.min.js',
       '<%= paths.admin_js %>lib/stepper.min.js',

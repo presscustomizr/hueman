@@ -17,9 +17,13 @@ module.exports = {
 		tasks : [ 'jshint:front_js', 'uglify:front_js'],
 		//tasks: ['concat:front_js', 'jshint:front', 'ftp_push:those'],
 	},
+  global_js : {
+    files : ['<%= paths.global_js %>*.js', '!*.min.js'],
+    tasks : [ 'jshint:global_js', 'uglify:global_js'],
+  },
 	admin_customizer_control_js : {
 		files : ['<%= paths.admin_js %>parts/*.js'],
-		tasks : ['jshint:those' , 'concat:admin_control_js', 'comments:customize_control_js', 'uglify:customize_control_js' ],
+		tasks : ['jshint:those' , 'concat:admin_control_js', 'uglify:customize_control_js' ],
 	},
 	//Other admin js assets are jshinted on change
 	admin_customizer_preview_js : {

@@ -3,10 +3,24 @@ module.exports = {
 		compress: {
 			global_defs: {
 				"DEBUG": false
+  		},
+  		dead_code: true
 		},
-		dead_code: true
-		}
+    preserveComments: function(node, comment) {
+            // preserve comments that start with a bang
+            return /^!/.test( comment.value );
+        },
 	},
+  global_js: {
+    files: [{
+      expand: true,
+      cwd: '<%= paths.global_js %>',
+      src: ['oldBrowserCompat.js'],
+      //src: ['**/*.js', '!*.min.js'],
+      dest: '<%= paths.global_js %>',
+      ext: '.min.js'
+    }]
+  },
 	front_js: {
 		files: [{
 			expand: true,

@@ -1,8 +1,8 @@
-// addEventListener Polyfill ie9- http://stackoverflow.com/a/27790212
+/*! addEventListener Polyfill ie9- http://stackoverflow.com/a/27790212*/
 window.addEventListener = window.addEventListener || function (e, f) { window.attachEvent('on' + e, f); };
 
 
-// Datenow Polyfill ie9- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now
+/*!  Datenow Polyfill ie9- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now */
 if (!Date.now) {
   Date.now = function now() {
     return new Date().getTime();
@@ -10,7 +10,7 @@ if (!Date.now) {
 }
 
 
-// Object.create monkey patch ie8 http://stackoverflow.com/a/18020326
+/*! Object.create monkey patch ie8 http://stackoverflow.com/a/18020326 */
 if ( ! Object.create ) {
   Object.create = function(proto, props) {
     if (typeof props !== "undefined") {
@@ -24,7 +24,7 @@ if ( ! Object.create ) {
 }
 
 
-//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+/*! https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter */
 // filter() was added to the ECMA-262 standard in the 5th edition; as such it may not be present in all implementations of the standard.
 // You can work around this by inserting the following code at the beginning of your scripts, allowing use of filter() in ECMA-262 implementations which do not natively support it.
 // This algorithm is exactly the one specified in ECMA-262, 5th edition, assuming that fn.call evaluates to the original value of Function.prototype.call(), and that Array.prototype.push() has its original value.
@@ -65,7 +65,8 @@ if ( ! Array.prototype.filter ) {
 
 
 
-//map was added to the ECMA-262 standard in the 5th edition; as such it may not be present in all implementations of the standard. You can work around this by inserting the following code at the beginning of your scripts, allowing use of map in implementations which do not natively support it. This algorithm is exactly the one specified in ECMA-262, 5th edition, assuming Object, TypeError, and Array have their original values and that callback.call evaluates to the original value of Function.prototype.call.
+/*! map was added to the ECMA-262 standard in the 5th edition */
+// as such it may not be present in all implementations of the standard. You can work around this by inserting the following code at the beginning of your scripts, allowing use of map in implementations which do not natively support it. This algorithm is exactly the one specified in ECMA-262, 5th edition, assuming Object, TypeError, and Array have their original values and that callback.call evaluates to the original value of Function.prototype.call.
 // Production steps of ECMA-262, Edition 5, 15.4.4.19
 // Reference: http://es5.github.io/#x15.4.4.19
 if (!Array.prototype.map) {
@@ -74,7 +75,7 @@ if (!Array.prototype.map) {
 
     var T, A, k;
 
-    if (this == null) {
+    if (this === null) {
       throw new TypeError(' this is null or not defined');
     }
 
