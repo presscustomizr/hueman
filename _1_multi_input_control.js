@@ -37,12 +37,10 @@ var CZRMultiInputMethods = CZRMultiInputMethods || {};
 
     setupImageUploader : function() {
       var control  = this;
-      console.log('IN SETUP IMAGE', $('.' + control.css_attr.multi_input_wrapper, control.container).find('[data-input-type="upload"]' ) );
       //do we have view template script?
       if ( 0 === $( '#tmpl-customize-control-media-content' ).length )
         return this;
 
-      console.log('wp.template( control.viewContentTemplateEl )', wp.template( '#tmpl-customize-control-media-content' ) );
       var view_template = wp.template( 'customize-control-media-content' );
 
      //console.log(view_template());

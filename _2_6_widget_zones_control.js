@@ -166,7 +166,7 @@ var CZRWidgetAreasMethods = CZRWidgetAreasMethods || {};
 
       }
       if ( _.isEmpty(_el) ) {
-        console.log('No valid template has been found in getTemplateEl()');
+        throw new Error( 'No valid template has been found in getTemplateEl()' );
       } else {
         return _el;
       }
@@ -556,8 +556,7 @@ var CZRWidgetAreasMethods = CZRWidgetAreasMethods || {};
     //in this case the parameter are the sidebar data with id and name
     addWidgetSidebar : function( obj, sidebar_data ) {
       if ( ! _.isObject(obj) && isEmpty(sidebar_data) ) {
-        console.log('No valid input were provided to add a new Widget Zone.');
-        return;
+        throw new Error('No valid input were provided to add a new Widget Zone.');
       }
 
 
@@ -588,8 +587,8 @@ var CZRWidgetAreasMethods = CZRWidgetAreasMethods || {};
           sidebarId: _new_sidebar.id,
           title: _new_sidebar.name,
           description : 'undefined' != typeof(sidebar_data) ? sidebar_data.description : api.section( "sidebar-widgets-" + serverControlParams.defaultWidgetSidebar ).params.description,
-          //always set the new priority to the maximum + 1 ( sidebars_create_sec is excluded from this calculation because it must always be at the bottom )
-          priority: _.max( _.omit( api.settings.sections, 'sidebars_create_sec'), function(sec){ return sec.instanceNumber; }).priority + 1,
+          //always set the new priority to the maximum + 1 ( serverControlParams.dynWidgetSection is excluded from this calculation because it must always be at the bottom )
+          priority: _.max( _.omit( api.settings.sections, serverControlParams.dynWidgetSection), function(sec){ return sec.instanceNumber; }).priority + 1,
         }
       );
 
@@ -711,19 +710,19 @@ var CZRWidgetAreasMethods = CZRWidgetAreasMethods || {};
       fixTopMargin.create('fixed_for_current_session');
       fixTopMargin.create('value');
 
-      api.section('sidebars_create_sec').fixTopMargin = fixTopMargin;
-      api.section('sidebars_create_sec').fixTopMargin('fixed_for_current_session').set(false);
+      api.section(serverControlParams.dynWidgetSection).fixTopMargin = fixTopMargin;
+      api.section(serverControlParams.dynWidgetSection).fixTopMargin('fixed_for_current_session').set(false);
 
       //will be used for adjustments
       api.panel('widgets').expanded.callbacks.add( function(expanded) {
         var _top_margin = api.panel('widgets').container.find( '.control-panel-content' ).css('margin-top');
-        api.section('sidebars_create_sec').fixTopMargin('value').set( _top_margin );
+        api.section(serverControlParams.dynWidgetSection).fixTopMargin('value').set( _top_margin );
 
-        var _section_content = api.section('sidebars_create_sec').container.find( '.accordion-section-content' ),
+        var _section_content = api.section(serverControlParams.dynWidgetSection).container.find( '.accordion-section-content' ),
           _panel_content = api.panel('widgets').container.find( '.control-panel-content' ),
           _set_margins = function() {
             _section_content.css( 'margin-top', '' );
-            _panel_content.css('margin-top', api.section('sidebars_create_sec').fixTopMargin('value').get() );
+            _panel_content.css('margin-top', api.section(serverControlParams.dynWidgetSection).fixTopMargin('value').get() );
           };
 
         // Fix the top margin after reflow.
@@ -742,8 +741,8 @@ var CZRWidgetAreasMethods = CZRWidgetAreasMethods || {};
 
 
       //change the expanded behaviour for the widget zone section
-      api.section('sidebars_create_sec').expanded.callbacks.add( function(expanded) {
-        var section =  api.section('sidebars_create_sec'),
+      api.section(serverControlParams.dynWidgetSection).expanded.callbacks.add( function(expanded) {
+        var section =  api.section(serverControlParams.dynWidgetSection),
             container = section.container.closest( '.wp-full-overlay-sidebar-content' ),
             content = section.container.find( '.accordion-section-content' ),
             overlay = section.container.closest( '.wp-full-overlay' ),

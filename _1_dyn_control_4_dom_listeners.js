@@ -52,8 +52,7 @@ var CZRDynamicMethods = CZRDynamicMethods || {};
 
       //the model is always passed as parameter
       if ( ! _.has( obj, 'event' ) || ! _.has( obj.event, 'actions' ) ) {
-        console.log( 'No obj.event or no obj.event.actions properties found in control.executeEventActionChain()' );
-        return;
+        throw new Error('executeEventActionChain : No obj.event or no obj.event.actions properties found');
       }
 
       //if the actions param is a anonymous function, fire it and stop there
@@ -75,8 +74,7 @@ var CZRDynamicMethods = CZRDynamicMethods || {};
           return;
 
         if ( 'function' != typeof( control[_cb] ) ) {
-          console.log( 'The action : ' + _cb + ' has not been found when firing event : ' + obj.event.selector );
-          return;
+          throw new Error( 'executeEventActionChain : the action : ' + _cb + ' has not been found when firing event : ' + obj.event.selector );
         }
 
         //allow other actions to be bound before

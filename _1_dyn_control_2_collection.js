@@ -10,14 +10,14 @@ var CZRDynamicMethods = CZRDynamicMethods || {};
     //@fired in control ready on api('ready')
     fetchSavedCollection : function() {
       var control = this;
+
       //inits the collection with the saved models
       //populates the collection with the saved model
       _.map( control.savedModels, function( model, key ) {
         //normalizes the model
         model = control._normalizeModel(model, _.has( model, 'id' ) ? model.id : key );
         if ( false === model ) {
-          console.log('A model could not be added in : ', control.id );
-          return;
+          throw new Error('fetchSavedCollection : a model could not be added in : ' + control.id );
         }
         //adds it to the collection
         control.addModel( { model : model }, key);

@@ -1,18 +1,13 @@
 (function (api, $, _) {
-
   var $_nav_section_container,
       translatedStrings = serverControlParams.translatedStrings || {};
-
 
   api.bind( 'ready' , function() {
     api.czr_visibilities = new api.CZR_visibilities();
   } );
 
-
-
   api.CZR_visibilities = api.Class.extend( {
           controlDeps : {},
-
           initialize: function() {
                 var self = this;
                 //store the default control dependencies
@@ -23,8 +18,6 @@
 
           },
 
-
-
           //bind all actions to wp.customize ready event
           //map each setting with its dependencies
           _setControlVisibilities : function() {
@@ -34,74 +27,12 @@
                 });
           },
 
-           /*
+          /*
           * Main control dependencies object
           */
           _getControlDeps : function() {
-                return {
-                  'dynamic-styles' : {
-                    controls: [
-                      'boxed',
-                      'font',
-                      'container-width',
-                      'sidebar-padding',
-                      'color-1',
-                      'color-2',
-                      'color-topbar',
-                      'color-header',
-                      'color-header-menu',
-                      'image-border-radius',
-                      'body-background',
-
-                    ],
-                    callback : function (to) {
-                      return '0' !== to && false !== to && 'off' !== to;
-                    },
-                  },
-                  'blog-heading-enabled' : {
-                    controls: [
-                      'blog-heading',
-                      'blog-subheading'
-                    ],
-                    callback : function (to) {
-                      return '0' !== to && false !== to && 'off' !== to;
-                    },
-                  },
-                  'featured-posts-enabled' : {
-                    controls: [
-                      'featured-category',
-                      'featured-posts-count',
-                      'featured-posts-full-content',
-                      'featured-slideshow',
-                      'featured-slideshow-speed',
-                      'featured-posts-include'
-                    ],
-                    callback : function (to) {
-                      return '0' !== to && false !== to && 'off' !== to;
-                    },
-                  },
-                  'featured-slideshow' : {
-                    controls: [
-                      'featured-slideshow-speed'
-                    ],
-                    callback : function (to) {
-                      return '0' !== to && false !== to && 'off' !== to;
-                    },
-                  },
-                  'about-page' : {
-                    controls: [
-                      'help-button'
-                    ],
-                    callback : function (to) {
-                      return '0' !== to && false !== to && 'off' !== to;
-                    },
-                  }
-                };
+            return {};
           },
-
-
-
-
 
           /*****************************************************************************
           * HELPERS
@@ -216,8 +147,6 @@
                 });
           },
 
-
-
           /**
           * Fired on api ready
           * May change the site_icon description on load
@@ -230,7 +159,7 @@
                 //1) WP version < 4.3 where site icon has been introduced
                 //2) User had not defined a favicon
                 //3) User has already set WP site icon
-                if ( ! api.has('site_icon') || ! api.control('site_icon') || ( api.has(api.czr_build_setId('favicon')) && 0 === + api( api.czr_build_setId('favicon') ).get() ) || + api('site_icon').get() > 0 )
+                if ( ! api.has('site_icon') || ! api.control('site_icon') || ( api.has(api.czr_build_setId(serverControlParams.faviconOptionName)) && 0 === + api( api.czr_build_setId(serverControlParams.faviconOptionName) ).get() ) || + api('site_icon').get() > 0 )
                   return;
 
                 var _oldDes     = api.control('site_icon').params.description;
@@ -245,8 +174,8 @@
                     //reset the description to default
                     api.control('site_icon').container.find('.description').text(_oldDes);
                     //reset the previous favicon setting
-                    if ( api.has( api.czr_build_setId('favicon') ) )
-                      api( api.czr_build_setId('favicon') ).set("");
+                    if ( api.has( api.czr_build_setId(serverControlParams.faviconOptionName) ) )
+                      api( api.czr_build_setId(serverControlParams.faviconOptionName) ).set("");
                   }
                   else {
                     self._printFaviconNote(_newDes );

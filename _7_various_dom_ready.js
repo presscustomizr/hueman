@@ -84,13 +84,6 @@
         $('<span/>', {class:'fa fa-magic'} )
       );
     }
-
-    /* ADD text to the content panel title */
-    if ( $('#accordion-panel-czr-content-panel').find('.accordion-section-title').first().length ) {
-      $('#accordion-panel-czr-content-panel').find('.accordion-section-title').first().append(
-        $('<span/>', { html : ' ( Home, Blog, Layout, Sidebars, Slideshows, ... )' } ).css('font-style', 'italic').css('font-size', '14px')
-      );
-    }
   });//end of $( function($) ) dom ready
 
 })( wp, jQuery);
