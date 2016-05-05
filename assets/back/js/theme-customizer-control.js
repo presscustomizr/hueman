@@ -165,7 +165,7 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
     });
 
   };//initialize
-  api.hu_getDocSearchLink = function( text ) {
+  api.czr_getDocSearchLink = function( text ) {
     text = ! _.isString(text) ? '' : text;
     var _searchtext = text.replace( / /g, '+'),
         _url = [ serverControlParams.docURL, 'search?query=', _searchtext ].join('');
@@ -177,22 +177,22 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
   };
 
 
-  api.hu_wp_builtin_settings = [
+  api.czr_wp_builtin_settings = [
     'page_for_posts',
     'show_on_front',
     'blogname',
     'blogdescription'
   ];
-  api.hu_build_setId = function ( name ) {
-    if ( _.has( api.hu_wp_builtin_settings, name ) )
+  api.czr_build_setId = function ( name ) {
+    if ( _.has( api.czr_wp_builtin_settings, name ) )
       return name;
     return -1 == name.indexOf( serverControlParams.themeOptions ) ? [ serverControlParams.themeOptions +'[' , name  , ']' ].join('') : name;
   };
 })( wp.customize , jQuery, _);
-var HUBaseControlMethods = HUBaseControlMethods || {};
+var CZRBaseControlMethods = CZRBaseControlMethods || {};
 
 (function (api, $, _) {
-  $.extend( HUBaseControlMethods, {
+  $.extend( CZRBaseControlMethods, {
 
     initialize: function( id, options ) {
       var control = this;
@@ -245,15 +245,15 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
       return  isTooLong ? s_ + '...' : s_;
     }
 
-  });//$.extend//HUBaseControlMethods
-})( wp.customize , jQuery, _);var HUDynamicMethods = HUDynamicMethods || {};
+  });//$.extend//CZRBaseControlMethods
+})( wp.customize , jQuery, _);var CZRDynamicMethods = CZRDynamicMethods || {};
 
 (function (api, $, _) {
-  $.extend( HUDynamicMethods, {
+  $.extend( CZRDynamicMethods, {
     initialize: function( id, options ) {
 
       var control = this;
-      api.HUBaseControl.prototype.initialize.call( control, id, options );
+      api.CZRBaseControl.prototype.initialize.call( control, id, options );
       control.control_event_map = [
         {
           trigger   : 'click keydown',
@@ -314,30 +314,30 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
     },//initialize
     _setupApiValues : function() {
       var control = this;
-      control.hu_preModel = new api.Values();
-      control.hu_preModel.create('model');
-      control.hu_preModel.create('view_content');
-      control.hu_preModel.create('view_status');
-      control.hu_preModel('view_status').set('closed');
-      control.hu_Model = new api.Values();
-      control.hu_View = new api.Values();
-      control.hu_Collection = new api.Values();
-      control.hu_Collection.create('models');
-      control.hu_Collection('models').set([]);
+      control.czr_preModel = new api.Values();
+      control.czr_preModel.create('model');
+      control.czr_preModel.create('view_content');
+      control.czr_preModel.create('view_status');
+      control.czr_preModel('view_status').set('closed');
+      control.czr_Model = new api.Values();
+      control.czr_View = new api.Values();
+      control.czr_Collection = new api.Values();
+      control.czr_Collection.create('models');
+      control.czr_Collection('models').set([]);
     },
     ready : function() {
       var control = this;
       api.bind( 'ready', function() {
         control.setupDOMListeners( control.control_event_map , { dom_el : control.container } );
         control.setupCollectionListeners().fetchSavedCollection();
-        control.hu_Collection('models').callbacks.add( function( to, from ) {
+        control.czr_Collection('models').callbacks.add( function( to, from ) {
             api(control.id).set( control.filterCollectionBeforeAjax(to) );
             var is_model_update = ( _.size(from) == _.size(to) ) && ! _.isEmpty( _.difference(from, to) );
             if ( 'postMessage' == api(control.id).transport && ! is_model_update )
               control.previewer.refresh();
         });
-        control.hu_preModel('model').set(control.getDefaultModel());
-        control.hu_preModel('view_status').callbacks.add( function( to, from ) {
+        control.czr_preModel('model').set(control.getDefaultModel());
+        control.czr_preModel('view_status').callbacks.add( function( to, from ) {
           control._togglePreModelViewExpansion( to );
         });
       });
@@ -346,25 +346,25 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
 
   });//$.extend()
 
-})( wp.customize, jQuery, _ );var HUDynamicMethods = HUDynamicMethods || {};
+})( wp.customize, jQuery, _ );var CZRDynamicMethods = CZRDynamicMethods || {};
 
 
 (function (api, $, _) {
-  $.extend( HUDynamicMethods, {
+  $.extend( CZRDynamicMethods, {
 
     updatePreModel : function(obj) {
       var control           = this,
           $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
           _changed_prop     = $_changed_input.attr('data-type'),
           _new_val          = $( $_changed_input, obj.dom_el ).val(),
-          _new_model        = _.clone(control.hu_preModel('model').get());//initialize it to the current value
+          _new_model        = _.clone(control.czr_preModel('model').get());//initialize it to the current value
       if ( 'title' == _changed_prop && _.isEmpty(_new_val) ) {
         _defaultModel = control.getDefaultModel();
         _new_val = _defaultModel.title;
       }
 
       _new_model[_changed_prop] = _new_val;
-      control.hu_preModel('model').set(_new_model);
+      control.czr_preModel('model').set(_new_model);
 
       control.doActions(
         'pre_model:' + _changed_prop + ':changed',
@@ -376,8 +376,8 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
       var control = this,
           model = {},
           is_added_by_user = _.has(obj, 'dom_event') && ! _.has(obj.dom_event, 'isTrigger');
-      if ( ! _.has( obj, 'model') && _.has(control, 'hu_preModel') ) {
-        model = control.hu_preModel('model').get();
+      if ( ! _.has( obj, 'model') && _.has(control, 'czr_preModel') ) {
+        model = control.czr_preModel('model').get();
       } else {
         model = _.has( obj, 'model') ? obj.model : model;
       }
@@ -385,15 +385,15 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
         return;
       model =  ( _.has( model, 'id') && control._isModelIdPossible( model.id) ) ? model : this._initNewModel( model || {} );
       key   = 'undefined' == typeof(key) ? key : false;
-      control.hu_Model.create(model.id);
-      control.hu_Model(model.id).callbacks.add( function( to, from ) {
+      control.czr_Model.create(model.id);
+      control.czr_Model(model.id).callbacks.add( function( to, from ) {
           control.updateCollection( { model : to }, key );
           control.writeViewTitle( {model:to});
           if ( ! _.isEmpty(from) || ! _.isUndefined(from) ) {
             control._sendModel(from, to );
           }
       });
-      control.hu_Model(model.id).set(model);
+      control.czr_Model(model.id).set(model);
       if ( is_added_by_user ) {
         control.setViewVisibility( {model:model}, is_added_by_user );
         control.closeResetPreModel();
@@ -407,7 +407,7 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
           $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
           _changed_prop     = $_changed_input.attr('data-type'),
           _new_val          = $( $_changed_input, obj.dom_el ).val(),
-          _current_model    = control.hu_Model(obj.model.id).get(),
+          _current_model    = control.czr_Model(obj.model.id).get(),
           _new_model        = _.clone( _current_model );//initialize it to the current value
       if ( 'title' == _changed_prop && _.isEmpty(_new_val) ) {
         _defaultModel = control.getDefaultModel();
@@ -415,7 +415,7 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
       }
       _new_model[_changed_prop] = _new_val;
 
-      control.hu_Model(obj.model.id).set(_new_model);
+      control.czr_Model(obj.model.id).set(_new_model);
       control.doActions(
         _changed_prop + ':changed',
         obj.dom_el,
@@ -424,10 +424,10 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
     },
     removeModel : function( obj ) {
       var control = this,
-          _new_collection = _.clone( control.hu_Collection('models').get() );
+          _new_collection = _.clone( control.czr_Collection('models').get() );
 
       _new_collection = _.without( _new_collection, _.findWhere( _new_collection, {id: obj.model.id }) );
-      control.hu_Collection('models').set( _new_collection );
+      control.czr_Collection('models').set( _new_collection );
     },
     getDefaultModel : function( id ) {
       var control = this;
@@ -442,13 +442,13 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
     },
     _isModelIdPossible : function( _id ) {
       var control = this;
-      return ! _.isEmpty(_id) && ! _.findWhere( control.hu_Collection('models').get(), { id : _id });
+      return ! _.isEmpty(_id) && ! _.findWhere( control.czr_Collection('models').get(), { id : _id });
     },
     _initNewModel : function( _model , _next_key ) {
       var control = this,
           _new_model = { id : '' },
           _id;
-      _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( control.hu_Collection('models').get() );
+      _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( control.czr_Collection('models').get() );
 
       if ( _.isNumber(_next_key) ) {
         _id = control.params.type + '_' + _next_key;
@@ -494,11 +494,11 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
     },
   });//$.extend()
 
-})( wp.customize, jQuery, _);var HUDynamicMethods = HUDynamicMethods || {};
+})( wp.customize, jQuery, _);var CZRDynamicMethods = CZRDynamicMethods || {};
 
 
 (function (api, $, _) {
-  $.extend( HUDynamicMethods, {
+  $.extend( CZRDynamicMethods, {
     fetchSavedCollection : function() {
       var control = this;
       _.map( control.savedModels, function( model, key ) {
@@ -513,26 +513,26 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
     },
     setupCollectionListeners : function() {
       var control = this;
-      control.hu_Collection('models').callbacks.add( function( to, from ) {
+      control.czr_Collection('models').callbacks.add( function( to, from ) {
         var _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
             _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
             _model_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
             _collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && _.isEmpty(_model_updated);
         if ( ! _.isEmpty(_to_render) && ! control.getViewEl(_to_render.id).length ) {
           var $view = control.renderView( {model:_to_render} );
-          control.setupViewApiListeners( {model:_to_render, dom_el : $view} );//listener of the hu_View value for expansion state
+          control.setupViewApiListeners( {model:_to_render, dom_el : $view} );//listener of the czr_View value for expansion state
           control.setupDOMListeners( control.view_event_map , {model:_to_render, dom_el:$view} );//listeners for the view wrapper
           control._makeSortable();
           control.doActions('after_viewSetup', $view, { model : _to_render , dom_el: $view} );
         }//if
         if ( ! _.isEmpty(_to_remove) ) {
           control._destroyView(_to_remove.id);
-          control.hu_Model.remove(_to_remove.id);
-          control.hu_View.remove(_to_remove.id);
+          control.czr_Model.remove(_to_remove.id);
+          control.czr_View.remove(_to_remove.id);
           control.doActions('after_modelRemoved', control.container, { model : _to_remove } );
         }//if
         if ( _collection_sorted ) {
-          control.hu_preModel('view_status').set('closed');
+          control.czr_preModel('view_status').set('closed');
           control.closeAllViews();
           control.closeAllAlerts();
         }//if
@@ -544,10 +544,10 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
     },
     updateCollection : function( obj, key ) {
       var control = this,
-          _current_collection = control.hu_Collection('models').get();
+          _current_collection = control.czr_Collection('models').get();
           _new_collection = _.clone(_current_collection);
       if ( _.has( obj, 'collection' ) ) {
-        control.hu_Collection('models').set(obj.collection);
+        control.czr_Collection('models').set(obj.collection);
         return;
       }
       var _key = ( 'undefined' == typeof(key) ) ? false : key,
@@ -571,11 +571,11 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
           _new_collection.push(model);
         }
       }//else
-      control.hu_Collection('models').set(_new_collection);
+      control.czr_Collection('models').set(_new_collection);
     },
     _getSortedDOMCollection : function( obj ) {
       var control = this,
-          _old_collection = _.clone( control.hu_Collection('models').get() ),
+          _old_collection = _.clone( control.czr_Collection('models').get() ),
           _new_collection = [],
           _index = 0;
       $( '.' + control.css_attr.inner_view, control.container ).each( function() {
@@ -596,17 +596,17 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
     },
     getModel : function(id) {
       var control = this;
-      _model = _.findWhere( control.hu_Collection('models').get(), {id:id} );
+      _model = _.findWhere( control.czr_Collection('models').get(), {id:id} );
       if ( false !== _model )
         return _model;
       return model;
     }
   });//$.extend()
 
-})( wp.customize, jQuery, _);var HUDynamicMethods = HUDynamicMethods || {};
+})( wp.customize, jQuery, _);var CZRDynamicMethods = CZRDynamicMethods || {};
 
 (function (api, $, _) {
-  $.extend( HUDynamicMethods, {
+  $.extend( CZRDynamicMethods, {
     renderView : function( obj ) {
       var control = this,
           model = _.clone(obj.model);
@@ -668,9 +668,9 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
           $viewContent = $( '.' + control.css_attr.view_content, control.getViewEl(obj.model.id) ),
           $view = control.getViewEl(obj.model.id);
 
-      control.hu_View.create(obj.model.id);
-      control.hu_View(obj.model.id).set('closed');
-      control.hu_View(obj.model.id).callbacks.add( function( to, from ) {
+      control.czr_View.create(obj.model.id);
+      control.czr_View(obj.model.id).set('closed');
+      control.czr_View(obj.model.id).callbacks.add( function( to, from ) {
         if ( ! $.trim( $viewContent.html() ) ) {
           control.renderViewContent( obj ).setupDOMListeners(
             control.view_content_event_map,
@@ -683,27 +683,27 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
     setViewVisibility : function(obj, is_added_by_user ) {
       var control = this;
       if ( is_added_by_user ) {
-        control.hu_View(obj.model.id).set( 'expanded_noscroll' );
+        control.czr_View(obj.model.id).set( 'expanded_noscroll' );
       } else {
         control.closeAllViews(obj.model.id);
-        control.hu_preModel('view_status').set( 'closed');
-        control.hu_View(obj.model.id).set( 'expanded' == control._getViewState(obj.model.id) ? 'closed' : 'expanded' );
+        control.czr_preModel('view_status').set( 'closed');
+        control.czr_View(obj.model.id).set( 'expanded' == control._getViewState(obj.model.id) ? 'closed' : 'expanded' );
       }
     },
     closeAllViews : function(model_id) {
       var control = this,
-          _current_collection = _.clone( control.hu_Collection('models').get() ),
+          _current_collection = _.clone( control.czr_Collection('models').get() ),
           _filtered_collection = _.filter( _current_collection , function( mod) { return mod.id != model_id; } );
 
       _.map( _filtered_collection, function(_model) {
-        if ( control.hu_View.has(_model.id) && 'expanded' == control._getViewState(_model.id) )
-          control.hu_View( _model.id).set( 'closed' ); // => will fire the cb _toggleViewExpansion
+        if ( control.czr_View.has(_model.id) && 'expanded' == control._getViewState(_model.id) )
+          control.czr_View( _model.id).set( 'closed' ); // => will fire the cb _toggleViewExpansion
        } );
     },
 
 
     _getViewState : function(model_id) {
-      return -1 == this.hu_View(model_id).get().indexOf('expanded') ? 'closed' : 'expanded';
+      return -1 == this.czr_View(model_id).get().indexOf('expanded') ? 'closed' : 'expanded';
     },
     _toggleViewExpansion : function( model_id, status, duration ) {
       var control = this;
@@ -753,7 +753,7 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
       $( '.' + control.css_attr.views_wrapper, control.container ).sortable( {
           handle: '.' + control.css_attr.sortable_handle,
           update: function( event, ui ) {
-            control.hu_Collection('models').set( control._getSortedDOMCollection() );
+            control.czr_Collection('models').set( control._getSortedDOMCollection() );
           }
         }
       );
@@ -777,7 +777,7 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
           $_alert_el = $( '.' + control.css_attr.remove_alert_wrapper, obj.dom_el ),
           $_clicked = obj.dom_event;
       this.closeAllViews();
-      control.hu_preModel('view_status').set( 'closed');
+      control.czr_preModel('view_status').set( 'closed');
       $('.' + control.css_attr.remove_alert_wrapper, control.container ).not($_alert_el).each( function() {
         if ( $(this).hasClass('open') ) {
           $(this).slideToggle( {
@@ -807,7 +807,7 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
     },
     renderPreModelView : function( obj ) {
       var control = this;
-      if ( ! _.isEmpty( control.hu_preModel('view_content').get() ) )
+      if ( ! _.isEmpty( control.czr_preModel('view_content').get() ) )
         return;
       if ( ! _.has(control, 'viewPreAddEl') ||  0 === $( '#tmpl-' + control.viewPreAddEl ).length )
         return this;
@@ -818,7 +818,7 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
       var $_pre_add_el = $('.' + control.css_attr.pre_add_view_content, control.container );
 
       $_pre_add_el.prepend( pre_add_template() );
-      control.hu_preModel('view_content').set( pre_add_template() );
+      control.czr_preModel('view_content').set( pre_add_template() );
       control.doActions( 'pre_add_view_rendered' , control.container, {model : {}, dom_el : $_pre_add_el});
     },
     _getPreModelView : function() {
@@ -829,13 +829,13 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
     destroyPreModelView : function() {
       var control = this;
       $('.' + control.css_attr.pre_add_view_content, control.container ).find('.czr-sub-set').remove();
-      control.hu_preModel('view_content').set('');
+      control.czr_preModel('view_content').set('');
     },
     setPreModelViewVisibility : function(obj) {
       var control = this;
 
       control.closeAllViews();
-      control.hu_preModel('view_status').set( 'expanded' == control.hu_preModel('view_status').get() ? 'closed' : 'expanded' );
+      control.czr_preModel('view_status').set( 'expanded' == control.czr_preModel('view_status').get() ? 'closed' : 'expanded' );
     },
     _togglePreModelViewExpansion : function( status) {
       var control = this,
@@ -861,8 +861,8 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
       var control = this;
       control.toggleSuccessMessage('on');
       setTimeout( function() {
-          control.hu_preModel('view_status').set( 'closed');
-          control.hu_preModel('model').set(control.getDefaultModel());
+          control.czr_preModel('view_status').set( 'closed');
+          control.czr_preModel('model').set(control.getDefaultModel());
           control.toggleSuccessMessage('off').destroyPreModelView();
         } , 3000);
     },
@@ -885,10 +885,10 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
       return this;
     }
   });//$.extend()
-})( wp.customize, jQuery, _);var HUDynamicMethods = HUDynamicMethods || {};
+})( wp.customize, jQuery, _);var CZRDynamicMethods = CZRDynamicMethods || {};
 
 (function (api, $, _) {
-  $.extend( HUDynamicMethods, {
+  $.extend( CZRDynamicMethods, {
     setupDOMListeners : function( event_map , obj ) {
       var control = this;
       _.map( event_map , function( _event ) {
@@ -940,14 +940,14 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
     }
   });//$.extend()
 
-})( wp.customize, jQuery, _);var HUMultiInputMethods = HUMultiInputMethods || {};
+})( wp.customize, jQuery, _);var CZRMultiInputMethods = CZRMultiInputMethods || {};
 
 (function (api, $, _) {
 
-  $.extend( HUMultiInputMethods , {
+  $.extend( CZRMultiInputMethods , {
     initialize: function( id, options ) {
       var control = this;
-      api.HUBaseControl.prototype.initialize.call( control, id, options );
+      api.CZRBaseControl.prototype.initialize.call( control, id, options );
       control.model = api(control.id).get();
     },
 
@@ -1029,10 +1029,10 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
 
   });//$.extend
 
-})( wp.customize, jQuery, _);var TCMultiplePickerMethods = TCMultiplePickerMethods || {};
+})( wp.customize, jQuery, _);var CZRMultiplePickerMethods = CZRMultiplePickerMethods || {};
 
 (function (api, $, _) {
-  $.extend( TCMultiplePickerMethods , {
+  $.extend( CZRMultiplePickerMethods , {
     ready: function() {
       var control  = this,
           _select  = this.container.find('select');
@@ -1043,12 +1043,12 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
     }
   });//$.extend
 
-})( wp.customize, jQuery, _);var TCCroppedImageMethods = TCCroppedImageMethods || {};
+})( wp.customize, jQuery, _);var CZRCroppedImageMethods = CZRCroppedImageMethods || {};
 
 (function (api, $, _) {
   if ( 'function' != typeof wp.media.controller.Cropper  || 'function' != typeof api.CroppedImageControl  )
     return;
-    wp.media.controller.TCCustomizeImageCropper = wp.media.controller.Cropper.extend({
+    wp.media.controller.CZRCustomizeImageCropper = wp.media.controller.Cropper.extend({
       doCrop: function( attachment ) {
         var cropDetails = attachment.get( 'cropDetails' ),
             control = this.get( 'control' );
@@ -1065,7 +1065,7 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
         } );
       }
     });
-    $.extend( TCCroppedImageMethods , {
+    $.extend( CZRCroppedImageMethods , {
       initFrame: function() {
 
         var l10n = _wpMediaViewsL10n;
@@ -1085,7 +1085,7 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
                     suggestedWidth: this.params.width,
                     suggestedHeight: this.params.height
                 }),
-                new wp.media.controller.TCCustomizeImageCropper({
+                new wp.media.controller.CZRCustomizeImageCropper({
                     imgSelectOptions: this.calculateImageSelectOptions,
                     control: this
                 })
@@ -1112,10 +1112,10 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
       },
     });//Method definition
 
-})( wp.customize, jQuery, _);var TCUploadMethods = TCUploadMethods || {};
+})( wp.customize, jQuery, _);var CZRUploadMethods = CZRUploadMethods || {};
 
 (function (api, $, _) {
-  $.extend( TCUploadMethods, {
+  $.extend( CZRUploadMethods, {
     ready: function() {
       var control = this;
 
@@ -1166,10 +1166,10 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
     }
   });//method definition
 
-})( wp.customize, jQuery, _);var HULayoutSelectMethods = HULayoutSelectMethods || {};
+})( wp.customize, jQuery, _);var CZRLayoutSelectMethods = CZRLayoutSelectMethods || {};
 
 (function (api, $, _) {
-  $.extend( HULayoutSelectMethods , {
+  $.extend( CZRLayoutSelectMethods , {
     ready: function() {
       this.setupSelect();
     },
@@ -1200,12 +1200,12 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
     },
   });//$.extend
 
-})( wp.customize, jQuery, _);var HUBackgroundMethods = HUBackgroundMethods || {};
+})( wp.customize, jQuery, _);var CZRBackgroundMethods = CZRBackgroundMethods || {};
 (function (api, $, _) {
-  $.extend( HUBackgroundMethods , {
+  $.extend( CZRBackgroundMethods , {
     initialize: function( id, options ) {
       var control = this;
-      api.HUBaseControl.prototype.initialize.call( control, id, options );
+      api.CZRBaseControl.prototype.initialize.call( control, id, options );
     },
 
     ready: function() {
@@ -1238,14 +1238,14 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
     },
   });//$.extend
 
-})( wp.customize, jQuery, _);//extends api.HUDynamicControl
+})( wp.customize, jQuery, _);//extends api.CZRDynamicControl
 
-var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
+var CZRWidgetAreasMethods = CZRWidgetAreasMethods || {};
 
 (function (api, $, _) {
-  $.extend( HUWidgetAreasMethods, {
+  $.extend( CZRWidgetAreasMethods, {
     initialize: function( id, options ) {
-      api.HUDynamicControl.prototype.initialize.call( this, id, options );
+      api.CZRDynamicControl.prototype.initialize.call( this, id, options );
 
       var control = this;
       control.addActions(
@@ -1319,21 +1319,21 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
       control.locations = _.has( options.params , 'sidebar_locations') ? options.params.sidebar_locations : {};
       control.model = {
         id : '',
-        title : 'Widget Zone',
+        title : serverControlParams.translatedStrings.widgetZone,
         contexts : _.without( _.keys(control.contexts), '_all_' ),//the server list of contexts is an object, we only need the keys, whitout _all_
-        locations : ['s1'],
+        locations : [ serverControlParams.defaultWidgetLocation ],
         description : ''
       };
       this.modelAddedMessage = serverControlParams.translatedStrings.widgetZoneAdded;
       this.setExpansionsCallbacks();
       this.listenToSidebarInsights();
-      control.hu_preModel.create('location_alert_view_state');
-      control.hu_preModel('location_alert_view_state').set('closed');
-      control.hu_preModel('location_alert_view_state').callbacks.add( function( to, from ) {
+      control.czr_preModel.create('location_alert_view_state');
+      control.czr_preModel('location_alert_view_state').set('closed');
+      control.czr_preModel('location_alert_view_state').callbacks.add( function( to, from ) {
         var $view = control._getPreModelView();
         control._toggleLocationAlertExpansion( $view, to );
       });
-      control.hu_viewLocationAlert = new api.Values();
+      control.czr_viewLocationAlert = new api.Values();
     },//initialize
     getTemplateEl : function( type, model ) {
       var control = this, _el;
@@ -1435,7 +1435,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
     },
     listenToViewExpand : function(obj) {
       var control = this;
-      control.hu_View(obj.model.id).callbacks.add( function( to, from ) {
+      control.czr_View(obj.model.id).callbacks.add( function( to, from ) {
         if ( -1 == to.indexOf('expanded') )//can take the expanded_noscroll value !
           return;
 
@@ -1446,7 +1446,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
     },
     listenToPreModelViewExpand : function(obj) {
       var control = this;
-      control.hu_preModel('view_status').callbacks.add( function( to, from ) {
+      control.czr_preModel('view_status').callbacks.add( function( to, from ) {
         if ( 'expanded' != to )
           return;
         control._setupLocationSelect( obj.model.id, obj.dom_el , true );//true for refresh
@@ -1455,9 +1455,9 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
     },
     setupLocationsApiListeners : function(obj) {
       var control = this;
-      control.hu_viewLocationAlert.create(obj.model.id);
-      control.hu_viewLocationAlert(obj.model.id).set('closed');
-      control.hu_viewLocationAlert(obj.model.id).callbacks.add( function( to, from ) {
+      control.czr_viewLocationAlert.create(obj.model.id);
+      control.czr_viewLocationAlert(obj.model.id).set('closed');
+      control.czr_viewLocationAlert(obj.model.id).callbacks.add( function( to, from ) {
         var $view = control.getViewEl(obj.model.id);
         control._toggleLocationAlertExpansion( $view , to );
       });
@@ -1469,7 +1469,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
           _unavailable = _.filter( _selected_locations, function( loc ) {
             return ! _.contains(available_locs, loc);
           });
-      control.hu_preModel('location_alert_view_state').set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
+      control.czr_preModel('location_alert_view_state').set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
 
     },
     mayBeDisplayModelAlert : function(obj) {
@@ -1479,7 +1479,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
           _unavailable = _.filter( _selected_locations, function( loc ) {
             return ! _.contains(available_locs, loc);
           });
-      control.hu_viewLocationAlert(obj.model.id).set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
+      control.czr_viewLocationAlert(obj.model.id).set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
     },
 
     _toggleLocationAlertExpansion : function($view, to) {
@@ -1488,7 +1488,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
       if ( ! $_alert_el.length ) {
         var _html = [
           '<span>' + serverControlParams.translatedStrings.locationWarning + '</span>',
-          api.hu_getDocSearchLink( serverControlParams.translatedStrings.locationWarning ),
+          api.czr_getDocSearchLink( serverControlParams.translatedStrings.locationWarning ),
         ].join('');
 
         $_alert_el = $('<div/>', {
@@ -1504,7 +1504,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
       });
     },
     closePreModelAlert : function() {
-      this.hu_preModel('location_alert_view_state').set('closed');
+      this.czr_preModel('location_alert_view_state').set('closed');
     },
     setupSelect : function( obj ) {
       this._setupContextSelect( obj.model, obj.dom_el );
@@ -1587,7 +1587,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
       }
       var _model        = ! _.isEmpty(obj) ? _.clone(obj.model) : sidebar_data;
           _new_sidebar  = _.isEmpty(obj) ? sidebar_data : $.extend(
-            _.clone( _.findWhere( api.Widgets.data.registeredSidebars, { id: "primary" } ) ),
+            _.clone( _.findWhere( api.Widgets.data.registeredSidebars, { id: serverControlParams.defaultWidgetSidebar } ) ),
             {
               name : _model.title,
               id : _model.id
@@ -1595,13 +1595,13 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
           );
       api.Widgets.registeredSidebars.add( _new_sidebar );
       var _params = $.extend(
-        _.clone( api.section("sidebar-widgets-primary").params ),
+        _.clone( api.section( "sidebar-widgets-" + serverControlParams.defaultWidgetSidebar ).params ),
         {
           id : "sidebar-widgets-" + _model.id,
           instanceNumber: _.max(api.settings.sections, function(sec){ return sec.instanceNumber; }).instanceNumber + 1,
           sidebarId: _new_sidebar.id,
           title: _new_sidebar.name,
-          description : 'undefined' != typeof(sidebar_data) ? sidebar_data.description : api.section("sidebar-widgets-primary").params.description,
+          description : 'undefined' != typeof(sidebar_data) ? sidebar_data.description : api.section( "sidebar-widgets-" + serverControlParams.defaultWidgetSidebar ).params.description,
           priority: _.max( _.omit( api.settings.sections, 'sidebars_create_sec'), function(sec){ return sec.instanceNumber; }).priority + 1,
         }
       );
@@ -1610,7 +1610,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
       api.settings.sections[ _params.id ] = _params.id;
       var _new_set_id = 'sidebars_widgets['+_model.id+']',
           _new_set    = $.extend(
-            _.clone( api.settings.settings['sidebars_widgets[primary]'] ),
+            _.clone( api.settings.settings['sidebars_widgets[' + serverControlParams.defaultWidgetSidebar + ']'] ),
             {
               value:[]
             }
@@ -1622,14 +1622,14 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
         dirty: false
       } );
       var _cloned_control = $.extend(
-            _.clone( api.settings.controls['sidebars_widgets[primary]'] ),
+            _.clone( api.settings.controls['sidebars_widgets[' + serverControlParams.defaultWidgetSidebar + ']'] ),
             {
               settings : { default : _new_set_id }
             }),
           _new_control = {};
       _.map( _cloned_control, function( param, key ) {
         if ( 'string' == typeof(param) ) {
-          param = param.replace('primary', _model.id );
+          param = param.replace( serverControlParams.defaultWidgetSidebar , _model.id );
         }
         _new_control[key] = param;
       });
@@ -1687,7 +1687,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
       } );
       api.panel('widgets').expanded.callbacks.add( function(expanded) {
         control.closeAllViews();
-        control.hu_preModel('view_status').set('closed');
+        control.czr_preModel('view_status').set('closed');
       } );
       api.section('sidebars_create_sec').expanded.callbacks.add( function(expanded) {
         var section =  api.section('sidebars_create_sec'),
@@ -1714,7 +1714,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
     listenToSidebarInsights : function() {
       var control = this;
       api.sidebar_insights('registered').callbacks.add( function( _registered_zones ) {
-        var _current_collection = _.clone( control.hu_Collection('models').get() );
+        var _current_collection = _.clone( control.czr_Collection('models').get() );
         _.map(_current_collection, function( _model ) {
           if ( ! control.getViewEl(_model.id).length )
             return;
@@ -1723,7 +1723,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
         });
       });
       api.sidebar_insights('inactives').callbacks.add( function( _inactives_zones ) {
-        var _current_collection = _.clone( control.hu_Collection('models').get() );
+        var _current_collection = _.clone( control.czr_Collection('models').get() );
         _.map(_current_collection, function( _model ) {
           if ( ! control.getViewEl(_model.id).length )
             return;
@@ -1750,7 +1750,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
             return;
           if ( api.section.has("sidebar-widgets-" +_sidebar.id ) )
             return;
-          api.HUWidgetAreasControl.prototype.addWidgetSidebar( {}, _sidebar );
+          api.CZRWidgetAreasControl.prototype.addWidgetSidebar( {}, _sidebar );
           if ( _.has( api.sidebar_insights('actives').get(), _sidebar.id ) && api.section.has("sidebar-widgets-" +_sidebar.id ) )
             api.section( "sidebar-widgets-" +_sidebar.id ).activate();
         });
@@ -1774,7 +1774,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
     },
     getDefaultModel : function(id) {
       var control = this,
-          _current_collection = control.hu_Collection('models').get(),
+          _current_collection = control.czr_Collection('models').get(),
           _default = _.clone( control.model ),
           _default_contexts = _default.contexts;
       return $.extend( _default, {
@@ -1784,14 +1784,14 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
 
   });//$.extend()
 
-})( wp.customize, jQuery, _);//extends api.HUDynamicControl
+})( wp.customize, jQuery, _);//extends api.CZRDynamicControl
 
-var HUSocialMethods = HUSocialMethods || {};
+var CZRSocialMethods = CZRSocialMethods || {};
 
 (function (api, $, _) {
-  $.extend( HUSocialMethods, {
+  $.extend( CZRSocialMethods, {
     initialize: function( id, options ) {
-      api.HUDynamicControl.prototype.initialize.call( this, id, options );
+      api.CZRDynamicControl.prototype.initialize.call( this, id, options );
 
       var control = this;
 
@@ -2011,14 +2011,14 @@ var HUSocialMethods = HUSocialMethods || {};
       _new_model['social-link'] = '';
       _new_model['social-color'] = _new_color;
 
-      control.hu_Model(obj.model.id).set(_new_model);
+      control.czr_Model(obj.model.id).set(_new_model);
     },
     updatePreModelTitle : function(obj) {
       var control = this,
           _new_title  = control._capitalize( obj.model['social-icon'].replace('fa-', '') ),
-          _new_model = control.hu_preModel('model').get();
+          _new_model = control.czr_preModel('model').get();
       _new_model.title = [ serverControlParams.translatedStrings.followUs, _new_title].join(' ');
-      control.hu_preModel('model').set(_new_model);
+      control.czr_preModel('model').set(_new_model);
     },
 
 
@@ -2088,31 +2088,31 @@ var HUSocialMethods = HUSocialMethods || {};
 
 })( wp.customize, jQuery, _);
 (function (api, $, _) {
-  api.HUBaseControl           = api.Control.extend( HUBaseControlMethods || {} );
-  api.HUDynamicControl        = api.HUBaseControl.extend( HUDynamicMethods || {} );
-  api.HUMultiInputControl     = api.HUBaseControl.extend( HUMultiInputMethods || {} );
+  api.CZRBaseControl           = api.Control.extend( CZRBaseControlMethods || {} );
+  api.CZRDynamicControl        = api.CZRBaseControl.extend( CZRDynamicMethods || {} );
+  api.CZRMultiInputControl     = api.CZRBaseControl.extend( CZRMultiInputMethods || {} );
 
-  api.HUWidgetAreasControl    = api.HUDynamicControl.extend( HUWidgetAreasMethods || {} );
-  api.HUSocialControl         = api.HUDynamicControl.extend( HUSocialMethods || {} );
+  api.CZRWidgetAreasControl    = api.CZRDynamicControl.extend( CZRWidgetAreasMethods || {} );
+  api.CZRSocialControl         = api.CZRDynamicControl.extend( CZRSocialMethods || {} );
 
-  api.TCUploadControl         = api.Control.extend( TCUploadMethods || {} );
-  api.HULayoutControl         = api.Control.extend( HULayoutSelectMethods || {} );
-  api.TCMultiplePickerControl = api.Control.extend( TCMultiplePickerMethods || {} );
+  api.CZRUploadControl         = api.Control.extend( CZRUploadMethods || {} );
+  api.CZRLayoutControl         = api.Control.extend( CZRLayoutSelectMethods || {} );
+  api.CZRMultiplePickerControl = api.Control.extend( CZRMultiplePickerMethods || {} );
 
   $.extend( api.controlConstructor, {
-    hu_upload     : api.TCUploadControl,
-    hu_sidebars   : api.HUWidgetAreasControl,
-    hu_socials    : api.HUSocialControl,
-    tc_multiple_picker : api.TCMultiplePickerControl,
-    hu_layouts    : api.HULayoutControl,
-    hu_multi_input : api.HUMultiInputControl
+    czr_upload     : api.CZRUploadControl,
+    czr_sidebars   : api.CZRWidgetAreasControl,
+    czr_socials    : api.CZRSocialControl,
+    czr_multiple_picker : api.CZRMultiplePickerControl,
+    czr_layouts    : api.CZRLayoutControl,
+    czr_multi_input : api.CZRMultiInputControl
   });
 
   if ( 'function' == typeof api.CroppedImageControl ) {
-    api.TCCroppedImageControl   = api.CroppedImageControl.extend( TCCroppedImageMethods || {} );
+    api.CZRCroppedImageControl   = api.CroppedImageControl.extend( CZRCroppedImageMethods || {} );
 
     $.extend( api.controlConstructor, {
-      hu_cropped_image : api.TCCroppedImageControl
+      czr_cropped_image : api.CZRCroppedImageControl
     });
   }
 
@@ -2123,12 +2123,12 @@ var HUSocialMethods = HUSocialMethods || {};
 
 
   api.bind( 'ready' , function() {
-    api.hu_visibilities = new api.HU_visibilities();
+    api.czr_visibilities = new api.CZR_visibilities();
   } );
 
 
 
-  api.HU_visibilities = api.Class.extend( {
+  api.CZR_visibilities = api.Class.extend( {
           controlDeps : {},
 
           initialize: function() {
@@ -2202,26 +2202,6 @@ var HUSocialMethods = HUSocialMethods || {};
                     callback : function (to) {
                       return '0' !== to && false !== to && 'off' !== to;
                     },
-                  },
-                  'page_for_posts' : {
-                     controls: [
-                       'tc_blog_restrict_by_cat'
-                     ],
-                     callback : function (to) {
-                       return '0' !== to;
-                     },
-                  },
-                  'show_on_front' : {
-                    controls: [
-                      'tc_blog_restrict_by_cat'
-                    ],
-                    callback : function (to) {
-                      if ( 'posts' == to )
-                        return true;
-                      if ( 'page' == to )
-                        return '0' !== api( api.hu_build_setId('page_for_posts') ).get() ;
-                      return false;
-                    },
                   }
                 };
           },
@@ -2271,12 +2251,12 @@ var HUSocialMethods = HUSocialMethods || {};
                     _id     = _cross.master,
                     _cb     = _cross.callback;
 
-                _id = api.hu_build_setId(_id);
+                _id = api.czr_build_setId(_id);
                 return _cb( api.instance(_id).get() );
               },
           _prepare_visibilities : function( setId, o ) {
                 var self = this;
-                api( api.hu_build_setId(setId) , function (setting) {
+                api( api.czr_build_setId(setId) , function (setting) {
                   var _params = {
                     setting   : setting,
                     setId : setId,
@@ -2292,7 +2272,7 @@ var HUSocialMethods = HUSocialMethods || {};
 
           _set_single_dependant_control_visibility : function( depSetId , _params ) {
                 var self = this;
-                api.control( api.hu_build_setId(depSetId) , function (control) {
+                api.control( api.czr_build_setId(depSetId) , function (control) {
                   var _visibility = function (to) {
                     var _action   = self._get_visibility_action( _params.setId , depSetId ),
                         _callback = self._get_visibility_cb( _params.setId , _action ),
@@ -2316,7 +2296,7 @@ var HUSocialMethods = HUSocialMethods || {};
           },
           _handleFaviconNote : function() {
                 var self = this;
-                if ( ! api.has('site_icon') || ! api.control('site_icon') || ( api.has(api.hu_build_setId('favicon')) && 0 === + api( api.hu_build_setId('favicon') ).get() ) || + api('site_icon').get() > 0 )
+                if ( ! api.has('site_icon') || ! api.control('site_icon') || ( api.has(api.czr_build_setId('favicon')) && 0 === + api( api.czr_build_setId('favicon') ).get() ) || + api('site_icon').get() > 0 )
                   return;
 
                 var _oldDes     = api.control('site_icon').params.description;
@@ -2325,8 +2305,8 @@ var HUSocialMethods = HUSocialMethods || {};
                 api('site_icon').callbacks.add( function(to) {
                   if ( +to > 0 ) {
                     api.control('site_icon').container.find('.description').text(_oldDes);
-                    if ( api.has( api.hu_build_setId('favicon') ) )
-                      api( api.hu_build_setId('favicon') ).set("");
+                    if ( api.has( api.czr_build_setId('favicon') ) )
+                      api( api.czr_build_setId('favicon') ).set("");
                   }
                   else {
                     self._printFaviconNote(_newDes );
@@ -2337,7 +2317,7 @@ var HUSocialMethods = HUSocialMethods || {};
                 api.control('site_icon').container.find('.description').html(_newDes);
           }
     }
-  );//api.Class.extend() //api.HU_visibilities
+  );//api.Class.extend() //api.CZR_visibilities
 
 })( wp.customize, jQuery, _);//DOM READY :
 (function (wp, $) {

@@ -259,7 +259,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
                     'control'   => 'HU_Customize_Widget_Areas_Control',
                     'label'     => __('Create And Order Widget Areas', 'hueman'),
                     'section'   => 'sidebars_create_sec',
-                    'type'      => 'hu_sidebars',//@todo create dynamic type
+                    'type'      => 'czr_sidebars',//@todo create dynamic type
                     'notice'    => __('You must save changes for the new areas to appear below. <br /><i>Warning: Make sure each area has a unique ID.</i>' , 'hueman'),
                     'transport' => 'postMessage',
               )
@@ -286,7 +286,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
                   'control'   => 'HU_Customize_Widget_Areas_Control',
                   'label'     => __('Create And Manage Widget Areas', 'hueman'),
                   'section'   => 'sidebars_create_sec',
-                  'type'      => 'hu_sidebars',//@todo create dynamic type
+                  'type'      => 'czr_sidebars',//@todo create dynamic type
                   'notice'    => __('You must save changes for the new areas to appear below. <br /><i>Warning: Make sure each area has a unique ID.</i>' , 'hueman'),
                   'transport' => 'postMessage'
             )
@@ -638,6 +638,8 @@ if ( ! class_exists( 'HU_customize' ) ) :
             'themeName'     => THEMENAME,
             'themeOptions'  => HU_THEME_OPTIONS,
             'defaultSocialColor' => 'rgba(255,255,255,0.7)',
+            'defaultWidgetSidebar' => 'primary',//the one that will be cloned. Specific to each themes
+            'defaultWidgetLocation' => 's1',//Specific to each themes
             'translatedStrings'    => array(
               'edit' => __('Edit', 'hueman'),
               'close' => __('Close', 'hueman'),
@@ -650,6 +652,8 @@ if ( ! class_exists( 'HU_customize' ) ) :
               'followUs' => __('Follow us on', 'hueman'),
               'successMessage' => __('Done !', 'hueman'),
               'socialLinkAdded' => __('New Social Link created ! Scroll down to edit it.', 'hueman'),
+
+              'widgetZone' => __('Widget Zone', 'hueman'),
               'widgetZoneAdded' => __('New Widget Zone created ! Scroll down to edit it.', 'hueman'),
               'inactiveWidgetZone' => __('Inactive in current context/location', 'hueman'),
               'unavailableLocation' => __('Unavailable location. Some settings must be changed.', 'hueman'),
