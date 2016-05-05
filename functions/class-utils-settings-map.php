@@ -316,7 +316,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'     => __('Create and organize your social links', 'hueman'),
                 'section'   => 'social_links_sec',
                 'type'      => 'hu_socials',//@todo create dynamic type
-                'transport' => 'postMessage'
+                'transport' => 'postMessage',
+                'priority'  => 10
           )
       );
     }
