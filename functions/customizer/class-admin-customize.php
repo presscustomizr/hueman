@@ -41,8 +41,8 @@ if ( ! class_exists( 'HU_customize' ) ) :
   		add_action ( 'customize_preview_init'			              , array( $this , 'hu_customize_preview_js' ), 20 );
       //exports some wp_query informations. Updated on each preview refresh.
       add_action ( 'customize_preview_init'                   , array( $this , 'hu_add_preview_footer_action' ), 20 );
-
-      add_action( 'customize_controls_print_footer_scripts'  , array( $this, 'hu_print_js_templates' ) );
+      //print rate link + template
+      add_action( 'customize_controls_print_footer_scripts'   , array( $this, 'hu_print_rate_link' ) );
     }
 
     //updates the names of the built-in widget zones for users who installed the theme before v3.1.2
@@ -630,13 +630,14 @@ if ( ! class_exists( 'HU_customize' ) ) :
 			//localizes
 			wp_localize_script(
         'hu-customizer-controls',
-        'HUControlParams',
+        'serverControlParams',
         apply_filters('hu_js_customizer_control_params' ,
 	        array(
 	        	'AjaxUrl'       => admin_url( 'admin-ajax.php' ),
             'docURL'        => esc_url('docs.presscustomizr.com/'),
 	        	'HUNonce' 			=> wp_create_nonce( 'hu-customizer-nonce' ),
             'themeName'     => THEMENAME,
+            'themeOptions'  => HU_THEME_OPTIONS,
             'defaultSocialColor' => 'rgba(255,255,255,0.7)',
             'translatedStrings'    => array(
               'edit' => __('Edit', 'hueman'),
@@ -665,15 +666,10 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
 
 
-    /*
-    * Renders the underscore templates for the call to actions
-    * callback of 'customize_controls_print_footer_scripts'
-    *@since v3.2.9
-    */
-    function hu_print_js_templates() {
+    //hook : customize_controls_print_footer_scripts
+    function hu_print_rate_link() {
       ?>
-
-      <script type="text/template" id="rate-czr">
+      <script id="rate-tpl" type="text/template" >
         <?php
           printf( '<span class="hu-rate-link">%1$s %2$s, <br/>%3$s <a href="%4$s" title="%5$s" class="hu-stars" target="_blank">%6$s</a> %7$s</span>',
             __( 'If you like' , 'hueman' ),
@@ -686,8 +682,20 @@ if ( ! class_exists( 'HU_customize' ) ) :
           );
         ?>
       </script>
+      <script id="rate-theme" type="text/javascript">
+        /* CONTRIBUTION TO HUEMAN */
+        _render_rate_czr();
+
+        function _render_rate_czr() {
+          var _cta = _.template(
+                $( "script#rate-tpl" ).html()
+            );
+            $('#customize-footer-actions').append( _cta() );
+          }
+      </script>
       <?php
     }
+
 
 	}//end of class
 endif;

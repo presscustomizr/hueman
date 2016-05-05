@@ -15,6 +15,7 @@ patches/
 node_modules/
 .ftpauth
 assets/back/js/parts/
+npm-debug.log
 
 # TRAVIS
 .travis.yml

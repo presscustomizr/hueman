@@ -168,9 +168,9 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
   api.hu_getDocSearchLink = function( text ) {
     text = ! _.isString(text) ? '' : text;
     var _searchtext = text.replace( / /g, '+'),
-        _url = [ HUControlParams.docURL, 'search?query=', _searchtext ].join('');
+        _url = [ serverControlParams.docURL, 'search?query=', _searchtext ].join('');
     return [
-      '<a href="' + _url + '" title="' + HUControlParams.translatedStrings.readDocumentation + '" target="_blank">',
+      '<a href="' + _url + '" title="' + serverControlParams.translatedStrings.readDocumentation + '" target="_blank">',
       ' ',
       '<span class="fa fa-question-circle-o"></span>'
     ].join('');
@@ -304,7 +304,7 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
       ];
       control.savedModels = api(control.id).get();
       control.model = { id : '', title : '' };
-      control.modelAddedMessage = HUControlParams.translatedStrings.successMessage;
+      control.modelAddedMessage = serverControlParams.translatedStrings.successMessage;
       $.extend( control, {
         viewAlertEl : 'customize-control-' + options.params.type + '-alert',
         viewPreAddEl : 'customize-control-' + options.params.type + '-pre-add-view-content',
@@ -718,9 +718,9 @@ var HUBaseControlMethods = HUBaseControlMethods || {};
 
             $_edit_icon.toggleClass('active' , _is_expanded );
             if ( _is_expanded )
-              $_edit_icon.removeClass('fa-pencil').addClass('fa-minus-square').attr('title', HUControlParams.translatedStrings.close );
+              $_edit_icon.removeClass('fa-pencil').addClass('fa-minus-square').attr('title', serverControlParams.translatedStrings.close );
             else
-              $_edit_icon.removeClass('fa-minus-square').addClass('fa-pencil').attr('title', HUControlParams.translatedStrings.edit );
+              $_edit_icon.removeClass('fa-minus-square').addClass('fa-pencil').attr('title', serverControlParams.translatedStrings.edit );
             if ( 'expanded' == status )
               control._adjustScrollExpandedBlock( control.getViewEl(model_id) );
           }//done callback
@@ -1324,7 +1324,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
         locations : ['s1'],
         description : ''
       };
-      this.modelAddedMessage = HUControlParams.translatedStrings.widgetZoneAdded;
+      this.modelAddedMessage = serverControlParams.translatedStrings.widgetZoneAdded;
       this.setExpansionsCallbacks();
       this.listenToSidebarInsights();
       control.hu_preModel.create('location_alert_view_state');
@@ -1394,9 +1394,9 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
           }
         );
       }
-      var _locationText = HUControlParams.translatedStrings.locations,
-          _contextText = HUControlParams.translatedStrings.contexts,
-          _notsetText = HUControlParams.translatedStrings.notset;
+      var _locationText = serverControlParams.translatedStrings.locations,
+          _contextText = serverControlParams.translatedStrings.contexts,
+          _notsetText = serverControlParams.translatedStrings.notset;
 
       _locations = _.isEmpty( _locations ) ? '<span style="font-weight: bold;">' + _notsetText + '</span>' : _locations.join(', ');
       _contexts = _.isEmpty( _contexts ) ? '<span style="font-weight: bold;">' + _notsetText + '</span>' : _contexts.join(', ');
@@ -1487,8 +1487,8 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
 
       if ( ! $_alert_el.length ) {
         var _html = [
-          '<span>' + HUControlParams.translatedStrings.locationWarning + '</span>',
-          api.hu_getDocSearchLink( HUControlParams.translatedStrings.locationWarning ),
+          '<span>' + serverControlParams.translatedStrings.locationWarning + '</span>',
+          api.hu_getDocSearchLink( serverControlParams.translatedStrings.locationWarning ),
         ].join('');
 
         $_alert_el = $('<div/>', {
@@ -1545,7 +1545,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
         if (! state.id) { return state.text; }
         if (  _.contains(available_locs, state.element.value) ) { return state.text; }
         var $state = $(
-          '<span class="hu-unavailable-location fa fa-ban" title="' + HUControlParams.translatedStrings.unavailableLocation + '">&nbsp;&nbsp;' + state.text + '</span>'
+          '<span class="hu-unavailable-location fa fa-ban" title="' + serverControlParams.translatedStrings.unavailableLocation + '">&nbsp;&nbsp;' + state.text + '</span>'
         );
         return $state;
       }
@@ -1732,7 +1732,7 @@ var HUWidgetAreasMethods = HUWidgetAreasMethods || {};
             control.getViewEl( _model.id ).addClass('inactive');
             if ( ! control.getViewEl( _model.id ).find('.hu-inactive-alert').length )
               control.getViewEl( _model.id ).find('.hu-view-title').append(
-                $('<span/>', {class : "hu-inactive-alert", html : " [ " + HUControlParams.translatedStrings.inactiveWidgetZone + " ]" })
+                $('<span/>', {class : "hu-inactive-alert", html : " [ " + serverControlParams.translatedStrings.inactiveWidgetZone + " ]" })
               );
           }
           else {
@@ -1975,10 +1975,10 @@ var HUSocialMethods = HUSocialMethods || {};
         title : '' ,
         'social-icon' : '',
         'social-link' : '',
-        'social-color' : HUControlParams.defaultSocialColor,
+        'social-color' : serverControlParams.defaultSocialColor,
         'social-target' : 1
       };
-      this.modelAddedMessage = HUControlParams.translatedStrings.socialLinkAdded;
+      this.modelAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
     },//initialize
 
 
@@ -1986,7 +1986,7 @@ var HUSocialMethods = HUSocialMethods || {};
       title = title || ( 'string' === typeof(icon) ? this._capitalize( icon.replace( 'fa-', '') ) : '' );
       title = this._truncate(title, 20);
       icon = icon || 'fa-' + this.social_icons[0];
-      color = color || HUControlParams.defaultSocialColor;
+      color = color || serverControlParams.defaultSocialColor;
 
       return '<div><span class="fa ' + icon + '" style="color:' + color + '"></span> ' + title + '</div>';
     },
@@ -2001,8 +2001,8 @@ var HUSocialMethods = HUSocialMethods || {};
       var control     = this,
           _new_model  = _.clone( obj.model ),
           _new_title  = control._capitalize( obj.model['social-icon'].replace('fa-', '') ),
-          _new_color  = HUControlParams.defaultSocialColor;
-      _new_title = [ HUControlParams.translatedStrings.followUs, _new_title].join(' ');
+          _new_color  = serverControlParams.defaultSocialColor;
+      _new_title = [ serverControlParams.translatedStrings.followUs, _new_title].join(' ');
 
       $('input[data-type="title"]', obj.dom_el ).val( _new_title );
       $('input[data-type="social-link"]', obj.dom_el ).val( '' );
@@ -2017,7 +2017,7 @@ var HUSocialMethods = HUSocialMethods || {};
       var control = this,
           _new_title  = control._capitalize( obj.model['social-icon'].replace('fa-', '') ),
           _new_model = control.hu_preModel('model').get();
-      _new_model.title = [ HUControlParams.translatedStrings.followUs, _new_title].join(' ');
+      _new_model.title = [ serverControlParams.translatedStrings.followUs, _new_title].join(' ');
       control.hu_preModel('model').set(_new_model);
     },
 
@@ -2026,7 +2026,7 @@ var HUSocialMethods = HUSocialMethods || {};
 
     setupSelect : function( obj ) {
       var control = this,
-          socialList = _.union( [HUControlParams.translatedStrings.selectSocialIcon], control.social_icons);
+          socialList = _.union( [serverControlParams.translatedStrings.selectSocialIcon], control.social_icons);
       _.map( socialList , function( icon_name, k ) {
         var _value = ( 0 === k ) ? '' : 'fa-' + icon_name.toLowerCase(),
             _attributes = {
@@ -2119,7 +2119,7 @@ var HUSocialMethods = HUSocialMethods || {};
 })( wp.customize, jQuery, _);(function (api, $, _) {
 
   var $_nav_section_container,
-      translatedStrings = HUControlParams.translatedStrings || {};
+      translatedStrings = serverControlParams.translatedStrings || {};
 
 
   api.bind( 'ready' , function() {
@@ -2386,14 +2386,6 @@ var HUSocialMethods = HUSocialMethods || {};
         });
     });
     $('input[type="number"]').stepper();
-    _render_rate_czr();
-
-    function _render_rate_czr() {
-      var _cta = _.template(
-          $( "script#rate-czr" ).html()
-      );
-      $('#customize-footer-actions').append( _cta() );
-    }
     if ( $('.control-panel-widgets').find('.accordion-section-title').first().length ) {
       $('.control-panel-widgets').find('.accordion-section-title').first().prepend(
         $('<span/>', {class:'fa fa-magic'} )
