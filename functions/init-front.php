@@ -867,28 +867,3 @@ function hu_is_widget_zone_allowed_in_context( $_contexts, $_map_conditionals ) 
 
   return false;
 }
-
-
-
-
-
-/* ------------------------------------------------------------------------- *
- *  Dev mode script
-/* ------------------------------------------------------------------------- */
-//Grunt Live reload script on DEV mode (HU_DEV constant has to be defined. In wp_config for example)
-if ( defined('TC_DEV') && true === TC_DEV && apply_filters('hu_live_reload_in_dev_mode' , true ) )
-  add_action( 'wp_head', 'hu_add_livereload_script' );
-
-/*
-* Writes the livereload script in dev mode (Grunt watch livereload enabled)
-*/
-function hu_add_livereload_script() {
-  ?>
-  <script id="hu-dev-live-reload" type="text/javascript">
-      document.write('<script src="http://'
-          + ('localhost').split(':')[0]
-          + ':35729/livereload.js?snipver=1" type="text/javascript"><\/script>')
-      console.log('When WP_DEBUG mode is enabled, activate the watch Grunt task to enable live reloading. This script can be disabled with the following code to paste in your functions.php file : add_filter("hu_live_reload_in_dev_mode" , "__return_false")');
-  </script>
-  <?php
-}
