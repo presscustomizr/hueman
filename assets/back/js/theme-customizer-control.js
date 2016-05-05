@@ -3143,20 +3143,15 @@ var CZRSocialMethods = CZRSocialMethods || {};
   }
 
 })( wp.customize, jQuery, _);(function (api, $, _) {
-
   var $_nav_section_container,
       translatedStrings = serverControlParams.translatedStrings || {};
-
 
   api.bind( 'ready' , function() {
     api.czr_visibilities = new api.CZR_visibilities();
   } );
 
-
-
   api.CZR_visibilities = api.Class.extend( {
           controlDeps : {},
-
           initialize: function() {
                 var self = this;
                 //store the default control dependencies
@@ -3167,8 +3162,6 @@ var CZRSocialMethods = CZRSocialMethods || {};
 
           },
 
-
-
           //bind all actions to wp.customize ready event
           //map each setting with its dependencies
           _setControlVisibilities : function() {
@@ -3178,74 +3171,12 @@ var CZRSocialMethods = CZRSocialMethods || {};
                 });
           },
 
-           /*
+          /*
           * Main control dependencies object
           */
           _getControlDeps : function() {
-                return {
-                  'dynamic-styles' : {
-                    controls: [
-                      'boxed',
-                      'font',
-                      'container-width',
-                      'sidebar-padding',
-                      'color-1',
-                      'color-2',
-                      'color-topbar',
-                      'color-header',
-                      'color-header-menu',
-                      'image-border-radius',
-                      'body-background',
-
-                    ],
-                    callback : function (to) {
-                      return '0' !== to && false !== to && 'off' !== to;
-                    },
-                  },
-                  'blog-heading-enabled' : {
-                    controls: [
-                      'blog-heading',
-                      'blog-subheading'
-                    ],
-                    callback : function (to) {
-                      return '0' !== to && false !== to && 'off' !== to;
-                    },
-                  },
-                  'featured-posts-enabled' : {
-                    controls: [
-                      'featured-category',
-                      'featured-posts-count',
-                      'featured-posts-full-content',
-                      'featured-slideshow',
-                      'featured-slideshow-speed',
-                      'featured-posts-include'
-                    ],
-                    callback : function (to) {
-                      return '0' !== to && false !== to && 'off' !== to;
-                    },
-                  },
-                  'featured-slideshow' : {
-                    controls: [
-                      'featured-slideshow-speed'
-                    ],
-                    callback : function (to) {
-                      return '0' !== to && false !== to && 'off' !== to;
-                    },
-                  },
-                  'about-page' : {
-                    controls: [
-                      'help-button'
-                    ],
-                    callback : function (to) {
-                      return '0' !== to && false !== to && 'off' !== to;
-                    },
-                  }
-                };
+            return {};
           },
-
-
-
-
 
           /*****************************************************************************
           * HELPERS
@@ -3359,8 +3290,6 @@ var CZRSocialMethods = CZRSocialMethods || {};
                   _params.setting.bind( _visibility );
                 });
           },
-
-
 
           /**
           * Fired on api ready

@@ -43,6 +43,8 @@ if ( ! class_exists( 'HU_customize' ) ) :
       add_action ( 'customize_preview_init'                   , array( $this , 'hu_add_preview_footer_action' ), 20 );
       //print rate link + template
       add_action( 'customize_controls_print_footer_scripts'   , array( $this, 'hu_print_rate_link' ) );
+      //Add the visibilities
+      add_action( 'customize_controls_print_footer_scripts'   , array( $this, 'hu_extend_visibilities' ), 10 );
     }
 
     //updates the names of the built-in widget zones for users who installed the theme before v3.1.2
@@ -702,6 +704,77 @@ if ( ! class_exists( 'HU_customize' ) ) :
       <?php
     }
 
+
+    //hook : 'customize_controls_enqueue_scripts':10
+    function hu_extend_visibilities() {
+      ?>
+      <script id="control-visibilities" type="text/javascript">
+        (function (api, $, _) {
+          api.CZR_visibilities.prototype.controlDeps = _.extend(
+            api.CZR_visibilities.prototype.controlDeps,
+            {
+              'dynamic-styles' : {
+                controls: [
+                  'boxed',
+                  'font',
+                  'container-width',
+                  'sidebar-padding',
+                  'color-1',
+                  'color-2',
+                  'color-topbar',
+                  'color-header',
+                  'color-header-menu',
+                  'image-border-radius',
+                  'body-background'
+                ],
+                callback : function (to) {
+                  return '0' !== to && false !== to && 'off' !== to;
+                },
+              },
+              'blog-heading-enabled' : {
+                controls: [
+                  'blog-heading',
+                  'blog-subheading'
+                ],
+                callback : function (to) {
+                  return '0' !== to && false !== to && 'off' !== to;
+                },
+              },
+              'featured-posts-enabled' : {
+                controls: [
+                  'featured-category',
+                  'featured-posts-count',
+                  'featured-posts-full-content',
+                  'featured-slideshow',
+                  'featured-slideshow-speed',
+                  'featured-posts-include'
+                ],
+                callback : function (to) {
+                  return '0' !== to && false !== to && 'off' !== to;
+                },
+              },
+              'featured-slideshow' : {
+                controls: [
+                  'featured-slideshow-speed'
+                ],
+                callback : function (to) {
+                  return '0' !== to && false !== to && 'off' !== to;
+                },
+              },
+              'about-page' : {
+                controls: [
+                  'help-button'
+                ],
+                callback : function (to) {
+                  return '0' !== to && false !== to && 'off' !== to;
+                },
+              }
+            }//end of visibility {}
+          );//_.extend()
+        }) ( wp.customize, jQuery, _);
+      </script>
+      <?php
+    }
 
 	}//end of class
 endif;
