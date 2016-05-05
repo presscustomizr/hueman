@@ -736,14 +736,14 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
     //@fired in control ready on api('ready')
     fetchSavedCollection : function() {
       var control = this;
+
       //inits the collection with the saved models
       //populates the collection with the saved model
       _.map( control.savedModels, function( model, key ) {
         //normalizes the model
         model = control._normalizeModel(model, _.has( model, 'id' ) ? model.id : key );
         if ( false === model ) {
-          console.log('A model could not be added in : ', control.id );
-          return;
+          throw new Error('fetchSavedCollection : a model could not be added in : ' + control.id );
         }
         //adds it to the collection
         control.addModel( { model : model }, key);
@@ -1422,8 +1422,7 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
 
       //the model is always passed as parameter
       if ( ! _.has( obj, 'event' ) || ! _.has( obj.event, 'actions' ) ) {
-        console.log( 'No obj.event or no obj.event.actions properties found in control.executeEventActionChain()' );
-        return;
+        throw new Error('executeEventActionChain : No obj.event or no obj.event.actions properties found');
       }
 
       //if the actions param is a anonymous function, fire it and stop there
@@ -1445,8 +1444,7 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
           return;
 
         if ( 'function' != typeof( control[_cb] ) ) {
-          console.log( 'The action : ' + _cb + ' has not been found when firing event : ' + obj.event.selector );
-          return;
+          throw new Error( 'executeEventActionChain : the action : ' + _cb + ' has not been found when firing event : ' + obj.event.selector );
         }
 
         //allow other actions to be bound before
@@ -1510,12 +1508,10 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
 
     setupImageUploader : function() {
       var control  = this;
-      console.log('IN SETUP IMAGE', $('.' + control.css_attr.multi_input_wrapper, control.container).find('[data-input-type="upload"]' ) );
       //do we have view template script?
       if ( 0 === $( '#tmpl-customize-control-media-content' ).length )
         return this;
 
-      console.log('wp.template( control.viewContentTemplateEl )', wp.template( '#tmpl-customize-control-media-content' ) );
       var view_template = wp.template( 'customize-control-media-content' );
 
      //console.log(view_template());
@@ -2055,7 +2051,7 @@ var CZRWidgetAreasMethods = CZRWidgetAreasMethods || {};
 
       }
       if ( _.isEmpty(_el) ) {
-        console.log('No valid template has been found in getTemplateEl()');
+        throw new Error( 'No valid template has been found in getTemplateEl()' );
       } else {
         return _el;
       }
@@ -2445,8 +2441,7 @@ var CZRWidgetAreasMethods = CZRWidgetAreasMethods || {};
     //in this case the parameter are the sidebar data with id and name
     addWidgetSidebar : function( obj, sidebar_data ) {
       if ( ! _.isObject(obj) && isEmpty(sidebar_data) ) {
-        console.log('No valid input were provided to add a new Widget Zone.');
-        return;
+        throw new Error('No valid input were provided to add a new Widget Zone.');
       }
 
 
@@ -2477,8 +2472,8 @@ var CZRWidgetAreasMethods = CZRWidgetAreasMethods || {};
           sidebarId: _new_sidebar.id,
           title: _new_sidebar.name,
           description : 'undefined' != typeof(sidebar_data) ? sidebar_data.description : api.section( "sidebar-widgets-" + serverControlParams.defaultWidgetSidebar ).params.description,
-          //always set the new priority to the maximum + 1 ( sidebars_create_sec is excluded from this calculation because it must always be at the bottom )
-          priority: _.max( _.omit( api.settings.sections, 'sidebars_create_sec'), function(sec){ return sec.instanceNumber; }).priority + 1,
+          //always set the new priority to the maximum + 1 ( serverControlParams.dynWidgetSection is excluded from this calculation because it must always be at the bottom )
+          priority: _.max( _.omit( api.settings.sections, serverControlParams.dynWidgetSection), function(sec){ return sec.instanceNumber; }).priority + 1,
         }
       );
 
@@ -2600,19 +2595,19 @@ var CZRWidgetAreasMethods = CZRWidgetAreasMethods || {};
       fixTopMargin.create('fixed_for_current_session');
       fixTopMargin.create('value');
 
-      api.section('sidebars_create_sec').fixTopMargin = fixTopMargin;
-      api.section('sidebars_create_sec').fixTopMargin('fixed_for_current_session').set(false);
+      api.section(serverControlParams.dynWidgetSection).fixTopMargin = fixTopMargin;
+      api.section(serverControlParams.dynWidgetSection).fixTopMargin('fixed_for_current_session').set(false);
 
       //will be used for adjustments
       api.panel('widgets').expanded.callbacks.add( function(expanded) {
         var _top_margin = api.panel('widgets').container.find( '.control-panel-content' ).css('margin-top');
-        api.section('sidebars_create_sec').fixTopMargin('value').set( _top_margin );
+        api.section(serverControlParams.dynWidgetSection).fixTopMargin('value').set( _top_margin );
 
-        var _section_content = api.section('sidebars_create_sec').container.find( '.accordion-section-content' ),
+        var _section_content = api.section(serverControlParams.dynWidgetSection).container.find( '.accordion-section-content' ),
           _panel_content = api.panel('widgets').container.find( '.control-panel-content' ),
           _set_margins = function() {
             _section_content.css( 'margin-top', '' );
-            _panel_content.css('margin-top', api.section('sidebars_create_sec').fixTopMargin('value').get() );
+            _panel_content.css('margin-top', api.section(serverControlParams.dynWidgetSection).fixTopMargin('value').get() );
           };
 
         // Fix the top margin after reflow.
@@ -2631,8 +2626,8 @@ var CZRWidgetAreasMethods = CZRWidgetAreasMethods || {};
 
 
       //change the expanded behaviour for the widget zone section
-      api.section('sidebars_create_sec').expanded.callbacks.add( function(expanded) {
-        var section =  api.section('sidebars_create_sec'),
+      api.section(serverControlParams.dynWidgetSection).expanded.callbacks.add( function(expanded) {
+        var section =  api.section(serverControlParams.dynWidgetSection),
             container = section.container.closest( '.wp-full-overlay-sidebar-content' ),
             content = section.container.find( '.accordion-section-content' ),
             overlay = section.container.closest( '.wp-full-overlay' ),
@@ -3303,7 +3298,7 @@ var CZRSocialMethods = CZRSocialMethods || {};
                 //1) WP version < 4.3 where site icon has been introduced
                 //2) User had not defined a favicon
                 //3) User has already set WP site icon
-                if ( ! api.has('site_icon') || ! api.control('site_icon') || ( api.has(api.czr_build_setId('favicon')) && 0 === + api( api.czr_build_setId('favicon') ).get() ) || + api('site_icon').get() > 0 )
+                if ( ! api.has('site_icon') || ! api.control('site_icon') || ( api.has(api.czr_build_setId(serverControlParams.faviconOptionName)) && 0 === + api( api.czr_build_setId(serverControlParams.faviconOptionName) ).get() ) || + api('site_icon').get() > 0 )
                   return;
 
                 var _oldDes     = api.control('site_icon').params.description;
@@ -3318,8 +3313,8 @@ var CZRSocialMethods = CZRSocialMethods || {};
                     //reset the description to default
                     api.control('site_icon').container.find('.description').text(_oldDes);
                     //reset the previous favicon setting
-                    if ( api.has( api.czr_build_setId('favicon') ) )
-                      api( api.czr_build_setId('favicon') ).set("");
+                    if ( api.has( api.czr_build_setId(serverControlParams.faviconOptionName) ) )
+                      api( api.czr_build_setId(serverControlParams.faviconOptionName) ).set("");
                   }
                   else {
                     self._printFaviconNote(_newDes );
@@ -3418,13 +3413,6 @@ var CZRSocialMethods = CZRSocialMethods || {};
     if ( $('.control-panel-widgets').find('.accordion-section-title').first().length ) {
       $('.control-panel-widgets').find('.accordion-section-title').first().prepend(
         $('<span/>', {class:'fa fa-magic'} )
-      );
-    }
-
-    /* ADD text to the content panel title */
-    if ( $('#accordion-panel-czr-content-panel').find('.accordion-section-title').first().length ) {
-      $('#accordion-panel-czr-content-panel').find('.accordion-section-title').first().append(
-        $('<span/>', { html : ' ( Home, Blog, Layout, Sidebars, Slideshows, ... )' } ).css('font-style', 'italic').css('font-size', '14px')
       );
     }
   });//end of $( function($) ) dom ready

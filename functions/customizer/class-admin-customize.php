@@ -20,29 +20,27 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
       //v3.1.2 option update : registered sidebar names have changed
       $this -> hu_update_widget_database_option();
+      //define useful constants
+      if( ! defined( 'CZR_DYN_WIDGETS_SECTION' ) )      define( 'CZR_DYN_WIDGETS_SECTION' , 'dyn_widgets_section' );
+
 
   		//add control class
   		add_action ( 'customize_register'				                , array( $this , 'hu_augment_customizer' ),10,1);
-
   		//control scripts and style
   		add_action ( 'customize_controls_enqueue_scripts'	      , array( $this , 'hu_customize_controls_js_css' ));
-
       //add the customizer built with the builder below
       add_action ( 'customize_register'                       , array( $this , 'hu_customize_register' ), 20, 1 );
-
       //add the customizer built with the builder below
   		add_action ( 'customize_register'				                , array( $this , 'hu_schedule_register_sidebar_section' ), 1000, 1 );
-
       //modify some WP built-in settings / controls / sections
       add_action ( 'customize_register'                       , array( $this , 'hu_alter_wp_customizer_settings' ), 30, 1 );
-
       //preview scripts
       //set with priority 20 to be fired after hu_customize_store_db_opt in HU_utils
   		add_action ( 'customize_preview_init'			              , array( $this , 'hu_customize_preview_js' ), 20 );
       //exports some wp_query informations. Updated on each preview refresh.
       add_action ( 'customize_preview_init'                   , array( $this , 'hu_add_preview_footer_action' ), 20 );
-      //print rate link + template
-      add_action( 'customize_controls_print_footer_scripts'   , array( $this, 'hu_print_rate_link' ) );
+      //Various DOM ready actions + print rate link + template
+      add_action( 'customize_controls_print_footer_scripts'   , array( $this, 'hu_various_dom_ready' ) );
       //Add the visibilities
       add_action( 'customize_controls_print_footer_scripts'   , array( $this, 'hu_extend_visibilities' ), 10 );
     }
@@ -260,7 +258,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
                     'default'   => array(),//empty array by default
                     'control'   => 'HU_Customize_Widget_Areas_Control',
                     'label'     => __('Create And Order Widget Areas', 'hueman'),
-                    'section'   => 'sidebars_create_sec',
+                    'section'   => CZR_DYN_WIDGETS_SECTION,
                     'type'      => 'czr_sidebars',//@todo create dynamic type
                     'notice'    => __('You must save changes for the new areas to appear below. <br /><i>Warning: Make sure each area has a unique ID.</i>' , 'hueman'),
                     'transport' => 'postMessage',
@@ -281,13 +279,14 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
 
     function hu_register_sidebar_section( $wp_customize ) {
+      $_widget_section_name = CZR_DYN_WIDGETS_SECTION;
       $_map = array(
         'add_control' => array(
             'sidebar-areas' => array(
                   'default'   => array(),//empty array by default
                   'control'   => 'HU_Customize_Widget_Areas_Control',
                   'label'     => __('Create And Manage Widget Areas', 'hueman'),
-                  'section'   => 'sidebars_create_sec',
+                  'section'   => $_widget_section_name,
                   'type'      => 'czr_sidebars',//@todo create dynamic type
                   'notice'    => __('You must save changes for the new areas to appear below. <br /><i>Warning: Make sure each area has a unique ID.</i>' , 'hueman'),
                   'transport' => 'postMessage'
@@ -295,7 +294,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
         ),//'add_control'
         'add_section' => array(
-            'sidebars_create_sec' => array(
+            "{$_widget_section_name}" => array(
               'title'    => __( 'Create and manage widget zones', 'hueman' ),
               'priority' => 1000,
               'panel'    => 'widgets',
@@ -639,7 +638,9 @@ if ( ! class_exists( 'HU_customize' ) ) :
 	        	'HUNonce' 			=> wp_create_nonce( 'hu-customizer-nonce' ),
             'themeName'     => THEMENAME,
             'themeOptions'  => HU_THEME_OPTIONS,
+            'faviconOptionName' => 'favicon',
             'defaultSocialColor' => 'rgba(255,255,255,0.7)',
+            'dynWidgetSection' => CZR_DYN_WIDGETS_SECTION,
             'defaultWidgetSidebar' => 'primary',//the one that will be cloned. Specific to each themes
             'defaultWidgetLocation' => 's1',//Specific to each themes
             'translatedStrings'    => array(
@@ -654,7 +655,6 @@ if ( ! class_exists( 'HU_customize' ) ) :
               'followUs' => __('Follow us on', 'hueman'),
               'successMessage' => __('Done !', 'hueman'),
               'socialLinkAdded' => __('New Social Link created ! Scroll down to edit it.', 'hueman'),
-
               'widgetZone' => __('Widget Zone', 'hueman'),
               'widgetZoneAdded' => __('New Widget Zone created ! Scroll down to edit it.', 'hueman'),
               'inactiveWidgetZone' => __('Inactive in current context/location', 'hueman'),
@@ -672,7 +672,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
 
     //hook : customize_controls_print_footer_scripts
-    function hu_print_rate_link() {
+    function hu_various_dom_ready() {
       ?>
       <script id="rate-tpl" type="text/template" >
         <?php
@@ -690,13 +690,20 @@ if ( ! class_exists( 'HU_customize' ) ) :
       <script id="rate-theme" type="text/javascript">
         (function (wp, $) {
           $( function($) {
+            //Render the rate link
             _render_rate_czr();
-
             function _render_rate_czr() {
               var _cta = _.template(
                     $( "script#rate-tpl" ).html()
               );
               $('#customize-footer-actions').append( _cta() );
+            }
+
+            /* Append text to the content panel title */
+            if ( $('#accordion-panel-hu-content-panel').find('.accordion-section-title').first().length ) {
+              $('#accordion-panel-hu-content-panel').find('.accordion-section-title').first().append(
+                $('<span/>', { html : ' ( Home, Blog, Layout, Sidebars, Slideshows, ... )' } ).css('font-style', 'italic').css('font-size', '14px')
+              );
             }
           });
         })(wp, jQuery)
