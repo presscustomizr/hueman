@@ -6,8 +6,6 @@
   $( function($) {
     var api = wp.customize || api;
 
-
-
     //WHAT IS HAPPENING IN THE MESSENGER
     // $(window.parent).on( 'message', function(e, o) {
     //   console.log('SENT STUFFS', JSON.parse( e.originalEvent.data), e );
@@ -20,9 +18,6 @@
     // }).bind("ajaxComplete", function(e, o){
     //    console.log('AJAX COMPLETE', e, o);
     // });
-
-
-
 
     /* GRID */
     var _build_setId = function ( name ) {
@@ -91,18 +86,6 @@
     /* NUMBER */
     $('input[type="number"]').stepper();
 
-
-
-
-    /* CONTRIBUTION TO HUEMAN */
-    _render_rate_czr();
-
-    function _render_rate_czr() {
-      var _cta = _.template(
-          $( "script#rate-czr" ).html()
-      );
-      $('#customize-footer-actions').append( _cta() );
-    }
 
     /* WIDGET PANEL ICON */
     if ( $('.control-panel-widgets').find('.accordion-section-title').first().length ) {
