@@ -246,7 +246,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
         'settings/class-settings.php'
       );
       foreach ($_classes as $_path) {
-        locate_template( 'functions/customizer/' . $_path , $load = true, $require_once = true );
+        locate_template( 'functions/czr/' . $_path , $load = true, $require_once = true );
       }
 
       //Registered types are eligible to be rendered via JS and created dynamically.
@@ -594,7 +594,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
 			wp_enqueue_script(
 				'hu-customizer-preview' ,
-				sprintf('%1$s/assets/back/js/theme-customizer-preview%2$s.js' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
+				sprintf('%1$s/assets/czr/js/czr-preview%2$s.js' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
 				array( 'customize-preview', 'underscore'),
 				( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
 				true
@@ -633,14 +633,14 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
 			wp_enqueue_style(
 				'hu-customizer-controls-style',
-				sprintf('%1$s/assets/back/css/theme-customizer-control%2$s.css' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
+				sprintf('%1$s/assets/czr/css/czr-control%2$s.css' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
 				array( 'customize-controls' ),
 				HUEMAN_VER,
 				$media = 'all'
 			);
 			wp_enqueue_script(
 				'hu-customizer-controls',
-				sprintf('%1$s/assets/back/js/theme-customizer-control%2$s.js' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
+				sprintf('%1$s/assets/czr/js/czr-control%2$s.js' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
 				array( 'customize-controls' , 'underscore'),
 				HUEMAN_VER,
 				true

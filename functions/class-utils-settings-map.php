@@ -1196,27 +1196,27 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     function hu_get_content_layout_choices( $_wot = null ) {
       $_layouts = array(
         'col-1c' => array(
-          'src' => get_template_directory_uri() . '/assets/back/img/col-1c.png',
+          'src' => get_template_directory_uri() . '/assets/admin/img/col-1c.png',
           'label' => __( '1 Column' , 'hueman' )
         ),
         'col-2cl'=> array(
-          'src' => get_template_directory_uri() . '/assets/back/img/col-2cl.png',
+          'src' => get_template_directory_uri() . '/assets/admin/img/col-2cl.png',
           'label' => __( '2 Columns - Content Left' , 'hueman' )
         ),
         'col-2cr'=> array(
-          'src' => get_template_directory_uri() . '/assets/back/img/col-2cr.png',
+          'src' => get_template_directory_uri() . '/assets/admin/img/col-2cr.png',
           'label' => __( '2 Columns - Content Right' , 'hueman' )
         ),
         'col-3cm'=> array(
-          'src' => get_template_directory_uri() . '/assets/back/img/col-3cm.png',
+          'src' => get_template_directory_uri() . '/assets/admin/img/col-3cm.png',
           'label' => __( '3 Columns - Content Middle' , 'hueman' )
         ),
         'col-3cl'=> array(
-          'src' => get_template_directory_uri() . '/assets/back/img/col-3cl.png',
+          'src' => get_template_directory_uri() . '/assets/admin/img/col-3cl.png',
           'label' => __( '3 Columns - Content Left' , 'hueman' )
         ),
         'col-3cr'=> array(
-          'src' => get_template_directory_uri() . '/assets/back/img/col-3cr.png',
+          'src' => get_template_directory_uri() . '/assets/admin/img/col-3cr.png',
           'label' => __( '3 Columns - Content Right' , 'hueman' )
         )
       );
@@ -1224,7 +1224,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         return array_merge(
           array(
             'inherit' => array(
-              'src' => get_template_directory_uri() . '/assets/back/img/layout-off.png',
+              'src' => get_template_directory_uri() . '/assets/admin/img/layout-off.png',
               'label' => __( 'Inherit Global Layout' , 'hueman' )
             )
           ),
@@ -1242,23 +1242,23 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     function hu_get_footer_layout_choices( $_wot = null ) {
       $_layouts = array(
         '0' => array(
-          'src' => get_template_directory_uri() . '/assets/back/img/footer-widgets-0.png',
+          'src' => get_template_directory_uri() . '/assets/admin/img/footer-widgets-0.png',
           'label' => __( 'Disable' , 'hueman' )
         ),
         '1' => array(
-          'src' => get_template_directory_uri() . '/assets/back/img/footer-widgets-1.png',
+          'src' => get_template_directory_uri() . '/assets/admin/img/footer-widgets-1.png',
           'label' => __( '1 Column' , 'hueman' )
         ),
         '2' => array(
-          'src' => get_template_directory_uri() . '/assets/back/img/footer-widgets-2.png',
+          'src' => get_template_directory_uri() . '/assets/admin/img/footer-widgets-2.png',
           'label' => __( '2 Columns' , 'hueman' )
         ),
         '3' => array(
-          'src' => get_template_directory_uri() . '/assets/back/img/footer-widgets-3.png',
+          'src' => get_template_directory_uri() . '/assets/admin/img/footer-widgets-3.png',
           'label' => __( '3 Columns' , 'hueman' )
         ),
         '4' => array(
-          'src' => get_template_directory_uri() . '/assets/back/img/footer-widgets-4.png',
+          'src' => get_template_directory_uri() . '/assets/admin/img/footer-widgets-4.png',
           'label' => __( '4 Columns' , 'hueman' )
         ),
       );

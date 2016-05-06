@@ -48,37 +48,37 @@ $page_options = array(
 				array(
 					'value'		=> 'inherit',
 					'label'		=> 'Inherit Layout',
-					'src'		=> get_template_directory_uri() . '/assets/back/img/layout-off.png'
+					'src'		=> get_template_directory_uri() . '/assets/admin/img/layout-off.png'
 				),
 				array(
 					'value'		=> 'col-1c',
 					'label'		=> '1 Column',
-					'src'		=> get_template_directory_uri() . '/assets/back/img/col-1c.png'
+					'src'		=> get_template_directory_uri() . '/assets/admin/img/col-1c.png'
 				),
 				array(
 					'value'		=> 'col-2cl',
 					'label'		=> '2 Column Left',
-					'src'		=> get_template_directory_uri() . '/assets/back/img/col-2cl.png'
+					'src'		=> get_template_directory_uri() . '/assets/admin/img/col-2cl.png'
 				),
 				array(
 					'value'		=> 'col-2cr',
 					'label'		=> '2 Column Right',
-					'src'		=> get_template_directory_uri() . '/assets/back/img/col-2cr.png'
+					'src'		=> get_template_directory_uri() . '/assets/admin/img/col-2cr.png'
 				),
 				array(
 					'value'		=> 'col-3cm',
 					'label'		=> '3 Column Middle',
-					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cm.png'
+					'src'		=> get_template_directory_uri() . '/assets/admin/img/col-3cm.png'
 				),
 				array(
 					'value'		=> 'col-3cl',
 					'label'		=> '3 Column Left',
-					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cl.png'
+					'src'		=> get_template_directory_uri() . '/assets/admin/img/col-3cl.png'
 				),
 				array(
 					'value'		=> 'col-3cr',
 					'label'		=> '3 Column Right',
-					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cr.png'
+					'src'		=> get_template_directory_uri() . '/assets/admin/img/col-3cr.png'
 				)
 			)
 		)
@@ -115,37 +115,37 @@ $post_options = array(
 				array(
 					'value'		=> 'inherit',
 					'label'		=> 'Inherit Layout',
-					'src'		=> get_template_directory_uri() . '/assets/back/img/layout-off.png'
+					'src'		=> get_template_directory_uri() . '/assets/admin/img/layout-off.png'
 				),
 				array(
 					'value'		=> 'col-1c',
 					'label'		=> '1 Column',
-					'src'		=> get_template_directory_uri() . '/assets/back/img/col-1c.png'
+					'src'		=> get_template_directory_uri() . '/assets/admin/img/col-1c.png'
 				),
 				array(
 					'value'		=> 'col-2cl',
 					'label'		=> '2 Column Left',
-					'src'		=> get_template_directory_uri() . '/assets/back/img/col-2cl.png'
+					'src'		=> get_template_directory_uri() . '/assets/admin/img/col-2cl.png'
 				),
 				array(
 					'value'		=> 'col-2cr',
 					'label'		=> '2 Column Right',
-					'src'		=> get_template_directory_uri() . '/assets/back/img/col-2cr.png'
+					'src'		=> get_template_directory_uri() . '/assets/admin/img/col-2cr.png'
 				),
 				array(
 					'value'		=> 'col-3cm',
 					'label'		=> '3 Column Middle',
-					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cm.png'
+					'src'		=> get_template_directory_uri() . '/assets/admin/img/col-3cm.png'
 				),
 				array(
 					'value'		=> 'col-3cl',
 					'label'		=> '3 Column Left',
-					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cl.png'
+					'src'		=> get_template_directory_uri() . '/assets/admin/img/col-3cl.png'
 				),
 				array(
 					'value'		=> 'col-3cr',
 					'label'		=> '3 Column Right',
-					'src'		=> get_template_directory_uri() . '/assets/back/img/col-3cr.png'
+					'src'		=> get_template_directory_uri() . '/assets/admin/img/col-3cr.png'
 				)
 			)
 		)

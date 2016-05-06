@@ -24,5 +24,12 @@ module.exports = {
 		src: ['*.css', '!*.min.css'],
 		dest: '<%= paths.admin_css %>',
 		ext: '.min.css'
-	}
+	},
+  czr_css: {
+    expand: true,
+    cwd: '<%= paths.czr_css %>',
+    src: ['*.css', '!*.min.css'],
+    dest: '<%= paths.czr_css %>',
+    ext: '.min.css'
+  }
 };

@@ -56,7 +56,8 @@ if ( ! class_exists( 'HU_Customize_Layout_Control' ) ) :
       return $_options_html;
     }//end of fn
 
-
+    //the layouts are turned into a js object
+    //{ 'col-1c' : { src: ..., label : ... }, ...  }
     public function to_json() {
       parent::to_json();
       $this->json['layouts'] = $this->choices;

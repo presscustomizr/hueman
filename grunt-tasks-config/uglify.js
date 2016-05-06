@@ -31,21 +31,21 @@ module.exports = {
 			ext: '.min.js'
 		}]
 	},
-  customize_control_js : {
+  czr_control_js : {
     files: [{
       expand: true,
-      cwd: '<%= paths.admin_js %>',
-      src: ['theme-customizer-control.js'],
-      dest: '<%= paths.admin_js %>',
+      cwd: '<%= paths.czr_js %>',
+      src: ['czr-control.js'],
+      dest: '<%= paths.czr_js %>',
       ext: '.min.js'
     }]
   },
-  customize_preview_js : {
+  czr_preview_js : {
     files: [{
       expand: true,
-      cwd: '<%= paths.admin_js %>',
-      src: ['theme-customizer-preview.js'],
-      dest: '<%= paths.admin_js %>',
+      cwd: '<%= paths.czr_js %>',
+      src: ['czr-preview.js'],
+      dest: '<%= paths.czr_js %>',
       ext: '.min.js'
     }]
   },

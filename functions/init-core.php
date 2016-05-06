@@ -964,7 +964,7 @@ if ( ! function_exists( 'hu_post_formats_script' ) ) {
     // Only load on posts, pages
     if ( !in_array($hook, array('post.php','post-new.php')) )
       return;
-    wp_enqueue_script('post-formats', get_template_directory_uri() . '/assets/back/js/post-formats.js', array( 'jquery' ));
+    wp_enqueue_script('post-formats', get_template_directory_uri() . '/assets/admin/js/post-formats.js', array( 'jquery' ));
   }
 
 }
@@ -1054,7 +1054,7 @@ add_filter( 'widget_text', 'do_shortcode' );
  *  Loads and instanciates customizer related classes
 /* ------------------------------------------------------------------------- */
 if ( hu_is_customizing() ) {
-  load_template( get_template_directory() . '/functions/customizer/class-admin-customize.php' );
+  load_template( get_template_directory() . '/functions/czr/class-admin-customize.php' );
   new HU_customize;
 }
 
@@ -1080,7 +1080,7 @@ add_action( 'wp_before_admin_bar_render', 'hu_add_help_button' );
 function hu_admin_style() {
   wp_enqueue_style(
     'hu-admincss',
-    sprintf('%1$sassets/back/css/hu_admin.css' , HU_BASE_URL ),
+    sprintf('%1$sassets/admin/css/hu_admin.css' , HU_BASE_URL ),
     array(),
     HUEMAN_VER
   );

@@ -128,7 +128,7 @@ if ( ! class_exists( 'HU_Customize_Socials' ) ) :
       //overriden by some specific style in theme-customzer-control.css
       wp_enqueue_style(
         'select2-css',
-        sprintf('%1$s/assets/back/css/lib/select2.min.css', get_template_directory_uri() ),
+        sprintf('%1$s/assets/czr/css/lib/select2.min.css', get_template_directory_uri() ),
         array( 'customize-controls' ),
         HUEMAN_VER,
         $media = 'all'

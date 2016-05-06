@@ -21,19 +21,23 @@ module.exports = {
     files : ['<%= paths.global_js %>*.js', '!*.min.js'],
     tasks : [ 'jshint:global_js', 'uglify:global_js'],
   },
-	admin_customizer_control_js : {
-		files : ['<%= paths.admin_js %>parts/*.js'],
-		tasks : ['jshint:those' , 'concat:admin_control_js', 'uglify:customize_control_js' ],
+	czr_control_js : {
+		files : ['<%= paths.czr_js %>control_dev/*.js'],
+		tasks : ['jshint:those' , 'concat:czr_control_js', 'uglify:czr_control_js' ],
 	},
 	//Other admin js assets are jshinted on change
-	admin_customizer_preview_js : {
-		files : ['<%= paths.admin_js %>theme-customizer-preview.js'],
-		tasks : ['jshint:those', 'uglify:customize_preview_js'],
+	czr_preview_js : {
+		files : ['<%= paths.czr_js %>preview_dev/dev-czr-preview.js'],
+		tasks : ['jshint:those', 'uglify:czr_preview_js'],
 	},
 	admin_css : {
 		files : ['<%= paths.admin_css %>*.css'],
 		tasks : ['cssmin:admin_css'],
 	},
+  czr_css : {
+    files : ['<%= paths.czr_css %>*.css'],
+    tasks : ['cssmin:czr_css'],
+  },
 	php : {
 		files: ['**/*.php' , '!build/**.*.php'],
 		tasks: []

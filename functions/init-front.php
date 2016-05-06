@@ -585,7 +585,7 @@ if ( ! function_exists( 'hu_ie_js_header' ) ) {
 
   function hu_ie_js_header () {
     echo '<!--[if lt IE 9]>'. "\n";
-    echo '<script src="' . esc_url( get_template_directory_uri() . '/assets/front/js/ie/html5.js' ) . '"></script>'. "\n";
+    echo '<script src="' . esc_url( get_template_directory_uri() . '/assets/front/js/ie/html5shiv-printshiv.min.js' ) . '"></script>'. "\n";
     echo '<script src="' . esc_url( get_template_directory_uri() . '/assets/front/js/ie/selectivizr.js' ) . '"></script>'. "\n";
     echo '<![endif]-->'. "\n";
   }
