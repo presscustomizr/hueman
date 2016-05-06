@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman v3.1.3\n"
-"POT-Creation-Date: 2016-05-05 16:02+0200\n"
-"PO-Revision-Date: 2016-05-05 16:02+0200\n"
+"Project-Id-Version: Hueman v3.1.4\n"
+"POT-Creation-Date: 2016-05-06 14:42+0200\n"
+"PO-Revision-Date: 2016-05-06 14:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: Press Customizr\n"
 "Language: en_US\n"
@@ -49,7 +49,7 @@ msgstr "Komentar"
 msgid "Pingbacks"
 msgstr "Pingback"
 
-#: footer.php:103 functions/customizer/class-admin-customize.php:597
+#: footer.php:103 functions/czr/class-admin-customize.php:616
 msgid "All Rights Reserved."
 msgstr "Hak Cipta Terdaftar."
 
@@ -837,8 +837,6 @@ msgid ""
 "This zone is located before the other footer widgets and takes 100% of the "
 "width. Very appropriate to display a Google Map or an advertisement banner."
 msgstr ""
-"Zona ini ditempatkan sebelum widget footer lainnya dan menjadi 100% lebar. "
-"Sangat cocok untuk menampilkan Peta Google atau baner iklan."
 
 #: functions/class-utils-settings-map.php:840
 msgid "Select columns to enable footer widgets"
@@ -1058,15 +1056,15 @@ msgstr "Tanpa Sidebar"
 msgid "Choose Sidebar"
 msgstr "Pilih Sidebar"
 
-#: functions/customizer/class-admin-customize.php:138
+#: functions/czr/class-admin-customize.php:157
 msgid "&mdash; Select &mdash;"
 msgstr "&mdash; Pilih  &mdash;"
 
-#: functions/customizer/class-admin-customize.php:175
+#: functions/czr/class-admin-customize.php:194
 msgid "Assign menus to locations"
 msgstr "Susun menu ke lokasi"
 
-#: functions/customizer/class-admin-customize.php:185
+#: functions/czr/class-admin-customize.php:204
 #, php-format
 msgid ""
 "You haven't created any menu yet. %s or check the %s to learn more about "
@@ -1075,24 +1073,24 @@ msgstr ""
 "Anda belum membuat menu apapun. %s atau cek %s untuk mempelajari tentang "
 "menu."
 
-#: functions/customizer/class-admin-customize.php:186
+#: functions/czr/class-admin-customize.php:205
 msgid "Create a new menu now"
 msgstr "Buatlah menu sekarang"
 
-#: functions/customizer/class-admin-customize.php:187
+#: functions/czr/class-admin-customize.php:206
 msgid "WordPress documentation"
 msgstr "Dokumentasi Wordpress"
 
-#: functions/customizer/class-admin-customize.php:203
+#: functions/czr/class-admin-customize.php:222
 msgid "SITE ICON"
 msgstr "IKON SITUS"
 
-#: functions/customizer/class-admin-customize.php:260
+#: functions/czr/class-admin-customize.php:279
 msgid "Create And Order Widget Areas"
 msgstr "Buat dan Susun Area Widget"
 
-#: functions/customizer/class-admin-customize.php:263
-#: functions/customizer/class-admin-customize.php:290
+#: functions/czr/class-admin-customize.php:282
+#: functions/czr/class-admin-customize.php:310
 msgid ""
 "You must save changes for the new areas to appear below. <br /><i>Warning: "
 "Make sure each area has a unique ID.</i>"
@@ -1100,29 +1098,29 @@ msgstr ""
 "Anda harus menyimpan perubahan untuk area baru muncul dibawah.<br/"
 "><i>Peringatan: Pastikan setiap area memiliki ID unik.</i>"
 
-#: functions/customizer/class-admin-customize.php:287
+#: functions/czr/class-admin-customize.php:307
 msgid "Create And Manage Widget Areas"
 msgstr "Buat dan Kelola Area Widget"
 
-#: functions/customizer/class-admin-customize.php:297
+#: functions/czr/class-admin-customize.php:317
 msgid "Create and manage widget zones"
 msgstr "Buat dan kelola zona widget"
 
-#: functions/customizer/class-admin-customize.php:319
+#: functions/czr/class-admin-customize.php:338
 msgid "Dynamic Sidebars and Widgets"
 msgstr "Sidebar dan Widget Dinamis"
 
-#: functions/customizer/class-admin-customize.php:642
-#: functions/customizer/controls/class-hu-dynamic-control.php:90
-#: functions/customizer/controls/class-hu-widget-areas-control.php:100
+#: functions/czr/class-admin-customize.php:666
+#: functions/czr/controls/class-dynamic-control.php:90
+#: functions/czr/controls/class-widget-areas-control.php:100
 msgid "Edit"
 msgstr "Edit"
 
-#: functions/customizer/class-admin-customize.php:643
+#: functions/czr/class-admin-customize.php:667
 msgid "Close"
 msgstr "Tutup"
 
-#: functions/customizer/class-admin-customize.php:644
+#: functions/czr/class-admin-customize.php:668
 msgid ""
 "Your favicon is currently handled with an old method and will not be "
 "properly displayed on all devices. You might consider to re-upload your "
@@ -1132,250 +1130,254 @@ msgstr ""
 "semua perangkat. Pertimbangkan untuk mengunggah ulang favicon Anda dengan "
 "kontrol baru dibawah."
 
-#: functions/customizer/class-admin-customize.php:645
-#: functions/customizer/controls/class-hu-widget-areas-control.php:77
-#: functions/customizer/controls/class-hu-widget-areas-control.php:126
-#: functions/customizer/controls/class-hu-widget-areas-control.php:170
+#: functions/czr/class-admin-customize.php:669
+#: functions/czr/controls/class-widget-areas-control.php:77
+#: functions/czr/controls/class-widget-areas-control.php:126
+#: functions/czr/controls/class-widget-areas-control.php:170
 msgid "Location(s)"
 msgstr "Lokasi"
 
-#: functions/customizer/class-admin-customize.php:646
-#: functions/customizer/controls/class-hu-widget-areas-control.php:133
-#: functions/customizer/controls/class-hu-widget-areas-control.php:177
+#: functions/czr/class-admin-customize.php:670
+#: functions/czr/controls/class-widget-areas-control.php:133
+#: functions/czr/controls/class-widget-areas-control.php:177
 msgid "Context(s)"
 msgstr "Konteks"
 
-#: functions/customizer/class-admin-customize.php:647
+#: functions/czr/class-admin-customize.php:671
 msgid "Not set"
 msgstr "Tidak di Atur"
 
-#: functions/customizer/class-admin-customize.php:648
+#: functions/czr/class-admin-customize.php:672
 msgid "Rss"
 msgstr "Rss"
 
-#: functions/customizer/class-admin-customize.php:649
+#: functions/czr/class-admin-customize.php:673
 msgid "Select a social icon"
 msgstr "Pilih ikon medsos"
 
-#: functions/customizer/class-admin-customize.php:650
+#: functions/czr/class-admin-customize.php:674
 msgid "Follow us on"
 msgstr "Ikuti kami di"
 
-#: functions/customizer/class-admin-customize.php:651
+#: functions/czr/class-admin-customize.php:675
 msgid "Done !"
 msgstr "Selesai !"
 
-#: functions/customizer/class-admin-customize.php:652
+#: functions/czr/class-admin-customize.php:676
 msgid "New Social Link created ! Scroll down to edit it."
 msgstr "Link baru medsos sudah dibuat ! Gulir kebawah untuk mengeditnya."
 
-#: functions/customizer/class-admin-customize.php:653
+#: functions/czr/class-admin-customize.php:677
+msgid "Widget Zone"
+msgstr ""
+
+#: functions/czr/class-admin-customize.php:678
 msgid "New Widget Zone created ! Scroll down to edit it."
 msgstr "Zona Baru Widget sudah dibuat ! Gulir kebawah untuk mengeditnya."
 
-#: functions/customizer/class-admin-customize.php:654
+#: functions/czr/class-admin-customize.php:679
 msgid "Inactive in current context/location"
 msgstr "Tidak aktif di lokasi/konteks baru"
 
-#: functions/customizer/class-admin-customize.php:655
+#: functions/czr/class-admin-customize.php:680
 msgid "Unavailable location. Some settings must be changed."
 msgstr "Lokasi tidak tersedia. Beberapa pengaturan harus diubah."
 
-#: functions/customizer/class-admin-customize.php:656
+#: functions/czr/class-admin-customize.php:681
 msgid "A selected location is not available with the current settings."
 msgstr "Lokasi terpilih tidak tersedia dengan pengaturan baru."
 
-#: functions/customizer/class-admin-customize.php:657
+#: functions/czr/class-admin-customize.php:682
 msgid "Learn more about this in the documentation"
 msgstr "Pelajari tentang ini di dokumentasi"
 
-#: functions/customizer/class-admin-customize.php:679
+#: functions/czr/class-admin-customize.php:699
 msgid "If you like"
 msgstr "Jika Anda suka"
 
-#: functions/customizer/class-admin-customize.php:680
+#: functions/czr/class-admin-customize.php:700
 msgid "the Hueman theme"
 msgstr "tema Hueman"
 
-#: functions/customizer/class-admin-customize.php:681
+#: functions/czr/class-admin-customize.php:701
 msgid "we would love to receive a"
 msgstr "kami senang menerima"
 
-#: functions/customizer/class-admin-customize.php:683
+#: functions/czr/class-admin-customize.php:703
 msgid "Review the Hueman theme"
 msgstr "Ulas tema Hueman"
 
-#: functions/customizer/class-admin-customize.php:685
+#: functions/czr/class-admin-customize.php:705
 msgid "rating. Thanks :) !"
 msgstr "rating. Terimakasih :) !"
 
-#: functions/customizer/controls/class-hu-background-control.php:64
+#: functions/czr/controls/class-background-control.php:64
 msgid "Color"
 msgstr "Warna"
 
-#: functions/customizer/controls/class-hu-background-control.php:71
+#: functions/czr/controls/class-background-control.php:71
 msgid "Repeat"
 msgstr "Ulangi"
 
-#: functions/customizer/controls/class-hu-background-control.php:78
+#: functions/czr/controls/class-background-control.php:78
 msgid "Background attachment"
 msgstr "Lampiran background"
 
-#: functions/customizer/controls/class-hu-background-control.php:85
+#: functions/czr/controls/class-background-control.php:85
 msgid "Background position"
 msgstr "Posisi background"
 
-#: functions/customizer/controls/class-hu-background-control.php:92
+#: functions/czr/controls/class-background-control.php:92
 msgid "Background size"
 msgstr "Ukuran background"
 
-#: functions/customizer/controls/class-hu-background-control.php:99
+#: functions/czr/controls/class-background-control.php:99
 msgid "Background Image"
 msgstr "Gambar Background"
 
-#: functions/customizer/controls/class-hu-dynamic-control.php:60
+#: functions/czr/controls/class-dynamic-control.php:60
 msgid "Add New"
 msgstr "Tambah Baru"
 
-#: functions/customizer/controls/class-hu-dynamic-control.php:65
+#: functions/czr/controls/class-dynamic-control.php:65
 msgid "Cancel"
 msgstr "Batal"
 
-#: functions/customizer/controls/class-hu-dynamic-control.php:65
+#: functions/czr/controls/class-dynamic-control.php:65
 msgid "Add it"
 msgstr "Tambahkan"
 
-#: functions/customizer/controls/class-hu-dynamic-control.php:90
-#: functions/customizer/controls/class-hu-upload-control.php:68
+#: functions/czr/controls/class-dynamic-control.php:90
+#: functions/czr/controls/class-upload-control.php:68
 msgid "Remove"
 msgstr "Singkirkan"
 
-#: functions/customizer/controls/class-hu-dynamic-control.php:103
+#: functions/czr/controls/class-dynamic-control.php:103
 msgid "Are you sure you want to remove : <strong>{{ data.title }} ?</strong>"
 msgstr ""
 "Apakah Anda yakin ingin menyingkirkan : <strong>{{ data.title }} ?</strong>"
 
-#: functions/customizer/controls/class-hu-dynamic-control.php:104
+#: functions/czr/controls/class-dynamic-control.php:104
 msgid "Yes"
 msgstr "Ya"
 
-#: functions/customizer/controls/class-hu-dynamic-control.php:104
+#: functions/czr/controls/class-dynamic-control.php:104
 msgid "No"
 msgstr "Tidak"
 
-#: functions/customizer/controls/class-hu-socials-control.php:28
+#: functions/czr/controls/class-socials-control.php:28
 msgid "Select an icon"
 msgstr "Pilih ikon"
 
-#: functions/customizer/controls/class-hu-socials-control.php:34
+#: functions/czr/controls/class-socials-control.php:34
 msgid "Social link url"
 msgstr "Url link medsos"
 
-#: functions/customizer/controls/class-hu-socials-control.php:36
-#: functions/customizer/controls/class-hu-socials-control.php:74
+#: functions/czr/controls/class-socials-control.php:36
+#: functions/czr/controls/class-socials-control.php:74
 msgid "http://..."
 msgstr "http://..."
 
-#: functions/customizer/controls/class-hu-socials-control.php:38
+#: functions/czr/controls/class-socials-control.php:38
 msgid "Enter the full url of your social profile (must be valid url)."
 msgstr "Masukkan url full dari profil medsos Anda (harus valid)."
 
-#: functions/customizer/controls/class-hu-socials-control.php:59
+#: functions/czr/controls/class-socials-control.php:59
 msgid "Id"
 msgstr "Id"
 
-#: functions/customizer/controls/class-hu-socials-control.php:65
+#: functions/czr/controls/class-socials-control.php:65
 msgid "Social icon"
 msgstr "Ikon medsos"
 
-#: functions/customizer/controls/class-hu-socials-control.php:72
+#: functions/czr/controls/class-socials-control.php:72
 msgid "Social link"
 msgstr "Link medsos"
 
-#: functions/customizer/controls/class-hu-socials-control.php:76
+#: functions/czr/controls/class-socials-control.php:76
 msgid "Enter the full url of your social profile (must be a valid url)."
 msgstr "Enter the full url of your social profile (must be valid url)."
 
-#: functions/customizer/controls/class-hu-socials-control.php:79
+#: functions/czr/controls/class-socials-control.php:79
 msgid "Title"
 msgstr "Judul"
 
-#: functions/customizer/controls/class-hu-socials-control.php:81
+#: functions/czr/controls/class-socials-control.php:81
 msgid "Enter a title"
 msgstr "Masukkan judul"
 
-#: functions/customizer/controls/class-hu-socials-control.php:83
+#: functions/czr/controls/class-socials-control.php:83
 msgid "This is the text displayed on mouse over."
 msgstr "Ini adalah tulisan yang tampil saat disentuh mouse."
 
-#: functions/customizer/controls/class-hu-socials-control.php:87
+#: functions/czr/controls/class-socials-control.php:87
 msgid "Icon color"
 msgstr "Warna ikon"
 
-#: functions/customizer/controls/class-hu-socials-control.php:91
+#: functions/czr/controls/class-socials-control.php:91
 msgid "Set a unique color for your icon."
 msgstr "Atur warna unik untuk ikon Anda."
 
-#: functions/customizer/controls/class-hu-socials-control.php:98
+#: functions/czr/controls/class-socials-control.php:98
 msgid "Link target"
 msgstr "Target link"
 
-#: functions/customizer/controls/class-hu-socials-control.php:102
+#: functions/czr/controls/class-socials-control.php:102
 msgid "Check this option to open the link in a another tab of the browser."
 msgstr "Centang opsi ini untuk membuka link di tab baru browser."
 
-#: functions/customizer/controls/class-hu-upload-control.php:67
+#: functions/czr/controls/class-upload-control.php:67
 msgid "Upload"
 msgstr "Unggah"
 
-#: functions/customizer/controls/class-hu-widget-areas-control.php:70
-#: functions/customizer/controls/class-hu-widget-areas-control.php:120
-#: functions/customizer/controls/class-hu-widget-areas-control.php:163
+#: functions/czr/controls/class-widget-areas-control.php:70
+#: functions/czr/controls/class-widget-areas-control.php:120
+#: functions/czr/controls/class-widget-areas-control.php:163
 msgid "Name"
 msgstr "Nama"
 
-#: functions/customizer/controls/class-hu-widget-areas-control.php:72
+#: functions/czr/controls/class-widget-areas-control.php:72
 msgid "Give it a name"
 msgstr "Berikan nama"
 
-#: functions/customizer/controls/class-hu-widget-areas-control.php:74
-#: functions/customizer/controls/class-hu-widget-areas-control.php:167
+#: functions/czr/controls/class-widget-areas-control.php:74
+#: functions/czr/controls/class-widget-areas-control.php:167
 msgid "Personalizing the name of the widget zone will help you identify it."
 msgstr ""
 "Mempersonalisasikan nama sebuah zona widget akan membantu memberi identitas."
 
-#: functions/customizer/controls/class-hu-widget-areas-control.php:78
-#: functions/customizer/controls/class-hu-widget-areas-control.php:127
-#: functions/customizer/controls/class-hu-widget-areas-control.php:171
+#: functions/czr/controls/class-widget-areas-control.php:78
+#: functions/czr/controls/class-widget-areas-control.php:127
+#: functions/czr/controls/class-widget-areas-control.php:171
 msgid ""
 "Select the pre-defined location(s) in which you will embed this widget zone."
 msgstr ""
 "Pilih lokasi yang telah ditetapkan di manakah Anda ingin sematkan zona "
 "widget ini."
 
-#: functions/customizer/controls/class-hu-widget-areas-control.php:114
-#: functions/customizer/controls/class-hu-widget-areas-control.php:157
+#: functions/czr/controls/class-widget-areas-control.php:114
+#: functions/czr/controls/class-widget-areas-control.php:157
 msgid "id"
 msgstr "id"
 
-#: functions/customizer/controls/class-hu-widget-areas-control.php:116
-#: functions/customizer/controls/class-hu-widget-areas-control.php:159
+#: functions/czr/controls/class-widget-areas-control.php:116
+#: functions/czr/controls/class-widget-areas-control.php:159
 msgid "unique id"
 msgstr "id unik"
 
-#: functions/customizer/controls/class-hu-widget-areas-control.php:134
+#: functions/czr/controls/class-widget-areas-control.php:134
 msgid "Pick the contexts where this widget area will be displayed."
 msgstr "Pilih konteks dimana widget area ini akan ditampilkan."
 
-#: functions/customizer/controls/class-hu-widget-areas-control.php:165
+#: functions/czr/controls/class-widget-areas-control.php:165
 msgid "Enter a name"
 msgstr "Masukkan nama"
 
-#: functions/customizer/controls/class-hu-widget-areas-control.php:178
+#: functions/czr/controls/class-widget-areas-control.php:178
 msgid "Pick the context(s) where this widget area will be displayed."
 msgstr "Pilih konteks dimana area widget ini akan ditampilkan."
 
-#: functions/customizer/sections/class-hu-widgets-section.php:36
+#: functions/czr/sections/class-widgets-section.php:36
 msgid "Press return or enter to open this section"
 msgstr "Tekan kembali atau enter untuk membuka bagian ini"
 
@@ -1455,8 +1457,6 @@ msgid ""
 "100% of the width. Very appropriate to display a Google Map or an "
 "advertisement banner."
 msgstr ""
-"Zona Widget Footer ditempatkan sebelum widget footer lain dan menjadi 100% "
-"penuh. Sangat cocok untuk menampilkan Peta Google atau banner iklan."
 
 #: functions/init-core.php:750
 msgid "All contexts"
