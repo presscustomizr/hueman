@@ -70,40 +70,41 @@ msgstr ""
 
 #: functions/admin/class-admin-page.php:36
 msgid "more informations here"
-msgstr ""
+msgstr "Weitere Informationen"
 
 #: functions/admin/class-admin-page.php:37
 msgid "customizer"
-msgstr ""
+msgstr "Customizer"
 
 #: functions/admin/class-admin-page.php:40
 msgid ""
 "All your previous options have been kept and are available in the customizer "
 "options panel."
-msgstr ""
+msgstr "Alle Ihre vorheringen Optionen wurden übernommen und sind im Customizer verfügbar."
 
 #: functions/admin/class-admin-page.php:53
 msgid "About Hueman"
-msgstr ""
+msgstr "Über Hueman"
 
 #: functions/admin/class-admin-page.php:81
 msgid "Need help with"
-msgstr ""
+msgstr "Brauche Hilfe bei"
 
 #: functions/admin/class-admin-page.php:86
 msgid "Welcome to"
-msgstr ""
+msgstr "Willkommen bei"
 
 #: functions/admin/class-admin-page.php:103
 msgid "Thank you for using the Hueman WordPress theme for your website."
-msgstr ""
+msgstr "Danke, dass du das Hueman WordPress-Theme für deine Webseite benutzt."
 
 #: functions/admin/class-admin-page.php:104
 #, php-format
 msgid ""
 "Hueman %s has more features, is safer and more stable than ever to help you "
 "designing an awesome webdesign."
-msgstr ""
+msgstr "Hueman %s hat mehr Features, ist sicherer und stabiler als bisher um "
+"dich beim erstellen eines tollen Webdesigns zu unterstützen."
 
 #: functions/admin/class-admin-page.php:105
 #, php-format
@@ -112,35 +113,40 @@ msgid ""
 "to design your website safely and in live preview before publishing the "
 "changes. If you just upgraded from a lower version, you'll be able to find "
 "all your previous settings in the customizer."
-msgstr ""
+msgstr "Seit Version 3.0+ wurden alle Optionen zum %s übertragen, damit du "
+"deine Webseite noch sicherer mit einer Live-Vorschau designen kannst bevor "
+"die Änderungen veröffentlicht werden. Wenn du gerade erst das Update von einer "
+"alten Version installiert hast, dann findest du alle alten Optionen "
+"im Customizer."
 
 #: functions/admin/class-admin-page.php:106
 msgid "customizer panel"
-msgstr ""
+msgstr "Customizer Panel"
 
 #: functions/admin/class-admin-page.php:108
 #, php-format
 msgid ""
 "For more informations about this new version of the theme, %s or check the "
 "changelog below"
-msgstr ""
+msgstr "Für mehr Informationen über die neue Theme-Versionen %s oder "
+"lies den Changelog weiter unten"
 
 #: functions/admin/class-admin-page.php:109
 msgid "read the latest release notes"
-msgstr ""
+msgstr "Lies die aktuellsten Neuerungen"
 
 #: functions/admin/class-admin-page.php:114
 #, php-format
 msgid "The best way to start with %s is to read the %s and visit the %s."
-msgstr ""
+msgstr "Die beste Möglichkeit mit % zu starten ist es die %s zu lesen und das %s zu besuchen."
 
 #: functions/admin/class-admin-page.php:116
 msgid "getting started guide"
-msgstr ""
+msgstr "Beginner-Guide"
 
 #: functions/admin/class-admin-page.php:117
 msgid "demo website"
-msgstr ""
+msgstr "Demo Webseite"
 
 #: functions/admin/class-admin-page.php:131
 #, php-format
@@ -151,20 +157,20 @@ msgstr ""
 
 #: functions/admin/class-admin-page.php:147
 msgid "Go to Dashboard &rarr; Home"
-msgstr ""
+msgstr "Gehe zu Dashboard &rarr; Home"
 
 #: functions/admin/class-admin-page.php:147
 msgid "Go to Dashboard"
-msgstr ""
+msgstr "Gehe zum Dashboard"
 
 #: functions/admin/class-admin-page.php:162
 #, php-format
 msgid "The best way to start is to read the %s."
-msgstr ""
+msgstr "Am besten startest du, wenn du die %s liest."
 
 #: functions/admin/class-admin-page.php:163
 msgid "documentation"
-msgstr ""
+msgstr "Dokumentation"
 
 #: functions/admin/class-admin-page.php:167
 msgid ""
@@ -176,15 +182,15 @@ msgstr ""
 
 #: functions/admin/class-admin-page.php:169
 msgid "support forum"
-msgstr ""
+msgstr "Hilfe-Forum"
 
 #: functions/admin/class-admin-page.php:175
 msgid "Read the documentation"
-msgstr ""
+msgstr "Lies die Dokumentation"
 
 #: functions/admin/class-admin-page.php:179
 msgid "Get help in the support forum"
-msgstr ""
+msgstr "Bekomme Hilfe im Hilfe-Forum"
 
 #: functions/admin/class-admin-page.php:239
 #, php-format
@@ -193,11 +199,11 @@ msgstr ""
 
 #: functions/admin/class-admin-page.php:261
 msgid "System Informations"
-msgstr ""
+msgstr "System-Informationen"
 
 #: functions/admin/class-admin-page.php:262
 msgid "Please include the following informations when posting support requests"
-msgstr ""
+msgstr "Bitte füge die folgenden Informationen an wenn du Hilfe-Anfragen stellst."
 
 #: functions/admin/class-admin-page.php:263
 msgid ""
@@ -207,35 +213,35 @@ msgstr ""
 
 #: functions/admin/class-admin-update-notification.php:85
 msgid "Good, you've just upgraded to"
-msgstr ""
+msgstr "Super, du hast gerade geupgraded auf"
 
 #: functions/admin/class-admin-update-notification.php:87
 msgid "version"
-msgstr ""
+msgstr "Version"
 
 #: functions/admin/class-admin-update-notification.php:96
 msgid "We'd like to introduce the new features we've been working on."
-msgstr ""
+msgstr "Wir würden gerne neue Features an denen wir gearbeitet haben vorstellen."
 
 #: functions/admin/class-admin-update-notification.php:98
 msgid "Read the latest release notes"
-msgstr ""
+msgstr "Lies die aktuellsten Neuerungen"
 
 #: functions/admin/class-admin-update-notification.php:100
 msgid "Visit the demo"
-msgstr ""
+msgstr "Schau die Demo an"
 
 #: functions/admin/class-admin-update-notification.php:106
 msgid "I already know what's new thanks !"
-msgstr ""
+msgstr "Ich kenne die Neuerungen bereits, danke."
 
 #: functions/admin/class-admin-update-notification.php:107
 msgid "close"
-msgstr ""
+msgstr "schließen"
 
 #: functions/class-utils-settings-map.php:136
 msgid "Favicon Upload (supported formats : .ico, .png, .gif)"
-msgstr ""
+msgstr "Favicon-Upload (unterstütze Formate: .ico, .png, .gif)"
 
 #: functions/class-utils-settings-map.php:137
 msgid "FAVICON"
@@ -258,27 +264,27 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:166
 msgid "Turn on to use the styling options below"
-msgstr ""
+msgstr "Aktiviere das um die Design-Optionen unten zu nutzen"
 
 #: functions/class-utils-settings-map.php:171
 msgid "Boxed Layout"
-msgstr ""
+msgstr "Box-Layout"
 
 #: functions/class-utils-settings-map.php:174
 msgid "Use a boxed layout"
-msgstr ""
+msgstr "Benutze ein Box-Layout"
 
 #: functions/class-utils-settings-map.php:179
 msgid "Font"
-msgstr ""
+msgstr "Schrift"
 
 #: functions/class-utils-settings-map.php:183
 msgid "Select a font for your website"
-msgstr ""
+msgstr "Wähle eine Schrift für deine Webseite"
 
 #: functions/class-utils-settings-map.php:189
 msgid "Website Max-width"
-msgstr ""
+msgstr "Maximale Breite der Webseite"
 
 #: functions/class-utils-settings-map.php:195
 msgid ""
@@ -290,15 +296,15 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:200
 msgid "Sidebar Width"
-msgstr ""
+msgstr "Seitenleistenbreite"
 
 #: functions/class-utils-settings-map.php:204
 msgid "30px padding for widgets"
-msgstr ""
+msgstr "30px Padding für Widgets"
 
 #: functions/class-utils-settings-map.php:205
 msgid "20px padding for widgets"
-msgstr ""
+msgstr "20px Padding für Widgets"
 
 #: functions/class-utils-settings-map.php:207
 msgid "Change left and right sidebars padding"
@@ -306,67 +312,67 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:212
 msgid "Primary Color"
-msgstr ""
+msgstr "Primärfarbe"
 
 #: functions/class-utils-settings-map.php:222
 msgid "Secondary Color"
-msgstr ""
+msgstr "Sekundärfarbe"
 
 #: functions/class-utils-settings-map.php:234
 msgid "Body Background"
-msgstr ""
+msgstr "Hintergrundfarbe des Seitenbereiches"
 
 #: functions/class-utils-settings-map.php:235
 msgid "Set the website background color"
-msgstr ""
+msgstr "Stelle eine Farbe für den Webseitenhintergrund ein"
 
 #: functions/class-utils-settings-map.php:247
 msgid "Topbar Background"
-msgstr ""
+msgstr "Topbar-Hintergrund"
 
 #: functions/class-utils-settings-map.php:257
 msgid "Header Background"
-msgstr ""
+msgstr "Kopfzeilen-Hintergrund"
 
 #: functions/class-utils-settings-map.php:267
 msgid "Header Menu Background"
-msgstr ""
+msgstr "Kopfzeilen-Menü-Hintergrund"
 
 #: functions/class-utils-settings-map.php:277
 msgid "Footer Background"
-msgstr ""
+msgstr "Fußzeilen-Hitnergrund"
 
 #: functions/class-utils-settings-map.php:288
 msgid "Image Border Radius"
-msgstr ""
+msgstr "Bildeckenradius"
 
 #: functions/class-utils-settings-map.php:294
 msgid "Give your thumbnails and layout images rounded corners"
-msgstr ""
+msgstr "Gib deinen Bildern abgerundete Ecken"
 
 #: functions/class-utils-settings-map.php:316
 msgid "Create and organize your social links"
-msgstr ""
+msgstr "Erstelle und organisiere deine sozialen Links"
 
 #: functions/class-utils-settings-map.php:333
 msgid "Posts Comments"
-msgstr ""
+msgstr "Artikelkommentare"
 
 #: functions/class-utils-settings-map.php:336
 msgid "Comments on posts"
-msgstr ""
+msgstr "Kommentare zum Artikel"
 
 #: functions/class-utils-settings-map.php:341
 msgid "Pages Comments"
-msgstr ""
+msgstr "Seitenkommentare"
 
 #: functions/class-utils-settings-map.php:344
 msgid "Comments on pages"
-msgstr ""
+msgstr "Kommentare zur Seite"
 
 #: functions/class-utils-settings-map.php:358
 msgid "Enable the Mobile Friendly (or Responsive) layout"
-msgstr ""
+msgstr "Aktiviere das mobilgerätfreundliche Layout"
 
 #: functions/class-utils-settings-map.php:361
 msgid ""
@@ -379,7 +385,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:375
 msgid "Use a minified stylesheet"
-msgstr ""
+msgstr "Benutze ein minimiertes Stylesheet"
 
 #: functions/class-utils-settings-map.php:378
 msgid ""
@@ -419,7 +425,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:431
 msgid "Custom Header Logo"
-msgstr ""
+msgstr "Eigenes Kopfzeilen Logo"
 
 #: functions/class-utils-settings-map.php:442
 #: functions/class-utils-settings-map.php:859
@@ -1586,11 +1592,11 @@ msgstr "Das könnte auch interessant sein..."
 
 #: parts/single-author-date.php:16
 msgid "Published"
-msgstr ""
+msgstr "Veröffentlicht"
 
 #: parts/single-author-date.php:17
 msgid "Updated"
-msgstr ""
+msgstr "Bearbeitet"
 
 #: search.php:10
 msgid "For the term"
