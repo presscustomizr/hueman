@@ -14,8 +14,7 @@ patches/
 # GRUNT
 node_modules/
 .ftpauth
-assets/czr/js/control_dev/
-assets/czr/js/preview_dev/
+assets/czr/fmk
 npm-debug.log
 
 # TRAVIS

@@ -5,6 +5,6 @@ module.exports = {
         singleline: true,
         multiline: true
     },
-    src: [ '<%= paths.czr_js %>/czr-control.js'] // files to remove comments from
+    src: [ '<%= paths.czr_assets %>/js/czr-control.js'] // files to remove comments from
   }
 };

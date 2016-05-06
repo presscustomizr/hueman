@@ -16,8 +16,7 @@ module.exports = function(grunt) {
         global_js : 'assets/global/',
         admin_css : 'assets/admin/css/',
         admin_js : 'assets/admin/js/',
-        czr_js : 'assets/czr/js/',
-        czr_css : 'assets/czr/css/',
+        czr_assets : 'assets/czr/',
         lang : 'languages/'
       },
 			//default less modifiers
@@ -33,10 +32,7 @@ module.exports = function(grunt) {
         'pre_front_css' : ['concat:front_css', 'concat:front_not_responsive_css', 'cssmin:front_css', 'cssmin:font_awesome_css'],
         'pre_front_js' : ['jshint:front_js', 'uglify:front_js'],
         'pre_czr' : ['concat:czr_control_js','uglify:czr_control_js', 'uglify:czr_preview_js', 'cssmin:czr_css'],
-
 				'prod_build':  ['pre_front_css', 'pre_front_js', 'pre_czr', 'cssmin:admin_css', 'replace', 'clean', 'copy', 'compress'],
-				// //final build meta task
-				// 'hueman_build' : ['prod_front_css', 'prod_front_js', 'prod_admin_css_js', 'prod_build'],
 
 				//TRAVIS ci virtual machine build check on js @todo check other resources?
 				'travis' : ['jshint'],

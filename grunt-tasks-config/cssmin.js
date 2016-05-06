@@ -27,9 +27,9 @@ module.exports = {
 	},
   czr_css: {
     expand: true,
-    cwd: '<%= paths.czr_css %>',
+    cwd: '<%= paths.czr_assets %>fmk/css',
     src: ['*.css', '!*.min.css'],
-    dest: '<%= paths.czr_css %>',
+    dest: '<%= paths.czr_assets %>css',
     ext: '.min.css'
   }
 };

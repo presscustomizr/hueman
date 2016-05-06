@@ -7,9 +7,9 @@ module.exports = {
   		dead_code: true
 		},
     preserveComments: function(node, comment) {
-            // preserve comments that start with a bang
-            return /^!/.test( comment.value );
-        },
+      // preserve comments that start with a bang
+      return /^!/.test( comment.value );
+    },
 	},
   global_js: {
     files: [{
@@ -34,18 +34,18 @@ module.exports = {
   czr_control_js : {
     files: [{
       expand: true,
-      cwd: '<%= paths.czr_js %>',
+      cwd: '<%= paths.czr_assets %>fmk/js/',
       src: ['czr-control.js'],
-      dest: '<%= paths.czr_js %>',
+      dest: '<%= paths.czr_assets %>js',
       ext: '.min.js'
     }]
   },
   czr_preview_js : {
     files: [{
       expand: true,
-      cwd: '<%= paths.czr_js %>',
+      cwd: '<%= paths.czr_assets %>fmk/js/',
       src: ['czr-preview.js'],
-      dest: '<%= paths.czr_js %>',
+      dest: '<%= paths.czr_assets %>js',
       ext: '.min.js'
     }]
   },
