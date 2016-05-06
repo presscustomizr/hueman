@@ -71,6 +71,11 @@
 
   api.sidebar_insights = sidebar_insights;
 
+  //PARTIAL REFRESHS
+  var partial_refreshs = new api.Values();
+  partial_refreshs.create('settings');
+  api.czr_partials = partial_refreshs;
+
   //backup the original intialize
   var _old_initialize = api.PreviewFrame.prototype.initialize;
 
@@ -111,6 +116,9 @@
       api.contx('current').set( data );
     });
 
+    this.bind( 'czr-partial-refresh', function(data) {
+      api.czr_partials('settings').set(data);
+    });
   };//initialize
 
   /*****************************************************************************
@@ -143,6 +151,16 @@
     if ( _.has( api.czr_wp_builtin_settings, name ) )
       return name;
     return -1 == name.indexOf( serverControlParams.themeOptions ) ? [ serverControlParams.themeOptions +'[' , name  , ']' ].join('') : name;
+  };
+
+  //@return bool
+  //@uses api.czr_partials
+  api.czr_has_part_refresh = function( setId ) {
+    if ( ! _.has( api, 'czr_partials') || ! api.czr_partials.has('settings') )
+      return;
+    return  _.contains( _.map( api.czr_partials('settings').get(), function( partial, key ) {
+      return _.contains( partial.settings, setId );
+    }), true );
   };
 
   //react to a contx change
