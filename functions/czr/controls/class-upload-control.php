@@ -11,7 +11,7 @@ if ( ! class_exists( 'HU_Customize_Upload_Control' ) ) :
    * @since 3.4.0
    */
   class HU_Customize_Upload_Control extends WP_Customize_Control {
-    public $type    = 'hu_upload';
+    public $type    = 'czr_upload';
     public $removed = '';
     public $context;
     public $extensions = array();

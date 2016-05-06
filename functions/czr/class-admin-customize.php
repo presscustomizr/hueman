@@ -43,12 +43,44 @@ if ( ! class_exists( 'HU_customize' ) ) :
       add_action( 'customize_controls_print_footer_scripts'   , array( $this, 'hu_various_dom_ready' ) );
       //Add the visibilities
       add_action( 'customize_controls_print_footer_scripts'   , array( $this, 'hu_extend_visibilities' ), 10 );
-      //Partial refresh for social icons
-      add_action( 'customize_register'                        , array( $this,  'my_register_blogname_partials' ) );
+      //Partial refreshs
+      add_action( 'customize_register'                        , array( $this,  'hu_register_partials' ) );
     }
 
 
-    function my_register_blogname_partials( WP_Customize_Manager $wp_customize ) {
+    /**
+    * Augments wp customize controls and settings classes
+    * @package Hueman
+    * @since Hueman 3.0
+    */
+    function hu_augment_customizer( $manager ) {
+      $_classes = array(
+        'controls/class-base-advanced-control.php',
+        'controls/class-base-control.php',
+        'controls/class-cropped-image-control.php',
+        'controls/class-dynamic-control.php',
+        'controls/class-layout-control.php',
+        'controls/class-multipicker-control.php',
+        'controls/class-socials-control.php',
+        'controls/class-upload-control.php',
+        'controls/class-widget-areas-control.php',
+
+        'sections/class-widgets-section.php',
+
+        'settings/class-settings.php'
+      );
+      foreach ($_classes as $_path) {
+        locate_template( 'functions/czr/' . $_path , $load = true, $require_once = true );
+      }
+
+      //Registered types are eligible to be rendered via JS and created dynamically.
+      if ( class_exists('HU_Customize_Cropped_Image_Control') )
+        $manager -> register_control_type( 'HU_Customize_Cropped_Image_Control' );
+    }
+
+
+    //hook : customize_register
+    function hu_register_partials( WP_Customize_Manager $wp_customize ) {
 
         // Abort if selective refresh is not available.
         if ( ! isset( $wp_customize->selective_refresh ) ) {
@@ -222,37 +254,6 @@ if ( ! class_exists( 'HU_customize' ) ) :
       printf( '<h3 class="czr-hueman-title">%s</h3>', __( 'SITE ICON' , 'hueman') );
     }
 
-
-
-		/**
-		* Augments wp customize controls and settings classes
-		* @package Hueman
-		* @since Hueman 3.0
-		*/
-		function hu_augment_customizer( $manager ) {
-      $_classes = array(
-        'controls/class-base-advanced-control.php',
-        'controls/class-base-control.php',
-        'controls/class-cropped-image-control.php',
-        'controls/class-dynamic-control.php',
-        'controls/class-layout-control.php',
-        'controls/class-multipicker-control.php',
-        'controls/class-socials-control.php',
-        'controls/class-upload-control.php',
-        'controls/class-widget-areas-control.php',
-
-        'sections/class-widgets-section.php',
-
-        'settings/class-settings.php'
-      );
-      foreach ($_classes as $_path) {
-        locate_template( 'functions/czr/' . $_path , $load = true, $require_once = true );
-      }
-
-      //Registered types are eligible to be rendered via JS and created dynamically.
-      if ( class_exists('HU_Customize_Cropped_Image_Control') )
-        $manager -> register_control_type( 'HU_Customize_Cropped_Image_Control' );
-		}
 
 
     /**
