@@ -39,8 +39,6 @@
       _setting_cbs = {},
       _subsetting_cbs = {};//for nested sub settings
 
-
-
   //Patch for wp versions before 4.1 => preview-ready signal isn't triggered
   if ( HUPreviewParams && ! HUPreviewParams.preview_ready_event_exists )
     $(document).ready(fireCzrPrev);
@@ -53,10 +51,12 @@
           'houston-widget-settings',
           _.extend( _wpWidgetCustomizerPreviewSettings, { availableWidgetLocations : _.values( api.settings.availableWidgetLocations ) } )
         );
+        api.preview.send( 'czr-partial-refresh', ! _.isUndefined(_customizePartialRefreshExports) ? _customizePartialRefreshExports.partials : {} );
 
         //TEST
         //console.log('_wpCustomizeSettings', _wpCustomizeSettings, _wpCustomizeSettings.activeSections );
-        // console.log('_wpWidgetCustomizerPreviewSettings', _wpWidgetCustomizerPreviewSettings);
+        //console.log('_wpWidgetCustomizerPreviewSettings', _wpWidgetCustomizerPreviewSettings);
+        //console.log(' _customizePartialRefreshExports',  _customizePartialRefreshExports);
 
         //settings cb
         _.map( _setting_cbs, function( _cb, _setId ) {

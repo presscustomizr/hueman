@@ -43,7 +43,26 @@ if ( ! class_exists( 'HU_customize' ) ) :
       add_action( 'customize_controls_print_footer_scripts'   , array( $this, 'hu_various_dom_ready' ) );
       //Add the visibilities
       add_action( 'customize_controls_print_footer_scripts'   , array( $this, 'hu_extend_visibilities' ), 10 );
+      //Partial refresh for social icons
+      add_action( 'customize_register'                        , array( $this,  'my_register_blogname_partials' ) );
     }
+
+
+    function my_register_blogname_partials( WP_Customize_Manager $wp_customize ) {
+
+        // Abort if selective refresh is not available.
+        if ( ! isset( $wp_customize->selective_refresh ) ) {
+            return;
+        }
+
+        $wp_customize->selective_refresh->add_partial( 'social_links', array(
+            'selector' => '.social-links',
+            'settings' => array( 'hu_theme_options[social-links]' ),
+            'render_callback' => 'hu_print_social_links',
+            //'type' => 'my_partial'
+        ) );
+    }
+
 
     //updates the names of the built-in widget zones for users who installed the theme before v3.1.2
     function hu_update_widget_database_option() {

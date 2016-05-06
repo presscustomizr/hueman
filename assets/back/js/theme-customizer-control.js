@@ -100,6 +100,11 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
 
   api.sidebar_insights = sidebar_insights;
 
+  //PARTIAL REFRESHS
+  var partial_refreshs = new api.Values();
+  partial_refreshs.create('settings');
+  api.czr_partials = partial_refreshs;
+
   //backup the original intialize
   var _old_initialize = api.PreviewFrame.prototype.initialize;
 
@@ -140,6 +145,9 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
       api.contx('current').set( data );
     });
 
+    this.bind( 'czr-partial-refresh', function(data) {
+      api.czr_partials('settings').set(data);
+    });
   };//initialize
 
   /*****************************************************************************
@@ -172,6 +180,16 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
     if ( _.has( api.czr_wp_builtin_settings, name ) )
       return name;
     return -1 == name.indexOf( serverControlParams.themeOptions ) ? [ serverControlParams.themeOptions +'[' , name  , ']' ].join('') : name;
+  };
+
+  //@return bool
+  //@uses api.czr_partials
+  api.czr_has_part_refresh = function( setId ) {
+    if ( ! _.has( api, 'czr_partials') || ! api.czr_partials.has('settings') )
+      return;
+    return  _.contains( _.map( api.czr_partials('settings').get(), function( partial, key ) {
+      return _.contains( partial.settings, setId );
+    }), true );
   };
 
   //react to a contx change
@@ -449,8 +467,9 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
             //1) only needed if transport is postMessage, because is triggered by wp otherwise
             //2) only needed when : add, remove, sort model(s).
             var is_model_update = ( _.size(from) == _.size(to) ) && ! _.isEmpty( _.difference(from, to) );
-            if ( 'postMessage' == api(control.id).transport && ! is_model_update )
+            if ( 'postMessage' == api(control.id).transport && ! is_model_update && ! api.czr_has_part_refresh( control.id ) ) {
               control.previewer.refresh();
+            }
         });
 
         //PRE ADD MODEL SETUP
@@ -557,8 +576,9 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
       //refresh the preview frame (only needed if transport is postMessage )
       //must be a dom event not triggered
       //otherwise we are in the init collection case where the model are fetched and added from the setting in initialize
-      if ( 'postMessage' == api(this.id).transport && _.has( obj, 'dom_event') && ! _.has( obj.dom_event, 'isTrigger' ) )
-       control.previewer.refresh();
+      if ( 'postMessage' == api(this.id).transport && _.has( obj, 'dom_event') && ! _.has( obj.dom_event, 'isTrigger' ) && ! api.czr_has_part_refresh( control.id ) ) {
+        control.previewer.refresh();
+      }
     },
 
 
