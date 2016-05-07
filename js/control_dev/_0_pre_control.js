@@ -1,4 +1,5 @@
 (function (api, $, _) {
+
   //FIX FOR CONTROL VISIBILITY LOST ON PREVIEW REFRESH #1
   //This solves the problem of control visiblity settings being lost on preview refresh since WP 4.3
   //this overrides the wp method only for the control instances
@@ -49,78 +50,6 @@
   }
   /* end monkey patch */
 
-
-
-
-
-  /*****************************************************************************
-  * CAPTURE PREVIEW INFORMATIONS ON REFRESH + REACT TO THEM
-  *****************************************************************************/
-  /* CONTEXT */
-  var contx = new api.Values();
-  contx.create('current');
-  api.contx = contx;
-
-  /* SIDEBAR INSIGHTS */
-  var sidebar_insights = new api.Values();
-  sidebar_insights.create('candidates');//will store the sidebar candidates on preview refresh
-  sidebar_insights.create('actives');//will record the refreshed active list of active sidebars sent from the preview
-  sidebar_insights.create('inactives');
-  sidebar_insights.create('registered');
-  sidebar_insights.create('available_locations');
-
-  api.sidebar_insights = sidebar_insights;
-
-  //PARTIAL REFRESHS
-  var partial_refreshs = new api.Values();
-  partial_refreshs.create('settings');
-  api.czr_partials = partial_refreshs;
-
-  //backup the original intialize
-  var _old_initialize = api.PreviewFrame.prototype.initialize;
-
-  //captures some values on preview refresh
-  //@todo there must be a simpler way...
-  //=> using api.previewer.deferred.active.done() works on the first load but not after. The instance is not the same ?
-  api.PreviewFrame.prototype.initialize = function( params, options ) {
-    _old_initialize.call( this, params, options );
-
-    //observe widget settings changes
-    this.bind('houston-widget-settings', function(data) {
-        //get the difference
-        var _candidates = _.filter( data.registeredSidebars, function( sb ) {
-          return ! _.findWhere( _wpCustomizeWidgetsSettings.registeredSidebars, { id: sb.id } );
-        });
-
-        var _inactives = _.filter( data.registeredSidebars, function( sb ) {
-          return ! _.has( data.renderedSidebars, sb.id );
-        });
-
-        _inactives = _.map( _inactives, function(obj) {
-          return obj.id;
-        });
-
-        var _registered = _.map( data.registeredSidebars, function(obj) {
-          return obj.id;
-        });
-
-        api.sidebar_insights('actives').set( data.renderedSidebars );
-        api.sidebar_insights('inactives').set( _inactives );
-        api.sidebar_insights('registered').set( _registered );
-        api.sidebar_insights('candidates').set( _candidates );
-        api.sidebar_insights('available_locations').set( data.availableWidgetLocations );//built server side
-    });
-
-
-    this.bind( 'context-ready', function(data ) {
-      api.contx('current').set( data );
-    });
-
-    this.bind( 'czr-partial-refresh', function(data) {
-      api.czr_partials('settings').set(data);
-    });
-  };//initialize
-
   /*****************************************************************************
   * ADD SOME HELPERS AND PROPERTIES TO THE ALWAYS ACCESSIBLE API OBJECT.
   *****************************************************************************/
@@ -163,9 +92,9 @@
     }), true );
   };
 
-  //react to a contx change
-  //api.contx('current').callbacks.add( function( e, o) {
-    //console.log('the contx has been updated', e, o );
+  //react to a ctx change
+  //api.czr_ctx('wp').callbacks.add( function( e, o) {
+    //console.log('the ctx has been updated', e, o );
   //});
 
   // $( window ).on( 'message', function( e, o) {
