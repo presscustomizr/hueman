@@ -18,6 +18,7 @@ module.exports = {
       '<%= paths.czr_assets %>fmk/js/lib/stepper.min.js',
       '<%= paths.czr_assets %>fmk/js/lib/select2.min.js',
 
+      '<%= paths.czr_assets %>fmk/js/control_dev/_0_pre_advanced.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/_0_pre_control.js',
 
       '<%= paths.czr_assets %>fmk/js/control_dev/_1_dyn_control_0_init.js',

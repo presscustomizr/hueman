@@ -45,33 +45,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
       add_action( 'customize_controls_print_footer_scripts'   , array( $this, 'hu_extend_visibilities' ), 10 );
       //Partial refreshs
       add_action( 'customize_register'                        , array( $this,  'hu_register_partials' ) );
-
-
-      //LAB
-      add_action( 'customize_save_hu_theme_options'           , array( $this,  'hu_test' ));
-      add_action( 'customize_update_nicotype'                , array( $this,  'hu_customizer_update_nicotype' ), 10, 2 );
     }
-
-
-
-
-    //customize_save_hu_theme_options
-    function hu_test( $setting ) {
-      if ( ! isset($_POST['type']) )
-        return;
-      $setting -> type = "nicotype" == $_POST['type'] ? "nicotype" : $setting -> type;
-    }
-
-    function hu_customizer_update_nicotype($value, $setting) {
-      //$meta_key = $setting -> id_data[ 'base' ].'-'. $setting -> id;
-      echo $setting -> id;
-      update_post_meta( 1, $meta_key, $value );
-    }
-
-
-
-
-
 
     /**
     * Augments wp customize controls and settings classes
@@ -169,7 +143,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
       ?>
         <script type="text/javascript" id="czr-customizer-data">
           (function ( _export ){
-            _export.contx = <?php echo wp_json_encode( $_contexts ) ?>;
+            _export.wp_contx = <?php echo wp_json_encode( $_contexts ) ?>;
             _export.availableWidgetLocations = <?php echo wp_json_encode( $_available_locations ) ?>;
           })( _wpCustomizeSettings );
         </script>

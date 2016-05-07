@@ -45,8 +45,8 @@
   else
     api.bind( 'preview-ready', function(){
 
-        //send the current context and widgets settings
-        api.preview.send( 'context-ready', api.settings.contx );
+        //send infos to panel
+        api.preview.send( 'wp-ctx-ready', api.settings.wp_contx );
         api.preview.send(
           'houston-widget-settings',
           _.extend( _wpWidgetCustomizerPreviewSettings, { availableWidgetLocations : _.values( api.settings.availableWidgetLocations ) } )
@@ -57,8 +57,8 @@
         //console.log('_wpCustomizeSettings', _wpCustomizeSettings, _wpCustomizeSettings.activeSections );
         //console.log('_wpWidgetCustomizerPreviewSettings', _wpWidgetCustomizerPreviewSettings);
         //console.log(' _customizePartialRefreshExports',  _customizePartialRefreshExports);
+        api.preview.send( 'czr-ctx-ready', _.has( _wpCustomizeSettings, 'czr_ctx' ) ? _wpCustomizeSettings.czr_ctx : '');
 
-        console.log('_wpCustomizeSettings CTX', _wpCustomizeSettings );
 
         //settings cb
         _.map( _setting_cbs, function( _cb, _setId ) {
