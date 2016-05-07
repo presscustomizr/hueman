@@ -1,4 +1,37 @@
 /* OVERRIDE WP CUSTOMIZER */
+/* HEADER AND SCOPE SWITCHER */
+.wp-customizer .wp-full-overlay-sidebar .wp-full-overlay-header {
+  height: 85px;
+}
+.wp-customizer .wp-full-overlay-sidebar .wp-full-overlay-sidebar-content {
+  top: 85px;
+}
+.customize-controls-close {
+  border-bottom: 1px solid #ddd;
+}
+
+.czr-scope-switcher {
+  width: 100%;
+  float: right;
+  position: relative;
+  margin-top: 12px;
+}
+.czr-scope-switcher .button {
+  float: left;
+  width: 40%;
+  text-align: center;
+  margin: 0 2%;
+  opacity: 0.7;
+  -webkit-transition: opacity .3s ease-in-out;
+  -moz-transition: opacity .3s ease-in-out;
+  -ms-transition: opacity .3s ease-in-out;
+  -o-transition: opacity .3s ease-in-out;
+  transition: opacity .3s ease-in-out;
+}
+.czr-scope-switcher .button.active {
+  font-weight: bold;
+  opacity: 1;
+}
 /* LAYOUT */
 .wp-customizer .wp-full-overlay.expanded {
   margin-left: 440px;

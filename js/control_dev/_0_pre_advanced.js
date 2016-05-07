@@ -1,6 +1,71 @@
 (function (api, $, _) {
-  //LAB
+  /*****************************************************************************
+  * THE SCOPE SWITCHER
+  *****************************************************************************/
+  api.bind( 'ready' , function() {
+    //api.czr_scope = new api.CZR_scope();
+  } );
 
+  api.CZR_scope = api.Class.extend( {
+    initialize: function() {
+          var self = this;
+          //REACT TO ACTIVE SCOPE UPDATE
+          api.czr_ctx('active').callbacks.add( function(to, from) {
+
+              self.setScopeSwitcherButtonActive(to.db_type);
+          });
+
+          //REACT TO CTX UPDATE : embed or refresh dialog when ctx has been updated
+          api.czr_ctx('czr').callbacks.add( function(to, from) {
+              self.embedDialogBox( to ).listenToScopeSwitch(to);
+              console.log('BEFORE',  api.czr_ctx('active').get() );
+              //set the active scope as global
+              api.czr_ctx('active').set( to.global );
+              console.log('AFTER',  api.czr_ctx('active').get() );
+          });
+    },
+
+    embedDialogBox : function(ctx) {
+          //@todo will need to be refreshed on ctx change in the future
+          if ( $('#customize-header-actions').find('.czr-scope-switcher').length )
+            return this;
+
+          $('#customize-header-actions').append(
+            $('<div/>', {
+              class:'czr-scope-switcher',
+              html:'<span data-dyn-type="trans" class="czr-local-scope button">This page</span> <span data-dyn-type="option" class="czr-global-scope button">Global</span>'
+            })
+          );
+          return this;
+    },
+
+    listenToScopeSwitch : function() {
+          $('.czr-scope-switcher .button', '#customize-header-actions').on('click keydown', function( e, event_params ) {
+              //particular treatment
+              if ( api.utils.isKeydownButNotEnterEvent( e ) ) {
+                return;
+              }
+              e.preventDefault(); // Keep this AFTER the key filter above)
+
+              var _dyn_type   = $( e.currentTarget).attr('data-dyn-type'),
+                  _new_scope  = _.findWhere( api.czr_ctx('czr').get() , { db_type : _dyn_type });
+
+              api.czr_ctx('active').set( _new_scope );
+
+          });//.on()
+    },
+
+    setScopeSwitcherButtonActive : function( dyn_type ) {
+          $('.button', '.czr-scope-switcher').each( function( ind ) {
+            $(this).toggleClass( 'active', dyn_type == $(this).attr('data-dyn-type') );
+          });
+    }
+  });//api.Class.extend()
+
+
+  /*****************************************************************************
+  * OVERRIDES
+  *****************************************************************************/
   api.Setting.prototype.silent_set =function( to ) {
     var from = this._value;
 
@@ -36,10 +101,11 @@
 
           return {
             wp_customize: 'on',
-            type: 'nicotyp',
-            theme:      _wpCustomizeSettings.theme.stylesheet,
-            customized: JSON.stringify( dirtyCustomized ),
-            nonce:      this.nonce.preview
+            dyn_type:     api.czr_ctx('active').get().db_type,
+            opt_name:     api.czr_ctx('active').get().opt_name,
+            theme:        _wpCustomizeSettings.theme.stylesheet,
+            customized:   JSON.stringify( dirtyCustomized ),
+            nonce:        this.nonce.preview
           };
         },
 
@@ -131,8 +197,10 @@
   /* CONTEXT */
   var ctx = new api.Values();
   ctx.create('wp');
-  ctx.create('czr');
+  ctx.create('czr');//all available scope, including the current ctx
+  ctx.create('active');//the currently active scope
   api.czr_ctx = ctx;
+
 
   /* SIDEBAR INSIGHTS */
   var sidebar_insights = new api.Values();
@@ -194,7 +262,6 @@
     });
 
     this.bind( 'czr-ctx-ready', function(data) {
-      console.log('ALORS CTX?', data );
       api.czr_ctx('czr').set( data );
     });
   };//initialize
