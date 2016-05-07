@@ -16,7 +16,7 @@ var CZRUploadMethods = CZRUploadMethods || {};
 
       this.uploader = $.extend({
         container: this.container,
-        browser:   this.container.find('.tc-upload'),
+        browser:   this.container.find('.czr-upload'),
         //dropzone:  this.container.find('.upload-dropzone'),
         success:   this.success,
         plupload:  {},
