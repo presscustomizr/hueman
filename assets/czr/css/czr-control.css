@@ -21,8 +21,8 @@
   left: 440px;
 }
 
-.in-sub-panel #tc-donate-customizer,
- .in-sub-panel .tc-cta-wrap {
+.in-sub-panel #czr-donate-customizer,
+ .in-sub-panel .czr-cta-wrap {
    left: -450px;
    height: 0;
  }
@@ -52,8 +52,8 @@
   right: 440px;
 }
 
-.rtl .in-sub-panel #tc-donate-customizer,
- .rtl .in-sub-panel .tc-cta-wrap {
+.rtl .in-sub-panel #czr-donate-customizer,
+ .rtl .in-sub-panel .czr-cta-wrap {
    right: -450px;
  }
 
@@ -206,8 +206,8 @@
      width: 100%;
    }
 
-   .in-sub-panel .tc-cta-wrap,
-   .in-sub-panel #tc-donate-customizer,
+   .in-sub-panel .czr-cta-wrap,
+   .in-sub-panel #czr-donate-customizer,
    #customize-theme-controls .control-section.current-panel > h3.accordion-section-title {
      left: -100%;
    }
@@ -226,8 +226,8 @@
      width: 100%;
      left: auto;
    }
-   .rtl .in-sub-panel #tc-donate-customizer,
-   .rtl .in-sub-panel .tc-cta-wrap,
+   .rtl .in-sub-panel #czr-donate-customizer,
+   .rtl .in-sub-panel .czr-cta-wrap,
    .rtl #customize-theme-controls .control-section.current-panel > h3.accordion-section-title {
      right: -100%;
      left: auto;

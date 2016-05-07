@@ -3,7 +3,7 @@
 */
 if ( class_exists('WP_Customize_Cropped_Image_Control') && ! class_exists( 'HU_Customize_Cropped_Image_Control' ) ) :
   class HU_Customize_Cropped_Image_Control extends WP_Customize_Cropped_Image_Control {
-    public $type = 'hu_cropped_image';
+    public $type = 'czr_cropped_image';
     public $title;
     public $notice;
     public $dst_width;
