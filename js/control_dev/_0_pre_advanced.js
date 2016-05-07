@@ -3,7 +3,7 @@
   * THE SCOPE SWITCHER
   *****************************************************************************/
   api.bind( 'ready' , function() {
-    //api.czr_scope = new api.CZR_scope();
+    api.czr_scope = new api.CZR_scope();
   } );
 
   api.CZR_scope = api.Class.extend( {
@@ -13,6 +13,27 @@
           api.czr_ctx('active').callbacks.add( function(to, from) {
 
               self.setScopeSwitcherButtonActive(to.db_type);
+
+              //TEST UPDATE LOGO ON SWITCH
+              if ( 'trans' == to.db_type ) {
+
+                api.control('hu_theme_options[custom-logo]').container.remove();
+
+                api.control.remove('hu_theme_options[custom-logo]');
+
+                var _constructor = api.controlConstructor['czr_cropped_image'];
+                var _data = api.settings.controls['hu_theme_options[custom-logo]'];
+                api('hu_theme_options[custom-logo]').set(23);
+
+                //add the control when the new image has been fetched asynchronously.
+                wp.media.attachment( 23 ).fetch().done( function() {
+                  _data.attachment = this.attributes;
+                  api.control.add(
+                  'hu_theme_options[custom-logo]',
+                    new _constructor('hu_theme_options[custom-logo]', { params : _data, previewer :api.previewer })
+                  );
+                } );
+              }
           });
 
           //REACT TO CTX UPDATE : embed or refresh dialog when ctx has been updated
