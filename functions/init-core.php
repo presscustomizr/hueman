@@ -216,6 +216,11 @@ load_template( get_template_directory() . '/functions/class-utils.php' );
 new HU_utils;
 
 
+/* ------------------------------------------------------------------------- *
+ *  Loads Ctx helpers
+/* ------------------------------------------------------------------------- */
+load_template( get_template_directory() . '/functions/init-ctx.php' );
+
 //note:  $default is never used => to remove
 function hu_get_option( $option_id, $default = '' ) {
   return HU_utils::$inst -> hu_opt( $option_id );

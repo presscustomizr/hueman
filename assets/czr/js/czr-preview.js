@@ -58,6 +58,8 @@
         //console.log('_wpWidgetCustomizerPreviewSettings', _wpWidgetCustomizerPreviewSettings);
         //console.log(' _customizePartialRefreshExports',  _customizePartialRefreshExports);
 
+        console.log('_wpCustomizeSettings CTX', _wpCustomizeSettings );
+
         //settings cb
         _.map( _setting_cbs, function( _cb, _setId ) {
           if ( ! api.has( _build_setId(_setId) ) )

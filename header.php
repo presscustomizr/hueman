@@ -15,6 +15,9 @@
 <div id="wrapper">
 
   <header id="header">
+    <pre>
+      <?php print_r( get_post_meta( 1, HU_THEME_OPTIONS.'-rss-feed' ) ); ?>
+    </pre>
 
     <?php if ( has_nav_menu('topbar') ): ?>
       <nav class="nav-container group" id="nav-topbar">
