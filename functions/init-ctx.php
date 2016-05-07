@@ -311,25 +311,27 @@ function hu_get_query_ctx() {
   $type         = false;
   $obj_id       = false;
 
-  //post, custom post types, page
-  if ( isset($current_obj -> post_type) ) {
-      $meta_type  = 'post';
-      $type       = $current_obj -> post_type;
-      $obj_id     = $current_obj -> ID;
-  }
+  if ( is_object($current_obj) ) {
+      //post, custom post types, page
+      if ( isset($current_obj -> post_type) ) {
+          $meta_type  = 'post';
+          $type       = $current_obj -> post_type;
+          $obj_id     = $current_obj -> ID;
+      }
 
-  //taxinomies : tags, categories, custom tax type
-  if ( isset($current_obj -> taxonomy) && isset($current_obj -> term_id) ) {
-      $meta_type  = 'tax';
-      $type       = $current_obj -> taxonomy;
-      $obj_id     = $current_obj -> term_id;
-  }
+      //taxinomies : tags, categories, custom tax type
+      if ( isset($current_obj -> taxonomy) && isset($current_obj -> term_id) ) {
+          $meta_type  = 'tax';
+          $type       = $current_obj -> taxonomy;
+          $obj_id     = $current_obj -> term_id;
+      }
 
-  //author page
-  if ( isset($current_obj -> data -> user_login ) && isset($current_obj -> ID) ) {
-      $meta_type  = 'author';
-      $type       = 'user';
-      $obj_id     = $current_obj -> ID;
+      //author page
+      if ( isset($current_obj -> data -> user_login ) && isset($current_obj -> ID) ) {
+          $meta_type  = 'author';
+          $type       = 'user';
+          $obj_id     = $current_obj -> ID;
+      }
   }
 
   if ( is_404() )
