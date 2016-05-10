@@ -43,26 +43,40 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
 
               self.setScopeSwitcherButtonActive(to.db_type);
 
-              //TEST UPDATE LOGO ON SWITCH
+              //TEST UPDATE DYNAMIC STYLE CHECKBOX ON SWITCH
               if ( 'trans' == to.db_type ) {
-
-                api.control('hu_theme_options[custom-logo]').container.remove();
-
-                api.control.remove('hu_theme_options[custom-logo]');
-
-                var _constructor = api.controlConstructor['czr_cropped_image'];
-                var _data = api.settings.controls['hu_theme_options[custom-logo]'];
-                api('hu_theme_options[custom-logo]').set(23);
-
-                //add the control when the new image has been fetched asynchronously.
-                wp.media.attachment( 23 ).fetch().done( function() {
-                  _data.attachment = this.attributes;
-                  api.control.add(
-                  'hu_theme_options[custom-logo]',
-                    new _constructor('hu_theme_options[custom-logo]', { params : _data, previewer :api.previewer })
-                  );
-                } );
+                api('hu_theme_options[dynamic-styles]').set(true);
+                //api('hu_theme_options[dynamic-styles]').set(23);
+                $('input[type=checkbox]', api.control('hu_theme_options[dynamic-styles]').container ).iCheck('update');
               }
+
+              //TEST UPDATE FONT SELECT ON SWITCH
+              if ( 'trans' == to.db_type ) {
+                api('hu_theme_options[font]').set('raleway');
+                //api('hu_theme_options[dynamic-styles]').set(23);
+                $('select[data-customize-setting-link]', api.control('hu_theme_options[font]').container ).selecter('destroy').selecter();
+              }
+
+              var _img_id = 'trans' == to.db_type ? 23 : 25;
+              //TEST UPDATE LOGO ON SWITCH
+              api.control('hu_theme_options[custom-logo]').container.remove();
+
+              api.control.remove('hu_theme_options[custom-logo]');
+
+              var _constructor = api.controlConstructor['czr_cropped_image'];
+              var _data = api.settings.controls['hu_theme_options[custom-logo]'];
+              api('hu_theme_options[custom-logo]').set(_img_id);
+
+              //add the control when the new image has been fetched asynchronously.
+              wp.media.attachment( _img_id ).fetch().done( function() {
+                _data.attachment = this.attributes;
+                api.control.add(
+                'hu_theme_options[custom-logo]',
+                  new _constructor('hu_theme_options[custom-logo]', { params : _data, previewer :api.previewer })
+                );
+              } );
+
+
           });
 
           //REACT TO CTX UPDATE : embed or refresh dialog when ctx has been updated
@@ -3606,45 +3620,64 @@ var CZRSocialMethods = CZRSocialMethods || {};
 
 
     /* CHECKBOXES */
-    //init icheck only if not already initiated
-    //exclude widget inputs
-    $('input[type=checkbox]').not('input[id*="widget"]').each( function() {
-      //first fix the checked / unchecked status
-      if ( 0 === $(this).val() || '0' == $(this).val() || 'off' == $(this).val() || _.isEmpty($(this).val() ) ) {
-        $(this).prop('checked', false);
-      } else {
-        $(this).prop('checked', true);
-      }
+    api.czrSetupCheckbox = function( controlId, refresh ) {
+      $('input[type=checkbox]', api.control(controlId).container ).each( function() {
+        //first fix the checked / unchecked status
+        if ( 0 === $(this).val() || '0' == $(this).val() || 'off' == $(this).val() || _.isEmpty($(this).val() ) ) {
+          $(this).prop('checked', false);
+        } else {
+          $(this).prop('checked', true);
+        }
 
-      //then render icheck if not done already
-      if ( 0 !== $(this).closest('div[class^="icheckbox"]').length )
-        return;
+        //then render icheck if not done already
+        if ( 0 !== $(this).closest('div[class^="icheckbox"]').length )
+          return;
 
-      $(this).iCheck({
-        checkboxClass: 'icheckbox_flat-grey',
-        //checkedClass: 'checked',
-        radioClass: 'iradio_flat-grey',
-      })
-      .on( 'ifChanged', function(e){
-        $(this).val( false === $(this).is(':checked') ? 0 : 1 );
-        $(e.currentTarget).trigger('change');
-      });
-    });
-
-    /* SELECT */
-    //Exclude no-selecter-js
-    $('select[data-customize-setting-link]').not('.no-selecter-js')
-      .each( function() {
-        $(this).selecter({
-        //triggers a change event on the view, passing the newly selected value + index as parameters.
-        // callback : function(value, index) {
-        //   self.triggerSettingChange( window.event || {} , value, index); // first param is a null event.
-        // }
+        $(this).iCheck({
+          checkboxClass: 'icheckbox_flat-grey',
+          //checkedClass: 'checked',
+          radioClass: 'iradio_flat-grey',
+        })
+        .on( 'ifChanged', function(e){
+          $(this).val( false === $(this).is(':checked') ? 0 : 1 );
+          $(e.currentTarget).trigger('change');
         });
-    });
+      });
+    };//api.czrSetupCheckbox()
 
-    /* NUMBER */
-    $('input[type="number"]').stepper();
+    /* SELECT INPUT */
+    api.czrSetupSelect = function(controlId, refresh) {
+      //Exclude no-selecter-js
+      $('select[data-customize-setting-link]', api.control(controlId).container ).not('.no-selecter-js')
+        .each( function() {
+          $(this).selecter({
+          //triggers a change event on the view, passing the newly selected value + index as parameters.
+          // callback : function(value, index) {
+          //   self.triggerSettingChange( window.event || {} , value, index); // first param is a null event.
+          // }
+          });
+      });
+    };//api.czrSetupSelect()
+
+
+    /* NUMBER INPUT */
+    api.czrSetupStepper = function(controlId, refresh) {
+      //Exclude no-selecter-js
+      $('input[type="number"]', api.control(controlId).container ).each( function() {
+          $(this).stepper();
+      });
+    };//api.czrSetupStepper()
+
+    api.control.each(function(control){
+      if ( ! _.has(control,'id') )
+        return;
+      //exclude widget controls for checkboxes
+      if ('widget' != control.id.substring(0, 6) ) {
+        api.czrSetupCheckbox(control.id);
+      }
+      api.czrSetupSelect(control.id);
+      api.czrSetupStepper(control.id);
+    });
 
 
     /* WIDGET PANEL ICON */
