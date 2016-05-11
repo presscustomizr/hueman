@@ -260,7 +260,7 @@ var CZRWidgetAreasMethods = CZRWidgetAreasMethods || {};
     //@param contexts = array of contexts
     _getMatchingContexts : function( defaults ) {
       var control = this,
-          _current = api.czr_ctx('wp').get() || {},
+          _current = api.czr_wp_conditionals.get() || {},
           _matched = _.filter(control.context_match_map, function( hu, wp ) { return true === _current[wp]; });
 
       return _.isEmpty( _matched ) ? defaults : _matched;
