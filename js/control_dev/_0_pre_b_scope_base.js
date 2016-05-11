@@ -1,6 +1,26 @@
 (function (api, $, _) {
+  //HOW DOES THIS WORK ?
+  //CZR_scopeBase listens to collection changes
+  // 1) instantiate new models, remove old ones and their view
+  // 2) sets each scope models active scope state changes
+
+
+  // CZR_scopeModel
+  // 1) instantiate, the scope view
+  // 2) listens to the active state
+  //   => store dirtyness on switch
+  //   => fetch the db values, build the full set and update the settings
+
+  // CZR_scopeView
+  // 1) renders the view
+  // 2) listens to model active state
+  //   => change the view display elements
+  // 3) listen to DOM interactions and set scope values : state, priority
+
+  // @todo in the view, return the $() element to store the view.container
+
   /*****************************************************************************
-  * THE SCOPE COLLECTION
+  * THE SCOPE BASE OBJECT
   *****************************************************************************/
   api.bind( 'ready' , function() {
     api.czr_scopeBase = new api.CZR_scopeBase();
@@ -11,7 +31,8 @@
 
     initialize: function() {
           var self = this;
-          this.globalSettingVal = this.getGlobalSettingVal();
+          //store the initial state of the global option
+          this.initialGlobalSettingVal = this.getGlobalSettingVal();
 
           //WHAT IS A SCOPE ?
           //A scope is an object describing a set of options for a given customization scope
@@ -61,144 +82,80 @@
           //setup the callbacks of the scope collection update
           //on init and on preview change : the collection of scopes is populated with new scopes
           //=> instanciate the relevant scope object + render them
-          this.listenToScopeCollection();
-
+          api.czr_scopeCollection('collection').callbacks.add( function() { return self.initScopeModels.apply(self, arguments ); } );
 
           //REACT TO ACTIVE SCOPE UPDATE
-          this.listenToActiveScope();
+          api.czr_scopeCollection('active').callbacks.add( function() { return self.setScopeStates.apply(self, arguments ); } );
     },
 
     //setup the czr_scopeCollection('collection') callbacks
     //fired in initialize
-    listenToScopeCollection : function() {
+    initScopeModels : function(to, from) {
           var self = this;
-          //REACT TO SCOPE UPDATE : embed or refresh dialog when the scopes have been updated
-          api.czr_scopeCollection('collection').callbacks.add( function(to, from) {
+          to = to || {};
+          from = from || {};
 
-              //Create Scopes
-              _.map( to, function( data , name ) {
-                api.czr_scope.add(
-                  name,
-                  new api.CZR_scopeModel( name, _.extend( data, {name : name} ) )
-                );
-              });
-
-
-              //DOM ACTIONS
-              self.embedDialogBox( to ).listenToScopeSwitch(to);
-
-              console.log('BEFORE',  api.czr_scopeCollection('active').get() );
-              //set the active scope as global
-              api.czr_scopeCollection('active').set( to.global );
-              console.log('AFTER',  api.czr_scopeCollection('active').get() );
+          //destroy the previous scopes views and models
+          //Instantiate the scopes collection
+          _.map( from, function( data , name ) {
+            //remove the view DOM el
+            api.czr_scope(name).view.container.remove();
+            //remove the model from the collection
+            api.czr_scope(name).remove();
           });
+
+
+          //Instantiate the scopes collection
+          _.map( to, function( data , name ) {
+            api.czr_scope.add( name, new api.CZR_scopeModel( name, _.extend( data, {name : name} ) ) );
+            //fire this right after instantiation for the views (we need the model instances in the views)
+            api.czr_scope(name).ready();
+          });
+
+          //set the defaut scope as active as global
+          api.czr_scopeCollection('active').set( self.getActiveScopeOnInit(to) );
     },//listenToScopeCollection()
 
 
     //fired in initialize
-    listenToActiveScope : function() {
+    setScopeStates : function(to, from) {
           var self = this;
-          api.czr_scopeCollection('active').callbacks.add( function(to, from) {
+          //set the to and from scope state on init and switch
+          if ( ! _.isUndefined(from) && api.czr_scope.has(from) )
+            api.czr_scope(from).active.set(false);
+          else if ( ! _.isUndefined(from) )
+            throw new Error('listenToActiveScope : previous scope does not exist in the collection');
 
-              self.setScopeSwitcherButtonActive(to.dyn_type);
-
-              //TEST UPDATE DYNAMIC STYLE CHECKBOX ON SWITCH
-              if ( 'trans' == to.dyn_type ) {
-                api('hu_theme_options[dynamic-styles]').set(true);
-                //api('hu_theme_options[dynamic-styles]').set(23);
-                $('input[type=checkbox]', api.control('hu_theme_options[dynamic-styles]').container ).iCheck('update');
-              }
-
-              //TEST UPDATE FONT SELECT ON SWITCH
-              if ( 'trans' == to.dyn_type ) {
-                api('hu_theme_options[font]').set('raleway');
-                //api('hu_theme_options[dynamic-styles]').set(23);
-                $('select[data-customize-setting-link]', api.control('hu_theme_options[font]').container ).selecter('destroy').selecter();
-              }
-
-              var _img_id = 'trans' == to.dyn_type ? 23 : 25;
-              //TEST UPDATE LOGO ON SWITCH
-              api.control('hu_theme_options[custom-logo]').container.remove();
-
-              api.control.remove('hu_theme_options[custom-logo]');
-
-              var _constructor = api.controlConstructor['czr_cropped_image'];
-              var _data = api.settings.controls['hu_theme_options[custom-logo]'];
-              api('hu_theme_options[custom-logo]').set(_img_id);
-
-              //add the control when the new image has been fetched asynchronously.
-              wp.media.attachment( _img_id ).fetch().done( function() {
-                _data.attachment = this.attributes;
-                api.control.add(
-                'hu_theme_options[custom-logo]',
-                  new _constructor('hu_theme_options[custom-logo]', { params : _data, previewer :api.previewer })
-                );
-              } );
-
-
-          });
+          if ( ! _.isUndefined(to) && api.czr_scope.has(to) )
+            api.czr_scope(to).active.set(true);
+          else
+            throw new Error('listenToActiveScope : requested scope ' + to + ' does not exist in the collection');
     },
+
 
 
     /*****************************************************************************
     * HELPERS
     *****************************************************************************/
+    //@return the
+    getActiveScopeOnInit : function(collection) {
+          _def = _.findWhere(collection, {is_default : true }).name;
+          return ! _.isUndefined(_def) ? _def : 'global';
+    },
+
+
     getGlobalSettingVal : function() {
-      var _vals = {};
-      //parse the current eligible scope settings and write an setting val object
-      api.each( function ( value, key ) {
-        //only the current theme options are eligible
-        if ( -1 == key.indexOf(serverControlParams.themeOptions) )
-          return;
-        var _k = key.replace(serverControlParams.themeOptions, '').replace(/[|]/gi, '' );
-        _vals[_k] = { value : value(), dirty : value._dirty };
-      });
-      return _vals;
-    },
-
-
-
-
-
-
-    /*****************************************************************************
-    * DOM : RENDERING AND EVENT LISTENERS
-    *****************************************************************************/
-    embedDialogBox : function(scopes) {
-          //@todo will need to be refreshed on scopes change in the future
-          if ( $('#customize-header-actions').find('.czr-scope-switcher').length )
-            return this;
-
-          $('#customize-header-actions').append(
-            $('<div/>', {
-              class:'czr-scope-switcher',
-              html:'<span data-dyn-type="trans" class="czr-local-scope button">This page</span> <span data-dyn-type="option" class="czr-global-scope button">Global</span>'
-            })
-          );
-          return this;
-    },
-
-    listenToScopeSwitch : function() {
-          $('.czr-scope-switcher .button', '#customize-header-actions').on('click keydown', function( e, event_params ) {
-              //particular treatment
-              if ( api.utils.isKeydownButNotEnterEvent( e ) ) {
-                return;
-              }
-              e.preventDefault(); // Keep this AFTER the key filter above)
-
-              var _dyn_type   = $( e.currentTarget).attr('data-dyn-type'),
-                  _new_scope  = _.findWhere( api.czr_scopeCollection('collection').get() , { dyn_type : _dyn_type });
-
-              api.czr_scopeCollection('active').set( _new_scope );
-
-          });//.on()
-    },
-
-    setScopeSwitcherButtonActive : function( dyn_type ) {
-          $('.button', '.czr-scope-switcher').each( function( ind ) {
-            $(this).toggleClass( 'active', dyn_type == $(this).attr('data-dyn-type') );
+          var _vals = {};
+          //parse the current eligible scope settings and write an setting val object
+          api.each( function ( value, key ) {
+            //only the current theme options are eligible
+            if ( -1 == key.indexOf(serverControlParams.themeOptions) )
+              return;
+            var _k = key.replace(serverControlParams.themeOptions, '').replace(/[|]/gi, '' );
+            _vals[_k] = { value : value(), dirty : value._dirty };
           });
-    }
+          return _vals;
+        }
   });//api.Class.extend()
 
 

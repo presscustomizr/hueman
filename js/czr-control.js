@@ -55,8 +55,28 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
   api.czr_partials = new api.Value();
 
 })( wp.customize , jQuery, _);(function (api, $, _) {
+  //HOW DOES THIS WORK ?
+  //CZR_scopeBase listens to collection changes
+  // 1) instantiate new models, remove old ones and their view
+  // 2) sets each scope models active scope state changes
+
+
+  // CZR_scopeModel
+  // 1) instantiate, the scope view
+  // 2) listens to the active state
+  //   => store dirtyness on switch
+  //   => fetch the db values, build the full set and update the settings
+
+  // CZR_scopeView
+  // 1) renders the view
+  // 2) listens to model active state
+  //   => change the view display elements
+  // 3) listen to DOM interactions and set scope values : state, priority
+
+  // @todo in the view, return the $() element to store the view.container
+
   /*****************************************************************************
-  * THE SCOPE COLLECTION
+  * THE SCOPE BASE OBJECT
   *****************************************************************************/
   api.bind( 'ready' , function() {
     api.czr_scopeBase = new api.CZR_scopeBase();
@@ -67,7 +87,8 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
 
     initialize: function() {
           var self = this;
-          this.globalSettingVal = this.getGlobalSettingVal();
+          //store the initial state of the global option
+          this.initialGlobalSettingVal = this.getGlobalSettingVal();
 
           //WHAT IS A SCOPE ?
           //A scope is an object describing a set of options for a given customization scope
@@ -117,110 +138,315 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
           //setup the callbacks of the scope collection update
           //on init and on preview change : the collection of scopes is populated with new scopes
           //=> instanciate the relevant scope object + render them
-          this.listenToScopeCollection();
-
+          api.czr_scopeCollection('collection').callbacks.add( function() { return self.initScopeModels.apply(self, arguments ); } );
 
           //REACT TO ACTIVE SCOPE UPDATE
-          this.listenToActiveScope();
+          api.czr_scopeCollection('active').callbacks.add( function() { return self.setScopeStates.apply(self, arguments ); } );
     },
 
     //setup the czr_scopeCollection('collection') callbacks
     //fired in initialize
-    listenToScopeCollection : function() {
+    initScopeModels : function(to, from) {
           var self = this;
-          //REACT TO SCOPE UPDATE : embed or refresh dialog when the scopes have been updated
-          api.czr_scopeCollection('collection').callbacks.add( function(to, from) {
+          to = to || {};
+          from = from || {};
 
-              //Create Scopes
-              _.map( to, function( data , name ) {
-                api.czr_scope.add(
-                  name,
-                  new api.CZR_scopeModel( name, _.extend( data, {name : name} ) )
-                );
-              });
-
-
-              //DOM ACTIONS
-              self.embedDialogBox( to ).listenToScopeSwitch(to);
-
-              console.log('BEFORE',  api.czr_scopeCollection('active').get() );
-              //set the active scope as global
-              api.czr_scopeCollection('active').set( to.global );
-              console.log('AFTER',  api.czr_scopeCollection('active').get() );
+          //destroy the previous scopes views and models
+          //Instantiate the scopes collection
+          _.map( from, function( data , name ) {
+            //remove the view DOM el
+            api.czr_scope(name).view.container.remove();
+            //remove the model from the collection
+            api.czr_scope(name).remove();
           });
+
+
+          //Instantiate the scopes collection
+          _.map( to, function( data , name ) {
+            api.czr_scope.add( name, new api.CZR_scopeModel( name, _.extend( data, {name : name} ) ) );
+            //fire this right after instantiation for the views (we need the model instances in the views)
+            api.czr_scope(name).ready();
+          });
+
+          //set the defaut scope as active as global
+          api.czr_scopeCollection('active').set( self.getActiveScopeOnInit(to) );
     },//listenToScopeCollection()
 
 
     //fired in initialize
-    listenToActiveScope : function() {
+    setScopeStates : function(to, from) {
           var self = this;
-          api.czr_scopeCollection('active').callbacks.add( function(to, from) {
+          //set the to and from scope state on init and switch
+          if ( ! _.isUndefined(from) && api.czr_scope.has(from) )
+            api.czr_scope(from).active.set(false);
+          else if ( ! _.isUndefined(from) )
+            throw new Error('listenToActiveScope : previous scope does not exist in the collection');
 
-              self.setScopeSwitcherButtonActive(to.dyn_type);
-
-              //TEST UPDATE DYNAMIC STYLE CHECKBOX ON SWITCH
-              if ( 'trans' == to.dyn_type ) {
-                api('hu_theme_options[dynamic-styles]').set(true);
-                //api('hu_theme_options[dynamic-styles]').set(23);
-                $('input[type=checkbox]', api.control('hu_theme_options[dynamic-styles]').container ).iCheck('update');
-              }
-
-              //TEST UPDATE FONT SELECT ON SWITCH
-              if ( 'trans' == to.dyn_type ) {
-                api('hu_theme_options[font]').set('raleway');
-                //api('hu_theme_options[dynamic-styles]').set(23);
-                $('select[data-customize-setting-link]', api.control('hu_theme_options[font]').container ).selecter('destroy').selecter();
-              }
-
-              var _img_id = 'trans' == to.dyn_type ? 23 : 25;
-              //TEST UPDATE LOGO ON SWITCH
-              api.control('hu_theme_options[custom-logo]').container.remove();
-
-              api.control.remove('hu_theme_options[custom-logo]');
-
-              var _constructor = api.controlConstructor['czr_cropped_image'];
-              var _data = api.settings.controls['hu_theme_options[custom-logo]'];
-              api('hu_theme_options[custom-logo]').set(_img_id);
-
-              //add the control when the new image has been fetched asynchronously.
-              wp.media.attachment( _img_id ).fetch().done( function() {
-                _data.attachment = this.attributes;
-                api.control.add(
-                'hu_theme_options[custom-logo]',
-                  new _constructor('hu_theme_options[custom-logo]', { params : _data, previewer :api.previewer })
-                );
-              } );
-
-
-          });
+          if ( ! _.isUndefined(to) && api.czr_scope.has(to) )
+            api.czr_scope(to).active.set(true);
+          else
+            throw new Error('listenToActiveScope : requested scope ' + to + ' does not exist in the collection');
     },
+
 
 
     /*****************************************************************************
     * HELPERS
     *****************************************************************************/
-    getGlobalSettingVal : function() {
-      var _vals = {};
-      //parse the current eligible scope settings and write an setting val object
-      api.each( function ( value, key ) {
-        //only the current theme options are eligible
-        if ( -1 == key.indexOf(serverControlParams.themeOptions) )
-          return;
-        var _k = key.replace(serverControlParams.themeOptions, '').replace(/[|]/gi, '' );
-        _vals[_k] = { value : value(), dirty : value._dirty };
-      });
-      return _vals;
+    //@return the
+    getActiveScopeOnInit : function(collection) {
+          _def = _.findWhere(collection, {is_default : true }).name;
+          return ! _.isUndefined(_def) ? _def : 'global';
     },
 
 
+    getGlobalSettingVal : function() {
+          var _vals = {};
+          //parse the current eligible scope settings and write an setting val object
+          api.each( function ( value, key ) {
+            //only the current theme options are eligible
+            if ( -1 == key.indexOf(serverControlParams.themeOptions) )
+              return;
+            var _k = key.replace(serverControlParams.themeOptions, '').replace(/[|]/gi, '' );
+            _vals[_k] = { value : value(), dirty : value._dirty };
+          });
+          return _vals;
+        }
+  });//api.Class.extend()
 
 
+})( wp.customize , jQuery, _);(function (api, $, _) {
+  /*****************************************************************************
+  * THE SCOPE MODEL
+  *****************************************************************************/
+  // 'ctx'         => '_all_',
+  // 'dyn_type'    => 'option',
+  // 'opt_name'    => HU_THEME_OPTIONS,
+  // 'is_default'  => true,
+  // 'is_winner'   => false
+  api.CZR_scopeModel = api.Class.extend( {
+    initialize: function( name, options ) {
+          var scope = this;
+          scope.options = options;
+          //write the options as properties, name is included
+          $.extend( scope, options || {} );
+
+          //Make it alive with various Values
+          scope.applied   = new api.Value(); //is this scope the one that will be applied on front end in the current context?
+          scope.priority  = new api.Value(); //shall this scope always win or respect the default scopes priority
+          scope.active    = new api.Value(); //active, inactive. Are we currently customizing this scope ?
+          scope.dirtyness  = new api.Value(); //true or false : has this scope been customized ?
+
+          //setting values are stored in :
+          scope.dbValues  = new api.Value();
+          scope.dirtyValues = new api.Value();//stores the current customized value.
+    },
+
+
+    //this scope model is instantiated at this point.
+    ready : function() {
+          var scope = this;
+          //INSTANTIATE THE SCOPE VIEW : EMBED AND SET DOM ALIVE
+          scope.view = new api.CZR_scopeView( name, scope.options );
+
+          //LISTEN TO ACTIVE
+          scope.active.callbacks.add(function() { return scope.activeStateModelCallbacks.apply(scope, arguments ); } );
+
+          //LISTEN TO DIRTYNESS
+          scope.dirtyValues.callbacks.add( function(to){
+            //set the model dirtyness boolean state value
+            scope.dirtyness.set( ! to );
+          });
+
+          //init the values
+          scope.dbValues.set({});
+          scope.active.set( scope.is_default );
+          scope.dirtyness.set( false );
+          scope.applied.set( scope.is_winner );
+    },
+
+
+    /*****************************************************************************
+    * VALUES CALLBACKS
+    *****************************************************************************/
+    activeStateModelCallbacks : function(to){
+          var scope = this;
+
+          //when becoming inactive
+          //store the dirtyValues
+          if ( ! to ) {
+            scope.storeDirtyness();
+            return;
+          }
+
+          //When becoming active :
+            //1) fetch the option if needed
+            //2) update the setting values
+
+          //What are the setting values ?
+          //when switching to a new scope, we need to re-build a complete set of values from :
+            //1) values saved in the database (only some)
+            //2) values already made dirty in the customizer(only some)
+            //3) default values(all)
+
+          //=> fetch the values from the db. on done(), build the full set and update all eligible settings values
+          //How to build the full set ?
+            //If not global, local for ex. :
+            //1) check if scope.dbValues() is _dirty (has not been set yet), and if so, attempt to fetch the values from the db and populate it
+            //2) then check the dirtyness state of this scope. If it's dirty (has been customized), then incomplete_set = $.extend( dbValues, dirtyValues );
+            //3) then $.extend( initialglobalvalues, incomplete_set ) to get the full set of option.
+            //IMPORTANT : if dbValues have to be fetched, always wait for the done() ajax, because asynchronous.
+
+            //if the current scope is 'global'
+            //=> build the full set with $.extend( initialglobalvalues, dirtyValues )
+
+
+          //if the current scope is global, then get it from the settings
+          if ( serverControlParams.themeOptions == scope.opt_name ) {
+            return api.czr_scopeBase.getGlobalSettingVal();
+          }
+
+          //@uses wp.ajax. See wp.ajax.send() in `wp-includes/js/wp-util.js`.
+          var _options = '',
+              _query = {
+                data : {
+                  action : serverControlParams.optionAjaxAction,//theme dependant
+                  opt_name: opt_name,
+                  dyn_type: dyn_type,
+                  stylesheet : api.settings.theme.stylesheet
+                }
+              };
+
+          wp.ajax.send( _query ).done( function( resp ){
+            _options = resp;
+          });
+
+    },
+
+
+    storeDirtyness : function() {
+          var scope = this;
+          scope.dirtyValues.set( scope.getDirties() );
+    },
+
+
+    getDirties : function() {
+          var scope = this,
+              _dirtyCustomized = {};
+          //populate with the current scope settings dirtyValues
+          api.each( function ( value, key ) {
+            if ( value._dirty ) {
+              var _k = key.replace(serverControlParams.themeOptions, '').replace(/[|]/gi, '' );
+              _dirtyCustomized[ _k ] = { value : value(), dirty : value._dirty };
+            }
+          } );
+          return _dirtyCustomized;
+    },
+
+
+    populateCustomizedValues: function() {
+          console.log('name ?', this.name );
+    },
+
+    getDBOptions : function( opt_name, dyn_type ) {
+          //if the requested opt set is global, then get it from the settings
+          if ( serverControlParams.themeOptions == opt_name ) {
+            return api.czr_scopeBase.getGlobalSettingVal();
+          }
+
+          //@uses wp.ajax. See wp.ajax.send() in `wp-includes/js/wp-util.js`.
+          var _options = '',
+              _query = {
+                data : {
+                  action : serverControlParams.optionAjaxAction,//theme dependant
+                  opt_name: opt_name,
+                  dyn_type: dyn_type,
+                  stylesheet : api.settings.theme.stylesheet
+                }
+              };
+
+          wp.ajax.send( _query ).done( function( resp ){
+            _options = resp;
+          });
+          return _options;
+    },
+
+
+    setSettingsValue : function() {
+          //TEST UPDATE DYNAMIC STYLE CHECKBOX ON SWITCH
+          if ( 'trans' == to.dyn_type ) {
+            api('hu_theme_options[dynamic-styles]').set(true);
+            //api('hu_theme_options[dynamic-styles]').set(23);
+            $('input[type=checkbox]', api.control('hu_theme_options[dynamic-styles]').container ).iCheck('update');
+          }
+
+          //TEST UPDATE FONT SELECT ON SWITCH
+          if ( 'trans' == to.dyn_type ) {
+            api('hu_theme_options[font]').set('raleway');
+            //api('hu_theme_options[dynamic-styles]').set(23);
+            $('select[data-customize-setting-link]', api.control('hu_theme_options[font]').container ).selecter('destroy').selecter();
+          }
+
+          var _img_id = 'trans' == to.dyn_type ? 23 : 25;
+          //TEST UPDATE LOGO ON SWITCH
+          api.control('hu_theme_options[custom-logo]').container.remove();
+
+          api.control.remove('hu_theme_options[custom-logo]');
+
+          var _constructor = api.controlConstructor['czr_cropped_image'];
+          var _data = api.settings.controls['hu_theme_options[custom-logo]'];
+          api('hu_theme_options[custom-logo]').set(_img_id);
+
+          //add the control when the new image has been fetched asynchronously.
+          wp.media.attachment( _img_id ).fetch().done( function() {
+            _data.attachment = this.attributes;
+            api.control.add(
+            'hu_theme_options[custom-logo]',
+              new _constructor('hu_theme_options[custom-logo]', { params : _data, previewer :api.previewer })
+            );
+          } );
+
+        }
+
+  });//api.Class.extend()
+
+
+})( wp.customize , jQuery, _);(function (api, $, _) {
+  /*****************************************************************************
+  * THE SCOPE VIEW
+  *****************************************************************************/
+  //instantiated on scope model ready
+  api.CZR_scopeView = api.Class.extend( {
+    initialize: function( name, options ) {
+          var view = this;
+          //write the options as properties, name is included
+          $.extend( view, options || {} );
+
+          view.el = '';//@todo replace with a css selector based on the scope name
+
+          //EMBED IN THE DOM AND STORES THE $
+          view.container = view.embedDialogBox();
+
+          //LISTEN TO DOM EVENTS
+          //view.listenToScopeSwitch(to)
+
+          //LISTEN TO MODEL EVENTS
+          //How does the view react to model changes ?
+          //When active :
+          //1) add a green point to the view box
+          //2) disable the switch-to icon
+          api.czr_scope(view.name).active.callbacks.add(function() { return view.activeStateViewCallbacks.apply(view, arguments ); } );
+    },
+
+    activeStateViewCallbacks : function(to, from){
+      console.log('in the view : listen for scope state change', this.name, to, from );
+    },
 
 
     /*****************************************************************************
     * DOM : RENDERING AND EVENT LISTENERS
     *****************************************************************************/
-    embedDialogBox : function(scopes) {
+    embedDialogBox : function() {
           //@todo will need to be refreshed on scopes change in the future
           if ( $('#customize-header-actions').find('.czr-scope-switcher').length )
             return this;
@@ -231,7 +457,7 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
               html:'<span data-dyn-type="trans" class="czr-local-scope button">This page</span> <span data-dyn-type="option" class="czr-global-scope button">Global</span>'
             })
           );
-          return this;
+          return this;//@todo : shall return the $(element)
     },
 
     listenToScopeSwitch : function() {
@@ -254,101 +480,15 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
           $('.button', '.czr-scope-switcher').each( function( ind ) {
             $(this).toggleClass( 'active', dyn_type == $(this).attr('data-dyn-type') );
           });
-    }
-  });//api.Class.extend()
-
-
-})( wp.customize , jQuery, _);(function (api, $, _) {
-  /*****************************************************************************
-  * THE SCOPE MODEL
-  *****************************************************************************/
-
-  api.CZR_scopeModel = api.Class.extend( {
-    initialize: function( name, options ) {
-
-      var scope = this;
-
-      //write the options as properties, name is included
-      $.extend( scope, options || {} );
-
-      //Make it observable with various Values
-      scope.applied = new api.Value(); //is this scope the one that will be applied on front end in the current context?
-      scope.priority = new api.Value(); //shall this scope always win or respect the default scopes priority
-      scope.active = new api.Value(); //active, inactive. Are we currently customizing this scope ?
-      scope.dirty = new api.Value(); //true or false : has this scope been customized ?
-      scope.customizedValues = new api.Value();//stores the current customized value.
-
-      //Setup listeners
-      scope.active.callbacks.add(function(to){
-        if ( ! to )
-          return;
-
-        //Do we need to populate the customizedValues ?
-        if ( _.isEmpty(scope.customizedValues.get() ) ) {
-            var _options = scope.getDBOptions( to.opt_name, to.dyn_type );
-
-            //populate
-            var _customizedValues = _.map( _options, function( val, key )  {
-              return {
-                key : { value : val, dirty : false }
-              }
-            });
-        }
-
-        scope.customizedValues.set( _customizedValues )
-
-
-        //set this scope as the active one
-      });
-
-      //init the values
-      scope.customizedValues.set({});
-      scope.active.set( scope.is_default );
-      scope.dirty.set( false );
-      scope.applied.set( scope.is_winner );
-
-
-      //populate the active
     },
 
-
-    populateCustomizedValues: function() {
-
-    },
-
-    getDBOptions : function( opt_name, dyn_type ) {
-      //if the requested opt set is global, then get it from the settings
-      if ( serverControlParams.themeOptions == opt_name ) {
-        return api.czr_scopeBase.globalSettingVal;
-      }
-
-      //@uses wp.ajax. See wp.ajax.send() in `wp-includes/js/wp-util.js`.
-      var _options = '',
-          _query = {
-            data : {
-              action : serverControlParams.optionAjaxAction,//theme dependant
-              opt_name: opt_name,
-              dyn_type: dyn_type,
-              stylesheet : api.settings.theme.stylesheet
-            }
-          };
-
-      wp.ajax.send( _query ).done( function( resp ){
-        _options = resp;
-      });
-      return _options;
+    /*****************************************************************************
+    * HELPERS
+    *****************************************************************************/
+    getEl : function() {
+          var view = this;
+          return $( view.el, '#customize-header-actions');
     }
-
-  });//api.Class.extend()
-
-
-})( wp.customize , jQuery, _);(function (api, $, _) {
-  /*****************************************************************************
-  * THE SCOPE VIEW
-  *****************************************************************************/
-
-  api.CZR_scopeView = api.Class.extend( {
-    initialize: function() {}
   });//api.Class.extend()
 
 
