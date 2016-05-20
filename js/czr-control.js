@@ -578,7 +578,12 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
   /*****************************************************************************
   * A SCOPE AWARE PREVIEWER
   *****************************************************************************/
+
   api.bind('ready', function() {
+
+        if ( ! serverControlParams.isCtxEnabled )
+          return;
+
         /**
         * Build the query to send along with the Preview request.
         *
@@ -671,10 +676,8 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
             };
             api.state.bind( 'change', submitWhenDoneProcessing );
           }
-
-        };
-  });
-})( wp.customize , jQuery, _);(function (api, $, _) {
+        }
+  });//api.bind('ready')
 
   //FIX FOR CONTROL VISIBILITY LOST ON PREVIEW REFRESH #1
   //This solves the problem of control visiblity settings being lost on preview refresh since WP 4.3
@@ -682,19 +685,19 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
   //it check if there's been a customizations
   //=> args.unchanged is true for all cases, for example when api.previewer.loading and the preview send 'ready'created during the frame synchronisation
   api.Control.prototype.onChangeActive = function ( active, args ) {
-    if ( args.unchanged )
-      return;
-    if ( this.container[0] && ! $.contains( document, this.container[0] ) ) {
-      // jQuery.fn.slideUp is not hiding an element if it is not in the DOM
-      this.container.toggle( active );
-      if ( args.completeCallback ) {
-        args.completeCallback();
-      }
-    } else if ( active ) {
-      this.container.slideDown( args.duration, args.completeCallback );
-    } else {
-      this.container.slideUp( args.duration, args.completeCallback );
-    }
+        if ( args.unchanged )
+          return;
+        if ( this.container[0] && ! $.contains( document, this.container[0] ) ) {
+          // jQuery.fn.slideUp is not hiding an element if it is not in the DOM
+          this.container.toggle( active );
+          if ( args.completeCallback ) {
+            args.completeCallback();
+          }
+        } else if ( active ) {
+          this.container.slideDown( args.duration, args.completeCallback );
+        } else {
+          this.container.slideUp( args.duration, args.completeCallback );
+        }
   };
 
 
@@ -704,28 +707,29 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
     // backup the original function
     var _original_section_initialize = api.Section.prototype.initialize;
     api.Section.prototype.initialize = function( id, options ) {
-      //call the original constructor
-      _original_section_initialize.apply( this, [id, options] );
-      var section = this;
+          //call the original constructor
+          _original_section_initialize.apply( this, [id, options] );
+          var section = this;
 
-      this.expanded.callbacks.add( function( _expanded ) {
-        if ( ! _expanded )
-          return;
+          this.expanded.callbacks.add( function( _expanded ) {
+            if ( ! _expanded )
+              return;
 
-      var container = section.container.closest( '.wp-full-overlay-sidebar-content' ),
-            content = section.container.find( '.accordion-section-content' );
-        //content resizing to the container height
-        _resizeContentHeight = function() {
-          content.css( 'height', container.innerHeight() );
-      };
-        _resizeContentHeight();
-        //this is set to off in the original expand callback if 'expanded' is false
-        $( window ).on( 'resize.customizer-section', _.debounce( _resizeContentHeight, 110 ) );
-      });
-    };
+          var container = section.container.closest( '.wp-full-overlay-sidebar-content' ),
+                content = section.container.find( '.accordion-section-content' );
+            //content resizing to the container height
+            _resizeContentHeight = function() {
+              content.css( 'height', container.innerHeight() );
+          };
+            _resizeContentHeight();
+            //this is set to off in the original expand callback if 'expanded' is false
+            $( window ).on( 'resize.customizer-section', _.debounce( _resizeContentHeight, 110 ) );
+          });
+        };
   }
   /* end monkey patch */
 
+})( wp.customize , jQuery, _);(function (api, $, _) {
   /*****************************************************************************
   * ADD SOME HELPERS AND PROPERTIES TO THE ALWAYS ACCESSIBLE API OBJECT.
   *****************************************************************************/
@@ -776,19 +780,7 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
   // $( window ).on( 'message', function( e, o) {
   //   console.log('WHAT ARE WE LISTENING TO?', e, o );
   // });
-})( wp.customize , jQuery, _);
-
-
-
-
-
-
-
-
-
-
-
-/*****************************************************************************
+})( wp.customize , jQuery, _);/*****************************************************************************
 * BASE CONTROL CLASS
 *****************************************************************************/
 //define a set of methods, mostly helpers, to extend the base WP control class
@@ -2441,7 +2433,7 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
   $.extend( CZRBackgroundMethods , {
     initialize: function( id, options ) {
       var control = this;
-      api.CZRBaseControl.prototype.initialize.call( control, id, options );
+      api.CZRMultiInputControl.prototype.initialize.call( control, id, options );
     },
 
     ready: function() {

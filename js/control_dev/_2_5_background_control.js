@@ -11,7 +11,7 @@ var CZRBackgroundMethods = CZRBackgroundMethods || {};
   $.extend( CZRBackgroundMethods , {
     initialize: function( id, options ) {
       var control = this;
-      api.CZRBaseControl.prototype.initialize.call( control, id, options );
+      api.CZRMultiInputControl.prototype.initialize.call( control, id, options );
     },
 
     ready: function() {
