@@ -792,69 +792,178 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
   $.extend( CZRBaseControlMethods, {
 
     initialize: function( id, options ) {
-      var control = this;
-      api.Control.prototype.initialize.call( control, id, options );
+            var control = this;
+            api.Control.prototype.initialize.call( control, id, options );
 
-      //add a shortcut to the css properties declared in the php controls
-      this.css_attr = _.has( options.params , 'css_attr') ? options.params.css_attr : {};
+            //add a shortcut to the css properties declared in the php controls
+            this.css_attr = _.has( options.params , 'css_attr') ? options.params.css_attr : {};
 
-      //extend the control with new template Selectors
-      $.extend( control, {
-        viewTemplateEl : 'customize-control-' + options.params.type + '-view',
-        viewContentTemplateEl : 'customize-control-' + options.params.type + '-view-content',
-      } );
+            //extend the control with new template Selectors
+            $.extend( control, {
+              viewTemplateEl : 'customize-control-' + options.params.type + '-view',
+              viewContentTemplateEl : 'customize-control-' + options.params.type + '-view-content',
+            } );
+    },
+
+
+
+    //////////////////////////////////////////////////
+    /// ACTIONS AND DOM LISTENERS
+    //////////////////////////////////////////////////
+    //adds action to an existing event map
+    //@event map = [ {event1}, {event2}, ... ]
+    //@new_event = {  trigger   : event name , actions   : [ 'cb1', 'cb2', ... ] }
+    addActions : function( event_map, new_events ) {
+            var control = this;
+            control[event_map] = control[event_map] || [];
+            new_event_map = _.clone( control[event_map] );
+            control[event_map] = _.union( new_event_map, ! _.isArray(new_events) ? [new_events] : new_events );
+    },
+
+    doActions : function( action, $dom_el, obj ) {
+            $dom_el.trigger( action, obj );
+    },
+
+
+    //@obj = {model : model, dom_el : $_view_el, refreshed : _refreshed }
+    setupDOMListeners : function( event_map , obj ) {
+            var control = this;
+            //loop on the event map and map the relevant callbacks by event name
+            _.map( event_map , function( _event ) {
+              //LISTEN TO THE DOM
+              obj.dom_el.on( _event.trigger , _event.selector, function( e, event_params ) {
+                //particular treatment
+                if ( api.utils.isKeydownButNotEnterEvent( e ) ) {
+                  return;
+                }
+                e.preventDefault(); // Keep this AFTER the key filter above
+
+                //! use a new cloned object
+                var _obj = _.clone(obj);
+                //always get the latest model from the collection
+                if ( _.has(_obj, 'model') && _.has( _obj.model, 'id') ) {
+                  _obj.model = control.getModel( _obj.model.id );
+                }
+
+                //always add the event obj to the passed obj
+                //+ the dom event
+                $.extend( _obj, { event : _event, dom_event : e } );
+
+                //add the event param => useful for triggered event
+                $.extend( _obj, event_params );
+
+
+
+                //SETUP THE EMITTERS
+                //inform the container that something has happened
+                //pass the model and the current dom_el
+                control.executeEventActionChain( _obj );
+              });//.on()
+
+            });//_.map()
+    },
+
+
+
+    //GENERIC METHOD TO SETUP EVENT LISTENER
+    //NOTE : the obj.event must alway be defined
+    executeEventActionChain : function( obj ) {
+            var control = this;
+            //the model is always passed as parameter
+            if ( ! _.has( obj, 'event' ) || ! _.has( obj.event, 'actions' ) ) {
+              throw new Error('executeEventActionChain : No obj.event or no obj.event.actions properties found');
+            }
+
+            //if the actions param is a anonymous function, fire it and stop there
+            if ( 'function' === typeof(obj.event.actions) )
+              return obj.event.actions(obj);
+
+            //execute the various actions required
+            //first normalizes the provided actions into an array of callback methods
+            //then loop on the array and fire each cb if exists
+            if ( ! _.isArray(obj.event.actions) )
+              obj.event.actions = [ obj.event.actions ];
+
+            //if one of the callbacks returns false, then we break the loop
+            //=> allows us to stop a chain of callbacks if a condition is not met
+            var _break = false;
+            _.map( obj.event.actions, function( _cb ) {
+
+              if ( _break )
+                return;
+
+              if ( 'function' != typeof( control[_cb] ) ) {
+                throw new Error( 'executeEventActionChain : the action : ' + _cb + ' has not been found when firing event : ' + obj.event.selector );
+              }
+
+              //allow other actions to be bound before
+              //=> we don't want the event in the object here => we use the one in the event map if set
+              //=> otherwise will loop infinitely because triggering always the same cb from obj.event.actions[_cb]
+              //=> the dom element shall be get from the passed obj and fall back to the controler container.
+              var $_dom_el = ( _.has(obj, 'dom_el') && -1 != obj.dom_el.length ) ? obj.dom_el : control.container;
+
+              $_dom_el.trigger('before_' + _cb, _.omit( obj, 'event') );
+
+                //executes the _cb and stores the result in a local var
+                var _cb_return = control[_cb](obj);
+                //shall we stop the action chain here ?
+                if ( false === _cb_return )
+                  _break = true;
+
+              //allow other actions to be bound after
+              //=> we don't want the event in the object here => we use the one in the event map if set
+              $_dom_el.trigger('after_' + _cb, _.omit( obj, 'event') );
+
+            });//_.map
+    },
+
+
+
+
+    //////////////////////////////////////////////////
+    /// HELPERS
+    //////////////////////////////////////////////////
+    _capitalize : function( string ) {
+            if( ! _.isString(string) )
+              return string;
+            return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+
+    _truncate : function( string, n, useWordBoundary ){
+            var isTooLong = string.length > n,
+                s_ = isTooLong ? string.substr(0,n-1) : string;
+                s_ = (useWordBoundary && isTooLong) ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
+            return  isTooLong ? s_ + '...' : s_;
     },
 
     //called before rendering a view
     //can be overriden to set a specific view template depending on the model properties
     //@return string
     getTemplateEl : function( type, model ) {
-      var control = this, _el;
-      switch(type) {
-        case 'view' :
-          _el = control.viewTemplateEl;
-          break;
-        case 'view-content' :
-          _el = control.viewContentTemplateEl;
-          break;
-      }
-      if ( _.isEmpty(_el) ) {
-        console.log('No valid template has been found in getTemplateEl()');
-      } else {
-        return _el;
-      }
+            var control = this, _el;
+            switch(type) {
+              case 'view' :
+                _el = control.viewTemplateEl;
+                break;
+              case 'view-content' :
+                _el = control.viewContentTemplateEl;
+                break;
+            }
+            if ( _.isEmpty(_el) ) {
+              console.log('No valid template has been found in getTemplateEl()');
+            } else {
+              return _el;
+            }
     },
 
-    //adds action to an existing event map
-    //@event map = [ {event1}, {event2}, ... ]
-    //@new_event = {  trigger   : event name , actions   : [ 'cb1', 'cb2', ... ] }
-    addActions : function( event_map, new_events ) {
-      new_event_map = _.clone( this[event_map] );
-      this[event_map] = _.union( new_event_map, ! _.isArray(new_events) ? [new_events] : new_events );
-    },
 
-    doActions : function( action, $dom_el, obj ) {
-      $dom_el.trigger( action, obj );
-    },
 
     //@return void()
     refreshPreview : function( obj ) {
-      this.previewer.refresh();
-    },
-
-
-    _capitalize : function( string ) {
-      if( ! _.isString(string) )
-        return string;
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    },
-
-    _truncate : function( string, n, useWordBoundary ){
-      var isTooLong = string.length > n,
-          s_ = isTooLong ? string.substr(0,n-1) : string;
-          s_ = (useWordBoundary && isTooLong) ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
-      return  isTooLong ? s_ + '...' : s_;
+            this.previewer.refresh();
     }
+
+
 
   });//$.extend//CZRBaseControlMethods
 })( wp.customize , jQuery, _);var CZRDynamicMethods = CZRDynamicMethods || {};
@@ -1956,231 +2065,232 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
       return this;
     }
   });//$.extend()
-})( wp.customize, jQuery, _);var CZRDynamicMethods = CZRDynamicMethods || {};
-
-(function (api, $, _) {
-  $.extend( CZRDynamicMethods, {
-    //////////////////////////////////////////////////
-    /// DOM LISTENERS
-    //////////////////////////////////////////////////
-    //@obj = {model : model, dom_el : $_view_el, refreshed : _refreshed }
-    setupDOMListeners : function( event_map , obj ) {
-      var control = this;
-      //loop on the event map and map the relevant callbacks by event name
-      _.map( event_map , function( _event ) {
-
-        //LISTEN TO THE DOM
-        obj.dom_el.on( _event.trigger , _event.selector, function( e, event_params ) {
-          //particular treatment
-          if ( api.utils.isKeydownButNotEnterEvent( e ) ) {
-            return;
-          }
-          e.preventDefault(); // Keep this AFTER the key filter above
-
-          //! use a new cloned object
-          var _obj = _.clone(obj);
-          //always get the latest model from the collection
-          if ( _.has(_obj, 'model') && _.has( _obj.model, 'id') ) {
-            _obj.model = control.getModel( _obj.model.id );
-          }
-
-          //always add the event obj to the passed obj
-          //+ the dom event
-          $.extend( _obj, { event : _event, dom_event : e } );
-
-          //add the event param => useful for triggered event
-          $.extend( _obj, event_params );
-
-
-          //SETUP THE EMITTERS
-          //inform the container that something has happened
-          //pass the model and the current dom_el
-          control.executeEventActionChain( _obj );
-        });//.on()
-
-      });//_.map()
-    },
-
-
-
-    //GENERIC METHOD TO SETUP EVENT LISTENER
-    //NOTE : the obj.event must alway be defined
-    executeEventActionChain : function( obj ) {
-      var control = this;
-
-      //the model is always passed as parameter
-      if ( ! _.has( obj, 'event' ) || ! _.has( obj.event, 'actions' ) ) {
-        throw new Error('executeEventActionChain : No obj.event or no obj.event.actions properties found');
-      }
-
-      //if the actions param is a anonymous function, fire it and stop there
-      if ( 'function' === typeof(obj.event.actions) )
-        return obj.event.actions(obj);
-
-      //execute the various actions required
-      //first normalizes the provided actions into an array of callback methods
-      //then loop on the array and fire each cb if exists
-      if ( ! _.isArray(obj.event.actions) )
-        obj.event.actions = [ obj.event.actions ];
-
-      //if one of the callbacks returns false, then we break the loop
-      //=> allows us to stop a chain of callbacks if a condition is not met
-      var _break = false;
-      _.map( obj.event.actions, function( _cb ) {
-
-        if ( _break )
-          return;
-
-        if ( 'function' != typeof( control[_cb] ) ) {
-          throw new Error( 'executeEventActionChain : the action : ' + _cb + ' has not been found when firing event : ' + obj.event.selector );
-        }
-
-        //allow other actions to be bound before
-        //=> we don't want the event in the object here => we use the one in the event map if set
-        //=> otherwise will loop infinitely because triggering always the same cb from obj.event.actions[_cb]
-        //=> the dom element shall be get from the passed obj and fall back to the controler container.
-        var $_dom_el = ( _.has(obj, 'dom_el') && -1 != obj.dom_el.length ) ? obj.dom_el : control.container;
-
-        $_dom_el.trigger('before_' + _cb, _.omit( obj, 'event') );
-
-          //executes the _cb and stores the result in a local var
-          var _cb_return = control[_cb](obj);
-          //shall we stop the action chain here ?
-          if ( false === _cb_return )
-            _break = true;
-
-        //allow other actions to be bound after
-        //=> we don't want the event in the object here => we use the one in the event map if set
-        $_dom_el.trigger('after_' + _cb, _.omit( obj, 'event') );
-
-      });//_.map
-    }
-  });//$.extend()
-
-})( wp.customize, jQuery, _);var CZRMultiInputMethods = CZRMultiInputMethods || {};
-
+})( wp.customize, jQuery, _);//extends api.CZRBaseControl
+var CZRMultiInputMethods = CZRMultiInputMethods || {};
 (function (api, $, _) {
 
   $.extend( CZRMultiInputMethods , {
     initialize: function( id, options ) {
-      var control = this;
-      api.CZRBaseControl.prototype.initialize.call( control, id, options );
-      control.model = api(control.id).get();
-    },
+          var control = this;
+          api.CZRBaseControl.prototype.initialize.call( control, id, options );
+
+          ////////////////////////////////////////////////////
+          /// CONTROL DEFAULT EVENT MAP
+          ////////////////////////////////////////////////////
+          control.control_event_map = [
+            //set input value
+            {
+              trigger   : 'propertychange change click keyup input colorpickerchange',//colorpickerchange is a custom colorpicker event @see method setupColorPicker => otherwise we don't
+              selector  : 'input[data-type], select[data-type]',
+              name      : 'set_input_value',
+              actions   : 'updateModel'
+            }
+          ];
+
+          ////////////////////////////////////////////////////
+          /// SET UP THE MODEL (DB OPTION) AS AN OBSERVABLE VALUE
+          ////////////////////////////////////////////////////
+          control.czr_Model = new api.Value();
+
+          //listens and reacts to the model changes
+          control.czr_Model.callbacks.add(function(to, from) {
+            //on init the from is empty
+            //=> render the control
+            if ( _.isUndefined(from) ) {
+              //Setup the control event listeners
+              control.setupDOMListeners( control.control_event_map , { dom_el : control.container } );
+              control.renderView();
+            } else {//the update
+              //update the setting value
+              console.log('NEW MODEL VAL', to );
+              api(control.id).set(to);
+            }
+          });
+
+    },//initialize
 
 
     ready: function() {
-      var control  = this;
-      api.bind( 'ready', function() {
-        control.renderView();
-        control.setupColorPicker();
-        //control.setupImageUploader();
-      });
+          var control  = this;
+          api.bind( 'ready', function() {
+            //sets the model value on api ready
+            //=> triggers the control rendering + DOM LISTENERS
+            control.czr_Model.set( api(control.id).get() );
+          });
     },
 
 
-    setupColorPicker : function() {
-      var control  = this;
 
-      $('.' + control.css_attr.multi_input_wrapper, control.container).find('[data-input-type="color"]').find('input').wpColorPicker( {
-        change : function( e, o ) {
-          //if the input val is not updated here, it's not detected right away.
-          //weird
-          //is there a "change complete" kind of event for iris ?
-          $(this).val($(this).wpColorPicker('color'));
-          $(this).trigger('colorpickerchange');
-        }
-      });
+
+
+
+    //////////////////////////////////////////////////
+    /// MODEL
+    //////////////////////////////////////////////////
+    //fired after a input change is detected
+    updateModel : function( obj ) {
+
+      //get the changed property and val
+      //=> all html input have data-type attribute corresponding to the ones stored in the model
+      var control           = this,
+          $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
+          _changed_prop     = $_changed_input.attr('data-type'),
+          _new_val          = $( $_changed_input, obj.dom_el ).val(),
+          _current_model    = control.czr_Model.get(),
+          _new_model        = _.clone( _current_model );//initialize it to the current value
+
+      //make sure the _new_model is an object
+      _new_model =  ! _.isObject(_new_model) ? {} : _new_model;
+
+      //set the new val to the changed property
+      _new_model[_changed_prop] = _new_val;
+
+      control.czr_Model.set(_new_model);
+
+      //say it to the current view
+      control.doActions(
+        _changed_prop + ':changed',
+        obj.dom_el,
+        { model : _new_model }
+      );
     },
 
 
-    setupImageUploader : function() {
-      var control  = this;
-      //do we have view template script?
-      if ( 0 === $( '#tmpl-customize-control-media-content' ).length )
-        return this;
-
-      var view_template = wp.template( 'customize-control-media-content' );
-
-     //console.log(view_template());
-      //do we have an html template and a control container?
-      if ( ! view_template  || ! control.container )
-        return this;
-
-      //if the view has already been rendered, the view element exists, we simply need to remove its html content and append the new one
-      //if not, then we need to render the view element and append the view html content to it
-      var $_view_el = $('.' + control.css_attr.multi_input_wrapper, control.container).find('[data-input-type="upload"]' ).find('.czr-input');
 
 
-      if ( ! $_view_el.length )
-        return;
-      $_view_el.append( view_template( {}) );
-    },
-
-    getDefaultModel : function() {
-
-    },
 
 
 
     //////////////////////////////////////////////////
     /// VIEWS
     //////////////////////////////////////////////////
+    //the view wrapper is rendered by WP
+    //the content ( the various inputs ) is rendered by the following methods
+    //an event is triggered on the control.container when content is rendered
     renderView : function() {
-      //=> an array of objects
-      var control = this,
-          model = control.model;
+          //=> an array of objects
+          var control = this;
 
-      //do we have view template script?
-      if ( 0 === $( '#tmpl-' + control.viewContentTemplateEl ).length )
-        return this;
+          //do we have view template script?
+          if ( 0 === $( '#tmpl-' + control.viewContentTemplateEl ).length )
+            return this;
 
-      var view_template = wp.template( control.viewContentTemplateEl );
+          var view_template = wp.template( control.viewContentTemplateEl );
 
-      //do we have an html template and a control container?
-      if ( ! view_template  || ! control.container )
-        return this;
+          //do we have an html template and a control container?
+          if ( ! view_template  || ! control.container )
+            return this;
 
-      //if the view has already been rendered, the view element exists, we simply need to remove its html content and append the new one
-      //if not, then we need to render the view element and append the view html content to it
-      var $_view_el = $('.' + control.css_attr.multi_input_wrapper, control.container);
+          //if the view has already been rendered, the view element exists, we simply need to remove its html content and append the new one
+          //if not, then we need to render the view element and append the view html content to it
+          var $_view_el = $('.' + control.css_attr.multi_input_wrapper, control.container);
 
-      if ( _.isEmpty($_view_el.html() ) ) {
-        $_view_el.append( control.getViewContent() );
-      } else {
-        //var $_view_el = $('li[data-id="' + model.id + '"]');
-        //empty the html and append the updated content
-        $_view_el.html( control.getViewContent() );
-      }
-      return this;
+          if ( _.isEmpty($_view_el.html() ) ) {
+            $_view_el.append( control._getViewContent() );
+          } else {
+            //var $_view_el = $('li[data-id="' + model.id + '"]');
+            //empty the html and append the updated content
+            $_view_el.html( control._getViewContent() );
+          }
+
+          control.doActions( 'viewContentRendered' , control.container, {} );
+
+          return this;
+    },
+
+    //renders saved model view
+    //the saved model is an object (the db option is an array of "sub_settings" )
+    _getViewContent : function() {
+          //=> an array of objects
+          var control = this;
+
+          //do we have view content template script?
+          if ( 0 === $( '#tmpl-' + control.viewContentTemplateEl ).length )
+            return this;
+
+          var  view_content_template = wp.template( control.viewContentTemplateEl );
+
+          //do we have an html template and a control container?
+          if ( ! view_content_template || ! control.container )
+            return this;
+
+          //the view content
+          return $( view_content_template( control.czr_Model.get() ));
+
     },
 
 
 
-    //renders saved models views and attach event handlers
-    //the saved model look like :
-    //array[ { id : 'sidebar-one', title : 'A Title One' }, {id : 'sidebar-two', title : 'A Title Two' }]
-    getViewContent : function() {
-      //=> an array of objects
-      var control = this,
-          model = control.model;
 
-      //do we have view content template script?
-      if ( 0 === $( '#tmpl-' + control.viewContentTemplateEl ).length )
-        return this;
 
-      var  view_content_template = wp.template( control.viewContentTemplateEl );
 
-      //do we have an html template and a control container?
-      if ( ! view_content_template || ! control.container )
-        return this;
 
-      //the view content
-      return $( view_content_template( model ));
 
+    //////////////////////////////////////////////////
+    /// DEFAULT METHODS FOR SETTING UP THE SUB-INPUTS
+    //////////////////////////////////////////////////
+    setupSelect : function() {
+          var control = this;
+          $('select', control.container ).not('.no-selecter-js')
+            .each( function() {
+              $(this).selecter({
+              //triggers a change event on the view, passing the newly selected value + index as parameters.
+              // callback : function(value, index) {
+              //   self.triggerSettingChange( window.event || {} , value, index); // first param is a null event.
+              // }
+              });
+          });
+    },
+
+    setupColorPicker : function() {
+          var control  = this;
+
+          $('.' + control.css_attr.multi_input_wrapper, control.container).find('[data-input-type="color"]').find('input').wpColorPicker( {
+            change : function( e, o ) {
+              //if the input val is not updated here, it's not detected right away.
+              //weird
+              //is there a "change complete" kind of event for iris ?
+              $(this).val($(this).wpColorPicker('color'));
+              $(this).trigger('colorpickerchange');
+            }
+          });
     },
 
 
+    setupImageUploader : function() {
+          var control  = this;
+         //  //do we have view template script?
+         //  if ( 0 === $( '#tmpl-customize-control-media-content' ).length )
+         //    return this;
+
+         //  var view_template = wp.template( 'customize-control-media-content' );
+
+         // //console.log(view_template());
+         //  //do we have an html template and a control container?
+         //  if ( ! view_template  || ! control.container )
+         //    return this;
+
+         //  //if the view has already been rendered, the view element exists, we simply need to remove its html content and append the new one
+         //  //if not, then we need to render the view element and append the view html content to it
+         //  var $_view_el = $('.' + control.css_attr.multi_input_wrapper, control.container).find('[data-input-type="upload"]' ).find('.czr-input');
+
+
+         //  if ( ! $_view_el.length )
+         //    return;
+         //  $_view_el.append( view_template( {}) );
+    }
+
+
+
+
+
+
+    //////////////////////////////////////////////////
+    /// HELPERS
+    //////////////////////////////////////////////////
+    // getDefaultModel : function() {
+
+    // },
 
   });//$.extend
 
@@ -2422,53 +2532,31 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
 
 })( wp.customize, jQuery, _);var CZRBackgroundMethods = CZRBackgroundMethods || {};
 
-//@augments CZRBaseControl
+//@extends CZRMultiInputMethods
 (function (api, $, _) {
-  /* Multiple Picker */
-  /**
-   * @constructor
-   * @augments wp.customize.Control
-   * @augments wp.customize.Class
-   */
   $.extend( CZRBackgroundMethods , {
     initialize: function( id, options ) {
       var control = this;
       api.CZRMultiInputControl.prototype.initialize.call( control, id, options );
-    },
 
-    ready: function() {
-      this.setupSelect();
-    },
+      ////////////////////////////////////////////////////
+      /// EXTEND THE CONTROL EVENT MAP
+      /// CAN BE USED FOR :
+      /// => SETUP SPECIFIC INPUT FOR THIS CONTROL
+      /// => ADDING SPECIFIC EVENT FOR THE CONTROL
+      ////////////////////////////////////////////////////
+      this.addActions( 'control_event_map',
+        [
+          {
+            trigger   : 'viewContentRendered',
+            actions   : [ 'setupSelect', 'setupColorPicker']
+          }
+        ]
+      );
+    }//initialize
 
+    //ready: function() {}//fired in the parent
 
-    setupSelect : function( obj ) {
-      var control = this;
-          $_select  = this.container.find('select');
-
-      function addImg( state ) {
-        if (! state.id) { return state.text; }
-        if ( ! _.has( control.params.layouts, state.element.value ) )
-          return;
-
-        var _layout_data = control.params.layouts[state.element.value],
-            _src = _layout_data.src,
-            _title = _layout_data.label,
-            $state = $(
-          '<img src="' + _src +'" class="czr-layout-img" title="' + _title + '" /><span class="czr-layout-title">' + _title + '</span>'
-        );
-        return $state;
-      }
-
-      //destroy selected if set
-      //$_select.selecter("destroy");
-
-      //fire select2
-      $_select.select2( {
-          templateResult: addImg,
-          templateSelection: addImg,
-          minimumResultsForSearch: Infinity
-      });
-    },
   });//$.extend
 
 })( wp.customize, jQuery, _);//extends api.CZRDynamicControl
@@ -3699,7 +3787,7 @@ var CZRSocialMethods = CZRSocialMethods || {};
   api.CZRDynamicControl        = api.CZRBaseControl.extend( CZRDynamicMethods || {} );
   api.CZRMultiInputControl     = api.CZRBaseControl.extend( CZRMultiInputMethods || {} );
 
-  //api.CZRBackgroundControl     = api.CZRMultiInputControl.extend( CZRBackgroundMethods || {} );
+  api.CZRBackgroundControl     = api.CZRMultiInputControl.extend( CZRBackgroundMethods || {} );
 
   api.CZRWidgetAreasControl    = api.CZRDynamicControl.extend( CZRWidgetAreasMethods || {} );
   api.CZRSocialControl         = api.CZRDynamicControl.extend( CZRSocialMethods || {} );
@@ -3714,7 +3802,7 @@ var CZRSocialMethods = CZRSocialMethods || {};
     czr_socials    : api.CZRSocialControl,
     czr_multiple_picker : api.CZRMultiplePickerControl,
     czr_layouts    : api.CZRLayoutControl,
-    czr_multi_input : api.CZRMultiInputControl
+    czr_multi_input : api.CZRBackgroundControl
   });
 
   if ( 'function' == typeof api.CroppedImageControl ) {
