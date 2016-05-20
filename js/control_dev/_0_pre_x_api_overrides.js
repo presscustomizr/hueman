@@ -5,7 +5,7 @@
   //backup the original intialize
   var _old_initialize = api.PreviewFrame.prototype.initialize;
 
-  //captures some values on preview refresh
+  //Amend the PreviewFrame prototype so that we can captures some values on preview refresh
   //@todo there must be a simpler way...
   //=> using api.previewer.deferred.active.done() works on the first load but not after. The instance is not the same ?
   api.PreviewFrame.prototype.initialize = function( params, options ) {

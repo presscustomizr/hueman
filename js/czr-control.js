@@ -55,17 +55,17 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
   api.czr_partials = new api.Value();
 
 })( wp.customize , jQuery, _);(function (api, $, _) {
-  //HOW DOES THIS WORK ?
-  //CZR_scopeBase listens to collection changes
-  // 1) instantiate new models, remove old ones and their view
+  // HOW DOES THIS WORK ?
+  //CZR_scopeBase listens to scope collection changes
+  // 1) instantiate new models (CZR_scopeModel), remove old ones and their view
   // 2) sets each scope models active scope state changes
 
 
   // CZR_scopeModel
-  // 1) instantiate, the scope view
+  // 1) instantiate, the scope view (CZR_scopeView)
   // 2) listens to the active state
   //   => store dirtyness on switch
-  //   => fetch the db values, build the full set and update the settings
+  //   => fetch the db values, build the full set of values ( db + dirties + default) and update the settings
 
   // CZR_scopeView
   // 1) renders the view
@@ -79,7 +79,9 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
   * THE SCOPE BASE OBJECT
   *****************************************************************************/
   api.bind( 'ready' , function() {
-    api.czr_scopeBase = new api.CZR_scopeBase();
+    if ( serverControlParams.isCtxEnabled ) {
+      api.czr_scopeBase = new api.CZR_scopeBase();
+    }
   } );
 
   api.CZR_scopeBase = api.Class.extend( {
@@ -499,7 +501,7 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
   //backup the original intialize
   var _old_initialize = api.PreviewFrame.prototype.initialize;
 
-  //captures some values on preview refresh
+  //Amend the PreviewFrame prototype so that we can captures some values on preview refresh
   //@todo there must be a simpler way...
   //=> using api.previewer.deferred.active.done() works on the first load but not after. The instance is not the same ?
   api.PreviewFrame.prototype.initialize = function( params, options ) {
