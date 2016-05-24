@@ -17,7 +17,7 @@ var CZRBackgroundMethods = CZRBackgroundMethods || {};
         [
           {
             trigger   : 'viewContentRendered',
-            actions   : [ 'setupSelect', 'setupColorPicker']
+            actions   : [ 'setupSelect', 'setupColorPicker', 'setupImageUploader' ]
           }
         ]
       );
