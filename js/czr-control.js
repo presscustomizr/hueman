@@ -1000,8 +1000,10 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
 
 
     //@obj = {model : model, dom_el : $_view_el, refreshed : _refreshed }
-    setupDOMListeners : function( event_map , obj ) {
+    //
+    setupDOMListeners : function( event_map , obj, instance ) {
             var control = this;
+            instance = instance || control;
             //loop on the event map and map the relevant callbacks by event name
             _.map( event_map , function( _event ) {
               //LISTEN TO THE DOM
@@ -1031,7 +1033,7 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
                 //SETUP THE EMITTERS
                 //inform the container that something has happened
                 //pass the model and the current dom_el
-                control.executeEventActionChain( _obj );
+                control.executeEventActionChain( _obj, instance );
               });//.on()
 
             });//_.map()
@@ -1041,7 +1043,7 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
 
     //GENERIC METHOD TO SETUP EVENT LISTENER
     //NOTE : the obj.event must alway be defined
-    executeEventActionChain : function( obj ) {
+    executeEventActionChain : function( obj, instance ) {
             var control = this;
             //the model is always passed as parameter
             if ( ! _.has( obj, 'event' ) || ! _.has( obj.event, 'actions' ) ) {
@@ -1066,7 +1068,7 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
               if ( _break )
                 return;
 
-              if ( 'function' != typeof( control[_cb] ) ) {
+              if ( 'function' != typeof( instance[_cb] ) ) {
                 throw new Error( 'executeEventActionChain : the action : ' + _cb + ' has not been found when firing event : ' + obj.event.selector );
               }
 
@@ -1079,7 +1081,7 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
               $_dom_el.trigger('before_' + _cb, _.omit( obj, 'event') );
 
                 //executes the _cb and stores the result in a local var
-                var _cb_return = control[_cb](obj);
+                var _cb_return = instance[_cb](obj);
                 //shall we stop the action chain here ?
                 if ( false === _cb_return )
                   _break = true;
@@ -1150,19 +1152,6 @@ var CZRStaticMethods = CZRStaticMethods || {};
           api.CZRBaseControl.prototype.initialize.call( control, id, options );
 
           ////////////////////////////////////////////////////
-          /// CONTROL DEFAULT EVENT MAP
-          ////////////////////////////////////////////////////
-          control.control_event_map = [
-            //set input value
-            {
-              trigger   : 'propertychange change click keyup input colorpickerchange',//colorpickerchange is a custom colorpicker event @see method setupColorPicker => otherwise we don't
-              selector  : 'input[data-type], select[data-type]',
-              name      : 'set_input_value',
-              actions   : 'updateModel'
-            }
-          ];
-
-          ////////////////////////////////////////////////////
           /// SET UP THE MODEL (DB OPTION) AS AN OBSERVABLE VALUE
           ////////////////////////////////////////////////////
           control.czr_Model = new api.Value();
@@ -1185,12 +1174,19 @@ var CZRStaticMethods = CZRStaticMethods || {};
             //=> triggers the control rendering + DOM LISTENERS
             control.czr_Model.set( _.extend( control.defaultModel, api(control.id).get() ) );
 
-            control.setupDOMListeners( control.control_event_map , { dom_el : control.container } );
+            //control.setupDOMListeners( control.control_event_map , { dom_el : control.container } );
             control.renderView();
 
             //creates the subModels based on the rendered items
             $( '.'+control.css_attr.sub_set_wrapper, control.container).each( function(_index) {
-              console.log( 'data-input-type ? ', $(this).attr('data-input-type') );
+              var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index;
+
+              control.czr_subModel.add(_id, new control.CZR_subModel( _id, {
+                id : _id,
+                value : $(this).find('[data-type]').val(),
+                container : $(this),
+                control : control
+              } ) );
             });
 
             //listens and reacts to the model changes
@@ -1209,37 +1205,64 @@ var CZRStaticMethods = CZRStaticMethods || {};
 
   $.extend( CZRStaticMethods , {
 
-    //////////////////////////////////////////////////
-    /// MODEL
-    //////////////////////////////////////////////////
-    //fired after a input change is detected
-    updateModel : function( obj ) {
+    CZR_subModel : api.Class.extend({
+            initialize: function( name, options ) {
+                var submodel = this;
+                //submodel.options = options;
+                //write the options as properties, name is included
+                $.extend( submodel, options || {} );
 
-      //get the changed property and val
-      //=> all html input have data-type attribute corresponding to the ones stored in the model
-      var control           = this,
-          $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
-          _changed_prop     = $_changed_input.attr('data-type'),
-          _new_val          = $( $_changed_input, obj.dom_el ).val(),
-          _current_model    = control.czr_Model.get(),
-          _new_model        = _.clone( _current_model );//initialize it to the current value
+                //Make it alive with various Values
+                submodel.value   = new api.Value();
+                submodel.value.set(options.value);
 
-      console.log('NEW MODEL', _changed_prop, _current_model, _new_model, _.isObject(_new_model) );
-      //make sure the _new_model is an object and is not empty
-      _new_model =  ( ! _.isObject(_new_model) || _.isEmpty(_new_model) ) ? {} : _new_model;
+                ////////////////////////////////////////////////////
+                /// SUB MODEL EVENT MAP
+                ////////////////////////////////////////////////////
+                submodel.submodel_event_map = [
+                  //set input value
+                  {
+                    trigger   : 'propertychange change click keyup input colorpickerchange',//colorpickerchange is a custom colorpicker event @see method setupColorPicker => otherwise we don't
+                    selector  : 'input[data-type], select[data-type]',
+                    name      : 'set_input_value',
+                    actions   : 'updateSubModel'
+                  }
+                ];
 
-      //set the new val to the changed property
-      _new_model[_changed_prop] = _new_val;
+                submodel.ready();
+            },
 
-      control.czr_Model.set(_new_model);
+            ready : function() {
+              var submodel = this;
+              submodel.control.setupDOMListeners( submodel.submodel_event_map , { dom_el : submodel.container }, submodel );
 
-      //say it to the current view
-      control.doActions(
-        _changed_prop + ':changed',
-        obj.dom_el,
-        { model : _new_model }
-      );
-    }
+              //callbacks
+              submodel.value.callbacks.add(function( to, from) {
+                    var _current_model    = submodel.control.czr_Model.get(),
+                        _new_model        = _.clone( _current_model );//initialize it to the current value
+
+                    //make sure the _new_model is an object and is not empty
+                    _new_model =  ( ! _.isObject(_new_model) || _.isEmpty(_new_model) ) ? {} : _new_model;
+                    //set the new val to the changed property
+                    _new_model[submodel.id] = to;
+
+                    submodel.control.czr_Model.set(_new_model);
+
+                    console.log('a submodel value has changed : ', submodel.id, to, from );
+              });
+            },
+
+
+            updateSubModel : function( obj ) {
+              //get the changed property and val
+              //=> all html input have data-type attribute corresponding to the ones stored in the model
+              var submodel           = this,
+                  $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
+                  _new_val          = $( $_changed_input, obj.dom_el ).val();
+
+              submodel.value.set(_new_val);
+            }
+    })//CZR_subModel
 
   });//$.extend
 

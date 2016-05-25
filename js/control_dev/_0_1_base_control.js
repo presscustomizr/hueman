@@ -46,8 +46,10 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
 
 
     //@obj = {model : model, dom_el : $_view_el, refreshed : _refreshed }
-    setupDOMListeners : function( event_map , obj ) {
+    //
+    setupDOMListeners : function( event_map , obj, instance ) {
             var control = this;
+            instance = instance || control;
             //loop on the event map and map the relevant callbacks by event name
             _.map( event_map , function( _event ) {
               //LISTEN TO THE DOM
@@ -77,7 +79,7 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
                 //SETUP THE EMITTERS
                 //inform the container that something has happened
                 //pass the model and the current dom_el
-                control.executeEventActionChain( _obj );
+                control.executeEventActionChain( _obj, instance );
               });//.on()
 
             });//_.map()
@@ -87,7 +89,7 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
 
     //GENERIC METHOD TO SETUP EVENT LISTENER
     //NOTE : the obj.event must alway be defined
-    executeEventActionChain : function( obj ) {
+    executeEventActionChain : function( obj, instance ) {
             var control = this;
             //the model is always passed as parameter
             if ( ! _.has( obj, 'event' ) || ! _.has( obj.event, 'actions' ) ) {
@@ -112,7 +114,7 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
               if ( _break )
                 return;
 
-              if ( 'function' != typeof( control[_cb] ) ) {
+              if ( 'function' != typeof( instance[_cb] ) ) {
                 throw new Error( 'executeEventActionChain : the action : ' + _cb + ' has not been found when firing event : ' + obj.event.selector );
               }
 
@@ -125,7 +127,7 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
               $_dom_el.trigger('before_' + _cb, _.omit( obj, 'event') );
 
                 //executes the _cb and stores the result in a local var
-                var _cb_return = control[_cb](obj);
+                var _cb_return = instance[_cb](obj);
                 //shall we stop the action chain here ?
                 if ( false === _cb_return )
                   _break = true;
