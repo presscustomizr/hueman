@@ -8,19 +8,6 @@ var CZRStaticMethods = CZRStaticMethods || {};
           api.CZRBaseControl.prototype.initialize.call( control, id, options );
 
           ////////////////////////////////////////////////////
-          /// CONTROL DEFAULT EVENT MAP
-          ////////////////////////////////////////////////////
-          control.control_event_map = [
-            //set input value
-            {
-              trigger   : 'propertychange change click keyup input colorpickerchange',//colorpickerchange is a custom colorpicker event @see method setupColorPicker => otherwise we don't
-              selector  : 'input[data-type], select[data-type]',
-              name      : 'set_input_value',
-              actions   : 'updateModel'
-            }
-          ];
-
-          ////////////////////////////////////////////////////
           /// SET UP THE MODEL (DB OPTION) AS AN OBSERVABLE VALUE
           ////////////////////////////////////////////////////
           control.czr_Model = new api.Value();
@@ -43,12 +30,19 @@ var CZRStaticMethods = CZRStaticMethods || {};
             //=> triggers the control rendering + DOM LISTENERS
             control.czr_Model.set( _.extend( control.defaultModel, api(control.id).get() ) );
 
-            control.setupDOMListeners( control.control_event_map , { dom_el : control.container } );
+            //control.setupDOMListeners( control.control_event_map , { dom_el : control.container } );
             control.renderView();
 
             //creates the subModels based on the rendered items
             $( '.'+control.css_attr.sub_set_wrapper, control.container).each( function(_index) {
-              console.log( 'data-input-type ? ', $(this).attr('data-input-type') );
+              var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index;
+
+              control.czr_subModel.add(_id, new control.CZR_subModel( _id, {
+                id : _id,
+                value : $(this).find('[data-type]').val(),
+                container : $(this),
+                control : control
+              } ) );
             });
 
             //listens and reacts to the model changes
