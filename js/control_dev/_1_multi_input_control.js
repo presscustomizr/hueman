@@ -195,7 +195,7 @@ var CZRMultiInputMethods = CZRMultiInputMethods || {};
 
          //do we have an html template and a control container?
          if ( ! control.container )
-          return this;
+           return this;
 
 
          if ( ! this.renderImageUploaderTemplate() )
@@ -213,10 +213,14 @@ var CZRMultiInputMethods = CZRMultiInputMethods || {};
 
          control.setting.bind( function( value, old_val, something ) {
            //TODO, scope to the actual background image input as at the moment it reacts to watever value changes in the setting
+
+           //Is the following needed?
            // Send attachment information to the preview for possible use in `postMessage` transport.
            wp.media.attachment( value ).fetch().done( function() {
              wp.customize.previewer.send( control.setting.id + '-attachment-data', this.attributes );
            } );
+
+           //re-render the template
            control.renderImageUploaderTemplate();
          });
     },
