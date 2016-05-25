@@ -1,12 +1,6 @@
 var CZRLayoutSelectMethods = CZRLayoutSelectMethods || {};
 
 (function (api, $, _) {
-  /* Multiple Picker */
-  /**
-   * @constructor
-   * @augments wp.customize.Control
-   * @augments wp.customize.Class
-   */
   $.extend( CZRLayoutSelectMethods , {
     ready: function() {
       this.setupSelect();

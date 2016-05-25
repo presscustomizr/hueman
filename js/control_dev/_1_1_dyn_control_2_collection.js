@@ -175,10 +175,7 @@ var CZRDynamicMethods = CZRDynamicMethods || {};
     //takes a model unique id as param
     getModel : function(id) {
       var control = this;
-      _model = _.findWhere( control.czr_Collection('models').get(), {id:id} );
-      if ( false !== _model )
-        return _model;
-      return model;
+      return _.findWhere( control.czr_Collection('models').get(), {id:id} ) || {};
     }
   });//$.extend()
 

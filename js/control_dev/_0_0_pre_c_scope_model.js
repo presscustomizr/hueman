@@ -2,7 +2,7 @@
   /*****************************************************************************
   * THE SCOPE MODEL
   *****************************************************************************/
-  // 'ctx'         => '_all_',
+  // 'level'         => '_all_',
   // 'dyn_type'    => 'option',
   // 'opt_name'    => HU_THEME_OPTIONS,
   // 'is_default'  => true,
@@ -15,13 +15,13 @@
           $.extend( scope, options || {} );
 
           //Make it alive with various Values
-          scope.applied   = new api.Value(); //is this scope the one that will be applied on front end in the current context?
-          scope.priority  = new api.Value(); //shall this scope always win or respect the default scopes priority
-          scope.active    = new api.Value(); //active, inactive. Are we currently customizing this scope ?
-          scope.dirtyness  = new api.Value(); //true or false : has this scope been customized ?
+          scope.winner      = new api.Value(); //is this scope the one that will be applied on front end in the current context?
+          scope.priority    = new api.Value(); //shall this scope always win or respect the default scopes priority
+          scope.active      = new api.Value(); //active, inactive. Are we currently customizing this scope ?
+          scope.dirtyness   = new api.Value(); //true or false : has this scope been customized ?
 
           //setting values are stored in :
-          scope.dbValues  = new api.Value();
+          scope.dbValues    = new api.Value();
           scope.dirtyValues = new api.Value();//stores the current customized value.
     },
 
@@ -38,14 +38,15 @@
           //LISTEN TO DIRTYNESS
           scope.dirtyValues.callbacks.add( function(to){
             //set the model dirtyness boolean state value
-            scope.dirtyness.set( ! to );
+            scope.dirtyness.set( ! _.isEmpty(to) );
           });
 
           //init the values
-          scope.dbValues.set({});
+          scope.dirtyValues.set({});
+          scope.dbValues.set( _.isEmpty(scope.db) ? {} : scope.db );
           scope.active.set( scope.is_default );
           scope.dirtyness.set( false );
-          scope.applied.set( scope.is_winner );
+          scope.winner.set( scope.is_winner );
     },
 
 
@@ -57,10 +58,10 @@
 
           //when becoming inactive
           //store the dirtyValues
-          if ( ! to ) {
-            scope.storeDirtyness();
-            return;
-          }
+          // if ( ! to ) {
+          //   scope.storeDirtyness();
+          //   return;
+          // }
 
           //When becoming active :
             //1) fetch the option if needed
@@ -84,26 +85,6 @@
             //=> build the full set with $.extend( initialglobalvalues, dirtyValues )
 
 
-          //if the current scope is global, then get it from the settings
-          if ( serverControlParams.themeOptions == scope.opt_name ) {
-            return api.czr_scopeBase.getGlobalSettingVal();
-          }
-
-          //@uses wp.ajax. See wp.ajax.send() in `wp-includes/js/wp-util.js`.
-          var _options = '',
-              _query = {
-                data : {
-                  action : serverControlParams.optionAjaxAction,//theme dependant
-                  opt_name: opt_name,
-                  dyn_type: dyn_type,
-                  stylesheet : api.settings.theme.stylesheet
-                }
-              };
-
-          wp.ajax.send( _query ).done( function( resp ){
-            _options = resp;
-          });
-
     },
 
 
@@ -126,33 +107,6 @@
           return _dirtyCustomized;
     },
 
-
-    populateCustomizedValues: function() {
-          console.log('name ?', this.name );
-    },
-
-    getDBOptions : function( opt_name, dyn_type ) {
-          //if the requested opt set is global, then get it from the settings
-          if ( serverControlParams.themeOptions == opt_name ) {
-            return api.czr_scopeBase.getGlobalSettingVal();
-          }
-
-          //@uses wp.ajax. See wp.ajax.send() in `wp-includes/js/wp-util.js`.
-          var _options = '',
-              _query = {
-                data : {
-                  action : serverControlParams.optionAjaxAction,//theme dependant
-                  opt_name: opt_name,
-                  dyn_type: dyn_type,
-                  stylesheet : api.settings.theme.stylesheet
-                }
-              };
-
-          wp.ajax.send( _query ).done( function( resp ){
-            _options = resp;
-          });
-          return _options;
-    },
 
 
     setSettingsValue : function() {
@@ -189,8 +143,59 @@
             );
           } );
 
-        }
+    },
 
+
+
+
+
+    /////////////////////////
+    //AJAX STUFFS
+    ////////////////////////
+    //if the current scope is global, then get it from the settings
+          // if ( serverControlParams.themeOptions == scope.opt_name ) {
+          //   return api.czr_scopeBase.getGlobalSettingVal();
+          // }
+
+          // //@uses wp.ajax. See wp.ajax.send() in `wp-includes/js/wp-util.js`.
+          // var _options = '',
+          //     _query = {
+          //       data : {
+          //         action : serverControlParams.optionAjaxAction,//theme dependant
+          //         opt_name: scope.opt_name,
+          //         dyn_type: scope.dyn_type,
+          //         stylesheet : api.settings.theme.stylesheet
+          //       }
+          //     };
+
+          // console.log('before ajax send request : ', scope.name, scope, to , serverControlParams.themeOptions, scope.opt_name );
+
+          // wp.ajax.send( _query ).done( function( resp ){
+          //   _options = resp;
+          //   console.log('AJAX RESPONSE IN DONE() : ', resp);
+          // });
+    getDBOptions : function( opt_name, dyn_type ) {
+          //if the requested opt set is global, then get it from the settings
+          if ( serverControlParams.themeOptions == opt_name ) {
+            return api.czr_scopeBase.getGlobalSettingVal();
+          }
+
+          //@uses wp.ajax. See wp.ajax.send() in `wp-includes/js/wp-util.js`.
+          var _options = '',
+              _query = {
+                data : {
+                  action : serverControlParams.optionAjaxAction,//theme dependant
+                  opt_name: opt_name,
+                  dyn_type: dyn_type,
+                  stylesheet : api.settings.theme.stylesheet
+                }
+              };
+
+          wp.ajax.send( _query ).done( function( resp ){
+            _options = resp;
+          });
+          return _options;
+    },
   });//api.Class.extend()
 
 

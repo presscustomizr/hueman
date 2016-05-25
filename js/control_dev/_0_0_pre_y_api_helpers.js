@@ -14,19 +14,13 @@
   };
 
 
-  api.czr_wp_builtin_settings = [
-    'page_for_posts',
-    'show_on_front',
-    'blogname',
-    'blogdescription'
-  ];
-
   /*
   * @return string
   * simple helper to build the setting id name
   */
   api.czr_build_setId = function ( name ) {
-    if ( _.has( api.czr_wp_builtin_settings, name ) )
+    //exclude the WP built-in settings like blogdescription, show_on_front, etc
+    if ( _.contains( serverControlParams.wpBuiltinSettings, name ) )
       return name;
     return -1 == name.indexOf( serverControlParams.themeOptions ) ? [ serverControlParams.themeOptions +'[' , name  , ']' ].join('') : name;
   };

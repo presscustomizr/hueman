@@ -82,9 +82,19 @@
   /*****************************************************************************
   * A SCOPE AWARE PREVIEWER
   *****************************************************************************/
+  //PREPARE THE SCOPE AWARE PREVIEWER
+  api.czr_isPreviewerScopeAware = new api.Value();
+  api.czr_isPreviewerScopeAware.set(false);
+  var _old_preview = api.Setting.prototype.preview;
+  api.Setting.prototype.preview = function() {
+    if ( ! api.czr_isPreviewerScopeAware.get() )
+      return this.previewer.refresh();
+    //as soon as the previewer is setup, let's behave as usual
+    _old_preview.call(this);
+  };
+
 
   api.bind('ready', function() {
-
         if ( ! serverControlParams.isCtxEnabled )
           return;
 
@@ -101,15 +111,19 @@
             }
           } );
 
+          //the previewer is now scope aware :
+          api.czr_isPreviewerScopeAware.set(true);
+
           return {
             wp_customize: 'on',
-            dyn_type:     api.czr_scopeCollection('active').get().dyn_type,//post_meta, term_meta, user_meta, trans, option
-            opt_name:     api.czr_scopeCollection('active').get().opt_name,
+            dyn_type:     api.czr_scope( api.czr_scopeCollection('active').get() ).dyn_type,//post_meta, term_meta, user_meta, trans, option
+            opt_name:     api.czr_scope( api.czr_scopeCollection('active').get() ).opt_name,
+            obj_id:       api.czr_scope( api.czr_scopeCollection('active').get() ).obj_id,
             theme:        _wpCustomizeSettings.theme.stylesheet,
             customized:   JSON.stringify( dirtyCustomized ),
             nonce:        this.nonce.preview
           };
-        },
+        };
 
 
 
@@ -127,8 +141,9 @@
             query = $.extend( self.query(), {
               nonce:  self.nonce.save
             } );
-            request = wp.ajax.post( 'customize_save', query );
 
+            console.log('in submit : ', query);
+            request = wp.ajax.post( 'customize_save', query );
             api.trigger( 'save', request );
 
             request.always( function () {
@@ -180,7 +195,7 @@
             };
             api.state.bind( 'change', submitWhenDoneProcessing );
           }
-        }
+        };
   });//api.bind('ready')
 
   //FIX FOR CONTROL VISIBILITY LOST ON PREVIEW REFRESH #1
