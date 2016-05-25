@@ -1,9 +1,11 @@
 /*****************************************************************************
 * BASE CONTROL CLASS
+* extends api.Control
 *****************************************************************************/
 //define a set of methods, mostly helpers, to extend the base WP control class
 //this will become our base constructor for main complex controls
 //EARLY SETUP
+
 var CZRBaseControlMethods = CZRBaseControlMethods || {};
 
 (function (api, $, _) {
@@ -14,7 +16,7 @@ var CZRBaseControlMethods = CZRBaseControlMethods || {};
             api.Control.prototype.initialize.call( control, id, options );
 
             //add a shortcut to the css properties declared in the php controls
-            this.css_attr = _.has( options.params , 'css_attr') ? options.params.css_attr : {};
+            control.css_attr = _.has( serverControlParams , 'css_attr') ? serverControlParams.css_attr : {};
 
             //extend the control with new template Selectors
             $.extend( control, {

@@ -34,21 +34,21 @@ var CZRDynamicMethods = CZRDynamicMethods || {};
         //pre add new model : open the dialog box
         {
           trigger   : 'click keydown',
-          selector  : [ '.' + options.params.css_attr.open_pre_add_btn, '.' + options.params.css_attr.cancel_pre_add_btn ].join(','),
+          selector  : [ '.' + control.css_attr.open_pre_add_btn, '.' + control.css_attr.cancel_pre_add_btn ].join(','),
           name      : 'pre_add_model',
           actions   : ['renderPreModelView','setPreModelViewVisibility'],
         },
         //update_pre_model
         {
           trigger   : 'propertychange change click keyup input colorpickerchange',//colorpickerchange is a custom colorpicker event @see method setupColorPicker => otherwise we don't
-          selector  : [ '.' + options.params.css_attr.pre_add_view_content + ' input[data-type]', '.' + options.params.css_attr.pre_add_view_content + ' select[data-type]'].join(','),
+          selector  : [ '.' + control.css_attr.pre_add_view_content + ' input[data-type]', '.' + control.css_attr.pre_add_view_content + ' select[data-type]'].join(','),
           name      : 'update_pre_model',
           actions   : ['updatePreModel' ]
         },
         //add new model
         {
           trigger   : 'click keydown',
-          selector  : '.' + options.params.css_attr.add_new_btn, //'.czr-add-new',
+          selector  : '.' + control.css_attr.add_new_btn, //'.czr-add-new',
           name      : 'add_model',
           actions   : ['closeAllViews', 'addModel'],
         }
@@ -64,21 +64,21 @@ var CZRDynamicMethods = CZRDynamicMethods || {};
         //toggles remove view alert
         {
           trigger   : 'click keydown',
-          selector  : [ '.' + options.params.css_attr.display_alert_btn, '.' + options.params.css_attr.cancel_alert_btn ].join(','),
+          selector  : [ '.' + control.css_attr.display_alert_btn, '.' + control.css_attr.cancel_alert_btn ].join(','),
           name      : 'toggle_remove_alert',
           actions   : ['toggleRemoveAlertVisibility']
         },
         //removes model and destroys its view
         {
           trigger   : 'click keydown',
-          selector  : '.' + options.params.css_attr.remove_view_btn,
+          selector  : '.' + control.css_attr.remove_view_btn,
           name      : 'remove_model',
           actions   : ['removeModel']
         },
         //edit view
         {
           trigger   : 'click keydown',
-          selector  : [ '.' + options.params.css_attr.edit_view_btn, '.' + options.params.css_attr.view_title ].join(','),
+          selector  : [ '.' + control.css_attr.edit_view_btn, '.' + control.css_attr.view_title ].join(','),
           name      : 'edit_view',
           actions   : ['setViewVisibility']
         }

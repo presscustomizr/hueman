@@ -8,9 +8,9 @@
    */
   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMethods || {} );
   api.CZRDynamicControl        = api.CZRBaseControl.extend( CZRDynamicMethods || {} );
-  api.CZRMultiInputControl     = api.CZRBaseControl.extend( CZRMultiInputMethods || {} );
+  api.CZRStaticControl         = api.CZRBaseControl.extend( CZRStaticMethods || {} );
 
-  api.CZRBackgroundControl     = api.CZRMultiInputControl.extend( CZRBackgroundMethods || {} );
+  api.CZRBackgroundControl     = api.CZRStaticControl.extend( CZRBackgroundMethods || {} );
 
   api.CZRWidgetAreasControl    = api.CZRDynamicControl.extend( CZRWidgetAreasMethods || {} );
   api.CZRSocialControl         = api.CZRDynamicControl.extend( CZRSocialMethods || {} );
@@ -25,7 +25,7 @@
     czr_socials    : api.CZRSocialControl,
     czr_multiple_picker : api.CZRMultiplePickerControl,
     czr_layouts    : api.CZRLayoutControl,
-    czr_multi_input : api.CZRBackgroundControl
+    czr_background : api.CZRBackgroundControl
   });
 
   if ( 'function' == typeof api.CroppedImageControl ) {
