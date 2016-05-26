@@ -6,7 +6,7 @@ var CZRStaticMethods = CZRStaticMethods || {};
     //////////////////////////////////////////////////
     /// VIEWS
     //////////////////////////////////////////////////
-    //the view wrapper is rendered by WP
+    //the view wrapper has been rendered by WP
     //the content ( the various inputs ) is rendered by the following methods
     //an event is triggered on the control.container when content is rendered
     renderView : function() {
@@ -60,7 +60,7 @@ var CZRStaticMethods = CZRStaticMethods || {};
           //we inject the model + additional params like default color in the template
           return $( view_content_template(
               _.extend(
-                control.czr_Model.get(),
+                control.czr_Model.value.get(),
                 { defaultBgColor : control.defaultModel['background-color'] || '#eaeaea' }
               )
             )

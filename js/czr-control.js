@@ -1154,10 +1154,11 @@ var CZRStaticMethods = CZRStaticMethods || {};
           ////////////////////////////////////////////////////
           /// SET UP THE MODEL (DB OPTION) AS AN OBSERVABLE VALUE
           ////////////////////////////////////////////////////
-          control.czr_Model = new api.Value();
+          //the model is a collection of inputs, each one has its own view element.
+          control.czr_Model = new api.Values();
 
-          //the model is a collection of sub models, each one has its view element.
-          control.czr_subModel = new api.Values();
+          control.czr_Model.value = new api.Value();
+          //control.czr_Input = new api.Values();
 
           control.defaultModel = {};
 
@@ -1172,7 +1173,7 @@ var CZRStaticMethods = CZRStaticMethods || {};
             }
             //sets the model value on api ready
             //=> triggers the control rendering + DOM LISTENERS
-            control.czr_Model.set( _.extend( control.defaultModel, api(control.id).get() ) );
+            control.czr_Model.value.set( _.extend( control.defaultModel, api(control.id).get() ) );
 
             //control.setupDOMListeners( control.control_event_map , { dom_el : control.container } );
             control.renderView();
@@ -1181,8 +1182,9 @@ var CZRStaticMethods = CZRStaticMethods || {};
             $( '.'+control.css_attr.sub_set_wrapper, control.container).each( function(_index) {
               var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index;
 
-              control.czr_subModel.add(_id, new control.CZR_subModel( _id, {
+              control.czr_Model.add( _id, new control.CZR_Input( _id, {
                 id : _id,
+                type : $(this).attr('data-input-type'),
                 value : $(this).find('[data-type]').val(),
                 container : $(this),
                 control : control
@@ -1190,7 +1192,7 @@ var CZRStaticMethods = CZRStaticMethods || {};
             });
 
             //listens and reacts to the model changes
-            control.czr_Model.callbacks.add(function(to, from) {
+            control.czr_Model.value.callbacks.add(function(to, from) {
               api(control.id).set(to);
             });
           });
@@ -1205,64 +1207,76 @@ var CZRStaticMethods = CZRStaticMethods || {};
 
   $.extend( CZRStaticMethods , {
 
-    CZR_subModel : api.Class.extend({
+    CZR_Input : api.Value.extend({
             initialize: function( name, options ) {
-                var submodel = this;
-                //submodel.options = options;
+                api.Value.prototype.initialize.call( this, null, options );
+                var input = this;
+                //input.options = options;
                 //write the options as properties, name is included
-                $.extend( submodel, options || {} );
+                $.extend( input, options || {} );
 
-                //Make it alive with various Values
-                submodel.value   = new api.Value();
-                submodel.value.set(options.value);
+                input.set(options.value);
 
-                ////////////////////////////////////////////////////
-                /// SUB MODEL EVENT MAP
-                ////////////////////////////////////////////////////
-                submodel.submodel_event_map = [
+                //setup the appropriate input based on the type
+                input.type_map = {
+                  text : '',
+                  select : 'setupSelect',
+                  upload : 'setupImageUploader',
+                  color : 'setupColorPicker',
+                };
+                if ( _.has( input.type_map, input.type ) ) {
+                  var _meth = input.type_map[input.type];
+                  if ( _.isFunction(input[_meth]) )
+                    input[_meth]();
+                }
+
+                //Input Event Map
+                input.input_event_map = [
                   //set input value
                   {
                     trigger   : 'propertychange change click keyup input colorpickerchange',//colorpickerchange is a custom colorpicker event @see method setupColorPicker => otherwise we don't
                     selector  : 'input[data-type], select[data-type]',
                     name      : 'set_input_value',
-                    actions   : 'updateSubModel'
+                    actions   : 'updateInput'
                   }
                 ];
 
-                submodel.ready();
+                input.ready();
             },
+
 
             ready : function() {
-              var submodel = this;
-              submodel.control.setupDOMListeners( submodel.submodel_event_map , { dom_el : submodel.container }, submodel );
+                var input = this;
+                input.control.setupDOMListeners( input.input_event_map , { dom_el : input.container }, input );
 
-              //callbacks
-              submodel.value.callbacks.add(function( to, from) {
-                    var _current_model    = submodel.control.czr_Model.get(),
-                        _new_model        = _.clone( _current_model );//initialize it to the current value
+                //callbacks
+                input.callbacks.add(function( to, from) {
+                      var _current_model    = input.control.czr_Model.value.get(),
+                          _new_model        = _.clone( _current_model );//initialize it to the current value
 
-                    //make sure the _new_model is an object and is not empty
-                    _new_model =  ( ! _.isObject(_new_model) || _.isEmpty(_new_model) ) ? {} : _new_model;
-                    //set the new val to the changed property
-                    _new_model[submodel.id] = to;
+                      //make sure the _new_model is an object and is not empty
+                      _new_model =  ( ! _.isObject(_new_model) || _.isEmpty(_new_model) ) ? {} : _new_model;
+                      //set the new val to the changed property
+                      _new_model[input.id] = to;
 
-                    submodel.control.czr_Model.set(_new_model);
+                      input.control.czr_Model.value.set(_new_model);
 
-                    console.log('a submodel value has changed : ', submodel.id, to, from );
-              });
+                      console.log('a input value has changed : ', input.id, to, from );
+
+                });
             },
 
 
-            updateSubModel : function( obj ) {
-              //get the changed property and val
-              //=> all html input have data-type attribute corresponding to the ones stored in the model
-              var submodel           = this,
-                  $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
-                  _new_val          = $( $_changed_input, obj.dom_el ).val();
+            updateInput : function( obj ) {
+                //get the changed property and val
+                //=> all html input have data-type attribute corresponding to the ones stored in the model
+                var input           = this,
+                    $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
+                    _new_val          = $( $_changed_input, obj.dom_el ).val();
 
-              submodel.value.set(_new_val);
+                input.set(_new_val);
             }
-    })//CZR_subModel
+    })//CZR_Input
 
   });//$.extend
 
@@ -1275,7 +1289,7 @@ var CZRStaticMethods = CZRStaticMethods || {};
     //////////////////////////////////////////////////
     /// VIEWS
     //////////////////////////////////////////////////
-    //the view wrapper is rendered by WP
+    //the view wrapper has been rendered by WP
     //the content ( the various inputs ) is rendered by the following methods
     //an event is triggered on the control.container when content is rendered
     renderView : function() {
@@ -1329,7 +1343,7 @@ var CZRStaticMethods = CZRStaticMethods || {};
           //we inject the model + additional params like default color in the template
           return $( view_content_template(
               _.extend(
-                control.czr_Model.get(),
+                control.czr_Model.value.get(),
                 { defaultBgColor : control.defaultModel['background-color'] || '#eaeaea' }
               )
             )
@@ -1344,13 +1358,13 @@ var CZRStaticMethods = CZRStaticMethods || {};
 var CZRStaticMethods = CZRStaticMethods || {};
 (function (api, $, _) {
 
-  $.extend( CZRStaticMethods , {
+  $.extend( CZRStaticMethods.CZR_Input.prototype , {
     //////////////////////////////////////////////////
     /// DEFAULT METHODS FOR SETTING UP THE SUB-INPUTS
     //////////////////////////////////////////////////
     setupSelect : function() {
-          var control = this;
-          $('select', control.container ).not('.no-selecter-js')
+          var input = this;
+          $('select', input.container ).not('.no-selecter-js')
             .each( function() {
               $(this).selecter({
               //triggers a change event on the view, passing the newly selected value + index as parameters.
@@ -1362,9 +1376,9 @@ var CZRStaticMethods = CZRStaticMethods || {};
     },
 
     setupColorPicker : function() {
-          var control  = this;
+          var input  = this;
 
-          $('.' + control.css_attr.multi_input_wrapper, control.container).find('[data-input-type="color"]').find('input').wpColorPicker( {
+          input.container.find('input').wpColorPicker( {
             change : function( e, o ) {
               //if the input val is not updated here, it's not detected right away.
               //weird
@@ -1376,39 +1390,57 @@ var CZRStaticMethods = CZRStaticMethods || {};
     },
 
 
-    setupImageUploader : function() {
-         var control  = this;
 
-         //do we have an html template and a control container?
-         if ( ! control.container )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    setupImageUploader : function() {
+         var input  = this;
+
+         //do we have an html template and a input container?
+         if ( ! input.container )
            return this;
 
-
-         if ( ! this.renderImageUploaderTemplate() )
+         if ( ! input.renderImageUploaderTemplate() )
            return;
 
          //Bind events
          // Shortcut so that we don't have to use _.bind every time we add a callback.
-         _.bindAll( control, 'czrImgUploadRestoreDefault', 'czrImgUploadRemoveFile', 'czrImgUploadOpenFrame', 'czrImgUploadSelect');
+         _.bindAll( input, 'czrImgUploadRestoreDefault', 'czrImgUploadRemoveFile', 'czrImgUploadOpenFrame', 'czrImgUploadSelect');
 
          // Bind events, with delegation to facilitate re-rendering.
-         control.container.on( 'click keydown', '.upload-button', control.czrImgUploadOpenFrame );
-         control.container.on( 'click keydown', '.thumbnail-image img', control.czrImgUploadOpenFrame );
-         control.container.on( 'click keydown', '.remove-button', control.czrImgUploadRemoveFile );
-         control.container.on( 'click keydown', '.default-button', control.czrImgUploadRestoreDefault );
+         input.container.on( 'click keydown', '.upload-button', input.czrImgUploadOpenFrame );
+         input.container.on( 'click keydown', '.thumbnail-image img', input.czrImgUploadOpenFrame );
+         input.container.on( 'click keydown', '.remove-button', input.czrImgUploadRemoveFile );
+         input.container.on( 'click keydown', '.default-button', input.czrImgUploadRestoreDefault );
 
-         control.setting.bind( function( value, old_val, something ) {
-           //TODO, scope to the actual background image input as at the moment it reacts to watever value changes in the setting
-
-           //Is the following needed?
-           // Send attachment information to the preview for possible use in `postMessage` transport.
-           wp.media.attachment( value ).fetch().done( function() {
-             wp.customize.previewer.send( control.setting.id + '-attachment-data', this.attributes );
-           } );
-
-           //re-render the template
-           control.renderImageUploaderTemplate();
+         input.bind( function( to, from ){
+            input.renderImageUploaderTemplate();
          });
+
+         // control.setting.bind( function( value, old_val, something ) {
+         //   //TODO, scope to the actual background image input as at the moment it reacts to watever value changes in the setting
+
+         //   //Is the following needed?
+         //   // Send attachment information to the preview for possible use in `postMessage` transport.
+         //   wp.media.attachment( value ).fetch().done( function() {
+         //     wp.customize.previewer.send( control.setting.id + '-attachment-data', this.attributes );
+         //   } );
+
+         //   //re-render the template
+         //   control.renderImageUploaderTemplate();
+         // });
     },
 
     /**
@@ -1432,38 +1464,42 @@ var CZRStaticMethods = CZRStaticMethods || {};
     * Create a media modal select frame, and store it so the instance can be reused when needed.
     */
     czrImgUploadInitFrame: function() {
-         this.frame = wp.media({
+        var input = this,
+            control = input.control;
+
+         input.frame = wp.media({
            button: {
-               text: this.params.button_labels.frame_button
+               text: control.params.button_labels.frame_button
            },
            states: [
                new wp.media.controller.Library({
-                 title:     this.params.button_labels.frame_title,
-                 library:   wp.media.query({ type: this.params.mime_type }),
+                 title:     control.params.button_labels.frame_title,
+                 library:   wp.media.query({ type: control.params.mime_type }),
                  multiple:  false,
                  date:      false
                })
            ]
          });
          // When a file is selected, run a callback.
-         this.frame.on( 'select', this.czrImgUploadSelect );
+         input.frame.on( 'select', input.czrImgUploadSelect );
     },
 
     /**
     * Reset the setting to the default value.
     */
     czrImgUploadRestoreDefault: function( event ) {
+          var input = this,
+            control = input.control;
+
           if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
             return;
           }
           event.preventDefault();
 
-          this.params.attachment = this.params.defaultAttachment;
+          control.params.attachment = control.params.defaultAttachment;
 
-          // Set the Customizer setting; the callback takes care of rendering.
-          var _sub_setting = $('.' + control.css_attr.multi_input_wrapper, control.container)
-                             .find('[data-input-type="upload"] .czr-input input' );
-          _sub_setting.val( this.params.defaultAttachment.url ).trigger('change');
+          // Set the input; the callback takes care of rendering.
+          input.container.find('input').val( control.params.defaultAttachment.url ).trigger('change');
 
     },
 
@@ -1473,40 +1509,34 @@ var CZRStaticMethods = CZRStaticMethods || {};
     * @param {object} event jQuery Event object
     */
     czrImgUploadRemoveFile: function( event ) {
-          var control = this;
+          var input = this,
+            control = input.control;
 
           if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
             return;
           }
           event.preventDefault();
 
-          this.params.attachment = {};
+          control.params.attachment = {};
 
-          // Set the Customizer setting; the callback takes care of rendering.
-          var _sub_setting = $('.' + control.css_attr.multi_input_wrapper, control.container)
-                             .find('[data-input-type="upload"] .czr-input input' );
-          _sub_setting.val( '' ).trigger('change');
+          input.container.find('input').val( '' ).trigger('change');
     },
 
 
     /**
     * Callback handler for when an attachment is selected in the media modal.
-    * Gets the selected image information, and sets it within the control.
+    * Gets the selected image information, and sets it within the input.
     */
     czrImgUploadSelect: function() {
-          // Get the attachment from the modal frame.
           var node,
-              attachment   = this.frame.state().get( 'selection' ).first().toJSON(),
-              mejsSettings = window._wpmejsSettings || {},
-              control      = this;
+              input = this,
+              control = input.control,
+              attachment   = input.frame.state().get( 'selection' ).first().toJSON(),  // Get the attachment from the modal frame.
+              mejsSettings = window._wpmejsSettings || {};
 
-          this.params.attachment = attachment;
+          control.params.attachment = attachment;
 
-          // Set the Customizer setting; the callback takes care of rendering.
-          var _sub_setting = $('.' + control.css_attr.multi_input_wrapper, control.container)
-                             .find('[data-input-type="upload"] .czr-input input' );
-
-          _sub_setting.val( attachment.id ).trigger('change');
+          input.container.find('input').val( attachment.id ).trigger('change');
     },
 
 
@@ -1516,7 +1546,7 @@ var CZRStaticMethods = CZRStaticMethods || {};
     /// HELPERS
     //////////////////////////////////////////////////
     renderImageUploaderTemplate: function() {
-         var control  = this;
+         var input  = this;
 
           //do we have view template script?
          if ( 0 === $( '#tmpl-czr-img-uploader-view-content' ).length )
@@ -1525,16 +1555,15 @@ var CZRStaticMethods = CZRStaticMethods || {};
          var view_template = wp.template('czr-img-uploader-view-content');
 
          //  //do we have an html template and a control container?
-         if ( ! view_template  || ! control.container )
+         if ( ! view_template  || ! input.container )
           return;
 
-         var $_view_el    = $('.' + control.css_attr.multi_input_wrapper, control.container).
-             find('[data-input-type="upload"] .czr-imgup-container' );
+         var $_view_el    = input.container.find('.' + input.control.css_attr.img_upload_container );
 
          if ( ! $_view_el.length )
            return;
 
-         $_view_el.html( view_template( control.params ) );
+         $_view_el.html( view_template( input.control.params ) );
 
          return true;
     },
@@ -2883,50 +2912,70 @@ var CZRDynamicMethods = CZRDynamicMethods || {};
       /// => SETUP SPECIFIC INPUT FOR THIS CONTROL
       /// => ADDING SPECIFIC EVENT FOR THE CONTROL
       ////////////////////////////////////////////////////
-      this.addActions( 'control_event_map',
-        [
-          {
-            trigger   : 'viewContentRendered',
-            actions   : [ 'setupSelect', 'setupColorPicker', 'setupImageUploader' ]
-          }
-        ]
-      );
+      // this.addActions( 'control_event_map',
+      //   [
+      //     {
+      //       trigger   : 'viewContentRendered',
+      //       actions   : [ 'setupSelect', 'setupColorPicker', 'setupImageUploader' ]
+      //     }
+      //   ]
+      // );
 
       control.defaultModel = control.params.default_model;
 
+      //the map describing how to populate each particular select inputs
+      control.select_map = {
+          'background-repeat'     : $.extend( {'': serverControlParams.translatedStrings.selectBgRepeat}, control.params.bg_repeat_options ),
+          'background-attachment' : $.extend( {'': serverControlParams.translatedStrings.selectBgAttachment}, control.params.bg_attachment_options ),
+          'background-position'   : $.extend( {'': serverControlParams.translatedStrings.selectBgPosition}, control.params.bg_position_options ),
+      };
+
     },//initialize
+  });//$.extend
+
+})( wp.customize, jQuery, _);
+
+
+//@extends and overrides CZRStaticMethods.CZR_Input.prototype
+(function (api, $, _) {
+  $.extend( CZRStaticMethods.CZR_Input.prototype , {
 
     setupSelect : function( obj ) {
-      var control      = this,
-          selects      = {
-              'background-repeat'     : $.extend( {'': serverControlParams.translatedStrings.selectBgRepeat}, control.params.bg_repeat_options ),
-              'background-attachment' : $.extend( {'': serverControlParams.translatedStrings.selectBgAttachment}, control.params.bg_attachment_options ),
-              'background-position'   : $.extend( {'': serverControlParams.translatedStrings.selectBgPosition}, control.params.bg_position_options ),
-          };
+      var input      = this,
+          control     = input.control;
 
       //generates the options
-      _.each( selects, function( options, subsetting_name ) {
-          control._buildSelect( obj.dom_el, subsetting_name, options );
-      });
+      if ( _.has(control.select_map, input.id ) )
+        input._buildSelect( control.select_map[input.id] );
 
-      //fire select
-      api.CZRStaticControl.prototype.setupSelect.call(control);
+      $('select', input.container ).not('.no-selecter-js')
+        .each( function() {
+          $(this).selecter({
+          //triggers a change event on the view, passing the newly selected value + index as parameters.
+          // callback : function(value, index) {
+          //   self.triggerSettingChange( window.event || {} , value, index); // first param is a null event.
+          // }
+          });
+      });
     },
 
 
-    _buildSelect: function ( control_dom_el, subsetting_name, options ) {
-      var control      = this,
-          model        = control.czr_Model.get();
+    _buildSelect: function ( select_options ) {
+      var input       = this,
+          control     = input.control,
+          model       = control.czr_Model(input.id).get();
 
-      _.each( options, function( _label, _value ) {
+      console.log('select_options', input.id, select_options );
+
+      _.each( select_options, function( _label, _value ) {
           var _attributes = {
               value : _value,
               html  : _label
             };
-          if ( typeof(model[subsetting_name]) != "undefined" && _value == model[subsetting_name] )
+          if ( _value == input.get() )
             $.extend( _attributes, { selected : "selected" } );
 
-          $( 'select[data-type="'+subsetting_name+'"]', control_dom_el ).append( $('<option>', _attributes) );
+          $( 'select[data-type="'+ input.id +'"]', input.container ).append( $('<option>', _attributes) );
       });
     }
     //ready: function() {}//fired in the parent

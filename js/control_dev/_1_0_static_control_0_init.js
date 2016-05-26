@@ -10,10 +10,11 @@ var CZRStaticMethods = CZRStaticMethods || {};
           ////////////////////////////////////////////////////
           /// SET UP THE MODEL (DB OPTION) AS AN OBSERVABLE VALUE
           ////////////////////////////////////////////////////
-          control.czr_Model = new api.Value();
+          //the model is a collection of inputs, each one has its own view element.
+          control.czr_Model = new api.Values();
 
-          //the model is a collection of sub models, each one has its view element.
-          control.czr_subModel = new api.Values();
+          control.czr_Model.value = new api.Value();
+          //control.czr_Input = new api.Values();
 
           control.defaultModel = {};
 
@@ -28,7 +29,7 @@ var CZRStaticMethods = CZRStaticMethods || {};
             }
             //sets the model value on api ready
             //=> triggers the control rendering + DOM LISTENERS
-            control.czr_Model.set( _.extend( control.defaultModel, api(control.id).get() ) );
+            control.czr_Model.value.set( _.extend( control.defaultModel, api(control.id).get() ) );
 
             //control.setupDOMListeners( control.control_event_map , { dom_el : control.container } );
             control.renderView();
@@ -37,8 +38,9 @@ var CZRStaticMethods = CZRStaticMethods || {};
             $( '.'+control.css_attr.sub_set_wrapper, control.container).each( function(_index) {
               var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index;
 
-              control.czr_subModel.add(_id, new control.CZR_subModel( _id, {
+              control.czr_Model.add( _id, new control.CZR_Input( _id, {
                 id : _id,
+                type : $(this).attr('data-input-type'),
                 value : $(this).find('[data-type]').val(),
                 container : $(this),
                 control : control
@@ -46,7 +48,7 @@ var CZRStaticMethods = CZRStaticMethods || {};
             });
 
             //listens and reacts to the model changes
-            control.czr_Model.callbacks.add(function(to, from) {
+            control.czr_Model.value.callbacks.add(function(to, from) {
               api(control.id).set(to);
             });
           });

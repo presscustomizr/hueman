@@ -2,13 +2,13 @@
 var CZRStaticMethods = CZRStaticMethods || {};
 (function (api, $, _) {
 
-  $.extend( CZRStaticMethods , {
+  $.extend( CZRStaticMethods.CZR_Input.prototype , {
     //////////////////////////////////////////////////
     /// DEFAULT METHODS FOR SETTING UP THE SUB-INPUTS
     //////////////////////////////////////////////////
     setupSelect : function() {
-          var control = this;
-          $('select', control.container ).not('.no-selecter-js')
+          var input = this;
+          $('select', input.container ).not('.no-selecter-js')
             .each( function() {
               $(this).selecter({
               //triggers a change event on the view, passing the newly selected value + index as parameters.
@@ -20,9 +20,9 @@ var CZRStaticMethods = CZRStaticMethods || {};
     },
 
     setupColorPicker : function() {
-          var control  = this;
+          var input  = this;
 
-          $('.' + control.css_attr.multi_input_wrapper, control.container).find('[data-input-type="color"]').find('input').wpColorPicker( {
+          input.container.find('input').wpColorPicker( {
             change : function( e, o ) {
               //if the input val is not updated here, it's not detected right away.
               //weird
@@ -34,39 +34,57 @@ var CZRStaticMethods = CZRStaticMethods || {};
     },
 
 
-    setupImageUploader : function() {
-         var control  = this;
 
-         //do we have an html template and a control container?
-         if ( ! control.container )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    setupImageUploader : function() {
+         var input  = this;
+
+         //do we have an html template and a input container?
+         if ( ! input.container )
            return this;
 
-
-         if ( ! this.renderImageUploaderTemplate() )
+         if ( ! input.renderImageUploaderTemplate() )
            return;
 
          //Bind events
          // Shortcut so that we don't have to use _.bind every time we add a callback.
-         _.bindAll( control, 'czrImgUploadRestoreDefault', 'czrImgUploadRemoveFile', 'czrImgUploadOpenFrame', 'czrImgUploadSelect');
+         _.bindAll( input, 'czrImgUploadRestoreDefault', 'czrImgUploadRemoveFile', 'czrImgUploadOpenFrame', 'czrImgUploadSelect');
 
          // Bind events, with delegation to facilitate re-rendering.
-         control.container.on( 'click keydown', '.upload-button', control.czrImgUploadOpenFrame );
-         control.container.on( 'click keydown', '.thumbnail-image img', control.czrImgUploadOpenFrame );
-         control.container.on( 'click keydown', '.remove-button', control.czrImgUploadRemoveFile );
-         control.container.on( 'click keydown', '.default-button', control.czrImgUploadRestoreDefault );
+         input.container.on( 'click keydown', '.upload-button', input.czrImgUploadOpenFrame );
+         input.container.on( 'click keydown', '.thumbnail-image img', input.czrImgUploadOpenFrame );
+         input.container.on( 'click keydown', '.remove-button', input.czrImgUploadRemoveFile );
+         input.container.on( 'click keydown', '.default-button', input.czrImgUploadRestoreDefault );
 
-         control.setting.bind( function( value, old_val, something ) {
-           //TODO, scope to the actual background image input as at the moment it reacts to watever value changes in the setting
-
-           //Is the following needed?
-           // Send attachment information to the preview for possible use in `postMessage` transport.
-           wp.media.attachment( value ).fetch().done( function() {
-             wp.customize.previewer.send( control.setting.id + '-attachment-data', this.attributes );
-           } );
-
-           //re-render the template
-           control.renderImageUploaderTemplate();
+         input.bind( function( to, from ){
+            input.renderImageUploaderTemplate();
          });
+
+         // control.setting.bind( function( value, old_val, something ) {
+         //   //TODO, scope to the actual background image input as at the moment it reacts to watever value changes in the setting
+
+         //   //Is the following needed?
+         //   // Send attachment information to the preview for possible use in `postMessage` transport.
+         //   wp.media.attachment( value ).fetch().done( function() {
+         //     wp.customize.previewer.send( control.setting.id + '-attachment-data', this.attributes );
+         //   } );
+
+         //   //re-render the template
+         //   control.renderImageUploaderTemplate();
+         // });
     },
 
     /**
@@ -90,38 +108,42 @@ var CZRStaticMethods = CZRStaticMethods || {};
     * Create a media modal select frame, and store it so the instance can be reused when needed.
     */
     czrImgUploadInitFrame: function() {
-         this.frame = wp.media({
+        var input = this,
+            control = input.control;
+
+         input.frame = wp.media({
            button: {
-               text: this.params.button_labels.frame_button
+               text: control.params.button_labels.frame_button
            },
            states: [
                new wp.media.controller.Library({
-                 title:     this.params.button_labels.frame_title,
-                 library:   wp.media.query({ type: this.params.mime_type }),
+                 title:     control.params.button_labels.frame_title,
+                 library:   wp.media.query({ type: control.params.mime_type }),
                  multiple:  false,
                  date:      false
                })
            ]
          });
          // When a file is selected, run a callback.
-         this.frame.on( 'select', this.czrImgUploadSelect );
+         input.frame.on( 'select', input.czrImgUploadSelect );
     },
 
     /**
     * Reset the setting to the default value.
     */
     czrImgUploadRestoreDefault: function( event ) {
+          var input = this,
+            control = input.control;
+
           if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
             return;
           }
           event.preventDefault();
 
-          this.params.attachment = this.params.defaultAttachment;
+          control.params.attachment = control.params.defaultAttachment;
 
-          // Set the Customizer setting; the callback takes care of rendering.
-          var _sub_setting = $('.' + control.css_attr.multi_input_wrapper, control.container)
-                             .find('[data-input-type="upload"] .czr-input input' );
-          _sub_setting.val( this.params.defaultAttachment.url ).trigger('change');
+          // Set the input; the callback takes care of rendering.
+          input.container.find('input').val( control.params.defaultAttachment.url ).trigger('change');
 
     },
 
@@ -131,40 +153,34 @@ var CZRStaticMethods = CZRStaticMethods || {};
     * @param {object} event jQuery Event object
     */
     czrImgUploadRemoveFile: function( event ) {
-          var control = this;
+          var input = this,
+            control = input.control;
 
           if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
             return;
           }
           event.preventDefault();
 
-          this.params.attachment = {};
+          control.params.attachment = {};
 
-          // Set the Customizer setting; the callback takes care of rendering.
-          var _sub_setting = $('.' + control.css_attr.multi_input_wrapper, control.container)
-                             .find('[data-input-type="upload"] .czr-input input' );
-          _sub_setting.val( '' ).trigger('change');
+          input.container.find('input').val( '' ).trigger('change');
     },
 
 
     /**
     * Callback handler for when an attachment is selected in the media modal.
-    * Gets the selected image information, and sets it within the control.
+    * Gets the selected image information, and sets it within the input.
     */
     czrImgUploadSelect: function() {
-          // Get the attachment from the modal frame.
           var node,
-              attachment   = this.frame.state().get( 'selection' ).first().toJSON(),
-              mejsSettings = window._wpmejsSettings || {},
-              control      = this;
+              input = this,
+              control = input.control,
+              attachment   = input.frame.state().get( 'selection' ).first().toJSON(),  // Get the attachment from the modal frame.
+              mejsSettings = window._wpmejsSettings || {};
 
-          this.params.attachment = attachment;
+          control.params.attachment = attachment;
 
-          // Set the Customizer setting; the callback takes care of rendering.
-          var _sub_setting = $('.' + control.css_attr.multi_input_wrapper, control.container)
-                             .find('[data-input-type="upload"] .czr-input input' );
-
-          _sub_setting.val( attachment.id ).trigger('change');
+          input.container.find('input').val( attachment.id ).trigger('change');
     },
 
 
@@ -174,7 +190,7 @@ var CZRStaticMethods = CZRStaticMethods || {};
     /// HELPERS
     //////////////////////////////////////////////////
     renderImageUploaderTemplate: function() {
-         var control  = this;
+         var input  = this;
 
           //do we have view template script?
          if ( 0 === $( '#tmpl-czr-img-uploader-view-content' ).length )
@@ -183,16 +199,15 @@ var CZRStaticMethods = CZRStaticMethods || {};
          var view_template = wp.template('czr-img-uploader-view-content');
 
          //  //do we have an html template and a control container?
-         if ( ! view_template  || ! control.container )
+         if ( ! view_template  || ! input.container )
           return;
 
-         var $_view_el    = $('.' + control.css_attr.multi_input_wrapper, control.container).
-             find('[data-input-type="upload"] .czr-imgup-container' );
+         var $_view_el    = input.container.find('.' + input.control.css_attr.img_upload_container );
 
          if ( ! $_view_el.length )
            return;
 
-         $_view_el.html( view_template( control.params ) );
+         $_view_el.html( view_template( input.control.params ) );
 
          return true;
     },

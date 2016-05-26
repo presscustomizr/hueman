@@ -13,50 +13,70 @@ var CZRBackgroundMethods = CZRBackgroundMethods || {};
       /// => SETUP SPECIFIC INPUT FOR THIS CONTROL
       /// => ADDING SPECIFIC EVENT FOR THE CONTROL
       ////////////////////////////////////////////////////
-      this.addActions( 'control_event_map',
-        [
-          {
-            trigger   : 'viewContentRendered',
-            actions   : [ 'setupSelect', 'setupColorPicker', 'setupImageUploader' ]
-          }
-        ]
-      );
+      // this.addActions( 'control_event_map',
+      //   [
+      //     {
+      //       trigger   : 'viewContentRendered',
+      //       actions   : [ 'setupSelect', 'setupColorPicker', 'setupImageUploader' ]
+      //     }
+      //   ]
+      // );
 
       control.defaultModel = control.params.default_model;
 
+      //the map describing how to populate each particular select inputs
+      control.select_map = {
+          'background-repeat'     : $.extend( {'': serverControlParams.translatedStrings.selectBgRepeat}, control.params.bg_repeat_options ),
+          'background-attachment' : $.extend( {'': serverControlParams.translatedStrings.selectBgAttachment}, control.params.bg_attachment_options ),
+          'background-position'   : $.extend( {'': serverControlParams.translatedStrings.selectBgPosition}, control.params.bg_position_options ),
+      };
+
     },//initialize
+  });//$.extend
+
+})( wp.customize, jQuery, _);
+
+
+//@extends and overrides CZRStaticMethods.CZR_Input.prototype
+(function (api, $, _) {
+  $.extend( CZRStaticMethods.CZR_Input.prototype , {
 
     setupSelect : function( obj ) {
-      var control      = this,
-          selects      = {
-              'background-repeat'     : $.extend( {'': serverControlParams.translatedStrings.selectBgRepeat}, control.params.bg_repeat_options ),
-              'background-attachment' : $.extend( {'': serverControlParams.translatedStrings.selectBgAttachment}, control.params.bg_attachment_options ),
-              'background-position'   : $.extend( {'': serverControlParams.translatedStrings.selectBgPosition}, control.params.bg_position_options ),
-          };
+      var input      = this,
+          control     = input.control;
 
       //generates the options
-      _.each( selects, function( options, subsetting_name ) {
-          control._buildSelect( obj.dom_el, subsetting_name, options );
-      });
+      if ( _.has(control.select_map, input.id ) )
+        input._buildSelect( control.select_map[input.id] );
 
-      //fire select
-      api.CZRStaticControl.prototype.setupSelect.call(control);
+      $('select', input.container ).not('.no-selecter-js')
+        .each( function() {
+          $(this).selecter({
+          //triggers a change event on the view, passing the newly selected value + index as parameters.
+          // callback : function(value, index) {
+          //   self.triggerSettingChange( window.event || {} , value, index); // first param is a null event.
+          // }
+          });
+      });
     },
 
 
-    _buildSelect: function ( control_dom_el, subsetting_name, options ) {
-      var control      = this,
-          model        = control.czr_Model.get();
+    _buildSelect: function ( select_options ) {
+      var input       = this,
+          control     = input.control,
+          model       = control.czr_Model(input.id).get();
 
-      _.each( options, function( _label, _value ) {
+      console.log('select_options', input.id, select_options );
+
+      _.each( select_options, function( _label, _value ) {
           var _attributes = {
               value : _value,
               html  : _label
             };
-          if ( typeof(model[subsetting_name]) != "undefined" && _value == model[subsetting_name] )
+          if ( _value == input.get() )
             $.extend( _attributes, { selected : "selected" } );
 
-          $( 'select[data-type="'+subsetting_name+'"]', control_dom_el ).append( $('<option>', _attributes) );
+          $( 'select[data-type="'+ input.id +'"]', input.container ).append( $('<option>', _attributes) );
       });
     }
     //ready: function() {}//fired in the parent
