@@ -20,13 +20,16 @@
   api.CZRLayoutControl         = api.Control.extend( CZRLayoutSelectMethods || {} );
   api.CZRMultiplePickerControl = api.Control.extend( CZRMultiplePickerMethods || {} );
 
+  api.CZRSektionsControl       = api.CZRDynamicControl.extend( CZRSektionsMethods || {} );
+
   $.extend( api.controlConstructor, {
     czr_upload     : api.CZRUploadControl,
     czr_sidebars   : api.CZRWidgetAreasControl,
     czr_socials    : api.CZRSocialControl,
     czr_multiple_picker : api.CZRMultiplePickerControl,
     czr_layouts    : api.CZRLayoutControl,
-    czr_background : api.CZRBackgroundControl
+    czr_background : api.CZRBackgroundControl,
+    czr_sektions   : api.CZRSektionsControl
   });
 
   if ( 'function' == typeof api.CroppedImageControl ) {

@@ -114,6 +114,18 @@
 
 
 
+/* SEKTIONS AND BLOCKS */
+.czr-block {
+  width: 88%;
+  float: left;
+  padding: 0 5%;
+  border: 2px dotted #aaa;
+  text-align: center;
+}
+
+
+
+
 
 
 /* LAYOUT */
