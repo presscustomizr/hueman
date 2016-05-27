@@ -1,3 +1,4 @@
+
 (function (api, $, _) {
   var $_nav_section_container,
       translatedStrings = serverControlParams.translatedStrings || {};

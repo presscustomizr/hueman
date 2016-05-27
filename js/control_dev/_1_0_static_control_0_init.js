@@ -1,59 +1,52 @@
 //extends api.CZRBaseControl
 var CZRStaticMethods = CZRStaticMethods || {};
-(function (api, $, _) {
+$.extend( CZRStaticMethods , {
+  initialize: function( id, options ) {
+        var control = this;
+        api.CZRBaseControl.prototype.initialize.call( control, id, options );
+        //the model is a collection of inputs, each one has its own view element.
+        control.czr_Model = new api.Values();
+        control.czr_Model.val = new api.Value();
 
-  $.extend( CZRStaticMethods , {
-    initialize: function( id, options ) {
-          var control = this;
-          api.CZRBaseControl.prototype.initialize.call( control, id, options );
+        control.defaultModel = {};
 
-          ////////////////////////////////////////////////////
-          /// SET UP THE MODEL (DB OPTION) AS AN OBSERVABLE VALUE
-          ////////////////////////////////////////////////////
-          //the model is a collection of inputs, each one has its own view element.
-          control.czr_Model = new api.Values();
-
-          control.czr_Model.value = new api.Value();
-          //control.czr_Input = new api.Values();
-
-          control.defaultModel = {};
-
-    },//initialize
+        //this can be overriden by extended classes to add and overrides methods
+        control.inputConstructor = api.CZRInput;
+  },//initialize
 
 
-    ready: function() {
-          var control  = this;
-          api.bind( 'ready', function() {
-            if ( _.isEmpty(control.defaultModel) || _.isUndefined(control.defaultModel) ) {
-              throw new Error('No default model found in multi input control ' + control.id + '. Aborting');
-            }
-            //sets the model value on api ready
-            //=> triggers the control rendering + DOM LISTENERS
-            control.czr_Model.value.set( _.extend( control.defaultModel, api(control.id).get() ) );
+  ready: function() {
+        var control  = this;
+        api.bind( 'ready', function() {
 
-            //control.setupDOMListeners( control.control_event_map , { dom_el : control.container } );
-            control.renderView();
+              if ( _.isEmpty(control.defaultModel) || _.isUndefined(control.defaultModel) ) {
+                throw new Error('No default model found in multi input control ' + control.id + '. Aborting');
+              }
+              //sets the model value on api ready
+              //=> triggers the control rendering + DOM LISTENERS
+              control.czr_Model.val.set( _.extend( control.defaultModel, api(control.id).get() ) );
 
-            //creates the subModels based on the rendered items
-            $( '.'+control.css_attr.sub_set_wrapper, control.container).each( function(_index) {
-              var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index;
+              //control.setupDOMListeners( control.control_event_map , { dom_el : control.container } );
+              control.renderView();
 
-              control.czr_Model.add( _id, new control.CZR_Input( _id, {
-                id : _id,
-                type : $(this).attr('data-input-type'),
-                value : $(this).find('[data-type]').val(),
-                container : $(this),
-                control : control
-              } ) );
-            });
+              //creates the subModels based on the rendered items
+              $( '.'+control.css_attr.sub_set_wrapper, control.container).each( function(_index) {
+                var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index;
 
-            //listens and reacts to the model changes
-            control.czr_Model.value.callbacks.add(function(to, from) {
-              api(control.id).set(to);
-            });
-          });
-    }
+                control.czr_Model.add( _id, new control.inputConstructor( _id, {
+                  id : _id,
+                  type : $(this).attr('data-input-type'),
+                  value : $(this).find('[data-type]').val(),
+                  container : $(this),
+                  control : control
+                } ) );
+              });
 
-  });//$.extend
+              //listens and reacts to the model changes
+              control.czr_Model.val.callbacks.add(function(to, from) {
+                api(control.id).set(to);
+              });
+        });
+  }
 
-})( wp.customize, jQuery, _);
+});//$.extend

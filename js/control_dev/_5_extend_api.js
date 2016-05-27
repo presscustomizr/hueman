@@ -1,11 +1,12 @@
-
 (function (api, $, _) {
+  //Add the DOM helpers (addAction, ...) to the Control Base Class + Input Base Class
+  $.extend( CZRBaseControlMethods, api.CZR_Dom || {} );
+  $.extend( CZRInputMethods, api.CZR_Dom || {} );
 
-  /**
-   * @constructor
-   * @augments wp.customize.Control
-   * @augments wp.customize.Class
-   */
+  //INPUTS
+  api.CZRInput                 = api.Value.extend( CZRInputMethods || {} );
+
+  //CONTROLS
   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMethods || {} );
   api.CZRDynamicControl        = api.CZRBaseControl.extend( CZRDynamicMethods || {} );
   api.CZRStaticControl         = api.CZRBaseControl.extend( CZRStaticMethods || {} );

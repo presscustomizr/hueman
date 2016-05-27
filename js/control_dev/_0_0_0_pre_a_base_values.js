@@ -1,3 +1,4 @@
+var api = api || wp.customize, $ = $ || jQuery;
 (function (api, $, _) {
   /*****************************************************************************
   * CAPTURE PREVIEW INFORMATIONS ON REFRESH + REACT TO THEM

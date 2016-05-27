@@ -1,3 +1,4 @@
+
 var CZRCroppedImageMethods = CZRCroppedImageMethods || {};
 
 (function (api, $, _) {
