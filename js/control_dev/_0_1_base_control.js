@@ -32,6 +32,8 @@ $.extend( CZRBaseControlMethods, {
   },
 
   _truncate : function( string, n, useWordBoundary ){
+          if ( _.isUndefined(string) )
+            return '';
           var isTooLong = string.length > n,
               s_ = isTooLong ? string.substr(0,n-1) : string;
               s_ = (useWordBoundary && isTooLong) ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
