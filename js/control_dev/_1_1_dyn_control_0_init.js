@@ -175,6 +175,7 @@ $.extend( CZRDynamicMethods, {
           //1) only needed if transport is postMessage, because is triggered by wp otherwise
           //2) only needed when : add, remove, sort model(s).
           var is_model_update = ( _.size(from) == _.size(to) ) && ! _.isEmpty( _.difference(from, to) );
+
           if ( 'postMessage' == api(control.id).transport && ! is_model_update && ! api.czr_has_part_refresh( control.id ) ) {
             control.previewer.refresh();
           }

@@ -86,7 +86,7 @@ $.extend( CZRDynamicMethods, {
   writeViewTitle : function( obj ) {
     var control = this;
         _model = _.clone(obj.model);
-        _title = this._capitalize( _model.title );
+        _title = _.has(_model, 'title')? this._capitalize( _model.title ) : _model.id;
     _title = this._truncate(_title, 20);
     $( '.' + this.css_attr.view_title , '#' + obj.model.id ).text(_title );
 
