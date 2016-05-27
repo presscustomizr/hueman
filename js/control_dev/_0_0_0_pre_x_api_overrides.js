@@ -83,15 +83,17 @@
   * A SCOPE AWARE PREVIEWER
   *****************************************************************************/
   //PREPARE THE SCOPE AWARE PREVIEWER
-  api.czr_isPreviewerScopeAware = new api.Value();
-  api.czr_isPreviewerScopeAware.set(false);
-  var _old_preview = api.Setting.prototype.preview;
-  api.Setting.prototype.preview = function() {
-    if ( ! api.czr_isPreviewerScopeAware.get() )
-      return this.previewer.refresh();
-    //as soon as the previewer is setup, let's behave as usual
-    _old_preview.call(this);
-  };
+  if ( serverControlParams.isCtxEnabled ) {
+    api.czr_isPreviewerScopeAware = new api.Value();
+    api.czr_isPreviewerScopeAware.set(false);
+    var _old_preview = api.Setting.prototype.preview;
+    api.Setting.prototype.preview = function() {
+      if ( ! api.czr_isPreviewerScopeAware.get() )
+        return this.previewer.refresh();
+      //as soon as the previewer is setup, let's behave as usual
+      _old_preview.call(this);
+    };
+  }
 
 
   api.bind('ready', function() {
