@@ -17,6 +17,7 @@ function hu_set_setting_type( $setting ) {
     $setting -> type = 'option';
   else
     $setting -> type = $_POST['dyn_type'];
+  echo $setting -> type;
 }
 
 //hook : customize_update_trans
@@ -43,7 +44,26 @@ function hu_extract_opt_name( $setting_id ) {
 
 
 
+/*****************************************************
+* AJAX
+*****************************************************/
+add_action( 'wp_ajax_' . HU_OPT_AJAX_ACTION , 'hu_ajax_get_opt' );
 
+
+/**
+ * Ajax handler for getting an attachment.
+ *
+ * @since 3.5.0
+ */
+function hu_ajax_get_opt() {
+  if ( ! isset( $_REQUEST['opt_name'] ) || ! isset( $_REQUEST['dyn_type'] ) || ! isset( $_REQUEST['stylesheet'] ) )
+    wp_send_json_error();
+  if ( ! current_user_can( 'edit_theme_options' ) )
+    wp_send_json_error();
+
+  $_trans = get_transient( $_REQUEST['opt_name'] );
+  wp_send_json_success( $_trans );
+}
 
 
 
@@ -86,18 +106,34 @@ function hu_get_ctx_opt( $_opt_val , $opt_name , $opt_group, $_default_val ) {
   $_meta_opts = array();
   $_trans_opts = array();
 
+  //WHEN NOT CUSTOMIZING
   $meta_type = hu_get_ctx( 'meta_type', true );
+  //WHEN CUSTOMIZING, ALWAYS GET THE DYNAMIC META TYPE
+  if ( hu_is_customize_preview_frame() && isset($_POST['dyn_type']) )
+    $meta_type = $_POST['dyn_type'];
 
-  if ( hu_can_have_meta_opt( $meta_type ) )
-    $_meta_opts = hu_get_meta_opt( $opt_name, $meta_type );
-  elseif ( hu_can_have_trans_opt( $meta_type ) )
-    $_trans_opts = hu_get_trans_opt( $opt_name, $meta_type );
+  //CUSTOMIZING
+  if ( hu_is_customize_preview_frame() ) {
+    if ( 'option' == $meta_type ) {
+      return $_opt_val;
+    } elseif( hu_has_customized_val( $opt_name ) ) {
+      return hu_get_customized_val( $opt_name );
+    } else {
+      return $_opt_val;//always fallback to the global option val (or default if global is not set)
+    }
+  }
+  else {// NOT CUSTOMIZING
+      if ( hu_can_have_meta_opt( $meta_type ) )
+        $_meta_opts = hu_get_meta_opt( $opt_name, $meta_type );
+      elseif ( hu_can_have_trans_opt( $meta_type ) )
+        $_trans_opts = hu_get_trans_opt( $opt_name, $meta_type );
 
-  //priority
-  if ( isset($_meta_opts[$opt_name]) )
-    $_new_val = $_meta_opts[$opt_name];
-  elseif ( isset($_trans_opts[$opt_name]) )
-    $_new_val = $_trans_opts[$opt_name];
+      //priority
+      if ( isset($_meta_opts[$opt_name]) )
+        $_new_val = $_meta_opts[$opt_name];
+      elseif ( isset($_trans_opts[$opt_name]) )
+        $_new_val = $_trans_opts[$opt_name];
+  }
 
   return $_new_val;
 }
@@ -139,7 +175,14 @@ function hu_is_customized_dyn_type( $meta_type ) {
   return $meta_type == $_POST['dyn_type'];
 }
 
+//@return bool
+function hu_has_customized_val( $opt_name ) {
+  $_cust_opt_name = '[' . HU_THEME_OPTIONS . '['. $opt_name . ']]';
+  $_customized = hu_get_czr_post_values('customized');
+  return array_key_exists( $_cust_opt_name, $_customized );
+}
 
+//@return option val : can be any type of variable.
 function hu_get_customized_val( $opt_name ) {
   $_cust_opt_name = '[' . HU_THEME_OPTIONS . '['. $opt_name . ']]';
   $_customized = hu_get_czr_post_values('customized');
@@ -194,29 +237,33 @@ function hu_get_czr_post_values() {
 * FRONT END CONTEXT
 *****************************************************/
 //hook : customize_preview_init
-add_action( 'wp_footer', 'hu_print_ctx', 30 );
-function hu_print_ctx() {
+add_action( 'wp_footer', 'hu_print_scopes', 30 );
+function hu_print_scopes() {
   if ( ! hu_is_customize_preview_frame() )
     return;
   global $wp_query, $wp_customize;
   $_meta_type = hu_get_ctx( 'meta_type', true );
 
-  $_czr_ctx = array(
+  $_czr_scopes = array(
     'local' => array(
-      'ctx'     => hu_get_ctx(),
-      'db_type' => hu_get_db_type( $_meta_type ),
-      'opt_name'=> hu_get_opt_name()
+      'ctx'         => hu_get_ctx(),
+      'dyn_type'    => hu_get_dyn_type( $_meta_type ),
+      'opt_name'    => hu_get_opt_name(),
+      'is_default'  => false,
+      'is_winner'   => true
     ),
     'global' => array(
-      'ctx'     => '_all_',
-      'db_type' => 'option',
-      'opt_name'=> ''
+      'ctx'         => '_all_',
+      'dyn_type'    => 'option',
+      'opt_name'    => HU_THEME_OPTIONS,
+      'is_default'  => true,
+      'is_winner'   => false
     )
   );
   ?>
     <script type="text/javascript" id="czr-print-ctx">
       (function ( _export ){
-        _export.czr_ctx   = <?php echo wp_json_encode( $_czr_ctx ) ?>;
+        _export.czr_scopes   = <?php echo wp_json_encode( $_czr_scopes ) ?>;
       })( _wpCustomizeSettings );
     </script>
   <?php
@@ -224,7 +271,7 @@ function hu_print_ctx() {
 
 
 //map ctx and db opt type
-function hu_get_db_type( $meta_type ) {
+function hu_get_dyn_type( $meta_type ) {
   $_map = array(
     '_post'    => 'post_meta',
     '_tax'     => 'term_meta',

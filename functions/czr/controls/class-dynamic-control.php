@@ -42,7 +42,7 @@ if ( ! class_exists( 'HU_Customize_Dynamic_Control' ) ) :
 
 
     public function hu_print_control_templates() {
-      $css_attr = $this -> css_attr
+      $css_attr = HU_customize::$instance -> css_attr;
       //Render the control wrapper
       //we'll inject subviews in it
       //this template is rendered by default in customize-control.js by the api.Control.renderContent() method
@@ -75,7 +75,7 @@ if ( ! class_exists( 'HU_Customize_Dynamic_Control' ) ) :
 
 
     public function hu_print_view_template() {
-      $css_attr = $this -> css_attr
+      $css_attr = HU_customize::$instance -> css_attr;
         //the following template is a "sub view"
         //it's rendered :
         //1) on customizer start, depending on what is fetched from the db
@@ -97,7 +97,7 @@ if ( ! class_exists( 'HU_Customize_Dynamic_Control' ) ) :
     }
 
     function hu_print_alert_template() {
-      $css_attr = $this -> css_attr
+      $css_attr = HU_customize::$instance -> css_attr;
       ?>
         <script type="text/html" id="tmpl-customize-control-<?php echo $this->type; ?>-alert">
           <p><?php _e('Are you sure you want to remove : <strong>{{ data.title }} ?</strong>', 'hueman'); ?></p>

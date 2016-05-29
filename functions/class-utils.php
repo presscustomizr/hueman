@@ -263,7 +263,8 @@ if ( ! class_exists( 'HU_utils' ) ) :
           'last_update_notice',
           'last_update_notice_pro',
           'sidebar-areas',
-          'social-links'
+          'social-links',
+          'body-background'
         )
       );
     }

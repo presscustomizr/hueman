@@ -236,43 +236,25 @@ a,
         //for users of wp.org version prior to 3.0+, this option is an hex color string.
         if ( is_string($body_bg) ) {
           $styles .= 'body { background-color: ' . $body_bg . '; }'."\n";
-        } elseif ( is_array($body_bg) && isset($body_bg['background-color']) ) {
-          $styles .= 'body { background-color: '. $body_bg['background-color'] . '; }'."\n";
+        } elseif ( is_array($body_bg) ) {
+          //set-up sub-options
+          foreach ( array( 'color', 'image', 'attachment', 'position', 'size', 'repeat' ) as $prop ) {
+            $body_bg[ "background-{$prop}" ] = isset( $body_bg[ "background-{$prop}" ] ) ? $body_bg[ "background-{$prop}" ] : '';
+          }
+          //background_image retrieve src
+          $body_bg[ 'background-image' ]   = hu_get_img_src( $body_bg[ 'background-image' ] );
+
+          //set-up style
+          if ( $body_bg[ 'background-image' ] && $body_bg[ 'background-size' ] == "" ) {
+            $styles .= 'body { background: '.$body_bg['background-color'].' url('.$body_bg['background-image'].') '.$body_bg['background-attachment'].' '.$body_bg['background-position'].' '.$body_bg['background-repeat'].'; }'."\n";
+          }
+          elseif ( $body_bg[ 'background-image' ] && $body_bg[ 'background-size' ] != "" ) {
+            $styles .= 'body { background: '.$body_bg['background-color'].' url('.$body_bg['background-image'].') '.$body_bg['background-attachment'].' '.$body_bg['background-position'].' '.$body_bg['background-repeat'].'; background-size: '.$body_bg['background-size'].'; }'."\n";
+          }
+          elseif ( $body_bg['background-color'] ) {
+            $styles .= 'body { background-color: '.$body_bg['background-color'].'; }'."\n";
+          }
         }
-        // elseif ( is_array($body_bg) ) {
-        //   $body_bg = wp_parse_args(
-        //     $body_bg,
-        //     array(
-        //       'background-color'      => "#eaeaea",
-        //       'background-image'      => false,
-        //       'background-position'   => '',
-        //       'background-attachment' => '',
-        //       'background-repeat'     => '',
-        //       'backgrount-size'       => ''
-        //     )
-        //   );
-
-        //   $body_color       = $body_bg['background-color'];
-        //   $body_image       = $body_bg['background-image'];
-        //   $body_position    = $body_bg['background-position'];
-        //   $body_attachment  = $body_bg['background-attachment'];
-        //   $body_repeat      = $body_bg['background-repeat'];
-        //   $body_size        = $body_bg['background-size'];
-
-        //   if ( false !== $body_image && $body_size == "" ) {
-        //     $styles .= 'body { background: '.$body_color.' url('.$body_image.') '.$body_attachment.' '.$body_position.' '.$body_repeat.'; }'."\n";
-        //   } elseif ( false !== $body_image && $body_size != "" ) {
-        //     $styles .= 'body { background: '.$body_color.' url('.$body_image.') '.$body_attachment.' '.$body_position.' '.$body_repeat.'; background-size: '.$body_size.'; }'."\n";
-        //   } elseif ( '' != $body_color ) {
-        //     $styles .= 'body { background-color: '.$body_color.'; }'."\n";
-        //   } else {
-        //     $styles .= '';
-        //   }
-        // }
-
-
-
-
       }
 
       $styles .= '</style>'."\n";

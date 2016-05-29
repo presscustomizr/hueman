@@ -168,8 +168,8 @@ if ( ! function_exists( 'hu_site_title' ) ) {
 
   function hu_site_title() {
     // Text or image?
-    if ( false != hu_get_img_src( 'custom-logo' ) ) {
-      $logo = '<img src="'. hu_get_img_src( 'custom-logo' ) . '" alt="'.get_bloginfo('name').'">';
+    if ( false != hu_get_img_src_from_option( 'custom-logo' ) ) {
+      $logo = '<img src="'. hu_get_img_src_from_option( 'custom-logo' ) . '" alt="'.get_bloginfo('name').'">';
     } else {
       $logo = get_bloginfo('name');
     }

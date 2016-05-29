@@ -20,7 +20,7 @@ if ( ! class_exists( 'HU_Customize_Socials' ) ) :
 
 
     public function hu_print_pre_add_view_template() {
-      $css_attr = $this -> css_attr
+      $css_attr = HU_customize::$instance -> css_attr;
       ?>
 
       <script type="text/html" id="tmpl-customize-control-<?php echo $this->type; ?>-pre-add-view-content">
@@ -46,7 +46,7 @@ if ( ! class_exists( 'HU_Customize_Socials' ) ) :
 
 
     public function hu_print_view_content_template() {
-      $css_attr = $this -> css_attr
+      $css_attr = HU_customize::$instance -> css_attr;
         //the following template is a "sub view"
         //it's rendered :
         //1) on customizer start, depending on what is fetched from the db

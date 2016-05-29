@@ -128,7 +128,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     //This section has been previously removed from its initial location and added back in the General Settings panel
     //Important Note :
     //IF WP VERSION >= 4.3 AND SITE_ICON SETTING EXISTS
-    //=> The following FAV ICON CONTROL is removed (@see class-admin-customize.php)
+    //=> The following FAV ICON CONTROL is removed (@see class-czr-init.php)
     function hu_site_identity_sec() {
       return array(
           'favicon'  => array(
@@ -228,17 +228,16 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           ),
           'body-background' => array(
                 //'default'     => array(),
-                'default'       => '#eaeaea',
-                //'control'     => 'HU_Body_Background_Control',
-                'control'     => 'WP_Customize_Color_Control',
+                'default'       => array( 'background-color' => '#eaeaea' ),
+                'control'     => 'HU_Body_Background_Control',
                 'label'       => __( 'Body Background' , 'hueman' ),
                 'description' => __('Set the website background color', 'hueman'),
                 'section'     => 'general_design_sec',
-                //'type'        => 'czr_multi_input' ,
-                'type'        => 'color',
-                'sanitize_callback'    => array( $this, 'hu_sanitize_bg_color' ),
-                'sanitize_js_callback' => array( $this, 'hu_maybe_hash_bg_hex_color' ),
-                'transport'   => 'postMessage',
+                'type'        => 'czr_background' ,
+                //'type'        => 'color',
+                // 'sanitize_callback'    => array( $this, 'hu_sanitize_body_bg' ),@todo
+                // 'sanitize_js_callback' => array( $this, 'hu_sanitize_js_body_bg' ),@todo
+                //'transport'   => 'postMessage',
                 //'notice'        => __('Set background color and/or upload your own background image.', 'hueman')
           ),
           'color-topbar' => array(
@@ -1371,8 +1370,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     ************ TEMPORARY
     *********************************************************************************************/
     //temporary fix for the background color before final move in the customizer
-    function hu_sanitize_bg_color( $color ) {
-      if ( is_array($color) ) {
+    function hu_sanitize_bg_color( $value ) {
+      if ( is_array($value) ) {
         $color = isset($color['body-background']) ? $color['body-background'] : '#eaeaea';
       }
       if ( $unhashed = sanitize_hex_color_no_hash( $color ) )
@@ -1393,7 +1392,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
      * @param string $color
      * @return string
      */
-    function hu_maybe_hash_bg_hex_color( $color ) {
+    function hu_sanitize_js_body_bg( $color ) {
       if ( is_array($color) ) {
         $color = isset($color['body-background']) ? $color['body-background'] : '#eaeaea';
       }
