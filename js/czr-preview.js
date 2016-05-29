@@ -4,7 +4,7 @@
  * Contains handlers to make Theme Customizer preview reload changes asynchronously.
  * Things like site title, description, and background color changes
  */
-( function( $, _ ) {
+( function( api, $, _ ) {
 
   //HOW DOES THE PREVIEW POST MESSAGE REFRESH WORKS ?
   //the control panel sends message with the postMessage jQuery method
@@ -31,10 +31,14 @@
   // });
 
 
+  api.CZR_preview = api.Class.extend( {
 
 
-  var api       = wp.customize,
-      $_body    = $( 'body' ),
+
+
+  });//api.Class.extend
+
+  var $_body    = $( 'body' ),
       _wp_sets  = ['blogname', 'blogdescription', 'background_color'],
       _setting_cbs = {},
       _subsetting_cbs = {};//for nested sub settings
@@ -215,4 +219,4 @@
     return _pattern.test( _url );
   };
 
-} )( jQuery, _ );
+} )( wp.customize, jQuery, _ );
