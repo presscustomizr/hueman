@@ -23,7 +23,7 @@ module.exports = {
   },
 	czr_control_js : {
 		files : ['<%= paths.czr_assets %>fmk/js/control_dev/*.js'],
-		tasks : ['jshint:those' , 'concat:czr_control_js', 'uglify:czr_control_js', 'copy:czr_js' ],
+		tasks : ['jshint:those' , 'concat:czr_control_js', 'comments:czr_control_js', 'uglify:czr_control_js', 'copy:czr_js' ],
 	},
 	//Other admin js assets are jshinted on change
 	czr_preview_js : {

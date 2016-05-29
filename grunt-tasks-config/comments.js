@@ -1,5 +1,5 @@
 module.exports = {
-  customize_control_js : {
+  czr_control_js : {
     // Target-specific file lists and/or options go here.
     options: {
         singleline: true,

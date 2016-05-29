@@ -363,7 +363,7 @@ if ( ! class_exists( 'OT_Loader' ) ) {
         'ot-functions-admin',
         'ot-functions-option-types',
         'ot-functions-compat',
-        'ot-settings-api'
+        //'ot-settings-api'
       );
 
       /* include the meta box api */
@@ -373,17 +373,17 @@ if ( ! class_exists( 'OT_Loader' ) ) {
 
       /* include the post formats api */
       if ( OT_META_BOXES == true && OT_POST_FORMATS == true ) {
-        $files[] = 'ot-post-formats-api';
+        //$files[] = 'ot-post-formats-api';
       }
 
       /* include the settings & docs pages */
       if ( OT_SHOW_PAGES == true ) {
-        $files[] = 'ot-functions-settings-page';
-        $files[] = 'ot-functions-docs-page';
+        //$files[] = 'ot-functions-settings-page';
+        //$files[] = 'ot-functions-docs-page';
       }
 
       /* include the cleanup api */
-      $files[] = 'ot-cleanup-api';
+      //$files[] = 'ot-cleanup-api';
 
       /* require the files */
       foreach ( $files as $file ) {
@@ -391,7 +391,7 @@ if ( ! class_exists( 'OT_Loader' ) ) {
       }
 
       /* Registers the Theme Option page */
-      add_action( 'init', 'ot_register_theme_options_page' );
+      //add_action( 'init', 'ot_register_theme_options_page' );
 
       /* Registers the Settings page */
       if ( OT_SHOW_PAGES == true ) {
@@ -464,19 +464,19 @@ if ( ! class_exists( 'OT_Loader' ) ) {
       add_action( 'admin_bar_menu', 'ot_register_theme_options_admin_bar_menu', 999 );
 
       /* prepares the after save do_action */
-      add_action( 'admin_init', 'ot_after_theme_options_save', 1 );
+      //add_action( 'admin_init', 'ot_after_theme_options_save', 1 );
 
       /* default settings */
-      add_action( 'admin_init', 'ot_default_settings', 2 );
+      //add_action( 'admin_init', 'ot_default_settings', 2 );
 
       /* add xml to upload filetypes array */
       add_action( 'admin_init', 'ot_add_xml_to_upload_filetypes', 3 );
 
       /* import */
-      add_action( 'admin_init', 'ot_import', 4 );
+      //add_action( 'admin_init', 'ot_import', 4 );
 
       /* export */
-      add_action( 'admin_init', 'ot_export', 5 );
+      //add_action( 'admin_init', 'ot_export', 5 );
 
       /* save settings */
       add_action( 'admin_init', 'ot_save_settings', 6 );
@@ -614,7 +614,7 @@ if ( ! class_exists( 'OT_Loader' ) ) {
      * AJAX utility function for adding a new section.
      */
     public function add_section() {
-      echo ot_sections_view( ot_settings_id() . '[sections]', $_REQUEST['count'] );
+      //echo ot_sections_view( ot_settings_id() . '[sections]', $_REQUEST['count'] );
       die();
     }
 
@@ -784,7 +784,7 @@ if ( ! class_exists( 'OT_Loader' ) ) {
 
         // Once is enough.
         remove_filter( 'gettext', array( $this, 'ot_change_image_button' ) );
-        return apply_filters( 'ot_upload_text', __( 'Send to OptionTree', 'option-tree' ) );
+        return apply_filters( 'ot_upload_text', 'Send to OptionTree' );
 
       }
 
