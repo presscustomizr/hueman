@@ -49,7 +49,8 @@ $.extend( CZRStaticMethods , {
         if ( 0 === $( '#tmpl-' + control.viewContentTemplateEl ).length )
           return this;
 
-        var  view_content_template = wp.template( control.viewContentTemplateEl );
+        var view_content_template = wp.template( control.viewContentTemplateEl ),
+            current_model = _.clone(control.czr_Model.val.get());
 
         //do we have an html template and a control container?
         if ( ! view_content_template || ! control.container )
@@ -58,8 +59,8 @@ $.extend( CZRStaticMethods , {
         //the view content
         //we inject the model + additional params like default color in the template
         return $( view_content_template(
-            _.extend(
-              control.czr_Model.val.get(),
+            $.extend(
+              current_model,
               { defaultBgColor : control.defaultModel['background-color'] || '#eaeaea' }
             )
           )

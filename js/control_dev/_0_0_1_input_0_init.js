@@ -15,7 +15,8 @@ $.extend( CZRInputMethods , {
         //write the options as properties, name is included
         $.extend( input, options || {} );
 
-        input.set(options.value);
+        //initialize to thr provided value
+        input.set(options.input_value);
 
         //setup the appropriate input based on the type
         input.type_map = {
@@ -48,6 +49,8 @@ $.extend( CZRInputMethods , {
     ready : function() {
         var input = this;
         input.setupDOMListeners( input.input_event_map , { dom_el : input.container }, input );
+
+        //sets the input value to the one
 
         //callbacks
         input.callbacks.add(function( to, from) {

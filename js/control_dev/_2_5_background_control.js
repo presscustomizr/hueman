@@ -53,7 +53,6 @@ $.extend( CZRBackgroundMethods , {
 
           ready : function() {
             var input = this;
-            //console.log('api.CZRInput.prototype.initialize', api.CZRInput.prototype.initialize );
 
             input.addActions(
               'input_event_map',
