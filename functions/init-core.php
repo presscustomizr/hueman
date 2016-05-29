@@ -141,6 +141,88 @@ function hu_user_started_before_version( $_ver ) {
 
 
 
+
+/* ------------------------------------------------------------------------- *
+ *  Various Helpers
+/* ------------------------------------------------------------------------- */
+/**
+* helper
+* Check if we are displaying posts lists or front page
+* @return  bool
+*/
+function hu_is_home() {
+  //get info whether the front page is a list of last posts or a page
+  return ( is_home() && ( 'posts' == get_option( 'show_on_front' ) || 'nothing' == get_option( 'show_on_front' ) ) ) || is_front_page();
+}
+
+/**
+* helper
+* States if the current context is the blog page from a WP standpoint
+* @return  bool
+*/
+function hu_is_blogpage() {
+  return is_home() && ! is_front_page();
+}
+
+/**
+* helper
+* @return  bool
+*/
+function hu_has_social_links() {
+  $_socials = hu_get_option('social-links');
+  return ! empty( $_socials ) && false != $_socials;
+}
+
+/**
+* helper ensuring backward compatibility with the previous option system
+* @return img src string
+*/
+function hu_get_img_src( $img ) {
+  if ( ! $img )
+    return;
+
+  $_image_src     = '';
+  $_width         = false;
+  $_height        = false;
+  $_attachment_id = '';
+
+  //Get the img src
+  if ( is_numeric($img) ) {
+    $_attachment_id     = $img;
+    $_attachment_data   = apply_filters( "hu_attachment_img" , wp_get_attachment_image_src( $_attachment_id, 'full' ), $_attachment_id );
+    $_img_src           = $_attachment_data[0];
+    $_width             = ( isset($_attachment_data[1]) && $_attachment_data[1] > 1 ) ? $_attachment_data[1] : $_width;
+    $_height            = ( isset($_attachment_data[2]) && $_attachment_data[2] > 1 ) ? $_attachment_data[2] : $_height;
+  } else { //old treatment
+    //rebuild the img path : check if the full path is already saved in DB. If not, then rebuild it.
+    $upload_dir         = wp_upload_dir();
+    $_saved_path        = esc_url ( $img );
+    $_img_src           = ( false !== strpos( $_saved_path , '/wp-content/' ) ) ? $_saved_path : $upload_dir['baseurl'] . $_saved_path;
+  }
+
+  //return img source + make ssl compliant
+  return is_ssl() ? str_replace('http://', 'https://', $_img_src) : $_img_src;
+}
+
+/**
+* wrapper of hu_get_img_src specific for theme options
+* @return logo src string
+*/
+function hu_get_img_src_from_option( $option_name ) {
+  $_img_option    = esc_attr( hu_get_option($option_name) );
+  if ( ! $_img_option )
+    return;
+
+  $_logo_src      = hu_get_img_src( $_img_option );
+  //hook
+  return apply_filters( "hu_logo_src" , $_logo_src ) ;
+}
+
+
+
+
+
+
 /* ------------------------------------------------------------------------- *
  *  OptionTree framework integration: Use in theme mode
 /* ------------------------------------------------------------------------- */
@@ -202,6 +284,11 @@ if( ! defined( 'THEMENAME' ) )       define( 'THEMENAME' , $hu_base_data['title'
 //HU_OPTION_GROUP contains the Name of the hueman theme options in wp_options
 //=> was previously option tree default name
 if( ! defined( 'HU_THEME_OPTIONS' ) ) define( 'HU_THEME_OPTIONS' , apply_filters( 'hu_theme_options', 'hu_theme_options' ) );
+
+if( ! defined( 'HU_OPT_AJAX_ACTION' ) ) define( 'HU_OPT_AJAX_ACTION' , 'hu_get_option' );
+
+if( ! defined( 'HU_CTX_ON' ) ) define( 'HU_CTX_ON' , false );
+
 //HU_WEBSITE is the home website of Hueman
 if( ! defined( 'HU_WEBSITE' ) )         define( 'HU_WEBSITE' , $hu_base_data['authoruri'] );
 
@@ -215,6 +302,13 @@ new HU_utils_settings_map;
 load_template( get_template_directory() . '/functions/class-utils.php' );
 new HU_utils;
 
+
+/* ------------------------------------------------------------------------- *
+ *  Loads Ctx helpers
+/* ------------------------------------------------------------------------- */
+if ( HU_CTX_ON ) {
+  load_template( get_template_directory() . '/functions/skop/init-skop.php' );
+}
 
 //note:  $default is never used => to remove
 function hu_get_option( $option_id, $default = '' ) {
@@ -1054,7 +1148,7 @@ add_filter( 'widget_text', 'do_shortcode' );
  *  Loads and instanciates customizer related classes
 /* ------------------------------------------------------------------------- */
 if ( hu_is_customizing() ) {
-  load_template( get_template_directory() . '/functions/czr/class-admin-customize.php' );
+  load_template( get_template_directory() . '/functions/czr/class-czr-init.php' );
   new HU_customize;
 }
 

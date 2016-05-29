@@ -49,7 +49,7 @@ msgstr "Yorumlar"
 msgid "Pingbacks"
 msgstr "Geri bildirimler"
 
-#: footer.php:103 functions/czr/class-admin-customize.php:616
+#: footer.php:103 functions/czr/class-czr-init.php:616
 msgid "All Rights Reserved."
 msgstr "Her hakkı saklıdır."
 
@@ -976,151 +976,151 @@ msgstr ""
 msgid "Choose Sidebar"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:157
+#: functions/czr/class-czr-init.php:157
 msgid "&mdash; Select &mdash;"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:194
+#: functions/czr/class-czr-init.php:194
 msgid "Assign menus to locations"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:204
+#: functions/czr/class-czr-init.php:204
 #, php-format
 msgid ""
 "You haven't created any menu yet. %s or check the %s to learn more about "
 "menus."
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:205
+#: functions/czr/class-czr-init.php:205
 msgid "Create a new menu now"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:206
+#: functions/czr/class-czr-init.php:206
 msgid "WordPress documentation"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:222
+#: functions/czr/class-czr-init.php:222
 msgid "SITE ICON"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:279
+#: functions/czr/class-czr-init.php:279
 msgid "Create And Order Widget Areas"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:282
-#: functions/czr/class-admin-customize.php:310
+#: functions/czr/class-czr-init.php:282
+#: functions/czr/class-czr-init.php:310
 msgid ""
 "You must save changes for the new areas to appear below. <br /><i>Warning: "
 "Make sure each area has a unique ID.</i>"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:307
+#: functions/czr/class-czr-init.php:307
 msgid "Create And Manage Widget Areas"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:317
+#: functions/czr/class-czr-init.php:317
 msgid "Create and manage widget zones"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:338
+#: functions/czr/class-czr-init.php:338
 msgid "Dynamic Sidebars and Widgets"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:666
+#: functions/czr/class-czr-init.php:666
 #: functions/czr/controls/class-dynamic-control.php:90
 #: functions/czr/controls/class-widget-areas-control.php:100
 msgid "Edit"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:667
+#: functions/czr/class-czr-init.php:667
 msgid "Close"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:668
+#: functions/czr/class-czr-init.php:668
 msgid ""
 "Your favicon is currently handled with an old method and will not be "
 "properly displayed on all devices. You might consider to re-upload your "
 "favicon with the new control below."
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:669
+#: functions/czr/class-czr-init.php:669
 #: functions/czr/controls/class-widget-areas-control.php:77
 #: functions/czr/controls/class-widget-areas-control.php:126
 #: functions/czr/controls/class-widget-areas-control.php:170
 msgid "Location(s)"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:670
+#: functions/czr/class-czr-init.php:670
 #: functions/czr/controls/class-widget-areas-control.php:133
 #: functions/czr/controls/class-widget-areas-control.php:177
 msgid "Context(s)"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:671
+#: functions/czr/class-czr-init.php:671
 msgid "Not set"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:672
+#: functions/czr/class-czr-init.php:672
 msgid "Rss"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:673
+#: functions/czr/class-czr-init.php:673
 msgid "Select a social icon"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:674
+#: functions/czr/class-czr-init.php:674
 msgid "Follow us on"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:675
+#: functions/czr/class-czr-init.php:675
 msgid "Done !"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:676
+#: functions/czr/class-czr-init.php:676
 msgid "New Social Link created ! Scroll down to edit it."
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:677
+#: functions/czr/class-czr-init.php:677
 msgid "Widget Zone"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:678
+#: functions/czr/class-czr-init.php:678
 msgid "New Widget Zone created ! Scroll down to edit it."
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:679
+#: functions/czr/class-czr-init.php:679
 msgid "Inactive in current context/location"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:680
+#: functions/czr/class-czr-init.php:680
 msgid "Unavailable location. Some settings must be changed."
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:681
+#: functions/czr/class-czr-init.php:681
 msgid "A selected location is not available with the current settings."
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:682
+#: functions/czr/class-czr-init.php:682
 msgid "Learn more about this in the documentation"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:699
+#: functions/czr/class-czr-init.php:699
 msgid "If you like"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:700
+#: functions/czr/class-czr-init.php:700
 msgid "the Hueman theme"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:701
+#: functions/czr/class-czr-init.php:701
 msgid "we would love to receive a"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:703
+#: functions/czr/class-czr-init.php:703
 msgid "Review the Hueman theme"
 msgstr ""
 
-#: functions/czr/class-admin-customize.php:705
+#: functions/czr/class-czr-init.php:705
 msgid "rating. Thanks :) !"
 msgstr ""
 

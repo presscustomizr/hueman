@@ -15,7 +15,6 @@
 <div id="wrapper">
 
   <header id="header">
-
     <?php if ( has_nav_menu('topbar') ): ?>
       <nav class="nav-container group" id="nav-topbar">
         <div class="nav-toggle"><i class="fa fa-bars"></i></div>
@@ -38,7 +37,7 @@
 
     <div class="container group">
       <div class="container-inner">
-        <?php $_header_img_src = hu_get_img_src('header-image'); ?>
+        <?php $_header_img_src = hu_get_img_src_from_option('header-image'); ?>
         <?php if ( ! $_header_img_src || empty( $_header_img_src ) ): //@fromfull to keep ?>
 
           <div class="group pad">
@@ -55,7 +54,7 @@
 
         <?php else :  ?>
             <a href="<?php echo home_url('/'); ?>" rel="home">
-              <img class="site-image" src="<?php echo hu_get_img_src('header-image'); ?>" alt="<?php echo get_bloginfo('name'); ?>">
+              <img class="site-image" src="<?php echo hu_get_img_src_from_option('header-image'); ?>" alt="<?php echo get_bloginfo('name'); ?>">
             </a>
         <?php endif; ?>
 

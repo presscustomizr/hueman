@@ -11,9 +11,10 @@
 * @license      http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 if ( ! class_exists( 'HU_customize' ) ) :
-	class HU_customize {
+  class HU_customize {
     static $instance;
     public $control_translations;
+    public $css_attr;
 
     function __construct () {
       self::$instance =& $this;
@@ -23,28 +24,22 @@ if ( ! class_exists( 'HU_customize' ) ) :
       //define useful constants
       if( ! defined( 'CZR_DYN_WIDGETS_SECTION' ) )      define( 'CZR_DYN_WIDGETS_SECTION' , 'dyn_widgets_section' );
 
+      //add control class
+      add_action( 'customize_register'                        , array( $this , 'hu_augment_customizer' ),10,1);
 
-  		//add control class
-  		add_action ( 'customize_register'				                , array( $this , 'hu_augment_customizer' ),10,1);
-  		//control scripts and style
-  		add_action ( 'customize_controls_enqueue_scripts'	      , array( $this , 'hu_customize_controls_js_css' ));
       //add the customizer built with the builder below
-      add_action ( 'customize_register'                       , array( $this , 'hu_customize_register' ), 20, 1 );
+      add_action( 'customize_register'                       , array( $this , 'hu_customize_register' ), 20, 1 );
       //add the customizer built with the builder below
-  		add_action ( 'customize_register'				                , array( $this , 'hu_schedule_register_sidebar_section' ), 1000, 1 );
+      add_action( 'customize_register'                        , array( $this , 'hu_schedule_register_sidebar_section' ), 1000, 1 );
       //modify some WP built-in settings / controls / sections
-      add_action ( 'customize_register'                       , array( $this , 'hu_alter_wp_customizer_settings' ), 30, 1 );
-      //preview scripts
-      //set with priority 20 to be fired after hu_customize_store_db_opt in HU_utils
-  		add_action ( 'customize_preview_init'			              , array( $this , 'hu_customize_preview_js' ), 20 );
-      //exports some wp_query informations. Updated on each preview refresh.
-      add_action ( 'customize_preview_init'                   , array( $this , 'hu_add_preview_footer_action' ), 20 );
-      //Various DOM ready actions + print rate link + template
-      add_action( 'customize_controls_print_footer_scripts'   , array( $this, 'hu_various_dom_ready' ) );
-      //Add the visibilities
-      add_action( 'customize_controls_print_footer_scripts'   , array( $this, 'hu_extend_visibilities' ), 10 );
-      //Partial refreshs
+      add_action( 'customize_register'                       , array( $this , 'hu_alter_wp_customizer_settings' ), 30, 1 );
+       //Partial refreshs
       add_action( 'customize_register'                        , array( $this,  'hu_register_partials' ) );
+
+      //populate the css_attr property, used both server side and on the customize panel (passed via serverControlParams )
+      $this -> css_attr = $this -> hu_get_controls_css_attr();
+
+      locate_template( 'functions/czr/czr-resources.php', true, true );
     }
 
 
@@ -55,8 +50,9 @@ if ( ! class_exists( 'HU_customize' ) ) :
     */
     function hu_augment_customizer( $manager ) {
       $_classes = array(
-        'controls/class-base-advanced-control.php',
         'controls/class-base-control.php',
+        'controls/class-base-advanced-control.php',
+        'controls/class-background-control.php',
         'controls/class-cropped-image-control.php',
         'controls/class-dynamic-control.php',
         'controls/class-layout-control.php',
@@ -118,38 +114,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
       update_option('hu_theme_options', $_options );
     }
 
-    //hook : customize_preview_init
-    function hu_add_preview_footer_action() {
-      add_action( 'wp_footer', array( $this, 'hu_add_customize_preview_data' ), 20 );
-    }
 
-
-    //hook : wp_footer in the preview frame
-    function hu_add_customize_preview_data() {
-      global $wp_query, $wp_customize;
-
-      $_contexts = array();
-      $_available_locations = hu_get_available_widget_loc();
-
-      //export only the conditional tags
-      foreach( (array)$wp_query as $prop => $val ) {
-        if (  false === strpos($prop, 'is_') )
-          continue;
-        if ( 'is_home' == $prop )
-          $val = hu_is_home();
-
-        $_contexts[$prop] = $val;
-      }
-
-      ?>
-        <script type="text/javascript" id="czr-customizer-data">
-          (function ( _export ){
-            _export.contx = <?php echo wp_json_encode( $_contexts ) ?>;
-            _export.availableWidgetLocations = <?php echo wp_json_encode( $_available_locations ) ?>;
-          })( _wpCustomizeSettings );
-        </script>
-      <?php
-    }
 
 
 
@@ -340,127 +305,127 @@ if ( ! class_exists( 'HU_customize' ) ) :
     }
 
 
-		/**
-		* Generates customizer sections, settings and controls
-		* @package Hueman
-		* @since Hueman 3.0
-		*/
-		function hu_customize_register( $wp_customize) {
-			return $this -> hu_customize_factory (
+    /**
+    * Generates customizer sections, settings and controls
+    * @package Hueman
+    * @since Hueman 3.0
+    */
+    function hu_customize_register( $wp_customize) {
+      return $this -> hu_customize_factory (
         $wp_customize,
         $this -> hu_customize_arguments(),
         HU_utils_settings_map::$instance -> hu_get_customizer_map()
       );
-		}
+    }
 
 
 
 
-		/**
-		 * Defines authorized arguments for panels, sections, settings and controls
-		 * @package Hueman
-		 * @since Hueman 3.0
-		 */
-		function hu_customize_arguments() {
-			$args = array(
-					'panels' => array(
-								'title' ,
-								'description',
-								'priority' ,
-								'theme_supports',
-								'capability'
-					),
-					'sections' => array(
-								'title' ,
-								'priority' ,
-								'description',
-								'panel',
-								'theme_supports',
-                'type'
-					),
-					'settings' => array(
-								'default'			=>	null,
-								'capability'		=>	'manage_options' ,
-								'setting_type'		=>	'option' ,
-								'sanitize_callback'	=>	null,
-                'sanitize_js_callback'  =>  null,
-								'transport'			=>	null
-					),
-					'controls' => array(
-								'title' ,
-								'label' ,
+    /**
+     * Defines authorized arguments for panels, sections, settings and controls
+     * @package Hueman
+     * @since Hueman 3.0
+     */
+    function hu_customize_arguments() {
+      $args = array(
+          'panels' => array(
+                'title' ,
                 'description',
-								'section' ,
-								'settings',
-								'type' ,
-								'choices' ,
-								'priority' ,
-								'sanitize_callback',
+                'priority' ,
+                'theme_supports',
+                'capability'
+          ),
+          'sections' => array(
+                'title' ,
+                'priority' ,
+                'description',
+                'panel',
+                'theme_supports',
+                'type'
+          ),
+          'settings' => array(
+                'default'     =>  null,
+                'capability'    =>  'manage_options' ,
+                'setting_type'    =>  'option' ,
+                'sanitize_callback' =>  null,
+                'sanitize_js_callback'  =>  null,
+                'transport'     =>  null
+          ),
+          'controls' => array(
+                'title' ,
+                'label' ,
+                'description',
+                'section' ,
+                'settings',
+                'type' ,
+                'choices' ,
+                'priority' ,
+                'sanitize_callback',
                 'sanitize_js_callback',
-								'notice' ,
-								'buttontext' ,//button specific
-								'link' ,//button specific
-								'step' ,//number specific
-								'min' ,//number specific
-								'range-input' ,
-								'max',
-								'cssid',
-								'slider_default',
-								'active_callback',
-								'content_after',
-								'content_before',
-								'icon',
+                'notice' ,
+                'buttontext' ,//button specific
+                'link' ,//button specific
+                'step' ,//number specific
+                'min' ,//number specific
+                'range-input' ,
+                'max',
+                'cssid',
+                'slider_default',
+                'active_callback',
+                'content_after',
+                'content_before',
+                'icon',
                 'width',
                 'height',
                 'flex_width',
                 'flex_height',
                 'dst_width',
                 'dst_height'
-					)
-			);
-			return apply_filters( 'hu_customizer_arguments', $args );
-		}
+          )
+      );
+      return apply_filters( 'hu_customizer_arguments', $args );
+    }
 
 
 
 
 
-		/**
-		 * Generates customizer
-		 * @package Hueman
-		 * @since Hueman 3.0
-		 */
-		function hu_customize_factory ( $wp_customize , $args, $setup ) {
-			global $wp_version;
-			//add panels if current WP version >= 4.0
-			if ( isset( $setup['add_panel']) && version_compare( $wp_version, '4.0', '>=' ) ) {
-				foreach ( $setup['add_panel'] as $p_key => $p_options ) {
-					//declares the clean section option array
-					$panel_options = array();
-					//checks authorized panel args
-					foreach( $args['panels'] as $p_set) {
-						$panel_options[$p_set] = isset( $p_options[$p_set]) ?  $p_options[$p_set] : null;
-					}
-					$wp_customize -> add_panel( $p_key, $panel_options );
-				}
-			}
+    /**
+     * Generates customizer
+     * @package Hueman
+     * @since Hueman 3.0
+     */
+    function hu_customize_factory ( $wp_customize , $args, $setup ) {
+      global $wp_version;
+      //add panels if current WP version >= 4.0
+      if ( isset( $setup['add_panel']) && version_compare( $wp_version, '4.0', '>=' ) ) {
+        foreach ( $setup['add_panel'] as $p_key => $p_options ) {
+          //declares the clean section option array
+          $panel_options = array();
+          //checks authorized panel args
+          foreach( $args['panels'] as $p_set) {
+            $panel_options[$p_set] = isset( $p_options[$p_set]) ?  $p_options[$p_set] : null;
+          }
+          $wp_customize -> add_panel( $p_key, $panel_options );
+        }
+      }
 
-			//remove sections
-			if ( isset( $setup['remove_section'])) {
-				foreach ( $setup['remove_section'] as $section) {
-					$wp_customize	-> remove_section( $section);
-				}
-			}
+      //remove sections
+      if ( isset( $setup['remove_section'])) {
+        foreach ( $setup['remove_section'] as $section) {
+          $wp_customize -> remove_section( $section);
+        }
+      }
 
-			//add sections
-			if ( isset( $setup['add_section'])) {
-				foreach ( $setup['add_section'] as  $key => $options) {
-					//generate section array
-					$option_section = array();
+      //add sections
+      if ( isset( $setup['add_section'])) {
+        foreach ( $setup['add_section'] as  $key => $options) {
+          //generate section array
+          $option_section = array();
 
-					foreach( $args['sections'] as $sec) {
-						$option_section[$sec] = isset( $options[$sec]) ?  $options[$sec] : null;
-					}
+          foreach( $args['sections'] as $sec) {
+            $option_section[$sec] = isset( $options[$sec]) ?  $options[$sec] : null;
+          }
 
           //instanciate a custom class if defined
           if( ! isset( $options['section_class']) )
@@ -468,8 +433,8 @@ if ( ! class_exists( 'HU_customize' ) ) :
           else if ( isset( $options['section_class']) && class_exists($options['section_class']) )
             $wp_customize -> add_section( new $options['section_class']( $wp_customize, $key, $option_section ));
 
-				}//end foreach
-			}//end if
+        }//end foreach
+      }//end if
 
 
       //add setting alone
@@ -535,30 +500,30 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
 
 
-			//add settings and controls
-			if ( isset( $setup['add_setting_control'])) {
+      //add settings and controls
+      if ( isset( $setup['add_setting_control'])) {
 
-				foreach ( $setup['add_setting_control'] as $key => $options) {
-					//isolates the option name for the setting's filter
-					$f_option = preg_match_all( '/\[(.*?)\]/' , $key , $match );
-		      $f_option_name = isset( $match[1][0] )  ? $match[1][0] : 'setting';
+        foreach ( $setup['add_setting_control'] as $key => $options) {
+          //isolates the option name for the setting's filter
+          $f_option = preg_match_all( '/\[(.*?)\]/' , $key , $match );
+          $f_option_name = isset( $match[1][0] )  ? $match[1][0] : 'setting';
 
           $hu_option_group = HU_THEME_OPTIONS;
 
           $_opt_name = "{$hu_option_group}[{$key}]";
 
-					//declares settings array
-					$option_settings = array();
-					foreach( $args['settings'] as $set => $set_value) {
-						if ( $set == 'setting_type' ) {
-							$option_settings['type'] = isset( $options['setting_type']) ?  $options['setting_type'] : $args['settings'][$set];
-							$option_settings['type'] = apply_filters( "{$f_option_name}_customizer_set", $option_settings['type'] , $set );
-						}
-						else {
-							$option_settings[$set] = isset( $options[$set]) ?  $options[$set] : $args['settings'][$set];
-							$option_settings[$set] = apply_filters( "{$f_option_name}_customizer_set" , $option_settings[$set] , $set );
-						}
-					}
+          //declares settings array
+          $option_settings = array();
+          foreach( $args['settings'] as $set => $set_value) {
+            if ( $set == 'setting_type' ) {
+              $option_settings['type'] = isset( $options['setting_type']) ?  $options['setting_type'] : $args['settings'][$set];
+              $option_settings['type'] = apply_filters( "{$f_option_name}_customizer_set", $option_settings['type'] , $set );
+            }
+            else {
+              $option_settings[$set] = isset( $options[$set]) ?  $options[$set] : $args['settings'][$set];
+              $option_settings[$set] = apply_filters( "{$f_option_name}_customizer_set" , $option_settings[$set] , $set );
+            }
+          }
 
           //add setting
           if ( class_exists('HU_Customize_Setting') )
@@ -566,242 +531,98 @@ if ( ! class_exists( 'HU_customize' ) ) :
           else
             $wp_customize -> add_setting( $_opt_name, $option_settings );
 
-					//generate controls array
-					$option_controls = array();
-					foreach( $args['controls'] as $con) {
-						$option_controls[$con] = isset( $options[$con]) ?  $options[$con] : null;
-					}
+          //generate controls array
+          $option_controls = array();
+          foreach( $args['controls'] as $con) {
+            $option_controls[$con] = isset( $options[$con]) ?  $options[$con] : null;
+          }
 
-					//add control with a class instanciation if not default
-					if( ! isset( $options['control']) )
-						$wp_customize	-> add_control( $_opt_name, $option_controls );
-					else
-						$wp_customize	-> add_control( new $options['control']( $wp_customize, $_opt_name, $option_controls ));
+          //add control with a class instanciation if not default
+          if( ! isset( $options['control']) )
+            $wp_customize -> add_control( $_opt_name, $option_controls );
+          else
+            $wp_customize -> add_control( new $options['control']( $wp_customize, $_opt_name, $option_controls ));
 
-				}//end for each
-			}//end if isset
-		}//end of customize generator function
-
-
-
-		/**
-		 *  Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
-		 * @package Hueman
-		 * @since Hueman 3.0
-		 */
-
-		function hu_customize_preview_js() {
-			global $wp_version;
-
-			wp_enqueue_script(
-				'hu-customizer-preview' ,
-				sprintf('%1$s/assets/czr/js/czr-preview%2$s.js' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
-				array( 'customize-preview', 'underscore'),
-				( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
-				true
-			);
-
-			//localizes
-			wp_localize_script(
-		        'hu-customizer-preview',
-		        'HUPreviewParams',
-		        apply_filters('hu_js_customizer_preview_params' ,
-			        array(
-			        	'themeFolder' 		=> get_template_directory_uri(),
-                //patch for old wp versions which don't trigger preview-ready signal => since WP 4.1
-                'preview_ready_event_exists'   => version_compare( $wp_version, '4.1' , '>=' ),
-                'blogname' => get_bloginfo('name'),
-                'copyright' => sprintf('%1$s &copy; %2$s. %3$s',
-                  get_bloginfo('name'),
-                  date( 'Y' ),
-                  __( 'All Rights Reserved.', 'hueman' )
-                )
-			        )
-			       )
-	        );
-		}
+        }//end for each
+      }//end if isset
+    }//end of customize generator function
 
 
 
-		/**
-		 * Add script to controls
-		 * Dependency : customize-controls located in wp-includes/script-loader.php
-		 * Hooked on customize_controls_enqueue_scripts located in wp-admin/customize.php
-		 * @package Hueman
-		 * @since Hueman 3.3.0
-		 */
-		function hu_customize_controls_js_css() {
+    function hu_get_controls_css_attr() {
+      return apply_filters('controls_css_attr',
+          array(
+            'multi_input_wrapper' => 'czr-multi-input-wrapper',
+            'sub_set_wrapper'     => 'czr-sub-set',
+            'sub_set_input'       => 'czr-input',
+            'img_upload_container' => 'czr-imgup-container',
 
-			wp_enqueue_style(
-				'hu-customizer-controls-style',
-				sprintf('%1$s/assets/czr/css/czr-control%2$s.css' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
-				array( 'customize-controls' ),
-				HUEMAN_VER,
-				$media = 'all'
-			);
-			wp_enqueue_script(
-				'hu-customizer-controls',
-				sprintf('%1$s/assets/czr/js/czr-control%2$s.js' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
-				array( 'customize-controls' , 'underscore'),
-				HUEMAN_VER,
-				true
-			);
+            'views_wrapper'     => 'czr-views-wrapper',
+            'inner_view'        => 'czr-inner-view',
+            'view_content'      => 'czr-view-content',
+            'view_header'       => 'czr-view-header',
+            'view_title'        => 'czr-view-title',
+            'view_buttons'      => 'czr-view-buttons',
+            'sortable_handle'   => 'czr-sortable-handle',
 
-			//localizes
-			wp_localize_script(
-        'hu-customizer-controls',
-        'serverControlParams',
-        apply_filters('hu_js_customizer_control_params' ,
-	        array(
-	        	'AjaxUrl'       => admin_url( 'admin-ajax.php' ),
-            'docURL'        => esc_url('docs.presscustomizr.com/'),
-	        	'HUNonce' 			=> wp_create_nonce( 'hu-customizer-nonce' ),
-            'themeName'     => THEMENAME,
-            'themeOptions'  => HU_THEME_OPTIONS,
-            'faviconOptionName' => 'favicon',
-            'defaultSocialColor' => 'rgba(255,255,255,0.7)',
-            'dynWidgetSection' => CZR_DYN_WIDGETS_SECTION,
-            'defaultWidgetSidebar' => 'primary',//the one that will be cloned. Specific to each themes
-            'defaultWidgetLocation' => 's1',//Specific to each themes
-            'translatedStrings'    => array(
-              'edit' => __('Edit', 'hueman'),
-              'close' => __('Close', 'hueman'),
-              'faviconNote' => __( "Your favicon is currently handled with an old method and will not be properly displayed on all devices. You might consider to re-upload your favicon with the new control below." , 'hueman'),
-              'locations' => __('Location(s)', 'hueman'),
-              'contexts' => __('Context(s)', 'hueman'),
-              'notset' => __('Not set', 'hueman'),
-              'rss' => __('Rss', 'hueman'),
-              'selectSocialIcon' => __('Select a social icon', 'hueman'),
-              'followUs' => __('Follow us on', 'hueman'),
-              'successMessage' => __('Done !', 'hueman'),
-              'socialLinkAdded' => __('New Social Link created ! Scroll down to edit it.', 'hueman'),
-              'widgetZone' => __('Widget Zone', 'hueman'),
-              'widgetZoneAdded' => __('New Widget Zone created ! Scroll down to edit it.', 'hueman'),
-              'inactiveWidgetZone' => __('Inactive in current context/location', 'hueman'),
-              'unavailableLocation' => __('Unavailable location. Some settings must be changed.', 'hueman'),
-              'locationWarning' => __('A selected location is not available with the current settings.', 'hueman'),
-              'readDocumentation' => __('Learn more about this in the documentation', 'hueman')
-            )
-	        )
-	      )
+            //remove dialog
+            'display_alert_btn' => 'czr-display-alert',
+            'remove_alert_wrapper'   => 'czr-remove-alert-wrapper',
+            'cancel_alert_btn'  => 'czr-cancel-button',
+            'remove_view_btn'        => 'czr-remove-button',
+
+            'edit_view_btn'     => 'czr-edit-view',
+            //pre add dialog
+            'open_pre_add_btn'      => 'czr-open-pre-add-new',
+            'adding_new'        => 'czr-adding-new',
+            'pre_add_wrapper'   => 'czr-pre-add-wrapper',
+            'pre_add_view_content'   => 'czr-pre-add-view-content',
+            'cancel_pre_add_btn'  => 'czr-cancel-add-new',
+            'add_new_btn'       => 'czr-add-new',
+            'pre_add_success'   => 'czr-add-success'
+        )
       );
-
-		}
-
-
-
-
-    //hook : customize_controls_print_footer_scripts
-    function hu_various_dom_ready() {
-      ?>
-      <script id="rate-tpl" type="text/template" >
-        <?php
-          printf( '<span class="czr-rate-link">%1$s %2$s, <br/>%3$s <a href="%4$s" title="%5$s" class="czr-stars" target="_blank">%6$s</a> %7$s</span>',
-            __( 'If you like' , 'hueman' ),
-            __( 'the Hueman theme' , 'hueman'),
-            __( 'we would love to receive a' , 'hueman' ),
-            'https://' . 'wordpress.org/support/view/theme-reviews/hueman?filter=5',
-            __( 'Review the Hueman theme' , 'hueman' ),
-            '&#9733;&#9733;&#9733;&#9733;&#9733;',
-            __( 'rating. Thanks :) !' , 'hueman')
-          );
-        ?>
-      </script>
-      <script id="rate-theme" type="text/javascript">
-        (function (wp, $) {
-          $( function($) {
-            //Render the rate link
-            _render_rate_czr();
-            function _render_rate_czr() {
-              var _cta = _.template(
-                    $( "script#rate-tpl" ).html()
-              );
-              $('#customize-footer-actions').append( _cta() );
-            }
-
-            /* Append text to the content panel title */
-            if ( $('#accordion-panel-hu-content-panel').find('.accordion-section-title').first().length ) {
-              $('#accordion-panel-hu-content-panel').find('.accordion-section-title').first().append(
-                $('<span/>', { html : ' ( Home, Blog, Layout, Sidebars, Slideshows, ... )' } ).css('font-style', 'italic').css('font-size', '14px')
-              );
-            }
-          });
-        })(wp, jQuery)
-      </script>
-      <?php
     }
 
-
-    //hook : 'customize_controls_enqueue_scripts':10
-    function hu_extend_visibilities() {
-      ?>
-      <script id="control-visibilities" type="text/javascript">
-        (function (api, $, _) {
-          api.CZR_visibilities.prototype.controlDeps = _.extend(
-            api.CZR_visibilities.prototype.controlDeps,
-            {
-              'dynamic-styles' : {
-                controls: [
-                  'boxed',
-                  'font',
-                  'container-width',
-                  'sidebar-padding',
-                  'color-1',
-                  'color-2',
-                  'color-topbar',
-                  'color-header',
-                  'color-header-menu',
-                  'image-border-radius',
-                  'body-background'
-                ],
-                callback : function (to) {
-                  return '0' !== to && false !== to && 'off' !== to;
-                },
-              },
-              'blog-heading-enabled' : {
-                controls: [
-                  'blog-heading',
-                  'blog-subheading'
-                ],
-                callback : function (to) {
-                  return '0' !== to && false !== to && 'off' !== to;
-                },
-              },
-              'featured-posts-enabled' : {
-                controls: [
-                  'featured-category',
-                  'featured-posts-count',
-                  'featured-posts-full-content',
-                  'featured-slideshow',
-                  'featured-slideshow-speed',
-                  'featured-posts-include'
-                ],
-                callback : function (to) {
-                  return '0' !== to && false !== to && 'off' !== to;
-                },
-              },
-              'featured-slideshow' : {
-                controls: [
-                  'featured-slideshow-speed'
-                ],
-                callback : function (to) {
-                  return '0' !== to && false !== to && 'off' !== to;
-                },
-              },
-              'about-page' : {
-                controls: [
-                  'help-button'
-                ],
-                callback : function (to) {
-                  return '0' !== to && false !== to && 'off' !== to;
-                },
-              }
-            }//end of visibility {}
-          );//_.extend()
-        }) ( wp.customize, jQuery, _);
-      </script>
-      <?php
+    function hu_get_translated_strings() {
+      return apply_filters('controls_translated_strings',
+          array(
+                'edit' => __('Edit', 'hueman'),
+                'close' => __('Close', 'hueman'),
+                'faviconNote' => __( "Your favicon is currently handled with an old method and will not be properly displayed on all devices. You might consider to re-upload your favicon with the new control below." , 'hueman'),
+                'locations' => __('Location(s)', 'hueman'),
+                'contexts' => __('Context(s)', 'hueman'),
+                'notset' => __('Not set', 'hueman'),
+                'rss' => __('Rss', 'hueman'),
+                'selectSocialIcon' => __('Select a social icon', 'hueman'),
+                'followUs' => __('Follow us on', 'hueman'),
+                'successMessage' => __('Done !', 'hueman'),
+                'socialLinkAdded' => __('New Social Link created ! Scroll down to edit it.', 'hueman'),
+                'selectBgRepeat'  => __('Select repeat property', 'hueman'),
+                'selectBgAttachment'  => __('Select attachment property', 'hueman'),
+                'selectBgPosition'  => __('Select position property', 'hueman'),
+                'widgetZone' => __('Widget Zone', 'hueman'),
+                'widgetZoneAdded' => __('New Widget Zone created ! Scroll down to edit it.', 'hueman'),
+                'inactiveWidgetZone' => __('Inactive in current context/location', 'hueman'),
+                'unavailableLocation' => __('Unavailable location. Some settings must be changed.', 'hueman'),
+                'locationWarning' => __('A selected location is not available with the current settings.', 'hueman'),
+                'readDocumentation' => __('Learn more about this in the documentation', 'hueman')
+          )
+      );
     }
 
-	}//end of class
+    //@return array of WP builtin settings
+    function hu_get_wp_builtin_settings() {
+      return array(
+        'blogname',
+        'blogdescription',
+        'site-icon',
+        'custom-logo',
+        'background_color',
+        'show_on_front',
+        'page_on_front',
+        'page_for_posts'
+      );
+    }
+  }//end of class
 endif;

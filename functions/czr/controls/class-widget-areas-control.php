@@ -63,7 +63,7 @@ if ( ! class_exists( 'HU_Customize_Widget_Areas_Control' ) ) :
 
 
     public function hu_print_pre_add_view_template() {
-      $css_attr = $this -> css_attr
+      $css_attr = HU_customize::$instance -> css_attr;
       ?>
       <script type="text/html" id="tmpl-customize-control-<?php echo $this->type; ?>-pre-add-view-content">
         <div class="czr-sub-set">
@@ -88,7 +88,7 @@ if ( ! class_exists( 'HU_Customize_Widget_Areas_Control' ) ) :
 
     //print template for built-in models like primary, secondary, footer-1, etc...
     function hu_print_built_in_templates() {
-      $css_attr = $this -> css_attr
+      $css_attr = HU_customize::$instance -> css_attr;
       //REDUCED VIEW TEMPLATE
       //no remove button
       //no remove alert wrapper
@@ -144,7 +144,7 @@ if ( ! class_exists( 'HU_Customize_Widget_Areas_Control' ) ) :
 
     //Fired by the parent class
     function hu_print_view_content_template() {
-      $css_attr = $this -> css_attr
+      $css_attr = HU_customize::$instance -> css_attr;
         //the following template is a "sub view"
         //it's rendered :
         //1) on customizer start, depending on what is fetched from the db

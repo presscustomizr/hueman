@@ -168,8 +168,8 @@ if ( ! function_exists( 'hu_site_title' ) ) {
 
   function hu_site_title() {
     // Text or image?
-    if ( false != hu_get_img_src( 'custom-logo' ) ) {
-      $logo = '<img src="'. hu_get_img_src( 'custom-logo' ) . '" alt="'.get_bloginfo('name').'">';
+    if ( false != hu_get_img_src_from_option( 'custom-logo' ) ) {
+      $logo = '<img src="'. hu_get_img_src_from_option( 'custom-logo' ) . '" alt="'.get_bloginfo('name').'">';
     } else {
       $logo = get_bloginfo('name');
     }
@@ -637,68 +637,6 @@ add_action( 'wp_print_styles', 'hu_deregister_styles', 100 );
 
 
 
-/* ------------------------------------------------------------------------- *
- *  Various Helpers
-/* ------------------------------------------------------------------------- */
-/**
-* helper
-* Check if we are displaying posts lists or front page
-* @return  bool
-*/
-function hu_is_home() {
-  //get info whether the front page is a list of last posts or a page
-  return ( is_home() && ( 'posts' == get_option( 'show_on_front' ) || 'nothing' == get_option( 'show_on_front' ) ) ) || is_front_page();
-}
-
-/**
-* helper
-* States if the current context is the blog page from a WP standpoint
-* @return  bool
-*/
-function hu_is_blogpage() {
-  return is_home() && ! is_front_page();
-}
-
-/**
-* helper
-* @return  bool
-*/
-function hu_has_social_links() {
-  $_socials = hu_get_option('social-links');
-  return ! empty( $_socials ) && false != $_socials;
-}
-
-/**
-* helper ensuring backward compatibility with the previous option system
-* @return logo src string
-*/
-function hu_get_img_src( $option_name ) {
-  $_img_option    = esc_attr( hu_get_option($option_name) );
-  if ( ! $_img_option )
-    return;
-
-  $_logo_src      = '';
-  $_width         = false;
-  $_height        = false;
-  $_attachement_id    = false;
-
-  //Get the logo src
-  if ( is_numeric($_img_option) ) {
-      $_attachement_id  = $_img_option;
-      $_attachment_data   = apply_filters( "hu_logo_attachment_img" , wp_get_attachment_image_src( $_img_option , 'full' ) );
-      $_logo_src      = $_attachment_data[0];
-      $_width       = ( isset($_attachment_data[1]) && $_attachment_data[1] > 1 ) ? $_attachment_data[1] : $_width;
-      $_height      = ( isset($_attachment_data[2]) && $_attachment_data[2] > 1 ) ? $_attachment_data[2] : $_height;
-  } else { //old treatment
-      //rebuild the logo path : check if the full path is already saved in DB. If not, then rebuild it.
-      $upload_dir       = wp_upload_dir();
-      $_saved_path      = esc_url ( $_img_option );
-      $_logo_src        = ( false !== strpos( $_saved_path , '/wp-content/' ) ) ? $_saved_path : $upload_dir['baseurl'] . $_saved_path;
-  }
-
-  //hook + makes ssl compliant
-  return apply_filters( "hu_logo_src" , is_ssl() ? str_replace('http://', 'https://', $_logo_src) : $_logo_src ) ;
-}
 
 
 

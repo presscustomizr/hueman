@@ -165,11 +165,11 @@ if ( ! class_exists( 'HU_utils' ) ) :
       //ctx retro compat => falls back to default val if ctx like option detected
       //important note : some options like hu_slider are not concerned by ctx
       if ( ! $this -> hu_is_option_excluded_from_ctx( $option_name ) ) {
-        if ( is_array($_single_opt) && ! class_exists( 'HU_contx' ) )
+        if ( is_array($_single_opt) && ! class_exists( 'HU_ctx' ) )
           $_single_opt = $_default_val;
       }
 
-      //allow contx filtering globally
+      //allow ctx filtering globally
       $_single_opt = apply_filters( "hu_opt" , $_single_opt , $option_name , $option_group, $_default_val );
 
       //allow single option filtering
@@ -263,7 +263,8 @@ if ( ! class_exists( 'HU_utils' ) ) :
           'last_update_notice',
           'last_update_notice_pro',
           'sidebar-areas',
-          'social-links'
+          'social-links',
+          'body-background'
         )
       );
     }
