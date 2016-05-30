@@ -83,8 +83,10 @@ See headers of files for further details.
 
 ## Changelog
 = 3.1.4 May 30th 2016 =
+* fixed : Use get_option date_format for all dates
 * added : background image option
 * added : social links partial refresh in the customizer
+
 
 = 3.1.3 May 4th 2016 =
 * fixed : the author link in posts

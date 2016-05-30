@@ -244,9 +244,8 @@ if ( ! class_exists( 'HU_customize' ) ) :
                     'control'   => 'HU_Customize_Widget_Areas_Control',
                     'label'     => __('Create And Order Widget Areas', 'hueman'),
                     'section'   => CZR_DYN_WIDGETS_SECTION,
-                    'type'      => 'czr_sidebars',//@todo create dynamic type
-                    'notice'    => __('You must save changes for the new areas to appear below. <br /><i>Warning: Make sure each area has a unique ID.</i>' , 'hueman'),
-                    'transport' => 'postMessage',
+                    'type'      => 'czr_sidebars',
+                    'transport' => 'postMessage'
               )
 
           )
@@ -272,8 +271,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
                   'control'   => 'HU_Customize_Widget_Areas_Control',
                   'label'     => __('Create And Manage Widget Areas', 'hueman'),
                   'section'   => $_widget_section_name,
-                  'type'      => 'czr_sidebars',//@todo create dynamic type
-                  'notice'    => __('You must save changes for the new areas to appear below. <br /><i>Warning: Make sure each area has a unique ID.</i>' , 'hueman'),
+                  'type'      => 'czr_sidebars',
                   'transport' => 'postMessage'
             )
 

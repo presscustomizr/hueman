@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Hueman v3.1.4\n"
-"POT-Creation-Date: 2016-05-29 16:47+0200\n"
-"PO-Revision-Date: 2016-05-29 16:47+0200\n"
+"POT-Creation-Date: 2016-05-30 08:28+0200\n"
+"PO-Revision-Date: 2016-05-30 08:31+0200\n"
 "Last-Translator: noaneo <webmaster@noaneo.fr>\n"
 "Language-Team: Press Customizr\n"
 "Language: fr_FR\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: assets\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 "X-Poedit-SearchPathExcluded-2: grunt-tasks-config\n"
-# "X-Poedit-SearchPathExcluded-3: option-tree\n"
+"X-Poedit-SearchPathExcluded-3: option-tree\n"
 "X-Poedit-SearchPathExcluded-4: build\n"
 
 #: 404.php:14
@@ -26,21 +26,20 @@ msgid ""
 "The page you are trying to reach does not exist, or has been moved. Please "
 "use the menus or the search box to find what you are looking for."
 msgstr ""
-"La page que vous essayez d'atteindre n'existe pas ou a été déplacée. "
-"Veuillez utiliser les menus ou la zone de recherche pour trouver ce que vous "
-"cherchez."
+"La page que vous recherchez n'existe pas ou plus... Tentez votre chance dans "
+"les menus de navigation ou faîtes une recherche."
 
 #: comments.php:7
 msgid "No Responses"
-msgstr "Pas de Réponse"
+msgstr "Pas de réponses"
 
 #: comments.php:7
 msgid "1 Response"
-msgstr "1 Réponse"
+msgstr "1 commentaire"
 
 #: comments.php:7
 msgid "% Responses"
-msgstr "% Réponses"
+msgstr "% réponses"
 
 #: comments.php:10 functions/class-utils-settings-map.php:1057
 msgid "Comments"
@@ -48,15 +47,15 @@ msgstr "Commentaires"
 
 #: comments.php:11
 msgid "Pingbacks"
-msgstr "Rétroliens"
+msgstr "Pings"
 
 #: footer.php:103 functions/czr/czr-resources.php:42
 msgid "All Rights Reserved."
-msgstr "Tous Droits Réservés"
+msgstr "Tous droits réservés."
 
 #: footer.php:109
 msgid "Powered by"
-msgstr "Propulsé par "
+msgstr "Fièrement propulsé par"
 
 #: footer.php:109
 msgid "Theme by"
@@ -68,36 +67,40 @@ msgid ""
 "<h2>As per the WordPress themes guidelines (%1$s), all the Hueman theme "
 "options have been moved to the %2$s.</h2>"
 msgstr ""
+"<h2>Afin de respecter les standards de développements des thèmes WordPress "
+"(%1$s), toutes les options de Hueman ont été déplacées dans le %2$s.</h2>"
 
 #: functions/admin/class-admin-page.php:36
 msgid "more informations here"
-msgstr ""
+msgstr "plus d'informations ici"
 
 #: functions/admin/class-admin-page.php:37
 msgid "customizer"
-msgstr ""
+msgstr "Outil de personnalisation"
 
 #: functions/admin/class-admin-page.php:40
 msgid ""
 "All your previous options have been kept and are available in the customizer "
 "options panel."
 msgstr ""
+"Tous vos précédents réglages ont été conservés et sont disponibles dans le "
+"customizer."
 
 #: functions/admin/class-admin-page.php:53
 msgid "About Hueman"
-msgstr ""
+msgstr "À propos de Hueman"
 
 #: functions/admin/class-admin-page.php:81
 msgid "Need help with"
-msgstr ""
+msgstr "Besoin d'aide avec"
 
 #: functions/admin/class-admin-page.php:86
 msgid "Welcome to"
-msgstr ""
+msgstr "Bienvenue à"
 
 #: functions/admin/class-admin-page.php:103
 msgid "Thank you for using the Hueman WordPress theme for your website."
-msgstr ""
+msgstr "Merci d'utiliser le thème Hueman pour votre site WordPress."
 
 #: functions/admin/class-admin-page.php:104
 #, php-format
@@ -105,6 +108,8 @@ msgid ""
 "Hueman %s has more features, is safer and more stable than ever to help you "
 "designing an awesome webdesign."
 msgstr ""
+"Hueman %s a plus de fonctionnalités, est encore plus sûr et stable que "
+"jamais pour vous aider à créer un superbe web design."
 
 #: functions/admin/class-admin-page.php:105
 #, php-format
@@ -114,10 +119,14 @@ msgid ""
 "changes. If you just upgraded from a lower version, you'll be able to find "
 "all your previous settings in the customizer."
 msgstr ""
+"Depuis la version 3.0+, toutes les options ont été déplacées dans le %s, ce "
+"qui vous permet de créer votre site de manière plus sûre, et en temps réel "
+"avant de le publier. Si vous venez de mettre à jour depuis une version "
+"antérieure, vous retrouverez toutes vos personnalisations dans le customizer."
 
 #: functions/admin/class-admin-page.php:106
 msgid "customizer panel"
-msgstr ""
+msgstr "Panneau de personnalisation"
 
 #: functions/admin/class-admin-page.php:108
 #, php-format
@@ -125,23 +134,27 @@ msgid ""
 "For more informations about this new version of the theme, %s or check the "
 "changelog below"
 msgstr ""
+"Pour plus d'informations sur cette nouvelle version du thème, %s ou "
+"consultez l'historique des changements ci-dessous."
 
 #: functions/admin/class-admin-page.php:109
 msgid "read the latest release notes"
-msgstr ""
+msgstr "lisez la dernière note de version"
 
 #: functions/admin/class-admin-page.php:114
 #, php-format
 msgid "The best way to start with %s is to read the %s and visit the %s."
 msgstr ""
+"La meilleure manière de démarrer avec %s est de lire le %s et de visiter le "
+"%s."
 
 #: functions/admin/class-admin-page.php:116
 msgid "getting started guide"
-msgstr ""
+msgstr "guide de démarrage"
 
 #: functions/admin/class-admin-page.php:117
 msgid "demo website"
-msgstr ""
+msgstr "Site démo"
 
 #: functions/admin/class-admin-page.php:131
 #, php-format
@@ -149,23 +162,26 @@ msgid ""
 "You are using a child theme of Hueman %1$s : always check the %2$s after "
 "upgrading to see if a function or a template has been deprecated."
 msgstr ""
+"Vous utilisez un thème enfant d'Hueman %1$s : vérifier toujours l'%2$s après "
+"les mises à jour, afin de vérifier si une fonction ou un fichier a été "
+"modifié."
 
 #: functions/admin/class-admin-page.php:147
 msgid "Go to Dashboard &rarr; Home"
-msgstr ""
+msgstr "Aller au Tableau de Bord &rarr; Accueil"
 
 #: functions/admin/class-admin-page.php:147
 msgid "Go to Dashboard"
-msgstr ""
+msgstr "Accès Tableau de Bord"
 
 #: functions/admin/class-admin-page.php:162
 #, php-format
 msgid "The best way to start is to read the %s."
-msgstr ""
+msgstr "La meilleure façon de commencer est de lire la %s."
 
 #: functions/admin/class-admin-page.php:163
 msgid "documentation"
-msgstr ""
+msgstr "documentation"
 
 #: functions/admin/class-admin-page.php:167
 msgid ""
@@ -174,77 +190,88 @@ msgid ""
 "constantly reporting bugs and potential issues. If you encounter a problem "
 "with the theme, chances are that it's already been reported and fixed in the"
 msgstr ""
+"Si vous ne trouvez pas une réponse à votre question dans la documentation, "
+"pas de panique ! Le thème Hueman est utilisé par un grand nombre de "
+"webmestres signalant constamment des bugs et des problèmes potentiels. Si "
+"vous rencontrez un problème, il y a des chances qu'il ait déjà été rapporté "
+"et corrigé dans la"
 
 #: functions/admin/class-admin-page.php:169
 msgid "support forum"
-msgstr ""
+msgstr "forum de support officiel"
 
 #: functions/admin/class-admin-page.php:175
 msgid "Read the documentation"
-msgstr ""
+msgstr "Lire la documentation"
 
 #: functions/admin/class-admin-page.php:179
 msgid "Get help in the support forum"
-msgstr ""
+msgstr "Obtenir de l'aide dans le forum de support"
 
 #: functions/admin/class-admin-page.php:239
 #, php-format
 msgid "Changelog in version %1$s"
-msgstr ""
+msgstr "Journal des changement en version %1$s"
 
 #: functions/admin/class-admin-page.php:261
 msgid "System Informations"
-msgstr ""
+msgstr "Systèmes d'informations"
 
 #: functions/admin/class-admin-page.php:262
 msgid "Please include the following informations when posting support requests"
 msgstr ""
+"Merci d'inclure les informations fournies ci-dessous lorsque vous postez vos "
+"demandes de support"
 
 #: functions/admin/class-admin-page.php:263
 msgid ""
 "To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C "
 "(Mac)."
 msgstr ""
+"Afin de copier vos informations système, merci de cliquer ci-dessous, puis "
+"de presser Ctrl + C (PC) ou Cmd + C (Mac)."
 
 #: functions/admin/class-admin-update-notification.php:85
 msgid "Good, you've just upgraded to"
-msgstr ""
+msgstr "Parfait, vous venez de mettre à jour à"
 
 #: functions/admin/class-admin-update-notification.php:87
 msgid "version"
-msgstr ""
+msgstr "version"
 
 #: functions/admin/class-admin-update-notification.php:96
 msgid "We'd like to introduce the new features we've been working on."
 msgstr ""
+"Nous voudrions vous présenter les dernières fonctionnalités que nous avons "
+"développées."
 
 #: functions/admin/class-admin-update-notification.php:98
 msgid "Read the latest release notes"
-msgstr ""
+msgstr "Lisez les dernières notes de version"
 
 #: functions/admin/class-admin-update-notification.php:100
 msgid "Visit the demo"
-msgstr ""
+msgstr "Visiter la démo"
 
 #: functions/admin/class-admin-update-notification.php:106
 msgid "I already know what's new thanks !"
-msgstr ""
+msgstr "Je sais déjà ce qui est nouveau, merci !"
 
 #: functions/admin/class-admin-update-notification.php:107
 msgid "close"
-msgstr ""
+msgstr "Fermer"
 
 #: functions/class-utils-settings-map.php:136
 msgid "Favicon Upload (supported formats : .ico, .png, .gif)"
-msgstr ""
+msgstr "Téléchargement d'une favicône (formats supportés : .ico, .png, .gif)."
 
 #: functions/class-utils-settings-map.php:137
 msgid "FAVICON"
-msgstr ""
+msgstr "FAVICÔNE"
 
 #: functions/class-utils-settings-map.php:145
 msgid "FeedBurner URL"
-msgstr ""
+msgstr "URL FeedBurner"
 
 #: functions/class-utils-settings-map.php:150
 msgid ""
@@ -252,34 +279,37 @@ msgid ""
 "to use FeedBurner over the standard WordPress feed e.g. http://feeds."
 "feedburner.com/yoururlhere "
 msgstr ""
+"Entrez votre URL FeedBurner complète (ou toute autre URL de flux préférée) "
+"si vous souhaitez utiliser FeedBurner au-dessus du flux standard de "
+"WordPress, par exemple http://feeds.feedburner.com/yoururlhere"
 
 #: functions/class-utils-settings-map.php:163
 msgid "Dynamic Styles"
-msgstr ""
+msgstr "Styles dynamiques"
 
 #: functions/class-utils-settings-map.php:166
 msgid "Turn on to use the styling options below"
-msgstr ""
+msgstr "Activer pour utiliser les options de style ci-dessous."
 
 #: functions/class-utils-settings-map.php:171
 msgid "Boxed Layout"
-msgstr ""
+msgstr "Mise en page encadrée"
 
 #: functions/class-utils-settings-map.php:174
 msgid "Use a boxed layout"
-msgstr ""
+msgstr "Utilisé une mise en page encadrée"
 
 #: functions/class-utils-settings-map.php:179
 msgid "Font"
-msgstr ""
+msgstr "Police"
 
 #: functions/class-utils-settings-map.php:183
 msgid "Select a font for your website"
-msgstr ""
+msgstr "Choisir une police pour votre site web"
 
 #: functions/class-utils-settings-map.php:189
 msgid "Website Max-width"
-msgstr ""
+msgstr "Largeur maximale du site web"
 
 #: functions/class-utils-settings-map.php:195
 msgid ""
@@ -288,86 +318,91 @@ msgid ""
 "<strong>1380px</strong> for 2 sidebars and <strong>1120px</strong> for 1 "
 "sidebar. If you use a combination of both, try something inbetween.</i>"
 msgstr ""
+"Largeur maximale du conteneur. Si vous utilisez 2 barres latérales, votre "
+"conteneur doit être d'au moins 1 200px. <br /><i>Note : pour un contenu de "
+"720px (par défaut) utilisez <strong>1 380px</strong> pour 2 barres latérales "
+"et <strong>1 120px</strong> pour 1 barre latérale. Si vous utilisez une "
+"combinaison des deux, essayez quelque chose entre les deux. </i>"
 
 #: functions/class-utils-settings-map.php:200
 msgid "Sidebar Width"
-msgstr ""
+msgstr "Largeur de la barre latérale"
 
 #: functions/class-utils-settings-map.php:204
 msgid "30px padding for widgets"
-msgstr ""
+msgstr "Rembourrage de 30px pour les widgets."
 
 #: functions/class-utils-settings-map.php:205
 msgid "20px padding for widgets"
-msgstr ""
+msgstr "Rembourrage de 20px pour les widgets."
 
 #: functions/class-utils-settings-map.php:207
 msgid "Change left and right sidebars padding"
-msgstr ""
+msgstr "Change le rembourrage gauche et droite des barres latérales. "
 
 #: functions/class-utils-settings-map.php:212
 msgid "Primary Color"
-msgstr ""
+msgstr "Couleur principale"
 
 #: functions/class-utils-settings-map.php:222
 msgid "Secondary Color"
-msgstr ""
+msgstr "Couleur secondaire"
 
 #: functions/class-utils-settings-map.php:233
 msgid "Body Background"
-msgstr ""
+msgstr "Arrière-plan du site"
 
 #: functions/class-utils-settings-map.php:234
 msgid "Set the website background color"
-msgstr ""
+msgstr "Définissez la couleur d'arrière-plan du site."
 
 #: functions/class-utils-settings-map.php:246
 msgid "Topbar Background"
-msgstr ""
+msgstr "Arrière-plan de la barre du haut"
 
 #: functions/class-utils-settings-map.php:256
 msgid "Header Background"
-msgstr ""
+msgstr "Arrière-plan de l'en-tête"
 
 #: functions/class-utils-settings-map.php:266
 msgid "Header Menu Background"
-msgstr ""
+msgstr "Arrière-plan du Menu d'en-tête"
 
 #: functions/class-utils-settings-map.php:276
 msgid "Footer Background"
-msgstr ""
+msgstr "Arrière plan du pied de page"
 
 #: functions/class-utils-settings-map.php:287
 msgid "Image Border Radius"
-msgstr ""
+msgstr "Rayon de la bordure d'image"
 
 #: functions/class-utils-settings-map.php:293
 msgid "Give your thumbnails and layout images rounded corners"
-msgstr ""
+msgstr "Donnez à vos vignettes et au cadre de vos images des coins arrondis."
 
 #: functions/class-utils-settings-map.php:315
 msgid "Create and organize your social links"
-msgstr ""
+msgstr "Créer et organiser vos liens sociaux"
 
 #: functions/class-utils-settings-map.php:332
 msgid "Posts Comments"
-msgstr ""
+msgstr "Contenu des commentaires"
 
 #: functions/class-utils-settings-map.php:335
 msgid "Comments on posts"
-msgstr ""
+msgstr "Commentaires sur les articles"
 
 #: functions/class-utils-settings-map.php:340
 msgid "Pages Comments"
-msgstr ""
+msgstr "Pages des commentaires"
 
 #: functions/class-utils-settings-map.php:343
 msgid "Comments on pages"
-msgstr ""
+msgstr "Commentaires sur les pages"
 
 #: functions/class-utils-settings-map.php:357
 msgid "Enable the Mobile Friendly (or Responsive) layout"
-msgstr ""
+msgstr "Activer la mise en page adaptée aux mobiles (responsive)."
 
 #: functions/class-utils-settings-map.php:360
 msgid ""
@@ -377,20 +412,29 @@ msgid ""
 "behaviour will not be working anymore. In most of the cases, you won't need "
 "to disable this option, and it is not recommended."
 msgstr ""
+"Hueman est d’emblée un thème WordPress adapté aux mobiles. Cela signifie "
+"qu'il va s'adapter et avoir un bon rendu sur tous les appareils : "
+"ordinateurs, tablettes, mobiles. <br/> Si vous décochez cette case, ce "
+"comportement adaptatif (ou reponsive) ne fonctionnera plus. Dans la plupart "
+"des cas, vous ne devez pas désactiver cette option, et ce n'est pas "
+"recommandé."
 
 #: functions/class-utils-settings-map.php:374
 msgid "Use a minified stylesheet"
-msgstr ""
+msgstr "Utiliser une feuille de style minifié"
 
 #: functions/class-utils-settings-map.php:377
 msgid ""
 "Unchecking this option is not recommended. Minifying css stylesheets "
 "improves performance for your website overall by decreasing the load time."
 msgstr ""
+"Décocher cette option est déconseillée. Minifier une feuille de style CSS "
+"améliore les performances de votre site web en général en diminuant le temps "
+"de chargement."
 
 #: functions/class-utils-settings-map.php:382
 msgid "Use Structured Data Markup for your posts"
-msgstr ""
+msgstr "Utiliser « Structured Data Markup » pour vos publications."
 
 #: functions/class-utils-settings-map.php:385
 msgid ""
@@ -398,10 +442,14 @@ msgid ""
 "machines can understand it. Implementing it will help your website rank "
 "higher in search engines."
 msgstr ""
+"« Structured Data Markup » est un moyen standard d'annoter votre contenu "
+"afin que les machines puissent le comprendre. Sa mise en œuvre aidera votre "
+"site web à atteindre un rang plus élevé dans les moteurs de recherche."
 
 #: functions/class-utils-settings-map.php:399
 msgid "Display the \"About Hueman\" page in the \"Appearance\" admin menu"
 msgstr ""
+"Afficher la page « A propos de Hueman » dans le menu Admin « Apparence »"
 
 #: functions/class-utils-settings-map.php:402
 msgid ""
@@ -409,18 +457,22 @@ msgid ""
 "changelog, release note, documentation link. It also display informations "
 "about your current install that can be useful if you need to report an issue."
 msgstr ""
+"Cette page est destinée à fournir des informations sur le thème Hueman : "
+"journal des modifications, note de publication, lien de documentation. Il "
+"affiche également des informations sur votre installation actuelle, ce qui "
+"peut être utile si vous avez besoin de signaler un problème."
 
 #: functions/class-utils-settings-map.php:407
 msgid "Display a Help button in the admin bar"
-msgstr ""
+msgstr "Afficher un bouton d'aide dans la barre d'admin"
 
 #: functions/class-utils-settings-map.php:410
 msgid "This button links to the \"About Hueman\" page."
-msgstr ""
+msgstr "Ce bouton lie à la page « A propos de Hueman »."
 
 #: functions/class-utils-settings-map.php:430
 msgid "Custom Header Logo"
-msgstr ""
+msgstr "Logo de l'en-tête personnalisé."
 
 #: functions/class-utils-settings-map.php:441
 #: functions/class-utils-settings-map.php:858
@@ -428,222 +480,254 @@ msgid ""
 "Upload your custom logo image. Supported formats : .jpg, .png, .gif, svg, "
 "svgz"
 msgstr ""
+"Téléchargez votre logo. Formats pris en charge : .jpg, .png, .gif, .svg, ."
+"svgz."
 
 #: functions/class-utils-settings-map.php:447
 msgid "Header Logo Image Max-height"
-msgstr ""
+msgstr "Hauteur maximale du logo d'en-tête."
 
 #: functions/class-utils-settings-map.php:453
 msgid ""
 "Your logo image should have the double height of this to be high resolution"
 msgstr ""
+"Votre logo doit avoir le double de hauteur de cela pour être en haute "
+"résolution."
 
 #: functions/class-utils-settings-map.php:458
 msgid "Display your site's description (tagline)"
-msgstr ""
+msgstr "Affichez votre description du site (slogan)."
 
 #: functions/class-utils-settings-map.php:461
 msgid "The description that appears next to your logo"
-msgstr ""
+msgstr "La description qui apparaît à côté de votre logo."
 
 #: functions/class-utils-settings-map.php:465
 msgid "Header Image"
-msgstr ""
+msgstr "Image d’en-tête"
 
 #: functions/class-utils-settings-map.php:475
 msgid ""
 "Upload a header image (supported formats : .jpg, .png, .gif, svg, svgz). "
 "This will disable header title/logo, site description, header ads widget"
 msgstr ""
+"Ajouter une image d'en-tête (formats pris en charge : .jpg, .png, .gif, ."
+"svg, .svgz). Cela va désactiver le titre/logo, la description du site, et le "
+"widget d'annonces de l'en-tête."
 
 #: functions/class-utils-settings-map.php:489
 msgid "Display a widget in your header"
-msgstr ""
+msgstr "Afficher un widget dans l'en-tête."
 
 #: functions/class-utils-settings-map.php:492
 msgid ""
 "Header widget area, perfect to insert advertisements. Note : this feature is "
 "not available when a header image is being displayed."
 msgstr ""
+"Zone de widget d'en-tête, parfait pour insérer des publicités. Remarque : "
+"cette fonction n'est pas disponible lorsqu'une image d'en-tête est affiché."
 
 #: functions/class-utils-settings-map.php:513
 msgid "Global Layout"
-msgstr ""
+msgstr "Mise en page globale"
 
 #: functions/class-utils-settings-map.php:517
 msgid "Other layouts will override this option if they are set"
-msgstr ""
+msgstr "D'autres mises en page remplacent cette option si elles sont définies."
 
 #: functions/class-utils-settings-map.php:522 functions/init-core.php:845
 msgid "Home"
-msgstr ""
+msgstr "Accueil"
 
 #: functions/class-utils-settings-map.php:526
 msgid "[ <strong>is_home</strong> ] Posts homepage layout"
-msgstr ""
+msgstr "[ <strong>is_home</strong> ] Mise en page d'article de page d'accueil."
 
 #: functions/class-utils-settings-map.php:531
 msgid "Single"
-msgstr ""
+msgstr "Unique"
 
 #: functions/class-utils-settings-map.php:535
 msgid ""
 "[ <strong>is_single</strong> ] Single post layout - If a post has a set "
 "layout, it will override this."
 msgstr ""
+"[ <strong>is_single</strong> ] Mise en page d'un article. (Si un article a "
+"une mise en page configurée, elle remplacera celle-ci.) "
 
 #: functions/class-utils-settings-map.php:540
 msgid "Archive"
-msgstr ""
+msgstr "Archive"
 
 #: functions/class-utils-settings-map.php:544
 msgid ""
 "[ <strong>is_archive</strong> ] Category, date, tag and author archive layout"
 msgstr ""
+"[ <strong>is_archive</strong> ] Mise en page pour page de catégorie, date, "
+"étiquette et auteur."
 
 #: functions/class-utils-settings-map.php:549
 msgid "Archive - Category"
-msgstr ""
+msgstr "Archive - Catégorie"
 
 #: functions/class-utils-settings-map.php:553
 msgid "[ <strong>is_category</strong> ] Category archive layout"
-msgstr ""
+msgstr "[ <strong>is_category</strong> ] Mise en page archive catégorie."
 
 #: functions/class-utils-settings-map.php:558
 msgid "Search"
-msgstr ""
+msgstr "Rerchercher"
 
 #: functions/class-utils-settings-map.php:562
 msgid "[ <strong>is_search</strong> ] Search page layout"
-msgstr ""
+msgstr "[ <strong>is_search</strong> ] Mise en page de la page de recherche"
 
 #: functions/class-utils-settings-map.php:567
 msgid "Error 404"
-msgstr ""
+msgstr "Erreur 404"
 
 #: functions/class-utils-settings-map.php:571
 msgid "[ <strong>is_404</strong> ] Error 404 page layout"
-msgstr ""
+msgstr "[ <strong>is_404</strong> ] mise en page erreur 404"
 
 #: functions/class-utils-settings-map.php:576
 msgid "Default Page"
-msgstr ""
+msgstr "Page par défaut"
 
 #: functions/class-utils-settings-map.php:580
 msgid ""
 "[ <strong>is_page</strong> ] Default page layout - If a page has a set "
 "layout, it will override this."
 msgstr ""
+"[ <strong>is_page</strong> ] Mise en page par défaut. (Si une page a une "
+"mise en page configurée, elle remplacera celle-ci.)"
 
 #: functions/class-utils-settings-map.php:594
 msgid "Display a custom heading for your blog."
-msgstr ""
+msgstr "Afficher une rubrique personnalisée pour votre site."
 
 #: functions/class-utils-settings-map.php:601
 msgid "Blog Heading"
-msgstr ""
+msgstr "Titre du site"
 
 #: functions/class-utils-settings-map.php:604
 msgid ""
 "Your blog heading. Html is allowed. Note : write a blank space to hide the "
 "default content."
 msgstr ""
+"Le titre de votre site. Le HTML est autorisé. Note : saisir un espace vide "
+"pour cacher le contenu par défaut."
 
 #: functions/class-utils-settings-map.php:608 functions/init-front.php:219
 msgid "Blog"
-msgstr ""
+msgstr "Site"
 
 #: functions/class-utils-settings-map.php:610
 msgid "Blog Sub-Heading"
-msgstr ""
+msgstr "Sous-titre du site"
 
 #: functions/class-utils-settings-map.php:613
 msgid ""
 "Your blog sub-heading. Html is allowed. Note : write a blank space to hide "
 "the default content."
 msgstr ""
+"Le sous-titre de votre site. Le HTML est autorisé. Note : écrire un espace "
+"vide pour cacher le contenu par défaut."
 
 #: functions/class-utils-settings-map.php:620
 msgid "Excerpt Length"
-msgstr ""
+msgstr "Taille de l'extrait"
 
 #: functions/class-utils-settings-map.php:626
 msgid "Set the excerpt length (in number of words)"
-msgstr ""
+msgstr "Définir la longueur de l'extrait (en nombre de mots)."
 
 #: functions/class-utils-settings-map.php:631
 msgid "Display your blog post as a standard list."
-msgstr ""
+msgstr "Afficher vos articles de blog en liste standard."
 
 #: functions/class-utils-settings-map.php:634
 msgid ""
 "While the default blog design is a grid of posts, you can check this option "
 "and display one post per row, whith the thumbnail beside the text."
 msgstr ""
+"Alors que le design du site par défaut est une grille d'articles, vous "
+"pouvez cocher cette option et afficher un article par ligne, avec la "
+"miniature à côté du texte."
 
 #: functions/class-utils-settings-map.php:638
 msgid "Featured posts"
-msgstr ""
+msgstr "Articles mis en avant"
 
 #: functions/class-utils-settings-map.php:640
 msgid "Feature posts on top of your blog"
-msgstr ""
+msgstr "Articles mis en avant en haut de votre site"
 
 #: functions/class-utils-settings-map.php:643
 msgid ""
 "Check this box to display a selection of posts with a slideshow, on top of "
 "your blog."
 msgstr ""
+"Cocher cette boite pour afficher une sélection d'article dans un diaporama, "
+"en haut de votre site."
 
 #: functions/class-utils-settings-map.php:648
 msgid "Select a category to feature"
-msgstr ""
+msgstr "Sélectionnez une catégorie à mettre en avant."
 
 #: functions/class-utils-settings-map.php:652
 msgid ""
 "If no specific category is selected, the featured posts block will display "
 "your latest post(s) from all categories."
 msgstr ""
+"Si aucune catégorie n'est sélectionné, le bloc d'article mis en avant "
+"affichera le(s) dernier(s) message(s) de toutes les catégories."
 
 #: functions/class-utils-settings-map.php:658
 msgid "Featured Post Count"
-msgstr ""
+msgstr "Compteur d'articles mis en avant"
 
 #: functions/class-utils-settings-map.php:664
 msgid ""
 "Max number of featured posts to display. <br /><i>Set to 1 and it will show "
 "it without any slider script</i><br /><i>Set it to 0 to disable</i>"
 msgstr ""
+"Nombre maximum d'articles à la une à afficher. <br /><i>Mettre 1 pour "
+"afficher un article sans diaporama</i><br /><i>Mettre 0 pour le désactiver</"
+"i>"
 
 #: functions/class-utils-settings-map.php:669
 msgid "Display the full post content"
-msgstr ""
+msgstr "Afficher le contenu complet"
 
 #: functions/class-utils-settings-map.php:672
 msgid ""
 "By default, your featured posts display the first words of their content "
 "( the \"excerpt\"). Check this box to display the full content."
 msgstr ""
+"Par défaut, vos articles mis en avant affichent les premiers mots de leur "
+"contenu (l' « extrait »). Cochez cette case pour afficher l'intégralité du "
+"contenu."
 
 #: functions/class-utils-settings-map.php:677
 msgid "Animate your featured posts with a slideshow"
-msgstr ""
+msgstr "Animer vos articles à la une avec un diaporama."
 
 #: functions/class-utils-settings-map.php:680
 msgid "Enables the automatic animation of the featured posts carousel."
-msgstr ""
+msgstr "Active l'animation automatique du carrousel des articles à la une."
 
 #: functions/class-utils-settings-map.php:686
 msgid "Featured Slideshow Speed"
-msgstr ""
+msgstr "Vitesse du Diaporama de la une."
 
 #: functions/class-utils-settings-map.php:692
 msgid "Speed of the automatic slideshow animation"
-msgstr ""
+msgstr "Vitesse de l'animation automatique du diaporama"
 
 #: functions/class-utils-settings-map.php:697
 msgid "Display the featured posts also in the list of posts"
-msgstr ""
+msgstr "Affiche les articles à la une aussi dans la liste d'articles."
 
 #: functions/class-utils-settings-map.php:700
 msgid ""
@@ -651,110 +735,118 @@ msgid ""
 "featured slider and in the post list below. Usually not recommended because "
 "a given post might appear two times on the same page."
 msgstr ""
+"Si cette case est coché, vos articles à la une s'afficheront à la fois dans "
+"le diaporama à la une et dans la liste article en dessous. Ce n'est "
+"généralement pas recommandé car un article pourrait apparaître deux fois sur "
+"la même page."
 
 #: functions/class-utils-settings-map.php:715
 msgid "Single - Author Bio"
-msgstr ""
+msgstr "Article seul - Bio de l'auteur"
 
 #: functions/class-utils-settings-map.php:718
 msgid "Display post author description, if it exists"
-msgstr ""
+msgstr "Afficher la description de l'article de l'auteur, si elle existe."
 
 #: functions/class-utils-settings-map.php:723
 msgid "Single - Related Posts"
-msgstr ""
+msgstr "Article seul - Articles Similaires"
 
 #: functions/class-utils-settings-map.php:727
 #: functions/class-utils-settings-map.php:740
 #: functions/class-utils-settings-map.php:1245
 msgid "Disable"
-msgstr ""
+msgstr "Désactiver"
 
 #: functions/class-utils-settings-map.php:728
 msgid "Related by categories"
-msgstr ""
+msgstr "Rassemblé par catégories"
 
 #: functions/class-utils-settings-map.php:729
 msgid "Related by tags"
-msgstr ""
+msgstr "Rassemblé par étiquettes"
 
 #: functions/class-utils-settings-map.php:731
 msgid "Display randomized related articles below the post"
-msgstr ""
+msgstr "Affichage aléatoire des articles similaires en bas de l'article"
 
 #: functions/class-utils-settings-map.php:736
 msgid "Single - Post Navigation"
-msgstr ""
+msgstr "Simple - Navigation par article"
 
 #: functions/class-utils-settings-map.php:741
 msgid "Left Sidebar"
-msgstr ""
+msgstr "Colonne latérale gauche"
 
 #: functions/class-utils-settings-map.php:742
 msgid "Right Sidebar"
-msgstr ""
+msgstr "Colonne latérale droite"
 
 #: functions/class-utils-settings-map.php:743
 msgid "Below content"
-msgstr ""
+msgstr "Au dessous du contenu"
 
 #: functions/class-utils-settings-map.php:745
 msgid "Display links to the next and previous article"
-msgstr ""
+msgstr "Afficher les liens vers le prochain et le précédent article."
 
 #: functions/class-utils-settings-map.php:759
 msgid "Thumbnail Placeholder"
-msgstr ""
+msgstr "Emplacement de la vignette"
 
 #: functions/class-utils-settings-map.php:762
 msgid "Display featured image placeholders if no featured image is set"
 msgstr ""
+"Affiche l'emplacement de l'image mise en avant si aucune image n'est choisie"
 
 #: functions/class-utils-settings-map.php:767
 msgid "Thumbnail Comment Count"
-msgstr ""
+msgstr "Miniature du nombre de commentaires "
 
 #: functions/class-utils-settings-map.php:770
 msgid "Display comment count on thumbnails"
-msgstr ""
+msgstr "Afficher le nombre de commentaire sur les miniatures"
 
 #: functions/class-utils-settings-map.php:791
 msgid "Sidebar Top Boxes"
-msgstr ""
+msgstr "Boites en haut des colonnes latérales "
 
 #: functions/class-utils-settings-map.php:794
 msgid "Display boxes at the top of the sidebars"
-msgstr ""
+msgstr "Afficher les boites en haut des colonnes latérales"
 
 #: functions/class-utils-settings-map.php:799
 msgid "Mobile Sidebar Content"
-msgstr ""
+msgstr "Contenu de la colonne latérale sur mobile"
 
 #: functions/class-utils-settings-map.php:803
 msgid "Display both sidebars"
-msgstr ""
+msgstr "Afficher les 2 colonnes latérales"
 
 #: functions/class-utils-settings-map.php:804
 msgid "Hide primary sidebar"
-msgstr ""
+msgstr "Masquer la barre latérale primaire"
 
 #: functions/class-utils-settings-map.php:805
 msgid "Hide secondary sidebar"
-msgstr ""
+msgstr "Masquer la barre latérale secondaire"
 
 #: functions/class-utils-settings-map.php:806
 msgid "Hide both sidebars"
-msgstr ""
+msgstr "Masquer les deux barres latérales"
 
 #: functions/class-utils-settings-map.php:808
 msgid ""
 "Control how the sidebar content is displayed on smartphone mobile devices "
 "(320px). Note : on smartphones the sidebars are displayed below the content."
 msgstr ""
+"Contrôler comment le contenu de la colonne latérale s'affiche sur les "
+"périphériques mobiles smartphone (320px). Remarque : sur les mobiles les "
+"colonnes latérales s'affichent sous le contenu."
 
 #: functions/class-utils-settings-map.php:831
 msgid "Display a full width widget area in your footer"
-msgstr ""
+msgstr "Afficher une zone de widget pleine largeur dans votre pied de page"
 
 #: functions/class-utils-settings-map.php:834
 #, php-format
@@ -762,78 +854,83 @@ msgid ""
 "This zone is located before the other footer widgets and takes 100% of the "
 "width. Very appropriate to display a Google Map or an advertisement banner."
 msgstr ""
+"Cette zone se situe avant les autres widgets de pied de page et prend "
+"100% de la largeur. Elle convient très bien pour afficher une carte Google "
+"ou une bannière publicitaire."
 
 #: functions/class-utils-settings-map.php:839
 msgid "Select columns to enable footer widgets"
-msgstr ""
+msgstr "Sélectionnez les colonnes pour autoriser des widgets en pied de page"
 
 #: functions/class-utils-settings-map.php:843
 msgid "Recommended number of columns : 3"
-msgstr ""
+msgstr "Nombre de colonnes recommandées : 3"
 
 #: functions/class-utils-settings-map.php:847
 msgid "Upload your custom logo image"
-msgstr ""
+msgstr "Télécharger votre logo"
 
 #: functions/class-utils-settings-map.php:863
 msgid "Replace the footer copyright text"
-msgstr ""
+msgstr "Remplacer le texte de copyright de pied de page"
 
 #: functions/class-utils-settings-map.php:867
 msgid "Note : Html is allowed."
-msgstr ""
+msgstr "Note : HTML autorisé."
 
 #: functions/class-utils-settings-map.php:872
 msgid "Footer credit text"
-msgstr ""
+msgstr "Texte de crédit dans le pied de page"
 
 #: functions/class-utils-settings-map.php:907
 msgid "Global settings"
-msgstr ""
+msgstr "Réglages globaux"
 
 #: functions/class-utils-settings-map.php:908
 msgid "General settings for the Hueman theme : design, comments, mobile, ..."
 msgstr ""
+"Réglages généraux pour le thème Hueman : style, commentaires, appareils "
+"mobiles..."
 
 #: functions/class-utils-settings-map.php:913
 msgid "Header"
-msgstr ""
+msgstr "En-tête"
 
 #: functions/class-utils-settings-map.php:914
 msgid "Header settings for the Hueman theme."
-msgstr ""
+msgstr "Réglages de l'en-tête pour le thème Hueman."
 
 #: functions/class-utils-settings-map.php:919
 msgid "Content"
-msgstr ""
+msgstr "Contenu"
 
 #: functions/class-utils-settings-map.php:920
 msgid "Content settings for the Hueman theme."
-msgstr ""
+msgstr "Réglages du contenu pour le thème Hueman."
 
 #: functions/class-utils-settings-map.php:925
 msgid "Sidebars"
-msgstr ""
+msgstr "Colonnes latérales"
 
 #: functions/class-utils-settings-map.php:926
 msgid "Sidebars settings for the Hueman theme."
-msgstr ""
+msgstr "Réglages de barres latérales pour le thème Hueman."
 
 #: functions/class-utils-settings-map.php:931
 msgid "Footer"
-msgstr ""
+msgstr "Pied de page"
 
 #: functions/class-utils-settings-map.php:932
 msgid "Footer settings for the Hueman theme."
-msgstr ""
+msgstr "Réglages du pied de page pour le thème Hueman."
 
 #: functions/class-utils-settings-map.php:937
 msgid "Advanced options"
-msgstr ""
+msgstr "Options avancées"
 
 #: functions/class-utils-settings-map.php:938
 msgid "Advanced settings for the Hueman theme."
-msgstr ""
+msgstr "Réglages avancés pour le thème Hueman."
 
 #: functions/class-utils-settings-map.php:1013
 #, php-format
@@ -841,149 +938,156 @@ msgid "Your theme supports %s menu. Select which menu you would like to use."
 msgid_plural ""
 "Your theme supports %s menus. Select which menu appears in each location."
 msgstr[0] ""
+"Votre thème peut utiliser %s menu. Sélectionnez le menu que vous voudriez "
+"utiliser."
 msgstr[1] ""
+"Votre thème peut utiliser %s menus. Sélectionnez le menu que vous voudriez "
+"utiliser pour chaque emplacement."
 
 #: functions/class-utils-settings-map.php:1016
 #: functions/class-utils-settings-map.php:1024
 #, php-format
 msgid "You can create new menu and edit your menu's content %s."
 msgstr ""
+"Vous pouvez créer un nouveau menu et modifier le contenu de votre menu %s."
 
 #: functions/class-utils-settings-map.php:1019
 msgid "on the Menus screen in the Appearance section"
-msgstr ""
+msgstr "sur l'écran Menus dans la section Apparence"
 
 #: functions/class-utils-settings-map.php:1020
 #: functions/class-utils-settings-map.php:1028
 msgid "create/edit menus"
-msgstr ""
+msgstr "créer/modifier des menus"
 
 #: functions/class-utils-settings-map.php:1027
 msgid "in the menu panel"
-msgstr ""
+msgstr "dans le panneau menu"
 
 #: functions/class-utils-settings-map.php:1033
 msgid ""
 "If a menu location has no menu assigned to it, a default page menu will be "
 "used."
 msgstr ""
+"Si un emplacement menu n'a pas de menu qui lui soit assigné, un menu de page "
+"par défaut sera utilisé."
 
 #: functions/class-utils-settings-map.php:1042
 msgid "Site Identity : Title, Tagline and Site Icon"
-msgstr ""
+msgstr "Identité du site : titre, slogan et icône du site "
 
 #: functions/class-utils-settings-map.php:1047
 msgid "General Design Options : Font, Colors, ..."
-msgstr ""
+msgstr "Options Design Général : Police, Couleurs..."
 
 #: functions/class-utils-settings-map.php:1052
 msgid "Social links"
-msgstr ""
+msgstr "Réseaux sociaux"
 
 #: functions/class-utils-settings-map.php:1062
 msgid "Mobile devices"
-msgstr ""
+msgstr "Appareils mobiles"
 
 #: functions/class-utils-settings-map.php:1067
 msgid "Performances and SEO"
-msgstr ""
+msgstr "Performances et SEO"
 
 #: functions/class-utils-settings-map.php:1072
 msgid "Hueman Admin Settings"
-msgstr ""
+msgstr "Réglages admin de Hueman"
 
 #: functions/class-utils-settings-map.php:1083
 msgid "Header Design : logo, background, ..."
-msgstr ""
+msgstr "Design de l'en-tête : logo, arrière-plan..."
 
 #: functions/class-utils-settings-map.php:1088
 msgid "Header Advertisement Widget"
-msgstr ""
+msgstr "Widget Annonce dans l'En-tête"
 
 #: functions/class-utils-settings-map.php:1098
 msgid "Layout options for the main content"
-msgstr ""
+msgstr "Options mise en page pour le contenu principal"
 
 #: functions/class-utils-settings-map.php:1103
 msgid "Sidebars : Design and Mobile Settings"
-msgstr ""
+msgstr "Colonnes latérales : Réglages Design et Mobile "
 
 #: functions/class-utils-settings-map.php:1108
 msgid "Blog Design and Content"
-msgstr ""
+msgstr "Design et contenu du site"
 
 #: functions/class-utils-settings-map.php:1113
 msgid "Single Posts Settings"
-msgstr ""
+msgstr "Réglages articles uniques"
 
 #: functions/class-utils-settings-map.php:1118
 msgid "Thumbnails Settings"
-msgstr ""
+msgstr "Réglages des miniatures"
 
 #: functions/class-utils-settings-map.php:1127
 msgid "Footer Design : Logo, layout, ..."
-msgstr ""
+msgstr "Design du pied de page : logo, mise en page... "
 
 #: functions/class-utils-settings-map.php:1180
 msgid "Choose one "
-msgstr ""
+msgstr "En choisir un"
 
 #: functions/class-utils-settings-map.php:1199
 #: functions/class-utils-settings-map.php:1249
 msgid "1 Column"
-msgstr ""
+msgstr "1 colonne"
 
 #: functions/class-utils-settings-map.php:1203
 msgid "2 Columns - Content Left"
-msgstr ""
+msgstr "2 colonnes - Contenu à gauche"
 
 #: functions/class-utils-settings-map.php:1207
 msgid "2 Columns - Content Right"
-msgstr ""
+msgstr "2 colonnes - Contenu à droite"
 
 #: functions/class-utils-settings-map.php:1211
 msgid "3 Columns - Content Middle"
-msgstr ""
+msgstr "2 colonnes - Contenu au centre"
 
 #: functions/class-utils-settings-map.php:1215
 msgid "3 Columns - Content Left"
-msgstr ""
+msgstr "3 colonnes - Contenu à gauche"
 
 #: functions/class-utils-settings-map.php:1219
 msgid "3 Columns - Content Right"
-msgstr ""
+msgstr "3 colonnes - Contenu à droite"
 
 #: functions/class-utils-settings-map.php:1227
 msgid "Inherit Global Layout"
-msgstr ""
+msgstr "Hérite du style global"
 
 #: functions/class-utils-settings-map.php:1253
 msgid "2 Columns"
-msgstr ""
+msgstr "2 colonnes"
 
 #: functions/class-utils-settings-map.php:1257
 msgid "3 Columns"
-msgstr ""
+msgstr "3 colonnes"
 
 #: functions/class-utils-settings-map.php:1261
 msgid "4 Columns"
-msgstr ""
+msgstr "4 colonnes "
 
 #: functions/class-utils-settings-map.php:1286
 msgid "No Sidebars"
-msgstr ""
+msgstr "Aucune barre latérale"
 
 #: functions/class-utils-settings-map.php:1291
 msgid "Choose Sidebar"
-msgstr ""
+msgstr "Choisir la barre latérale"
 
 #: functions/czr/class-czr-init.php:154
 msgid "&mdash; Select &mdash;"
-msgstr ""
+msgstr "&mdash; Sélectionnez &mdash;"
 
 #: functions/czr/class-czr-init.php:191
 msgid "Assign menus to locations"
-msgstr "Choisir les emplacements des menus"
+msgstr "Affichez vos menus aux emplacements prédéfinis"
 
 #: functions/czr/class-czr-init.php:201
 #, php-format
@@ -991,246 +1095,246 @@ msgid ""
 "You haven't created any menu yet. %s or check the %s to learn more about "
 "menus."
 msgstr ""
+"Vous n'avez pas encore créé de menu. %s ou visitez la %s pour en savoir plus "
+"sur les menus."
 
 #: functions/czr/class-czr-init.php:202
 msgid "Create a new menu now"
-msgstr ""
+msgstr "Créer un nouveau menu maintenant"
 
 #: functions/czr/class-czr-init.php:203
 msgid "WordPress documentation"
-msgstr ""
+msgstr "Documentation WordPress"
 
 #: functions/czr/class-czr-init.php:219
 msgid "SITE ICON"
-msgstr ""
+msgstr "ICÔNE DE SITE"
 
 #: functions/czr/class-czr-init.php:245
 msgid "Create And Order Widget Areas"
-msgstr ""
+msgstr "Créer et Organiser Vos Zones de Widgets"
 
-#: functions/czr/class-czr-init.php:248 functions/czr/class-czr-init.php:276
-msgid ""
-"You must save changes for the new areas to appear below. <br /><i>Warning: "
-"Make sure each area has a unique ID.</i>"
-msgstr ""
-
-#: functions/czr/class-czr-init.php:273
+#: functions/czr/class-czr-init.php:272
 msgid "Create And Manage Widget Areas"
-msgstr "Créer et gérer les zones Widget"
+msgstr "Créer et Gérer les Zones de Widgets"
 
-#: functions/czr/class-czr-init.php:283
+#: functions/czr/class-czr-init.php:281
 msgid "Create and manage widget zones"
-msgstr "Créer et gérer les zones Widget"
+msgstr "Créer et gérer les zones de widgets"
 
-#: functions/czr/class-czr-init.php:304
+#: functions/czr/class-czr-init.php:302
 msgid "Dynamic Sidebars and Widgets"
-msgstr ""
+msgstr "Barres Latérales et Widgets"
 
-#: functions/czr/class-czr-init.php:590
+#: functions/czr/class-czr-init.php:588
 #: functions/czr/controls/class-dynamic-control.php:90
 #: functions/czr/controls/class-widget-areas-control.php:100
 msgid "Edit"
-msgstr ""
+msgstr "Modifier"
 
-#: functions/czr/class-czr-init.php:591
+#: functions/czr/class-czr-init.php:589
 msgid "Close"
-msgstr ""
+msgstr "Fermer"
 
-#: functions/czr/class-czr-init.php:592
+#: functions/czr/class-czr-init.php:590
 msgid ""
 "Your favicon is currently handled with an old method and will not be "
 "properly displayed on all devices. You might consider to re-upload your "
 "favicon with the new control below."
 msgstr ""
+"Votre icône de site est actuellement gérée par une ancienne méthode qui ne "
+"garantit pas un affichage optimal sur tous les appareils. Vous devriez "
+"recharger votre icône de site avec la nouvelle méthode ci-dessous."
 
-#: functions/czr/class-czr-init.php:593
+#: functions/czr/class-czr-init.php:591
 #: functions/czr/controls/class-widget-areas-control.php:77
 #: functions/czr/controls/class-widget-areas-control.php:126
 #: functions/czr/controls/class-widget-areas-control.php:170
 msgid "Location(s)"
-msgstr ""
+msgstr "Emplacement(s)"
 
-#: functions/czr/class-czr-init.php:594
+#: functions/czr/class-czr-init.php:592
 #: functions/czr/controls/class-widget-areas-control.php:133
 #: functions/czr/controls/class-widget-areas-control.php:177
 msgid "Context(s)"
-msgstr ""
+msgstr "Contexte(s)"
+
+#: functions/czr/class-czr-init.php:593
+msgid "Not set"
+msgstr "Non défini"
+
+#: functions/czr/class-czr-init.php:594
+msgid "Rss"
+msgstr "RSS"
 
 #: functions/czr/class-czr-init.php:595
-msgid "Not set"
-msgstr ""
+msgid "Select a social icon"
+msgstr "Choisissez une icône sociale"
 
 #: functions/czr/class-czr-init.php:596
-msgid "Rss"
-msgstr ""
+msgid "Follow us on"
+msgstr "Suivez-nous sur"
 
 #: functions/czr/class-czr-init.php:597
-msgid "Select a social icon"
-msgstr ""
+msgid "Done !"
+msgstr "C'est fait !"
 
 #: functions/czr/class-czr-init.php:598
-msgid "Follow us on"
-msgstr ""
+msgid "New Social Link created ! Scroll down to edit it."
+msgstr "Nouveau lien réseau social créé ! Défiler vers le bas pour l'éditer."
 
 #: functions/czr/class-czr-init.php:599
-msgid "Done !"
-msgstr ""
+msgid "Select repeat property"
+msgstr "Propriété \"repeat\""
 
 #: functions/czr/class-czr-init.php:600
-msgid "New Social Link created ! Scroll down to edit it."
-msgstr ""
+msgid "Select attachment property"
+msgstr "Propriété \"attachment\""
 
 #: functions/czr/class-czr-init.php:601
-msgid "Select repeat property"
-msgstr ""
+msgid "Select position property"
+msgstr "Propriété \"position\""
 
 #: functions/czr/class-czr-init.php:602
-msgid "Select attachment property"
-msgstr ""
+msgid "Widget Zone"
+msgstr "Zone de Widget"
 
 #: functions/czr/class-czr-init.php:603
-msgid "Select position property"
-msgstr ""
-
-#: functions/czr/class-czr-init.php:604
-msgid "Widget Zone"
-msgstr ""
-
-#: functions/czr/class-czr-init.php:605
 msgid "New Widget Zone created ! Scroll down to edit it."
 msgstr ""
+"Nouvelle zone de widget créée ! Faites défiler vers le bas pour la modifier."
+
+#: functions/czr/class-czr-init.php:604
+msgid "Inactive in current context/location"
+msgstr "Inactif dans le contexte / emplacement courant."
+
+#: functions/czr/class-czr-init.php:605
+msgid "Unavailable location. Some settings must be changed."
+msgstr "Emplacement non disponible. Certains réglages doivent être modifiés."
 
 #: functions/czr/class-czr-init.php:606
-msgid "Inactive in current context/location"
-msgstr ""
+msgid "A selected location is not available with the current settings."
+msgstr "Un emplacement choisi n'est pas disponible avec les réglages actuels."
 
 #: functions/czr/class-czr-init.php:607
-msgid "Unavailable location. Some settings must be changed."
-msgstr ""
-
-#: functions/czr/class-czr-init.php:608
-msgid "A selected location is not available with the current settings."
-msgstr ""
-
-#: functions/czr/class-czr-init.php:609
 msgid "Learn more about this in the documentation"
-msgstr ""
+msgstr "En savoir plus à ce sujet dans la documentation."
 
 #: functions/czr/controls/class-background-control.php:27
 #: functions/czr/controls/class-background-control.php:32
 msgid "Select Image"
-msgstr ""
+msgstr "Image"
 
 #: functions/czr/controls/class-background-control.php:28
 msgid "Change Image"
-msgstr ""
+msgstr "Changez l'image"
 
 #: functions/czr/controls/class-background-control.php:29
 #: functions/czr/controls/class-dynamic-control.php:90
 #: functions/czr/controls/class-upload-control.php:68
 msgid "Remove"
-msgstr ""
+msgstr "Supprimer"
 
 #: functions/czr/controls/class-background-control.php:30
 msgid "Default"
-msgstr ""
+msgstr "Valeur par défaut"
 
 #: functions/czr/controls/class-background-control.php:31
 msgid "No image selected"
-msgstr ""
+msgstr "Aucune image sélectionnée"
 
 #: functions/czr/controls/class-background-control.php:33
 msgid "Choose Image"
-msgstr ""
+msgstr "Choisir une image"
 
 #: functions/czr/controls/class-background-control.php:38
 msgid "No Repeat"
-msgstr ""
+msgstr "Ne pas répéter"
 
 #: functions/czr/controls/class-background-control.php:39
 msgid "Repeat All"
-msgstr ""
+msgstr "Répéter dans toutes les dimensions"
 
 #: functions/czr/controls/class-background-control.php:40
 msgid "Repeat Horizontally"
-msgstr ""
+msgstr "Répéter Horizontalement"
 
 #: functions/czr/controls/class-background-control.php:41
 msgid "Repeat Vertically"
-msgstr ""
+msgstr "Répéter Verticalement"
 
 #: functions/czr/controls/class-background-control.php:42
 #: functions/czr/controls/class-background-control.php:49
 msgid "Inherit"
-msgstr ""
+msgstr "Hériter"
 
 #: functions/czr/controls/class-background-control.php:47
 msgid "Fixed"
-msgstr ""
+msgstr "Fixe"
 
 #: functions/czr/controls/class-background-control.php:48
 msgid "Scroll"
-msgstr ""
+msgstr "Défilement"
 
 #: functions/czr/controls/class-background-control.php:54
 msgid "Left Top"
-msgstr ""
+msgstr "Gauche Haut"
 
 #: functions/czr/controls/class-background-control.php:55
 msgid "Left Center"
-msgstr ""
+msgstr "Gauche Milieu"
 
 #: functions/czr/controls/class-background-control.php:56
 msgid "Left Bottom"
-msgstr ""
+msgstr "Gauche Bas"
 
 #: functions/czr/controls/class-background-control.php:57
 msgid "Center Top"
-msgstr ""
+msgstr "Centré Haut"
 
 #: functions/czr/controls/class-background-control.php:58
 msgid "Center Center"
-msgstr ""
+msgstr "Centré Centré"
 
 #: functions/czr/controls/class-background-control.php:59
 msgid "Center Bottom"
-msgstr ""
+msgstr "Centré Bas"
 
 #: functions/czr/controls/class-background-control.php:60
 msgid "Right Top"
-msgstr ""
+msgstr "Droite Haut"
 
 #: functions/czr/controls/class-background-control.php:61
 msgid "Right Center"
-msgstr ""
+msgstr "Droite Centré"
 
 #: functions/czr/controls/class-background-control.php:62
 msgid "Right Bottom"
-msgstr ""
+msgstr "Droite Bas"
 
 #: functions/czr/controls/class-background-control.php:188
 msgid "Color"
-msgstr ""
+msgstr "Couleur"
 
 #: functions/czr/controls/class-background-control.php:195
 msgid "Background Image"
-msgstr ""
+msgstr "Image d'arrière plan"
 
 #: functions/czr/controls/class-background-control.php:203
 msgid "Repeat"
-msgstr ""
+msgstr "Répéter"
 
 #: functions/czr/controls/class-background-control.php:210
 msgid "Background attachment"
-msgstr ""
+msgstr "Fichier joint d'arrière-plan"
 
 #: functions/czr/controls/class-background-control.php:217
 msgid "Background position"
-msgstr ""
+msgstr "Position d'arrière-plan"
 
 #: functions/czr/controls/class-background-control.php:224
 msgid "Background size"
-msgstr ""
+msgstr "Taille du fond"
 
 #: functions/czr/controls/class-background-control.php:229
 msgid ""
@@ -1238,118 +1342,125 @@ msgid ""
 "images. The size of the image can be fully constrained or only partially in "
 "order to preserve its intrinsic ratio."
 msgstr ""
+"La propriété background-size définit la taille des images d'arrière-plan "
+"pour l'élément. La taille de l'image peut être contrainte, complètement ou "
+"partiellement afin de conserver ses proportions."
 
 #: functions/czr/controls/class-background-control.php:231
 msgid "Learn more"
-msgstr ""
+msgstr "En savoir plus"
 
 #: functions/czr/controls/class-background-control.php:232
 msgid "here"
-msgstr ""
+msgstr "ici"
 
 #: functions/czr/controls/class-dynamic-control.php:60
 msgid "Add New"
-msgstr ""
+msgstr "Ajouter un nouveau"
 
 #: functions/czr/controls/class-dynamic-control.php:65
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: functions/czr/controls/class-dynamic-control.php:65
 msgid "Add it"
-msgstr ""
+msgstr "Ajouter"
 
 #: functions/czr/controls/class-dynamic-control.php:103
 msgid "Are you sure you want to remove : <strong>{{ data.title }} ?</strong>"
 msgstr ""
+"Êtes-vous sûr de vouloir supprimer : <strong>{{ data.title }} ?</strong>"
 
 #: functions/czr/controls/class-dynamic-control.php:104
 msgid "Yes"
-msgstr ""
+msgstr "Oui"
 
 #: functions/czr/controls/class-dynamic-control.php:104
 msgid "No"
-msgstr ""
+msgstr "Non"
 
 #: functions/czr/controls/class-socials-control.php:28
 msgid "Select an icon"
-msgstr ""
+msgstr "Sélectionner une icône"
 
 #: functions/czr/controls/class-socials-control.php:34
 msgid "Social link url"
-msgstr ""
+msgstr "Lien réseau social"
 
 #: functions/czr/controls/class-socials-control.php:36
 #: functions/czr/controls/class-socials-control.php:74
 msgid "http://..."
-msgstr ""
+msgstr "http://..."
 
 #: functions/czr/controls/class-socials-control.php:38
 msgid "Enter the full url of your social profile (must be valid url)."
 msgstr ""
+"Entrer l'URL complète de votre profil social (ce doit être une URL valide)."
 
 #: functions/czr/controls/class-socials-control.php:59
 msgid "Id"
-msgstr ""
+msgstr "Identité"
 
 #: functions/czr/controls/class-socials-control.php:65
 msgid "Social icon"
-msgstr ""
+msgstr "Icône sociale"
 
 #: functions/czr/controls/class-socials-control.php:72
 msgid "Social link"
-msgstr ""
+msgstr "Lien réseau social"
 
 #: functions/czr/controls/class-socials-control.php:76
 msgid "Enter the full url of your social profile (must be a valid url)."
 msgstr ""
+"Entrer l'URL complète de votre profil social (ce doit être une URL valide)."
 
 #: functions/czr/controls/class-socials-control.php:79
 msgid "Title"
-msgstr ""
+msgstr "Titre"
 
 #: functions/czr/controls/class-socials-control.php:81
 msgid "Enter a title"
-msgstr ""
+msgstr "Saisir un titre"
 
 #: functions/czr/controls/class-socials-control.php:83
 msgid "This is the text displayed on mouse over."
-msgstr ""
+msgstr "Ceci est le texte affiché au passage de la souris."
 
 #: functions/czr/controls/class-socials-control.php:87
 msgid "Icon color"
-msgstr ""
+msgstr "Couleur de l’icône"
 
 #: functions/czr/controls/class-socials-control.php:91
 msgid "Set a unique color for your icon."
-msgstr ""
+msgstr "Définir une couleur unique pour votre icône."
 
 #: functions/czr/controls/class-socials-control.php:98
 msgid "Link target"
-msgstr ""
+msgstr "Cible du lien"
 
 #: functions/czr/controls/class-socials-control.php:102
 msgid "Check this option to open the link in a another tab of the browser."
 msgstr ""
+"Cochez cette option pour ouvrir le lien dans un autre onglet du navigateur."
 
 #: functions/czr/controls/class-upload-control.php:67
 msgid "Upload"
-msgstr ""
+msgstr "Envoyer"
 
 #: functions/czr/controls/class-widget-areas-control.php:70
 #: functions/czr/controls/class-widget-areas-control.php:120
 #: functions/czr/controls/class-widget-areas-control.php:163
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: functions/czr/controls/class-widget-areas-control.php:72
 msgid "Give it a name"
-msgstr ""
+msgstr "Donnez-lui un nom"
 
 #: functions/czr/controls/class-widget-areas-control.php:74
 #: functions/czr/controls/class-widget-areas-control.php:167
 msgid "Personalizing the name of the widget zone will help you identify it."
-msgstr ""
+msgstr "Personnaliser le nom de la zone de widget vous aidera à l'identifier."
 
 #: functions/czr/controls/class-widget-areas-control.php:78
 #: functions/czr/controls/class-widget-areas-control.php:127
@@ -1357,119 +1468,128 @@ msgstr ""
 msgid ""
 "Select the pre-defined location(s) in which you will embed this widget zone."
 msgstr ""
+"Sélectionnez le(s) emplacement(s) prédéfini dans lequel vous allez intégrer "
+"cette zone de widget."
 
 #: functions/czr/controls/class-widget-areas-control.php:114
 #: functions/czr/controls/class-widget-areas-control.php:157
 msgid "id"
-msgstr ""
+msgstr "id"
 
 #: functions/czr/controls/class-widget-areas-control.php:116
 #: functions/czr/controls/class-widget-areas-control.php:159
 msgid "unique id"
-msgstr ""
+msgstr "id unique"
 
 #: functions/czr/controls/class-widget-areas-control.php:134
 msgid "Pick the contexts where this widget area will be displayed."
-msgstr ""
+msgstr "Choisissez les contextes où cette zone de widget sera affiché."
 
 #: functions/czr/controls/class-widget-areas-control.php:165
 msgid "Enter a name"
-msgstr ""
+msgstr "Saisir un nom"
 
 #: functions/czr/controls/class-widget-areas-control.php:178
 msgid "Pick the context(s) where this widget area will be displayed."
-msgstr ""
+msgstr "Choisissez le(s) contexte(s) où cette zone de widget sera affichée."
 
 #: functions/czr/czr-resources.php:239
 msgid "If you like"
-msgstr ""
+msgstr "Si vous voulez"
 
 #: functions/czr/czr-resources.php:240
 msgid "the Hueman theme"
-msgstr ""
+msgstr "Le thème Hueman"
 
 #: functions/czr/czr-resources.php:241
 msgid "we would love to receive a"
-msgstr ""
+msgstr "nous aimerions recevoir un"
 
 #: functions/czr/czr-resources.php:243
 msgid "Review the Hueman theme"
-msgstr ""
+msgstr "Noter le thème Hueman"
 
 #: functions/czr/czr-resources.php:245
 msgid "rating. Thanks :) !"
-msgstr ""
+msgstr "note. Merci :-) !"
 
 #: functions/czr/sections/class-widgets-section.php:36
 msgid "Press return or enter to open this section"
-msgstr ""
+msgstr "Appuyez sur Retour ou Entrée pour ouvrir cette section"
 
 #: functions/init-core.php:251
 msgid "Theme Options [OLD]"
-msgstr ""
+msgstr "Options du thème (ancien)"
 
 #: functions/init-core.php:751
 msgid "Primary"
-msgstr ""
+msgstr "Primaire"
 
 #: functions/init-core.php:753
 msgid ""
 "Full width widget zone. Located in the left sidebar in a 3 columns layout. "
 "Can be on the right of a 2 columns sidebar when content is on the left."
 msgstr ""
+"Zone de widgets pleine largeur. Situé dans la barre latérale gauche dans une "
+"mise en page 3 colonnes. Peut-être sur la droite d'une barre latérale 2 "
+"colonnes lorsque le contenu est sur la gauche."
 
 #: functions/init-core.php:760
 msgid "Secondary"
-msgstr ""
+msgstr "Secondaire"
 
 #: functions/init-core.php:762
 msgid ""
 "Full width widget zone. Located in the right sidebar in a 3 columns layout."
 msgstr ""
+"Zone de widgets pleine largeur. Situé dans la barre de droite dans une mise "
+"en page 3 colonnes."
 
 #: functions/init-core.php:769 functions/init-core.php:863
 msgid "Footer 1"
-msgstr ""
+msgstr "Pied de page 1"
 
 #: functions/init-core.php:771
 msgid "Widgetized footer 1"
-msgstr ""
+msgstr "Pied de page widgetisé 1"
 
 #: functions/init-core.php:778 functions/init-core.php:864
 msgid "Footer 2"
-msgstr ""
+msgstr "Pied de page 2"
 
 #: functions/init-core.php:780
 msgid "Widgetized footer 2"
-msgstr ""
+msgstr "Pied de page widgetisé 2"
 
 #: functions/init-core.php:787 functions/init-core.php:865
 msgid "Footer 3"
-msgstr ""
+msgstr "Pied de page 3"
 
 #: functions/init-core.php:789
 msgid "Widgetized footer 3"
-msgstr ""
+msgstr "Pied de page widgetisé 3"
 
 #: functions/init-core.php:796 functions/init-core.php:866
 msgid "Footer 4"
-msgstr ""
+msgstr "Pied de page 4"
 
 #: functions/init-core.php:798
 msgid "Widgetized footer 4"
-msgstr ""
+msgstr "Pied de page widgetisé 4"
 
 #: functions/init-core.php:804 functions/init-core.php:867
 msgid "Header (next to logo / title)"
-msgstr ""
+msgstr "En-tête (à côté du logo / titre)"
 
 #: functions/init-core.php:806
 msgid "The Header Widget Zone is located next to your logo or site title."
 msgstr ""
+"La zone de widget d'en-tête se trouve à côté de votre logo ou du titre de "
+"votre site."
 
 #: functions/init-core.php:813 functions/init-core.php:868
 msgid "Footer Full Width"
-msgstr ""
+msgstr "Pleine largeur de pied de page"
 
 #: functions/init-core.php:815
 #, php-format
@@ -1478,58 +1598,63 @@ msgid ""
 "100% of the width. Very appropriate to display a Google Map or an "
 "advertisement banner."
 msgstr ""
+"La zone widget de pied de page se trouve avant les autres widgets de pied de "
+"page et prend 100% de la largeur. Elle convient très bien pour afficher une "
+"carte Google ou une bannière publicitaire."
 
 #: functions/init-core.php:844
 msgid "All contexts"
-msgstr ""
+msgstr "Tous les contextes"
 
 #: functions/init-core.php:846
 msgid "Blog Page"
-msgstr ""
+msgstr "Page de site"
 
 #: functions/init-core.php:847
 msgid "Pages"
-msgstr ""
+msgstr "Pages"
 
 #: functions/init-core.php:848
 msgid "Single Posts"
-msgstr ""
+msgstr "Articles Seuls"
 
 #: functions/init-core.php:849
 msgid "Archives"
-msgstr ""
+msgstr "Archives"
 
 #: functions/init-core.php:850
 msgid "Categories"
-msgstr ""
+msgstr "Catégorie"
 
 #: functions/init-core.php:851
 msgid "Search Results"
-msgstr ""
+msgstr "Chercher les résultats"
 
 #: functions/init-core.php:852
 msgid "404 Error Pages"
-msgstr ""
+msgstr "Pages d'erreur 404"
 
 #: functions/init-core.php:861
 msgid "Primary Sidebar (on the left in a 3 columns layout)"
 msgstr ""
+"Barre latérale primaire (sur la gauche dans une mise en page 3 colonnes)"
 
 #: functions/init-core.php:862
 msgid "Secondary Sidebar (on the right in a 3 columns layout)"
 msgstr ""
+"Barre latérale secondaire (sur la gauche dans une mise en page 3 colonnes) "
 
 #: functions/init-core.php:1191
 msgid "Help"
-msgstr ""
+msgstr "Aide"
 
 #: functions/init-core.php:1194
 msgid "Need help with the Hueman theme ? Click here!"
-msgstr ""
+msgstr "Besoin d'aide avec Hueman ? Cliquez ici !"
 
 #: functions/init-front.php:87
 msgid "No widget zones available in this sidebar."
-msgstr ""
+msgstr "Aucune zone de widget disponible dans cette barre latérale."
 
 #: functions/init-front.php:88
 msgid ""
@@ -1538,172 +1663,190 @@ msgid ""
 "this sidebar in <strong>Content &raquo; Layout Options for the main content</"
 "strong>."
 msgstr ""
+"Vous pouvez ajouter des zones de widget ici depuis l'outil de "
+"personnalisation, dans le panneau <strong>Barres latérales dynamiques et "
+"Widgets</strong>, ou bien vous pouvez modifier la mise en page pour "
+"supprimer cette barre latérale dans <strong>Contenu &raquo; Options de mise "
+"en page pour le contenu principal</strong>."
 
 #: functions/init-front.php:115
 msgid "You have already assigned the following widget zone here : "
-msgstr ""
+msgstr "Vous avez déjà affecté la zone de widget suivante ici :"
 
 #: functions/init-front.php:117
 msgid "in this post or page options."
-msgstr ""
+msgstr "dans ces options d'article ou de page."
 
 #: functions/init-front.php:118
 msgid ""
 "You can change or disable this setting by editing the options of the current "
 "post / page."
 msgstr ""
+"Vous pouvez modifier ou désactiver ce réglage en modifiant les options de "
+"l'article / page en cours."
 
 #: functions/init-front.php:124
 msgid "Add widgets to the zone :"
-msgstr ""
+msgstr "Ajout des widgets à la zone&nbsp;:"
 
-#: functions/init-meta-boxes.php:30
+#: functions/init-meta-boxes.php:29
 msgid "Select a widget zone for the primary sidebar."
-msgstr ""
+msgstr "Sélectionnez une zone de widgets pour la barre latérale primaire."
 
-#: functions/init-meta-boxes.php:30
+#: functions/init-meta-boxes.php:29
 msgid ""
 "Notes : 1)This will override any default settings of the customizer options "
 "panel. 2) The primary sidebar is placed on the left in a 3 columns layout. "
 "It can be on the right in a 2 columns layout, when the content is on the "
 "left."
 msgstr ""
+"Notes : 1) Ceci remplacera les réglages par défaut du panneau d'options de "
+"personnalisation. 2) La barre latérale primaire est placée sur la gauche "
+"dans une configuration 3 colonnes. Elle peut être sur la droite dans une "
+"mise en page 2 colonnes, lorsque le contenu est sur la gauche."
 
-#: functions/init-meta-boxes.php:36
+#: functions/init-meta-boxes.php:35
 msgid "Select a widget zone for the secondary sidebar."
-msgstr ""
+msgstr "Sélectionnez une zone de widgets pour la barre latérale secondaire."
 
-#: functions/init-meta-boxes.php:36
+#: functions/init-meta-boxes.php:35
 msgid ""
 "Notes : 1)This will override any default settings of the customizer options "
 "panel. 2) The secondary sidebar is placed on the right in a 3 columns layout."
 msgstr ""
+"Notes : 1) Ceci remplacera les réglages par défaut du panneau d'options de "
+"personnalisation. 2) La barre latérale secondaire est placé sur la droite "
+"dans une mise en page 3 colonnes."
 
-#: functions/init-meta-boxes.php:42
+#: functions/init-meta-boxes.php:41
 msgid "Select a layout for this page."
-msgstr ""
+msgstr "Sélectionner une mise en page pour cette page."
 
-#: functions/init-meta-boxes.php:42 functions/init-meta-boxes.php:97
-#: functions/init-meta-boxes.php:103
+#: functions/init-meta-boxes.php:41 functions/init-meta-boxes.php:96
+#: functions/init-meta-boxes.php:102
 msgid ""
 "This will override any default settings of the customizer options panel."
 msgstr ""
+"Ceci remplacera les réglages par défaut du panneau d'options de "
+"personnalisation."
 
-#: functions/init-meta-boxes.php:97
+#: functions/init-meta-boxes.php:96
 msgid "Select a widget zone for the left sidebar."
-msgstr ""
+msgstr "Sélectionnez une zone de widget pour la barre latérale gauche."
 
-#: functions/init-meta-boxes.php:103
+#: functions/init-meta-boxes.php:102
 msgid "Select a widget zone for the right sidebar."
-msgstr ""
+msgstr "Sélectionne une zone de widget pour la barre latérale de droite."
 
 #: functions/widgets/alx-posts.php:21
 msgid "Hueman Posts"
-msgstr ""
+msgstr "Articles Hueman"
 
 #: functions/widgets/alx-posts.php:23
 msgid "Display posts from a category"
-msgstr ""
+msgstr "Affiche les articles d'une catégorie"
 
 #: functions/widgets/alx-tabs.php:21
 msgid "Hueman Dynamic Tabs"
-msgstr ""
+msgstr "Onglets dynamiques Hueman"
 
 #: functions/widgets/alx-tabs.php:23
 msgid "List posts, comments, and/or tags with or without tabs."
 msgstr ""
+"Lister les articles, les commentaires et/ou les étiquettes avec ou sans "
+"onglets."
 
 #: functions/widgets/alx-tabs.php:66
 msgid "Recent Posts"
-msgstr "Articles Récents"
+msgstr "Articles récents"
 
 #: functions/widgets/alx-tabs.php:67
 msgid "Popular Posts"
-msgstr "Articles Populaires"
+msgstr "Articles populaires"
 
 #: functions/widgets/alx-tabs.php:68
 msgid "Recent Comments"
-msgstr "Commentaires Récents"
+msgstr "Commentaires récents"
 
 #: functions/widgets/alx-tabs.php:69
 msgid "Tags"
-msgstr "Etiquettes"
+msgstr "Étiquettes"
 
 #: functions/widgets/alx-tabs.php:234
 msgid "says:"
-msgstr "dit:"
+msgstr "dit"
 
 #: functions/widgets/alx-video.php:21
 msgid "Hueman Videos"
-msgstr ""
+msgstr "Vidéos Hueman"
 
 #: functions/widgets/alx-video.php:23
 msgid "Display a responsive video with a YouTube or Vimeo link."
-msgstr ""
+msgstr "Afficher une vidéo adaptative avec un lien YouTube ou Vimeo."
 
 #: parts/page-title.php:22
 msgid "Search result"
-msgstr "Résultat de la recherche"
+msgstr "Résultats de recherche"
 
 #: parts/page-title.php:24
 msgid "Search results"
-msgstr "Résultats de la recherche"
+msgstr "Résultats de recherche"
 
 #: parts/page-title.php:30
 msgid "Error 404."
-msgstr "Erreur 404."
+msgstr "Erreur 404"
 
 #: parts/page-title.php:30
 msgid "Page not found!"
-msgstr "Page non trouvé!"
+msgstr "Page non trouvée&nbsp;!"
 
 #: parts/page-title.php:34
 msgid "Author:"
-msgstr "Auteur:"
+msgstr "Auteur&nbsp;:"
 
 #: parts/page-title.php:37
 msgid "Category:"
-msgstr "Catégorie:"
+msgstr "Catégorie&nbsp;:"
 
 #: parts/page-title.php:40
 msgid "Tagged:"
-msgstr "Etiqueté:"
+msgstr "Mots-clés :"
 
 #: parts/page-title.php:43
 msgid "Daily Archive:"
-msgstr "Archive Journalière:"
+msgstr "Archive journalier :"
 
 #: parts/page-title.php:46
 msgid "Monthly Archive:"
-msgstr "Archive Mensuelle"
+msgstr "Archives du mois&nbsp;:"
 
 #: parts/page-title.php:49
 msgid "Yearly Archive:"
-msgstr "Archive Annuelle:"
+msgstr "Archives de l&rsquo;année&nbsp;:"
 
 #: parts/post-list-author-date.php:11 parts/single-author-date.php:6
 msgid "by"
-msgstr "par"
+msgstr "de"
 
 #: parts/post-nav.php:3
 msgid "Next story"
-msgstr "Prochain article"
+msgstr "Histoire suivante"
 
 #: parts/post-nav.php:4
 msgid "Previous story"
-msgstr "Article précédent"
+msgstr "Histoire précédente"
 
 #: parts/related-posts.php:6
 msgid "You may also like..."
-msgstr "Vous aimerez peut être aussi..."
+msgstr "Vous aimerez aussi..."
 
 #: parts/single-author-date.php:12
 msgid "Published"
-msgstr ""
+msgstr "Publication"
 
 #: parts/single-author-date.php:13
 msgid "Updated"
-msgstr ""
+msgstr "Mis à jour"
 
 #: search.php:10
 msgid "For the term"
@@ -1711,15 +1854,15 @@ msgstr "Pour le terme"
 
 #: search.php:12
 msgid "Please try another search:"
-msgstr "Veuillez essayer une autre recherche :"
+msgstr "Veuillez essayer une nouvelle recherche&nbsp;:"
 
 #: searchform.php:3
 msgid "To search type and hit enter"
-msgstr "Pour rechercher, tapez et appuyez sur entrée"
+msgstr "Saisissez votre recherche et pressez Entrée"
 
 #: sidebar-2.php:3 sidebar.php:6
 msgid "Expand Sidebar"
-msgstr "Développer la Barre Latérale"
+msgstr "Étendre la colonne latérale"
 
 #: sidebar-2.php:9
 msgid "More"
@@ -1727,15 +1870,692 @@ msgstr "Plus"
 
 #: sidebar.php:12
 msgid "Follow:"
-msgstr "Suivre :"
+msgstr "Suivez :"
 
 #: single.php:29
 msgid "Pages:"
-msgstr "Pages:"
+msgstr "Pages&nbsp;:"
 
 #: single.php:45
 msgid "Tags:"
-msgstr "Etiquettes:"
+msgstr "Étiquettes : "
 
-#~ msgid "Share"
-#~ msgstr "Partager"
+#~ msgid ""
+#~ "Hueman is a mobile friendly WordPress theme for blogs, magazines and "
+#~ "business websites. It's been designed to beautifully display pictures and "
+#~ "text content, and engineered to be easy to use and fast. The Hueman theme "
+#~ "helps you attract and retain more visitors, that's why it's already used "
+#~ "by 70K+ active websites in the world and has received hundreds of five "
+#~ "stars ratings."
+#~ msgstr ""
+#~ "Hueman est un thème WordPress adapté aux mobiles pour les blogs, les "
+#~ "magazines et les sites web d'entreprises. Il a été conçu pour un bel "
+#~ "affichage des images et du contenu textuel, et développé pour être rapide "
+#~ "et facile à utiliser. Le thème Hueman vous aide à attirer et retenir plus "
+#~ "de visiteurs, c'est la raison pour laquelle il est déjà utilisé par plus "
+#~ "de 70k sites actifs dans le monde et qu'il a reçu des centaines de notes "
+#~ "cinq étoiles."
+
+#~ msgid "Hueman"
+#~ msgstr "Hueman"
+
+#~ msgid "Child Menu"
+#~ msgstr "Menu enfant"
+
+#~ msgid "Save Layouts"
+#~ msgstr "Enregistrer la mise en page"
+
+#~ msgid "Reset Options"
+#~ msgstr "Réinitialiser les options"
+
+#~ msgid "Import Theme Options"
+#~ msgstr "Importer les réglages"
+
+#~ msgid "Import Layouts"
+#~ msgstr "Importer la mise en page"
+
+#~ msgid "Export Settings File"
+#~ msgstr "Exporter le fichier des réglages"
+
+#~ msgid "Add Section"
+#~ msgstr "Ajouter une section"
+
+#~ msgid "Contextual Help"
+#~ msgstr "Aide contextuelle"
+
+#~ msgid "Contextual Help Sidebar"
+#~ msgstr "Aide contextuelle de la barre latérale"
+
+#~ msgid "Import XML"
+#~ msgstr "Importer XML"
+
+#~ msgid "Add XML"
+#~ msgstr "Ajouter XML"
+
+#~ msgid "Import Settings"
+#~ msgstr "Réglages d'importation"
+
+#~ msgid "No Tags Found"
+#~ msgstr "Aucune étiquette trouvée"
+
+#~ msgid "No Taxonomies Found"
+#~ msgstr "Aucune taxinomie trouvée"
+
+#~ msgid "Warning!"
+#~ msgstr "Attention !"
+
+#~ msgid "left"
+#~ msgstr "Gauche"
+
+#~ msgid "bottom"
+#~ msgstr "bas"
+
+#~ msgid "right"
+#~ msgstr "droite"
+
+#~ msgid "VK.com"
+#~ msgstr "VK.com"
+
+#~ msgid "top"
+#~ msgstr "haut"
+
+#~ msgid "Flickr"
+#~ msgstr "Flickr"
+
+#~ msgid "Vimeo"
+#~ msgstr "Vimeo"
+
+#~ msgid "SoundCloud"
+#~ msgstr "SoundCloud"
+
+#~ msgid "Skype"
+#~ msgstr "Skype "
+
+#~ msgid "Forrst"
+#~ msgstr "Forrst"
+
+#~ msgid "Digg"
+#~ msgstr "Digg "
+
+#~ msgid "Delicious"
+#~ msgstr "Delicious"
+
+#~ msgid "Tumblr"
+#~ msgstr "Tumblr"
+
+#~ msgid "Github"
+#~ msgstr "GitHub"
+
+#~ msgid "Dribbble"
+#~ msgstr "Dribbble"
+
+#~ msgid "Youtube"
+#~ msgstr "YouTube"
+
+#~ msgid "Pinterest"
+#~ msgstr "Pinterest"
+
+#~ msgid "LinkedIn"
+#~ msgstr "Linkedin"
+
+#~ msgid "Google+"
+#~ msgstr "Google+"
+
+#~ msgid "Twitter"
+#~ msgstr "Twitter"
+
+#~ msgid "Facebook"
+#~ msgstr "Facebook"
+
+#~ msgid "No Pages Found"
+#~ msgstr "Aucune page trouvée"
+
+#~ msgid "Off"
+#~ msgstr "Arrêt"
+
+#~ msgid "On"
+#~ msgstr "On"
+
+#~ msgid "Add Google Font"
+#~ msgstr "Ajouter Google Font"
+
+#~ msgctxt "color picker"
+#~ msgid "Standard"
+#~ msgstr "Standard"
+
+#~ msgctxt "color picker"
+#~ msgid "Hover"
+#~ msgstr "Au survol"
+
+#~ msgctxt "color picker"
+#~ msgid "Active"
+#~ msgstr "Actif"
+
+#~ msgctxt "color picker"
+#~ msgid "Visited"
+#~ msgstr "Visité"
+
+#~ msgctxt "color picker"
+#~ msgid "Focus"
+#~ msgstr "Focus"
+
+#~ msgid "height"
+#~ msgstr "Hauteur"
+
+#~ msgid "No Categories Found"
+#~ msgstr "Aucune catégorie trouvée"
+
+#~ msgid "Choose One"
+#~ msgstr "En choisir un"
+
+#~ msgid "No Posts Found"
+#~ msgstr "Aucun article trouvé"
+
+#~ msgid "unit"
+#~ msgstr "Unité"
+
+#~ msgid "style"
+#~ msgstr "style"
+
+#~ msgid "width"
+#~ msgstr "largeur"
+
+#~ msgid "Add Media"
+#~ msgstr "Ajouter un média"
+
+#~ msgid "For Developers"
+#~ msgstr "Pour les développeurs"
+
+#~ msgid "Creating a Layout"
+#~ msgstr "Créer une mise en page"
+
+#~ msgid "Activating a Layout"
+#~ msgstr "Activer une mise en page"
+
+#~ msgid "Deleting a Layout"
+#~ msgstr "Supprimer une mise en page"
+
+#~ msgid "Edit Layout Data"
+#~ msgstr "Modifier les données de mise en page"
+
+#~ msgid "Use"
+#~ msgstr "Utiliser"
+
+#~ msgid "instead"
+#~ msgstr "au lieu"
+
+#~ msgid "array"
+#~ msgstr "tableau"
+
+#~ msgid "boolean"
+#~ msgstr "Booléen"
+
+#~ msgid "Echo the output."
+#~ msgstr "Écho de la sortie."
+
+#~ msgid "integer"
+#~ msgstr "entier"
+
+#~ msgid "String Examples"
+#~ msgstr "Exemple de chaîne de caractères"
+
+#~ msgid "optional"
+#~ msgstr "facultatif"
+
+#~ msgid "Default:"
+#~ msgstr "Défaut :"
+
+#~ msgid "None"
+#~ msgstr "Aucun"
+
+#~ msgid "Usage"
+#~ msgstr "Utilisation"
+
+#~ msgid "Parameters"
+#~ msgstr "Réglages"
+
+#~ msgid "string"
+#~ msgstr "chaîne"
+
+#~ msgid "required"
+#~ msgstr "obligatoire"
+
+#~ msgid "Condition"
+#~ msgstr "Condition"
+
+#~ msgid "Operator"
+#~ msgstr "Opérateur"
+
+#~ msgid "Input"
+#~ msgstr "Entrée"
+
+#~ msgid "Output"
+#~ msgstr "Sortie"
+
+#~ msgid "Taxonomy"
+#~ msgstr "Taxinomie"
+
+#~ msgid "Min, Max, & Step"
+#~ msgstr "Min, max, & étape"
+
+#~ msgid "CSS Class"
+#~ msgstr "Classe CSS"
+
+#~ msgid "Post Type"
+#~ msgstr "Type d'article"
+
+#~ msgid "Rows"
+#~ msgstr "Lignes"
+
+#~ msgid "Choices"
+#~ msgstr "Choix"
+
+#~ msgid "Standard"
+#~ msgstr "Par défaut"
+
+#~ msgid "ID"
+#~ msgstr "Id"
+
+#~ msgid "Audio"
+#~ msgstr "Sons"
+
+#~ msgid "Source Name (ex. author, singer, actor)"
+#~ msgstr "Nom de la source (ex. : auteur, chanteur, acteur)"
+
+#~ msgid "Source URL"
+#~ msgstr "URL source"
+
+#~ msgid "Source Title (ex. book, song, movie)"
+#~ msgstr "Titre de la source (ex. : livre, chanson, film)"
+
+#~ msgid "Source Date"
+#~ msgstr "Date de la source"
+
+#~ msgid "Video"
+#~ msgstr "Vidéos"
+
+#~ msgid "Quote"
+#~ msgstr "Citation"
+
+#~ msgid "Link Title"
+#~ msgstr "Titre du lien"
+
+#~ msgid "New Layout"
+#~ msgstr "Nouvelle mise en page"
+
+#~ msgid "Link URL"
+#~ msgstr "Lien de l'URL"
+
+#~ msgid "Layout"
+#~ msgstr "Arrangement"
+
+#~ msgid "Value"
+#~ msgstr "Valeur"
+
+#~ msgid "Label"
+#~ msgstr "Titre"
+
+#~ msgid "Add Setting"
+#~ msgstr "Ajouter un réglage"
+
+#~ msgid "or"
+#~ msgstr "ou"
+
+#~ msgid "Delete"
+#~ msgstr "Supprimer"
+
+#~ msgid "Enter the name of the social website."
+#~ msgstr "Entrez le nom du réseau social."
+
+#~ msgid "Enter the text shown in the title attribute of the link."
+#~ msgstr "Entrez le texte affiché dans l'attribut title du lien."
+
+#~ msgid ""
+#~ "Enter a link to the profile or page on the social website. Remember to "
+#~ "add the %s part to the front of the link."
+#~ msgstr ""
+#~ "Entrez un lien vers le profil ou la page sur le réseau social. N'oubliez "
+#~ "pas d'ajouter la partie %s vers l'avant du lien."
+
+#~ msgid "Unable to write to file %s."
+#~ msgstr "Impossible d'écrire dans le fichier %s."
+
+#~ msgid "edit"
+#~ msgstr "modifier"
+
+#~ msgid "Description"
+#~ msgstr "Description"
+
+#~ msgid "Dual Sidebar"
+#~ msgstr "Double Barre Latérale"
+
+#~ msgid "Left Dual Sidebar"
+#~ msgstr "Double Barre Latérale à gauche"
+
+#~ msgid "Right Dual Sidebar"
+#~ msgstr "Double Barre Latérale à droite"
+
+#~ msgid "Link"
+#~ msgstr "Lien"
+
+#~ msgid "Full Width (no sidebar)"
+#~ msgstr "Largeur plein écran (Pas de barre latérale)"
+
+#~ msgid "Tab"
+#~ msgstr "Onglet"
+
+#~ msgid "Settings could not be imported."
+#~ msgstr "Les réglages ne peuvent être importés."
+
+#~ msgid "Data Imported."
+#~ msgstr "Donnée importée."
+
+#~ msgid "Data could not be imported."
+#~ msgstr "La donnée ne peut être importée."
+
+#~ msgid "Layouts Imported."
+#~ msgstr "Mise en page importée."
+
+#~ msgid "Layouts could not be imported."
+#~ msgstr "La mise en page ne peut être importée."
+
+#~ msgid "Layouts Updated."
+#~ msgstr "Mises en pages actualisées."
+
+#~ msgid "Layouts could not be updated."
+#~ msgstr "Les mises en pages ne peuvent être actualisées."
+
+#~ msgid "Layouts have been deleted."
+#~ msgstr "Les mises en pages ont été supprimées."
+
+#~ msgid "Layout activated."
+#~ msgstr "Mise en page activée."
+
+#~ msgid "Slider"
+#~ msgstr "Diaporama"
+
+#~ msgid "Settings updated."
+#~ msgstr "Réglages mis à jour."
+
+#~ msgid "Settings could not be saved."
+#~ msgstr "Les réglages ne peuvent être enregistrés."
+
+#~ msgid "Settings Imported."
+#~ msgstr "Réglages importés"
+
+#~ msgid "Option Tree"
+#~ msgstr "Arbre d'option"
+
+#~ msgid "General"
+#~ msgstr "Général"
+
+#~ msgid "Image"
+#~ msgstr "Image"
+
+#~ msgid "Featured Image"
+#~ msgstr "Image à la Une"
+
+#~ msgid "Now"
+#~ msgstr "Maintenant"
+
+#~ msgid "Are you sure you want to delete this Gallery?"
+#~ msgstr "Êtes-vous sûr de vouloir supprimer cette galerie ?"
+
+#~ msgid "Today"
+#~ msgstr "Aujourd'hui"
+
+#~ msgid "Create Gallery"
+#~ msgstr "Créer une galerie"
+
+#~ msgid "Edit Gallery"
+#~ msgstr "Modifier la galerie"
+
+#~ msgid "Are you sure you want to remove this?"
+#~ msgstr "Êtes-vous sûr de vouloir supprimer ceci ?"
+
+#~ msgid "Delete Gallery"
+#~ msgstr "Supprimer la galerie"
+
+#~ msgid "Meta Boxes"
+#~ msgstr "boîte de méta"
+
+#~ msgid "Layouts"
+#~ msgstr "Mises en page"
+
+#~ msgid "Settings XML"
+#~ msgstr "Réglages XML"
+
+#~ msgid "Documentation"
+#~ msgstr "Documentation"
+
+#~ msgid "Export"
+#~ msgstr "Exporter"
+
+#~ msgid "Import"
+#~ msgstr "Importer"
+
+#~ msgid "Save Settings"
+#~ msgstr "Enregistrer les réglages"
+
+#~ msgid "OptionTree"
+#~ msgstr "Arbre d'options"
+
+#~ msgid "Settings"
+#~ msgstr "Réglages"
+
+#~ msgid "Save Changes"
+#~ msgstr "Enregistrer les modifications"
+
+#~ msgid "Multiple Media Posts"
+#~ msgstr "Plusieurs messages médias"
+
+#~ msgid "Reloading..."
+#~ msgstr "Rechargement..."
+
+#~ msgid "Drop Table"
+#~ msgstr "Suppression de la table"
+
+#~ msgid "Deleting the outdated and unused %s table..."
+#~ msgstr "Suppression de la table %s périmée et inutilisée..."
+
+#~ msgid ""
+#~ "The %s table has been successfully deleted. The page will now reload..."
+#~ msgstr ""
+#~ "La table %s a été supprimé avec succès. La page va maintenant être "
+#~ "rechargée..."
+
+#~ msgid "Theme Options"
+#~ msgstr "Options du thème"
+
+#~ msgid "Typography"
+#~ msgstr "Typographie"
+
+#~ msgid "Spacing"
+#~ msgstr "Espacement"
+
+#~ msgid "Textblock"
+#~ msgstr "Bloc de texte"
+
+#~ msgid "-- Choose One --"
+#~ msgstr "-- En choisir un --"
+
+#~ msgid "Social Links"
+#~ msgstr "Liens réseaux sociaux"
+
+#~ msgid "Page Select"
+#~ msgstr "Sélectionner une page"
+
+#~ msgid "Post Checkbox"
+#~ msgstr "Case à cocher d'article"
+
+#~ msgid "Post Select"
+#~ msgstr "Sélecteur d'article"
+
+#~ msgid "Radio"
+#~ msgstr "Radio"
+
+#~ msgid "Maybe"
+#~ msgstr "Peut-être"
+
+#~ msgid "Radio Image"
+#~ msgstr "Image radio"
+
+#~ msgid "Select"
+#~ msgstr "Sélectionner"
+
+#~ msgid "Measurement"
+#~ msgstr "Mesure"
+
+#~ msgid "Numeric Slider"
+#~ msgstr "Curseur numérique"
+
+#~ msgid "On/Off"
+#~ msgstr "Marche/Arrêt"
+
+#~ msgid "Page Checkbox"
+#~ msgstr "Case à cocher de page"
+
+#~ msgid "List Item"
+#~ msgstr "Élément de liste"
+
+#~ msgid "JavaScript"
+#~ msgstr "JavaScript"
+
+#~ msgid "Link Color"
+#~ msgstr "Couleur des liens"
+
+#~ msgid "Date Picker"
+#~ msgstr "Sélecteur de date"
+
+#~ msgid "Date Time Picker"
+#~ msgstr "Sélecteur de date / heure"
+
+#~ msgid "Dimension"
+#~ msgstr "Dimension"
+
+#~ msgid "Gallery Shortcode"
+#~ msgstr "Code court galerie"
+
+#~ msgid "Google Fonts"
+#~ msgstr "Google Fonts"
+
+#~ msgid "Colorpicker"
+#~ msgstr "Sélecteur de couleur"
+
+#~ msgid "Colorpicker Opacity"
+#~ msgstr "Sélecteur de couleur Opacité"
+
+#~ msgid "CSS"
+#~ msgstr "CSS"
+
+#~ msgid "Custom Post Type Checkbox"
+#~ msgstr "Case à cocher de Custom Post Type"
+
+#~ msgid "Custom Post Type Select"
+#~ msgstr "Sélecteur de Custom Post Type"
+
+#~ msgid "Box Shadow"
+#~ msgstr "Ombre de la boite"
+
+#~ msgid "Category Checkbox"
+#~ msgstr "Case à cocher de catégorie"
+
+#~ msgid "Category Select"
+#~ msgstr "Sélecteur de catégorie"
+
+#~ msgid "Checkbox"
+#~ msgstr "Case à cocher"
+
+#~ msgid ""
+#~ "The Border option type is used to set width, unit, style, and color "
+#~ "values."
+#~ msgstr ""
+#~ "Le type d'option Bordure est utilisé pour définir la largeur, l'unité, le "
+#~ "style et les valeurs de couleur."
+
+#~ msgid ""
+#~ "The Background option type is for adding background styles to your theme "
+#~ "either dynamically via the CSS option type below or manually with %s. The "
+#~ "Background option type has filters that allow you to remove fields or "
+#~ "change the defaults. For example, you can filter %s to remove unwanted "
+#~ "fields from all Background options or an individual one. You can also "
+#~ "filter %s. These filters allow you to fine tune the select lists for your "
+#~ "specific needs."
+#~ msgstr ""
+#~ "Le type d'option d'arrière-plan sert pour l'ajout de styles d'arrière-"
+#~ "plan à votre thème soit dynamiquement par le biais de type d'option CSS "
+#~ "ci-dessous, soit manuellement avec %s. Le type d'option arrière-plan "
+#~ "possède des filtres qui vous permettent de supprimer des champs ou "
+#~ "modifier les valeurs par défaut. Par exemple, vous pouvez filtrer les %s "
+#~ "pour supprimer les champs non désirés de toutes les options d'arrière "
+#~ "plan ou d'une seule. Vous pouvez également filtrer %s. Ces filtres vous "
+#~ "permettent d'affiner les listes de sélection pour vos besoins spécifiques."
+
+#~ msgid "and"
+#~ msgstr "et"
+
+#~ msgid "Border"
+#~ msgstr "Bordure"
+
+#~ msgid "This is a demo Text field."
+#~ msgstr "C'est un champ de texte démo "
+
+#~ msgid "Textarea"
+#~ msgstr "Zone de texte"
+
+#~ msgid "This is a demo Textarea field."
+#~ msgstr "Ceci est une démo de champ texte"
+
+#~ msgid "Option Types"
+#~ msgstr "Types d'options"
+
+#~ msgid "Help content goes here!"
+#~ msgstr "L'aide s'affiche ici !"
+
+#~ msgid "Sidebar content goes here!"
+#~ msgstr "Le contenu de la barre latérale s'affiche ici !"
+
+#~ msgid "Background"
+#~ msgstr "Arrière-plan"
+
+#~ msgid "This is a Gallery option type. It displays when %s."
+#~ msgstr "Il s'agit d'un type d'option de galerie. Il s'affiche quand %s."
+
+#~ msgid "More Options"
+#~ msgstr "Plus d'options"
+
+#~ msgid "Text"
+#~ msgstr "Texte"
+
+#~ msgid "Shows the Gallery when set to %s."
+#~ msgstr "Montre la galerie lorsque réglé sur %s."
+
+#~ msgid "Show Gallery"
+#~ msgstr "Afficher la galerie"
+
+#~ msgid "Demo Meta Box"
+#~ msgstr "Démo de boîte de méta"
+
+#~ msgid "Conditions"
+#~ msgstr "Conditions"
+
+#~ msgid "Congratulations, you created a gallery!"
+#~ msgstr "Félicitations, vous avez créé une galerie !"
+
+#~ msgid "Gallery"
+#~ msgstr "Galerie"
+
+#~ msgid "Type"
+#~ msgstr "Type"
+
+#~ msgid "Activate"
+#~ msgstr "Activer"
+
+#~ msgid "http://presscustomizr.com/hueman/"
+#~ msgstr "http://presscustomizr.com/hueman/"
+
+#~ msgid "nikeo"
+#~ msgstr "nikeo"
+
+#~ msgid "http://presscustomizr.com"
+#~ msgstr "http://presscustomizr.com"
