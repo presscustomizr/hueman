@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Hueman v3.1.4\n"
-"POT-Creation-Date: 2016-05-30 08:14+0200\n"
-"PO-Revision-Date: 2016-05-30 08:14+0200\n"
+"POT-Creation-Date: 2016-05-30 08:45+0200\n"
+"PO-Revision-Date: 2016-05-30 08:45+0200\n"
 "Last-Translator: Ansas Meyer <webmaster@ansas-meyer.de>\n"
 "Language-Team: Press Customizr\n"
 "Language: de_DE\n"
@@ -144,8 +144,6 @@ msgstr "Lies die aktuellsten Neuerungen"
 #, php-format
 msgid "The best way to start with %s is to read the %s and visit the %s."
 msgstr ""
-"Die beste Möglichkeit mit % zu starten ist es die %s zu lesen und das %s zu "
-"besuchen."
 
 #: functions/admin/class-admin-page.php:116
 msgid "getting started guide"
@@ -1022,111 +1020,105 @@ msgstr ""
 msgid "Create And Order Widget Areas"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:248 functions/czr/class-czr-init.php:276
-msgid ""
-"You must save changes for the new areas to appear below. <br /><i>Warning: "
-"Make sure each area has a unique ID.</i>"
-msgstr ""
-
-#: functions/czr/class-czr-init.php:273
+#: functions/czr/class-czr-init.php:272
 msgid "Create And Manage Widget Areas"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:283
+#: functions/czr/class-czr-init.php:281
 msgid "Create and manage widget zones"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:304
+#: functions/czr/class-czr-init.php:302
 msgid "Dynamic Sidebars and Widgets"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:590
+#: functions/czr/class-czr-init.php:588
 #: functions/czr/controls/class-dynamic-control.php:90
 #: functions/czr/controls/class-widget-areas-control.php:100
 msgid "Edit"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:591
+#: functions/czr/class-czr-init.php:589
 msgid "Close"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:592
+#: functions/czr/class-czr-init.php:590
 msgid ""
 "Your favicon is currently handled with an old method and will not be "
 "properly displayed on all devices. You might consider to re-upload your "
 "favicon with the new control below."
 msgstr ""
 
-#: functions/czr/class-czr-init.php:593
+#: functions/czr/class-czr-init.php:591
 #: functions/czr/controls/class-widget-areas-control.php:77
 #: functions/czr/controls/class-widget-areas-control.php:126
 #: functions/czr/controls/class-widget-areas-control.php:170
 msgid "Location(s)"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:594
+#: functions/czr/class-czr-init.php:592
 #: functions/czr/controls/class-widget-areas-control.php:133
 #: functions/czr/controls/class-widget-areas-control.php:177
 msgid "Context(s)"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:595
+#: functions/czr/class-czr-init.php:593
 msgid "Not set"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:596
+#: functions/czr/class-czr-init.php:594
 msgid "Rss"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:597
+#: functions/czr/class-czr-init.php:595
 msgid "Select a social icon"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:598
+#: functions/czr/class-czr-init.php:596
 msgid "Follow us on"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:599
+#: functions/czr/class-czr-init.php:597
 msgid "Done !"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:600
+#: functions/czr/class-czr-init.php:598
 msgid "New Social Link created ! Scroll down to edit it."
 msgstr ""
 
-#: functions/czr/class-czr-init.php:601
+#: functions/czr/class-czr-init.php:599
 msgid "Select repeat property"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:602
+#: functions/czr/class-czr-init.php:600
 msgid "Select attachment property"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:603
+#: functions/czr/class-czr-init.php:601
 msgid "Select position property"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:604
+#: functions/czr/class-czr-init.php:602
 msgid "Widget Zone"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:605
+#: functions/czr/class-czr-init.php:603
 msgid "New Widget Zone created ! Scroll down to edit it."
 msgstr ""
 
-#: functions/czr/class-czr-init.php:606
+#: functions/czr/class-czr-init.php:604
 msgid "Inactive in current context/location"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:607
+#: functions/czr/class-czr-init.php:605
 msgid "Unavailable location. Some settings must be changed."
 msgstr ""
 
-#: functions/czr/class-czr-init.php:608
+#: functions/czr/class-czr-init.php:606
 msgid "A selected location is not available with the current settings."
 msgstr ""
 
-#: functions/czr/class-czr-init.php:609
+#: functions/czr/class-czr-init.php:607
 msgid "Learn more about this in the documentation"
 msgstr ""
 

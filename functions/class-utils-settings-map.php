@@ -635,7 +635,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           ),
           'featured-posts-enabled' => array(
                 'default'   => 1,
-                'title'       => __( 'Featured posts', 'customizr' ),
+                'title'       => __( 'Featured posts', 'hueman' ),
                 'control'   => 'HU_controls',
                 'label'     => __("Feature posts on top of your blog", 'hueman'),
                 'section'   => 'content_blog_sec',

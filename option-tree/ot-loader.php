@@ -18,7 +18,7 @@ if ( class_exists( 'OT_Loader' ) && defined( 'OT_PLUGIN_MODE' ) && OT_PLUGIN_MOD
 
   function ot_conflict_notice() {
 
-    echo '<div class="error"><p>' . __( 'OptionTree is installed as a plugin and also embedded in your current theme. Please deactivate the plugin to load the theme dependent version of OptionTree, and remove this warning.', 'option-tree' ) . '</p></div>';
+    echo '';
 
   }
 

@@ -187,7 +187,7 @@ if ( ! class_exists( 'HU_Body_Background_Control' ) ) :
           <div class="<?php echo $css_attr['sub_set_wrapper']; ?>" data-input-type="color">
             <div class="customize-control-title"><?php _e('Color', 'hueman'); ?></div>
             <div class="<?php echo $css_attr['sub_set_input']; ?>">
-              <input data-type="background-color" type="text" maxlength="7" placeholder="<?php esc_attr_e( 'Hex Value' ); ?>" value="{{ data['background-color'] }}" {{ defaultBgColor }} />
+              <input data-type="background-color" type="text" maxlength="7" placeholder="<?php esc_attr_e( 'Hex Value', 'hueman' ); ?>" value="{{ data['background-color'] }}" {{ defaultBgColor }} />
             </div>
           </div>
 

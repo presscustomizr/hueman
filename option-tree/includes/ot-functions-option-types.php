@@ -227,12 +227,12 @@ if ( ! function_exists( 'ot_type_sidebar_select' ) ) {
 
         /* has sidebars */
         if ( count( $sidebars ) ) {
-          echo '<option value="">-- ' . __( 'Choose Sidebar', 'option-tree' ) . ' --</option>';
+          echo '<option value="">-- ' . __( 'Choose Sidebar', 'hueman' ) . ' --</option>';
           foreach ( $sidebars as $id => $sidebar ) {
             echo '<option value="' . esc_attr( $id ) . '"' . selected( $field_value, $id, false ) . '>' . esc_attr( $sidebar ) . '</option>';
           }
         } else {
-          echo '<option value="">' . __( 'No Sidebars', 'option-tree' ) . '</option>';
+          echo '<option value="">' . __( 'No Sidebars', 'hueman' ) . '</option>';
         }
 
         echo '</select>';
@@ -438,7 +438,7 @@ if ( ! function_exists( 'ot_type_upload' ) ) {
           echo '<input type="text" name="' . esc_attr( $field_name ) . '" id="' . esc_attr( $field_id ) . '" value="' . esc_attr( $field_value ) . '" class="widefat option-tree-ui-upload-input ' . esc_attr( $field_class ) . '" />';
 
           /* add media button */
-          echo '<a href="javascript:void(0);" class="ot_upload_media option-tree-ui-button button button-primary light" rel="' . $post_id . '" title="' . __( 'Add Media', 'option-tree' ) . '"><span class="icon ot-icon-plus-circle"></span>' . __( 'Add Media', 'option-tree' ) . '</a>';
+          echo '<a href="javascript:void(0);" class="ot_upload_media option-tree-ui-button button button-primary light" rel="' . $post_id . '" title="' . __( 'Add Media', 'hueman' ) . '"><span class="icon ot-icon-plus-circle"></span>' . __( 'Add Media', 'hueman' ) . '</a>';
 
         echo '</div>';
 
@@ -454,7 +454,7 @@ if ( ! function_exists( 'ot_type_upload' ) ) {
             if ( preg_match( '/\.(?:jpe?g|png|gif|ico)$/i', $field_value ) )
               echo '<div class="option-tree-ui-image-wrap"><img src="' . esc_url( $field_value ) . '" alt="" /></div>';
 
-            echo '<a href="javascript:(void);" class="option-tree-ui-remove-media option-tree-ui-button button button-secondary light" title="' . __( 'Remove Media', 'option-tree' ) . '"><span class="icon ot-icon-minus-circle"></span>' . __( 'Remove Media', 'option-tree' ) . '</a>';
+            echo '<a href="javascript:(void);" class="option-tree-ui-remove-media option-tree-ui-button button button-secondary light" title="' . __( 'Remove Media', 'hueman' ) . '"><span class="icon ot-icon-minus-circle"></span>' . __( 'Remove Media', 'hueman' ) . '</a>';
 
           echo '</div>';
 
