@@ -1645,7 +1645,7 @@ body.ie8,
 
 /* ADMIN BAR
     -------------------------------------------------- */
-#wpadminbar #wp-admin-bar-tc-hueman-help .ab-item:before, li#wp-admin-bar-tc-hueman-help a:before {
+#wp-admin-bar-tc-hueman-help .ab-item:before, li#wp-admin-bar-tc-hueman-help a:before {
   font-family: 'FontAwesome';
   speak: none;
   font-weight: normal;
@@ -1675,7 +1675,7 @@ li#wp-admin-bar-tc-hueman-help a {
 }
 
 
-#wpadminbar .ab-top-menu>li#wp-admin-bar-tc-hueman-help:hover>.ab-item {
+.ab-top-menu>li#wp-admin-bar-tc-hueman-help:hover>.ab-item {
   color: #FFF;
   background: #6B9C51;
 }

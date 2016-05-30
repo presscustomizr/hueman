@@ -66,7 +66,7 @@
 /* ADMIN BAR
     -------------------------------------------------- */
 h1.need-help-title:before,
-#wpadminbar #wp-admin-bar-tc-hueman-help .ab-item:before, li#wp-admin-bar-tc-hueman-help a:before {
+#wp-admin-bar-tc-hueman-help .ab-item:before, li#wp-admin-bar-tc-hueman-help a:before {
   font-family: 'FontAwesome';
   speak: none;
   font-weight: normal;
@@ -80,7 +80,7 @@ h1.need-help-title:before,
   content: "\f1cd";
 }
 
-#wpadminbar #wp-admin-bar-tc-hueman-help .ab-item:before, li#wp-admin-bar-tc-hueman-help a:before {
+#wp-admin-bar-tc-hueman-help .ab-item:before, li#wp-admin-bar-tc-hueman-help a:before {
   padding-right: 0px;
   top: 2px;
   color: #FFF;
@@ -97,7 +97,7 @@ li#wp-admin-bar-tc-hueman-help a {
   transition: background .1s linear;
 }
 
-#wpadminbar .ab-top-menu>li#wp-admin-bar-tc-hueman-help:hover>.ab-item {
+.ab-top-menu>li#wp-admin-bar-tc-hueman-help:hover>.ab-item {
   color: #FFF;
   background: #6B9C51;
 }
