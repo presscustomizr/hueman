@@ -60,7 +60,7 @@ $.extend( CZRMultiModelMethods, {
             control.czr_View.remove(_to_remove.id);
 
             //hook here
-            control.doActions('after_modelRemoved', control.container, { model : _to_remove } );
+            control.doActions('before_modelRemoved', control.container, { model : _to_remove } );
           }//if
 
           //SORTED COLLECTION

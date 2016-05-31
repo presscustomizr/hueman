@@ -98,41 +98,46 @@ $.extend( CZRMonoModelMethods , {
   //@param : obj = { event : {}, model : {}, view : ${} }
   //Fired on view_rendered:new when a new model has been added
   //Fired on click on edit_view_btn
-  setViewVisibility : function(obj, is_added_by_user ) {
-          var control = this;
+  setViewVisibility : function(is_added_by_user ) {
+          var monoModel = this,
+              control = this.model_control,
+              model_id = monoModel.model_id;
           if ( is_added_by_user ) {
-            control.czr_View(obj.model.id).set( 'expanded_noscroll' );
+            monoModel.czr_View.set( 'expanded_noscroll' );
           } else {
-            control.closeAllViews(obj.model.id);
-            control.czr_preModel('view_status').set( 'closed');
-            control.czr_View(obj.model.id).set( 'expanded' == control._getViewState(obj.model.id) ? 'closed' : 'expanded' );
+            control.closeAllViews(model_id);
+            if ( _.has(control, 'czr_preModel') ) {
+              control.czr_preModel('view_status').set( 'closed');
+            }
+            monoModel.czr_View.set( 'expanded' == monoModel._getViewState(model_id) ? 'closed' : 'expanded' );
           }
   },
 
 
   _getViewState : function(model_id) {
-          return -1 == this.czr_View(model_id).get().indexOf('expanded') ? 'closed' : 'expanded';
+          return -1 == this.czr_View.get().indexOf('expanded') ? 'closed' : 'expanded';
   },
 
   //callback of czr_View() instance on change
   _toggleViewExpansion : function( status, duration ) {
-          var control = this,
-              model_id = this.id;
+          var monoModel = this,
+              control = this.model_control,
+              model_id = monoModel.model_id;
 
           //slide Toggle and toggle the 'open' class
-          $( '.' + control.css_attr.view_content , control.getViewEl(model_id) ).slideToggle( {
+          $( '.' + control.css_attr.view_content , monoModel.container ).slideToggle( {
               duration : duration || 200,
               done : function() {
                 var _is_expanded = 'closed' != status;
 
-                control.getViewEl(model_id).toggleClass('open' , _is_expanded );
+                monoModel.container.toggleClass('open' , _is_expanded );
 
                 //close all alerts
                 control.closeAllAlerts();
 
                 //toggle the icon activate class depending on the status
                 //switch icon
-                var $_edit_icon = $(this).siblings().find('.' + control.css_attr.edit_view_btn);
+                var $_edit_icon = $(this).siblings().find('.' + control.css_attr.edit_view_btn );
 
                 $_edit_icon.toggleClass('active' , _is_expanded );
                 if ( _is_expanded )
@@ -142,24 +147,28 @@ $.extend( CZRMonoModelMethods , {
 
                 //scroll to the currently expanded view
                 if ( 'expanded' == status )
-                  control._adjustScrollExpandedBlock( control.getViewEl(model_id) );
+                  control._adjustScrollExpandedBlock( monoModel.container );
               }//done callback
             } );
   },
 
+
   //toggles the visibility of the Remove View Block
   //@param : obj = { event : {}, model : {}, view : ${} }
   toggleRemoveAlertVisibility : function(obj) {
-          var control = this,
-              $_alert_el = $( '.' + control.css_attr.remove_alert_wrapper, obj.dom_el ),
+          var monoModel = this,
+              control = this.model_control,
+              $_alert_el = $( '.' + control.css_attr.remove_alert_wrapper, monoModel.container ),
               $_clicked = obj.dom_event;
 
           //first close all open views
-          this.closeAllViews();
-          control.czr_preModel('view_status').set( 'closed');
+          control.closeAllViews();
+          if ( _.has(control, 'czr_preModel') ) {
+            control.czr_preModel('view_status').set( 'closed');
+          }
 
           //then close any other open remove alert in the control containuer
-          $('.' + control.css_attr.remove_alert_wrapper, control.container ).not($_alert_el).each( function() {
+          $('.' + control.css_attr.remove_alert_wrapper, monoModel.container ).not($_alert_el).each( function() {
             if ( $(this).hasClass('open') ) {
               $(this).slideToggle( {
                 duration : 200,
@@ -175,10 +184,10 @@ $.extend( CZRMonoModelMethods , {
           //print the html
           var alert_template = wp.template( control.viewAlertEl );
           //do we have an html template and a control container?
-          if ( ! alert_template  || ! control.container )
+          if ( ! alert_template  || ! monoModel.container )
             return this;
 
-          $_alert_el.html( alert_template( obj.model ) );
+          $_alert_el.html( alert_template( monoModel.get() ) );
 
           //toggle it
           $_alert_el.slideToggle( {
@@ -190,8 +199,19 @@ $.extend( CZRMonoModelMethods , {
               $( obj.dom_el ).find('.' + control.css_attr.display_alert_btn).toggleClass( 'active', _is_open );
               //adjust scrolling to display the entire dialog block
               if ( _is_open )
-                control._adjustScrollExpandedBlock( control.getViewEl( obj.model.id ) );
+                control._adjustScrollExpandedBlock( monoModel.container );
             }
           } );
+  },
+
+
+  //removes the view dom element
+  _destroyView : function (model_id) {
+          monoModel.container.fadeOut( {
+            duration : 400,
+            done : function() {
+              $(this).remove();
+            }
+          });
   },
 });//$.extend

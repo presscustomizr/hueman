@@ -6,19 +6,6 @@
 //Listen to mono models collection changes and update the control setting
 var CZRMultiInputControlMethods = CZRMultiInputControlMethods || {};
 $.extend( CZRMultiInputControlMethods, {
-
-  //removes the view dom element
-  _destroyView : function (model_id) {
-          var $view = this.getViewEl(model_id);
-          $view.fadeOut( {
-            duration : 400,
-            done : function() {
-              $(this).remove();
-            }
-          });
-  },
-
-
   //helper
   //get the $ view DOM el from the model id
   getViewEl : function( model_id ) {
@@ -35,8 +22,9 @@ $.extend( CZRMultiInputControlMethods, {
               _filtered_collection = _.filter( _current_collection , function( mod) { return mod.id != model_id; } );
 
           _.map( _filtered_collection, function(_model) {
-            if ( control.czr_View.has(_model.id) && 'expanded' == control._getViewState(_model.id) )
-              control.czr_View( _model.id).set( 'closed' ); // => will fire the cb _toggleViewExpansion
+
+            if ( control.czr_Model.has(_model.id) && 'expanded' == control.czr_Model(_model.id)._getViewState(_model.id) )
+              control.czr_Model(_model.id).czr_View.set( 'closed' ); // => will fire the cb _toggleViewExpansion
            } );
   },
 

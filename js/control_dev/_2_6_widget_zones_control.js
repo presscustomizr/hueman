@@ -44,7 +44,7 @@ $.extend( CZRWidgetAreasMethods, {
             actions   : ['addWidgetSidebar', 'closePreModelAlert']
         },
         {
-            trigger   : 'after_modelRemoved',
+            trigger   : 'before_modelRemoved',
             actions   : ['removeWidgetSidebar']
         }
       ]

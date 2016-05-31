@@ -30,10 +30,8 @@ $.extend( CZRMultiInputControlMethods, {
   _normalizeModel : function( model, key ) {
           if ( ! _.isObject(model) )
             return;
-
           //id unicity
           model = this._initNewModel(model, key);
-
           return model;
   },
 
@@ -46,7 +44,7 @@ $.extend( CZRMultiInputControlMethods, {
 
   //the job of this function is to return a new model ready to be added to the collection
   //the new model shall have a unique id
-  //recursive
+  //!!recursive
   _initNewModel : function( _model , _next_key ) {
           var control = this,
               _new_model = { id : '' },

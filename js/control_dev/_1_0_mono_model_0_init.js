@@ -11,6 +11,7 @@ $.extend( CZRMonoModelMethods , {
           throw new Error('No control assigned to mono model ' + id + '. Aborting');
         }
         api.Value.prototype.initialize.call( this, null, options );
+
         var monoModel = this,
             control = monoModel.model_control;
 
@@ -26,7 +27,6 @@ $.extend( CZRMonoModelMethods , {
         //czr_View stores the current expansion status of a given view => one value by created by model.id
         //czr_View can take 3 values : expanded, expanded_noscroll (=> used on view creation), closed
         monoModel.czr_View = new api.Value();
-        monoModel.czr_View.create( monoModel.id );
         monoModel.setupView();
 
         //INPUTS
@@ -40,11 +40,9 @@ $.extend( CZRMonoModelMethods , {
         //setup listeners
         monoModel.callbacks.add( function() { return self.setupMonoModelListeners.apply(self, arguments ); } );
 
-        //if a model is manually added : open it and trigger a specific event
+        //if a model is manually added : open it
         if ( monoModel.is_added_by_user ) {
-              control.setViewVisibility( {model:model}, is_added_by_user );
-              control.closeResetPreModel();
-              control.doActions( 'model_added_by_user' , obj.dom_el, { model : model , dom_event : obj.dom_event } );
+          monoModel.setViewVisibility( true );//true for add_by_user
         }
 
   },//initialize
@@ -54,7 +52,7 @@ $.extend( CZRMonoModelMethods , {
           var monoModel = this,
               control = this.model_control;
 
-          this.view_event_map = [
+          monoModel.view_event_map = [
                   //toggles remove view alert
                   {
                     trigger   : 'click keydown',
@@ -79,9 +77,12 @@ $.extend( CZRMonoModelMethods , {
           ];
 
           monoModel.container = monoModel.renderView();
+          if ( ! monoModel.container.length ) {
+            throw new Error( 'In setupView the MonoModel view has not been rendered : ' + monoModel.model_id );
+          }
 
           //setup
-          monoModel.czr_View( monoModel.id ).set('closed');
+          monoModel.czr_View.set('closed');
 
           var $viewContent = $( '.' + control.css_attr.view_content, monoModel.container );
           //add a state listener on state change
@@ -111,7 +112,7 @@ $.extend( CZRMonoModelMethods , {
             control = monoModel.model_control;
 
         if ( _.isEmpty(monoModel.defaultModel) || _.isUndefined(monoModel.defaultModel) ) {
-          throw new Error('No default model found in multi input control ' + monoModel.id + '. Aborting');
+          throw new Error('No default model found in multi input control ' + monoModel.model_id + '. Aborting');
         }
 
         //prepare and sets the model value on api ready
@@ -170,12 +171,10 @@ $.extend( CZRMonoModelMethods , {
           // else {
           //   _new_collection.push(model);
           // }
-          _new_collection[monoModel.id] = to;
+          _new_collection[monoModel.model_id] = to;
           monoModel.control.czr_Model.czr_collection.set(_new_collection);
 
-
           monoModel.writeViewTitle(to);
-
 
           //send model to the preview. On update only, not on creation.
           if ( ! _.isEmpty(from) || ! _.isUndefined(from) ) {
