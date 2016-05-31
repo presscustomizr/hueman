@@ -103,28 +103,31 @@ if ( ! class_exists( 'HU_Body_Background_Control' ) ) :
         $this->json['canUpload']             = current_user_can( 'upload_files' );
         $this->json['default_model']         = $this->default_model;
 
-        $value   = $this->value();
-        $default = isset( $this ->setting -> default['background-image'] ) ? $this -> setting -> default['background-image'] : null;
-
-        if ( $default ) {
+        $value            = $this->value();
+        if ( isset( $this -> setting ) && is_object( $this -> setting ) ) {
+          $_defaults      = isset( $this->setting->default ) ? $this->setting->default : null;
+          $default_bg_img = isset( $_defaults['background-image'] ) ? $_defaults['background-image'] : null;
+        }
+        $default_bg_im    = isset( $default_bg_img ) ? $default_bg_img : null;
+        if ( $default_bg_img ) {
           // Fake an attachment model - needs all fields used by template.
          // Note that the default value must be a URL, NOT an attachment ID.
-         $type = in_array( substr( $default, -3 ), array( 'jpg', 'png', 'gif', 'bmp', 'svg' ) ) ? 'image' : 'document';
+         $type = in_array( substr( $default_bg_img, -3 ), array( 'jpg', 'png', 'gif', 'bmp', 'svg' ) ) ? 'image' : 'document';
            $default_attachment = array(
                'id' => 1,
-               'url' => $default,
+               'url' => $default_bg_img,
                'type' => $type,
                'icon' => wp_mime_type_icon( $type ),
-               'title' => basename( $default ),
+               'title' => basename( $default_bg_img ),
            );
            $default_attachment['sizes'] = array(
-                     'full' => array( 'url' => $default ),
+                     'full' => array( 'url' => $default_bg_img ),
            );
            $this->json['defaultAttachment'] = $default_attachment;
         }
         $background_image = isset( $value['background-image'] ) ? $value['background-image'] : null;
 
-        if ( $background_image && $default && $background_image === $default ) {
+        if ( $background_image && $default_bg_img && $background_image === $default_bg_img ) {
           // Set the default as the attachment.
           $this->json['attachment'] = $this->json['defaultAttachment'];
         } elseif ( $background_image ) {
