@@ -1078,16 +1078,19 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
 // type : $(this).attr('data-input-type'),
 // value : $(this).find('[data-type]').val(),
 // container : $(this),
-// control : control
+// mono_model : monoModel (Value instance, has a parent control)
 $.extend( CZRInputMethods , {
     initialize: function( name, options ) {
+        if ( _.isUndefined(options.mono_model ) || _.isEmpty(options.mono_model) ) {
+          throw new Error('No mono_model assigned to input ' + id + '. Aborting');
+        }
         api.Value.prototype.initialize.call( this, null, options );
         var input = this;
         //input.options = options;
         //write the options as properties, name is included
         $.extend( input, options || {} );
 
-        //initialize to thr provided value
+        //initialize to the provided value
         input.set(options.input_value);
 
         //setup the appropriate input based on the type
@@ -1126,13 +1129,13 @@ $.extend( CZRInputMethods , {
 
         //callbacks
         input.callbacks.add(function( to, from) {
-              var _current_model    = input.control.czr_Model.val.get(),
-                  _new_model        = _.clone( _current_model );//initialize it to the current value
+              var _current_mono_model = input.mono_model.get(),
+                  _new_model        = _.clone( current_mono_model );//initialize it to the current value
               //make sure the _new_model is an object and is not empty
               _new_model =  ( ! _.isObject(_new_model) || _.isEmpty(_new_model) ) ? {} : _new_model;
               //set the new val to the changed property
               _new_model[input.id] = to;
-              input.control.czr_Model.val.set(_new_model);
+              input.mono_model.set(_new_model);
         });
     },
 
@@ -1339,146 +1342,117 @@ $.extend( CZRInputMethods , {
             });
         });
     }
-});//$.extend//BASE CONTROL CLASS
-//extends api.Control
-//define a set of methods, mostly helpers, to extend the base WP control class
-//this will become our base constructor for main complex controls
-//EARLY SETUP
-
-var CZRBaseControlMethods = CZRBaseControlMethods || {};
-
-$.extend( CZRBaseControlMethods, {
-
+});//$.extend//extends api.Value
+var CZRMonoModelMethods = CZRMonoModelMethods || {};
+$.extend( CZRMonoModelMethods , {
   initialize: function( id, options ) {
-          var control = this;
-          api.Control.prototype.initialize.call( control, id, options );
+        if ( _.isUndefined(options.model_control) || _.isEmpty(options.model_control) ) {
+          throw new Error('No control assigned to mono model ' + id + '. Aborting');
+        }
+        api.Value.prototype.initialize.call( this, null, options );
+        var monoModel = this;
+        //input.options = options;
+        //write the options as properties, name is included
+        $.extend( monoModel, options || {} );
 
-          //add a shortcut to the css properties declared in the php controls
-          control.css_attr = _.has( serverControlParams , 'css_attr') ? serverControlParams.css_attr : {};
+        //initialize to the provided value
+        monoModel.set(options.model_val);
 
-          //extend the control with new template Selectors
-          $.extend( control, {
-            viewTemplateEl : 'customize-control-' + options.params.type + '-view',
-            viewContentTemplateEl : 'customize-control-' + options.params.type + '-view-content',
-          } );
-  },
-
-  //////////////////////////////////////////////////
-  /// HELPERS
-  //////////////////////////////////////////////////
-  _capitalize : function( string ) {
-          if( ! _.isString(string) )
-            return string;
-          return string.charAt(0).toUpperCase() + string.slice(1);
-  },
-
-  _truncate : function( string, n, useWordBoundary ){
-          if ( _.isUndefined(string) )
-            return '';
-          var isTooLong = string.length > n,
-              s_ = isTooLong ? string.substr(0,n-1) : string;
-              s_ = (useWordBoundary && isTooLong) ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
-          return  isTooLong ? s_ + '...' : s_;
-  },
-
-  //called before rendering a view
-  //can be overriden to set a specific view template depending on the model properties
-  //@return string
-  getTemplateEl : function( type, model ) {
-          var control = this, _el;
-          switch(type) {
-            case 'view' :
-              _el = control.viewTemplateEl;
-              break;
-            case 'view-content' :
-              _el = control.viewContentTemplateEl;
-              break;
-          }
-          if ( _.isEmpty(_el) ) {
-            console.log('No valid template has been found in getTemplateEl()');
-          } else {
-            return _el;
-          }
-  },
-
-  //@return void()
-  refreshPreview : function( obj ) {
-          this.previewer.refresh();
-  }
-
-});//$.extend//CZRBaseControlMethods//extends api.CZRBaseControl
-var CZRStaticMethods = CZRStaticMethods || {};
-$.extend( CZRStaticMethods , {
-  initialize: function( id, options ) {
-        var control = this;
-        api.CZRBaseControl.prototype.initialize.call( control, id, options );
         //the model is a collection of inputs, each one has its own view element.
-        control.czr_Model = new api.Values();
-        control.czr_Model.val = new api.Value();
+        monoModel.czr_Input = new api.Values();
 
-        control.defaultModel = {};
+        monoModel.defaultModel = {};
 
         //this can be overriden by extended classes to add and overrides methods
-        control.inputConstructor = api.CZRInput;
+        monoModel.inputConstructor = api.CZRInput;
+
+        //will be populated when model view is rendered
+        monoModel.container = '';
+
+        monoModel.container = monoModel.renderView();
+        monoModel.setupInputCollection();
+        //setup listeners
+        monoModel.callbacks.add( function( to, from ) {
+            var _current_collection = monoModel.control.czr_Model.czr_collection.get(),
+                _new_collection = _.clone( _current_collection  );//initialize it to the current value
+
+              //make sure the _collection is an object and is not empty
+              _new_collection =  ( ! _.isArray(_new_collection) || _.isEmpty(_new_collection) ) ? [] : _new_collection;
+
+              //set the new val to the changed property
+              //the model already exist in the collection
+              // if ( _.findWhere( _new_collection, { id : monoModel.id } ) ) {
+              //   _.each( _current_collection , function( _model, _ind ) {
+              //     if ( _model.id != model.id )
+              //       return;
+
+              //     //set the new val to the changed property
+              //     _new_collection[_ind] = model;
+              //   });
+              // }
+              // //the model has to be added
+              // else {
+              //   _new_collection.push(model);
+              // }
+              _new_collection[monoModel.id] = to;
+              monoModel.control.czr_Model.czr_collection.set(_new_collection);
+        });
   },//initialize
 
 
-  ready: function() {
-        var control  = this;
-        api.bind( 'ready', function() {
-              if ( _.isEmpty(control.defaultModel) || _.isUndefined(control.defaultModel) ) {
-                throw new Error('No default model found in multi input control ' + control.id + '. Aborting');
-              }
+  //creates the inputs based on the rendered items
+  setupInputCollection : function() {
+        var monoModel = this,
+            control = monoModel.model_control;
 
-              //prepare and sets the model value on api ready
-              //handles the retrocompat with previous setting (only color, not array)
-              //=> triggers the control rendering + DOM LISTENERS
-              var current_setval = _.isString( api(control.id).get() ) ? { 'background-color': api(control.id).get() } : api(control.id).get();
-              if ( ! _.isObject(current_setval) )
-                current_setval = {};
-              else
-                current_setval = _.extend( control.defaultModel, current_setval );
+        if ( _.isEmpty(monoModel.defaultModel) || _.isUndefined(monoModel.defaultModel) ) {
+          throw new Error('No default model found in multi input control ' + monoModel.id + '. Aborting');
+        }
 
-              control.czr_Model.val.set( current_setval );
+        //prepare and sets the model value on api ready
+        //=> triggers the control rendering + DOM LISTENERS
+        var current_model = monoModel.get();
 
-              //control.setupDOMListeners( control.control_event_map , { dom_el : control.container } );
-              control.renderView();
+        if ( ! _.isObject(current_model) )
+          current_model = monoModel.defaultModel;
+        else
+          current_model = _.extend( monoModel.defaultModel, current_model );
 
-              //creates the inputs based on the rendered items
-              $( '.'+control.css_attr.sub_set_wrapper, control.container).each( function(_index) {
-                var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index,
-                    _value = _.has( current_setval, _id) ? current_setval[_id] : '';
+        //creates the inputs based on the rendered items
+        $( '.'+control.css_attr.sub_set_wrapper, monoModel.container).each( function(_index) {
+              var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index,
+                  _value = _.has( current_model, _id) ? current_model[_id] : '';
 
-                control.czr_Model.add( _id, new control.inputConstructor( _id, {
+              monoModel.czr_Input.add( _id, new monoModel.inputConstructor( _id, {
                   id : _id,
                   type : $(this).attr('data-input-type'),
                   input_value : _value,
                   container : $(this),
-                  control : control
-                } ) );
+                  mono_model : monoModel
+              } ) );
+        });//each
 
-              });
-
-              //listens and reacts to the models changes
-              control.czr_Model.val.callbacks.add(function(to, from) {
-                api(control.id).set(to);
-              });
+        //listens and reacts to the models changes
+        monoModel.czr_Input.val.callbacks.add(function(to, from) {
+              //api(control.id).set(to);
+              //say it to the parent MonoModel
+              monoModel.set(to);
         });
-  }
+  },
 
 });//$.extend//extends api.CZRBaseControl
-var CZRStaticMethods = CZRStaticMethods || {};
+var CZRMonoModelMethods = CZRMonoModelMethods || {};
 
-  $.extend( CZRStaticMethods , {
+  $.extend( CZRMonoModelMethods , {
 
 
 
   });//$.extend
 
 //extends api.CZRBaseControl
-var CZRStaticMethods = CZRStaticMethods || {};
+var CZRMonoModelMethods = CZRMonoModelMethods || {};
 
-$.extend( CZRStaticMethods , {
+$.extend( CZRMonoModelMethods , {
   //////////////////////////////////////////////////
   /// VIEWS
   //////////////////////////////////////////////////
@@ -1487,33 +1461,38 @@ $.extend( CZRStaticMethods , {
   //an event is triggered on the control.container when content is rendered
   renderView : function() {
         //=> an array of objects
-        var control = this;
+        var monoModel = this,
+            model = monoModel.model_val,
+            control = monoModel.model_control;
 
         //do we have view template script?
-        if ( 0 === $( '#tmpl-' + control.viewContentTemplateEl ).length )
-          return this;
+        if ( 0 === $( '#tmpl-' + control.getTemplateEl( 'view', model ) ).length )
+          return false;//break the action chain
 
-        var view_template = wp.template( control.viewContentTemplateEl );
+        var view_template = wp.template( control.getTemplateEl( 'view', model ) );
 
         //do we have an html template and a control container?
         if ( ! view_template  || ! control.container )
-          return this;
+          return;
 
         //if the view has already been rendered, the view element exists, we simply need to remove its html content and append the new one
         //if not, then we need to render the view element and append the view html content to it
-        var $_view_el = $('.' + control.css_attr.multi_input_wrapper, control.container);
+        var $_view_el = '';
+
+        if ( ! monoModel.container.length )
+          $_view_el = $('<li>', { class : control.css_attr.inner_view, 'data-id' : model.id,  id : model.id } )
 
         if ( _.isEmpty($_view_el.html() ) ) {
-          $_view_el.append( control._getViewContent() );
+          $_view_el.append( monoModel._getViewContent() );
         } else {
           //var $_view_el = $('li[data-id="' + model.id + '"]');
           //empty the html and append the updated content
-          $_view_el.html( control._getViewContent() );
+          $_view_el.html( monoModel._getViewContent() );
         }
 
-        control.doActions( 'viewContentRendered' , control.container, {} );
+        monoModel.doActions( 'viewContentRendered' , control.container, {} );
 
-        return this;
+        return $_view_el;
   },
 
   //renders saved model view
@@ -1546,7 +1525,7 @@ $.extend( CZRStaticMethods , {
   }
 
 });//$.extend
-var CZRDynamicMethods = CZRDynamicMethods || {};
+var CZRMultiModelMethods = CZRMultiModelMethods || {};
 /* Dynamic Controls */
 //@augments CZRBaseControl
 /* //=> all html input have data-type attribute corresponding to the ones stored in the model
@@ -1561,7 +1540,7 @@ var CZRDynamicMethods = CZRDynamicMethods || {};
  * @todo : make sure that the model has changed before refreshing the view !! or don't refresh the view is already rendered ?
  */
 
-$.extend( CZRDynamicMethods, {
+$.extend( CZRMultiModelMethods, {
 
   //EARLY SETUP
   initialize: function( id, options ) {
@@ -1654,6 +1633,8 @@ $.extend( CZRDynamicMethods, {
     //declares a default model
     control.model = { id : '', title : '' };
 
+    control.modelConstructor = api.CZRMonoModel;
+
     //default success message when model added
     control.modelAddedMessage = serverControlParams.translatedStrings.successMessage;
 
@@ -1687,14 +1668,15 @@ $.extend( CZRDynamicMethods, {
     //czr_model stores the each model value => one value by created by model.id
     control.czr_Model = new api.Values();
 
+    //czr_collection stores the model collection
+    control.czr_Model.czr_collection = new api.Value();
+    control.czr_Model.czr_collection.set([]);
+
     //czr_View stores the current expansion status of a given view => one value by created by model.id
     //czr_View can take 3 values : expanded, expanded_noscroll (=> used on view creation), closed
     control.czr_View = new api.Values();
 
-    //czr_collection stores the model collection
-    control.czr_Collection = new api.Values();
-    control.czr_Collection.create('models');
-    control.czr_Collection('models').set([]);
+
   },
 
 
@@ -1715,7 +1697,7 @@ $.extend( CZRDynamicMethods, {
       //on init : populate the collection and setup the listener of the collection value
       control.setupCollectionListeners().fetchSavedCollection();
       //Now set the setting value (the saved collection has been rendered at this point)
-      control.czr_Collection('models').callbacks.add( function( to, from ) {
+      control.czr_Model.czr_collection.callbacks.add( function( to, from ) {
           //say it to the api
           api(control.id).set( control.filterCollectionBeforeAjax(to) );
 
@@ -1741,10 +1723,10 @@ $.extend( CZRDynamicMethods, {
     control.container.trigger('ready');
   },//ready()
 
-});//$.extend()var CZRDynamicMethods = CZRDynamicMethods || {};
+});//$.extend()var CZRMultiModelMethods = CZRMultiModelMethods || {};
 
 
-$.extend( CZRDynamicMethods, {
+$.extend( CZRMultiModelMethods, {
 
   updatePreModel : function(obj) {
     //get the changed property and val
@@ -1804,8 +1786,20 @@ $.extend( CZRDynamicMethods, {
     //set the callbacks
     //create the Value of this model
     control.czr_Model.create(model.id);
+
+    console.log( 'in add model', obj, model );
+
+    // control.czr_Model.add( model.id, new control.modelConstructor( model.id, {
+    //   model_id : model.id,
+    //   model_val : model,
+    //   model_control : control
+    // } ) );
+
+
+
     //add a listener on change
     control.czr_Model(model.id).callbacks.add( function( to, from ) {
+        console.log('KEY', key);
         //push the new model to the collection
         control.updateCollection( { model : to }, key );
         //Always update the view title
@@ -1881,12 +1875,12 @@ $.extend( CZRDynamicMethods, {
   //fired on click dom event
   removeModel : function( obj ) {
     var control = this,
-        _new_collection = _.clone( control.czr_Collection('models').get() );
+        _new_collection = _.clone( control.czr_Model.czr_collection.get() );
 
     _new_collection = _.without( _new_collection, _.findWhere( _new_collection, {id: obj.model.id }) );
 
     //say it
-    control.czr_Collection('models').set( _new_collection );
+    control.czr_Model.czr_collection.set( _new_collection );
   },
 
 
@@ -1927,7 +1921,7 @@ $.extend( CZRDynamicMethods, {
   //@return bool
   _isModelIdPossible : function( _id ) {
     var control = this;
-    return ! _.isEmpty(_id) && ! _.findWhere( control.czr_Collection('models').get(), { id : _id });
+    return ! _.isEmpty(_id) && ! _.findWhere( control.czr_Model.czr_collection.get(), { id : _id });
   },
 
   //the job of this function is to return a new model ready to be added to the collection
@@ -1939,7 +1933,7 @@ $.extend( CZRDynamicMethods, {
         _id;
 
     //get the next available key of the collection
-    _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( control.czr_Collection('models').get() );
+    _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( control.czr_Model.czr_collection.get() );
 
     if ( _.isNumber(_next_key) ) {
       _id = control.params.type + '_' + _next_key;
@@ -1996,9 +1990,9 @@ $.extend( CZRDynamicMethods, {
 
     });
   },
-});//$.extend()var CZRDynamicMethods = CZRDynamicMethods || {};
+});//$.extend()var CZRMultiModelMethods = CZRMultiModelMethods || {};
 
-$.extend( CZRDynamicMethods, {
+$.extend( CZRMultiModelMethods, {
   //////////////////////////////////
   ///COLLECTION//
   //////////////////////////////////
@@ -2015,11 +2009,14 @@ $.extend( CZRDynamicMethods, {
       if ( false === model ) {
         throw new Error('fetchSavedCollection : a model could not be added in : ' + control.id );
       }
+      console.log('ON FETCH COLLECTION', key);
       //adds it to the collection
       control.addModel( { model : model }, key);
     });
     return this;
   },
+
+
 
   //@fired in control ready on api('ready')
   //setup the collection listener
@@ -2028,44 +2025,44 @@ $.extend( CZRDynamicMethods, {
   setupCollectionListeners : function() {
     var control = this;
     //add a listener on change
-    control.czr_Collection('models').callbacks.add( function( to, from ) {
-      var _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
-          _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
-          _model_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
-          _collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && _.isEmpty(_model_updated);
+    control.czr_Model.czr_collection.callbacks.add( function( to, from ) {
+          var _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
+              _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
+              _model_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
+              _collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && _.isEmpty(_model_updated);
 
-      //RENDERS AND SETUP VIEW
-      if ( ! _.isEmpty(_to_render) && ! control.getViewEl(_to_render.id).length ) {
-        //Render model's view
-        var $view = control.renderView( {model:_to_render} );
-        //setup
-        control.setupViewApiListeners( {model:_to_render, dom_el : $view} );//listener of the czr_View value for expansion state
-        control.setupDOMListeners( control.view_event_map , {model:_to_render, dom_el:$view} );//listeners for the view wrapper
-        control._makeSortable();
+          //RENDERS AND SETUP VIEW
+          if ( ! _.isEmpty(_to_render) && ! control.getViewEl(_to_render.id).length ) {
+            //Render model's view
+            var $view = control.renderView( {model:_to_render} );
+            //setup
+            control.setupViewApiListeners( {model:_to_render, dom_el : $view} );//listener of the czr_View value for expansion state
+            control.setupDOMListeners( control.view_event_map , {model:_to_render, dom_el:$view} );//listeners for the view wrapper
+            control._makeSortable();
 
-        //hook here
-        control.doActions('after_viewSetup', $view, { model : _to_render , dom_el: $view} );
-      }//if
+            //hook here
+            control.doActions('after_viewSetup', $view, { model : _to_render , dom_el: $view} );
+          }//if
 
-      //REMOVES
-      if ( ! _.isEmpty(_to_remove) ) {
-        //destroy the DOM el
-        control._destroyView(_to_remove.id);
-        //remove the values
-        control.czr_Model.remove(_to_remove.id);
-        control.czr_View.remove(_to_remove.id);
+          //REMOVES
+          if ( ! _.isEmpty(_to_remove) ) {
+            //destroy the DOM el
+            control._destroyView(_to_remove.id);
+            //remove the values
+            control.czr_Model.remove(_to_remove.id);
+            control.czr_View.remove(_to_remove.id);
 
-        //hook here
-        control.doActions('after_modelRemoved', control.container, { model : _to_remove } );
-      }//if
+            //hook here
+            control.doActions('after_modelRemoved', control.container, { model : _to_remove } );
+          }//if
 
-      //SORTED COLLECTION
-      if ( _collection_sorted ) {
-        control.czr_preModel('view_status').set('closed');
-        control.closeAllViews();
-        control.closeAllAlerts();
-      }//if
-    });
+          //SORTED COLLECTION
+          if ( _collection_sorted ) {
+            control.czr_preModel('view_status').set('closed');
+            control.closeAllViews();
+            control.closeAllAlerts();
+          }//if
+    });//czr_collection.callbacks
     return this;
   },
 
@@ -2081,14 +2078,14 @@ $.extend( CZRDynamicMethods, {
   //@parama key is an integer OPTIONAL
   updateCollection : function( obj, key ) {
     var control = this,
-        _current_collection = control.czr_Collection('models').get();
+        _current_collection = control.czr_Model.czr_collection.get();
         _new_collection = _.clone(_current_collection);
 
     //if a collection is provided in the passed obj then simply refresh the collection
     //=> typically used when reordering the collection item with sortable or when a model is removed
     if ( _.has( obj, 'collection' ) ) {
       //reset the collection
-      control.czr_Collection('models').set(obj.collection);
+      control.czr_Model.czr_collection.set(obj.collection);
       return;
     }
 
@@ -2107,6 +2104,7 @@ $.extend( CZRDynamicMethods, {
     //  2) this is a new model to push in the collection
     //
     if ( false !== _key ) {
+      console.log('THERE IS A KEY, THERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEY', key );
       if ( _.isObject( _new_collection[key] ) )
         _new_collection[key] = model;
       else {
@@ -2131,7 +2129,7 @@ $.extend( CZRDynamicMethods, {
     }//else
 
     //updates the collection value
-    control.czr_Collection('models').set(_new_collection);
+    control.czr_Model.czr_collection.set(_new_collection);
   },
 
 
@@ -2139,7 +2137,7 @@ $.extend( CZRDynamicMethods, {
   //@returns a sorted collection as an array of model objects
   _getSortedDOMCollection : function( obj ) {
     var control = this,
-        _old_collection = _.clone( control.czr_Collection('models').get() ),
+        _old_collection = _.clone( control.czr_Model.czr_collection.get() ),
         _new_collection = [],
         _index = 0;
 
@@ -2171,11 +2169,11 @@ $.extend( CZRDynamicMethods, {
   //takes a model unique id as param
   getModel : function(id) {
     var control = this;
-    return _.findWhere( control.czr_Collection('models').get(), {id:id} ) || {};
+    return _.findWhere( control.czr_Model.czr_collection.get(), {id:id} ) || {};
   }
-});//$.extend()var CZRDynamicMethods = CZRDynamicMethods || {};
+});//$.extend()var CZRMultiModelMethods = CZRMultiModelMethods || {};
 
-$.extend( CZRDynamicMethods, {
+$.extend( CZRMultiModelMethods, {
   //////////////////////////////////////////////////
   /// VIEWS
   //////////////////////////////////////////////////
@@ -2344,7 +2342,7 @@ $.extend( CZRDynamicMethods, {
   //fired on views_sorted
   closeAllViews : function(model_id) {
     var control = this,
-        _current_collection = _.clone( control.czr_Collection('models').get() ),
+        _current_collection = _.clone( control.czr_Model.czr_collection.get() ),
         _filtered_collection = _.filter( _current_collection , function( mod) { return mod.id != model_id; } );
 
     _.map( _filtered_collection, function(_model) {
@@ -2424,7 +2422,7 @@ $.extend( CZRDynamicMethods, {
     $( '.' + control.css_attr.views_wrapper, control.container ).sortable( {
         handle: '.' + control.css_attr.sortable_handle,
         update: function( event, ui ) {
-          control.czr_Collection('models').set( control._getSortedDOMCollection() );
+          control.czr_Model.czr_collection.set( control._getSortedDOMCollection() );
         }
       }
     );
@@ -2858,11 +2856,11 @@ $.extend( CZRLayoutSelectMethods , {
 });//$.extend//wp.customize, jQuery, _
 var CZRBackgroundMethods = CZRBackgroundMethods || {};
 
-//@extends CZRStaticMethods
+//@extends CZRMonoModelMethods
 $.extend( CZRBackgroundMethods , {
   initialize: function( id, options ) {
           var control = this;
-          api.CZRStaticControl.prototype.initialize.call( control, id, options );
+          api.CZRMonoModelControl.prototype.initialize.call( control, id, options );
 
           control.defaultModel = control.params.default_model;
 
@@ -2876,10 +2874,13 @@ $.extend( CZRBackgroundMethods , {
           };
   },//initialize
 
-
+  //
+  //to add :
+  //handles the retrocompat with previous setting (only color, not array)
+  //var current_setval = _.isString( api(control.id).get() ) ? { 'background-color': api(control.id).get() } : api(control.id).get();
   ready : function() {
           var control = this;
-          api.CZRStaticControl.prototype.ready.call( control );
+          api.CZRMonoModelControl.prototype.ready.call( control );
 
           api.bind('ready', function() {
                 var _img_on_init = control.czr_Model('background-image').get();
@@ -2958,14 +2959,14 @@ $.extend( CZRBackgroundMethods , {
             });
           }
   }
-});//$.extend//extends api.CZRDynamicControl
+});//$.extend//extends api.CZRMultiModelControl
 
 var CZRWidgetAreasMethods = CZRWidgetAreasMethods || {};
 
 $.extend( CZRWidgetAreasMethods, {
   initialize: function( id, options ) {
     //run the parent initialize
-    api.CZRDynamicControl.prototype.initialize.call( this, id, options );
+    api.CZRMultiModelControl.prototype.initialize.call( this, id, options );
 
     var control = this;
     //adds control specific actions
@@ -3738,7 +3739,7 @@ $.extend( CZRWidgetAreasMethods, {
 
     //VISIBILITY BASED ON THE SIDEBAR INSIGHTS
     api.sidebar_insights('registered').callbacks.add( function( _registered_zones ) {
-      var _current_collection = _.clone( control.czr_Collection('models').get() );
+      var _current_collection = _.clone( control.czr_Model.czr_collection.get() );
       _.map(_current_collection, function( _model ) {
         if ( ! control.getViewEl(_model.id).length )
           return;
@@ -3749,7 +3750,7 @@ $.extend( CZRWidgetAreasMethods, {
 
     //OPACITY SIDEBAR INSIGHTS BASED
     api.sidebar_insights('inactives').callbacks.add( function( _inactives_zones ) {
-      var _current_collection = _.clone( control.czr_Collection('models').get() );
+      var _current_collection = _.clone( control.czr_Model.czr_collection.get() );
       _.map(_current_collection, function( _model ) {
         if ( ! control.getViewEl(_model.id).length )
           return;
@@ -3826,7 +3827,7 @@ $.extend( CZRWidgetAreasMethods, {
   //=> add a dynamic title
   getDefaultModel : function(id) {
     var control = this,
-        _current_collection = control.czr_Collection('models').get(),
+        _current_collection = control.czr_Model.czr_collection.get(),
         _default = _.clone( control.model ),
         _default_contexts = _default.contexts;
     return $.extend( _default, {
@@ -3835,7 +3836,7 @@ $.extend( CZRWidgetAreasMethods, {
       });
   },
 
-});//$.extend()//extends api.CZRDynamicControl
+});//$.extend()//extends api.CZRMultiModelControl
 
 var CZRSocialMethods = CZRSocialMethods || {};
 
@@ -3843,7 +3844,7 @@ $.extend( CZRSocialMethods, {
   initialize: function( id, options ) {
 
     //run the parent initialize
-    api.CZRDynamicControl.prototype.initialize.call( this, id, options );
+    api.CZRMultiModelControl.prototype.initialize.call( this, id, options );
 
     var control = this;
 
@@ -3998,7 +3999,7 @@ $.extend( CZRSocialMethods, {
 
 
     //add the new property to the the parent
-    //api.CZRDynamicControl.prototype.initialize.apply( this, arguments );
+    //api.CZRMultiModelControl.prototype.initialize.apply( this, arguments );
 
     //adds specific actions for this control
     this.addActions(
@@ -4168,7 +4169,7 @@ $.extend( CZRSocialMethods, {
     });
   }
 
-});//extends api.CZRDynamicControl
+});//extends api.CZRMultiModelControl
 
 var CZRSektionsMethods = CZRSektionsMethods || {};
 
@@ -4176,7 +4177,7 @@ $.extend( CZRSektionsMethods, {
   initialize: function( id, options ) {
 
     //run the parent initialize
-    api.CZRDynamicControl.prototype.initialize.call( this, id, options );
+    api.CZRMultiModelControl.prototype.initialize.call( this, id, options );
     var control = this;
 
     //declares a default model
@@ -4266,24 +4267,27 @@ $.extend( CZRSektionsMethods, {
   $.extend( CZRBaseControlMethods, api.CZR_Dom || {} );
   $.extend( CZRInputMethods, api.CZR_Dom || {} );
 
-  //INPUTS
+  //INPUTS => used as constructor when creating the collection of inputs
   api.CZRInput                 = api.Value.extend( CZRInputMethods || {} );
+
+  //MODELS => used as constructor when creating the collection of models
+  api.CZRMonoModel             = api.Value.extend( CZRMonoModelMethods || {} );
 
   //CONTROLS
   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMethods || {} );
-  api.CZRDynamicControl        = api.CZRBaseControl.extend( CZRDynamicMethods || {} );
-  api.CZRStaticControl         = api.CZRBaseControl.extend( CZRStaticMethods || {} );
+  api.CZRMultiModelControl     = api.CZRBaseControl.extend( CZRMultiModelMethods || {} );
+  //api.CZRMonoModelControl      = api.CZRBaseControl.extend( CZRMonoModelMethods || {} );
 
-  api.CZRBackgroundControl     = api.CZRStaticControl.extend( CZRBackgroundMethods || {} );
+  //api.CZRBackgroundControl     = api.CZRMonoModelControl.extend( CZRBackgroundMethods || {} );
 
-  api.CZRWidgetAreasControl    = api.CZRDynamicControl.extend( CZRWidgetAreasMethods || {} );
-  api.CZRSocialControl         = api.CZRDynamicControl.extend( CZRSocialMethods || {} );
+  api.CZRWidgetAreasControl    = api.CZRMultiModelControl.extend( CZRWidgetAreasMethods || {} );
+  api.CZRSocialControl         = api.CZRMultiModelControl.extend( CZRSocialMethods || {} );
 
   api.CZRUploadControl         = api.Control.extend( CZRUploadMethods || {} );
   api.CZRLayoutControl         = api.Control.extend( CZRLayoutSelectMethods || {} );
   api.CZRMultiplePickerControl = api.Control.extend( CZRMultiplePickerMethods || {} );
 
-  api.CZRSektionsControl       = api.CZRDynamicControl.extend( CZRSektionsMethods || {} );
+  api.CZRSektionsControl       = api.CZRMultiModelControl.extend( CZRSektionsMethods || {} );
 
   $.extend( api.controlConstructor, {
     czr_upload     : api.CZRUploadControl,
@@ -4291,7 +4295,7 @@ $.extend( CZRSektionsMethods, {
     czr_socials    : api.CZRSocialControl,
     czr_multiple_picker : api.CZRMultiplePickerControl,
     czr_layouts    : api.CZRLayoutControl,
-    czr_background : api.CZRBackgroundControl,
+    //czr_background : api.CZRBackgroundControl,
     czr_sektions   : api.CZRSektionsControl
   });
 

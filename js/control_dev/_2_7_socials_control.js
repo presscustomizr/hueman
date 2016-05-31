@@ -1,4 +1,4 @@
-//extends api.CZRDynamicControl
+//extends api.CZRMultiModelControl
 
 var CZRSocialMethods = CZRSocialMethods || {};
 
@@ -6,7 +6,7 @@ $.extend( CZRSocialMethods, {
   initialize: function( id, options ) {
 
     //run the parent initialize
-    api.CZRDynamicControl.prototype.initialize.call( this, id, options );
+    api.CZRMultiModelControl.prototype.initialize.call( this, id, options );
 
     var control = this;
 
@@ -161,7 +161,7 @@ $.extend( CZRSocialMethods, {
 
 
     //add the new property to the the parent
-    //api.CZRDynamicControl.prototype.initialize.apply( this, arguments );
+    //api.CZRMultiModelControl.prototype.initialize.apply( this, arguments );
 
     //adds specific actions for this control
     this.addActions(

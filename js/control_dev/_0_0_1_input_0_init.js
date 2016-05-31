@@ -6,16 +6,19 @@ var CZRInputMethods = CZRInputMethods || {};
 // type : $(this).attr('data-input-type'),
 // value : $(this).find('[data-type]').val(),
 // container : $(this),
-// control : control
+// mono_model : monoModel (Value instance, has a parent control)
 $.extend( CZRInputMethods , {
     initialize: function( name, options ) {
+        if ( _.isUndefined(options.mono_model ) || _.isEmpty(options.mono_model) ) {
+          throw new Error('No mono_model assigned to input ' + id + '. Aborting');
+        }
         api.Value.prototype.initialize.call( this, null, options );
         var input = this;
         //input.options = options;
         //write the options as properties, name is included
         $.extend( input, options || {} );
 
-        //initialize to thr provided value
+        //initialize to the provided value
         input.set(options.input_value);
 
         //setup the appropriate input based on the type
@@ -54,13 +57,13 @@ $.extend( CZRInputMethods , {
 
         //callbacks
         input.callbacks.add(function( to, from) {
-              var _current_model    = input.control.czr_Model.val.get(),
-                  _new_model        = _.clone( _current_model );//initialize it to the current value
+              var _current_mono_model = input.mono_model.get(),
+                  _new_model        = _.clone( current_mono_model );//initialize it to the current value
               //make sure the _new_model is an object and is not empty
               _new_model =  ( ! _.isObject(_new_model) || _.isEmpty(_new_model) ) ? {} : _new_model;
               //set the new val to the changed property
               _new_model[input.id] = to;
-              input.control.czr_Model.val.set(_new_model);
+              input.mono_model.set(_new_model);
         });
     },
 

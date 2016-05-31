@@ -1,11 +1,11 @@
-//extends api.CZRDynamicControl
+//extends api.CZRMultiModelControl
 
 var CZRWidgetAreasMethods = CZRWidgetAreasMethods || {};
 
 $.extend( CZRWidgetAreasMethods, {
   initialize: function( id, options ) {
     //run the parent initialize
-    api.CZRDynamicControl.prototype.initialize.call( this, id, options );
+    api.CZRMultiModelControl.prototype.initialize.call( this, id, options );
 
     var control = this;
     //adds control specific actions
@@ -778,7 +778,7 @@ $.extend( CZRWidgetAreasMethods, {
 
     //VISIBILITY BASED ON THE SIDEBAR INSIGHTS
     api.sidebar_insights('registered').callbacks.add( function( _registered_zones ) {
-      var _current_collection = _.clone( control.czr_Collection('models').get() );
+      var _current_collection = _.clone( control.czr_Model.czr_collection.get() );
       _.map(_current_collection, function( _model ) {
         if ( ! control.getViewEl(_model.id).length )
           return;
@@ -789,7 +789,7 @@ $.extend( CZRWidgetAreasMethods, {
 
     //OPACITY SIDEBAR INSIGHTS BASED
     api.sidebar_insights('inactives').callbacks.add( function( _inactives_zones ) {
-      var _current_collection = _.clone( control.czr_Collection('models').get() );
+      var _current_collection = _.clone( control.czr_Model.czr_collection.get() );
       _.map(_current_collection, function( _model ) {
         if ( ! control.getViewEl(_model.id).length )
           return;
@@ -866,7 +866,7 @@ $.extend( CZRWidgetAreasMethods, {
   //=> add a dynamic title
   getDefaultModel : function(id) {
     var control = this,
-        _current_collection = control.czr_Collection('models').get(),
+        _current_collection = control.czr_Model.czr_collection.get(),
         _default = _.clone( control.model ),
         _default_contexts = _default.contexts;
     return $.extend( _default, {

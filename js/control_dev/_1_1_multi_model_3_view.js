@@ -1,6 +1,6 @@
-var CZRDynamicMethods = CZRDynamicMethods || {};
+var CZRMultiModelMethods = CZRMultiModelMethods || {};
 
-$.extend( CZRDynamicMethods, {
+$.extend( CZRMultiModelMethods, {
   //////////////////////////////////////////////////
   /// VIEWS
   //////////////////////////////////////////////////
@@ -169,7 +169,7 @@ $.extend( CZRDynamicMethods, {
   //fired on views_sorted
   closeAllViews : function(model_id) {
     var control = this,
-        _current_collection = _.clone( control.czr_Collection('models').get() ),
+        _current_collection = _.clone( control.czr_Model.czr_collection.get() ),
         _filtered_collection = _.filter( _current_collection , function( mod) { return mod.id != model_id; } );
 
     _.map( _filtered_collection, function(_model) {
@@ -249,7 +249,7 @@ $.extend( CZRDynamicMethods, {
     $( '.' + control.css_attr.views_wrapper, control.container ).sortable( {
         handle: '.' + control.css_attr.sortable_handle,
         update: function( event, ui ) {
-          control.czr_Collection('models').set( control._getSortedDOMCollection() );
+          control.czr_Model.czr_collection.set( control._getSortedDOMCollection() );
         }
       }
     );

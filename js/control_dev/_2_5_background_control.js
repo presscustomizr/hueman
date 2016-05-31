@@ -1,15 +1,17 @@
 //wp.customize, jQuery, _
 var CZRBackgroundMethods = CZRBackgroundMethods || {};
 
-//@extends CZRStaticMethods
+//@extends CZRMonoModelMethods
 $.extend( CZRBackgroundMethods , {
   initialize: function( id, options ) {
           var control = this;
-          api.CZRStaticControl.prototype.initialize.call( control, id, options );
+          api.CZRMonoModelControl.prototype.initialize.call( control, id, options );
 
           control.defaultModel = control.params.default_model;
 
+          //EXTEND THE DEFAULT CONSTRUCTORS FOR INPUT AND MONOMODEL
           control.inputConstructor = api.CZRInput.extend( control.CZRBackgroundInputMethods || {} );
+          control.modelConstructor = api.CZRMonoModel.extend( control.CZRBackgroundModelMethods || {} );
 
           //the map describing how to populate each particular select inputs
           control.select_map = {
@@ -19,10 +21,13 @@ $.extend( CZRBackgroundMethods , {
           };
   },//initialize
 
-
+  //
+  //to add :
+  //handles the retrocompat with previous setting (only color, not array)
+  //var current_setval = _.isString( api(control.id).get() ) ? { 'background-color': api(control.id).get() } : api(control.id).get();
   ready : function() {
           var control = this;
-          api.CZRStaticControl.prototype.ready.call( control );
+          api.CZRMonoModelControl.prototype.ready.call( control );
 
           api.bind('ready', function() {
                 var _img_on_init = control.czr_Model('background-image').get();
@@ -100,5 +105,39 @@ $.extend( CZRBackgroundMethods , {
                 $( 'select[data-type="'+ input.id +'"]', input.container ).append( $('<option>', _attributes) );
             });
           }
+  },
+
+
+  CZRBackgroundModelMethods : {
+          //OVERRIDES THE PARENT METHOD TO ADD THE BG DEFAULT COLOR
+          renderViewContent : function() {
+                  //=> an array of objects
+                  var monoModel = this,
+                      control = this.model_control,
+                      model = _.clone( monoModel.get() );
+
+                  //do we have view content template script?
+                  if ( 0 === $( '#tmpl-' + control.getTemplateEl( 'view-content', model ) ).length )
+                    return this;
+
+                  var  view_content_template = wp.template( control.getTemplateEl( 'view-content', model ) );
+
+                  //do we have an html template and a control container?
+                  if ( ! view_content_template || ! control.container )
+                    return this;
+
+                  //the view content
+                  var extended_model = $.extend(
+                      model,
+                      { defaultBgColor : control.defaultModel['background-color'] || '#eaeaea' }
+                    );
+
+                  $( view_content_template( extended_model )).appendTo( $('.' + control.css_attr.view_content, obj.dom_el ) );
+
+                  control.doActions( 'viewContentRendered' , obj.dom_el, obj );
+
+                  return this;
+          }
   }
+
 });//$.extend

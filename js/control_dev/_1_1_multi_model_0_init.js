@@ -1,4 +1,4 @@
-var CZRDynamicMethods = CZRDynamicMethods || {};
+var CZRMultiModelMethods = CZRMultiModelMethods || {};
 /* Dynamic Controls */
 //@augments CZRBaseControl
 /* //=> all html input have data-type attribute corresponding to the ones stored in the model
@@ -13,7 +13,7 @@ var CZRDynamicMethods = CZRDynamicMethods || {};
  * @todo : make sure that the model has changed before refreshing the view !! or don't refresh the view is already rendered ?
  */
 
-$.extend( CZRDynamicMethods, {
+$.extend( CZRMultiModelMethods, {
 
   //EARLY SETUP
   initialize: function( id, options ) {
@@ -106,6 +106,8 @@ $.extend( CZRDynamicMethods, {
     //declares a default model
     control.model = { id : '', title : '' };
 
+    control.modelConstructor = api.CZRMonoModel;
+
     //default success message when model added
     control.modelAddedMessage = serverControlParams.translatedStrings.successMessage;
 
@@ -139,14 +141,15 @@ $.extend( CZRDynamicMethods, {
     //czr_model stores the each model value => one value by created by model.id
     control.czr_Model = new api.Values();
 
+    //czr_collection stores the model collection
+    control.czr_Model.czr_collection = new api.Value();
+    control.czr_Model.czr_collection.set([]);
+
     //czr_View stores the current expansion status of a given view => one value by created by model.id
     //czr_View can take 3 values : expanded, expanded_noscroll (=> used on view creation), closed
     control.czr_View = new api.Values();
 
-    //czr_collection stores the model collection
-    control.czr_Collection = new api.Values();
-    control.czr_Collection.create('models');
-    control.czr_Collection('models').set([]);
+
   },
 
 
@@ -167,7 +170,7 @@ $.extend( CZRDynamicMethods, {
       //on init : populate the collection and setup the listener of the collection value
       control.setupCollectionListeners().fetchSavedCollection();
       //Now set the setting value (the saved collection has been rendered at this point)
-      control.czr_Collection('models').callbacks.add( function( to, from ) {
+      control.czr_Model.czr_collection.callbacks.add( function( to, from ) {
           //say it to the api
           api(control.id).set( control.filterCollectionBeforeAjax(to) );
 

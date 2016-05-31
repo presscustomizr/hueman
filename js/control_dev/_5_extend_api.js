@@ -3,24 +3,27 @@
   $.extend( CZRBaseControlMethods, api.CZR_Dom || {} );
   $.extend( CZRInputMethods, api.CZR_Dom || {} );
 
-  //INPUTS
+  //INPUTS => used as constructor when creating the collection of inputs
   api.CZRInput                 = api.Value.extend( CZRInputMethods || {} );
+
+  //MODELS => used as constructor when creating the collection of models
+  api.CZRMonoModel             = api.Value.extend( CZRMonoModelMethods || {} );
 
   //CONTROLS
   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMethods || {} );
-  api.CZRDynamicControl        = api.CZRBaseControl.extend( CZRDynamicMethods || {} );
-  api.CZRStaticControl         = api.CZRBaseControl.extend( CZRStaticMethods || {} );
+  api.CZRMultiModelControl     = api.CZRBaseControl.extend( CZRMultiModelMethods || {} );
+  //api.CZRMonoModelControl      = api.CZRBaseControl.extend( CZRMonoModelMethods || {} );
 
-  api.CZRBackgroundControl     = api.CZRStaticControl.extend( CZRBackgroundMethods || {} );
+  //api.CZRBackgroundControl     = api.CZRMonoModelControl.extend( CZRBackgroundMethods || {} );
 
-  api.CZRWidgetAreasControl    = api.CZRDynamicControl.extend( CZRWidgetAreasMethods || {} );
-  api.CZRSocialControl         = api.CZRDynamicControl.extend( CZRSocialMethods || {} );
+  api.CZRWidgetAreasControl    = api.CZRMultiModelControl.extend( CZRWidgetAreasMethods || {} );
+  api.CZRSocialControl         = api.CZRMultiModelControl.extend( CZRSocialMethods || {} );
 
   api.CZRUploadControl         = api.Control.extend( CZRUploadMethods || {} );
   api.CZRLayoutControl         = api.Control.extend( CZRLayoutSelectMethods || {} );
   api.CZRMultiplePickerControl = api.Control.extend( CZRMultiplePickerMethods || {} );
 
-  api.CZRSektionsControl       = api.CZRDynamicControl.extend( CZRSektionsMethods || {} );
+  api.CZRSektionsControl       = api.CZRMultiModelControl.extend( CZRSektionsMethods || {} );
 
   $.extend( api.controlConstructor, {
     czr_upload     : api.CZRUploadControl,
@@ -28,7 +31,7 @@
     czr_socials    : api.CZRSocialControl,
     czr_multiple_picker : api.CZRMultiplePickerControl,
     czr_layouts    : api.CZRLayoutControl,
-    czr_background : api.CZRBackgroundControl,
+    //czr_background : api.CZRBackgroundControl,
     czr_sektions   : api.CZRSektionsControl
   });
 

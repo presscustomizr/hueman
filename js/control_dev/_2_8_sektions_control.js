@@ -1,4 +1,4 @@
-//extends api.CZRDynamicControl
+//extends api.CZRMultiModelControl
 
 var CZRSektionsMethods = CZRSektionsMethods || {};
 
@@ -6,7 +6,7 @@ $.extend( CZRSektionsMethods, {
   initialize: function( id, options ) {
 
     //run the parent initialize
-    api.CZRDynamicControl.prototype.initialize.call( this, id, options );
+    api.CZRMultiModelControl.prototype.initialize.call( this, id, options );
     var control = this;
 
     //declares a default model

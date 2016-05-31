@@ -1,7 +1,7 @@
-var CZRDynamicMethods = CZRDynamicMethods || {};
+var CZRMultiModelMethods = CZRMultiModelMethods || {};
 
 
-$.extend( CZRDynamicMethods, {
+$.extend( CZRMultiModelMethods, {
 
   updatePreModel : function(obj) {
     //get the changed property and val
@@ -61,8 +61,20 @@ $.extend( CZRDynamicMethods, {
     //set the callbacks
     //create the Value of this model
     control.czr_Model.create(model.id);
+
+    console.log( 'in add model', obj, model );
+
+    // control.czr_Model.add( model.id, new control.modelConstructor( model.id, {
+    //   model_id : model.id,
+    //   model_val : model,
+    //   model_control : control
+    // } ) );
+
+
+
     //add a listener on change
     control.czr_Model(model.id).callbacks.add( function( to, from ) {
+        console.log('KEY', key);
         //push the new model to the collection
         control.updateCollection( { model : to }, key );
         //Always update the view title
@@ -103,32 +115,32 @@ $.extend( CZRDynamicMethods, {
 
   //fired after a input change is detected
   updateModel : function( obj ) {
-    //get the changed property and val
-    //=> all html input have data-type attribute corresponding to the ones stored in the model
-    var control           = this,
-        $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
-        _changed_prop     = $_changed_input.attr('data-type'),
-        _new_val          = $( $_changed_input, obj.dom_el ).val(),
-        _current_model    = control.czr_Model(obj.model.id).get(),
-        _new_model        = _.clone( _current_model );//initialize it to the current value
+        //get the changed property and val
+        //=> all html input have data-type attribute corresponding to the ones stored in the model
+        var control           = this,
+            $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
+            _changed_prop     = $_changed_input.attr('data-type'),
+            _new_val          = $( $_changed_input, obj.dom_el ).val(),
+            _current_model    = control.czr_Model(obj.model.id).get(),
+            _new_model        = _.clone( _current_model );//initialize it to the current value
 
-    //make sure the title has not been emptied. If so, replace it with the default title.
-    if ( 'title' == _changed_prop && _.isEmpty(_new_val) ) {
-      _defaultModel = control.getDefaultModel();
-      _new_val = _defaultModel.title;
-    }
+        //make sure the title has not been emptied. If so, replace it with the default title.
+        if ( 'title' == _changed_prop && _.isEmpty(_new_val) ) {
+          _defaultModel = control.getDefaultModel();
+          _new_val = _defaultModel.title;
+        }
 
-    //set the new val to the changed property
-    _new_model[_changed_prop] = _new_val;
+        //set the new val to the changed property
+        _new_model[_changed_prop] = _new_val;
 
-    control.czr_Model(obj.model.id).set(_new_model);
+        control.czr_Model(obj.model.id).set(_new_model);
 
-    //say it to the current view
-    control.doActions(
-      _changed_prop + ':changed',
-      obj.dom_el,
-      { model : _new_model }
-    );
+        //say it to the current view
+        control.doActions(
+          _changed_prop + ':changed',
+          obj.dom_el,
+          { model : _new_model }
+        );
   },
 
 
@@ -137,13 +149,13 @@ $.extend( CZRDynamicMethods, {
 
   //fired on click dom event
   removeModel : function( obj ) {
-    var control = this,
-        _new_collection = _.clone( control.czr_Collection('models').get() );
+        var control = this,
+            _new_collection = _.clone( control.czr_Model.czr_collection.get() );
 
-    _new_collection = _.without( _new_collection, _.findWhere( _new_collection, {id: obj.model.id }) );
+        _new_collection = _.without( _new_collection, _.findWhere( _new_collection, {id: obj.model.id }) );
 
-    //say it
-    control.czr_Collection('models').set( _new_collection );
+        //say it
+        control.czr_Model.czr_collection.set( _new_collection );
   },
 
 
@@ -153,8 +165,8 @@ $.extend( CZRDynamicMethods, {
   //Returns the default model defined in initialize
   //Each chid class can override the default model and the following method
   getDefaultModel : function( id ) {
-    var control = this;
-    return $.extend( _.clone(control.model), { id : id || '' } );
+        var control = this;
+        return $.extend( _.clone(control.model), { id : id || '' } );
   },
 
 
@@ -171,86 +183,86 @@ $.extend( CZRDynamicMethods, {
   //2) have a unique id
   //3) have all the default properties set (default model is defined in each child class initialize() method)
   _normalizeModel : function( model, key ) {
-    if ( ! _.isObject(model) )
-      return;
+        if ( ! _.isObject(model) )
+          return;
 
-    //id unicity
-    model = this._initNewModel(model, key);
+        //id unicity
+        model = this._initNewModel(model, key);
 
-    return model;
+        return model;
   },
 
   //helper
   //@return bool
   _isModelIdPossible : function( _id ) {
-    var control = this;
-    return ! _.isEmpty(_id) && ! _.findWhere( control.czr_Collection('models').get(), { id : _id });
+        var control = this;
+        return ! _.isEmpty(_id) && ! _.findWhere( control.czr_Model.czr_collection.get(), { id : _id });
   },
 
   //the job of this function is to return a new model ready to be added to the collection
   //the new model shall have a unique id
   //recursive
   _initNewModel : function( _model , _next_key ) {
-    var control = this,
-        _new_model = { id : '' },
-        _id;
+          var control = this,
+              _new_model = { id : '' },
+              _id;
 
-    //get the next available key of the collection
-    _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( control.czr_Collection('models').get() );
+          //get the next available key of the collection
+          _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( control.czr_Model.czr_collection.get() );
 
-    if ( _.isNumber(_next_key) ) {
-      _id = control.params.type + '_' + _next_key;
-    }
-    else {
-      _id = _next_key;
-      //reset next key to 0 in case a recursive loop is needed later
-      _next_key = 0;
-    }
+          if ( _.isNumber(_next_key) ) {
+            _id = control.params.type + '_' + _next_key;
+          }
+          else {
+            _id = _next_key;
+            //reset next key to 0 in case a recursive loop is needed later
+            _next_key = 0;
+          }
 
-    if ( _model && ! _.isEmpty( _model) )
-      _new_model = $.extend( _model, { id : _id } );
-    else
-      _new_model = this.getDefaultModel( _id );
+          if ( _model && ! _.isEmpty( _model) )
+            _new_model = $.extend( _model, { id : _id } );
+          else
+            _new_model = this.getDefaultModel( _id );
 
-    //check the id existence, and its unicity
-    if ( _.has(_new_model, 'id') && control._isModelIdPossible(_id) ) {
-      //make sure that the provided model has all the default properties set
-      _.map( control.getDefaultModel() , function( value, property ){
-        if ( ! _.has(_new_model, property) )
-          _new_model[property] = value;
-      });
+          //check the id existence, and its unicity
+          if ( _.has(_new_model, 'id') && control._isModelIdPossible(_id) ) {
+            //make sure that the provided model has all the default properties set
+            _.map( control.getDefaultModel() , function( value, property ){
+              if ( ! _.has(_new_model, property) )
+                _new_model[property] = value;
+            });
 
-      return _new_model;
-    }
+            return _new_model;
+          }
 
-    //if id already exists, then test a new one
-    return control._initNewModel( _new_model, _next_key + 1);
+          //if id already exists, then test a new one
+          return control._initNewModel( _new_model, _next_key + 1);
   },
 
   //The idea is to send only the currently modified model instead of the entire collection
   //the entire collection is sent anyway on api(setId).set( value ), and accessible in the preview via api(setId).bind( fn( to) )
   _sendModel : function( from, to ) {
-    var control = this,
-      _changed_props = [],
-      $view = control.getViewEl(to.id);
+          var control = this,
+            _changed_props = [],
+            $view = control.getViewEl(to.id);
 
-    //which property(ies) has(ve) changed ?
-    _.map( from, function( _val, _key ) {
-      if ( _val != to[_key] )
-        _changed_props.push(_key);
-    });
+          //which property(ies) has(ve) changed ?
+          _.map( from, function( _val, _key ) {
+            if ( _val != to[_key] )
+              _changed_props.push(_key);
+          });
 
-    _.map( _changed_props, function( _prop) {
-      control.previewer.send( 'sub_setting', {
-        set_id : control.id,
-        model_id : to.id,
-        changed_prop : _prop,
-        value : to[_prop]
-      });
+          _.map( _changed_props, function( _prop) {
+            control.previewer.send( 'sub_setting', {
+              set_id : control.id,
+              model_id : to.id,
+              changed_prop : _prop,
+              value : to[_prop]
+            });
 
-      //add a hook here
-      control.doActions('after_sendModel', $view, { model : to , dom_el: $view, changed_prop : _prop } );
+            //add a hook here
+            control.doActions('after_sendModel', $view, { model : to , dom_el: $view, changed_prop : _prop } );
 
-    });
+          });
   },
 });//$.extend()
