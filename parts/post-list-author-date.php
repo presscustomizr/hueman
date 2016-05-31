@@ -11,7 +11,7 @@
   <p class="post-byline" style="display:none">&nbsp;<?php _e('by','hueman'); ?>
     <span class="vcard author">
       <span class="fn"><?php the_author_posts_link(); ?></span>
-    </span> &middot; Published <span class="published"><?php the_date( get_option('date_format') ); ?></span>
+    </span> &middot; Published <span class="published"><?php echo get_the_date( get_option('date_format') ); ?></span>
     <?php if( get_the_modified_date() != get_the_date() ) : ?> &middot; Last modified <span class="updated"><?php the_modified_date( get_option('date_format') ); ?></span><?php endif; ?>
   </p>
 <?php endif ?>
