@@ -75,6 +75,7 @@ See headers of files for further details.
 # Changelog
 = 3.1.6 May 31th 2016 =
 * fixed : publication date not showing up on single post
+* fixed : Parse error in the customizer when PHP version < 5.3
 
 = 3.1.5 May 30th 2016 =
 * updated : screenshot to 1200x900
