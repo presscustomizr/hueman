@@ -29,11 +29,7 @@ $.extend( CZRMultiInputDynMethods, {
 
           //default success message when model added
           control.modelAddedMessage = serverControlParams.translatedStrings.successMessage;
-  },
 
-
-  ready : function() {
-          var control = this;
           ////////////////////////////////////////////////////
           /// CONTROL EVENT MAP
           ////////////////////////////////////////////////////
@@ -61,8 +57,11 @@ $.extend( CZRMultiInputDynMethods, {
                 }
           ];//control.control_event_map
 
+  },
 
 
+  ready : function() {
+          var control = this;
           api.bind( 'ready', function() {
                 //Setup the control event listeners
                 control.setupDOMListeners( control.control_event_map , { dom_el : control.container } );
@@ -82,7 +81,7 @@ $.extend( CZRMultiInputDynMethods, {
 
   //the model is manually added.
   //We should have a pre model
-  addModel : function() {
+  addModel : function(obj) {
           var control = this,
               model = control.czr_preModel('model').get();
 
@@ -90,7 +89,7 @@ $.extend( CZRMultiInputDynMethods, {
             throw new Error('addModel : a model should be an object and not empty. In : ' + control.id +'. Aborted.' );
           }
 
-          control.instantiateModel(model, key, true); //true == Added by user
+          control.instantiateModel(model, true); //true == Added by user
 
           control.closeResetPreModel();
           control.doActions( 'model_added_by_user' , control.container, { model : model , dom_event : obj.dom_event } );

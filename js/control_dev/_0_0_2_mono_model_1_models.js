@@ -24,7 +24,7 @@ var CZRMonoModelMethods = CZRMonoModelMethods || {};
                 });
 
                 //add a hook here
-                control.doActions('after_sendModel', $view, { model : to , dom_el: monoModel.container, changed_prop : _prop } );
+                api.CZR_Dom.doActions('after_sendModel',  monoModel.container, { model : to , dom_el: monoModel.container, changed_prop : _prop }, monoModel );
           });
     },
 
@@ -48,6 +48,12 @@ var CZRMonoModelMethods = CZRMonoModelMethods || {};
             control.czr_Model.remove(monoModel.model_id);
     },
 
+    //@return the model {...} from the collection
+    //takes a model unique id as param
+    getModel : function(id) {
+            var monoModel = this;
+            return monoModel.get();
+    }
 
   });//$.extend
 

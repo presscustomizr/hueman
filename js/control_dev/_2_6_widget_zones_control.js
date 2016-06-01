@@ -97,7 +97,7 @@ $.extend( CZRWidgetAreasMethods, {
     control.locations = _.has( options.params , 'sidebar_locations') ? options.params.sidebar_locations : {};
 
     //declares a default model
-    control.model = {
+    control.defaultMonoModel = {
       id : '',
       title : serverControlParams.translatedStrings.widgetZone,
       contexts : _.without( _.keys(control.contexts), '_all_' ),//the server list of contexts is an object, we only need the keys, whitout _all_
@@ -867,7 +867,7 @@ $.extend( CZRWidgetAreasMethods, {
   getDefaultModel : function(id) {
     var control = this,
         _current_collection = control.czr_Model.czr_collection.get(),
-        _default = _.clone( control.model ),
+        _default = _.clone( control.defaultMonoModel ),
         _default_contexts = _default.contexts;
     return $.extend( _default, {
         title : 'Widget Zone ' +  ( _.size(_current_collection)*1 + 1 )

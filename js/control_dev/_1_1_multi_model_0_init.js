@@ -1,3 +1,4 @@
+
 var CZRMultiModelMethods = CZRMultiModelMethods || {};
 /* Dynamic Controls */
 //@augments CZRBaseControl
@@ -104,9 +105,7 @@ $.extend( CZRMultiModelMethods, {
     control.savedModels = api(control.id).get();
 
     //declares a default model
-    control.model = { id : '', title : '' };
-
-    control.modelConstructor = api.CZRMonoModel;
+    control.defaultMonoModel = { id : '', title : '' };
 
     //default success message when model added
     control.modelAddedMessage = serverControlParams.translatedStrings.successMessage;

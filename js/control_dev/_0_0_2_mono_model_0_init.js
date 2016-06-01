@@ -1,9 +1,10 @@
 //extends api.Value
 //options:
-//model_id : model.id,
-// model_val : model,
-// model_control : control,
-// is_added_by_user : is_added_by_user
+  // model_id : model.id,
+  // model_val : model,
+  // defaultMonoModel : control.defaultMonoModel,
+  // model_control : control,
+  // is_added_by_user : is_added_by_user || false
 var CZRMonoModelMethods = CZRMonoModelMethods || {};
 $.extend( CZRMonoModelMethods , {
   initialize: function( id, options ) {
@@ -19,9 +20,8 @@ $.extend( CZRMonoModelMethods , {
         //write the options as properties, name is included
         $.extend( monoModel, options || {} );
 
-        //initialize to the provided value
-        monoModel.set(options.model_val);
-        monoModel.defaultModel = {};
+        //setup listeners
+        monoModel.callbacks.add( function() { return monoModel.setupMonoModelListeners.apply(monoModel, arguments ); } );
 
         //VIEW
         //czr_View stores the current expansion status of a given view => one value by created by model.id
@@ -29,20 +29,19 @@ $.extend( CZRMonoModelMethods , {
         monoModel.czr_View = new api.Value();
         monoModel.setupView();
 
-        //INPUTS
+        //INPUTS => Setup as soon as the view content is rendered
         //the model is a collection of inputs, each one has its own view element.
         monoModel.czr_Input = new api.Values();
         //this can be overriden by extended classes to add and overrides methods
-        monoModel.inputConstructor = api.CZRInput;
-        monoModel.setupInputCollection();
+        monoModel.inputConstructor = control.inputConstructor;
 
+        //initialize to the provided value
+        monoModel.set(options.model_val);
 
-        //setup listeners
-        monoModel.callbacks.add( function() { return self.setupMonoModelListeners.apply(self, arguments ); } );
 
         //if a model is manually added : open it
         if ( monoModel.is_added_by_user ) {
-          monoModel.setViewVisibility( true );//true for add_by_user
+          monoModel.setViewVisibility( {}, true );//empty obj because this method can be fired by the dom chain actions, always passing an object. true for added_by_user
         }
 
   },//initialize
@@ -76,8 +75,8 @@ $.extend( CZRMonoModelMethods , {
                   }
           ];
 
-          monoModel.container = monoModel.renderView();
-          if ( ! monoModel.container.length ) {
+          monoModel.container = monoModel.renderView( monoModel.model_val );
+          if ( _.isUndefined(monoModel.container) || ! monoModel.container.length ) {
             throw new Error( 'In setupView the MonoModel view has not been rendered : ' + monoModel.model_id );
           }
 
@@ -85,22 +84,25 @@ $.extend( CZRMonoModelMethods , {
           monoModel.czr_View.set('closed');
 
           var $viewContent = $( '.' + control.css_attr.view_content, monoModel.container );
+
           //add a state listener on state change
           monoModel.czr_View.callbacks.add( function( to, from ) {
                 //render and setup view content if needed
                 if ( ! $.trim( $viewContent.html() ) ) {
                       monoModel.renderViewContent();
                 }
+                monoModel.setupInputCollection();
                 //expand
-                monoModel._toggleViewExpansion(to );
+                monoModel._toggleViewExpansion( to );
           });
 
 
-          monoModel.setupDOMListeners( monoModel.view_event_map , { model:monoModel.get(), dom_el:monoModel.container } );//listeners for the view wrapper
+          api.CZR_Dom.setupDOMListeners( monoModel.view_event_map , { model:monoModel.model_val, dom_el:monoModel.container }, monoModel );//listeners for the view wrapper
+
           monoModel._makeSortable();
 
           //hook here
-          control.doActions('after_viewSetup', $view, { model : _to_render , dom_el: $view} );
+          control.doActions('after_viewSetup', monoModel.container, { model : monoModel.model_val , dom_el: monoModel.container} );
   },
 
 
@@ -111,7 +113,7 @@ $.extend( CZRMonoModelMethods , {
         var monoModel = this,
             control = monoModel.model_control;
 
-        if ( _.isEmpty(monoModel.defaultModel) || _.isUndefined(monoModel.defaultModel) ) {
+        if ( _.isEmpty(monoModel.defaultMonoModel) || _.isUndefined(monoModel.defaultMonoModel) ) {
           throw new Error('No default model found in multi input control ' + monoModel.model_id + '. Aborting');
         }
 
@@ -120,12 +122,13 @@ $.extend( CZRMonoModelMethods , {
         var current_model = monoModel.get();
 
         if ( ! _.isObject(current_model) )
-          current_model = monoModel.defaultModel;
+          current_model = monoModel.defaultMonoModel;
         else
-          current_model = _.extend( monoModel.defaultModel, current_model );
+          current_model = $.extend( monoModel.defaultMonoModel, current_model );
 
         //creates the inputs based on the rendered items
         $( '.'+control.css_attr.sub_set_wrapper, monoModel.container).each( function(_index) {
+
               var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index,
                   _value = _.has( current_model, _id) ? current_model[_id] : '';
 
@@ -138,42 +141,22 @@ $.extend( CZRMonoModelMethods , {
               } ) );
         });//each
 
-        //listens and reacts to the models changes
-        monoModel.czr_Input.val.callbacks.add(function(to, from) {
-              //api(control.id).set(to);
-              //say it to the parent MonoModel
-              monoModel.set(to);
-        });
+        // //listens and reacts to the models changes
+        // monoModel.czr_Input.val.callbacks.add(function(to, from) {
+        //       //api(control.id).set(to);
+        //       //say it to the parent MonoModel
+        //       monoModel.set(to);
+        // });
   },
 
 
 
   setupMonoModelListeners : function( to, from ) {
-        var _current_collection = monoModel.control.czr_Model.czr_collection.get(),
-            _new_collection = _.clone( _current_collection  );//initialize it to the current value
+        var monoModel = this,
+            control = monoModel.model_control;
 
-          //make sure the _collection is an object and is not empty
-          _new_collection =  ( ! _.isArray(_new_collection) || _.isEmpty(_new_collection) ) ? [] : _new_collection;
-
-          //WAS UPDATE COLLECTION...
-          //set the new val to the changed property
-          //the model already exist in the collection
-          // if ( _.findWhere( _new_collection, { id : monoModel.id } ) ) {
-          //   _.each( _current_collection , function( _model, _ind ) {
-          //     if ( _model.id != model.id )
-          //       return;
-
-          //     //set the new val to the changed property
-          //     _new_collection[_ind] = model;
-          //   });
-          // }
-          // //the model has to be added
-          // else {
-          //   _new_collection.push(model);
-          // }
-          _new_collection[monoModel.model_id] = to;
-          monoModel.control.czr_Model.czr_collection.set(_new_collection);
-
+          control.updateCollection( {model : to });
+          //Always update the view title
           monoModel.writeViewTitle(to);
 
           //send model to the preview. On update only, not on creation.

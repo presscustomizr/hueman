@@ -8,11 +8,11 @@ $.extend( CZRMonoModelMethods , {
   //the view wrapper has been rendered by WP
   //the content ( the various inputs ) is rendered by the following methods
   //an event is triggered on the control.container when content is rendered
-  renderView : function() {
+  renderView : function( model ) {
         //=> an array of objects
         var monoModel = this,
-            model = monoModel.get(),
             control = monoModel.model_control;
+        model = model || monoModel.get();
 
         //do we have view template script?
         if ( 0 === $( '#tmpl-' + control.getTemplateEl( 'view', model ) ).length )
@@ -25,7 +25,7 @@ $.extend( CZRMonoModelMethods , {
           return;
 
         //has this model view already been rendered?
-        if ( false !== monoModel.container.length )
+        if ( _.has(monoModel, 'container') && false !== monoModel.container.length )
           return;
 
         $_view_el = $('<li>', { class : control.css_attr.inner_view, 'data-id' : model.id,  id : model.id } );
@@ -68,9 +68,9 @@ $.extend( CZRMonoModelMethods , {
             return this;
 
           //the view content
-          $( view_content_template( model )).appendTo( $('.' + control.css_attr.view_content, obj.dom_el ) );
+          $( view_content_template( model )).appendTo( $('.' + control.css_attr.view_content, monoModel.container ) );
 
-          control.doActions( 'viewContentRendered' , obj.dom_el, obj );
+          api.CZR_Dom.doActions( 'viewContentRendered' , monoModel.container, {model : model }, monoModel );
 
           return this;
   },
@@ -84,13 +84,13 @@ $.extend( CZRMonoModelMethods , {
         var monoModel = this,
             control = monoModel.model_control,
             _model = _.clone( model || monoModel.get() ),
-            _title = _.has( _model, 'title')? this._capitalize( _model.title ) : _model.id;
+            _title = _.has( _model, 'title')? control._capitalize( _model.title ) : _model.id;
 
-        _title = this._truncate(_title, 20);
+        _title = control._truncate(_title, 20);
         $( '.' + control.css_attr.view_title , '#' + _model.id ).text(_title );
 
         //add a hook here
-        this.doActions('after_writeViewTitle', monoModel.container , _model );
+        api.CZR_Dom.doActions('after_writeViewTitle', monoModel.container , _model, monoModel );
   },
 
 
@@ -98,7 +98,7 @@ $.extend( CZRMonoModelMethods , {
   //@param : obj = { event : {}, model : {}, view : ${} }
   //Fired on view_rendered:new when a new model has been added
   //Fired on click on edit_view_btn
-  setViewVisibility : function(is_added_by_user ) {
+  setViewVisibility : function( obj, is_added_by_user ) {
           var monoModel = this,
               control = this.model_control,
               model_id = monoModel.model_id;
@@ -117,6 +117,7 @@ $.extend( CZRMonoModelMethods , {
   _getViewState : function(model_id) {
           return -1 == this.czr_View.get().indexOf('expanded') ? 'closed' : 'expanded';
   },
+
 
   //callback of czr_View() instance on change
   _toggleViewExpansion : function( status, duration ) {
@@ -204,6 +205,21 @@ $.extend( CZRMonoModelMethods , {
           } );
   },
 
+    //fired
+  _makeSortable : function(obj) {
+    if ( wp.media.isTouchDevice || ! $.fn.sortable )
+      return;
+    var monoModel = this,
+        control = this.model_control;
+
+    $( '.' + control.css_attr.views_wrapper, monoModel.container ).sortable( {
+        handle: '.' + control.css_attr.sortable_handle,
+        update: function( event, ui ) {
+          control.czr_Model.czr_collection.set( control._getSortedDOMCollection() );
+        }
+      }
+    );
+  },
 
   //removes the view dom element
   _destroyView : function (model_id) {

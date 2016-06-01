@@ -23,10 +23,11 @@ $.extend( CZRInputMethods , {
 
         //setup the appropriate input based on the type
         input.type_map = {
-          text : '',
-          select : 'setupSelect',
-          upload : 'setupImageUploader',
-          color : 'setupColorPicker',
+              text : '',
+              check : 'setupIcheck',
+              select : 'setupSelect',
+              upload : 'setupImageUploader',
+              color : 'setupColorPicker',
         };
         if ( _.has( input.type_map, input.type ) ) {
           var _meth = input.type_map[input.type];
@@ -58,7 +59,7 @@ $.extend( CZRInputMethods , {
         //callbacks
         input.callbacks.add(function( to, from) {
               var _current_mono_model = input.mono_model.get(),
-                  _new_model        = _.clone( current_mono_model );//initialize it to the current value
+                  _new_model        = _.clone( _current_mono_model );//initialize it to the current value
               //make sure the _new_model is an object and is not empty
               _new_model =  ( ! _.isObject(_new_model) || _.isEmpty(_new_model) ) ? {} : _new_model;
               //set the new val to the changed property
@@ -76,5 +77,12 @@ $.extend( CZRInputMethods , {
             _new_val          = $( $_changed_input, obj.dom_el ).val();
 
         input.set(_new_val);
+
+        //say it to the dom
+        input.doActions(
+            input.id + ':changed',
+            input.container,
+            {}
+        );
     }
 });//$.extend

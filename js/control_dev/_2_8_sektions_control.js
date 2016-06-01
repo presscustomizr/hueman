@@ -10,7 +10,7 @@ $.extend( CZRSektionsMethods, {
     var control = this;
 
     //declares a default model
-    control.model = {
+    control.defaultMonoModel = {
       id : '',
       'sektion-layout' : 1,
     };

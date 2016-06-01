@@ -74,7 +74,6 @@ $.extend( CZRMultiModelMethods, {
 
     //add a listener on change
     control.czr_Model(model.id).callbacks.add( function( to, from ) {
-        console.log('KEY', key);
         //push the new model to the collection
         control.updateCollection( { model : to }, key );
         //Always update the view title
@@ -166,7 +165,7 @@ $.extend( CZRMultiModelMethods, {
   //Each chid class can override the default model and the following method
   getDefaultModel : function( id ) {
         var control = this;
-        return $.extend( _.clone(control.model), { id : id || '' } );
+        return $.extend( _.clone(control.defaultMonoModel), { id : id || '' } );
   },
 
 

@@ -977,7 +977,6 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
 
 
         //@obj = {model : model, dom_el : $_view_el, refreshed : _refreshed }
-        //
         setupDOMListeners : function( event_map , obj, instance ) {
                 var control = this;
                 instance = instance || control;
@@ -993,9 +992,13 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
 
                     //! use a new cloned object
                     var _obj = _.clone(obj);
+
                     //always get the latest model from the collection
                     if ( _.has(_obj, 'model') && _.has( _obj.model, 'id') ) {
-                      _obj.model = control.getModel( _obj.model.id );
+                      if ( _.has(instance, 'get') )
+                        _obj.model = instance.get();
+                      else
+                        _obj.model = instance.getModel( _obj.model.id );
                     }
 
                     //always add the event obj to the passed obj
@@ -1095,10 +1098,11 @@ $.extend( CZRInputMethods , {
 
         //setup the appropriate input based on the type
         input.type_map = {
-          text : '',
-          select : 'setupSelect',
-          upload : 'setupImageUploader',
-          color : 'setupColorPicker',
+              text : '',
+              check : 'setupIcheck',
+              select : 'setupSelect',
+              upload : 'setupImageUploader',
+              color : 'setupColorPicker',
         };
         if ( _.has( input.type_map, input.type ) ) {
           var _meth = input.type_map[input.type];
@@ -1130,7 +1134,7 @@ $.extend( CZRInputMethods , {
         //callbacks
         input.callbacks.add(function( to, from) {
               var _current_mono_model = input.mono_model.get(),
-                  _new_model        = _.clone( current_mono_model );//initialize it to the current value
+                  _new_model        = _.clone( _current_mono_model );//initialize it to the current value
               //make sure the _new_model is an object and is not empty
               _new_model =  ( ! _.isObject(_new_model) || _.isEmpty(_new_model) ) ? {} : _new_model;
               //set the new val to the changed property
@@ -1148,6 +1152,13 @@ $.extend( CZRInputMethods , {
             _new_val          = $( $_changed_input, obj.dom_el ).val();
 
         input.set(_new_val);
+
+        //say it to the dom
+        input.doActions(
+            input.id + ':changed',
+            input.container,
+            {}
+        );
     }
 });//$.extendvar CZRInputMethods = CZRInputMethods || {};
 $.extend( CZRInputMethods , {
@@ -1343,6 +1354,12 @@ $.extend( CZRInputMethods , {
         });
     }
 });//$.extend//extends api.Value
+//options:
+  // model_id : model.id,
+  // model_val : model,
+  // defaultMonoModel : control.defaultMonoModel,
+  // model_control : control,
+  // is_added_by_user : is_added_by_user || false
 var CZRMonoModelMethods = CZRMonoModelMethods || {};
 $.extend( CZRMonoModelMethods , {
   initialize: function( id, options ) {
@@ -1350,54 +1367,100 @@ $.extend( CZRMonoModelMethods , {
           throw new Error('No control assigned to mono model ' + id + '. Aborting');
         }
         api.Value.prototype.initialize.call( this, null, options );
-        var monoModel = this;
+
+        var monoModel = this,
+            control = monoModel.model_control;
+
         //input.options = options;
         //write the options as properties, name is included
         $.extend( monoModel, options || {} );
 
+        //setup listeners
+        monoModel.callbacks.add( function() { return monoModel.setupMonoModelListeners.apply(monoModel, arguments ); } );
+
+        //VIEW
+        //czr_View stores the current expansion status of a given view => one value by created by model.id
+        //czr_View can take 3 values : expanded, expanded_noscroll (=> used on view creation), closed
+        monoModel.czr_View = new api.Value();
+        monoModel.setupView();
+
+        //INPUTS => Setup as soon as the view content is rendered
+        //the model is a collection of inputs, each one has its own view element.
+        monoModel.czr_Input = new api.Values();
+        //this can be overriden by extended classes to add and overrides methods
+        monoModel.inputConstructor = control.inputConstructor;
+
         //initialize to the provided value
         monoModel.set(options.model_val);
 
-        //the model is a collection of inputs, each one has its own view element.
-        monoModel.czr_Input = new api.Values();
 
-        monoModel.defaultModel = {};
+        //if a model is manually added : open it
+        if ( monoModel.is_added_by_user ) {
+          monoModel.setViewVisibility( {}, true );//empty obj because this method can be fired by the dom chain actions, always passing an object. true for added_by_user
+        }
 
-        //this can be overriden by extended classes to add and overrides methods
-        monoModel.inputConstructor = api.CZRInput;
-
-        //will be populated when model view is rendered
-        monoModel.container = '';
-
-        monoModel.container = monoModel.renderView();
-        monoModel.setupInputCollection();
-        //setup listeners
-        monoModel.callbacks.add( function( to, from ) {
-            var _current_collection = monoModel.control.czr_Model.czr_collection.get(),
-                _new_collection = _.clone( _current_collection  );//initialize it to the current value
-
-              //make sure the _collection is an object and is not empty
-              _new_collection =  ( ! _.isArray(_new_collection) || _.isEmpty(_new_collection) ) ? [] : _new_collection;
-
-              //set the new val to the changed property
-              //the model already exist in the collection
-              // if ( _.findWhere( _new_collection, { id : monoModel.id } ) ) {
-              //   _.each( _current_collection , function( _model, _ind ) {
-              //     if ( _model.id != model.id )
-              //       return;
-
-              //     //set the new val to the changed property
-              //     _new_collection[_ind] = model;
-              //   });
-              // }
-              // //the model has to be added
-              // else {
-              //   _new_collection.push(model);
-              // }
-              _new_collection[monoModel.id] = to;
-              monoModel.control.czr_Model.czr_collection.set(_new_collection);
-        });
   },//initialize
+
+
+  setupView : function() {
+          var monoModel = this,
+              control = this.model_control;
+
+          monoModel.view_event_map = [
+                  //toggles remove view alert
+                  {
+                    trigger   : 'click keydown',
+                    selector  : [ '.' + control.css_attr.display_alert_btn, '.' + control.css_attr.cancel_alert_btn ].join(','),
+                    name      : 'toggle_remove_alert',
+                    actions   : ['toggleRemoveAlertVisibility']
+                  },
+                  //removes model and destroys its view
+                  {
+                    trigger   : 'click keydown',
+                    selector  : '.' + control.css_attr.remove_view_btn,
+                    name      : 'remove_model',
+                    actions   : ['removeModel']
+                  },
+                  //edit view
+                  {
+                    trigger   : 'click keydown',
+                    selector  : [ '.' + control.css_attr.edit_view_btn, '.' + control.css_attr.view_title ].join(','),
+                    name      : 'edit_view',
+                    actions   : ['setViewVisibility']
+                  }
+          ];
+
+          monoModel.container = monoModel.renderView( monoModel.model_val );
+          if ( _.isUndefined(monoModel.container) || ! monoModel.container.length ) {
+            throw new Error( 'In setupView the MonoModel view has not been rendered : ' + monoModel.model_id );
+          }
+
+          //setup
+          monoModel.czr_View.set('closed');
+
+          var $viewContent = $( '.' + control.css_attr.view_content, monoModel.container );
+
+          //add a state listener on state change
+          monoModel.czr_View.callbacks.add( function( to, from ) {
+                //render and setup view content if needed
+                if ( ! $.trim( $viewContent.html() ) ) {
+                      monoModel.renderViewContent();
+                }
+                monoModel.setupInputCollection();
+                //expand
+                monoModel._toggleViewExpansion( to );
+          });
+
+
+          api.CZR_Dom.setupDOMListeners( monoModel.view_event_map , { model:monoModel.model_val, dom_el:monoModel.container }, monoModel );//listeners for the view wrapper
+
+          monoModel._makeSortable();
+
+          //hook here
+          control.doActions('after_viewSetup', monoModel.container, { model : monoModel.model_val , dom_el: monoModel.container} );
+  },
+
+
 
 
   //creates the inputs based on the rendered items
@@ -1405,8 +1468,8 @@ $.extend( CZRMonoModelMethods , {
         var monoModel = this,
             control = monoModel.model_control;
 
-        if ( _.isEmpty(monoModel.defaultModel) || _.isUndefined(monoModel.defaultModel) ) {
-          throw new Error('No default model found in multi input control ' + monoModel.id + '. Aborting');
+        if ( _.isEmpty(monoModel.defaultMonoModel) || _.isUndefined(monoModel.defaultMonoModel) ) {
+          throw new Error('No default model found in multi input control ' + monoModel.model_id + '. Aborting');
         }
 
         //prepare and sets the model value on api ready
@@ -1414,12 +1477,13 @@ $.extend( CZRMonoModelMethods , {
         var current_model = monoModel.get();
 
         if ( ! _.isObject(current_model) )
-          current_model = monoModel.defaultModel;
+          current_model = monoModel.defaultMonoModel;
         else
-          current_model = _.extend( monoModel.defaultModel, current_model );
+          current_model = $.extend( monoModel.defaultMonoModel, current_model );
 
         //creates the inputs based on the rendered items
         $( '.'+control.css_attr.sub_set_wrapper, monoModel.container).each( function(_index) {
+
               var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index,
                   _value = _.has( current_model, _id) ? current_model[_id] : '';
 
@@ -1432,20 +1496,87 @@ $.extend( CZRMonoModelMethods , {
               } ) );
         });//each
 
-        //listens and reacts to the models changes
-        monoModel.czr_Input.val.callbacks.add(function(to, from) {
-              //api(control.id).set(to);
-              //say it to the parent MonoModel
-              monoModel.set(to);
-        });
+        // //listens and reacts to the models changes
+        // monoModel.czr_Input.val.callbacks.add(function(to, from) {
+        //       //api(control.id).set(to);
+        //       //say it to the parent MonoModel
+        //       monoModel.set(to);
+        // });
   },
+
+
+
+  setupMonoModelListeners : function( to, from ) {
+        var monoModel = this,
+            control = monoModel.model_control;
+
+          control.updateCollection( {model : to });
+          //Always update the view title
+          monoModel.writeViewTitle(to);
+
+          //send model to the preview. On update only, not on creation.
+          if ( ! _.isEmpty(from) || ! _.isUndefined(from) ) {
+            monoModel._sendModel(to, from);
+          }
+  }
+
 
 });//$.extend//extends api.CZRBaseControl
 var CZRMonoModelMethods = CZRMonoModelMethods || {};
 
   $.extend( CZRMonoModelMethods , {
+    //The idea is to send only the currently modified model instead of the entire collection
+    //the entire collection is sent anyway on api(setId).set( value ), and accessible in the preview via api(setId).bind( fn( to) )
+    _sendModel : function( to, from ) {
+          var monoModel = this,
+              control = monoModel.model_control,
+              _changed_props = [];
 
+          //which property(ies) has(ve) changed ?
+          _.each( from, function( _val, _key ) {
+                if ( _val != to[_key] )
+                  _changed_props.push(_key);
+          });
 
+          _.each( _changed_props, function( _prop ) {
+                control.previewer.send( 'sub_setting', {
+                      set_id : control.id,
+                      model_id : to.id,
+                      changed_prop : _prop,
+                      value : to[_prop]
+                });
+
+                //add a hook here
+                api.CZR_Dom.doActions('after_sendModel',  monoModel.container, { model : to , dom_el: monoModel.container, changed_prop : _prop }, monoModel );
+          });
+    },
+
+    //fired on click dom event
+    //for dynamic multi input controls
+    removeModel : function() {
+            var monoModel = this,
+                control = this.model_control,
+                _new_collection = _.clone( control.czr_Model.czr_collection.get() );
+
+            //destroy the Mono model DOM el
+            monoModel._destroyView();
+
+            //new collection
+            //say it
+            _new_collection = _.without( _new_collection, _.findWhere( _new_collection, {id: monoModel.model_id }) );
+            control.czr_Model.czr_collection.set( _new_collection );
+            //hook here
+            control.doActions('before_modelRemoved', control.container, { model : monoModel.get() } );
+            //remove the mono model from the collection
+            control.czr_Model.remove(monoModel.model_id);
+    },
+
+    //@return the model {...} from the collection
+    //takes a model unique id as param
+    getModel : function(id) {
+            var monoModel = this;
+            return monoModel.get();
+    }
 
   });//$.extend
 
@@ -1459,11 +1590,11 @@ $.extend( CZRMonoModelMethods , {
   //the view wrapper has been rendered by WP
   //the content ( the various inputs ) is rendered by the following methods
   //an event is triggered on the control.container when content is rendered
-  renderView : function() {
+  renderView : function( model ) {
         //=> an array of objects
         var monoModel = this,
-            model = monoModel.model_val,
             control = monoModel.model_control;
+        model = model || monoModel.get();
 
         //do we have view template script?
         if ( 0 === $( '#tmpl-' + control.getTemplateEl( 'view', model ) ).length )
@@ -1475,56 +1606,939 @@ $.extend( CZRMonoModelMethods , {
         if ( ! view_template  || ! control.container )
           return;
 
-        //if the view has already been rendered, the view element exists, we simply need to remove its html content and append the new one
-        //if not, then we need to render the view element and append the view html content to it
-        var $_view_el = '';
+        //has this model view already been rendered?
+        if ( _.has(monoModel, 'container') && false !== monoModel.container.length )
+          return;
 
-        if ( ! monoModel.container.length )
-          $_view_el = $('<li>', { class : control.css_attr.inner_view, 'data-id' : model.id,  id : model.id } )
+        $_view_el = $('<li>', { class : control.css_attr.inner_view, 'data-id' : model.id,  id : model.id } );
+        $( '.' + control.css_attr.views_wrapper , control.container).append( $_view_el );
+        //the view skeleton
+        $( view_template( model ) ).appendTo( $_view_el );
 
-        if ( _.isEmpty($_view_el.html() ) ) {
-          $_view_el.append( monoModel._getViewContent() );
-        } else {
-          //var $_view_el = $('li[data-id="' + model.id + '"]');
-          //empty the html and append the updated content
-          $_view_el.html( monoModel._getViewContent() );
-        }
 
-        monoModel.doActions( 'viewContentRendered' , control.container, {} );
+        // if ( _.isEmpty($_view_el.html() ) ) {
+        //   $_view_el.append( monoModel._getViewContent() );
+        // } else {
+        //   //var $_view_el = $('li[data-id="' + model.id + '"]');
+        //   //empty the html and append the updated content
+        //   $_view_el.html( monoModel._getViewContent() );
+        // }
+
+        // monoModel.doActions( 'viewContentRendered' , control.container, {} );
 
         return $_view_el;
   },
 
-  //renders saved model view
-  //the saved model is an object (the db option is an array of "sub_settings" )
-  _getViewContent : function() {
-        //=> an array of objects
-        var control = this;
 
-        //do we have view content template script?
-        if ( 0 === $( '#tmpl-' + control.viewContentTemplateEl ).length )
+  //renders saved models views and attach event handlers
+  //the saved model look like :
+  //array[ { id : 'sidebar-one', title : 'A Title One' }, {id : 'sidebar-two', title : 'A Title Two' }]
+  renderViewContent : function() {
+          //=> an array of objects
+          var monoModel = this,
+              control = this.model_control,
+              model = _.clone( monoModel.get() );
+
+          //do we have view content template script?
+          if ( 0 === $( '#tmpl-' + control.getTemplateEl( 'view-content', model ) ).length )
+            return this;
+
+          var  view_content_template = wp.template( control.getTemplateEl( 'view-content', model ) );
+
+          //do we have an html template and a control container?
+          if ( ! view_content_template || ! control.container )
+            return this;
+
+          //the view content
+          $( view_content_template( model )).appendTo( $('.' + control.css_attr.view_content, monoModel.container ) );
+
+          api.CZR_Dom.doActions( 'viewContentRendered' , monoModel.container, {model : model }, monoModel );
+
           return this;
+  },
 
-        var view_content_template = wp.template( control.viewContentTemplateEl ),
-            current_model = _.clone(control.czr_Model.val.get());
 
-        //do we have an html template and a control container?
-        if ( ! view_content_template || ! control.container )
-          return this;
 
-        //the view content
-        //we inject the model + additional params like default color in the template
-        return $( view_content_template(
-            $.extend(
-              current_model,
-              { defaultBgColor : control.defaultModel['background-color'] || '#eaeaea' }
-            )
-          )
-        );
 
+
+  //at this stage, the model passed in the obj is up to date
+  writeViewTitle : function( model ) {
+        var monoModel = this,
+            control = monoModel.model_control,
+            _model = _.clone( model || monoModel.get() ),
+            _title = _.has( _model, 'title')? control._capitalize( _model.title ) : _model.id;
+
+        _title = control._truncate(_title, 20);
+        $( '.' + control.css_attr.view_title , '#' + _model.id ).text(_title );
+
+        //add a hook here
+        api.CZR_Dom.doActions('after_writeViewTitle', monoModel.container , _model, monoModel );
+  },
+
+
+
+  //@param : obj = { event : {}, model : {}, view : ${} }
+  //Fired on view_rendered:new when a new model has been added
+  //Fired on click on edit_view_btn
+  setViewVisibility : function( obj, is_added_by_user ) {
+          var monoModel = this,
+              control = this.model_control,
+              model_id = monoModel.model_id;
+          if ( is_added_by_user ) {
+            monoModel.czr_View.set( 'expanded_noscroll' );
+          } else {
+            control.closeAllViews(model_id);
+            if ( _.has(control, 'czr_preModel') ) {
+              control.czr_preModel('view_status').set( 'closed');
+            }
+            monoModel.czr_View.set( 'expanded' == monoModel._getViewState(model_id) ? 'closed' : 'expanded' );
+          }
+  },
+
+
+  _getViewState : function(model_id) {
+          return -1 == this.czr_View.get().indexOf('expanded') ? 'closed' : 'expanded';
+  },
+
+
+  //callback of czr_View() instance on change
+  _toggleViewExpansion : function( status, duration ) {
+          var monoModel = this,
+              control = this.model_control,
+              model_id = monoModel.model_id;
+
+          //slide Toggle and toggle the 'open' class
+          $( '.' + control.css_attr.view_content , monoModel.container ).slideToggle( {
+              duration : duration || 200,
+              done : function() {
+                var _is_expanded = 'closed' != status;
+
+                monoModel.container.toggleClass('open' , _is_expanded );
+
+                //close all alerts
+                control.closeAllAlerts();
+
+                //toggle the icon activate class depending on the status
+                //switch icon
+                var $_edit_icon = $(this).siblings().find('.' + control.css_attr.edit_view_btn );
+
+                $_edit_icon.toggleClass('active' , _is_expanded );
+                if ( _is_expanded )
+                  $_edit_icon.removeClass('fa-pencil').addClass('fa-minus-square').attr('title', serverControlParams.translatedStrings.close );
+                else
+                  $_edit_icon.removeClass('fa-minus-square').addClass('fa-pencil').attr('title', serverControlParams.translatedStrings.edit );
+
+                //scroll to the currently expanded view
+                if ( 'expanded' == status )
+                  control._adjustScrollExpandedBlock( monoModel.container );
+              }//done callback
+            } );
+  },
+
+
+  //toggles the visibility of the Remove View Block
+  //@param : obj = { event : {}, model : {}, view : ${} }
+  toggleRemoveAlertVisibility : function(obj) {
+          var monoModel = this,
+              control = this.model_control,
+              $_alert_el = $( '.' + control.css_attr.remove_alert_wrapper, monoModel.container ),
+              $_clicked = obj.dom_event;
+
+          //first close all open views
+          control.closeAllViews();
+          if ( _.has(control, 'czr_preModel') ) {
+            control.czr_preModel('view_status').set( 'closed');
+          }
+
+          //then close any other open remove alert in the control containuer
+          $('.' + control.css_attr.remove_alert_wrapper, monoModel.container ).not($_alert_el).each( function() {
+            if ( $(this).hasClass('open') ) {
+              $(this).slideToggle( {
+                duration : 200,
+                done : function() {
+                  $(this).toggleClass('open' , false );
+                  //deactivate the icons
+                  $(this).siblings().find('.' + control.css_attr.display_alert_btn).toggleClass('active' , false );
+                }
+              } );
+            }
+          });
+
+          //print the html
+          var alert_template = wp.template( control.viewAlertEl );
+          //do we have an html template and a control container?
+          if ( ! alert_template  || ! monoModel.container )
+            return this;
+
+          $_alert_el.html( alert_template( monoModel.get() ) );
+
+          //toggle it
+          $_alert_el.slideToggle( {
+            duration : 200,
+            done : function() {
+              var _is_open = ! $(this).hasClass('open') && $(this).is(':visible');
+              $(this).toggleClass('open' , _is_open );
+              //set the active class of the clicked icon
+              $( obj.dom_el ).find('.' + control.css_attr.display_alert_btn).toggleClass( 'active', _is_open );
+              //adjust scrolling to display the entire dialog block
+              if ( _is_open )
+                control._adjustScrollExpandedBlock( monoModel.container );
+            }
+          } );
+  },
+
+    //fired
+  _makeSortable : function(obj) {
+    if ( wp.media.isTouchDevice || ! $.fn.sortable )
+      return;
+    var monoModel = this,
+        control = this.model_control;
+
+    $( '.' + control.css_attr.views_wrapper, monoModel.container ).sortable( {
+        handle: '.' + control.css_attr.sortable_handle,
+        update: function( event, ui ) {
+          control.czr_Model.czr_collection.set( control._getSortedDOMCollection() );
+        }
+      }
+    );
+  },
+
+  //removes the view dom element
+  _destroyView : function (model_id) {
+          monoModel.container.fadeOut( {
+            duration : 400,
+            done : function() {
+              $(this).remove();
+            }
+          });
+  },
+});//$.extend
+//BASE CONTROL CLASS
+//extends api.Control
+//define a set of methods, mostly helpers, to extend the base WP control class
+//this will become our base constructor for main complex controls
+//EARLY SETUP
+
+var CZRBaseControlMethods = CZRBaseControlMethods || {};
+
+$.extend( CZRBaseControlMethods, {
+
+  initialize: function( id, options ) {
+          var control = this;
+          api.Control.prototype.initialize.call( control, id, options );
+
+          //add a shortcut to the css properties declared in the php controls
+          control.css_attr = _.has( serverControlParams , 'css_attr') ? serverControlParams.css_attr : {};
+
+          //extend the control with new template Selectors
+          $.extend( control, {
+            viewTemplateEl : 'customize-control-' + options.params.type + '-view',
+            viewContentTemplateEl : 'customize-control-' + options.params.type + '-view-content',
+          } );
+  },
+
+  //////////////////////////////////////////////////
+  /// HELPERS
+  //////////////////////////////////////////////////
+  _capitalize : function( string ) {
+          if( ! _.isString(string) )
+            return string;
+          return string.charAt(0).toUpperCase() + string.slice(1);
+  },
+
+  _truncate : function( string, n, useWordBoundary ){
+          if ( _.isUndefined(string) )
+            return '';
+          var isTooLong = string.length > n,
+              s_ = isTooLong ? string.substr(0,n-1) : string;
+              s_ = (useWordBoundary && isTooLong) ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
+          return  isTooLong ? s_ + '...' : s_;
+  },
+
+  //called before rendering a view
+  //can be overriden to set a specific view template depending on the model properties
+  //@return string
+  getTemplateEl : function( type, model ) {
+          var control = this, _el;
+          switch(type) {
+            case 'view' :
+              _el = control.viewTemplateEl;
+              break;
+            case 'view-content' :
+              _el = control.viewContentTemplateEl;
+              break;
+          }
+          if ( _.isEmpty(_el) ) {
+            console.log('No valid template has been found in getTemplateEl()');
+          } else {
+            return _el;
+          }
+  },
+
+  //@return void()
+  refreshPreview : function( obj ) {
+          this.previewer.refresh();
   }
 
-});//$.extend
+});//$.extend//CZRBaseControlMethods//MULTI CONTROL CLASS
+//extends api.CZRBaseControl
+//
+//Setup the collection of mono models
+//renders the control view
+//Listen to mono models collection changes and update the control setting
+
+var CZRMultiInputControlMethods = CZRMultiInputControlMethods || {};
+
+$.extend( CZRMultiInputControlMethods, {
+
+  initialize: function( id, options ) {
+          var control = this;
+          api.CZRBaseControl.prototype.initialize.call( control, id, options );
+
+          //store the saved models => can be extended to add default models in children classes
+          control.savedModels = api(control.id).get();
+
+          //declares a default model
+          control.model = { id : '', title : '' };
+
+          //define a default Constructors
+          control.modelConstructor = api.CZRMonoModel;
+          control.inputConstructor = api.CZRInput;
+
+          //extend the control with new template Selectors
+          $.extend( control, {
+              viewAlertEl : 'customize-control-' + options.params.type + '-alert',
+              viewPreAddEl : 'customize-control-' + options.params.type + '-pre-add-view-content',
+          } );
+
+          //czr_model stores the each model value => one value by created by model.id
+          control.czr_Model = new api.Values();
+
+          //czr_collection stores the model collection
+          control.czr_Model.czr_collection = new api.Value();
+          control.czr_Model.czr_collection.set([]);
+  },
+
+
+
+  //////////////////////////////////
+  ///READY = CONTROL ELEMENT EMBEDDED ON THE PAGE
+  ///FIRED BEFORE API READY
+  //////////////////////////////////
+  ready : function() {
+          var control = this;
+          //Important note : this event refreshes the customizer setting value
+          //It's not listened to before the api is ready
+          //=> the collection update on startup is done when the control is embedded and BEFORE the api is ready
+          //=> won't trigger and change setting
+          api.bind( 'ready', function() {
+                //on init : populate the collection and setup the listener of the collection value
+                //control.czr_Model.czr_collection.callbacks.add( function() { return control.setupCollectionListeners.apply(control, arguments ); } );
+                control.populateCollection();
+
+                //LISTEN TO MONO MODELS COLLECTION
+                //1) update the control setting value
+                //2) fire dom actions
+                control.czr_Model.czr_collection.callbacks.add( function() { return control.apiCb.apply(control, arguments ); } );
+          });
+
+          //this control is ready
+          control.container.trigger('ready');
+  },//ready()
+
+
+
+  apiCb : function( to, from) {
+          var control = this;
+          //say it to the api
+          api(control.id).set( control.filterCollectionBeforeAjax(to) );
+
+          //refreshes the preview frame  :
+          //1) only needed if transport is postMessage, because is triggered by wp otherwise
+          //2) only needed when : add, remove, sort model(s).
+          var is_model_update = ( _.size(from) == _.size(to) ) && ! _.isEmpty( _.difference(from, to) );
+
+          if ( 'postMessage' == api(control.id).transport && ! is_model_update && ! api.czr_has_part_refresh( control.id ) ) {
+            control.previewer.refresh();
+          }
+  }
+
+
+
+});//$.extend//CZRBaseControlMethods//MULTI CONTROL CLASS
+//extends api.CZRBaseControl
+//
+//Setup the collection of mono models
+//renders the control view
+//Listen to mono models collection changes and update the control setting
+
+var CZRMultiInputControlMethods = CZRMultiInputControlMethods || {};
+
+$.extend( CZRMultiInputControlMethods, {
+
+  //@fired in control ready on api('ready')
+  populateCollection : function() {
+          var control = this;
+
+          //inits the collection with the saved models
+          //populates the collection with the saved model
+          _.each( control.savedModels, function( model, key ) {
+                //normalizes the model
+                model = control._normalizeModel(model, _.has( model, 'id' ) ? model.id : key );
+                if ( false === model ) {
+                  throw new Error('fetchSavedCollection : a model could not be added in : ' + control.id );
+                }
+                //adds it to the collection
+                control.instantiateModel( model);
+          });
+
+          return this;
+  },
+
+
+  instantiateModel : function( model,is_added_by_user ) {
+          console.log('MODEL BEFORE INSTANTIATION', model, _.has( model,'id'), is_added_by_user );
+          if ( ! _.has( model,'id') ) {
+            throw new Error('CZRMultiInputControl::instantiateModel() : a model has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
+          }
+          var control = this;
+
+          //Maybe prepare the model, make sure its id is set and unique
+          model =  ( _.has( model, 'id') && control._isModelIdPossible( model.id) ) ? model : control._initNewModel( model || {} );
+
+          //instanciate the model with the default constructor
+          control.czr_Model.add( model.id, new control.modelConstructor( model.id, {
+                model_id : model.id,
+                model_val : model,
+                defaultMonoModel : control.defaultMonoModel,
+                model_control : control,
+                is_added_by_user : is_added_by_user || false
+          } ) );
+  },
+
+
+  //@fired in control ready on api('ready')
+  //setup the collection listener
+  //Has to be fired after the initial fetch of the server saved collection
+  //=> otherwise an unwanted collection update will be triggered when adding the saved models
+  setupCollectionListeners : function(to, from) {
+    console.log(to, from, 'caca');
+          var control = this,
+              _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
+              _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
+              _model_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
+              _collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && _.isEmpty(_model_updated);
+
+          //RENDERS AND SETUP VIEW
+          // if ( ! _.isEmpty(_to_render) && ! control.getViewEl(_to_render.id).length ) {
+          //       //Render model's view
+          //       var $view = control.renderView( {model:_to_render} );
+          //       //setup
+          //       control.setupViewApiListeners( {model:_to_render, dom_el : $view} );//listener of the czr_View value for expansion state
+          //       control.setupDOMListeners( control.view_event_map , {model:_to_render, dom_el:$view} );//listeners for the view wrapper
+          //       control._makeSortable();
+
+          //       //hook here
+          //       control.doActions('after_viewSetup', $view, { model : _to_render , dom_el: $view} );
+          // }//if
+
+          //REMOVES
+          // if ( ! _.isEmpty(_to_remove) ) {
+          //       //destroy the DOM el
+          //       control._destroyView(_to_remove.id);
+          //       //remove the values
+          //       control.czr_Model.remove(_to_remove.id);
+          //       control.czr_View.remove(_to_remove.id);
+
+          //       //hook here
+          //       control.doActions('after_modelRemoved', control.container, { model : _to_remove } );
+          // }//if
+
+          //SORTED COLLECTION
+          if ( _collection_sorted ) {
+                if ( _.has(control, 'czr_preModel') ) {
+                  control.czr_preModel('view_status').set('closed');
+                }
+                control.closeAllViews();
+                control.closeAllAlerts();
+          }//if
+
+          return this;
+  },
+
+
+  //an overridable method to act on the collection just before it is ajaxed
+  //@return the collection array
+  filterCollectionBeforeAjax : function(candidate_for_db) {
+          return candidate_for_db;
+  },
+
+
+  //@param model an object
+  //@parama key is an integer OPTIONAL
+  updateCollection : function( obj ) {
+          var control = this,
+              _current_collection = control.czr_Model.czr_collection.get();
+              _new_collection = _.clone(_current_collection);
+
+          //if a collection is provided in the passed obj then simply refresh the collection
+          //=> typically used when reordering the collection item with sortable or when a model is removed
+          if ( _.has( obj, 'collection' ) ) {
+            //reset the collection
+            control.czr_Model.czr_collection.set(obj.collection);
+            return;
+          }
+
+          if ( ! _.has(obj, 'model') ) {
+            throw new Error('updateCollection, no model provided ' + control.id + '. Aborting');
+          }
+          var model = _.clone(obj.model);
+
+          //the model already exist in the collection
+          if ( _.findWhere( _new_collection, { id : model.id } ) ) {
+            _.map( _current_collection , function( _model, _ind ) {
+              if ( _model.id != model.id )
+                return;
+
+              //set the new val to the changed property
+              _new_collection[_ind] = model;
+            });
+          }
+          //the model has to be added
+          else {
+            _new_collection.push(model);
+          }
+
+          //updates the collection value
+          control.czr_Model.czr_collection.set(_new_collection);
+  },
+
+});//$.extend//CZRBaseControlMethods//MULTI CONTROL CLASS
+//extends api.CZRBaseControl
+//
+//Setup the collection of mono models
+//renders the control view
+//Listen to mono models collection changes and update the control setting
+
+var CZRMultiInputControlMethods = CZRMultiInputControlMethods || {};
+
+$.extend( CZRMultiInputControlMethods, {
+
+
+  //Returns the default model defined in initialize
+  //Each chid class can override the default model and the following method
+  getDefaultModel : function( id ) {
+          var control = this;
+          return $.extend( _.clone(control.model), { id : id || '' } );
+  },
+
+
+
+  //////////////////////////////////
+  ///MODEL HELPERS
+  //////////////////////////////////
+  //make sure the model and it's properties are ready to be added to the collection
+  //a model should :
+  //1) be an object
+  //2) have a unique id
+  //3) have all the default properties set (default model is defined in each child class initialize() method)
+  _normalizeModel : function( model, key ) {
+          if ( ! _.isObject(model) )
+            return;
+          //id unicity
+          model = this._initNewModel(model, key);
+          return model;
+  },
+
+  //helper
+  //@return bool
+  _isModelIdPossible : function( _id ) {
+          var control = this;
+          return ! _.isEmpty(_id) && ! _.findWhere( control.czr_Model.czr_collection.get(), { id : _id });
+  },
+
+  //the job of this function is to return a new model ready to be added to the collection
+  //the new model shall have a unique id
+  //!!recursive
+  _initNewModel : function( _model , _next_key ) {
+          var control = this,
+              _new_model = { id : '' },
+              _id;
+
+          //get the next available key of the collection
+          _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( control.czr_Model.czr_collection.get() );
+
+          if ( _.isNumber(_next_key) ) {
+            _id = control.params.type + '_' + _next_key;
+          }
+          else {
+            _id = _next_key;
+            //reset next key to 0 in case a recursive loop is needed later
+            _next_key = 0;
+          }
+
+          if ( _model && ! _.isEmpty( _model) )
+            _new_model = $.extend( _model, { id : _id } );
+          else
+            _new_model = this.getDefaultModel( _id );
+
+          //check the id existence, and its unicity
+          if ( _.has(_new_model, 'id') && control._isModelIdPossible(_id) ) {
+            //make sure that the provided model has all the default properties set
+            _.map( control.getDefaultModel() , function( value, property ){
+              if ( ! _.has(_new_model, property) )
+                _new_model[property] = value;
+            });
+
+            return _new_model;
+          }
+
+          //if id already exists, then test a new one
+          return control._initNewModel( _new_model, _next_key + 1);
+  }
+
+});//$.extend//MULTI CONTROL CLASS
+//extends api.CZRBaseControl
+//
+//Setup the collection of mono models
+//renders the control view
+//Listen to mono models collection changes and update the control setting
+var CZRMultiInputControlMethods = CZRMultiInputControlMethods || {};
+$.extend( CZRMultiInputControlMethods, {
+  //helper
+  //get the $ view DOM el from the model id
+  getViewEl : function( model_id ) {
+          var control = this;
+          return $( '[data-id = "' + model_id + '"]', control.container );
+  },
+
+
+  //fired on add_model
+  //fired on views_sorted
+  closeAllViews : function(model_id) {
+          var control = this,
+              _current_collection = _.clone( control.czr_Model.czr_collection.get() ),
+              _filtered_collection = _.filter( _current_collection , function( mod) { return mod.id != model_id; } );
+
+          _.map( _filtered_collection, function(_model) {
+
+            if ( control.czr_Model.has(_model.id) && 'expanded' == control.czr_Model(_model.id)._getViewState(_model.id) )
+              control.czr_Model(_model.id).czr_View.set( 'closed' ); // => will fire the cb _toggleViewExpansion
+           } );
+  },
+
+
+  //make sure a given jQuery block is fully visible
+  //@param $(el)
+  _adjustScrollExpandedBlock : function( $_block_el, adjust ) {
+          if ( ! $_block_el.length )
+            return;
+          var control = this,
+               $_controlSection = $( '.accordion-section-content', api.section( control.section() ).container ),
+              _currentScrollTopVal = $_controlSection.scrollTop(),
+              _scrollDownVal,
+              _adjust = adjust || 90;
+
+          setTimeout( function() {
+              if ( ( $_block_el.offset().top + $_block_el.height() + _adjust ) > $(window.top).height() ) {
+                _scrollDownVal = $_block_el.offset().top + $_block_el.height() + _adjust - $(window.top).height();
+                if ( _scrollDownVal > 0 ) {
+                  $_controlSection.animate({
+                      scrollTop:  _currentScrollTopVal + _scrollDownVal
+                  }, 500);
+                }
+              }
+          }, 50);
+  },
+
+
+  //close alert wrapper
+  //+ deactivate the icon
+  closeAllAlerts : function() {
+          var control = this;
+          $('.' + control.css_attr.remove_alert_wrapper, control.container ).each( function() {
+            if ( $(this).hasClass('open') ) {
+              $(this).slideToggle( {
+                duration : 100,
+                done : function() {
+                  $(this).toggleClass('open' , false );
+                  //deactivate the icons
+                  $(this).siblings().find('.' + control.css_attr.display_alert_btn).toggleClass('active' , false );
+                }
+              } );
+            }
+          });
+  },
+
+});//$.extend//MULTI CONTROL CLASS
+//extends api.CZRMultiInputControl
+//
+//Setup the collection of mono models
+//renders the control view
+//Listen to mono models collection changes and update the control setting
+
+var CZRMultiInputDynMethods = CZRMultiInputDynMethods || {};
+
+$.extend( CZRMultiInputDynMethods, {
+  initialize: function( id, options ) {
+          var control = this;
+          api.CZRMultiInputControl.prototype.initialize.call( control, id, options );
+
+
+          //EXTENDS THE DEFAULT MONO MODEL CONSTRUCTOR WITH NEW METHODS
+          //=> like remove model
+          //control.modelConstructor = api.CZRMonoModel.extend( control.CZRMonoModelDynamicMethods || {} );
+
+
+          //PRE MODEL
+          //czr_preModel stores the expansion state and the value of the preModel
+          control.czr_preModel = new api.Values();
+           //create observable pre-model values
+          control.czr_preModel.create('model');
+          control.czr_preModel.create('view_content');
+          control.czr_preModel.create('view_status');
+          control.czr_preModel('view_status').set('closed');
+
+          //default success message when model added
+          control.modelAddedMessage = serverControlParams.translatedStrings.successMessage;
+
+          ////////////////////////////////////////////////////
+          /// CONTROL EVENT MAP
+          ////////////////////////////////////////////////////
+          control.control_event_map = [
+                //pre add new model : open the dialog box
+                {
+                  trigger   : 'click keydown',
+                  selector  : [ '.' + control.css_attr.open_pre_add_btn, '.' + control.css_attr.cancel_pre_add_btn ].join(','),
+                  name      : 'pre_add_model',
+                  actions   : ['renderPreModelView','setPreModelViewVisibility'],
+                },
+                //update_pre_model
+                {
+                  trigger   : 'propertychange change click keyup input colorpickerchange',//colorpickerchange is a custom colorpicker event @see method setupColorPicker => otherwise we don't
+                  selector  : [ '.' + control.css_attr.pre_add_view_content + ' input[data-type]', '.' + control.css_attr.pre_add_view_content + ' select[data-type]'].join(','),
+                  name      : 'update_pre_model',
+                  actions   : ['updatePreModel' ]
+                },
+                //add new model
+                {
+                  trigger   : 'click keydown',
+                  selector  : '.' + control.css_attr.add_new_btn, //'.czr-add-new',
+                  name      : 'add_model',
+                  actions   : ['closeAllViews', 'addModel'],
+                }
+          ];//control.control_event_map
+
+  },
+
+
+  ready : function() {
+          var control = this;
+          api.bind( 'ready', function() {
+                //Setup the control event listeners
+                control.setupDOMListeners( control.control_event_map , { dom_el : control.container } );
+
+                //PRE ADD MODEL SETUP
+                control.czr_preModel('model').set(control.getDefaultModel());
+                //add state listeners
+                control.czr_preModel('view_status').callbacks.add( function( to, from ) {
+                  control._togglePreModelViewExpansion( to );
+                });
+          });
+
+          api.CZRMultiInputControl.prototype.ready.call( control );
+  },//ready()
+
+
+
+  //the model is manually added.
+  //We should have a pre model
+  addModel : function(obj) {
+          var control = this,
+              model = control.czr_preModel('model').get();
+
+          if ( _.isEmpty(model) || ! _.isObject(model) ) {
+            throw new Error('addModel : a model should be an object and not empty. In : ' + control.id +'. Aborted.' );
+          }
+
+          control.instantiateModel(model, true); //true == Added by user
+
+          control.closeResetPreModel();
+          control.doActions( 'model_added_by_user' , control.container, { model : model , dom_event : obj.dom_event } );
+
+          //refresh the preview frame (only needed if transport is postMessage )
+          //must be a dom event not triggered
+          //otherwise we are in the init collection case where the model are fetched and added from the setting in initialize
+          if ( 'postMessage' == api(this.id).transport && _.has( obj, 'dom_event') && ! _.has( obj.dom_event, 'isTrigger' ) && ! api.czr_has_part_refresh( control.id ) ) {
+            control.previewer.refresh();
+          }
+  }
+
+});//$.extend//MULTI CONTROL CLASS
+//extends api.CZRBaseControl
+//
+//Setup the collection of mono models
+//renders the control view
+//Listen to mono models collection changes and update the control setting
+
+var CZRMultiInputDynMethods = CZRMultiInputDynMethods || {};
+
+$.extend( CZRMultiInputDynMethods, {
+  updatePreModel : function(obj) {
+        //get the changed property and val
+        //=> all html input have data-type attribute corresponding to the ones stored in the model
+        var control           = this,
+            $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
+            _changed_prop     = $_changed_input.attr('data-type'),
+            _new_val          = $( $_changed_input, obj.dom_el ).val(),
+            _new_model        = _.clone(control.czr_preModel('model').get());//initialize it to the current value
+
+        //make sure the title has not been emptied. If so, replace it with the default title.
+        if ( 'title' == _changed_prop && _.isEmpty(_new_val) ) {
+          _defaultModel = control.getDefaultModel();
+          _new_val = _defaultModel.title;
+        }
+
+        _new_model[_changed_prop] = _new_val;
+
+        //set the new val to preModel Value()
+        control.czr_preModel('model').set(_new_model);
+
+        control.doActions(
+          'pre_model:' + _changed_prop + ':changed',
+          control.container,
+          { model : _new_model, dom_el : $('.' + control.css_attr.pre_add_view_content, control.container ) }
+        );
+  }
+
+});//$.extend//CZRBaseControlMethods//MULTI CONTROL CLASS
+//extends api.CZRBaseControl
+//
+//Setup the collection of mono models
+//renders the control view
+//Listen to mono models collection changes and update the control setting
+
+var CZRMultiInputDynMethods = CZRMultiInputDynMethods || {};
+
+$.extend( CZRMultiInputDynMethods, {
+    //////////////////////////////////////////////////
+  /// PRE ADD MODEL DIALOG AND VIEW
+  //////////////////////////////////////////////////
+  renderPreModelView : function( obj ) {
+          //=> an array of objects
+          var control = this;
+
+          //is this view already rendered ?
+          if ( ! _.isEmpty( control.czr_preModel('view_content').get() ) )
+            return;
+
+          //do we have view template script?
+          if ( ! _.has(control, 'viewPreAddEl') ||  0 === $( '#tmpl-' + control.viewPreAddEl ).length )
+            return this;
+
+          //print the html
+          var pre_add_template = wp.template( control.viewPreAddEl );
+
+          //do we have an html template and a control container?
+          if ( ! pre_add_template  || ! control.container )
+            return this;
+
+          var $_pre_add_el = $('.' + control.css_attr.pre_add_view_content, control.container );
+
+          $_pre_add_el.prepend( pre_add_template() );
+
+          //store it
+          control.czr_preModel('view_content').set( pre_add_template() );
+
+          //say it to the control
+          control.doActions( 'pre_add_view_rendered' , control.container, {model : {}, dom_el : $_pre_add_el});
+  },
+
+  //@return $ el of the premodel view
+  _getPreModelView : function() {
+          var control = this;
+          return $('.' + control.css_attr.pre_add_view_content, control.container );
+  },
+
+  destroyPreModelView : function() {
+          var control = this;
+          $('.' + control.css_attr.pre_add_view_content, control.container ).find('.czr-sub-set').remove();
+          control.czr_preModel('view_content').set('');
+  },
+
+   //toggles the visibility of the Remove View Block
+  //@param : obj = { event : {}, model : {}, view : ${} }
+  setPreModelViewVisibility : function(obj) {
+          var control = this;
+
+          control.closeAllViews();
+          control.czr_preModel('view_status').set( 'expanded' == control.czr_preModel('view_status').get() ? 'closed' : 'expanded' );
+  },
+
+
+  //callback of czr_preModel('view') instance on change
+  _togglePreModelViewExpansion : function( status) {
+          var control = this,
+            $_pre_add_el = $( '.' + control.css_attr.pre_add_view_content, control.container );
+
+          //toggle it
+          $_pre_add_el.slideToggle( {
+            duration : 200,
+            done : function() {
+                  var _is_expanded = 'closed' != status,
+                      $_btn = $( '.' + control.css_attr.open_pre_add_btn, control.container );
+
+                  $(this).toggleClass('open' , _is_expanded );
+                  //switch icons
+                  if ( _is_expanded )
+                    $_btn.find('.fa').removeClass('fa-plus-square').addClass('fa-minus-square');
+                  else
+                    $_btn.find('.fa').removeClass('fa-minus-square').addClass('fa-plus-square');
+
+                  //set the active class to the btn
+                  $_btn.toggleClass( 'active', _is_expanded );
+
+                  //set the adding_new class to the control container wrapper
+                  $( control.container ).toggleClass( control.css_attr.adding_new, _is_expanded );
+                  //make sure it's fully visible
+                  control._adjustScrollExpandedBlock( $(this), 120 );
+            }//done
+          } );
+  },
+
+  //Fired on "model_added_by_user"
+  closeResetPreModel : function() {
+          var control = this;
+          control.toggleSuccessMessage('on');
+          setTimeout( function() {
+                control.czr_preModel('view_status').set( 'closed');
+                control.czr_preModel('model').set(control.getDefaultModel());
+                control.toggleSuccessMessage('off').destroyPreModelView();
+          } , 3000);
+  },
+
+  toggleSuccessMessage : function(status) {
+          var control = this,
+              _message = control.modelAddedMessage,
+              $_pre_add_wrapper = $('.' + control.css_attr.pre_add_wrapper, control.container );
+              $_success_wrapper = $('.' + control.css_attr.pre_add_success, control.container );
+
+          if ( 'on' == status ) {
+              //write message
+              $_success_wrapper.find('p').text(_message);
+
+              //set various properties
+              $_success_wrapper.css('z-index', 1000001 )
+                .css('height', $_pre_add_wrapper.height() + 'px' )
+                .css('line-height', $_pre_add_wrapper.height() + 'px');
+          } else {
+              $_success_wrapper.attr('style','');
+          }
+          control.container.toggleClass('czr-model-added', 'on' == status );
+          return this;
+  }
+
+});//$.extend//CZRBaseControlMethods
 var CZRMultiModelMethods = CZRMultiModelMethods || {};
 /* Dynamic Controls */
 //@augments CZRBaseControl
@@ -1631,9 +2645,7 @@ $.extend( CZRMultiModelMethods, {
     control.savedModels = api(control.id).get();
 
     //declares a default model
-    control.model = { id : '', title : '' };
-
-    control.modelConstructor = api.CZRMonoModel;
+    control.defaultMonoModel = { id : '', title : '' };
 
     //default success message when model added
     control.modelAddedMessage = serverControlParams.translatedStrings.successMessage;
@@ -1799,7 +2811,6 @@ $.extend( CZRMultiModelMethods, {
 
     //add a listener on change
     control.czr_Model(model.id).callbacks.add( function( to, from ) {
-        console.log('KEY', key);
         //push the new model to the collection
         control.updateCollection( { model : to }, key );
         //Always update the view title
@@ -1840,32 +2851,32 @@ $.extend( CZRMultiModelMethods, {
 
   //fired after a input change is detected
   updateModel : function( obj ) {
-    //get the changed property and val
-    //=> all html input have data-type attribute corresponding to the ones stored in the model
-    var control           = this,
-        $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
-        _changed_prop     = $_changed_input.attr('data-type'),
-        _new_val          = $( $_changed_input, obj.dom_el ).val(),
-        _current_model    = control.czr_Model(obj.model.id).get(),
-        _new_model        = _.clone( _current_model );//initialize it to the current value
+        //get the changed property and val
+        //=> all html input have data-type attribute corresponding to the ones stored in the model
+        var control           = this,
+            $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
+            _changed_prop     = $_changed_input.attr('data-type'),
+            _new_val          = $( $_changed_input, obj.dom_el ).val(),
+            _current_model    = control.czr_Model(obj.model.id).get(),
+            _new_model        = _.clone( _current_model );//initialize it to the current value
 
-    //make sure the title has not been emptied. If so, replace it with the default title.
-    if ( 'title' == _changed_prop && _.isEmpty(_new_val) ) {
-      _defaultModel = control.getDefaultModel();
-      _new_val = _defaultModel.title;
-    }
+        //make sure the title has not been emptied. If so, replace it with the default title.
+        if ( 'title' == _changed_prop && _.isEmpty(_new_val) ) {
+          _defaultModel = control.getDefaultModel();
+          _new_val = _defaultModel.title;
+        }
 
-    //set the new val to the changed property
-    _new_model[_changed_prop] = _new_val;
+        //set the new val to the changed property
+        _new_model[_changed_prop] = _new_val;
 
-    control.czr_Model(obj.model.id).set(_new_model);
+        control.czr_Model(obj.model.id).set(_new_model);
 
-    //say it to the current view
-    control.doActions(
-      _changed_prop + ':changed',
-      obj.dom_el,
-      { model : _new_model }
-    );
+        //say it to the current view
+        control.doActions(
+          _changed_prop + ':changed',
+          obj.dom_el,
+          { model : _new_model }
+        );
   },
 
 
@@ -1874,13 +2885,13 @@ $.extend( CZRMultiModelMethods, {
 
   //fired on click dom event
   removeModel : function( obj ) {
-    var control = this,
-        _new_collection = _.clone( control.czr_Model.czr_collection.get() );
+        var control = this,
+            _new_collection = _.clone( control.czr_Model.czr_collection.get() );
 
-    _new_collection = _.without( _new_collection, _.findWhere( _new_collection, {id: obj.model.id }) );
+        _new_collection = _.without( _new_collection, _.findWhere( _new_collection, {id: obj.model.id }) );
 
-    //say it
-    control.czr_Model.czr_collection.set( _new_collection );
+        //say it
+        control.czr_Model.czr_collection.set( _new_collection );
   },
 
 
@@ -1890,8 +2901,8 @@ $.extend( CZRMultiModelMethods, {
   //Returns the default model defined in initialize
   //Each chid class can override the default model and the following method
   getDefaultModel : function( id ) {
-    var control = this;
-    return $.extend( _.clone(control.model), { id : id || '' } );
+        var control = this;
+        return $.extend( _.clone(control.defaultMonoModel), { id : id || '' } );
   },
 
 
@@ -1908,87 +2919,87 @@ $.extend( CZRMultiModelMethods, {
   //2) have a unique id
   //3) have all the default properties set (default model is defined in each child class initialize() method)
   _normalizeModel : function( model, key ) {
-    if ( ! _.isObject(model) )
-      return;
+        if ( ! _.isObject(model) )
+          return;
 
-    //id unicity
-    model = this._initNewModel(model, key);
+        //id unicity
+        model = this._initNewModel(model, key);
 
-    return model;
+        return model;
   },
 
   //helper
   //@return bool
   _isModelIdPossible : function( _id ) {
-    var control = this;
-    return ! _.isEmpty(_id) && ! _.findWhere( control.czr_Model.czr_collection.get(), { id : _id });
+        var control = this;
+        return ! _.isEmpty(_id) && ! _.findWhere( control.czr_Model.czr_collection.get(), { id : _id });
   },
 
   //the job of this function is to return a new model ready to be added to the collection
   //the new model shall have a unique id
   //recursive
   _initNewModel : function( _model , _next_key ) {
-    var control = this,
-        _new_model = { id : '' },
-        _id;
+          var control = this,
+              _new_model = { id : '' },
+              _id;
 
-    //get the next available key of the collection
-    _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( control.czr_Model.czr_collection.get() );
+          //get the next available key of the collection
+          _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( control.czr_Model.czr_collection.get() );
 
-    if ( _.isNumber(_next_key) ) {
-      _id = control.params.type + '_' + _next_key;
-    }
-    else {
-      _id = _next_key;
-      //reset next key to 0 in case a recursive loop is needed later
-      _next_key = 0;
-    }
+          if ( _.isNumber(_next_key) ) {
+            _id = control.params.type + '_' + _next_key;
+          }
+          else {
+            _id = _next_key;
+            //reset next key to 0 in case a recursive loop is needed later
+            _next_key = 0;
+          }
 
-    if ( _model && ! _.isEmpty( _model) )
-      _new_model = $.extend( _model, { id : _id } );
-    else
-      _new_model = this.getDefaultModel( _id );
+          if ( _model && ! _.isEmpty( _model) )
+            _new_model = $.extend( _model, { id : _id } );
+          else
+            _new_model = this.getDefaultModel( _id );
 
-    //check the id existence, and its unicity
-    if ( _.has(_new_model, 'id') && control._isModelIdPossible(_id) ) {
-      //make sure that the provided model has all the default properties set
-      _.map( control.getDefaultModel() , function( value, property ){
-        if ( ! _.has(_new_model, property) )
-          _new_model[property] = value;
-      });
+          //check the id existence, and its unicity
+          if ( _.has(_new_model, 'id') && control._isModelIdPossible(_id) ) {
+            //make sure that the provided model has all the default properties set
+            _.map( control.getDefaultModel() , function( value, property ){
+              if ( ! _.has(_new_model, property) )
+                _new_model[property] = value;
+            });
 
-      return _new_model;
-    }
+            return _new_model;
+          }
 
-    //if id already exists, then test a new one
-    return control._initNewModel( _new_model, _next_key + 1);
+          //if id already exists, then test a new one
+          return control._initNewModel( _new_model, _next_key + 1);
   },
 
   //The idea is to send only the currently modified model instead of the entire collection
   //the entire collection is sent anyway on api(setId).set( value ), and accessible in the preview via api(setId).bind( fn( to) )
   _sendModel : function( from, to ) {
-    var control = this,
-      _changed_props = [],
-      $view = control.getViewEl(to.id);
+          var control = this,
+            _changed_props = [],
+            $view = control.getViewEl(to.id);
 
-    //which property(ies) has(ve) changed ?
-    _.map( from, function( _val, _key ) {
-      if ( _val != to[_key] )
-        _changed_props.push(_key);
-    });
+          //which property(ies) has(ve) changed ?
+          _.map( from, function( _val, _key ) {
+            if ( _val != to[_key] )
+              _changed_props.push(_key);
+          });
 
-    _.map( _changed_props, function( _prop) {
-      control.previewer.send( 'sub_setting', {
-        set_id : control.id,
-        model_id : to.id,
-        changed_prop : _prop,
-        value : to[_prop]
-      });
+          _.map( _changed_props, function( _prop) {
+            control.previewer.send( 'sub_setting', {
+              set_id : control.id,
+              model_id : to.id,
+              changed_prop : _prop,
+              value : to[_prop]
+            });
 
-      //add a hook here
-      control.doActions('after_sendModel', $view, { model : to , dom_el: $view, changed_prop : _prop } );
+            //add a hook here
+            control.doActions('after_sendModel', $view, { model : to , dom_el: $view, changed_prop : _prop } );
 
-    });
+          });
   },
 });//$.extend()var CZRMultiModelMethods = CZRMultiModelMethods || {};
 
@@ -2009,7 +3020,6 @@ $.extend( CZRMultiModelMethods, {
       if ( false === model ) {
         throw new Error('fetchSavedCollection : a model could not be added in : ' + control.id );
       }
-      console.log('ON FETCH COLLECTION', key);
       //adds it to the collection
       control.addModel( { model : model }, key);
     });
@@ -2053,7 +3063,7 @@ $.extend( CZRMultiModelMethods, {
             control.czr_View.remove(_to_remove.id);
 
             //hook here
-            control.doActions('after_modelRemoved', control.container, { model : _to_remove } );
+            control.doActions('before_modelRemoved', control.container, { model : _to_remove } );
           }//if
 
           //SORTED COLLECTION
@@ -2104,7 +3114,6 @@ $.extend( CZRMultiModelMethods, {
     //  2) this is a new model to push in the collection
     //
     if ( false !== _key ) {
-      console.log('THERE IS A KEY, THERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEYTHERE IS A KEY', key );
       if ( _.isObject( _new_collection[key] ) )
         _new_collection[key] = model;
       else {
@@ -2864,7 +3873,9 @@ $.extend( CZRBackgroundMethods , {
 
           control.defaultModel = control.params.default_model;
 
+          //EXTEND THE DEFAULT CONSTRUCTORS FOR INPUT AND MONOMODEL
           control.inputConstructor = api.CZRInput.extend( control.CZRBackgroundInputMethods || {} );
+          control.modelConstructor = api.CZRMonoModel.extend( control.CZRBackgroundModelMethods || {} );
 
           //the map describing how to populate each particular select inputs
           control.select_map = {
@@ -2958,7 +3969,41 @@ $.extend( CZRBackgroundMethods , {
                 $( 'select[data-type="'+ input.id +'"]', input.container ).append( $('<option>', _attributes) );
             });
           }
+  },
+
+
+  CZRBackgroundModelMethods : {
+          //OVERRIDES THE PARENT METHOD TO ADD THE BG DEFAULT COLOR
+          renderViewContent : function() {
+                  //=> an array of objects
+                  var monoModel = this,
+                      control = this.model_control,
+                      model = _.clone( monoModel.get() );
+
+                  //do we have view content template script?
+                  if ( 0 === $( '#tmpl-' + control.getTemplateEl( 'view-content', model ) ).length )
+                    return this;
+
+                  var  view_content_template = wp.template( control.getTemplateEl( 'view-content', model ) );
+
+                  //do we have an html template and a control container?
+                  if ( ! view_content_template || ! control.container )
+                    return this;
+
+                  //the view content
+                  var extended_model = $.extend(
+                      model,
+                      { defaultBgColor : control.defaultModel['background-color'] || '#eaeaea' }
+                    );
+
+                  $( view_content_template( extended_model )).appendTo( $('.' + control.css_attr.view_content, obj.dom_el ) );
+
+                  control.doActions( 'viewContentRendered' , obj.dom_el, obj );
+
+                  return this;
+          }
   }
+
 });//$.extend//extends api.CZRMultiModelControl
 
 var CZRWidgetAreasMethods = CZRWidgetAreasMethods || {};
@@ -3005,7 +4050,7 @@ $.extend( CZRWidgetAreasMethods, {
             actions   : ['addWidgetSidebar', 'closePreModelAlert']
         },
         {
-            trigger   : 'after_modelRemoved',
+            trigger   : 'before_modelRemoved',
             actions   : ['removeWidgetSidebar']
         }
       ]
@@ -3058,7 +4103,7 @@ $.extend( CZRWidgetAreasMethods, {
     control.locations = _.has( options.params , 'sidebar_locations') ? options.params.sidebar_locations : {};
 
     //declares a default model
-    control.model = {
+    control.defaultMonoModel = {
       id : '',
       title : serverControlParams.translatedStrings.widgetZone,
       contexts : _.without( _.keys(control.contexts), '_all_' ),//the server list of contexts is an object, we only need the keys, whitout _all_
@@ -3828,7 +4873,7 @@ $.extend( CZRWidgetAreasMethods, {
   getDefaultModel : function(id) {
     var control = this,
         _current_collection = control.czr_Model.czr_collection.get(),
-        _default = _.clone( control.model ),
+        _default = _.clone( control.defaultMonoModel ),
         _default_contexts = _default.contexts;
     return $.extend( _default, {
         title : 'Widget Zone ' +  ( _.size(_current_collection)*1 + 1 )
@@ -3842,217 +4887,382 @@ var CZRSocialMethods = CZRSocialMethods || {};
 
 $.extend( CZRSocialMethods, {
   initialize: function( id, options ) {
+          //run the parent initialize
+          api.CZRMultiInputDynControl.prototype.initialize.call( this, id, options );
 
-    //run the parent initialize
-    api.CZRMultiModelControl.prototype.initialize.call( this, id, options );
+          var control = this;
 
-    var control = this;
-
-    this.social_icons = [
-      '500px',
-      'adn',
-      'amazon',
-      'android',
-      'angellist',
-      'apple',
-      'behance',
-      'behance-square',
-      'bitbucket',
-      'bitbucket-square',
-      'black-tie',
-      'btc',
-      'buysellads',
-      'chrome',
-      'codepen',
-      'codiepie',
-      'connectdevelop',
-      'contao',
-      'dashcube',
-      'delicious',
-      'delicious',
-      'deviantart',
-      'digg',
-      'dribbble',
-      'dropbox',
-      'drupal',
-      'edge',
-      'empire',
-      'expeditedssl',
-      'facebook',
-      'facebook',
-      'facebook-f (alias)',
-      'facebook-official',
-      'facebook-square',
-      'firefox',
-      'flickr',
-      'fonticons',
-      'fort-awesome',
-      'forumbee',
-      'foursquare',
-      'get-pocket',
-      'gg',
-      'gg-circle',
-      'git',
-      'github',
-      'github',
-      'github-alt',
-      'github-square',
-      'git-square',
-      'google',
-      'google',
-      'google-plus',
-      'google-plus-square',
-      'google-wallet',
-      'gratipay',
-      'hacker-news',
-      'houzz',
-      'instagram',
-      'internet-explorer',
-      'ioxhost',
-      'joomla',
-      'jsfiddle',
-      'lastfm',
-      'lastfm-square',
-      'leanpub',
-      'linkedin',
-      'linkedin',
-      'linkedin-square',
-      'linux',
-      'maxcdn',
-      'meanpath',
-      'medium',
-      'mixcloud',
-      'modx',
-      'odnoklassniki',
-      'odnoklassniki-square',
-      'opencart',
-      'openid',
-      'opera',
-      'optin-monster',
-      'pagelines',
-      'paypal',
-      'pied-piper',
-      'pied-piper-alt',
-      'pinterest',
-      'pinterest-p',
-      'pinterest-square',
-      'product-hunt',
-      'qq',
-      'rebel',
-      'reddit',
-      'reddit-alien',
-      'reddit-square',
-      'renren',
-      'rss',
-      'rss-square',
-      'safari',
-      'scribd',
-      'sellsy',
-      'share-alt',
-      'share-alt-square',
-      'shirtsinbulk',
-      'simplybuilt',
-      'skyatlas',
-      'skype',
-      'slack',
-      'slideshare',
-      'soundcloud',
-      'spotify',
-      'stack-exchange',
-      'stack-overflow',
-      'steam',
-      'steam-square',
-      'stumbleupon',
-      'stumbleupon',
-      'stumbleupon-circle',
-      'tencent-weibo',
-      'trello',
-      'tripadvisor',
-      'tumblr',
-      'tumblr-square',
-      'twitch',
-      'twitter',
-      'twitter',
-      'twitter-square',
-      'usb',
-      'viacoin',
-      'vimeo',
-      'vimeo-square',
-      'vine',
-      'vk',
-      'weibo',
-      'weixin',
-      'whatsapp',
-      'wikipedia-w',
-      'windows',
-      'wordpress',
-      'xing',
-      'xing-square',
-      'yahoo',
-      'yahoo',
-      'y-combinator',
-      'yelp',
-      'youtube',
-      'youtube-play',
-      'youtube-square'
-    ];
+          this.social_icons = [
+            '500px',
+            'adn',
+            'amazon',
+            'android',
+            'angellist',
+            'apple',
+            'behance',
+            'behance-square',
+            'bitbucket',
+            'bitbucket-square',
+            'black-tie',
+            'btc',
+            'buysellads',
+            'chrome',
+            'codepen',
+            'codiepie',
+            'connectdevelop',
+            'contao',
+            'dashcube',
+            'delicious',
+            'delicious',
+            'deviantart',
+            'digg',
+            'dribbble',
+            'dropbox',
+            'drupal',
+            'edge',
+            'empire',
+            'expeditedssl',
+            'facebook',
+            'facebook',
+            'facebook-f (alias)',
+            'facebook-official',
+            'facebook-square',
+            'firefox',
+            'flickr',
+            'fonticons',
+            'fort-awesome',
+            'forumbee',
+            'foursquare',
+            'get-pocket',
+            'gg',
+            'gg-circle',
+            'git',
+            'github',
+            'github',
+            'github-alt',
+            'github-square',
+            'git-square',
+            'google',
+            'google',
+            'google-plus',
+            'google-plus-square',
+            'google-wallet',
+            'gratipay',
+            'hacker-news',
+            'houzz',
+            'instagram',
+            'internet-explorer',
+            'ioxhost',
+            'joomla',
+            'jsfiddle',
+            'lastfm',
+            'lastfm-square',
+            'leanpub',
+            'linkedin',
+            'linkedin',
+            'linkedin-square',
+            'linux',
+            'maxcdn',
+            'meanpath',
+            'medium',
+            'mixcloud',
+            'modx',
+            'odnoklassniki',
+            'odnoklassniki-square',
+            'opencart',
+            'openid',
+            'opera',
+            'optin-monster',
+            'pagelines',
+            'paypal',
+            'pied-piper',
+            'pied-piper-alt',
+            'pinterest',
+            'pinterest-p',
+            'pinterest-square',
+            'product-hunt',
+            'qq',
+            'rebel',
+            'reddit',
+            'reddit-alien',
+            'reddit-square',
+            'renren',
+            'rss',
+            'rss-square',
+            'safari',
+            'scribd',
+            'sellsy',
+            'share-alt',
+            'share-alt-square',
+            'shirtsinbulk',
+            'simplybuilt',
+            'skyatlas',
+            'skype',
+            'slack',
+            'slideshare',
+            'soundcloud',
+            'spotify',
+            'stack-exchange',
+            'stack-overflow',
+            'steam',
+            'steam-square',
+            'stumbleupon',
+            'stumbleupon',
+            'stumbleupon-circle',
+            'tencent-weibo',
+            'trello',
+            'tripadvisor',
+            'tumblr',
+            'tumblr-square',
+            'twitch',
+            'twitter',
+            'twitter',
+            'twitter-square',
+            'usb',
+            'viacoin',
+            'vimeo',
+            'vimeo-square',
+            'vine',
+            'vk',
+            'weibo',
+            'weixin',
+            'whatsapp',
+            'wikipedia-w',
+            'windows',
+            'wordpress',
+            'xing',
+            'xing-square',
+            'yahoo',
+            'yahoo',
+            'y-combinator',
+            'yelp',
+            'youtube',
+            'youtube-play',
+            'youtube-square'
+          ];
 
 
-    //add the new property to the the parent
-    //api.CZRMultiModelControl.prototype.initialize.apply( this, arguments );
+          //add the new property to the the parent
+          //api.CZRMultiModelControl.prototype.initialize.apply( this, arguments );
 
-    //adds specific actions for this control
-    this.addActions(
-      'control_event_map',
-      [
-        //setup the select list for the pre add dialog box
-        {
-            trigger   : 'pre_add_view_rendered',
-            actions   : [ 'setupSelect' ]
-        },
-        {
-            trigger   : 'pre_model:social-icon:changed',
-            actions   : [ 'updatePreModelTitle' ]
-        }
-      ]
-    );
+          //adds specific actions for this control
+          this.addActions(
+            'control_event_map',
+            [
+              //setup the select list for the pre add dialog box
+              {
+                  trigger   : 'pre_add_view_rendered',
+                  actions   : [ 'setupSelect' ]
+              },
+              {
+                  trigger   : 'pre_model:social-icon:changed',
+                  actions   : [ 'updatePreModelTitle' ]
+              }
+            ]
+          );
 
-    this.addActions(
-      'view_event_map',
-      [
-        {
-            trigger   : 'viewContentRendered',
-            actions   : [ 'setupSelect', 'setupColorPicker', 'setupIcheck' ]
-        },
-        {
-            trigger   : 'social-icon:changed',
-            actions   : [ 'updateModelInputs' ]
-        }
-      ]
-    );
 
-    //declares a default model
-    this.model = {
-      id : '',
-      title : '' ,
-      'social-icon' : '',
-      'social-link' : '',
-      'social-color' : serverControlParams.defaultSocialColor,
-      'social-target' : 1
-    };
 
-    //overrides the default success message
-    this.modelAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
+          // this.addActions(
+          //   'view_event_map',
+          //   [
+          //     {
+          //         trigger   : 'viewContentRendered',
+          //         actions   : [ 'setupSelect', 'setupColorPicker', 'setupIcheck' ]
+          //     },
+          //     {
+          //         trigger   : 'social-icon:changed',
+          //         actions   : [ 'updateModelInputs' ]
+          //     }
+          //   ]
+          // );
+
+          //EXTEND THE DEFAULT CONSTRUCTORS FOR INPUT
+          control.inputConstructor = api.CZRInput.extend( control.CZRSocialsInputMethods || {} );
+
+          //EXTEND THE DEFAULT CONSTRUCTORS FOR MONOMODEL
+          control.modelConstructor = api.CZRMonoModel.extend( control.CZRSocialsMonoModel || {} );
+
+          //declares a default model
+          this.defaultMonoModel = {
+            id : '',
+            title : '' ,
+            'social-icon' : '',
+            'social-link' : '',
+            'social-color' : serverControlParams.defaultSocialColor,
+            'social-target' : 1
+          };
+
+          //overrides the default success message
+          this.modelAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
   },//initialize
 
 
-  _buildTitle : function( title, icon, color ) {
-    title = title || ( 'string' === typeof(icon) ? this._capitalize( icon.replace( 'fa-', '') ) : '' );
-    title = this._truncate(title, 20);
-    icon = icon || 'fa-' + this.social_icons[0];
-    color = color || serverControlParams.defaultSocialColor;
 
-    return '<div><span class="fa ' + icon + '" style="color:' + color + '"></span> ' + title + '</div>';
+
+
+
+  CZRSocialsInputMethods : {
+          ready : function() {
+                  var input = this;
+
+                  input.addActions(
+                    'input_event_map',
+                    {
+                        trigger   : 'social-icon:changed',
+                        actions   : [ 'updateModelInputs' ]
+                    },
+                    input
+                  );
+
+                  api.CZRInput.prototype.ready.call( input);
+          },
+
+          setupSelect : function() {
+                var input      = this,
+                    mono_model = input.mono_model,
+                    control     = mono_model.model_control,
+                    socialList = _.union( [serverControlParams.translatedStrings.selectSocialIcon], control.social_icons),
+                    _model = mono_model.get();
+
+                //generates the options
+                _.each( socialList , function( icon_name, k ) {
+                      var _value = ( 0 === k ) ? '' : 'fa-' + icon_name.toLowerCase(),
+                          _attributes = {
+                            value : _value,
+                            html: control._capitalize(icon_name)
+                          };
+                      if ( _value == _model['social-icon'] )
+                        $.extend( _attributes, { selected : "selected" } );
+
+                      $( 'select[data-type="social-icon"]', input.container ).append( $('<option>', _attributes) );
+                });
+
+                function addIcon( state ) {
+                  if (! state.id) { return state.text; }
+                  var $state = $(
+                    '<span class="fa ' + state.element.value.toLowerCase() + '">&nbsp;&nbsp;' + state.text + '</span>'
+                  );
+                  return $state;
+                }
+
+                //fire select2
+                $( 'select[data-type="social-icon"]', input.container ).select2( {
+                    templateResult: addIcon,
+                    templateSelection: addIcon
+                });
+        },
+
+        setupIcheck : function( obj ) {
+                var input      = this;
+
+                $( 'input[type=checkbox]', input.container ).each( function(e) {
+                  if ( 0 !== $(this).closest('div[class^="icheckbox"]').length )
+                    return;
+
+                  $(this).iCheck({
+                    checkboxClass: 'icheckbox_flat-grey',
+                    checkedClass: 'checked',
+                    radioClass: 'iradio_flat-grey',
+                  })
+                  .on( 'ifChanged', function(e){
+                    $(this).val( false === $(this).is(':checked') ? 0 : 1 );
+                    $(e.currentTarget).trigger('change');
+                  });
+                });
+        },
+
+        setupColorPicker : function( obj ) {
+                var input      = this,
+                    mono_model = input.mono_model,
+                    control     = mono_model.model_control;
+
+                $( 'input[data-type="social-color"]', input.container ).wpColorPicker( {
+                  defaultColor : 'rgba(255,255,255,0.7)',
+                  change : function( e, o ) {
+                    //if the input val is not updated here, it's not detected right away.
+                    //weird
+                    //is there a "change complete" kind of event for iris ?
+                    $(this).val(o.color.toString());
+                    $(this).trigger('colorpickerchange');
+                  }
+                });
+                //when the picker opens, it might be below the visible viewport.
+                //No built-in event available to react on this in the wpColorPicker unfortunately
+                $( 'input[data-type="social-color"]', input.container ).closest('div').on('click keydown', function() {
+                  control._adjustScrollExpandedBlock( input.container );
+                });
+        },
+
+
+        //ACTIONS ON ICON CHANGE
+        //Fired on 'social-icon:changed' for existing models
+        updateModelInputs : function() {
+                var mono_model = this.mono_model,
+                    control     = mono_model.model_control,
+                    _new_model  = _.clone( mono_model.get() ),
+                    _new_title  = control._capitalize( _new_model['social-icon'].replace('fa-', '') ),
+                    _new_color  = serverControlParams.defaultSocialColor;
+
+                //add text follow us... to the title
+                _new_title = [ serverControlParams.translatedStrings.followUs, _new_title].join(' ');
+
+                $('input[data-type="title"]', mono_model.container ).val( _new_title );
+                $('input[data-type="social-link"]', mono_model.container ).val( '' );
+                $('input[data-type="social-color"]', mono_model.container ).wpColorPicker('color', _new_color );
+
+                //set the new val to the changed property
+                _new_model.title = _new_title;
+                _new_model['social-link'] = '';
+                _new_model['social-color'] = _new_color;
+
+                mono_model.set(_new_model);
+        },
+
+  },//CZRSocialsInputMethods
+
+
+
+
+
+
+  CZRSocialsMonoModel : {
+          _buildTitle : function( title, icon, color ) {
+                  var mono_model = this,
+                      control     = mono_model.model_control;
+
+                  title = title || ( 'string' === typeof(icon) ? control._capitalize( icon.replace( 'fa-', '') ) : '' );
+                  title = control._truncate(title, 20);
+                  icon = icon || 'fa-' + control.social_icons[0];
+                  color = color || serverControlParams.defaultSocialColor;
+
+                  return '<div><span class="fa ' + icon + '" style="color:' + color + '"></span> ' + title + '</div>';
+          },
+
+          //overrides the default parent method by a custom one
+          //at this stage, the model passed in the obj is up to date
+          writeViewTitle : function( model ) {
+                  var mono_model = this,
+                      control     = mono_model.model_control;
+                  var _title = control._capitalize( model['social-icon'].replace('fa-', '') );
+
+                  $( '.' + control.css_attr.view_title , '#' + model.id ).html(
+                    mono_model._buildTitle( _title, model['social-icon'], model['social-color'] )
+                  );
+          }
+
+  },//CZRSocialsMonoModel
+
+
+
+
+  _buildTitle : function( title, icon, color ) {
+          title = title || ( 'string' === typeof(icon) ? this._capitalize( icon.replace( 'fa-', '') ) : '' );
+          title = this._truncate(title, 20);
+          icon = icon || 'fa-' + this.social_icons[0];
+          color = color || serverControlParams.defaultSocialColor;
+
+          return '<div><span class="fa ' + icon + '" style="color:' + color + '"></span> ' + title + '</div>';
   },
 
   //overrides the default parent method by a custom one
@@ -4101,35 +5311,35 @@ $.extend( CZRSocialMethods, {
 
 
   setupSelect : function( obj ) {
-    var control = this,
-        socialList = _.union( [serverControlParams.translatedStrings.selectSocialIcon], control.social_icons);
+          var control = this,
+              socialList = _.union( [serverControlParams.translatedStrings.selectSocialIcon], control.social_icons);
 
-    //generates the options
-    _.map( socialList , function( icon_name, k ) {
-      var _value = ( 0 === k ) ? '' : 'fa-' + icon_name.toLowerCase(),
-          _attributes = {
-            value : _value,
-            html: control._capitalize(icon_name)
-          };
-      if ( _value == obj.model['social-icon'] )
-        $.extend( _attributes, { selected : "selected" } );
+          //generates the options
+          _.map( socialList , function( icon_name, k ) {
+            var _value = ( 0 === k ) ? '' : 'fa-' + icon_name.toLowerCase(),
+                _attributes = {
+                  value : _value,
+                  html: control._capitalize(icon_name)
+                };
+            if ( _value == obj.model['social-icon'] )
+              $.extend( _attributes, { selected : "selected" } );
 
-      $( 'select[data-type="social-icon"]', obj.dom_el ).append( $('<option>', _attributes) );
-    });
+            $( 'select[data-type="social-icon"]', obj.dom_el ).append( $('<option>', _attributes) );
+          });
 
-    function addIcon( state ) {
-      if (! state.id) { return state.text; }
-      var $state = $(
-        '<span class="fa ' + state.element.value.toLowerCase() + '">&nbsp;&nbsp;' + state.text + '</span>'
-      );
-      return $state;
-    }
+          function addIcon( state ) {
+            if (! state.id) { return state.text; }
+            var $state = $(
+              '<span class="fa ' + state.element.value.toLowerCase() + '">&nbsp;&nbsp;' + state.text + '</span>'
+            );
+            return $state;
+          }
 
-    //fire select2
-    $( 'select[data-type="social-icon"]', obj.dom_el ).select2( {
-        templateResult: addIcon,
-        templateSelection: addIcon
-    });
+          //fire select2
+          $( 'select[data-type="social-icon"]', obj.dom_el ).select2( {
+              templateResult: addIcon,
+              templateSelection: addIcon
+          });
   },
 
 
@@ -4181,7 +5391,7 @@ $.extend( CZRSektionsMethods, {
     var control = this;
 
     //declares a default model
-    control.model = {
+    control.defaultMonoModel = {
       id : '',
       'sektion-layout' : 1,
     };
@@ -4262,7 +5472,55 @@ $.extend( CZRSektionsMethods, {
   }
 
 
-});(function (api, $, _) {
+});// (function (api, $, _) {
+//   //Add the DOM helpers (addAction, ...) to the Control Base Class + Input Base Class
+//   $.extend( CZRBaseControlMethods, api.CZR_Dom || {} );
+//   $.extend( CZRInputMethods, api.CZR_Dom || {} );
+
+//   //INPUTS => used as constructor when creating the collection of inputs
+//   api.CZRInput                 = api.Value.extend( CZRInputMethods || {} );
+
+//   //MODELS => used as constructor when creating the collection of models
+//   //api.CZRMonoModel             = api.Value.extend( CZRMonoModelMethods || {} );
+
+//   //CONTROLS
+//   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMethods || {} );
+//   api.CZRMultiModelControl     = api.CZRBaseControl.extend( CZRMultiModelMethods || {} );
+//   //api.CZRMonoModelControl      = api.CZRBaseControl.extend( CZRMonoModelMethods || {} );
+
+//   //api.CZRBackgroundControl     = api.CZRMonoModelControl.extend( CZRBackgroundMethods || {} );
+
+//   api.CZRWidgetAreasControl    = api.CZRMultiModelControl.extend( CZRWidgetAreasMethods || {} );
+//   api.CZRSocialControl         = api.CZRMultiModelControl.extend( CZRSocialMethods || {} );
+
+//   api.CZRUploadControl         = api.Control.extend( CZRUploadMethods || {} );
+//   api.CZRLayoutControl         = api.Control.extend( CZRLayoutSelectMethods || {} );
+//   api.CZRMultiplePickerControl = api.Control.extend( CZRMultiplePickerMethods || {} );
+
+//   api.CZRSektionsControl       = api.CZRMultiModelControl.extend( CZRSektionsMethods || {} );
+
+//   $.extend( api.controlConstructor, {
+//     czr_upload     : api.CZRUploadControl,
+//     czr_sidebars   : api.CZRWidgetAreasControl,
+//     czr_socials    : api.CZRSocialControl,
+//     czr_multiple_picker : api.CZRMultiplePickerControl,
+//     czr_layouts    : api.CZRLayoutControl,
+//     //czr_background : api.CZRBackgroundControl,
+//     czr_sektions   : api.CZRSektionsControl
+//   });
+
+//   if ( 'function' == typeof api.CroppedImageControl ) {
+//     api.CZRCroppedImageControl   = api.CroppedImageControl.extend( CZRCroppedImageMethods || {} );
+
+//     $.extend( api.controlConstructor, {
+//       czr_cropped_image : api.CZRCroppedImageControl
+//     });
+//   }
+
+// })( wp.customize, jQuery, _);
+
+
+(function (api, $, _) {
   //Add the DOM helpers (addAction, ...) to the Control Base Class + Input Base Class
   $.extend( CZRBaseControlMethods, api.CZR_Dom || {} );
   $.extend( CZRInputMethods, api.CZR_Dom || {} );
@@ -4275,28 +5533,28 @@ $.extend( CZRSektionsMethods, {
 
   //CONTROLS
   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMethods || {} );
-  api.CZRMultiModelControl     = api.CZRBaseControl.extend( CZRMultiModelMethods || {} );
-  //api.CZRMonoModelControl      = api.CZRBaseControl.extend( CZRMonoModelMethods || {} );
+  api.CZRMultiInputControl     = api.CZRBaseControl.extend( CZRMultiInputControlMethods || {} );
+  api.CZRMultiInputDynControl  = api.CZRMultiInputControl.extend( CZRMultiInputDynMethods || {} );
 
   //api.CZRBackgroundControl     = api.CZRMonoModelControl.extend( CZRBackgroundMethods || {} );
 
-  api.CZRWidgetAreasControl    = api.CZRMultiModelControl.extend( CZRWidgetAreasMethods || {} );
-  api.CZRSocialControl         = api.CZRMultiModelControl.extend( CZRSocialMethods || {} );
+  //api.CZRWidgetAreasControl    = api.CZRMultiInputDynControl.extend( CZRWidgetAreasMethods || {} );
+  api.CZRSocialControl         = api.CZRMultiInputDynControl.extend( CZRSocialMethods || {} );
 
   api.CZRUploadControl         = api.Control.extend( CZRUploadMethods || {} );
   api.CZRLayoutControl         = api.Control.extend( CZRLayoutSelectMethods || {} );
   api.CZRMultiplePickerControl = api.Control.extend( CZRMultiplePickerMethods || {} );
 
-  api.CZRSektionsControl       = api.CZRMultiModelControl.extend( CZRSektionsMethods || {} );
+  //api.CZRSektionsControl       = api.CZRMultiInputDynControl.extend( CZRSektionsMethods || {} );
 
   $.extend( api.controlConstructor, {
     czr_upload     : api.CZRUploadControl,
-    czr_sidebars   : api.CZRWidgetAreasControl,
+    //czr_sidebars   : api.CZRWidgetAreasControl,
     czr_socials    : api.CZRSocialControl,
     czr_multiple_picker : api.CZRMultiplePickerControl,
     czr_layouts    : api.CZRLayoutControl,
     //czr_background : api.CZRBackgroundControl,
-    czr_sektions   : api.CZRSektionsControl
+    //czr_sektions   : api.CZRSektionsControl
   });
 
   if ( 'function' == typeof api.CroppedImageControl ) {
