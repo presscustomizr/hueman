@@ -27,6 +27,10 @@ $.extend( CZRMultiInputDynMethods, {
           control.czr_preModel.create('view_status');
           control.czr_preModel('view_status').set('closed');
 
+          //PRE MODEL INPUTS
+          control.czr_preModelInput = new api.Values();
+
+
           //default success message when model added
           control.modelAddedMessage = serverControlParams.translatedStrings.successMessage;
 
@@ -40,13 +44,6 @@ $.extend( CZRMultiInputDynMethods, {
                   selector  : [ '.' + control.css_attr.open_pre_add_btn, '.' + control.css_attr.cancel_pre_add_btn ].join(','),
                   name      : 'pre_add_model',
                   actions   : ['renderPreModelView','setPreModelViewVisibility'],
-                },
-                //update_pre_model
-                {
-                  trigger   : 'propertychange change click keyup input colorpickerchange',//colorpickerchange is a custom colorpicker event @see method setupColorPicker => otherwise we don't
-                  selector  : [ '.' + control.css_attr.pre_add_view_content + ' input[data-type]', '.' + control.css_attr.pre_add_view_content + ' select[data-type]'].join(','),
-                  name      : 'update_pre_model',
-                  actions   : ['updatePreModel' ]
                 },
                 //add new model
                 {
@@ -68,6 +65,16 @@ $.extend( CZRMultiInputDynMethods, {
 
                 //PRE ADD MODEL SETUP
                 control.czr_preModel('model').set(control.getDefaultModel());
+
+                //Add view rendered listeners
+                control.czr_preModel('view_content').callbacks.add(function( to, from ) {
+                  if ( _.isUndefined(from) ) {
+                    //provide a constructor for the inputs
+                    control.preModelInputConstructor = control.inputConstructor;//api.CZRInput;
+                    control.setupPreModelInputCollection();
+                  }
+                });
+
                 //add state listeners
                 control.czr_preModel('view_status').callbacks.add( function( to, from ) {
                   control._togglePreModelViewExpansion( to );
@@ -77,6 +84,22 @@ $.extend( CZRMultiInputDynMethods, {
           api.CZRMultiInputControl.prototype.ready.call( control );
   },//ready()
 
+
+  setupPreModelInputCollection : function() {
+          var control = this;
+          //creates the inputs based on the rendered items
+          $('.' + control.css_attr.pre_add_wrapper, control.container).find( '.' + control.css_attr.sub_set_wrapper)
+          .each( function(_index) {
+                var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index;
+                control.czr_preModelInput.add( _id, new control.preModelInputConstructor( _id, {
+                    id : _id,
+                    type : $(this).attr('data-input-type'),
+                    container : $(this),
+                    mono_model : control.czr_preModel('model'),
+                    control : control
+                } ) );
+          });//each
+  },
 
 
   //the model is manually added.

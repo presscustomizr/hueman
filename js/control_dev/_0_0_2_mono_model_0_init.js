@@ -29,12 +29,6 @@ $.extend( CZRMonoModelMethods , {
         monoModel.czr_View = new api.Value();
         monoModel.setupView();
 
-        //INPUTS => Setup as soon as the view content is rendered
-        //the model is a collection of inputs, each one has its own view element.
-        monoModel.czr_Input = new api.Values();
-        //this can be overriden by extended classes to add and overrides methods
-        monoModel.inputConstructor = control.inputConstructor;
-
         //initialize to the provided value
         monoModel.set(options.model_val);
 
@@ -80,38 +74,47 @@ $.extend( CZRMonoModelMethods , {
             throw new Error( 'In setupView the MonoModel view has not been rendered : ' + monoModel.model_id );
           }
 
-          //setup
+          //set intial state
           monoModel.czr_View.set('closed');
 
-          var $viewContent = $( '.' + control.css_attr.view_content, monoModel.container );
-
-          //add a state listener on state change
-          monoModel.czr_View.callbacks.add( function( to, from ) {
-                //render and setup view content if needed
-                if ( ! $.trim( $viewContent.html() ) ) {
-                      monoModel.renderViewContent();
-                }
-                monoModel.setupInputCollection();
-                //expand
-                monoModel._toggleViewExpansion( to );
-          });
-
+          //add a listener on view state change
+          monoModel.czr_View.callbacks.add( function() { return monoModel.setupViewStateListeners.apply(monoModel, arguments ); } );
 
           api.CZR_Dom.setupDOMListeners( monoModel.view_event_map , { model:monoModel.model_val, dom_el:monoModel.container }, monoModel );//listeners for the view wrapper
-
-          monoModel._makeSortable();
 
           //hook here
           control.doActions('after_viewSetup', monoModel.container, { model : monoModel.model_val , dom_el: monoModel.container} );
   },
 
 
+  setupViewStateListeners : function( to, from ) {
+      var monoModel = this,
+          control = this.model_control,
+          $viewContent = $( '.' + control.css_attr.view_content, monoModel.container );
+
+      //render and setup view content if needed
+      if ( ! $.trim( $viewContent.html() ) ) {
+            monoModel.renderViewContent();
+      }
+      //create the collection of inputs if needed
+      if ( ! _.has(monoModel, 'czr_Input') ) {
+        monoModel.setupInputCollection();
+      }
+      //expand
+      monoModel._toggleViewExpansion( to );
+  },
 
 
   //creates the inputs based on the rendered items
   setupInputCollection : function() {
         var monoModel = this,
             control = monoModel.model_control;
+
+        //INPUTS => Setup as soon as the view content is rendered
+        //the model is a collection of inputs, each one has its own view element.
+        monoModel.czr_Input = new api.Values();
+        //this can be overriden by extended classes to add and overrides methods
+        monoModel.inputConstructor = control.inputConstructor;
 
         if ( _.isEmpty(monoModel.defaultMonoModel) || _.isUndefined(monoModel.defaultMonoModel) ) {
           throw new Error('No default model found in multi input control ' + monoModel.model_id + '. Aborting');
@@ -137,7 +140,8 @@ $.extend( CZRMonoModelMethods , {
                   type : $(this).attr('data-input-type'),
                   input_value : _value,
                   container : $(this),
-                  mono_model : monoModel
+                  mono_model : monoModel,
+                  control : control
               } ) );
         });//each
 

@@ -1082,83 +1082,100 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
 // value : $(this).find('[data-type]').val(),
 // container : $(this),
 // mono_model : monoModel (Value instance, has a parent control)
+// control : control
 $.extend( CZRInputMethods , {
     initialize: function( name, options ) {
-        if ( _.isUndefined(options.mono_model ) || _.isEmpty(options.mono_model) ) {
-          throw new Error('No mono_model assigned to input ' + id + '. Aborting');
-        }
-        api.Value.prototype.initialize.call( this, null, options );
-        var input = this;
-        //input.options = options;
-        //write the options as properties, name is included
-        $.extend( input, options || {} );
+            if ( _.isUndefined(options.mono_model ) || _.isEmpty(options.mono_model) ) {
+              throw new Error('No mono_model assigned to input ' + options.id + '. Aborting');
+            }
+            if ( _.isUndefined(options.control ) ) {
+              throw new Error('No control assigned to input ' + options.id + '. Aborting');
+            }
 
-        //initialize to the provided value
-        input.set(options.input_value);
+            api.Value.prototype.initialize.call( this, null, options );
+            var input = this;
+            //input.options = options;
+            //write the options as properties, name is included
+            $.extend( input, options || {} );
 
-        //setup the appropriate input based on the type
-        input.type_map = {
-              text : '',
-              check : 'setupIcheck',
-              select : 'setupSelect',
-              upload : 'setupImageUploader',
-              color : 'setupColorPicker',
-        };
-        if ( _.has( input.type_map, input.type ) ) {
-          var _meth = input.type_map[input.type];
-          if ( _.isFunction(input[_meth]) )
-            input[_meth]();
-        }
+            //initialize to the provided value if any
+            if ( ! _.isUndefined(options.input_value) )
+              input.set(options.input_value);
 
-        //Input Event Map
-        input.input_event_map = [
-          //set input value
-          {
-            trigger   : 'propertychange change click keyup input colorpickerchange',//colorpickerchange is a custom colorpicker event @see method setupColorPicker => otherwise we don't
-            selector  : 'input[data-type], select[data-type]',
-            name      : 'set_input_value',
-            actions   : 'updateInput'
-          }
-        ];
+            //setup the appropriate input based on the type
+            input.type_map = {
+                  text : '',
+                  textarea : '',
+                  check : 'setupIcheck',
+                  select : 'setupSelect',
+                  upload : 'setupImageUploader',
+                  color : 'setupColorPicker',
+                  password : ''
+            };
 
-        input.ready();
+            if ( _.has( input.type_map, input.type ) ) {
+                    var _meth = input.type_map[input.type];
+                    if ( _.isFunction(input[_meth]) )
+                      input[_meth]();
+            }
+
+            var trigger_map = {
+                  text : 'keyup',
+                  textarea : 'keyup',
+                  password : 'keyup',
+                  color : 'colorpickerchange',
+                  range : 'input propertychange'
+            };
+
+            //Input Event Map
+            input.input_event_map = [
+                    //set input value
+                    {
+                      trigger   : $.trim( ['change', trigger_map[input.type] || '' ].join(' ') ),//was 'propertychange change click keyup input',//colorpickerchange is a custom colorpicker event @see method setupColorPicker => otherwise we don't
+                      selector  : 'input[data-type], select[data-type]',
+                      name      : 'set_input_value',
+                      actions   : 'updateInput'
+                    }
+            ];
+
+            input.ready();
     },
 
 
     ready : function() {
-        var input = this;
-        input.setupDOMListeners( input.input_event_map , { dom_el : input.container }, input );
+            var input = this;
+            input.setupDOMListeners( input.input_event_map , { dom_el : input.container }, input );
+            input.callbacks.add( function() { return input.setupInputListeners.apply(input, arguments ); } );
+    },
 
-        //sets the input value to the one
 
-        //callbacks
-        input.callbacks.add(function( to, from) {
-              var _current_mono_model = input.mono_model.get(),
-                  _new_model        = _.clone( _current_mono_model );//initialize it to the current value
-              //make sure the _new_model is an object and is not empty
-              _new_model =  ( ! _.isObject(_new_model) || _.isEmpty(_new_model) ) ? {} : _new_model;
-              //set the new val to the changed property
-              _new_model[input.id] = to;
-              input.mono_model.set(_new_model);
-        });
+    setupInputListeners : function( to, from) {
+            var input = this,
+                _current_mono_model = input.mono_model.get(),
+                _new_model        = _.clone( _current_mono_model );//initialize it to the current value
+            //make sure the _new_model is an object and is not empty
+            _new_model =  ( ! _.isObject(_new_model) || _.isEmpty(_new_model) ) ? {} : _new_model;
+            //set the new val to the changed property
+            _new_model[input.id] = to;
+            input.mono_model.set(_new_model);
     },
 
 
     updateInput : function( obj ) {
-        //get the changed property and val
-        //=> all html input have data-type attribute corresponding to the ones stored in the model
-        var input           = this,
-            $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
-            _new_val          = $( $_changed_input, obj.dom_el ).val();
+            //get the changed property and val
+            //=> all html input have data-type attribute corresponding to the ones stored in the model
+            var input           = this,
+                $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
+                _new_val          = $( $_changed_input, obj.dom_el ).val();
 
-        input.set(_new_val);
+            input.set(_new_val);
 
-        //say it to the dom
-        input.doActions(
-            input.id + ':changed',
-            input.container,
-            {}
-        );
+            //say it to the dom
+            input.doActions(
+                input.id + ':changed',
+                input.container,
+                {}
+            );
     }
 });//$.extendvar CZRInputMethods = CZRInputMethods || {};
 $.extend( CZRInputMethods , {
@@ -1384,12 +1401,6 @@ $.extend( CZRMonoModelMethods , {
         monoModel.czr_View = new api.Value();
         monoModel.setupView();
 
-        //INPUTS => Setup as soon as the view content is rendered
-        //the model is a collection of inputs, each one has its own view element.
-        monoModel.czr_Input = new api.Values();
-        //this can be overriden by extended classes to add and overrides methods
-        monoModel.inputConstructor = control.inputConstructor;
-
         //initialize to the provided value
         monoModel.set(options.model_val);
 
@@ -1435,38 +1446,47 @@ $.extend( CZRMonoModelMethods , {
             throw new Error( 'In setupView the MonoModel view has not been rendered : ' + monoModel.model_id );
           }
 
-          //setup
+          //set intial state
           monoModel.czr_View.set('closed');
 
-          var $viewContent = $( '.' + control.css_attr.view_content, monoModel.container );
-
-          //add a state listener on state change
-          monoModel.czr_View.callbacks.add( function( to, from ) {
-                //render and setup view content if needed
-                if ( ! $.trim( $viewContent.html() ) ) {
-                      monoModel.renderViewContent();
-                }
-                monoModel.setupInputCollection();
-                //expand
-                monoModel._toggleViewExpansion( to );
-          });
-
+          //add a listener on view state change
+          monoModel.czr_View.callbacks.add( function() { return monoModel.setupViewStateListeners.apply(monoModel, arguments ); } );
 
           api.CZR_Dom.setupDOMListeners( monoModel.view_event_map , { model:monoModel.model_val, dom_el:monoModel.container }, monoModel );//listeners for the view wrapper
-
-          monoModel._makeSortable();
 
           //hook here
           control.doActions('after_viewSetup', monoModel.container, { model : monoModel.model_val , dom_el: monoModel.container} );
   },
 
 
+  setupViewStateListeners : function( to, from ) {
+      var monoModel = this,
+          control = this.model_control,
+          $viewContent = $( '.' + control.css_attr.view_content, monoModel.container );
+
+      //render and setup view content if needed
+      if ( ! $.trim( $viewContent.html() ) ) {
+            monoModel.renderViewContent();
+      }
+      //create the collection of inputs if needed
+      if ( ! _.has(monoModel, 'czr_Input') ) {
+        monoModel.setupInputCollection();
+      }
+      //expand
+      monoModel._toggleViewExpansion( to );
+  },
 
 
   //creates the inputs based on the rendered items
   setupInputCollection : function() {
         var monoModel = this,
             control = monoModel.model_control;
+
+        //INPUTS => Setup as soon as the view content is rendered
+        //the model is a collection of inputs, each one has its own view element.
+        monoModel.czr_Input = new api.Values();
+        //this can be overriden by extended classes to add and overrides methods
+        monoModel.inputConstructor = control.inputConstructor;
 
         if ( _.isEmpty(monoModel.defaultMonoModel) || _.isUndefined(monoModel.defaultMonoModel) ) {
           throw new Error('No default model found in multi input control ' + monoModel.model_id + '. Aborting');
@@ -1492,7 +1512,8 @@ $.extend( CZRMonoModelMethods , {
                   type : $(this).attr('data-input-type'),
                   input_value : _value,
                   container : $(this),
-                  mono_model : monoModel
+                  mono_model : monoModel,
+                  control : control
               } ) );
         });//each
 
@@ -1787,25 +1808,10 @@ $.extend( CZRMonoModelMethods , {
           } );
   },
 
-    //fired
-  _makeSortable : function(obj) {
-    if ( wp.media.isTouchDevice || ! $.fn.sortable )
-      return;
-    var monoModel = this,
-        control = this.model_control;
-
-    $( '.' + control.css_attr.views_wrapper, monoModel.container ).sortable( {
-        handle: '.' + control.css_attr.sortable_handle,
-        update: function( event, ui ) {
-          control.czr_Model.czr_collection.set( control._getSortedDOMCollection() );
-        }
-      }
-    );
-  },
 
   //removes the view dom element
   _destroyView : function (model_id) {
-          monoModel.container.fadeOut( {
+          this.container.fadeOut( {
             duration : 400,
             done : function() {
               $(this).remove();
@@ -1932,38 +1938,17 @@ $.extend( CZRMultiInputControlMethods, {
           //=> the collection update on startup is done when the control is embedded and BEFORE the api is ready
           //=> won't trigger and change setting
           api.bind( 'ready', function() {
-                //on init : populate the collection and setup the listener of the collection value
-                //control.czr_Model.czr_collection.callbacks.add( function() { return control.setupCollectionListeners.apply(control, arguments ); } );
-                control.populateCollection();
+                control.populateCollection()._makeSortable();
 
                 //LISTEN TO MONO MODELS COLLECTION
                 //1) update the control setting value
                 //2) fire dom actions
-                control.czr_Model.czr_collection.callbacks.add( function() { return control.apiCb.apply(control, arguments ); } );
+                control.czr_Model.czr_collection.callbacks.add( function() { return control.collectionListeners.apply(control, arguments ); } );
           });
 
           //this control is ready
           control.container.trigger('ready');
-  },//ready()
-
-
-
-  apiCb : function( to, from) {
-          var control = this;
-          //say it to the api
-          api(control.id).set( control.filterCollectionBeforeAjax(to) );
-
-          //refreshes the preview frame  :
-          //1) only needed if transport is postMessage, because is triggered by wp otherwise
-          //2) only needed when : add, remove, sort model(s).
-          var is_model_update = ( _.size(from) == _.size(to) ) && ! _.isEmpty( _.difference(from, to) );
-
-          if ( 'postMessage' == api(control.id).transport && ! is_model_update && ! api.czr_has_part_refresh( control.id ) ) {
-            control.previewer.refresh();
-          }
   }
-
-
 
 });//$.extend//CZRBaseControlMethods//MULTI CONTROL CLASS
 //extends api.CZRBaseControl
@@ -1997,7 +1982,6 @@ $.extend( CZRMultiInputControlMethods, {
 
 
   instantiateModel : function( model,is_added_by_user ) {
-          console.log('MODEL BEFORE INSTANTIATION', model, _.has( model,'id'), is_added_by_user );
           if ( ! _.has( model,'id') ) {
             throw new Error('CZRMultiInputControl::instantiateModel() : a model has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
           }
@@ -2016,54 +2000,34 @@ $.extend( CZRMultiInputControlMethods, {
           } ) );
   },
 
-
-  //@fired in control ready on api('ready')
-  //setup the collection listener
-  //Has to be fired after the initial fetch of the server saved collection
-  //=> otherwise an unwanted collection update will be triggered when adding the saved models
-  setupCollectionListeners : function(to, from) {
-    console.log(to, from, 'caca');
+  //registered callback by czr_collection.callbacks.add()
+  collectionListeners : function( to, from) {
           var control = this,
               _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
               _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
               _model_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
               _collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && _.isEmpty(_model_updated);
 
-          //RENDERS AND SETUP VIEW
-          // if ( ! _.isEmpty(_to_render) && ! control.getViewEl(_to_render.id).length ) {
-          //       //Render model's view
-          //       var $view = control.renderView( {model:_to_render} );
-          //       //setup
-          //       control.setupViewApiListeners( {model:_to_render, dom_el : $view} );//listener of the czr_View value for expansion state
-          //       control.setupDOMListeners( control.view_event_map , {model:_to_render, dom_el:$view} );//listeners for the view wrapper
-          //       control._makeSortable();
+          //say it to the api
+          api(control.id).set( control.filterCollectionBeforeAjax(to) );
 
-          //       //hook here
-          //       control.doActions('after_viewSetup', $view, { model : _to_render , dom_el: $view} );
-          // }//if
-
-          //REMOVES
-          // if ( ! _.isEmpty(_to_remove) ) {
-          //       //destroy the DOM el
-          //       control._destroyView(_to_remove.id);
-          //       //remove the values
-          //       control.czr_Model.remove(_to_remove.id);
-          //       control.czr_View.remove(_to_remove.id);
-
-          //       //hook here
-          //       control.doActions('after_modelRemoved', control.container, { model : _to_remove } );
-          // }//if
-
-          //SORTED COLLECTION
+           //SORTED COLLECTION
           if ( _collection_sorted ) {
                 if ( _.has(control, 'czr_preModel') ) {
                   control.czr_preModel('view_status').set('closed');
                 }
                 control.closeAllViews();
                 control.closeAllAlerts();
-          }//if
+          }
 
-          return this;
+          //refreshes the preview frame  :
+          //1) only needed if transport is postMessage, because is triggered by wp otherwise
+          //2) only needed when : add, remove, sort model(s).
+          var is_model_update = ( _.size(from) == _.size(to) ) && ! _.isEmpty( _.difference(from, to) );
+
+          if ( 'postMessage' == api(control.id).transport && ! is_model_update && ! api.czr_has_part_refresh( control.id ) ) {
+            control.previewer.refresh();
+          }
   },
 
 
@@ -2113,6 +2077,37 @@ $.extend( CZRMultiInputControlMethods, {
           control.czr_Model.czr_collection.set(_new_collection);
   },
 
+
+  //fire on sortable() update callback
+  //@returns a sorted collection as an array of model objects
+  _getSortedDOMCollection : function( obj ) {
+          var control = this,
+              _old_collection = _.clone( control.czr_Model.czr_collection.get() ),
+              _new_collection = [],
+              _index = 0;
+
+          //re-build the collection from the DOM
+          $( '.' + control.css_attr.inner_view, control.container ).each( function() {
+            var _model = _.findWhere( _old_collection, {id: $(this).attr('data-id') });
+            //do we have a match in the existing collection ?
+            if ( ! _model )
+              return;
+
+            _new_collection[_index] = _model;
+
+            _index ++;
+          });
+
+          //make sure the new collection is not empty...
+          if ( 0 === _new_collection.length )
+            return _old_collection;
+
+          //make sure we have the exact same models as before in the sorted collection
+          if ( ! _.isEmpty( _.difference( _old_collection, _new_collection ) ) )
+            return _old_collection;
+
+          return _new_collection;
+  }
 });//$.extend//CZRBaseControlMethods//MULTI CONTROL CLASS
 //extends api.CZRBaseControl
 //
@@ -2270,6 +2265,20 @@ $.extend( CZRMultiInputControlMethods, {
           });
   },
 
+
+  //fired
+  _makeSortable : function(obj) {
+          if ( wp.media.isTouchDevice || ! $.fn.sortable )
+            return;
+          var control = this;
+          $( '.' + control.css_attr.views_wrapper, control.container ).sortable( {
+              handle: '.' + control.css_attr.sortable_handle,
+              update: function( event, ui ) {
+                control.czr_Model.czr_collection.set( control._getSortedDOMCollection() );
+              }
+            }
+          );
+  }
 });//$.extend//MULTI CONTROL CLASS
 //extends api.CZRMultiInputControl
 //
@@ -2299,6 +2308,10 @@ $.extend( CZRMultiInputDynMethods, {
           control.czr_preModel.create('view_status');
           control.czr_preModel('view_status').set('closed');
 
+          //PRE MODEL INPUTS
+          control.czr_preModelInput = new api.Values();
+
+
           //default success message when model added
           control.modelAddedMessage = serverControlParams.translatedStrings.successMessage;
 
@@ -2312,13 +2325,6 @@ $.extend( CZRMultiInputDynMethods, {
                   selector  : [ '.' + control.css_attr.open_pre_add_btn, '.' + control.css_attr.cancel_pre_add_btn ].join(','),
                   name      : 'pre_add_model',
                   actions   : ['renderPreModelView','setPreModelViewVisibility'],
-                },
-                //update_pre_model
-                {
-                  trigger   : 'propertychange change click keyup input colorpickerchange',//colorpickerchange is a custom colorpicker event @see method setupColorPicker => otherwise we don't
-                  selector  : [ '.' + control.css_attr.pre_add_view_content + ' input[data-type]', '.' + control.css_attr.pre_add_view_content + ' select[data-type]'].join(','),
-                  name      : 'update_pre_model',
-                  actions   : ['updatePreModel' ]
                 },
                 //add new model
                 {
@@ -2340,6 +2346,16 @@ $.extend( CZRMultiInputDynMethods, {
 
                 //PRE ADD MODEL SETUP
                 control.czr_preModel('model').set(control.getDefaultModel());
+
+                //Add view rendered listeners
+                control.czr_preModel('view_content').callbacks.add(function( to, from ) {
+                  if ( _.isUndefined(from) ) {
+                    //provide a constructor for the inputs
+                    control.preModelInputConstructor = control.inputConstructor;//api.CZRInput;
+                    control.setupPreModelInputCollection();
+                  }
+                });
+
                 //add state listeners
                 control.czr_preModel('view_status').callbacks.add( function( to, from ) {
                   control._togglePreModelViewExpansion( to );
@@ -2349,6 +2365,22 @@ $.extend( CZRMultiInputDynMethods, {
           api.CZRMultiInputControl.prototype.ready.call( control );
   },//ready()
 
+
+  setupPreModelInputCollection : function() {
+          var control = this;
+          //creates the inputs based on the rendered items
+          $('.' + control.css_attr.pre_add_wrapper, control.container).find( '.' + control.css_attr.sub_set_wrapper)
+          .each( function(_index) {
+                var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index;
+                control.czr_preModelInput.add( _id, new control.preModelInputConstructor( _id, {
+                    id : _id,
+                    type : $(this).attr('data-input-type'),
+                    container : $(this),
+                    mono_model : control.czr_preModel('model'),
+                    control : control
+                } ) );
+          });//each
+  },
 
 
   //the model is manually added.
@@ -2384,32 +2416,32 @@ $.extend( CZRMultiInputDynMethods, {
 var CZRMultiInputDynMethods = CZRMultiInputDynMethods || {};
 
 $.extend( CZRMultiInputDynMethods, {
-  updatePreModel : function(obj) {
-        //get the changed property and val
-        //=> all html input have data-type attribute corresponding to the ones stored in the model
-        var control           = this,
-            $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
-            _changed_prop     = $_changed_input.attr('data-type'),
-            _new_val          = $( $_changed_input, obj.dom_el ).val(),
-            _new_model        = _.clone(control.czr_preModel('model').get());//initialize it to the current value
+  // updatePreModel : function(obj) {
+  //       //get the changed property and val
+  //       //=> all html input have data-type attribute corresponding to the ones stored in the model
+  //       var control           = this,
+  //           $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
+  //           _changed_prop     = $_changed_input.attr('data-type'),
+  //           _new_val          = $( $_changed_input, obj.dom_el ).val(),
+  //           _new_model        = _.clone(control.czr_preModel('model').get());//initialize it to the current value
 
-        //make sure the title has not been emptied. If so, replace it with the default title.
-        if ( 'title' == _changed_prop && _.isEmpty(_new_val) ) {
-          _defaultModel = control.getDefaultModel();
-          _new_val = _defaultModel.title;
-        }
+  //       //make sure the title has not been emptied. If so, replace it with the default title.
+  //       if ( 'title' == _changed_prop && _.isEmpty(_new_val) ) {
+  //         _defaultModel = control.getDefaultModel();
+  //         _new_val = _defaultModel.title;
+  //       }
 
-        _new_model[_changed_prop] = _new_val;
+  //       _new_model[_changed_prop] = _new_val;
 
-        //set the new val to preModel Value()
-        control.czr_preModel('model').set(_new_model);
+  //       //set the new val to preModel Value()
+  //       control.czr_preModel('model').set(_new_model);
 
-        control.doActions(
-          'pre_model:' + _changed_prop + ':changed',
-          control.container,
-          { model : _new_model, dom_el : $('.' + control.css_attr.pre_add_view_content, control.container ) }
-        );
-  }
+  //       control.doActions(
+  //         'pre_model:' + _changed_prop + ':changed',
+  //         control.container,
+  //         { model : _new_model, dom_el : $('.' + control.css_attr.pre_add_view_content, control.container ) }
+  //       );
+  // }
 
 });//$.extend//CZRBaseControlMethods//MULTI CONTROL CLASS
 //extends api.CZRBaseControl
@@ -4889,200 +4921,14 @@ $.extend( CZRSocialMethods, {
   initialize: function( id, options ) {
           //run the parent initialize
           api.CZRMultiInputDynControl.prototype.initialize.call( this, id, options );
-
           var control = this;
-
           this.social_icons = [
-            '500px',
-            'adn',
-            'amazon',
-            'android',
-            'angellist',
-            'apple',
-            'behance',
-            'behance-square',
-            'bitbucket',
-            'bitbucket-square',
-            'black-tie',
-            'btc',
-            'buysellads',
-            'chrome',
-            'codepen',
-            'codiepie',
-            'connectdevelop',
-            'contao',
-            'dashcube',
-            'delicious',
-            'delicious',
-            'deviantart',
-            'digg',
-            'dribbble',
-            'dropbox',
-            'drupal',
-            'edge',
-            'empire',
-            'expeditedssl',
-            'facebook',
-            'facebook',
-            'facebook-f (alias)',
-            'facebook-official',
-            'facebook-square',
-            'firefox',
-            'flickr',
-            'fonticons',
-            'fort-awesome',
-            'forumbee',
-            'foursquare',
-            'get-pocket',
-            'gg',
-            'gg-circle',
-            'git',
-            'github',
-            'github',
-            'github-alt',
-            'github-square',
-            'git-square',
-            'google',
-            'google',
-            'google-plus',
-            'google-plus-square',
-            'google-wallet',
-            'gratipay',
-            'hacker-news',
-            'houzz',
-            'instagram',
-            'internet-explorer',
-            'ioxhost',
-            'joomla',
-            'jsfiddle',
-            'lastfm',
-            'lastfm-square',
-            'leanpub',
-            'linkedin',
-            'linkedin',
-            'linkedin-square',
-            'linux',
-            'maxcdn',
-            'meanpath',
-            'medium',
-            'mixcloud',
-            'modx',
-            'odnoklassniki',
-            'odnoklassniki-square',
-            'opencart',
-            'openid',
-            'opera',
-            'optin-monster',
-            'pagelines',
-            'paypal',
-            'pied-piper',
-            'pied-piper-alt',
-            'pinterest',
-            'pinterest-p',
-            'pinterest-square',
-            'product-hunt',
-            'qq',
-            'rebel',
-            'reddit',
-            'reddit-alien',
-            'reddit-square',
-            'renren',
-            'rss',
-            'rss-square',
-            'safari',
-            'scribd',
-            'sellsy',
-            'share-alt',
-            'share-alt-square',
-            'shirtsinbulk',
-            'simplybuilt',
-            'skyatlas',
-            'skype',
-            'slack',
-            'slideshare',
-            'soundcloud',
-            'spotify',
-            'stack-exchange',
-            'stack-overflow',
-            'steam',
-            'steam-square',
-            'stumbleupon',
-            'stumbleupon',
-            'stumbleupon-circle',
-            'tencent-weibo',
-            'trello',
-            'tripadvisor',
-            'tumblr',
-            'tumblr-square',
-            'twitch',
-            'twitter',
-            'twitter',
-            'twitter-square',
-            'usb',
-            'viacoin',
-            'vimeo',
-            'vimeo-square',
-            'vine',
-            'vk',
-            'weibo',
-            'weixin',
-            'whatsapp',
-            'wikipedia-w',
-            'windows',
-            'wordpress',
-            'xing',
-            'xing-square',
-            'yahoo',
-            'yahoo',
-            'y-combinator',
-            'yelp',
-            'youtube',
-            'youtube-play',
-            'youtube-square'
+            '500px','adn','amazon','android','angellist','apple','behance','behance-square','bitbucket','bitbucket-square','black-tie','btc','buysellads','chrome','codepen','codiepie','connectdevelop','contao','dashcube','delicious','delicious','deviantart','digg','dribbble','dropbox','drupal','edge','empire','expeditedssl','facebook','facebook','facebook-f (alias)','facebook-official','facebook-square','firefox','flickr','fonticons','fort-awesome','forumbee','foursquare','get-pocket','gg','gg-circle','git','github','github','github-alt','github-square','git-square','google','google','google-plus','google-plus-square','google-wallet','gratipay','hacker-news','houzz','instagram','internet-explorer','ioxhost','joomla','jsfiddle','lastfm','lastfm-square','leanpub','linkedin','linkedin','linkedin-square','linux','maxcdn','meanpath','medium','mixcloud','modx','odnoklassniki','odnoklassniki-square','opencart','openid','opera','optin-monster','pagelines','paypal','pied-piper','pied-piper-alt','pinterest','pinterest-p','pinterest-square','product-hunt','qq','rebel','reddit','reddit-alien','reddit-square','renren','rss','rss-square','safari','scribd','sellsy','share-alt','share-alt-square','shirtsinbulk','simplybuilt','skyatlas','skype','slack','slideshare','soundcloud','spotify','stack-exchange','stack-overflow','steam','steam-square','stumbleupon','stumbleupon','stumbleupon-circle','tencent-weibo','trello','tripadvisor','tumblr','tumblr-square','twitch','twitter','twitter','twitter-square','usb','viacoin','vimeo','vimeo-square','vine','vk','weibo','weixin','whatsapp','wikipedia-w','windows','wordpress','xing','xing-square','yahoo','yahoo','y-combinator','yelp','youtube','youtube-play','youtube-square'
           ];
-
-
-          //add the new property to the the parent
-          //api.CZRMultiModelControl.prototype.initialize.apply( this, arguments );
-
-          //adds specific actions for this control
-          this.addActions(
-            'control_event_map',
-            [
-              //setup the select list for the pre add dialog box
-              {
-                  trigger   : 'pre_add_view_rendered',
-                  actions   : [ 'setupSelect' ]
-              },
-              {
-                  trigger   : 'pre_model:social-icon:changed',
-                  actions   : [ 'updatePreModelTitle' ]
-              }
-            ]
-          );
-
-
-
-          // this.addActions(
-          //   'view_event_map',
-          //   [
-          //     {
-          //         trigger   : 'viewContentRendered',
-          //         actions   : [ 'setupSelect', 'setupColorPicker', 'setupIcheck' ]
-          //     },
-          //     {
-          //         trigger   : 'social-icon:changed',
-          //         actions   : [ 'updateModelInputs' ]
-          //     }
-          //   ]
-          // );
-
           //EXTEND THE DEFAULT CONSTRUCTORS FOR INPUT
           control.inputConstructor = api.CZRInput.extend( control.CZRSocialsInputMethods || {} );
-
           //EXTEND THE DEFAULT CONSTRUCTORS FOR MONOMODEL
           control.modelConstructor = api.CZRMonoModel.extend( control.CZRSocialsMonoModel || {} );
-
           //declares a default model
           this.defaultMonoModel = {
             id : '',
@@ -5092,13 +4938,9 @@ $.extend( CZRSocialMethods, {
             'social-color' : serverControlParams.defaultSocialColor,
             'social-target' : 1
           };
-
           //overrides the default success message
           this.modelAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
   },//initialize
-
-
-
 
 
 
@@ -5118,12 +4960,19 @@ $.extend( CZRSocialMethods, {
                   api.CZRInput.prototype.ready.call( input);
           },
 
+
           setupSelect : function() {
                 var input      = this,
                     mono_model = input.mono_model,
-                    control     = mono_model.model_control,
-                    socialList = _.union( [serverControlParams.translatedStrings.selectSocialIcon], control.social_icons),
+                    control     = input.control,
+                    socialList = control.social_icons,
                     _model = mono_model.get();
+
+                //check if we are in the pre model case => if so, the id is empty
+                //=> add the select text
+                if ( _.isEmpty(_model.id) ) {
+                  socialList = _.union( [serverControlParams.translatedStrings.selectSocialIcon], socialList );
+                }
 
                 //generates the options
                 _.each( socialList , function( icon_name, k ) {
@@ -5175,7 +5024,7 @@ $.extend( CZRSocialMethods, {
         setupColorPicker : function( obj ) {
                 var input      = this,
                     mono_model = input.mono_model,
-                    control     = mono_model.model_control;
+                    control     = input.control;
 
                 $( 'input[data-type="social-color"]', input.container ).wpColorPicker( {
                   defaultColor : 'rgba(255,255,255,0.7)',
@@ -5199,7 +5048,7 @@ $.extend( CZRSocialMethods, {
         //Fired on 'social-icon:changed' for existing models
         updateModelInputs : function() {
                 var mono_model = this.mono_model,
-                    control     = mono_model.model_control,
+                    control     = this.control,
                     _new_model  = _.clone( mono_model.get() ),
                     _new_title  = control._capitalize( _new_model['social-icon'].replace('fa-', '') ),
                     _new_color  = serverControlParams.defaultSocialColor;
@@ -5207,9 +5056,12 @@ $.extend( CZRSocialMethods, {
                 //add text follow us... to the title
                 _new_title = [ serverControlParams.translatedStrings.followUs, _new_title].join(' ');
 
-                $('input[data-type="title"]', mono_model.container ).val( _new_title );
-                $('input[data-type="social-link"]', mono_model.container ).val( '' );
-                $('input[data-type="social-color"]', mono_model.container ).wpColorPicker('color', _new_color );
+                //if current mono_model is not the premodel, update the
+                if ( _.has(mono_model , 'container') ) {
+                    $('input[data-type="title"]', mono_model.container ).val( _new_title );
+                    $('input[data-type="social-link"]', mono_model.container ).val( '' );
+                    $('input[data-type="social-color"]', mono_model.container ).wpColorPicker('color', _new_color );
+                }
 
                 //set the new val to the changed property
                 _new_model.title = _new_title;
@@ -5220,8 +5072,6 @@ $.extend( CZRSocialMethods, {
         },
 
   },//CZRSocialsInputMethods
-
-
 
 
 
@@ -5252,132 +5102,6 @@ $.extend( CZRSocialMethods, {
           }
 
   },//CZRSocialsMonoModel
-
-
-
-
-  _buildTitle : function( title, icon, color ) {
-          title = title || ( 'string' === typeof(icon) ? this._capitalize( icon.replace( 'fa-', '') ) : '' );
-          title = this._truncate(title, 20);
-          icon = icon || 'fa-' + this.social_icons[0];
-          color = color || serverControlParams.defaultSocialColor;
-
-          return '<div><span class="fa ' + icon + '" style="color:' + color + '"></span> ' + title + '</div>';
-  },
-
-  //overrides the default parent method by a custom one
-  //at this stage, the model passed in the obj is up to date
-  writeViewTitle : function( obj ) {
-    var _title = this._capitalize( obj.model['social-icon'].replace('fa-', '') );
-
-    $( '.' + this.css_attr.view_title , '#' + obj.model.id ).html(
-      this._buildTitle( _title, obj.model['social-icon'], obj.model['social-color'] )
-    );
-  },
-
-  //ACTIONS ON ICON CHANGE
-  //Fired on 'social-icon:changed' for existing models
-  updateModelInputs : function( obj ) {
-    var control     = this,
-        _new_model  = _.clone( obj.model ),
-        _new_title  = control._capitalize( obj.model['social-icon'].replace('fa-', '') ),
-        _new_color  = serverControlParams.defaultSocialColor;
-    //add text follow us... to the title
-    _new_title = [ serverControlParams.translatedStrings.followUs, _new_title].join(' ');
-
-    $('input[data-type="title"]', obj.dom_el ).val( _new_title );
-    $('input[data-type="social-link"]', obj.dom_el ).val( '' );
-    $('input[data-type="social-color"]', obj.dom_el ).wpColorPicker('color', _new_color );
-
-    //set the new val to the changed property
-    _new_model.title = _new_title;
-    _new_model['social-link'] = '';
-    _new_model['social-color'] = _new_color;
-
-    control.czr_Model(obj.model.id).set(_new_model);
-  },
-
-
-  //Fired on pre_model:social-icon:changed
-  updatePreModelTitle : function(obj) {
-    var control = this,
-        _new_title  = control._capitalize( obj.model['social-icon'].replace('fa-', '') ),
-        _new_model = control.czr_preModel('model').get();
-    _new_model.title = [ serverControlParams.translatedStrings.followUs, _new_title].join(' ');
-    control.czr_preModel('model').set(_new_model);
-  },
-
-
-
-
-  setupSelect : function( obj ) {
-          var control = this,
-              socialList = _.union( [serverControlParams.translatedStrings.selectSocialIcon], control.social_icons);
-
-          //generates the options
-          _.map( socialList , function( icon_name, k ) {
-            var _value = ( 0 === k ) ? '' : 'fa-' + icon_name.toLowerCase(),
-                _attributes = {
-                  value : _value,
-                  html: control._capitalize(icon_name)
-                };
-            if ( _value == obj.model['social-icon'] )
-              $.extend( _attributes, { selected : "selected" } );
-
-            $( 'select[data-type="social-icon"]', obj.dom_el ).append( $('<option>', _attributes) );
-          });
-
-          function addIcon( state ) {
-            if (! state.id) { return state.text; }
-            var $state = $(
-              '<span class="fa ' + state.element.value.toLowerCase() + '">&nbsp;&nbsp;' + state.text + '</span>'
-            );
-            return $state;
-          }
-
-          //fire select2
-          $( 'select[data-type="social-icon"]', obj.dom_el ).select2( {
-              templateResult: addIcon,
-              templateSelection: addIcon
-          });
-  },
-
-
-  setupColorPicker : function( obj ) {
-    var control = this;
-    $( 'input[data-type="social-color"]', obj.dom_el ).wpColorPicker( {
-      defaultColor : 'rgba(255,255,255,0.7)',
-      change : function( e, o ) {
-        //if the input val is not updated here, it's not detected right away.
-        //weird
-        //is there a "change complete" kind of event for iris ?
-        $(this).val(o.color.toString());
-        $(this).trigger('colorpickerchange');
-      }
-    });
-    //when the picker opens, it might be below the visible viewport.
-    //No built-in event available to react on this in the wpColorPicker unfortunately
-    $( 'input[data-type="social-color"]', obj.dom_el ).closest('div').on('click keydown', function() {
-      control._adjustScrollExpandedBlock( obj.dom_el );
-    });
-  },
-
-  setupIcheck : function( obj ) {
-    $( 'input[type=checkbox]', obj.dom_el ).each( function(e) {
-      if ( 0 !== $(this).closest('div[class^="icheckbox"]').length )
-        return;
-
-      $(this).iCheck({
-        checkboxClass: 'icheckbox_flat-grey',
-        checkedClass: 'checked',
-        radioClass: 'iradio_flat-grey',
-      })
-      .on( 'ifChanged', function(e){
-        $(this).val( false === $(this).is(':checked') ? 0 : 1 );
-        $(e.currentTarget).trigger('change');
-      });
-    });
-  }
 
 });//extends api.CZRMultiModelControl
 

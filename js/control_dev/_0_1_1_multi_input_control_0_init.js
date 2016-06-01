@@ -50,37 +50,16 @@ $.extend( CZRMultiInputControlMethods, {
           //=> the collection update on startup is done when the control is embedded and BEFORE the api is ready
           //=> won't trigger and change setting
           api.bind( 'ready', function() {
-                //on init : populate the collection and setup the listener of the collection value
-                //control.czr_Model.czr_collection.callbacks.add( function() { return control.setupCollectionListeners.apply(control, arguments ); } );
-                control.populateCollection();
+                control.populateCollection()._makeSortable();
 
                 //LISTEN TO MONO MODELS COLLECTION
                 //1) update the control setting value
                 //2) fire dom actions
-                control.czr_Model.czr_collection.callbacks.add( function() { return control.apiCb.apply(control, arguments ); } );
+                control.czr_Model.czr_collection.callbacks.add( function() { return control.collectionListeners.apply(control, arguments ); } );
           });
 
           //this control is ready
           control.container.trigger('ready');
-  },//ready()
-
-
-
-  apiCb : function( to, from) {
-          var control = this;
-          //say it to the api
-          api(control.id).set( control.filterCollectionBeforeAjax(to) );
-
-          //refreshes the preview frame  :
-          //1) only needed if transport is postMessage, because is triggered by wp otherwise
-          //2) only needed when : add, remove, sort model(s).
-          var is_model_update = ( _.size(from) == _.size(to) ) && ! _.isEmpty( _.difference(from, to) );
-
-          if ( 'postMessage' == api(control.id).transport && ! is_model_update && ! api.czr_has_part_refresh( control.id ) ) {
-            control.previewer.refresh();
-          }
   }
-
-
 
 });//$.extend//CZRBaseControlMethods

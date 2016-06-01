@@ -30,7 +30,6 @@ $.extend( CZRMultiInputControlMethods, {
 
 
   instantiateModel : function( model,is_added_by_user ) {
-          console.log('MODEL BEFORE INSTANTIATION', model, _.has( model,'id'), is_added_by_user );
           if ( ! _.has( model,'id') ) {
             throw new Error('CZRMultiInputControl::instantiateModel() : a model has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
           }
@@ -49,54 +48,34 @@ $.extend( CZRMultiInputControlMethods, {
           } ) );
   },
 
-
-  //@fired in control ready on api('ready')
-  //setup the collection listener
-  //Has to be fired after the initial fetch of the server saved collection
-  //=> otherwise an unwanted collection update will be triggered when adding the saved models
-  setupCollectionListeners : function(to, from) {
-    console.log(to, from, 'caca');
+  //registered callback by czr_collection.callbacks.add()
+  collectionListeners : function( to, from) {
           var control = this,
               _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
               _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
               _model_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
               _collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && _.isEmpty(_model_updated);
 
-          //RENDERS AND SETUP VIEW
-          // if ( ! _.isEmpty(_to_render) && ! control.getViewEl(_to_render.id).length ) {
-          //       //Render model's view
-          //       var $view = control.renderView( {model:_to_render} );
-          //       //setup
-          //       control.setupViewApiListeners( {model:_to_render, dom_el : $view} );//listener of the czr_View value for expansion state
-          //       control.setupDOMListeners( control.view_event_map , {model:_to_render, dom_el:$view} );//listeners for the view wrapper
-          //       control._makeSortable();
+          //say it to the api
+          api(control.id).set( control.filterCollectionBeforeAjax(to) );
 
-          //       //hook here
-          //       control.doActions('after_viewSetup', $view, { model : _to_render , dom_el: $view} );
-          // }//if
-
-          //REMOVES
-          // if ( ! _.isEmpty(_to_remove) ) {
-          //       //destroy the DOM el
-          //       control._destroyView(_to_remove.id);
-          //       //remove the values
-          //       control.czr_Model.remove(_to_remove.id);
-          //       control.czr_View.remove(_to_remove.id);
-
-          //       //hook here
-          //       control.doActions('after_modelRemoved', control.container, { model : _to_remove } );
-          // }//if
-
-          //SORTED COLLECTION
+           //SORTED COLLECTION
           if ( _collection_sorted ) {
                 if ( _.has(control, 'czr_preModel') ) {
                   control.czr_preModel('view_status').set('closed');
                 }
                 control.closeAllViews();
                 control.closeAllAlerts();
-          }//if
+          }
 
-          return this;
+          //refreshes the preview frame  :
+          //1) only needed if transport is postMessage, because is triggered by wp otherwise
+          //2) only needed when : add, remove, sort model(s).
+          var is_model_update = ( _.size(from) == _.size(to) ) && ! _.isEmpty( _.difference(from, to) );
+
+          if ( 'postMessage' == api(control.id).transport && ! is_model_update && ! api.czr_has_part_refresh( control.id ) ) {
+            control.previewer.refresh();
+          }
   },
 
 
@@ -146,4 +125,35 @@ $.extend( CZRMultiInputControlMethods, {
           control.czr_Model.czr_collection.set(_new_collection);
   },
 
+
+  //fire on sortable() update callback
+  //@returns a sorted collection as an array of model objects
+  _getSortedDOMCollection : function( obj ) {
+          var control = this,
+              _old_collection = _.clone( control.czr_Model.czr_collection.get() ),
+              _new_collection = [],
+              _index = 0;
+
+          //re-build the collection from the DOM
+          $( '.' + control.css_attr.inner_view, control.container ).each( function() {
+            var _model = _.findWhere( _old_collection, {id: $(this).attr('data-id') });
+            //do we have a match in the existing collection ?
+            if ( ! _model )
+              return;
+
+            _new_collection[_index] = _model;
+
+            _index ++;
+          });
+
+          //make sure the new collection is not empty...
+          if ( 0 === _new_collection.length )
+            return _old_collection;
+
+          //make sure we have the exact same models as before in the sorted collection
+          if ( ! _.isEmpty( _.difference( _old_collection, _new_collection ) ) )
+            return _old_collection;
+
+          return _new_collection;
+  }
 });//$.extend//CZRBaseControlMethods

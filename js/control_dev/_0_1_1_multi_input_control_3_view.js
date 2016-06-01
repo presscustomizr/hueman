@@ -71,4 +71,18 @@ $.extend( CZRMultiInputControlMethods, {
           });
   },
 
+
+  //fired
+  _makeSortable : function(obj) {
+          if ( wp.media.isTouchDevice || ! $.fn.sortable )
+            return;
+          var control = this;
+          $( '.' + control.css_attr.views_wrapper, control.container ).sortable( {
+              handle: '.' + control.css_attr.sortable_handle,
+              update: function( event, ui ) {
+                control.czr_Model.czr_collection.set( control._getSortedDOMCollection() );
+              }
+            }
+          );
+  }
 });//$.extend

@@ -205,25 +205,10 @@ $.extend( CZRMonoModelMethods , {
           } );
   },
 
-    //fired
-  _makeSortable : function(obj) {
-    if ( wp.media.isTouchDevice || ! $.fn.sortable )
-      return;
-    var monoModel = this,
-        control = this.model_control;
-
-    $( '.' + control.css_attr.views_wrapper, monoModel.container ).sortable( {
-        handle: '.' + control.css_attr.sortable_handle,
-        update: function( event, ui ) {
-          control.czr_Model.czr_collection.set( control._getSortedDOMCollection() );
-        }
-      }
-    );
-  },
 
   //removes the view dom element
   _destroyView : function (model_id) {
-          monoModel.container.fadeOut( {
+          this.container.fadeOut( {
             duration : 400,
             done : function() {
               $(this).remove();
