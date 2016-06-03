@@ -13,7 +13,6 @@ $.extend( CZRMonoModelMethods , {
         var monoModel = this,
             control = monoModel.model_control;
         model = model || monoModel.get();
-
         //do we have view template script?
         if ( 0 === $( '#tmpl-' + control.getTemplateEl( 'view', model ) ).length )
           return false;//break the action chain

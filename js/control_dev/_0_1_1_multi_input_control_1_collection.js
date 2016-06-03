@@ -12,7 +12,6 @@ $.extend( CZRMultiInputControlMethods, {
   //@fired in control ready on api('ready')
   populateCollection : function() {
           var control = this;
-
           //inits the collection with the saved models
           //populates the collection with the saved model
           _.each( control.savedModels, function( model, key ) {

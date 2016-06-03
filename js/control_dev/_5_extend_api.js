@@ -47,6 +47,8 @@
 
 
 (function (api, $, _) {
+  //Extends with the events manager
+  $.extend( CZRBaseControlMethods, api.Events || {} );
   //Add the DOM helpers (addAction, ...) to the Control Base Class + Input Base Class
   $.extend( CZRBaseControlMethods, api.CZR_Dom || {} );
   $.extend( CZRInputMethods, api.CZR_Dom || {} );
@@ -64,7 +66,7 @@
 
   //api.CZRBackgroundControl     = api.CZRMonoModelControl.extend( CZRBackgroundMethods || {} );
 
-  //api.CZRWidgetAreasControl    = api.CZRMultiInputDynControl.extend( CZRWidgetAreasMethods || {} );
+  api.CZRWidgetAreasControl    = api.CZRMultiInputDynControl.extend( CZRWidgetAreasMethods || {} );
   api.CZRSocialControl         = api.CZRMultiInputDynControl.extend( CZRSocialMethods || {} );
 
   api.CZRUploadControl         = api.Control.extend( CZRUploadMethods || {} );
@@ -74,13 +76,13 @@
   //api.CZRSektionsControl       = api.CZRMultiInputDynControl.extend( CZRSektionsMethods || {} );
 
   $.extend( api.controlConstructor, {
-    czr_upload     : api.CZRUploadControl,
-    //czr_sidebars   : api.CZRWidgetAreasControl,
-    czr_socials    : api.CZRSocialControl,
-    czr_multiple_picker : api.CZRMultiplePickerControl,
-    czr_layouts    : api.CZRLayoutControl,
-    //czr_background : api.CZRBackgroundControl,
-    //czr_sektions   : api.CZRSektionsControl
+        czr_upload     : api.CZRUploadControl,
+        czr_sidebars   : api.CZRWidgetAreasControl,
+        czr_socials    : api.CZRSocialControl,
+        czr_multiple_picker : api.CZRMultiplePickerControl,
+        czr_layouts    : api.CZRLayoutControl,
+        //czr_background : api.CZRBackgroundControl,
+        //czr_sektions   : api.CZRSektionsControl
   });
 
   if ( 'function' == typeof api.CroppedImageControl ) {

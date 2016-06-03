@@ -43,7 +43,7 @@ var CZRMonoModelMethods = CZRMonoModelMethods || {};
             _new_collection = _.without( _new_collection, _.findWhere( _new_collection, {id: monoModel.model_id }) );
             control.czr_Model.czr_collection.set( _new_collection );
             //hook here
-            control.doActions('before_modelRemoved', control.container, { model : monoModel.get() } );
+            control.trigger('item_removed', monoModel.get() );
             //remove the mono model from the collection
             control.czr_Model.remove(monoModel.model_id);
     },
@@ -51,8 +51,7 @@ var CZRMonoModelMethods = CZRMonoModelMethods || {};
     //@return the model {...} from the collection
     //takes a model unique id as param
     getModel : function(id) {
-            var monoModel = this;
-            return monoModel.get();
+            return this.get();
     }
 
   });//$.extend

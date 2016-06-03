@@ -115,7 +115,9 @@ $.extend( CZRMultiInputDynMethods, {
           control.instantiateModel(model, true); //true == Added by user
 
           control.closeResetPreModel();
-          control.doActions( 'model_added_by_user' , control.container, { model : model , dom_event : obj.dom_event } );
+
+          control.trigger('model_item', model );
+          //control.doActions( 'model_added_by_user' , control.container, { model : model , dom_event : obj.dom_event } );
 
           //refresh the preview frame (only needed if transport is postMessage )
           //must be a dom event not triggered

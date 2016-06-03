@@ -35,46 +35,46 @@ $.extend( CZRWidgetAreasMethods, {
               //     actions   : [ 'writeSubtitleInfos' ]
               // },
               //this action will refresh the preview with a delay
-              {
-                  trigger   : 'after_sendModel',
-                  actions   : ['updateSectionTitle','setModelUpdateTimer']
-              },
+              // {
+              //     trigger   : 'after_sendModel',
+              //     actions   : ['updateSectionTitle','setModelUpdateTimer']
+              // },
               //=> update the related control choice list with the new widget area
               //=> creates section, setting and control for the newly added widget area
-              {
-                  trigger   : 'model_added_by_user',
-                  actions   : ['addWidgetSidebar', 'closePreModelAlert']
-              },
-              {
-                  trigger   : 'before_modelRemoved',
-                  actions   : ['removeWidgetSidebar']
-              }
+              // {
+              //     trigger   : 'model_added_by_user',
+              //     actions   : ['addWidgetSidebar', 'closePreModelAlert']
+              // },
+              // {
+              //     trigger   : 'before_modelRemoved',
+              //     actions   : ['removeWidgetSidebar']
+              // }
             ]
           );
 
           //extend each view event map
-          control.addActions(
-            'view_event_map', [
-              // {
-              //     trigger   : 'locations:changed',
-              //     actions   : [ 'mayBeDisplayModelAlert' ]
-              // },
-              //setup the location alert for each model views
-              {
-                  trigger   : 'after_viewSetup',
-                  actions   : [ 'setupLocationsApiListeners' ]
-              },
-              //add a callback to view => refresh the locations based on the preview insights
-              {
-                  trigger   : 'after_viewSetup',
-                  actions   : [ 'listenToViewExpand' ]
-              },
-              // {
-              //     trigger   : 'viewContentRendered',
-              //     actions   : [ 'setupSelect' ]
-              // }
-            ]
-          );
+          // control.addActions(
+          //   'view_event_map', [
+          //     // {
+          //     //     trigger   : 'locations:changed',
+          //     //     actions   : [ 'mayBeDisplayModelAlert' ]
+          //     // },
+          //     //setup the location alert for each model views
+          //     // {
+          //     //     trigger   : 'after_viewSetup',
+          //     //     actions   : [ 'setupLocationsApiListeners' ]
+          //     // },
+          //     //add a callback to view => refresh the locations based on the preview insights
+          //     // {
+          //     //     trigger   : 'after_viewSetup',
+          //     //     actions   : [ 'listenToViewExpand' ]
+          //     // },
+          //     // {
+          //     //     trigger   : 'viewContentRendered',
+          //     //     actions   : [ 'setupSelect' ]
+          //     // }
+          //   ]
+          // );
 
           //EXTEND THE DEFAULT CONSTRUCTORS FOR INPUT
           control.inputConstructor = api.CZRInput.extend( control.CZRWZonesInputMethods || {} );
@@ -87,30 +87,30 @@ $.extend( CZRWidgetAreasMethods, {
 
           //context match map
           control.context_match_map = {
-            is_404 : '404',
-            is_category : 'archive-category',
-            is_home : 'home',
-            is_page : 'page',
-            is_search : 'search',
-            is_single : 'single'
+                  is_404 : '404',
+                  is_category : 'archive-category',
+                  is_home : 'home',
+                  is_page : 'page',
+                  is_search : 'search',
+                  is_single : 'single'
           };
 
           //extend the saved model property
           //adds the default widget zones
           control.savedModels = _.union(
-            _.has(control.params, 'default_zones') ? control.params.default_zones : [],
-            control.savedModels
+                  _.has(control.params, 'default_zones') ? control.params.default_zones : [],
+                  control.savedModels
           );
 
           control.locations = _.has( options.params , 'sidebar_locations') ? options.params.sidebar_locations : {};
 
           //declares a default model
           control.defaultMonoModel = {
-            id : '',
-            title : serverControlParams.translatedStrings.widgetZone,
-            contexts : _.without( _.keys(control.contexts), '_all_' ),//the server list of contexts is an object, we only need the keys, whitout _all_
-            locations : [ serverControlParams.defaultWidgetLocation ],
-            description : ''
+                  id : '',
+                  title : serverControlParams.translatedStrings.widgetZone,
+                  contexts : _.without( _.keys(control.contexts), '_all_' ),//the server list of contexts is an object, we only need the keys, whitout _all_
+                  locations : [ serverControlParams.defaultWidgetLocation ],
+                  description : ''
           };
 
           //overrides the default success message
@@ -128,12 +128,21 @@ $.extend( CZRWidgetAreasMethods, {
           control.czr_preModel('location_alert_view_state').set('closed');
           //2) add state listeners
           control.czr_preModel('location_alert_view_state').callbacks.add( function( to, from ) {
-            var $view = control._getPreModelView();
-            control._toggleLocationAlertExpansion( $view, to );
+                    var $view = control._getPreModelView();
+                    control._toggleLocationAlertExpansion( $view, to );
           });
 
-          //AVAILABLE VALUES FOR THE MODELS
-          control.czr_viewLocationAlert = new api.Values();
+          //REACT ON ADD / REMOVE ITEMS
+          control.bind( 'item_added', function( model ) {
+                  console.log('arguments of model added', model, arguments);
+                  control.addWidgetSidebar( model );
+                  control.czr_preModel('location_alert_view_state').set('closed');
+          });
+
+
+          control.bind( 'item_removed' , function(model) {
+
+          });
   },//initialize
 
 
@@ -144,16 +153,22 @@ $.extend( CZRWidgetAreasMethods, {
   ready : function() {
           var control = this;
           api.CZRMultiInputDynControl.prototype.ready.call( control );
-          //add state listener on pre model view
-          control.czr_preModel('view_status').callbacks.add( function( to, from ) {
-                if ( 'expanded' != to )
-                  return;
-                //refresh the location list
-                control.czr_preModelInput('locations')._setupLocationSelect( true );//true for refresh
-                //refresh the location alert message
-                control.czr_preModelInput('locations').mayBeDisplayModelAlert();
+          api.bind( 'ready', function() {
+                //add state listener on pre model view
+                control.czr_preModel('view_status').callbacks.add( function( to, from ) {
+                      if ( 'expanded' != to )
+                        return;
+                      //refresh the location list
+                      control.czr_preModelInput('locations')._setupLocationSelect( true );//true for refresh
+                      //refresh the location alert message
+                      control.czr_preModelInput('locations').mayBeDisplayModelAlert();
+                });
           });
   },
+
+
+
+
 
 
 
@@ -184,17 +199,19 @@ $.extend( CZRWidgetAreasMethods, {
           //setup select on view_rendered|view_content_event_map
           setupSelect : function() {
                   var input      = this;
+                  if ( 'locations' == this.id )
+                    this._setupLocationSelect();
+                  if ( 'contexts' == this.id )
+                    this._setupContextSelect();
 
-                  this._setupContextSelect( input.get() );
-                  this._setupLocationSelect( input.get() );
           },
 
           //helper
           _setupContextSelect : function() {
                   var input      = this,
-                    model = input.get(),
-                    mono_model = input.mono_model,
-                    control     = input.control;
+                      input_contexts = input.get(),
+                      mono_model = input.mono_model,
+                      control     = input.control;
 
                   //generates the contexts options
                   _.each( control.contexts, function( title, key ) {
@@ -202,7 +219,7 @@ $.extend( CZRWidgetAreasMethods, {
                               value : key,
                               html: title
                             };
-                        if ( key == model.contexts || _.contains( model.contexts, key ) )
+                        if ( key == input_contexts || _.contains( input_contexts, key ) )
                           $.extend( _attributes, { selected : "selected" } );
 
                         $( 'select[data-type="contexts"]', input.container ).append( $('<option>', _attributes) );
@@ -216,10 +233,11 @@ $.extend( CZRWidgetAreasMethods, {
           //the refresh param is a bool
           _setupLocationSelect : function(refresh ) {
                   var input      = this,
-                      model = input.get(),
+                      input_locations = input.get(),
                       mono_model = input.mono_model,
                       control     = input.control,
                       available_locs = api.sidebar_insights('available_locations').get();
+
                   //generates the locations options
                   //append them if not set yet
                   if ( ! $( 'select[data-type="locations"]', input.container ).children().length ) {
@@ -229,7 +247,7 @@ $.extend( CZRWidgetAreasMethods, {
                             html: title
                           };
 
-                      if ( key == model.locations || _.contains( model.locations, key ) )
+                      if ( key == input_locations || _.contains( input_locations, key ) )
                         $.extend( _attributes, { selected : "selected" } );
 
                       $( 'select[data-type="locations"]', input.container ).append( $('<option>', _attributes) );
@@ -246,7 +264,7 @@ $.extend( CZRWidgetAreasMethods, {
                   }
 
                   if ( refresh ) {
-                    $( 'select[data-type="locations"]', input.container ).select2( "destroy" );
+                    $( 'select[data-type="locations"]', input.container ).select2( 'destroy' );
                   }
 
                   //fire select2
@@ -270,10 +288,10 @@ $.extend( CZRWidgetAreasMethods, {
                       });
 
                   //check if we are in the pre model case => if so, the id is empty
-                  if ( _.isEmpty( input.get().id ) ) {
+                  if ( ! _.has( input.get(), 'id' ) || _.isEmpty( input.get().id ) ) {
                     control.czr_preModel('location_alert_view_state').set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
                   } else {
-                    control.czr_viewLocationAlert( mono_model.model_id ).set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
+                    mono_model.czr_viewLocationAlert( mono_model.model_id ).set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
                   }
           }
   },//CZRWZonesInputMethods
@@ -293,42 +311,74 @@ $.extend( CZRWidgetAreasMethods, {
 
 
   CZRWZonesMonoModel : {
-          ready : function() {
-                  var monoModel = this;
+          initialize : function( id, options ) {
+                  var monoModel = this,
+                      control = monoModel.model_control;
 
-                  monoModel.addActions(
-                    'view_event_map',
-                    {
-                        trigger   : 'after_writeViewTitle',
-                        actions   : [ 'writeSubtitleInfos' ]
-                    },
-                    //this action will refresh the preview with a delay
-                    {
-                        trigger   : 'after_sendModel',
-                        actions   : ['updateSectionTitle','setModelUpdateTimer']
-                    },
-                    monoModel
-                  );
+                  //Add some observable values for this monoModel
+                  monoModel.czr_viewLocationAlert = new api.Values();
 
-                  api.CZRMonoModel.prototype.ready.call(monoModel);
+                  api.CZRMonoModel.prototype.initialize.call( monoModel, null, options );
           },
 
-          //fired after writeViewTitle
+
+
+          //extend parent setupview
+          setupView : function() {
+                  var monoModel = this,
+                      control = monoModel.model_control;
+                  api.CZRMonoModel.prototype.setupView.call(monoModel);
+
+                  /// ALERT FOR NOT AVAILABLE LOCATION
+                  monoModel.czr_viewLocationAlert.create( monoModel.model_id );
+                  monoModel.czr_viewLocationAlert( monoModel.model_id ).set('closed');
+
+                  //add a state listener on expansion change
+                  monoModel.czr_viewLocationAlert( monoModel.model_id ).callbacks.add( function( to, from ) {
+                    control._toggleLocationAlertExpansion( monoModel.container , to );
+                  });
+
+                  //this is fired just after the setupViewApiListeners
+                  //=> add a callback to refresh the availability status of the locations in the select location picker
+                  //add a state listener on expansion change
+                  monoModel.czr_View.callbacks.add( function( to, from ) {
+                        if ( -1 == to.indexOf('expanded') )//can take the expanded_noscroll value !
+                          return;
+                        //refresh the location list
+                        monoModel.czr_Input('locations')._setupLocationSelect( true );//true for refresh
+                        //refresh the location alert message
+                        monoModel.czr_Input('locations').mayBeDisplayModelAlert();
+                  });
+          },
+
+
+          //extend parent listener
+          setupMonoModelListeners : function(to, from) {
+                  var monoModel = this;
+                  api.CZRMonoModel.prototype.setupMonoModelListeners.call(monoModel, to, from);
+
+                  monoModel.writeSubtitleInfos(to);
+                  monoModel.updateSectionTitle(to).setModelUpdateTimer();
+          },
+
+
+
+          //Fired in setupMonoModelListeners. Reacts to model change.
           //Write html informations under the title : location(s) and context(s)
-          writeSubtitleInfos : function(obj) {
-                  var control = this,
-                      _model = _.clone(obj.model),
-                      $_view = this.getViewEl(_model.id),
+          writeSubtitleInfos : function(model) {
+                  var monoModel = this,
+                      control = monoModel.model_control,
+                      _model = _.clone( model || monoModel.get() ),
                       _locations = [],
                       _contexts = [],
                       _html = '';
 
-                  if ( ! $_view.length )
+                  if ( ! monoModel.container.length )
                     return;
 
                   //generate the locations and the contexts text from the json data if exists
                   _model.locations =_.isString(_model.locations) ? [_model.locations] : _model.locations;
-                  _.map( _model.locations, function( loc ) {
+                  _.each( _model.locations, function( loc ) {
                       if ( _.has( control.locations , loc ) )
                         _locations.push(control.locations[loc]);
                       else
@@ -340,10 +390,10 @@ $.extend( CZRWidgetAreasMethods, {
                   _model.contexts =_.isString(_model.contexts) ? [_model.contexts] : _model.contexts;
 
                   //all contexts cases ?
-                  if ( control._hasModelAllContexts(_model.id) ) {
+                  if ( monoModel._hasModelAllContexts( model ) ) {
                     _contexts.push(control.contexts._all_);
                   } else {
-                    _.map( _model.contexts, function( con ) {
+                    _.each( _model.contexts, function( con ) {
                         if ( _.has( control.contexts , con ) )
                           _contexts.push(control.contexts[con]);
                         else
@@ -368,24 +418,81 @@ $.extend( CZRWidgetAreasMethods, {
 
                   _html = '<u>' + _locationText + '</u> : ' + _locations + ' <strong>|</strong> <u>' + _contextText + '</u> : ' + _contexts;
 
-                  if ( ! $('.czr-zone-infos', $_view ).length ) {
+                  if ( ! $('.czr-zone-infos', monoModel.container ).length ) {
                     var $_zone_infos = $('<div/>', {
                       class : [ 'czr-zone-infos' , control.css_attr.sortable_handle ].join(' '),
                       html : _html
                     });
-                    $( '.' + control.css_attr.view_buttons, $_view ).after($_zone_infos);
+                    $( '.' + control.css_attr.view_buttons, monoModel.container ).after($_zone_infos);
                   } else {
-                    $('.czr-zone-infos', $_view ).html(_html);
+                    $('.czr-zone-infos', monoModel.container ).html(_html);
                   }
           },//writeSubtitleInfos
 
 
+
+          ////Fired in setupMonoModelListeners
+          //fired on 'after_sendModel'
+          updateSectionTitle : function(model) {
+                  var _sidebar_id = 'sidebar-widgets-' + model.id,
+                      _new_title  = model.title;
+                  //does this section exists ?
+                  if ( ! api.section.has(_sidebar_id) )
+                    return this;
+
+                  //update the section title
+                  $('.accordion-section-title', api.section(_sidebar_id).container ).text(_new_title);
+
+                  //update the top title ( visible when inside the expanded section )
+                  $('.customize-section-title h3', api.section(_sidebar_id).container ).html(
+                    '<span class="customize-action">' + api.section(_sidebar_id).params.customizeAction + '</span>' + _new_title
+                  );
+                  // $('.customize-section-title h3', api.section(_sidebar_id).container )
+                  //   .append('<span>', {
+                  //       class: 'customize-section-back',
+                  //       html: api.section(_sidebar_id).params.customizeAction
+                  //     } )
+                  //   .append(_new_title);
+
+                  //remove and re-instanciate
+                  //=> works for the section but the controls are not activated anymore.
+                  //Should be easy to fix but useless to go further here. Jquery does the job.
+                  // var _params = _.clone( api.section(_sidebar_id).params );
+                  // _params.title = _new_title;
+                  // api.section(_sidebar_id).container.remove();
+                  // api.section.remove(_sidebar_id);
+                  // api.section.add( _sidebar_id, new api.sectionConstructor[_params.type]( _params.id ,{ params : _params } ) );
+                  return this;
+          },
+
+
+          //fired on model_update
+          //Don't hammer the preview with too many refreshs
+          //2 seconds delay
+          setModelUpdateTimer : function() {
+                  var monoModel = this,
+                      control = monoModel.model_control;
+
+                  clearTimeout( $.data(this, 'modelUpdateTimer') );
+                  $.data(
+                    this,
+                    'modelUpdateTimer',
+                    setTimeout( function() {
+                      //refresh preview
+                      control.refreshPreview();
+                    } , 1000)
+                  );//$.data
+          },
+
+
           //@return bool
           //takes the model unique id
-          _hasModelAllContexts : function( id ) {
-                  var control = this,
-                      model = control.getModel(id),
+          _hasModelAllContexts : function( model ) {
+                  var monoModel = this,
+                      control = monoModel.model_control,
                       controlContexts = _.keys(control.contexts);
+
+                  model = model || this.get();
 
                   if ( ! _.has(model, 'contexts') )
                     return;
@@ -406,7 +513,7 @@ $.extend( CZRWidgetAreasMethods, {
                   return _.isEmpty( _matched ) ? defaults : _matched;
 
           }
-  },
+  },//CZRWZonesMonoModel
 
 
 
@@ -460,53 +567,6 @@ $.extend( CZRWidgetAreasMethods, {
 
 
 
-
-
-
-
-
-
-
-  //////////////////////////////////////////////////
-  ///LOCATION LIST REFRESH AND WARNINGS
-  //////////////////////////////////////////////////
-  //this is fired just after the setupViewApiListeners
-  //=> add a callback to refresh the availability status of the locations in the select location picker
-  listenToViewExpand : function(obj) {
-          var control = this;
-          //add a state listener on expansion change
-          control.czr_View(obj.model.id).callbacks.add( function( to, from ) {
-            if ( -1 == to.indexOf('expanded') )//can take the expanded_noscroll value !
-              return;
-
-            var $view = control.getViewEl( obj.model.id );
-            //refresh the location list
-            control._setupLocationSelect( obj.model.id, $view, true );//true for refresh
-            //refresh the location alert message
-            control.mayBeDisplayModelAlert( obj );
-          });
-  },
-
-
-
-  //////////////////////////////////////////////////
-  /// ALERT FOR NOT AVAILABLE LOCATION
-  //////////////////////////////////////////////////
-  //fired on 'after_setupViewApiListeners'
-  setupLocationsApiListeners : function(obj) {
-          var control = this;
-          control.czr_viewLocationAlert.create(obj.model.id);
-          control.czr_viewLocationAlert(obj.model.id).set('closed');
-
-          //add a state listener on expansion change
-          control.czr_viewLocationAlert(obj.model.id).callbacks.add( function( to, from ) {
-            var $view = control.getViewEl(obj.model.id);
-            control._toggleLocationAlertExpansion( $view , to );
-          });
-  },
-
-
-
   _toggleLocationAlertExpansion : function($view, to) {
           var $_alert_el = $view.find('.czr-location-alert');
 
@@ -529,68 +589,7 @@ $.extend( CZRWidgetAreasMethods, {
           });
   },
 
-  //always fired on 'model_added_by_user'
-  closePreModelAlert : function() {
-          this.czr_preModel('location_alert_view_state').set('closed');
-  },
 
-
-
-
-
-
-
-
-
-  //fired on model_update
-  //Don't hammer the preview with too many refreshs
-  //2 seconds delay
-  setModelUpdateTimer : function(obj) {
-          var control = this;
-          clearTimeout( $.data(this, 'modelUpdateTimer') );
-          $.data(
-            this,
-            'modelUpdateTimer',
-            setTimeout( function() {
-              //refresh preview
-              control.refreshPreview();
-            } , 1000)
-          );//$.data
-  },
-
-
-  //fired on 'after_sendModel'
-  updateSectionTitle : function(obj) {
-          var _sidebar_id = 'sidebar-widgets-' + obj.model.id,
-              _new_title  = obj.model.title;
-          //does this section exists ?
-          if ( ! api.section.has(_sidebar_id) )
-            return;
-
-          //update the section title
-          $('.accordion-section-title', api.section(_sidebar_id).container ).text(_new_title);
-
-          //update the top title ( visible when inside the expanded section )
-          $('.customize-section-title h3', api.section(_sidebar_id).container ).html(
-            '<span class="customize-action">' + api.section(_sidebar_id).params.customizeAction + '</span>' + _new_title
-          );
-          // $('.customize-section-title h3', api.section(_sidebar_id).container )
-          //   .append('<span>', {
-          //       class: 'customize-section-back',
-          //       html: api.section(_sidebar_id).params.customizeAction
-          //     } )
-          //   .append(_new_title);
-
-          //remove and re-instanciate
-          //=> works for the section but the controls are not activated anymore.
-          //Should be easy to fix but useless to go further here. Jquery does the job.
-          // var _params = _.clone( api.section(_sidebar_id).params );
-          // _params.title = _new_title;
-          // api.section(_sidebar_id).container.remove();
-          // api.section.remove(_sidebar_id);
-          // api.section.add( _sidebar_id, new api.sectionConstructor[_params.type]( _params.id ,{ params : _params } ) );
-
-  },
 
 
 
@@ -641,16 +640,16 @@ $.extend( CZRWidgetAreasMethods, {
   //
   //can also be called statically when a dynamic sidebar is added in the preview
   //in this case the parameter are the sidebar data with id and name
-  addWidgetSidebar : function( obj, sidebar_data ) {
-          if ( ! _.isObject(obj) && isEmpty(sidebar_data) ) {
+  addWidgetSidebar : function( model, sidebar_data ) {
+          if ( ! _.isObject(model) && _.isEmpty(sidebar_data) ) {
             throw new Error('No valid input were provided to add a new Widget Zone.');
           }
 
 
           //ADD the new sidebar to the existing collection
           //Clone the serverControlParams.defaultWidgetSidebar sidebar
-          var _model        = ! _.isEmpty(obj) ? _.clone(obj.model) : sidebar_data;
-              _new_sidebar  = _.isEmpty(obj) ? sidebar_data : $.extend(
+          var _model        = ! _.isEmpty(model) ? _.clone(model) : sidebar_data;
+              _new_sidebar  = _.isEmpty(model) ? sidebar_data : $.extend(
                 _.clone( _.findWhere( api.Widgets.data.registeredSidebars, { id: serverControlParams.defaultWidgetSidebar } ) ),
                 {
                   name : _model.title,
@@ -667,16 +666,16 @@ $.extend( CZRWidgetAreasMethods, {
 
           //ADD the sidebar section
           var _params = $.extend(
-            _.clone( api.section( "sidebar-widgets-" + serverControlParams.defaultWidgetSidebar ).params ),
-            {
-              id : "sidebar-widgets-" + _model.id,
-              instanceNumber: _.max(api.settings.sections, function(sec){ return sec.instanceNumber; }).instanceNumber + 1,
-              sidebarId: _new_sidebar.id,
-              title: _new_sidebar.name,
-              description : 'undefined' != typeof(sidebar_data) ? sidebar_data.description : api.section( "sidebar-widgets-" + serverControlParams.defaultWidgetSidebar ).params.description,
-              //always set the new priority to the maximum + 1 ( serverControlParams.dynWidgetSection is excluded from this calculation because it must always be at the bottom )
-              priority: _.max( _.omit( api.settings.sections, serverControlParams.dynWidgetSection), function(sec){ return sec.instanceNumber; }).priority + 1,
-            }
+                  _.clone( api.section( "sidebar-widgets-" + serverControlParams.defaultWidgetSidebar ).params ),
+                  {
+                    id : "sidebar-widgets-" + _model.id,
+                    instanceNumber: _.max(api.settings.sections, function(sec){ return sec.instanceNumber; }).instanceNumber + 1,
+                    sidebarId: _new_sidebar.id,
+                    title: _new_sidebar.name,
+                    description : 'undefined' != typeof(sidebar_data) ? sidebar_data.description : api.section( "sidebar-widgets-" + serverControlParams.defaultWidgetSidebar ).params.description,
+                    //always set the new priority to the maximum + 1 ( serverControlParams.dynWidgetSection is excluded from this calculation because it must always be at the bottom )
+                    priority: _.max( _.omit( api.settings.sections, serverControlParams.dynWidgetSection), function(sec){ return sec.instanceNumber; }).priority + 1,
+                  }
           );
 
           api.section.add( _params.id, new api.sectionConstructor[ _params.type ]( _params.id ,{ params : _params } ) );
@@ -699,9 +698,9 @@ $.extend( CZRWidgetAreasMethods, {
 
           //instanciate it
           api.create( _new_set_id, _new_set_id, _new_set.value, {
-            transport: _new_set.transport,
-            previewer: api.previewer,
-            dirty: false
+                  transport: _new_set.transport,
+                  previewer: api.previewer,
+                  dirty: false
           } );
 
 
@@ -717,10 +716,10 @@ $.extend( CZRWidgetAreasMethods, {
 
           //replace  serverControlParams.defaultWidgetSidebar  by the new sidebar id
           _.map( _cloned_control, function( param, key ) {
-            if ( 'string' == typeof(param) ) {
-              param = param.replace( serverControlParams.defaultWidgetSidebar , _model.id );
-            }
-            _new_control[key] = param;
+                  if ( 'string' == typeof(param) ) {
+                    param = param.replace( serverControlParams.defaultWidgetSidebar , _model.id );
+                  }
+                  _new_control[key] = param;
           });
 
           //set the instance number (no sure if needed)
@@ -731,8 +730,8 @@ $.extend( CZRWidgetAreasMethods, {
 
           //instanciate it
           api.control.add( _new_set_id, new api.controlConstructor[ _new_control.type ]( _new_set_id, {
-            params: _new_control,
-            previewer: api.previewer
+                  params: _new_control,
+                  previewer: api.previewer
           } ) );
 
 
@@ -745,38 +744,40 @@ $.extend( CZRWidgetAreasMethods, {
 
 
   //fired on "after_modelRemoved"
-  removeWidgetSidebar : function(obj) {
-          var model = obj.model;
+  removeWidgetSidebar : function( model ) {
+          if ( ! _.isObject(model) || _.isEmpty(model) ) {
+            throw new Error('No valid data were provided to remove a Widget Zone.');
+          }
 
           //Remove this sidebar from the backbone collection
           api.Widgets.registeredSidebars.remove( model.id );
 
           //remove the section from the api values and the DOM if exists
           if ( api.section.has("sidebar-widgets-" + model.id) ) {
-            //Remove the section container from the DOM
-            api.section("sidebar-widgets-" + model.id).container.remove();
-            //Remove the sidebar section from the api
-            api.section.remove( "sidebar-widgets-" + model.id );
-            //Remove this section from the static collection
-            delete api.settings.sections[ "sidebar-widgets-" + model.id ];
+                  //Remove the section container from the DOM
+                  api.section("sidebar-widgets-" + model.id).container.remove();
+                  //Remove the sidebar section from the api
+                  api.section.remove( "sidebar-widgets-" + model.id );
+                  //Remove this section from the static collection
+                  delete api.settings.sections[ "sidebar-widgets-" + model.id ];
           }
 
           //remove the setting from the api if exists
           if ( api.has('sidebars_widgets['+model.id+']') ) {
-            //Remove this setting from the api
-            api.remove( 'sidebars_widgets['+model.id+']' );
-            //Remove this setting from the static collection
-            delete api.settings.settings['sidebars_widgets['+model.id+']'];
+                  //Remove this setting from the api
+                  api.remove( 'sidebars_widgets['+model.id+']' );
+                  //Remove this setting from the static collection
+                  delete api.settings.settings['sidebars_widgets['+model.id+']'];
           }
 
           //remove the widget control of this sidebar from the api and the DOM if exists
           if ( api.control.has('sidebars_widgets['+model.id+']') ) {
-            //Remove the control container from the DOM
-            api.control( 'sidebars_widgets['+model.id+']' ).container.remove();
-            //Remove this control from the api
-            api.control.remove( 'sidebars_widgets['+model.id+']' );
-            //Remove it to the static collection of controls
-            delete api.settings.controls['sidebars_widgets['+model.id+']'];
+                  //Remove the control container from the DOM
+                  api.control( 'sidebars_widgets['+model.id+']' ).container.remove();
+                  //Remove this control from the api
+                  api.control.remove( 'sidebars_widgets['+model.id+']' );
+                  //Remove it to the static collection of controls
+                  delete api.settings.controls['sidebars_widgets['+model.id+']'];
           }
 
           //say it
@@ -802,53 +803,53 @@ $.extend( CZRWidgetAreasMethods, {
 
           //will be used for adjustments
           api.panel('widgets').expanded.callbacks.add( function(expanded) {
-            var _top_margin = api.panel('widgets').container.find( '.control-panel-content' ).css('margin-top');
-            api.section(serverControlParams.dynWidgetSection).fixTopMargin('value').set( _top_margin );
+                  var _top_margin = api.panel('widgets').container.find( '.control-panel-content' ).css('margin-top');
+                  api.section(serverControlParams.dynWidgetSection).fixTopMargin('value').set( _top_margin );
 
-            var _section_content = api.section(serverControlParams.dynWidgetSection).container.find( '.accordion-section-content' ),
-              _panel_content = api.panel('widgets').container.find( '.control-panel-content' ),
-              _set_margins = function() {
-                _section_content.css( 'margin-top', '' );
-                _panel_content.css('margin-top', api.section(serverControlParams.dynWidgetSection).fixTopMargin('value').get() );
-              };
+                  var _section_content = api.section(serverControlParams.dynWidgetSection).container.find( '.accordion-section-content' ),
+                    _panel_content = api.panel('widgets').container.find( '.control-panel-content' ),
+                    _set_margins = function() {
+                      _section_content.css( 'margin-top', '' );
+                      _panel_content.css('margin-top', api.section(serverControlParams.dynWidgetSection).fixTopMargin('value').get() );
+                    };
 
-            // Fix the top margin after reflow.
-            api.bind( 'pane-contents-reflowed', _.debounce( function() {
-              _set_margins();
-            }, 150 ) );
+                  // Fix the top margin after reflow.
+                  api.bind( 'pane-contents-reflowed', _.debounce( function() {
+                          _set_margins();
+                  }, 150 ) );
 
           } );
 
 
           //Close all views on widget panl expansion/clos
           api.panel('widgets').expanded.callbacks.add( function(expanded) {
-            control.closeAllViews();
-            control.czr_preModel('view_status').set('closed');
+                  control.closeAllViews();
+                  control.czr_preModel('view_status').set('closed');
           } );
 
 
           //change the expanded behaviour for the widget zone section
           api.section(serverControlParams.dynWidgetSection).expanded.callbacks.add( function(expanded) {
-            var section =  api.section(serverControlParams.dynWidgetSection),
-                container = section.container.closest( '.wp-full-overlay-sidebar-content' ),
-                content = section.container.find( '.accordion-section-content' ),
-                overlay = section.container.closest( '.wp-full-overlay' ),
-                backBtn = section.container.find( '.customize-section-back' ),
-                sectionTitle = section.container.find( '.accordion-section-title' ).first(),
-                headerActionsHeight = $( '#customize-header-actions' ).height(),
-                resizeContentHeight, expand, position, scroll;
-            if ( expanded ) {
-              overlay.removeClass( 'section-open' );
-              content.css( 'height', 'auto' );
-              //section.container.removeClass( 'open' );
-              sectionTitle.attr( 'tabindex', '0' );
-              content.css( 'margin-top', '' );
-              container.scrollTop( 0 );
-            }
+                  var section =  api.section(serverControlParams.dynWidgetSection),
+                      container = section.container.closest( '.wp-full-overlay-sidebar-content' ),
+                      content = section.container.find( '.accordion-section-content' ),
+                      overlay = section.container.closest( '.wp-full-overlay' ),
+                      backBtn = section.container.find( '.customize-section-back' ),
+                      sectionTitle = section.container.find( '.accordion-section-title' ).first(),
+                      headerActionsHeight = $( '#customize-header-actions' ).height(),
+                      resizeContentHeight, expand, position, scroll;
+                  if ( expanded ) {
+                    overlay.removeClass( 'section-open' );
+                    content.css( 'height', 'auto' );
+                    //section.container.removeClass( 'open' );
+                    sectionTitle.attr( 'tabindex', '0' );
+                    content.css( 'margin-top', '' );
+                    container.scrollTop( 0 );
+                  }
 
-            control.closeAllViews();
+                  control.closeAllViews();
 
-            content.slideToggle();
+                  content.slideToggle();
           });
   },//setExpansionsCallbacks()
 
@@ -866,56 +867,56 @@ $.extend( CZRWidgetAreasMethods, {
 
           //VISIBILITY BASED ON THE SIDEBAR INSIGHTS
           api.sidebar_insights('registered').callbacks.add( function( _registered_zones ) {
-            var _current_collection = _.clone( control.czr_Model.czr_collection.get() );
-            _.map(_current_collection, function( _model ) {
-              if ( ! control.getViewEl(_model.id).length )
-                return;
+                  var _current_collection = _.clone( control.czr_Model.czr_collection.get() );
+                  _.map(_current_collection, function( _model ) {
+                    if ( ! control.getViewEl(_model.id).length )
+                      return;
 
-              control.getViewEl(_model.id).css('display' , _.contains( _registered_zones, _model.id ) ? 'block' : 'none' );
-            });
+                    control.getViewEl(_model.id).css('display' , _.contains( _registered_zones, _model.id ) ? 'block' : 'none' );
+                  });
           });
 
           //OPACITY SIDEBAR INSIGHTS BASED
           api.sidebar_insights('inactives').callbacks.add( function( _inactives_zones ) {
-            var _current_collection = _.clone( control.czr_Model.czr_collection.get() );
-            _.map(_current_collection, function( _model ) {
-              if ( ! control.getViewEl(_model.id).length )
-                return;
+                  var _current_collection = _.clone( control.czr_Model.czr_collection.get() );
+                  _.map(_current_collection, function( _model ) {
+                    if ( ! control.getViewEl(_model.id).length )
+                      return;
 
-              if ( _.contains( _inactives_zones, _model.id ) ) {
-                control.getViewEl( _model.id ).addClass('inactive');
-                if ( ! control.getViewEl( _model.id ).find('.czr-inactive-alert').length )
-                  control.getViewEl( _model.id ).find('.czr-view-title').append(
-                    $('<span/>', {class : "czr-inactive-alert", html : " [ " + serverControlParams.translatedStrings.inactiveWidgetZone + " ]" })
-                  );
-              }
-              else {
-                control.getViewEl( _model.id ).removeClass('inactive');
-                if ( control.getViewEl( _model.id ).find('.czr-inactive-alert').length )
-                  control.getViewEl( _model.id ).find('.czr-inactive-alert').remove();
-              }
-            });
+                    if ( _.contains( _inactives_zones, _model.id ) ) {
+                      control.getViewEl( _model.id ).addClass('inactive');
+                      if ( ! control.getViewEl( _model.id ).find('.czr-inactive-alert').length )
+                        control.getViewEl( _model.id ).find('.czr-view-title').append(
+                          $('<span/>', {class : "czr-inactive-alert", html : " [ " + serverControlParams.translatedStrings.inactiveWidgetZone + " ]" })
+                        );
+                    }
+                    else {
+                      control.getViewEl( _model.id ).removeClass('inactive');
+                      if ( control.getViewEl( _model.id ).find('.czr-inactive-alert').length )
+                        control.getViewEl( _model.id ).find('.czr-inactive-alert').remove();
+                    }
+                  });
           });
 
           //WIDGET SIDEBAR CREATION BASED ON SIDEBAR INSIGHTS
           //react to a new register candidate(s) on preview refresh
           api.sidebar_insights('candidates').callbacks.add( function(_candidates) {
-            if ( ! _.isArray(_candidates) )
-              return;
-            _.map( _candidates, function( _sidebar ) {
-              if ( ! _.isObject(_sidebar) )
-                return;
-              //add this widget sidebar and the related setting and control.
-              //Only if not added already
-              if ( api.section.has("sidebar-widgets-" +_sidebar.id ) )
-                return;
+                  if ( ! _.isArray(_candidates) )
+                    return;
+                  _.map( _candidates, function( _sidebar ) {
+                    if ( ! _.isObject(_sidebar) )
+                      return;
+                    //add this widget sidebar and the related setting and control.
+                    //Only if not added already
+                    if ( api.section.has("sidebar-widgets-" +_sidebar.id ) )
+                      return;
 
-              //access the registration method statically
-              api.CZRWidgetAreasControl.prototype.addWidgetSidebar( {}, _sidebar );
-              //activate it if so
-              if ( _.has( api.sidebar_insights('actives').get(), _sidebar.id ) && api.section.has("sidebar-widgets-" +_sidebar.id ) )
-                api.section( "sidebar-widgets-" +_sidebar.id ).activate();
-            });
+                    //access the registration method statically
+                    api.CZRWidgetAreasControl.prototype.addWidgetSidebar( {}, _sidebar );
+                    //activate it if so
+                    if ( _.has( api.sidebar_insights('actives').get(), _sidebar.id ) && api.section.has("sidebar-widgets-" +_sidebar.id ) )
+                      api.section( "sidebar-widgets-" +_sidebar.id ).activate();
+                  });
           });
   },//listenToSidebarInsights()
 

@@ -93,7 +93,7 @@ $.extend( CZRMultiInputDynMethods, {
           } );
   },
 
-  //Fired on "model_added_by_user"
+  //Fired in addModel()
   closeResetPreModel : function() {
           var control = this;
           control.toggleSuccessMessage('on');
