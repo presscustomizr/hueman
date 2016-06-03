@@ -1,40 +1,47 @@
 //MULTI CONTROL CLASS
-//extends api.CZRBaseControl
+//extends api.Value
 //
 //Setup the collection of items
 //renders the control view
 //Listen to items collection changes and update the control setting
-
+//ELEMENT OPTIONS :
+  // section : element.section,
+  // block   : '',
+  // type    : element.type,
+  // items   : element.items,
+  // control : control,
+  // is_added_by_user : is_added_by_user || false
 var CZRElementMths = CZRElementMths || {};
 
 $.extend( CZRElementMths, {
 
   initialize: function( id, options ) {
-          var control = this;
-          api.CZRBaseControl.prototype.initialize.call( control, id, options );
+          var element = this;
 
+          //write the options as properties
+          $.extend( element, options || {} );
+
+          console.log('ELEMENT ?', element, options );
+          //@todo, the container could be specified for a given element
+          element.container = $( element.control.selector );
           //store the saved models => can be extended to add default models in children classes
-          control.savedModels = api(control.id).get();
+          element.savedItems = options.items;
 
           //declares a default model
-          control.model = { id : '', title : '' };
+          element.defaultItem = { id : '', title : '' };
 
           //define a default Constructors
-          control.modelConstructor = api.CZRItem;
-          control.inputConstructor = api.CZRInput;
-
-          //extend the control with new template Selectors
-          $.extend( control, {
-              viewAlertEl : 'customize-control-' + options.params.type + '-alert',
-              viewPreAddEl : 'customize-control-' + options.params.type + '-pre-add-view-content',
-          } );
+          element.itemConstructor = api.CZRItem;
+          element.inputConstructor = api.CZRInput;
 
           //czr_model stores the each model value => one value by created by model.id
-          control.czr_Model = new api.Values();
+          element.czr_Item = new api.Values();
 
-          //czr_collection stores the model collection
-          control.czr_Model.czr_collection = new api.Value();
-          control.czr_Model.czr_collection.set([]);
+          //czr_collection stores the item collection
+          element.czr_Item.czr_collection = new api.Value();
+          element.czr_Item.czr_collection.set([]);
+
+          element.ready();
   },
 
 
@@ -44,22 +51,22 @@ $.extend( CZRElementMths, {
   ///FIRED BEFORE API READY
   //////////////////////////////////
   ready : function() {
-          var control = this;
+          var element = this;
           //Important note : this event refreshes the customizer setting value
           //It's not listened to before the api is ready
-          //=> the collection update on startup is done when the control is embedded and BEFORE the api is ready
+          //=> the collection update on startup is done when the element is embedded and BEFORE the api is ready
           //=> won't trigger and change setting
           api.bind( 'ready', function() {
-                control.populateCollection()._makeSortable();
+                element.populateCollection()._makeSortable();
 
-                //LISTEN TO MONO MODELS COLLECTION
+                //LISTEN TO ITEMS COLLECTION
                 //1) update the control setting value
                 //2) fire dom actions
-                control.czr_Model.czr_collection.callbacks.add( function() { return control.collectionListeners.apply(control, arguments ); } );
+                element.czr_Item.czr_collection.callbacks.add( function() { return element.collectionListeners.apply(element, arguments ); } );
           });
 
-          //this control is ready
-          control.container.trigger('ready');
+          //this element is ready
+          //element.container.trigger('ready');
   }
 
 });//$.extend//CZRBaseControlMths

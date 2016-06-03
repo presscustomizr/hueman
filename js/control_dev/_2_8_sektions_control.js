@@ -17,35 +17,8 @@ $.extend( CZRSektionsMths, {
       id : '',
       'sektion-layout' : 1,
     };
-    //adds specific actions for this control
-    // this.addActions(
-    //   'control_event_map',
-    //   [
-    //     //setup the select list for the pre add dialog box
-    //     {
-    //         trigger   : 'pre_add_view_rendered',
-    //         actions   : [ 'setupSelect' ]
-    //     }
-    //   ]
-    // );
 
-    // this.addActions(
-    //   'view_event_map',
-    //   [
-    //     {
-    //         trigger   : 'viewContentRendered',
-    //         actions   : [ 'setupSelect', 'setupColorPicker', 'setupIcheck' ]
-    //     },
-    //     {
-    //         trigger   : 'social-icon:changed',
-    //         actions   : [ 'updateModelInputs' ]
-    //     }
-    //   ]
-    // );
-
-
-
-    //EXAMPLE : control.czr_Model(obj.model.id).set(_new_model);
+    //EXAMPLE : control.czr_Item(obj.model.id).set(_new_model);
     //
     //overrides the default success message
     //this.modelAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
@@ -83,7 +56,7 @@ $.extend( CZRSektionsMths, {
 
   renderSektionBlocks : function(obj) {
     var control   = this,
-        model     = control.czr_Model(obj.model.id).get(),
+        model     = control.czr_Item(obj.model.id).get(),
         block_nb  = parseInt( model['sektion-layout'] || 1, 10 );
 
     for (var blk = 1; blk < block_nb + 1; blk++) {

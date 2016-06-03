@@ -11,7 +11,7 @@ $.extend( CZRBackgroundMths , {
 
           //EXTEND THE DEFAULT CONSTRUCTORS FOR INPUT AND MONOMODEL
           control.inputConstructor = api.CZRInput.extend( control.CZRBackgroundInputMths || {} );
-          control.modelConstructor = api.CZRItem.extend( control.CZRBackgroundModelMths || {} );
+          control.itemConstructor = api.CZRItem.extend( control.CZRBackgroundItemMths || {} );
 
           //the map describing how to populate each particular select inputs
           control.select_map = {
@@ -30,11 +30,11 @@ $.extend( CZRBackgroundMths , {
           api.CZRItemControl.prototype.ready.call( control );
 
           api.bind('ready', function() {
-                var _img_on_init = control.czr_Model('background-image').get();
+                var _img_on_init = control.czr_Item('background-image').get();
 
                 control.setBgDependantsVisibilities( ! _.isUndefined(_img_on_init) && ! _.isEmpty(_img_on_init) );
 
-                control.czr_Model('background-image').bind(function(to, from) {
+                control.czr_Item('background-image').bind(function(to, from) {
                   control.setBgDependantsVisibilities( ! _.isUndefined(to) && ! _.isEmpty(to) );
                 });
 
@@ -48,7 +48,7 @@ $.extend( CZRBackgroundMths , {
   setBgDependantsVisibilities : function( has_img ) {
           var control = this;
           _.each( ['background-repeat', 'background-attachment', 'background-position', 'background-size'], function( dep ) {
-            control.czr_Model(dep).container.toggle( has_img );
+            control.czr_Item(dep).container.toggle( has_img );
           });
   },
 
@@ -108,7 +108,7 @@ $.extend( CZRBackgroundMths , {
   },
 
 
-  CZRBackgroundModelMths : {
+  CZRBackgroundItemMths : {
           //OVERRIDES THE PARENT METHOD TO ADD THE BG DEFAULT COLOR
           renderViewContent : function() {
                   //=> an array of objects

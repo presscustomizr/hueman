@@ -8,68 +8,68 @@ $.extend( CZRItemMths , {
   //the view wrapper has been rendered by WP
   //the content ( the various inputs ) is rendered by the following methods
   //an event is triggered on the control.container when content is rendered
-  renderView : function( model ) {
+  renderView : function( item_model ) {
         //=> an array of objects
         var item = this,
-            control = item.item_control;
-        model = model || item.get();
+            element = item.item_element;
+            item_model = item_model || item.get();
         //do we have view template script?
-        if ( 0 === $( '#tmpl-' + control.getTemplateEl( 'view', model ) ).length )
+        if ( 0 === $( '#tmpl-' + element.control.getTemplateEl( 'view', item_model ) ).length )
           return false;//break the action chain
 
-        var view_template = wp.template( control.getTemplateEl( 'view', model ) );
+        var view_template = wp.template( element.control.getTemplateEl( 'view', item_model ) );
 
-        //do we have an html template and a control container?
-        if ( ! view_template  || ! control.container )
+        //do we have an html template and a element container?
+        if ( ! view_template  || ! element.container )
           return;
 
-        //has this model view already been rendered?
+        //has this item view already been rendered?
         if ( _.has(item, 'container') && false !== item.container.length )
           return;
-
-        $_view_el = $('<li>', { class : control.css_attr.inner_view, 'data-id' : model.id,  id : model.id } );
-        $( '.' + control.css_attr.views_wrapper , control.container).append( $_view_el );
+        console.log('item model ?', item_model);
+        $_view_el = $('<li>', { class : element.control.css_attr.inner_view, 'data-id' : item_model.id,  id : item_model.id } );
+        $( '.' + element.control.css_attr.views_wrapper , element.container).append( $_view_el );
         //the view skeleton
-        $( view_template( model ) ).appendTo( $_view_el );
+        $( view_template( item_model ) ).appendTo( $_view_el );
 
 
         // if ( _.isEmpty($_view_el.html() ) ) {
         //   $_view_el.append( item._getViewContent() );
         // } else {
-        //   //var $_view_el = $('li[data-id="' + model.id + '"]');
+        //   //var $_view_el = $('li[data-id="' + item.id + '"]');
         //   //empty the html and append the updated content
         //   $_view_el.html( item._getViewContent() );
         // }
 
-        // item.doActions( 'viewContentRendered' , control.container, {} );
+        // item.doActions( 'viewContentRendered' , element.container, {} );
 
         return $_view_el;
   },
 
 
-  //renders saved models views and attach event handlers
-  //the saved model look like :
+  //renders saved items views and attach event handlers
+  //the saved item look like :
   //array[ { id : 'sidebar-one', title : 'A Title One' }, {id : 'sidebar-two', title : 'A Title Two' }]
   renderViewContent : function() {
           //=> an array of objects
           var item = this,
-              control = this.item_control,
-              model = _.clone( item.get() );
+              element = this.item_element,
+              item_model = _.clone( item.get() );
 
           //do we have view content template script?
-          if ( 0 === $( '#tmpl-' + control.getTemplateEl( 'view-content', model ) ).length )
+          if ( 0 === $( '#tmpl-' + element.control.getTemplateEl( 'view-content', item_model ) ).length )
             return this;
 
-          var  view_content_template = wp.template( control.getTemplateEl( 'view-content', model ) );
+          var  view_content_template = wp.template( element.control.getTemplateEl( 'view-content', item_model ) );
 
           //do we have an html template and a control container?
-          if ( ! view_content_template || ! control.container )
+          if ( ! view_content_template || ! element.container )
             return this;
 
           //the view content
-          $( view_content_template( model )).appendTo( $('.' + control.css_attr.view_content, item.container ) );
+          $( view_content_template( item_model )).appendTo( $('.' + element.control.css_attr.view_content, item.container ) );
 
-          api.CZR_Helpers.doActions( 'viewContentRendered' , item.container, {model : model }, item );
+          api.CZR_Helpers.doActions( 'viewContentRendered' , item.container, {model : item_model }, item );
 
           return this;
   },
@@ -81,12 +81,12 @@ $.extend( CZRItemMths , {
   //at this stage, the model passed in the obj is up to date
   writeViewTitle : function( model ) {
         var item = this,
-            control = item.item_control,
+            element = item.item_element,
             _model = _.clone( model || item.get() ),
             _title = _.has( _model, 'title')? api.CZR_Helpers.capitalize( _model.title ) : _model.id;
 
         _title = api.CZR_Helpers.truncate(_title, 20);
-        $( '.' + control.css_attr.view_title , '#' + _model.id ).text(_title );
+        $( '.' + element.control.css_attr.view_title , '#' + _model.id ).text(_title );
 
         //add a hook here
         api.CZR_Helpers.doActions('after_writeViewTitle', item.container , _model, item );
@@ -99,14 +99,14 @@ $.extend( CZRItemMths , {
   //Fired on click on edit_view_btn
   setViewVisibility : function( obj, is_added_by_user ) {
           var item = this,
-              control = this.item_control,
+              element = this.item_element,
               model_id = item.model_id;
           if ( is_added_by_user ) {
             item.czr_View.set( 'expanded_noscroll' );
           } else {
-            control.closeAllViews(model_id);
-            if ( _.has(control, 'czr_preModel') ) {
-              control.czr_preModel('view_status').set( 'closed');
+            element.closeAllViews(model_id);
+            if ( _.has(element, 'czr_preItem') ) {
+              element.czr_preItem('view_status').set( 'closed');
             }
             item.czr_View.set( 'expanded' == item._getViewState(model_id) ? 'closed' : 'expanded' );
           }
@@ -121,11 +121,11 @@ $.extend( CZRItemMths , {
   //callback of czr_View() instance on change
   _toggleViewExpansion : function( status, duration ) {
           var item = this,
-              control = this.item_control,
+              element = this.item_element,
               model_id = item.model_id;
 
           //slide Toggle and toggle the 'open' class
-          $( '.' + control.css_attr.view_content , item.container ).slideToggle( {
+          $( '.' + element.control.css_attr.view_content , item.container ).slideToggle( {
               duration : duration || 200,
               done : function() {
                 var _is_expanded = 'closed' != status;
@@ -133,11 +133,11 @@ $.extend( CZRItemMths , {
                 item.container.toggleClass('open' , _is_expanded );
 
                 //close all alerts
-                control.closeAllAlerts();
+                element.closeAllAlerts();
 
                 //toggle the icon activate class depending on the status
                 //switch icon
-                var $_edit_icon = $(this).siblings().find('.' + control.css_attr.edit_view_btn );
+                var $_edit_icon = $(this).siblings().find('.' + element.control.css_attr.edit_view_btn );
 
                 $_edit_icon.toggleClass('active' , _is_expanded );
                 if ( _is_expanded )
@@ -147,7 +147,7 @@ $.extend( CZRItemMths , {
 
                 //scroll to the currently expanded view
                 if ( 'expanded' == status )
-                  control._adjustScrollExpandedBlock( item.container );
+                  element._adjustScrollExpandedBlock( item.container );
               }//done callback
             } );
   },
@@ -157,32 +157,32 @@ $.extend( CZRItemMths , {
   //@param : obj = { event : {}, model : {}, view : ${} }
   toggleRemoveAlertVisibility : function(obj) {
           var item = this,
-              control = this.item_control,
-              $_alert_el = $( '.' + control.css_attr.remove_alert_wrapper, item.container ),
+              element = this.item_element,
+              $_alert_el = $( '.' + element.control.css_attr.remove_alert_wrapper, item.container ),
               $_clicked = obj.dom_event;
 
           //first close all open views
-          control.closeAllViews();
-          if ( _.has(control, 'czr_preModel') ) {
-            control.czr_preModel('view_status').set( 'closed');
+          element.closeAllViews();
+          if ( _.has(element, 'czr_preItem') ) {
+            element.czr_preItem('view_status').set( 'closed');
           }
 
-          //then close any other open remove alert in the control containuer
-          $('.' + control.css_attr.remove_alert_wrapper, item.container ).not($_alert_el).each( function() {
+          //then close any other open remove alert in the element containuer
+          $('.' + element.control.css_attr.remove_alert_wrapper, item.container ).not($_alert_el).each( function() {
             if ( $(this).hasClass('open') ) {
               $(this).slideToggle( {
                 duration : 200,
                 done : function() {
                   $(this).toggleClass('open' , false );
                   //deactivate the icons
-                  $(this).siblings().find('.' + control.css_attr.display_alert_btn).toggleClass('active' , false );
+                  $(this).siblings().find('.' + element.control.css_attr.display_alert_btn).toggleClass('active' , false );
                 }
               } );
             }
           });
 
           //print the html
-          var alert_template = wp.template( control.viewAlertEl );
+          var alert_template = wp.template( element.viewAlertEl );
           //do we have an html template and a control container?
           if ( ! alert_template  || ! item.container )
             return this;
@@ -199,7 +199,7 @@ $.extend( CZRItemMths , {
               $( obj.dom_el ).find('.' + control.css_attr.display_alert_btn).toggleClass( 'active', _is_open );
               //adjust scrolling to display the entire dialog block
               if ( _is_open )
-                control._adjustScrollExpandedBlock( item.container );
+                element._adjustScrollExpandedBlock( item.container );
             }
           } );
   },

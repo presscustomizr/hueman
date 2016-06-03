@@ -2,128 +2,126 @@
 //extends api.CZRElement
 //
 //Setup the collection of items
-//renders the control view
+//renders the element view
 //Listen to items collection changes and update the control setting
 
 var CZRDynElementMths = CZRDynElementMths || {};
 
 $.extend( CZRDynElementMths, {
   initialize: function( id, options ) {
-          var control = this;
-          api.CZRElement.prototype.initialize.call( control, id, options );
+          var element = this;
+          api.CZRElement.prototype.initialize.call( element, id, options );
 
 
           //EXTENDS THE DEFAULT MONO MODEL CONSTRUCTOR WITH NEW METHODS
-          //=> like remove model
-          //control.modelConstructor = api.CZRItem.extend( control.CZRItemDynamicMths || {} );
-
+          //=> like remove item
+          //element.itemConstructor = api.CZRItem.extend( element.CZRItemDynamicMths || {} );
 
           //PRE MODEL
-          //czr_preModel stores the expansion state and the value of the preModel
-          control.czr_preModel = new api.Values();
-           //create observable pre-model values
-          control.czr_preModel.create('model');
-          control.czr_preModel.create('view_content');
-          control.czr_preModel.create('view_status');
-          control.czr_preModel('view_status').set('closed');
+          //czr_preItem stores the expansion state and the value of the preItem
+          element.czr_preItem = new api.Values();
+           //create observable pre-item values
+          element.czr_preItem.create('item');
+          element.czr_preItem.create('view_content');
+          element.czr_preItem.create('view_status');
+          element.czr_preItem('view_status').set('closed');
 
           //PRE MODEL INPUTS
-          control.czr_preModelInput = new api.Values();
+          element.czr_preItemInput = new api.Values();
 
 
-          //default success message when model added
-          control.modelAddedMessage = serverControlParams.translatedStrings.successMessage;
+          //default success message when item added
+          element.itemAddedMessage = serverControlParams.translatedStrings.successMessage;
 
           ////////////////////////////////////////////////////
           /// CONTROL EVENT MAP
           ////////////////////////////////////////////////////
-          control.control_event_map = [
-                //pre add new model : open the dialog box
+          element.element_event_map = [
+                //pre add new item : open the dialog box
                 {
                   trigger   : 'click keydown',
-                  selector  : [ '.' + control.css_attr.open_pre_add_btn, '.' + control.css_attr.cancel_pre_add_btn ].join(','),
-                  name      : 'pre_add_model',
-                  actions   : ['renderPreModelView','setPreModelViewVisibility'],
+                  selector  : [ '.' + element.control.css_attr.open_pre_add_btn, '.' + element.control.css_attr.cancel_pre_add_btn ].join(','),
+                  name      : 'pre_add_item',
+                  actions   : ['renderPreItemView','setPreItemViewVisibility'],
                 },
-                //add new model
+                //add new item
                 {
                   trigger   : 'click keydown',
-                  selector  : '.' + control.css_attr.add_new_btn, //'.czr-add-new',
-                  name      : 'add_model',
-                  actions   : ['closeAllViews', 'addModel'],
+                  selector  : '.' + element.control.css_attr.add_new_btn, //'.czr-add-new',
+                  name      : 'add_item',
+                  actions   : ['closeAllViews', 'addItem'],
                 }
-          ];//control.control_event_map
-
+          ];//element.element_event_map
   },
 
 
   ready : function() {
-          var control = this;
+          var element = this;
           api.bind( 'ready', function() {
-                //Setup the control event listeners
-                control.setupDOMListeners( control.control_event_map , { dom_el : control.container } );
+                //Setup the element event listeners
+                element.setupDOMListeners( element.element_event_map , { dom_el : element.container } );
 
                 //PRE ADD MODEL SETUP
-                control.czr_preModel('model').set(control.getDefaultModel());
+                element.czr_preItem('item').set( element.getDefaultModel() );
 
                 //Add view rendered listeners
-                control.czr_preModel('view_content').callbacks.add(function( to, from ) {
+                element.czr_preItem('view_content').callbacks.add(function( to, from ) {
                   if ( _.isUndefined(from) ) {
                     //provide a constructor for the inputs
-                    control.preModelInputConstructor = control.inputConstructor;//api.CZRInput;
-                    control.setupPreModelInputCollection();
+                    element.preItemInputConstructor = element.inputConstructor;//api.CZRInput;
+                    element.setupPreItemInputCollection();
                   }
                 });
 
                 //add state listeners
-                control.czr_preModel('view_status').callbacks.add( function( to, from ) {
-                  control._togglePreModelViewExpansion( to );
+                element.czr_preItem('view_status').callbacks.add( function( to, from ) {
+                  element._togglePreItemViewExpansion( to );
                 });
           });
 
-          api.CZRElement.prototype.ready.call( control );
+          api.CZRElement.prototype.ready.call( element );
   },//ready()
 
 
-  setupPreModelInputCollection : function() {
-          var control = this;
+  setupPreItemInputCollection : function() {
+          var element = this;
           //creates the inputs based on the rendered items
-          $('.' + control.css_attr.pre_add_wrapper, control.container).find( '.' + control.css_attr.sub_set_wrapper)
+          $('.' + element.control.css_attr.pre_add_wrapper, control.container).find( '.' + element.control.css_attr.sub_set_wrapper)
           .each( function(_index) {
                 var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index;
-                control.czr_preModelInput.add( _id, new control.preModelInputConstructor( _id, {
+                element.czr_preItemInput.add( _id, new element.preItemInputConstructor( _id, {
                     id : _id,
                     type : $(this).attr('data-input-type'),
                     container : $(this),
-                    item : control.czr_preModel('model'),
-                    control : control
+                    item : element.czr_preItem('item'),
+                    element : element
                 } ) );
           });//each
   },
 
 
-  //the model is manually added.
-  //We should have a pre model
-  addModel : function(obj) {
-          var control = this,
-              model = control.czr_preModel('model').get();
+  //the item is manually added.
+  //We should have a pre Item
+  addItem : function(obj) {
+          var element = this,
+              item = element.czr_preItem('item').get();
 
-          if ( _.isEmpty(model) || ! _.isObject(model) ) {
-            throw new Error('addModel : a model should be an object and not empty. In : ' + control.id +'. Aborted.' );
+          if ( _.isEmpty(item) || ! _.isObject(item) ) {
+            throw new Error('addItem : an item should be an object and not empty. In : ' + element.id +'. Aborted.' );
           }
 
-          control.instantiateModel(model, true); //true == Added by user
+          element.instantiateItem(item, true); //true == Added by user
 
-          control.closeResetPreModel();
+          element.closeResetPreItem();
 
-          control.trigger('model_item', model );
-          //control.doActions( 'model_added_by_user' , control.container, { model : model , dom_event : obj.dom_event } );
+          element.trigger('item_added', item );
+          //element.doActions( 'item_added_by_user' , element.container, { item : item , dom_event : obj.dom_event } );
 
           //refresh the preview frame (only needed if transport is postMessage )
           //must be a dom event not triggered
-          //otherwise we are in the init collection case where the model are fetched and added from the setting in initialize
-          if ( 'postMessage' == api(this.id).transport && _.has( obj, 'dom_event') && ! _.has( obj.dom_event, 'isTrigger' ) && ! api.CZR_Helpers.has_part_refresh( control.id ) ) {
-            control.previewer.refresh();
+          //otherwise we are in the init collection case where the item are fetched and added from the setting in initialize
+          if ( 'postMessage' == api(this.id).transport && _.has( obj, 'dom_event') && ! _.has( obj.dom_event, 'isTrigger' ) && ! api.CZR_Helpers.has_part_refresh( element.control.id ) ) {
+            element.control.previewer.refresh();
           }
   }
 

@@ -12,7 +12,7 @@ $.extend( CZRWidgetAreasMths, {
           //EXTEND THE DEFAULT CONSTRUCTORS FOR INPUT
           control.inputConstructor = api.CZRInput.extend( control.CZRWZonesInputMths || {} );
           //EXTEND THE DEFAULT CONSTRUCTORS FOR MONOMODEL
-          control.modelConstructor = api.CZRItem.extend( control.CZRWZonesItem || {} );
+          control.itemConstructor = api.CZRItem.extend( control.CZRWZonesItem || {} );
 
 
           //add a shortcut to the server side json properties
@@ -30,9 +30,9 @@ $.extend( CZRWidgetAreasMths, {
 
           //extend the saved model property
           //adds the default widget zones
-          control.savedModels = _.union(
+          control.savedItems = _.union(
                   _.has(control.params, 'default_zones') ? control.params.default_zones : [],
-                  control.savedModels
+                  control.savedItems
           );
 
           control.locations = _.has( options.params , 'sidebar_locations') ? options.params.sidebar_locations : {};
@@ -56,11 +56,11 @@ $.extend( CZRWidgetAreasMths, {
           this.listenToSidebarInsights();
 
           //AVAILABLE LOCATIONS FOR THE PRE MODEL
-          //1) add an observable value to control.czr_preModel to handle the alert visibility
-          control.czr_preModel.create('location_alert_view_state');
-          control.czr_preModel('location_alert_view_state').set('closed');
+          //1) add an observable value to control.czr_preItem to handle the alert visibility
+          control.czr_preItem.create('location_alert_view_state');
+          control.czr_preItem('location_alert_view_state').set('closed');
           //2) add state listeners
-          control.czr_preModel('location_alert_view_state').callbacks.add( function( to, from ) {
+          control.czr_preItem('location_alert_view_state').callbacks.add( function( to, from ) {
                     var $view = control._getPreModelView();
                     control._toggleLocationAlertExpansion( $view, to );
           });
@@ -69,7 +69,7 @@ $.extend( CZRWidgetAreasMths, {
           control.bind( 'item_added', function( model ) {
                   console.log('arguments of model added', model, arguments);
                   control.addWidgetSidebar( model );
-                  control.czr_preModel('location_alert_view_state').set('closed');
+                  control.czr_preItem('location_alert_view_state').set('closed');
           });
 
 
@@ -83,20 +83,20 @@ $.extend( CZRWidgetAreasMths, {
 
 
 
-  //@todo : add the control.czr_preModel('view_content').callbacks.add(function( to, from ) {}
+  //@todo : add the control.czr_preItem('view_content').callbacks.add(function( to, from ) {}
   //=> to replace pre_add_view_rendered action
   ready : function() {
           var control = this;
           api.CZRDynElement.prototype.ready.call( control );
           api.bind( 'ready', function() {
-                //add state listener on pre model view
-                control.czr_preModel('view_status').callbacks.add( function( to, from ) {
+                //add state listener on pre Item view
+                control.czr_preItem('view_status').callbacks.add( function( to, from ) {
                       if ( 'expanded' != to )
                         return;
                       //refresh the location list
-                      control.czr_preModelInput('locations')._setupLocationSelect( true );//true for refresh
+                      control.czr_preItemInput('locations')._setupLocationSelect( true );//true for refresh
                       //refresh the location alert message
-                      control.czr_preModelInput('locations').mayBeDisplayModelAlert();
+                      control.czr_preItemInput('locations').mayBeDisplayModelAlert();
                 });
           });
   },
@@ -222,9 +222,9 @@ $.extend( CZRWidgetAreasMths, {
                         return ! _.contains(available_locs, loc);
                       });
 
-                  //check if we are in the pre model case => if so, the id is empty
+                  //check if we are in the pre Item case => if so, the id is empty
                   if ( ! _.has( input.get(), 'id' ) || _.isEmpty( input.get().id ) ) {
-                    control.czr_preModel('location_alert_view_state').set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
+                    control.czr_preItem('location_alert_view_state').set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
                   } else {
                     item.czr_viewLocationAlert( item.model_id ).set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
                   }
@@ -758,7 +758,7 @@ $.extend( CZRWidgetAreasMths, {
           //Close all views on widget panl expansion/clos
           api.panel('widgets').expanded.callbacks.add( function(expanded) {
                   control.closeAllViews();
-                  control.czr_preModel('view_status').set('closed');
+                  control.czr_preItem('view_status').set('closed');
           } );
 
 
@@ -801,7 +801,7 @@ $.extend( CZRWidgetAreasMths, {
 
           //VISIBILITY BASED ON THE SIDEBAR INSIGHTS
           api.sidebar_insights('registered').callbacks.add( function( _registered_zones ) {
-                  var _current_collection = _.clone( control.czr_Model.czr_collection.get() );
+                  var _current_collection = _.clone( control.czr_Item.czr_collection.get() );
                   _.map(_current_collection, function( _model ) {
                     if ( ! control.getViewEl(_model.id).length )
                       return;
@@ -812,7 +812,7 @@ $.extend( CZRWidgetAreasMths, {
 
           //OPACITY SIDEBAR INSIGHTS BASED
           api.sidebar_insights('inactives').callbacks.add( function( _inactives_zones ) {
-                  var _current_collection = _.clone( control.czr_Model.czr_collection.get() );
+                  var _current_collection = _.clone( control.czr_Item.czr_collection.get() );
                   _.map(_current_collection, function( _model ) {
                     if ( ! control.getViewEl(_model.id).length )
                       return;
@@ -889,7 +889,7 @@ $.extend( CZRWidgetAreasMths, {
   //=> add a dynamic title
   getDefaultModel : function(id) {
           var control = this,
-              _current_collection = control.czr_Model.czr_collection.get(),
+              _current_collection = control.czr_Item.czr_collection.get(),
               _default = _.clone( control.defaultItemModel ),
               _default_contexts = _default.contexts;
           return $.extend( _default, {

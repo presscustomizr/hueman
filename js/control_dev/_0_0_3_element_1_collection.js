@@ -2,78 +2,79 @@
 //extends api.CZRBaseControl
 //
 //Setup the collection of items
-//renders the control view
+//renders the element view
 //Listen to items collection changes and update the control setting
 
 var CZRElementMths = CZRElementMths || {};
 
 $.extend( CZRElementMths, {
 
-  //@fired in control ready on api('ready')
+  //@fired in element ready on api('ready')
   populateCollection : function() {
-          var control = this;
-          //inits the collection with the saved models
-          //populates the collection with the saved model
-          _.each( control.savedModels, function( model, key ) {
-                //normalizes the model
-                model = control._normalizeModel(model, _.has( model, 'id' ) ? model.id : key );
-                if ( false === model ) {
-                  throw new Error('fetchSavedCollection : a model could not be added in : ' + control.id );
+          var element = this;
+          console.log('POPULATE ITEM COLLECTION?', element.savedItems );
+          //populates the collection with the saved items
+          _.each( element.savedItems, function( item, key ) {
+                //normalizes the item
+                item = element._normalizeItem(item, _.has( item, 'id' ) ? item.id : key );
+                if ( false === item ) {
+                  throw new Error('fetchSavedCollection : an item could not be added in : ' + element.id );
                 }
                 //adds it to the collection
-                control.instantiateModel( model);
+                element.instantiateItem( item);
           });
 
           return this;
   },
 
 
-  instantiateModel : function( model,is_added_by_user ) {
-          if ( ! _.has( model,'id') ) {
-            throw new Error('CZRElement::instantiateModel() : a model has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
+  instantiateItem : function( item,is_added_by_user ) {
+          if ( ! _.has( item,'id') ) {
+            throw new Error('CZRElement::instantiateItem() : an item has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
           }
-          var control = this;
+          var element = this;
 
-          //Maybe prepare the model, make sure its id is set and unique
-          model =  ( _.has( model, 'id') && control._isModelIdPossible( model.id) ) ? model : control._initNewModel( model || {} );
+          //Maybe prepare the item, make sure its id is set and unique
+          item =  ( _.has( item, 'id') && element._isItemIdPossible( item.id) ) ? item : element._initNewItem( item || {} );
 
-          //instanciate the model with the default constructor
-          control.czr_Model.add( model.id, new control.modelConstructor( model.id, {
-                model_id : model.id,
-                model_val : model,
-                defaultItemModel : control.defaultItemModel,
-                item_control : control,
+          //instanciate the item with the default constructor
+          element.czr_Item.add( item.id, new element.itemConstructor( item.id, {
+                item_id : item.id,
+                item_val : item,
+                defaultItemModel : element.defaultItemModel,
+                item_control : element.control,
+                item_element : element,
                 is_added_by_user : is_added_by_user || false
           } ) );
   },
 
   //registered callback by czr_collection.callbacks.add()
   collectionListeners : function( to, from) {
-          var control = this,
+          var element = this,
               _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
               _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
-              _model_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
-              _collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && _.isEmpty(_model_updated);
+              _item_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
+              _collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && _.isEmpty(_item_updated);
 
           //say it to the api
-          api(control.id).set( control.filterCollectionBeforeAjax(to) );
+          api(element.control.id).set( element.filterCollectionBeforeAjax(to) );
 
            //SORTED COLLECTION
           if ( _collection_sorted ) {
-                if ( _.has(control, 'czr_preModel') ) {
-                  control.czr_preModel('view_status').set('closed');
+                if ( _.has(element, 'czr_preItem') ) {
+                  element.czr_preItem('view_status').set('closed');
                 }
-                control.closeAllViews();
-                control.closeAllAlerts();
+                element.closeAllViews();
+                element.closeAllAlerts();
           }
 
           //refreshes the preview frame  :
           //1) only needed if transport is postMessage, because is triggered by wp otherwise
-          //2) only needed when : add, remove, sort model(s).
-          var is_model_update = ( _.size(from) == _.size(to) ) && ! _.isEmpty( _.difference(from, to) );
+          //2) only needed when : add, remove, sort item(s).
+          var is_item_update = ( _.size(from) == _.size(to) ) && ! _.isEmpty( _.difference(from, to) );
 
-          if ( 'postMessage' == api(control.id).transport && ! is_model_update && ! api.CZR_Helpers.has_part_refresh( control.id ) ) {
-            control.previewer.refresh();
+          if ( 'postMessage' == api(element.control.id).transport && ! is_item_update && ! api.CZR_Helpers.has_part_refresh( element.control.id ) ) {
+            element.control.previewer.refresh();
           }
   },
 
@@ -85,62 +86,62 @@ $.extend( CZRElementMths, {
   },
 
 
-  //@param model an object
+  //@param item an object
   //@parama key is an integer OPTIONAL
   updateCollection : function( obj ) {
-          var control = this,
-              _current_collection = control.czr_Model.czr_collection.get();
+          var element = this,
+              _current_collection = element.czr_Item.czr_collection.get();
               _new_collection = _.clone(_current_collection);
 
           //if a collection is provided in the passed obj then simply refresh the collection
-          //=> typically used when reordering the collection item with sortable or when a model is removed
+          //=> typically used when reordering the collection item with sortable or when a item is removed
           if ( _.has( obj, 'collection' ) ) {
             //reset the collection
-            control.czr_Model.czr_collection.set(obj.collection);
+            element.czr_Item.czr_collection.set(obj.collection);
             return;
           }
 
-          if ( ! _.has(obj, 'model') ) {
-            throw new Error('updateCollection, no model provided ' + control.id + '. Aborting');
+          if ( ! _.has(obj, 'item') ) {
+            throw new Error('updateCollection, no item provided ' + element.control.id + '. Aborting');
           }
-          var model = _.clone(obj.model);
+          var item = _.clone(obj.item);
 
-          //the model already exist in the collection
-          if ( _.findWhere( _new_collection, { id : model.id } ) ) {
-            _.map( _current_collection , function( _model, _ind ) {
-              if ( _model.id != model.id )
+          //the item already exist in the collection
+          if ( _.findWhere( _new_collection, { id : item.id } ) ) {
+            _.map( _current_collection , function( _item, _ind ) {
+              if ( _item.id != item.id )
                 return;
 
               //set the new val to the changed property
-              _new_collection[_ind] = model;
+              _new_collection[_ind] = item;
             });
           }
-          //the model has to be added
+          //the item has to be added
           else {
-            _new_collection.push(model);
+            _new_collection.push(item);
           }
 
           //updates the collection value
-          control.czr_Model.czr_collection.set(_new_collection);
+          element.czr_Item.czr_collection.set(_new_collection);
   },
 
 
   //fire on sortable() update callback
-  //@returns a sorted collection as an array of model objects
+  //@returns a sorted collection as an array of item objects
   _getSortedDOMCollection : function( obj ) {
-          var control = this,
-              _old_collection = _.clone( control.czr_Model.czr_collection.get() ),
+          var element = this,
+              _old_collection = _.clone( element.czr_Item.czr_collection.get() ),
               _new_collection = [],
               _index = 0;
 
           //re-build the collection from the DOM
-          $( '.' + control.css_attr.inner_view, control.container ).each( function() {
-            var _model = _.findWhere( _old_collection, {id: $(this).attr('data-id') });
+          $( '.' + element.control.css_attr.inner_view, element.container ).each( function() {
+            var _item = _.findWhere( _old_collection, {id: $(this).attr('data-id') });
             //do we have a match in the existing collection ?
-            if ( ! _model )
+            if ( ! _item )
               return;
 
-            _new_collection[_index] = _model;
+            _new_collection[_index] = _item;
 
             _index ++;
           });
@@ -149,7 +150,7 @@ $.extend( CZRElementMths, {
           if ( 0 === _new_collection.length )
             return _old_collection;
 
-          //make sure we have the exact same models as before in the sorted collection
+          //make sure we have the exact same items as before in the sorted collection
           if ( ! _.isEmpty( _.difference( _old_collection, _new_collection ) ) )
             return _old_collection;
 

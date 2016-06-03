@@ -60,16 +60,16 @@ $.extend( CZRInputMths , {
   */
   czrImgUploadInitFrame: function() {
       var input = this,
-          control = input.control;
+          element = input.element;
 
        input.frame = wp.media({
          button: {
-             text: control.params.button_labels.frame_button
+             text: element.params.button_labels.frame_button
          },
          states: [
              new wp.media.controller.Library({
-               title:     control.params.button_labels.frame_title,
-               library:   wp.media.query({ type: control.params.mime_type }),
+               title:     element.params.button_labels.frame_title,
+               library:   wp.media.query({ type: element.params.mime_type }),
                multiple:  false,
                date:      false
              })
@@ -84,17 +84,17 @@ $.extend( CZRInputMths , {
   */
   czrImgUploadRestoreDefault: function( event ) {
         var input = this,
-          control = input.control;
+          element = input.element;
 
         if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
           return;
         }
         event.preventDefault();
 
-        control.params.attachment = control.params.defaultAttachment;
+        element.params.attachment = element.params.defaultAttachment;
 
         // Set the input; the callback takes care of rendering.
-        input.container.find('input').val( control.params.defaultAttachment.url ).trigger('change');
+        input.container.find('input').val( element.params.defaultAttachment.url ).trigger('change');
 
   },
 
@@ -105,14 +105,14 @@ $.extend( CZRInputMths , {
   */
   czrImgUploadRemoveFile: function( event ) {
         var input = this,
-          control = input.control;
+          element = input.element;
 
         if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
           return;
         }
         event.preventDefault();
 
-        control.params.attachment = {};
+        element.params.attachment = {};
 
         input.container.find('input').val( '' ).trigger('change');
   },
@@ -125,11 +125,11 @@ $.extend( CZRInputMths , {
   czrImgUploadSelect: function() {
         var node,
             input = this,
-            control = input.control,
+            element = input.element,
             attachment   = input.frame.state().get( 'selection' ).first().toJSON(),  // Get the attachment from the modal frame.
             mejsSettings = window._wpmejsSettings || {};
 
-        control.params.attachment = attachment;
+        element.params.attachment = attachment;
 
         input.container.find('input').val( attachment.id ).trigger('change');
   },
@@ -149,16 +149,16 @@ $.extend( CZRInputMths , {
 
        var view_template = wp.template('czr-img-uploader-view-content');
 
-       //  //do we have an html template and a control container?
+       //  //do we have an html template and a element container?
        if ( ! view_template  || ! input.container )
         return;
 
-       var $_view_el    = input.container.find('.' + input.control.css_attr.img_upload_container );
+       var $_view_el    = input.container.find('.' + input.element.control.css_attr.img_upload_container );
 
        if ( ! $_view_el.length )
          return;
 
-       $_view_el.html( view_template( input.control.params ) );
+       $_view_el.html( view_template( input.element.params ) );
 
        return true;
   }

@@ -6,15 +6,15 @@ var CZRInputMths = CZRInputMths || {};
 // type : $(this).attr('data-input-type'),
 // value : $(this).find('[data-type]').val(),
 // container : $(this),
-// item : item (Value instance, has a parent control)
-// control : control
+// item : item (Value instance, has a parent element)
+// element : element
 $.extend( CZRInputMths , {
     initialize: function( name, options ) {
             if ( _.isUndefined(options.item ) || _.isEmpty(options.item) ) {
               throw new Error('No item assigned to input ' + options.id + '. Aborting');
             }
-            if ( _.isUndefined(options.control ) ) {
-              throw new Error('No control assigned to input ' + options.id + '. Aborting');
+            if ( _.isUndefined(options.element ) ) {
+              throw new Error('No element assigned to input ' + options.id + '. Aborting');
             }
 
             api.Value.prototype.initialize.call( this, null, options );

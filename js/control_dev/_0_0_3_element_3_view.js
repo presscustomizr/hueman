@@ -2,29 +2,29 @@
 //extends api.CZRBaseControl
 //
 //Setup the collection of items
-//renders the control view
+//renders the element view
 //Listen to items collection changes and update the control setting
 var CZRElementMths = CZRElementMths || {};
 $.extend( CZRElementMths, {
   //helper
-  //get the $ view DOM el from the model id
-  getViewEl : function( model_id ) {
-          var control = this;
-          return $( '[data-id = "' + model_id + '"]', control.container );
+  //get the $ view DOM el from the item id
+  getViewEl : function( item_id ) {
+          var element = this;
+          return $( '[data-id = "' + item_id + '"]', element.container );
   },
 
 
-  //fired on add_model
+  //fired on add_item
   //fired on views_sorted
-  closeAllViews : function(model_id) {
-          var control = this,
-              _current_collection = _.clone( control.czr_Model.czr_collection.get() ),
-              _filtered_collection = _.filter( _current_collection , function( mod) { return mod.id != model_id; } );
+  closeAllViews : function(item_id) {
+          var element = this,
+              _current_collection = _.clone( element.czr_Item.czr_collection.get() ),
+              _filtered_collection = _.filter( _current_collection , function( mod) { return mod.id != item_id; } );
 
-          _.map( _filtered_collection, function(_model) {
+          _.map( _filtered_collection, function(_item) {
 
-            if ( control.czr_Model.has(_model.id) && 'expanded' == control.czr_Model(_model.id)._getViewState(_model.id) )
-              control.czr_Model(_model.id).czr_View.set( 'closed' ); // => will fire the cb _toggleViewExpansion
+            if ( element.czr_Item.has(_item.id) && 'expanded' == element.czr_Item(_item.id)._getViewState(_item.id) )
+              element.czr_Item(_item.id).czr_View.set( 'closed' ); // => will fire the cb _toggleViewExpansion
            } );
   },
 
@@ -34,9 +34,9 @@ $.extend( CZRElementMths, {
   _adjustScrollExpandedBlock : function( $_block_el, adjust ) {
           if ( ! $_block_el.length )
             return;
-          var control = this,
-               $_controlSection = $( '.accordion-section-content', api.section( control.section() ).container ),
-              _currentScrollTopVal = $_controlSection.scrollTop(),
+          var element = this,
+               $_elementSection = $( '.accordion-section-content', element.section.container ),//was api.section( control.section() )
+              _currentScrollTopVal = $_elementSection.scrollTop(),
               _scrollDownVal,
               _adjust = adjust || 90;
 
@@ -44,7 +44,7 @@ $.extend( CZRElementMths, {
               if ( ( $_block_el.offset().top + $_block_el.height() + _adjust ) > $(window.top).height() ) {
                 _scrollDownVal = $_block_el.offset().top + $_block_el.height() + _adjust - $(window.top).height();
                 if ( _scrollDownVal > 0 ) {
-                  $_controlSection.animate({
+                  $_elementSection.animate({
                       scrollTop:  _currentScrollTopVal + _scrollDownVal
                   }, 500);
                 }
@@ -56,15 +56,15 @@ $.extend( CZRElementMths, {
   //close alert wrapper
   //+ deactivate the icon
   closeAllAlerts : function() {
-          var control = this;
-          $('.' + control.css_attr.remove_alert_wrapper, control.container ).each( function() {
+          var element = this;
+          $('.' + element.control.css_attr.remove_alert_wrapper, element.container ).each( function() {
             if ( $(this).hasClass('open') ) {
               $(this).slideToggle( {
                 duration : 100,
                 done : function() {
                   $(this).toggleClass('open' , false );
                   //deactivate the icons
-                  $(this).siblings().find('.' + control.css_attr.display_alert_btn).toggleClass('active' , false );
+                  $(this).siblings().find('.' + element.control.css_attr.display_alert_btn).toggleClass('active' , false );
                 }
               } );
             }
@@ -76,11 +76,11 @@ $.extend( CZRElementMths, {
   _makeSortable : function(obj) {
           if ( wp.media.isTouchDevice || ! $.fn.sortable )
             return;
-          var control = this;
-          $( '.' + control.css_attr.views_wrapper, control.container ).sortable( {
-              handle: '.' + control.css_attr.sortable_handle,
+          var element = this;
+          $( '.' + element.control.css_attr.views_wrapper, element.container ).sortable( {
+              handle: '.' + element.control.css_attr.sortable_handle,
               update: function( event, ui ) {
-                control.czr_Model.czr_collection.set( control._getSortedDOMCollection() );
+                element.czr_Item.czr_collection.set( element._getSortedDOMCollection() );
               }
             }
           );
