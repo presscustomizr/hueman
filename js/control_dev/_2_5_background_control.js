@@ -1,17 +1,17 @@
 //wp.customize, jQuery, _
-var CZRBackgroundMethods = CZRBackgroundMethods || {};
+var CZRBackgroundMths = CZRBackgroundMths || {};
 
-//@extends CZRMonoModelMethods
-$.extend( CZRBackgroundMethods , {
+//@extends CZRItemMths
+$.extend( CZRBackgroundMths , {
   initialize: function( id, options ) {
           var control = this;
-          api.CZRMonoModelControl.prototype.initialize.call( control, id, options );
+          api.CZRItemControl.prototype.initialize.call( control, id, options );
 
           control.defaultModel = control.params.default_model;
 
           //EXTEND THE DEFAULT CONSTRUCTORS FOR INPUT AND MONOMODEL
-          control.inputConstructor = api.CZRInput.extend( control.CZRBackgroundInputMethods || {} );
-          control.modelConstructor = api.CZRMonoModel.extend( control.CZRBackgroundModelMethods || {} );
+          control.inputConstructor = api.CZRInput.extend( control.CZRBackgroundInputMths || {} );
+          control.modelConstructor = api.CZRItem.extend( control.CZRBackgroundModelMths || {} );
 
           //the map describing how to populate each particular select inputs
           control.select_map = {
@@ -27,7 +27,7 @@ $.extend( CZRBackgroundMethods , {
   //var current_setval = _.isString( api(control.id).get() ) ? { 'background-color': api(control.id).get() } : api(control.id).get();
   ready : function() {
           var control = this;
-          api.CZRMonoModelControl.prototype.ready.call( control );
+          api.CZRItemControl.prototype.ready.call( control );
 
           api.bind('ready', function() {
                 var _img_on_init = control.czr_Model('background-image').get();
@@ -54,7 +54,7 @@ $.extend( CZRBackgroundMethods , {
 
 
   //this set of methods extends and overrides the prototype of api.CZRInput
-  CZRBackgroundInputMethods : {
+  CZRBackgroundInputMths : {
 
           ready : function() {
             var input = this;
@@ -108,13 +108,13 @@ $.extend( CZRBackgroundMethods , {
   },
 
 
-  CZRBackgroundModelMethods : {
+  CZRBackgroundModelMths : {
           //OVERRIDES THE PARENT METHOD TO ADD THE BG DEFAULT COLOR
           renderViewContent : function() {
                   //=> an array of objects
-                  var monoModel = this,
-                      control = this.model_control,
-                      model = _.clone( monoModel.get() );
+                  var item = this,
+                      control = this.item_control,
+                      model = _.clone( item.get() );
 
                   //do we have view content template script?
                   if ( 0 === $( '#tmpl-' + control.getTemplateEl( 'view-content', model ) ).length )

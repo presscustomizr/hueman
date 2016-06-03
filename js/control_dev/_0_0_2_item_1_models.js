@@ -1,12 +1,12 @@
 //extends api.CZRBaseControl
-var CZRMonoModelMethods = CZRMonoModelMethods || {};
+var CZRItemMths = CZRItemMths || {};
 
-  $.extend( CZRMonoModelMethods , {
+  $.extend( CZRItemMths , {
     //The idea is to send only the currently modified model instead of the entire collection
     //the entire collection is sent anyway on api(setId).set( value ), and accessible in the preview via api(setId).bind( fn( to) )
     _sendModel : function( to, from ) {
-          var monoModel = this,
-              control = monoModel.model_control,
+          var item = this,
+              control = item.item_control,
               _changed_props = [];
 
           //which property(ies) has(ve) changed ?
@@ -24,28 +24,28 @@ var CZRMonoModelMethods = CZRMonoModelMethods || {};
                 });
 
                 //add a hook here
-                api.CZR_Dom.doActions('after_sendModel',  monoModel.container, { model : to , dom_el: monoModel.container, changed_prop : _prop }, monoModel );
+                control.trigger('model_sent', { model : to , dom_el: item.container, changed_prop : _prop } );
           });
     },
 
     //fired on click dom event
     //for dynamic multi input controls
     removeModel : function() {
-            var monoModel = this,
-                control = this.model_control,
+            var item = this,
+                control = this.item_control,
                 _new_collection = _.clone( control.czr_Model.czr_collection.get() );
 
-            //destroy the Mono model DOM el
-            monoModel._destroyView();
+            //destroy the Item DOM el
+            item._destroyView();
 
             //new collection
             //say it
-            _new_collection = _.without( _new_collection, _.findWhere( _new_collection, {id: monoModel.model_id }) );
+            _new_collection = _.without( _new_collection, _.findWhere( _new_collection, {id: item.model_id }) );
             control.czr_Model.czr_collection.set( _new_collection );
             //hook here
-            control.trigger('item_removed', monoModel.get() );
-            //remove the mono model from the collection
-            control.czr_Model.remove(monoModel.model_id);
+            control.trigger('item_removed', item.get() );
+            //remove the item from the collection
+            control.czr_Model.remove(item.model_id);
     },
 
     //@return the model {...} from the collection

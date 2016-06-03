@@ -1,5 +1,5 @@
-var CZRInputMethods = CZRInputMethods || {};
-$.extend( CZRInputMethods , {
+var CZRInputMths = CZRInputMths || {};
+$.extend( CZRInputMths , {
     setupSelect : function() {
         var input = this;
         $('select', input.container ).not('.no-selecter-js')

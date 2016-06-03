@@ -1,5 +1,5 @@
-var CZRInputMethods = CZRInputMethods || {};
-$.extend( CZRInputMethods , {
+var CZRInputMths = CZRInputMths || {};
+$.extend( CZRInputMths , {
     setupImageUploader : function() {
          var input  = this;
 

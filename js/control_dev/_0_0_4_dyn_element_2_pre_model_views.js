@@ -1,13 +1,13 @@
 //MULTI CONTROL CLASS
 //extends api.CZRBaseControl
 //
-//Setup the collection of mono models
+//Setup the collection of items
 //renders the control view
-//Listen to mono models collection changes and update the control setting
+//Listen to items collection changes and update the control setting
 
-var CZRMultiInputDynMethods = CZRMultiInputDynMethods || {};
+var CZRDynElementMths = CZRDynElementMths || {};
 
-$.extend( CZRMultiInputDynMethods, {
+$.extend( CZRDynElementMths, {
     //////////////////////////////////////////////////
   /// PRE ADD MODEL DIALOG AND VIEW
   //////////////////////////////////////////////////
@@ -125,4 +125,4 @@ $.extend( CZRMultiInputDynMethods, {
           return this;
   }
 
-});//$.extend//CZRBaseControlMethods
+});//$.extend//CZRBaseControlMths

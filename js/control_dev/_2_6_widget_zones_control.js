@@ -1,85 +1,18 @@
 //extends api.CZRMultiModelControl
 
-var CZRWidgetAreasMethods = CZRWidgetAreasMethods || {};
+var CZRWidgetAreasMths = CZRWidgetAreasMths || {};
 
-$.extend( CZRWidgetAreasMethods, {
+$.extend( CZRWidgetAreasMths, {
   initialize: function( id, options ) {
           //run the parent initialize
-          api.CZRMultiInputDynControl.prototype.initialize.call( this, id, options );
+          api.CZRDynElement.prototype.initialize.call( this, id, options );
 
           var control = this;
-          //adds control specific actions
-          control.addActions(
-            'control_event_map',
-            [
-              //add a callback to pre model view => refresh the locations based on the preview insights
-              // {
-              //     trigger   : 'pre_add_view_rendered',
-              //     actions   : [ 'listenToPreModelViewExpand' ]
-              // },
-              //display an alert for unavailable locations
-              // {
-              //     trigger   : 'pre_model:locations:changed',
-              //     actions   : ['mayBeDisplayPreModelAlert' ]
-              // },
-              //  //setup the select list for the pre add dialog box
-              // {
-              //     trigger   : 'pre_add_view_rendered',
-              //     name      : 'pre_add_view_rendered',
-              //     actions   : [ 'setupSelect' ]
-              // },
-
-
-              // {
-              //     trigger   : 'after_writeViewTitle',
-              //     actions   : [ 'writeSubtitleInfos' ]
-              // },
-              //this action will refresh the preview with a delay
-              // {
-              //     trigger   : 'after_sendModel',
-              //     actions   : ['updateSectionTitle','setModelUpdateTimer']
-              // },
-              //=> update the related control choice list with the new widget area
-              //=> creates section, setting and control for the newly added widget area
-              // {
-              //     trigger   : 'model_added_by_user',
-              //     actions   : ['addWidgetSidebar', 'closePreModelAlert']
-              // },
-              // {
-              //     trigger   : 'before_modelRemoved',
-              //     actions   : ['removeWidgetSidebar']
-              // }
-            ]
-          );
-
-          //extend each view event map
-          // control.addActions(
-          //   'view_event_map', [
-          //     // {
-          //     //     trigger   : 'locations:changed',
-          //     //     actions   : [ 'mayBeDisplayModelAlert' ]
-          //     // },
-          //     //setup the location alert for each model views
-          //     // {
-          //     //     trigger   : 'after_viewSetup',
-          //     //     actions   : [ 'setupLocationsApiListeners' ]
-          //     // },
-          //     //add a callback to view => refresh the locations based on the preview insights
-          //     // {
-          //     //     trigger   : 'after_viewSetup',
-          //     //     actions   : [ 'listenToViewExpand' ]
-          //     // },
-          //     // {
-          //     //     trigger   : 'viewContentRendered',
-          //     //     actions   : [ 'setupSelect' ]
-          //     // }
-          //   ]
-          // );
 
           //EXTEND THE DEFAULT CONSTRUCTORS FOR INPUT
-          control.inputConstructor = api.CZRInput.extend( control.CZRWZonesInputMethods || {} );
+          control.inputConstructor = api.CZRInput.extend( control.CZRWZonesInputMths || {} );
           //EXTEND THE DEFAULT CONSTRUCTORS FOR MONOMODEL
-          control.modelConstructor = api.CZRMonoModel.extend( control.CZRWZonesMonoModel || {} );
+          control.modelConstructor = api.CZRItem.extend( control.CZRWZonesItem || {} );
 
 
           //add a shortcut to the server side json properties
@@ -105,7 +38,7 @@ $.extend( CZRWidgetAreasMethods, {
           control.locations = _.has( options.params , 'sidebar_locations') ? options.params.sidebar_locations : {};
 
           //declares a default model
-          control.defaultMonoModel = {
+          control.defaultItemModel = {
                   id : '',
                   title : serverControlParams.translatedStrings.widgetZone,
                   contexts : _.without( _.keys(control.contexts), '_all_' ),//the server list of contexts is an object, we only need the keys, whitout _all_
@@ -148,11 +81,13 @@ $.extend( CZRWidgetAreasMethods, {
 
 
 
+
+
   //@todo : add the control.czr_preModel('view_content').callbacks.add(function( to, from ) {}
   //=> to replace pre_add_view_rendered action
   ready : function() {
           var control = this;
-          api.CZRMultiInputDynControl.prototype.ready.call( control );
+          api.CZRDynElement.prototype.ready.call( control );
           api.bind( 'ready', function() {
                 //add state listener on pre model view
                 control.czr_preModel('view_status').callbacks.add( function( to, from ) {
@@ -177,7 +112,7 @@ $.extend( CZRWidgetAreasMethods, {
 
 
 
-  CZRWZonesInputMethods : {
+  CZRWZonesInputMths : {
           ready : function() {
                   var input = this;
 
@@ -210,7 +145,7 @@ $.extend( CZRWidgetAreasMethods, {
           _setupContextSelect : function() {
                   var input      = this,
                       input_contexts = input.get(),
-                      mono_model = input.mono_model,
+                      item = input.item,
                       control     = input.control;
 
                   //generates the contexts options
@@ -234,7 +169,7 @@ $.extend( CZRWidgetAreasMethods, {
           _setupLocationSelect : function(refresh ) {
                   var input      = this,
                       input_locations = input.get(),
-                      mono_model = input.mono_model,
+                      item = input.item,
                       control     = input.control,
                       available_locs = api.sidebar_insights('available_locations').get();
 
@@ -279,7 +214,7 @@ $.extend( CZRWidgetAreasMethods, {
           //@param obj { dom_el: $() , model : {} )
           mayBeDisplayModelAlert : function() {
                   var input      = this,
-                      mono_model = input.mono_model,
+                      item = input.item,
                       control     = input.control,
                       _selected_locations = $('select[data-type="locations"]', input.container ).val(),
                       available_locs = api.sidebar_insights('available_locations').get(),
@@ -291,10 +226,10 @@ $.extend( CZRWidgetAreasMethods, {
                   if ( ! _.has( input.get(), 'id' ) || _.isEmpty( input.get().id ) ) {
                     control.czr_preModel('location_alert_view_state').set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
                   } else {
-                    mono_model.czr_viewLocationAlert( mono_model.model_id ).set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
+                    item.czr_viewLocationAlert( item.model_id ).set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
                   }
           }
-  },//CZRWZonesInputMethods
+  },//CZRWZonesInputMths
 
 
 
@@ -310,70 +245,70 @@ $.extend( CZRWidgetAreasMethods, {
 
 
 
-  CZRWZonesMonoModel : {
+  CZRWZonesItem : {
           initialize : function( id, options ) {
-                  var monoModel = this,
-                      control = monoModel.model_control;
+                  var item = this,
+                      control = item.item_control;
 
-                  //Add some observable values for this monoModel
-                  monoModel.czr_viewLocationAlert = new api.Values();
+                  //Add some observable values for this item
+                  item.czr_viewLocationAlert = new api.Values();
 
-                  api.CZRMonoModel.prototype.initialize.call( monoModel, null, options );
+                  api.CZRItem.prototype.initialize.call( item, null, options );
           },
 
 
 
           //extend parent setupview
           setupView : function() {
-                  var monoModel = this,
-                      control = monoModel.model_control;
-                  api.CZRMonoModel.prototype.setupView.call(monoModel);
+                  var item = this,
+                      control = item.item_control;
+                  api.CZRItem.prototype.setupView.call(item);
 
                   /// ALERT FOR NOT AVAILABLE LOCATION
-                  monoModel.czr_viewLocationAlert.create( monoModel.model_id );
-                  monoModel.czr_viewLocationAlert( monoModel.model_id ).set('closed');
+                  item.czr_viewLocationAlert.create( item.model_id );
+                  item.czr_viewLocationAlert( item.model_id ).set('closed');
 
                   //add a state listener on expansion change
-                  monoModel.czr_viewLocationAlert( monoModel.model_id ).callbacks.add( function( to, from ) {
-                    control._toggleLocationAlertExpansion( monoModel.container , to );
+                  item.czr_viewLocationAlert( item.model_id ).callbacks.add( function( to, from ) {
+                    control._toggleLocationAlertExpansion( item.container , to );
                   });
 
                   //this is fired just after the setupViewApiListeners
                   //=> add a callback to refresh the availability status of the locations in the select location picker
                   //add a state listener on expansion change
-                  monoModel.czr_View.callbacks.add( function( to, from ) {
+                  item.czr_View.callbacks.add( function( to, from ) {
                         if ( -1 == to.indexOf('expanded') )//can take the expanded_noscroll value !
                           return;
                         //refresh the location list
-                        monoModel.czr_Input('locations')._setupLocationSelect( true );//true for refresh
+                        item.czr_Input('locations')._setupLocationSelect( true );//true for refresh
                         //refresh the location alert message
-                        monoModel.czr_Input('locations').mayBeDisplayModelAlert();
+                        item.czr_Input('locations').mayBeDisplayModelAlert();
                   });
           },
 
 
           //extend parent listener
-          setupMonoModelListeners : function(to, from) {
-                  var monoModel = this;
-                  api.CZRMonoModel.prototype.setupMonoModelListeners.call(monoModel, to, from);
+          setupItemListeners : function(to, from) {
+                  var item = this;
+                  api.CZRItem.prototype.setupItemListeners.call(item, to, from);
 
-                  monoModel.writeSubtitleInfos(to);
-                  monoModel.updateSectionTitle(to).setModelUpdateTimer();
+                  item.writeSubtitleInfos(to);
+                  item.updateSectionTitle(to).setModelUpdateTimer();
           },
 
 
 
-          //Fired in setupMonoModelListeners. Reacts to model change.
+          //Fired in setupItemListeners. Reacts to model change.
           //Write html informations under the title : location(s) and context(s)
           writeSubtitleInfos : function(model) {
-                  var monoModel = this,
-                      control = monoModel.model_control,
-                      _model = _.clone( model || monoModel.get() ),
+                  var item = this,
+                      control = item.item_control,
+                      _model = _.clone( model || item.get() ),
                       _locations = [],
                       _contexts = [],
                       _html = '';
 
-                  if ( ! monoModel.container.length )
+                  if ( ! item.container.length )
                     return;
 
                   //generate the locations and the contexts text from the json data if exists
@@ -390,7 +325,7 @@ $.extend( CZRWidgetAreasMethods, {
                   _model.contexts =_.isString(_model.contexts) ? [_model.contexts] : _model.contexts;
 
                   //all contexts cases ?
-                  if ( monoModel._hasModelAllContexts( model ) ) {
+                  if ( item._hasModelAllContexts( model ) ) {
                     _contexts.push(control.contexts._all_);
                   } else {
                     _.each( _model.contexts, function( con ) {
@@ -418,21 +353,20 @@ $.extend( CZRWidgetAreasMethods, {
 
                   _html = '<u>' + _locationText + '</u> : ' + _locations + ' <strong>|</strong> <u>' + _contextText + '</u> : ' + _contexts;
 
-                  if ( ! $('.czr-zone-infos', monoModel.container ).length ) {
+                  if ( ! $('.czr-zone-infos', item.container ).length ) {
                     var $_zone_infos = $('<div/>', {
                       class : [ 'czr-zone-infos' , control.css_attr.sortable_handle ].join(' '),
                       html : _html
                     });
-                    $( '.' + control.css_attr.view_buttons, monoModel.container ).after($_zone_infos);
+                    $( '.' + control.css_attr.view_buttons, item.container ).after($_zone_infos);
                   } else {
-                    $('.czr-zone-infos', monoModel.container ).html(_html);
+                    $('.czr-zone-infos', item.container ).html(_html);
                   }
           },//writeSubtitleInfos
 
 
 
-          ////Fired in setupMonoModelListeners
-          //fired on 'after_sendModel'
+          ////Fired in setupItemListeners
           updateSectionTitle : function(model) {
                   var _sidebar_id = 'sidebar-widgets-' + model.id,
                       _new_title  = model.title;
@@ -470,8 +404,8 @@ $.extend( CZRWidgetAreasMethods, {
           //Don't hammer the preview with too many refreshs
           //2 seconds delay
           setModelUpdateTimer : function() {
-                  var monoModel = this,
-                      control = monoModel.model_control;
+                  var item = this,
+                      control = item.item_control;
 
                   clearTimeout( $.data(this, 'modelUpdateTimer') );
                   $.data(
@@ -488,8 +422,8 @@ $.extend( CZRWidgetAreasMethods, {
           //@return bool
           //takes the model unique id
           _hasModelAllContexts : function( model ) {
-                  var monoModel = this,
-                      control = monoModel.model_control,
+                  var item = this,
+                      control = item.item_control,
                       controlContexts = _.keys(control.contexts);
 
                   model = model || this.get();
@@ -513,7 +447,7 @@ $.extend( CZRWidgetAreasMethods, {
                   return _.isEmpty( _matched ) ? defaults : _matched;
 
           }
-  },//CZRWZonesMonoModel
+  },//CZRWZonesItem
 
 
 
@@ -956,7 +890,7 @@ $.extend( CZRWidgetAreasMethods, {
   getDefaultModel : function(id) {
           var control = this,
               _current_collection = control.czr_Model.czr_collection.get(),
-              _default = _.clone( control.defaultMonoModel ),
+              _default = _.clone( control.defaultItemModel ),
               _default_contexts = _default.contexts;
           return $.extend( _default, {
               title : 'Widget Zone ' +  ( _.size(_current_collection)*1 + 1 )

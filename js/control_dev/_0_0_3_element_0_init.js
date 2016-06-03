@@ -1,13 +1,13 @@
 //MULTI CONTROL CLASS
 //extends api.CZRBaseControl
 //
-//Setup the collection of mono models
+//Setup the collection of items
 //renders the control view
-//Listen to mono models collection changes and update the control setting
+//Listen to items collection changes and update the control setting
 
-var CZRMultiInputControlMethods = CZRMultiInputControlMethods || {};
+var CZRElementMths = CZRElementMths || {};
 
-$.extend( CZRMultiInputControlMethods, {
+$.extend( CZRElementMths, {
 
   initialize: function( id, options ) {
           var control = this;
@@ -20,7 +20,7 @@ $.extend( CZRMultiInputControlMethods, {
           control.model = { id : '', title : '' };
 
           //define a default Constructors
-          control.modelConstructor = api.CZRMonoModel;
+          control.modelConstructor = api.CZRItem;
           control.inputConstructor = api.CZRInput;
 
           //extend the control with new template Selectors
@@ -62,4 +62,4 @@ $.extend( CZRMultiInputControlMethods, {
           control.container.trigger('ready');
   }
 
-});//$.extend//CZRBaseControlMethods
+});//$.extend//CZRBaseControlMths

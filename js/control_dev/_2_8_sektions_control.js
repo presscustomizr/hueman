@@ -1,8 +1,11 @@
 //extends api.CZRMultiModelControl
+//This controls populates the sektions setting.
+//The each sektion is composed of blocks (=> columns on front end)
+//Each blocks of elements ( => content element on front end like slider, text block, etc)
 
-var CZRSektionsMethods = CZRSektionsMethods || {};
+var CZRSektionsMths = CZRSektionsMths || {};
 
-$.extend( CZRSektionsMethods, {
+$.extend( CZRSektionsMths, {
   initialize: function( id, options ) {
 
     //run the parent initialize
@@ -10,7 +13,7 @@ $.extend( CZRSektionsMethods, {
     var control = this;
 
     //declares a default model
-    control.defaultMonoModel = {
+    control.defaultItemModel = {
       id : '',
       'sektion-layout' : 1,
     };

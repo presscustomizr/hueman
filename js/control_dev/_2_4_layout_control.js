@@ -1,7 +1,7 @@
 
-var CZRLayoutSelectMethods = CZRLayoutSelectMethods || {};
+var CZRLayoutSelectMths = CZRLayoutSelectMths || {};
 
-$.extend( CZRLayoutSelectMethods , {
+$.extend( CZRLayoutSelectMths , {
   ready: function() {
     this.setupSelect();
   },

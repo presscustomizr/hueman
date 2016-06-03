@@ -1,21 +1,21 @@
 //MULTI CONTROL CLASS
-//extends api.CZRMultiInputControl
+//extends api.CZRElement
 //
-//Setup the collection of mono models
+//Setup the collection of items
 //renders the control view
-//Listen to mono models collection changes and update the control setting
+//Listen to items collection changes and update the control setting
 
-var CZRMultiInputDynMethods = CZRMultiInputDynMethods || {};
+var CZRDynElementMths = CZRDynElementMths || {};
 
-$.extend( CZRMultiInputDynMethods, {
+$.extend( CZRDynElementMths, {
   initialize: function( id, options ) {
           var control = this;
-          api.CZRMultiInputControl.prototype.initialize.call( control, id, options );
+          api.CZRElement.prototype.initialize.call( control, id, options );
 
 
           //EXTENDS THE DEFAULT MONO MODEL CONSTRUCTOR WITH NEW METHODS
           //=> like remove model
-          //control.modelConstructor = api.CZRMonoModel.extend( control.CZRMonoModelDynamicMethods || {} );
+          //control.modelConstructor = api.CZRItem.extend( control.CZRItemDynamicMths || {} );
 
 
           //PRE MODEL
@@ -81,7 +81,7 @@ $.extend( CZRMultiInputDynMethods, {
                 });
           });
 
-          api.CZRMultiInputControl.prototype.ready.call( control );
+          api.CZRElement.prototype.ready.call( control );
   },//ready()
 
 
@@ -95,7 +95,7 @@ $.extend( CZRMultiInputDynMethods, {
                     id : _id,
                     type : $(this).attr('data-input-type'),
                     container : $(this),
-                    mono_model : control.czr_preModel('model'),
+                    item : control.czr_preModel('model'),
                     control : control
                 } ) );
           });//each

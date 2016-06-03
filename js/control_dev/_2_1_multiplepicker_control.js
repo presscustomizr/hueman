@@ -1,12 +1,12 @@
 
-var CZRMultiplePickerMethods = CZRMultiplePickerMethods || {};
+var CZRMultiplePickerMths = CZRMultiplePickerMths || {};
 /* Multiple Picker */
 /**
  * @constructor
  * @augments wp.customize.Control
  * @augments wp.customize.Class
  */
-$.extend( CZRMultiplePickerMethods , {
+$.extend( CZRMultiplePickerMths , {
   ready: function() {
     var control  = this,
         _select  = this.container.find('select');

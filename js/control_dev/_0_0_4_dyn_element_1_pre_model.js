@@ -1,13 +1,13 @@
 //MULTI CONTROL CLASS
 //extends api.CZRBaseControl
 //
-//Setup the collection of mono models
+//Setup the collection of items
 //renders the control view
-//Listen to mono models collection changes and update the control setting
+//Listen to items collection changes and update the control setting
 
-var CZRMultiInputDynMethods = CZRMultiInputDynMethods || {};
+var CZRDynElementMths = CZRDynElementMths || {};
 
-$.extend( CZRMultiInputDynMethods, {
+$.extend( CZRDynElementMths, {
   // updatePreModel : function(obj) {
   //       //get the changed property and val
   //       //=> all html input have data-type attribute corresponding to the ones stored in the model
@@ -35,4 +35,4 @@ $.extend( CZRMultiInputDynMethods, {
   //       );
   // }
 
-});//$.extend//CZRBaseControlMethods
+});//$.extend//CZRBaseControlMths

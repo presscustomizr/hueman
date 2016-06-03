@@ -1,11 +1,11 @@
-var CZRUploadMethods = CZRUploadMethods || {};
+var CZRUploadMths = CZRUploadMths || {};
 
 /**
  * @constructor
  * @augments wp.customize.Control
  * @augments wp.customize.Class
  */
-$.extend( CZRUploadMethods, {
+$.extend( CZRUploadMths, {
   ready: function() {
     var control = this;
 

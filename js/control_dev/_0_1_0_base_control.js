@@ -4,9 +4,9 @@
 //this will become our base constructor for main complex controls
 //EARLY SETUP
 
-var CZRBaseControlMethods = CZRBaseControlMethods || {};
+var CZRBaseControlMths = CZRBaseControlMths || {};
 
-$.extend( CZRBaseControlMethods, {
+$.extend( CZRBaseControlMths, {
 
   initialize: function( id, options ) {
           var control = this;
@@ -65,4 +65,4 @@ $.extend( CZRBaseControlMethods, {
           this.previewer.refresh();
   }
 
-});//$.extend//CZRBaseControlMethods
+});//$.extend//CZRBaseControlMths

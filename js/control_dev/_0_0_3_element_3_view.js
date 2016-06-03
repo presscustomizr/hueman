@@ -1,11 +1,11 @@
 //MULTI CONTROL CLASS
 //extends api.CZRBaseControl
 //
-//Setup the collection of mono models
+//Setup the collection of items
 //renders the control view
-//Listen to mono models collection changes and update the control setting
-var CZRMultiInputControlMethods = CZRMultiInputControlMethods || {};
-$.extend( CZRMultiInputControlMethods, {
+//Listen to items collection changes and update the control setting
+var CZRElementMths = CZRElementMths || {};
+$.extend( CZRElementMths, {
   //helper
   //get the $ view DOM el from the model id
   getViewEl : function( model_id ) {

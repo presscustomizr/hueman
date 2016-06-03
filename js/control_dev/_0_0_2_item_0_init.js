@@ -2,50 +2,50 @@
 //options:
   // model_id : model.id,
   // model_val : model,
-  // defaultMonoModel : control.defaultMonoModel,
-  // model_control : control,
+  // defaultItemModel : control.defaultItemModel,
+  // item_control : control,
   // is_added_by_user : is_added_by_user || false
-var CZRMonoModelMethods = CZRMonoModelMethods || {};
-$.extend( CZRMonoModelMethods , {
+var CZRItemMths = CZRItemMths || {};
+$.extend( CZRItemMths , {
   initialize: function( id, options ) {
-        if ( _.isUndefined(options.model_control) || _.isEmpty(options.model_control) ) {
-          throw new Error('No control assigned to mono model ' + id + '. Aborting');
+        if ( _.isUndefined(options.item_control) || _.isEmpty(options.item_control) ) {
+          throw new Error('No control assigned to item ' + id + '. Aborting');
         }
         api.Value.prototype.initialize.call( this, null, options );
 
-        var monoModel = this,
-            control = monoModel.model_control;
+        var item = this,
+            control = item.item_control;
 
         //input.options = options;
         //write the options as properties, name is included
-        $.extend( monoModel, options || {} );
+        $.extend( item, options || {} );
 
         //setup listeners
-        monoModel.callbacks.add( function() { return monoModel.setupMonoModelListeners.apply(monoModel, arguments ); } );
+        item.callbacks.add( function() { return item.setupItemListeners.apply(item, arguments ); } );
 
         //VIEW
         //czr_View stores the current expansion status of a given view => one value by created by model.id
         //czr_View can take 3 values : expanded, expanded_noscroll (=> used on view creation), closed
-        monoModel.czr_View = new api.Value();
-        monoModel.setupView();
+        item.czr_View = new api.Value();
+        item.setupView();
 
         //initialize to the provided value
-        monoModel.set(options.model_val);
+        item.set(options.model_val);
 
 
         //if a model is manually added : open it
-        if ( monoModel.is_added_by_user ) {
-          monoModel.setViewVisibility( {}, true );//empty obj because this method can be fired by the dom chain actions, always passing an object. true for added_by_user
+        if ( item.is_added_by_user ) {
+          item.setViewVisibility( {}, true );//empty obj because this method can be fired by the dom chain actions, always passing an object. true for added_by_user
         }
 
   },//initialize
 
 
   setupView : function() {
-          var monoModel = this,
-              control = this.model_control;
+          var item = this,
+              control = this.item_control;
 
-          monoModel.view_event_map = [
+          item.view_event_map = [
                   //toggles remove view alert
                   {
                     trigger   : 'click keydown',
@@ -69,103 +69,103 @@ $.extend( CZRMonoModelMethods , {
                   }
           ];
 
-          monoModel.container = monoModel.renderView( monoModel.model_val );
-          if ( _.isUndefined(monoModel.container) || ! monoModel.container.length ) {
-            throw new Error( 'In setupView the MonoModel view has not been rendered : ' + monoModel.model_id );
+          item.container = item.renderView( item.model_val );
+          if ( _.isUndefined(item.container) || ! item.container.length ) {
+            throw new Error( 'In setupView the Item view has not been rendered : ' + item.model_id );
           }
 
           //set intial state
-          monoModel.czr_View.set('closed');
+          item.czr_View.set('closed');
 
           //add a listener on view state change
-          monoModel.czr_View.callbacks.add( function() { return monoModel.setupViewStateListeners.apply(monoModel, arguments ); } );
+          item.czr_View.callbacks.add( function() { return item.setupViewStateListeners.apply(item, arguments ); } );
 
-          api.CZR_Dom.setupDOMListeners( monoModel.view_event_map , { model:monoModel.model_val, dom_el:monoModel.container }, monoModel );//listeners for the view wrapper
+          api.CZR_Dom.setupDOMListeners( item.view_event_map , { model:item.model_val, dom_el:item.container }, item );//listeners for the view wrapper
 
           //hook here
-          control.doActions('after_viewSetup', monoModel.container, { model : monoModel.model_val , dom_el: monoModel.container} );
+          control.doActions('after_viewSetup', item.container, { model : item.model_val , dom_el: item.container} );
   },
 
 
   setupViewStateListeners : function( to, from ) {
-      var monoModel = this,
-          control = this.model_control,
-          $viewContent = $( '.' + control.css_attr.view_content, monoModel.container );
+      var item = this,
+          control = this.item_control,
+          $viewContent = $( '.' + control.css_attr.view_content, item.container );
 
       //render and setup view content if needed
       if ( ! $.trim( $viewContent.html() ) ) {
-            monoModel.renderViewContent();
+            item.renderViewContent();
       }
       //create the collection of inputs if needed
-      if ( ! _.has(monoModel, 'czr_Input') ) {
-        monoModel.setupInputCollection();
+      if ( ! _.has(item, 'czr_Input') ) {
+        item.setupInputCollection();
       }
       //expand
-      monoModel._toggleViewExpansion( to );
+      item._toggleViewExpansion( to );
   },
 
 
   //creates the inputs based on the rendered items
   setupInputCollection : function() {
-        var monoModel = this,
-            control = monoModel.model_control;
+        var item = this,
+            control = item.item_control;
 
         //INPUTS => Setup as soon as the view content is rendered
         //the model is a collection of inputs, each one has its own view element.
-        monoModel.czr_Input = new api.Values();
+        item.czr_Input = new api.Values();
         //this can be overriden by extended classes to add and overrides methods
-        monoModel.inputConstructor = control.inputConstructor;
+        item.inputConstructor = control.inputConstructor;
 
-        if ( _.isEmpty(monoModel.defaultMonoModel) || _.isUndefined(monoModel.defaultMonoModel) ) {
-          throw new Error('No default model found in multi input control ' + monoModel.model_id + '. Aborting');
+        if ( _.isEmpty(item.defaultItemModel) || _.isUndefined(item.defaultItemModel) ) {
+          throw new Error('No default model found in multi input control ' + item.model_id + '. Aborting');
         }
 
         //prepare and sets the model value on api ready
         //=> triggers the control rendering + DOM LISTENERS
-        var current_model = monoModel.get();
+        var current_model = item.get();
 
         if ( ! _.isObject(current_model) )
-          current_model = monoModel.defaultMonoModel;
+          current_model = item.defaultItemModel;
         else
-          current_model = $.extend( monoModel.defaultMonoModel, current_model );
+          current_model = $.extend( item.defaultItemModel, current_model );
 
         //creates the inputs based on the rendered items
-        $( '.'+control.css_attr.sub_set_wrapper, monoModel.container).each( function(_index) {
+        $( '.'+control.css_attr.sub_set_wrapper, item.container).each( function(_index) {
 
               var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index,
                   _value = _.has( current_model, _id) ? current_model[_id] : '';
 
-              monoModel.czr_Input.add( _id, new monoModel.inputConstructor( _id, {
+              item.czr_Input.add( _id, new item.inputConstructor( _id, {
                   id : _id,
                   type : $(this).attr('data-input-type'),
                   input_value : _value,
                   container : $(this),
-                  mono_model : monoModel,
+                  item : item,
                   control : control
               } ) );
         });//each
 
         // //listens and reacts to the models changes
-        // monoModel.czr_Input.val.callbacks.add(function(to, from) {
+        // item.czr_Input.val.callbacks.add(function(to, from) {
         //       //api(control.id).set(to);
-        //       //say it to the parent MonoModel
-        //       monoModel.set(to);
+        //       //say it to the parent Item
+        //       item.set(to);
         // });
   },
 
 
 
-  setupMonoModelListeners : function( to, from ) {
-        var monoModel = this,
-            control = monoModel.model_control;
+  setupItemListeners : function( to, from ) {
+        var item = this,
+            control = item.item_control;
 
           control.updateCollection( {model : to });
           //Always update the view title
-          monoModel.writeViewTitle(to);
+          item.writeViewTitle(to);
 
           //send model to the preview. On update only, not on creation.
           if ( ! _.isEmpty(from) || ! _.isUndefined(from) ) {
-            monoModel._sendModel(to, from);
+            item._sendModel(to, from);
           }
   }
 

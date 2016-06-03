@@ -1,5 +1,5 @@
 
-var CZRCroppedImageMethods = CZRCroppedImageMethods || {};
+var CZRCroppedImageMths = CZRCroppedImageMths || {};
 
 (function (api, $, _) {
   /* IMAGE UPLOADER CONTROL IN THE CUSTOMIZER */
@@ -43,7 +43,7 @@ var CZRCroppedImageMethods = CZRCroppedImageMethods || {};
 
 
     /* CZRCroppedImageControl */
-    $.extend( CZRCroppedImageMethods , {
+    $.extend( CZRCroppedImageMths , {
       /**
       * Create a media modal select frame, and store it so the instance can be reused when needed.
       * CZR: We don't want to crop svg (cropping fails), gif (animated gifs become static )

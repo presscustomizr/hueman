@@ -1,13 +1,13 @@
 //MULTI CONTROL CLASS
 //extends api.CZRBaseControl
 //
-//Setup the collection of mono models
+//Setup the collection of items
 //renders the control view
-//Listen to mono models collection changes and update the control setting
+//Listen to items collection changes and update the control setting
 
-var CZRMultiInputControlMethods = CZRMultiInputControlMethods || {};
+var CZRElementMths = CZRElementMths || {};
 
-$.extend( CZRMultiInputControlMethods, {
+$.extend( CZRElementMths, {
 
   //@fired in control ready on api('ready')
   populateCollection : function() {
@@ -30,7 +30,7 @@ $.extend( CZRMultiInputControlMethods, {
 
   instantiateModel : function( model,is_added_by_user ) {
           if ( ! _.has( model,'id') ) {
-            throw new Error('CZRMultiInputControl::instantiateModel() : a model has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
+            throw new Error('CZRElement::instantiateModel() : a model has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
           }
           var control = this;
 
@@ -41,8 +41,8 @@ $.extend( CZRMultiInputControlMethods, {
           control.czr_Model.add( model.id, new control.modelConstructor( model.id, {
                 model_id : model.id,
                 model_val : model,
-                defaultMonoModel : control.defaultMonoModel,
-                model_control : control,
+                defaultItemModel : control.defaultItemModel,
+                item_control : control,
                 is_added_by_user : is_added_by_user || false
           } ) );
   },
@@ -155,4 +155,4 @@ $.extend( CZRMultiInputControlMethods, {
 
           return _new_collection;
   }
-});//$.extend//CZRBaseControlMethods
+});//$.extend//CZRBaseControlMths

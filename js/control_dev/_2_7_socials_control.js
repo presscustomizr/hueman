@@ -1,21 +1,21 @@
 //extends api.CZRMultiModelControl
 
-var CZRSocialMethods = CZRSocialMethods || {};
+var CZRSocialMths = CZRSocialMths || {};
 
-$.extend( CZRSocialMethods, {
+$.extend( CZRSocialMths, {
   initialize: function( id, options ) {
           //run the parent initialize
-          api.CZRMultiInputDynControl.prototype.initialize.call( this, id, options );
+          api.CZRDynElement.prototype.initialize.call( this, id, options );
           var control = this;
           this.social_icons = [
             '500px','adn','amazon','android','angellist','apple','behance','behance-square','bitbucket','bitbucket-square','black-tie','btc','buysellads','chrome','codepen','codiepie','connectdevelop','contao','dashcube','delicious','delicious','deviantart','digg','dribbble','dropbox','drupal','edge','empire','expeditedssl','facebook','facebook','facebook-f (alias)','facebook-official','facebook-square','firefox','flickr','fonticons','fort-awesome','forumbee','foursquare','get-pocket','gg','gg-circle','git','github','github','github-alt','github-square','git-square','google','google','google-plus','google-plus-square','google-wallet','gratipay','hacker-news','houzz','instagram','internet-explorer','ioxhost','joomla','jsfiddle','lastfm','lastfm-square','leanpub','linkedin','linkedin','linkedin-square','linux','maxcdn','meanpath','medium','mixcloud','modx','odnoklassniki','odnoklassniki-square','opencart','openid','opera','optin-monster','pagelines','paypal','pied-piper','pied-piper-alt','pinterest','pinterest-p','pinterest-square','product-hunt','qq','rebel','reddit','reddit-alien','reddit-square','renren','rss','rss-square','safari','scribd','sellsy','share-alt','share-alt-square','shirtsinbulk','simplybuilt','skyatlas','skype','slack','slideshare','soundcloud','spotify','stack-exchange','stack-overflow','steam','steam-square','stumbleupon','stumbleupon','stumbleupon-circle','tencent-weibo','trello','tripadvisor','tumblr','tumblr-square','twitch','twitter','twitter','twitter-square','usb','viacoin','vimeo','vimeo-square','vine','vk','weibo','weixin','whatsapp','wikipedia-w','windows','wordpress','xing','xing-square','yahoo','yahoo','y-combinator','yelp','youtube','youtube-play','youtube-square'
           ];
           //EXTEND THE DEFAULT CONSTRUCTORS FOR INPUT
-          control.inputConstructor = api.CZRInput.extend( control.CZRSocialsInputMethods || {} );
+          control.inputConstructor = api.CZRInput.extend( control.CZRSocialsInputMths || {} );
           //EXTEND THE DEFAULT CONSTRUCTORS FOR MONOMODEL
-          control.modelConstructor = api.CZRMonoModel.extend( control.CZRSocialsMonoModel || {} );
+          control.modelConstructor = api.CZRItem.extend( control.CZRSocialsItem || {} );
           //declares a default model
-          this.defaultMonoModel = {
+          this.defaultItemModel = {
             id : '',
             title : '' ,
             'social-icon' : '',
@@ -29,7 +29,7 @@ $.extend( CZRSocialMethods, {
 
 
 
-  CZRSocialsInputMethods : {
+  CZRSocialsInputMths : {
           ready : function() {
                   var input = this;
 
@@ -48,10 +48,10 @@ $.extend( CZRSocialMethods, {
 
           setupSelect : function() {
                 var input      = this,
-                    mono_model = input.mono_model,
+                    item = input.item,
                     control     = input.control,
                     socialList = control.social_icons,
-                    _model = mono_model.get();
+                    _model = item.get();
 
                 //check if we are in the pre model case => if so, the id is empty
                 //=> add the select text
@@ -108,7 +108,7 @@ $.extend( CZRSocialMethods, {
 
         setupColorPicker : function( obj ) {
                 var input      = this,
-                    mono_model = input.mono_model,
+                    item = input.item,
                     control     = input.control;
 
                 $( 'input[data-type="social-color"]', input.container ).wpColorPicker( {
@@ -132,20 +132,20 @@ $.extend( CZRSocialMethods, {
         //ACTIONS ON ICON CHANGE
         //Fired on 'social-icon:changed' for existing models
         updateModelInputs : function() {
-                var mono_model = this.mono_model,
+                var item = this.item,
                     control     = this.control,
-                    _new_model  = _.clone( mono_model.get() ),
+                    _new_model  = _.clone( item.get() ),
                     _new_title  = control._capitalize( _new_model['social-icon'].replace('fa-', '') ),
                     _new_color  = serverControlParams.defaultSocialColor;
 
                 //add text follow us... to the title
                 _new_title = [ serverControlParams.translatedStrings.followUs, _new_title].join(' ');
 
-                //if current mono_model is not the premodel, update the
-                if ( _.has(mono_model , 'container') ) {
-                    $('input[data-type="title"]', mono_model.container ).val( _new_title );
-                    $('input[data-type="social-link"]', mono_model.container ).val( '' );
-                    $('input[data-type="social-color"]', mono_model.container ).wpColorPicker('color', _new_color );
+                //if current item is not the premodel, update the
+                if ( _.has(item , 'container') ) {
+                    $('input[data-type="title"]', item.container ).val( _new_title );
+                    $('input[data-type="social-link"]', item.container ).val( '' );
+                    $('input[data-type="social-color"]', item.container ).wpColorPicker('color', _new_color );
                 }
 
                 //set the new val to the changed property
@@ -153,18 +153,18 @@ $.extend( CZRSocialMethods, {
                 _new_model['social-link'] = '';
                 _new_model['social-color'] = _new_color;
 
-                mono_model.set(_new_model);
+                item.set(_new_model);
         },
 
-  },//CZRSocialsInputMethods
+  },//CZRSocialsInputMths
 
 
 
 
-  CZRSocialsMonoModel : {
+  CZRSocialsItem : {
           _buildTitle : function( title, icon, color ) {
-                  var mono_model = this,
-                      control     = mono_model.model_control;
+                  var item = this,
+                      control     = item.item_control;
 
                   title = title || ( 'string' === typeof(icon) ? control._capitalize( icon.replace( 'fa-', '') ) : '' );
                   title = control._truncate(title, 20);
@@ -177,15 +177,15 @@ $.extend( CZRSocialMethods, {
           //overrides the default parent method by a custom one
           //at this stage, the model passed in the obj is up to date
           writeViewTitle : function( model ) {
-                  var mono_model = this,
-                      control     = mono_model.model_control;
+                  var item = this,
+                      control     = item.item_control;
                   var _title = control._capitalize( model['social-icon'].replace('fa-', '') );
 
                   $( '.' + control.css_attr.view_title , '#' + model.id ).html(
-                    mono_model._buildTitle( _title, model['social-icon'], model['social-color'] )
+                    item._buildTitle( _title, model['social-icon'], model['social-color'] )
                   );
           }
 
-  },//CZRSocialsMonoModel
+  },//CZRSocialsItem
 
 });

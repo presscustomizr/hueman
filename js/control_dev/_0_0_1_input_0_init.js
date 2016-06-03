@@ -1,4 +1,4 @@
-var CZRInputMethods = CZRInputMethods || {};
+var CZRInputMths = CZRInputMths || {};
 
 //extends api.Value
 //an input is instanciated with the typical set of options :
@@ -6,12 +6,12 @@ var CZRInputMethods = CZRInputMethods || {};
 // type : $(this).attr('data-input-type'),
 // value : $(this).find('[data-type]').val(),
 // container : $(this),
-// mono_model : monoModel (Value instance, has a parent control)
+// item : item (Value instance, has a parent control)
 // control : control
-$.extend( CZRInputMethods , {
+$.extend( CZRInputMths , {
     initialize: function( name, options ) {
-            if ( _.isUndefined(options.mono_model ) || _.isEmpty(options.mono_model) ) {
-              throw new Error('No mono_model assigned to input ' + options.id + '. Aborting');
+            if ( _.isUndefined(options.item ) || _.isEmpty(options.item) ) {
+              throw new Error('No item assigned to input ' + options.id + '. Aborting');
             }
             if ( _.isUndefined(options.control ) ) {
               throw new Error('No control assigned to input ' + options.id + '. Aborting');
@@ -76,13 +76,13 @@ $.extend( CZRInputMethods , {
 
     setupInputListeners : function( to, from) {
             var input = this,
-                _current_mono_model = input.mono_model.get(),
-                _new_model        = _.clone( _current_mono_model );//initialize it to the current value
+                _current_item = input.item.get(),
+                _new_model        = _.clone( _current_item );//initialize it to the current value
             //make sure the _new_model is an object and is not empty
             _new_model =  ( ! _.isObject(_new_model) || _.isEmpty(_new_model) ) ? {} : _new_model;
             //set the new val to the changed property
             _new_model[input.id] = to;
-            input.mono_model.set(_new_model);
+            input.item.set(_new_model);
     },
 
 

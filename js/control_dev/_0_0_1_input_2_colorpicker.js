@@ -1,5 +1,5 @@
-var CZRInputMethods = CZRInputMethods || {};
-$.extend( CZRInputMethods , {
+var CZRInputMths = CZRInputMths || {};
+$.extend( CZRInputMths , {
     setupColorPicker : function() {
         var input  = this;
 
