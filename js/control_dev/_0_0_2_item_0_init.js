@@ -80,7 +80,7 @@ $.extend( CZRItemMths , {
           //add a listener on view state change
           item.czr_View.callbacks.add( function() { return item.setupViewStateListeners.apply(item, arguments ); } );
 
-          api.CZR_Dom.setupDOMListeners( item.view_event_map , { model:item.model_val, dom_el:item.container }, item );//listeners for the view wrapper
+          api.CZR_Helpers.setupDOMListeners( item.view_event_map , { model:item.model_val, dom_el:item.container }, item );//listeners for the view wrapper
 
           //hook here
           control.doActions('after_viewSetup', item.container, { model : item.model_val , dom_el: item.container} );

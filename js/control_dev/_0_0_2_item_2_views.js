@@ -69,7 +69,7 @@ $.extend( CZRItemMths , {
           //the view content
           $( view_content_template( model )).appendTo( $('.' + control.css_attr.view_content, item.container ) );
 
-          api.CZR_Dom.doActions( 'viewContentRendered' , item.container, {model : model }, item );
+          api.CZR_Helpers.doActions( 'viewContentRendered' , item.container, {model : model }, item );
 
           return this;
   },
@@ -83,13 +83,13 @@ $.extend( CZRItemMths , {
         var item = this,
             control = item.item_control,
             _model = _.clone( model || item.get() ),
-            _title = _.has( _model, 'title')? control._capitalize( _model.title ) : _model.id;
+            _title = _.has( _model, 'title')? api.CZR_Helpers.capitalize( _model.title ) : _model.id;
 
-        _title = control._truncate(_title, 20);
+        _title = api.CZR_Helpers.truncate(_title, 20);
         $( '.' + control.css_attr.view_title , '#' + _model.id ).text(_title );
 
         //add a hook here
-        api.CZR_Dom.doActions('after_writeViewTitle', item.container , _model, item );
+        api.CZR_Helpers.doActions('after_writeViewTitle', item.container , _model, item );
   },
 
 

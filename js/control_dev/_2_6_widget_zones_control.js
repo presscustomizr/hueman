@@ -507,7 +507,7 @@ $.extend( CZRWidgetAreasMths, {
           if ( ! $_alert_el.length ) {
             var _html = [
               '<span>' + serverControlParams.translatedStrings.locationWarning + '</span>',
-              api.czr_getDocSearchLink( serverControlParams.translatedStrings.locationWarning ),
+              api.CZR_Helpers.getDocSearchLink( serverControlParams.translatedStrings.locationWarning ),
             ].join('');
 
             $_alert_el = $('<div/>', {

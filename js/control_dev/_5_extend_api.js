@@ -2,8 +2,8 @@
   //Extends with the events manager
   $.extend( CZRBaseControlMths, api.Events || {} );
   //Add the DOM helpers (addAction, ...) to the Control Base Class + Input Base Class
-  $.extend( CZRBaseControlMths, api.CZR_Dom || {} );
-  $.extend( CZRInputMths, api.CZR_Dom || {} );
+  $.extend( CZRBaseControlMths, api.CZR_Helpers || {} );
+  $.extend( CZRInputMths, api.CZR_Helpers || {} );
 
   //INPUTS => used as constructor when creating the collection of inputs
   api.CZRInput                 = api.Value.extend( CZRInputMths || {} );

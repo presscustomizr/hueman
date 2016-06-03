@@ -93,7 +93,7 @@
                     _id     = _cross.master,
                     _cb     = _cross.callback;
 
-                _id = api.czr_build_setId(_id);
+                _id = api.CZR_Helpers.build_setId(_id);
                 //if _cb returns true => show
                 return _cb( api.instance(_id).get() );
               },
@@ -104,7 +104,7 @@
           */
           _prepare_visibilities : function( setId, o ) {
                 var self = this;
-                api( api.czr_build_setId(setId) , function (setting) {
+                api( api.CZR_Helpers.build_setId(setId) , function (setting) {
                   var _params = {
                     setting   : setting,
                     setId : setId,
@@ -120,7 +120,7 @@
 
           _set_single_dependant_control_visibility : function( depSetId , _params ) {
                 var self = this;
-                api.control( api.czr_build_setId(depSetId) , function (control) {
+                api.control( api.CZR_Helpers.build_setId(depSetId) , function (control) {
                   var _visibility = function (to) {
                     var _action   = self._get_visibility_action( _params.setId , depSetId ),
                         _callback = self._get_visibility_cb( _params.setId , _action ),
@@ -160,7 +160,7 @@
                 //1) WP version < 4.3 where site icon has been introduced
                 //2) User had not defined a favicon
                 //3) User has already set WP site icon
-                if ( ! api.has('site_icon') || ! api.control('site_icon') || ( api.has(api.czr_build_setId(serverControlParams.faviconOptionName)) && 0 === + api( api.czr_build_setId(serverControlParams.faviconOptionName) ).get() ) || + api('site_icon').get() > 0 )
+                if ( ! api.has('site_icon') || ! api.control('site_icon') || ( api.has(api.CZR_Helpers.build_setId(serverControlParams.faviconOptionName)) && 0 === + api( api.CZR_Helpers.build_setId(serverControlParams.faviconOptionName) ).get() ) || + api('site_icon').get() > 0 )
                   return;
 
                 var _oldDes     = api.control('site_icon').params.description;
@@ -175,8 +175,8 @@
                     //reset the description to default
                     api.control('site_icon').container.find('.description').text(_oldDes);
                     //reset the previous favicon setting
-                    if ( api.has( api.czr_build_setId(serverControlParams.faviconOptionName) ) )
-                      api( api.czr_build_setId(serverControlParams.faviconOptionName) ).set("");
+                    if ( api.has( api.CZR_Helpers.build_setId(serverControlParams.faviconOptionName) ) )
+                      api( api.CZR_Helpers.build_setId(serverControlParams.faviconOptionName) ).set("");
                   }
                   else {
                     self._printFaviconNote(_newDes );

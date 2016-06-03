@@ -22,23 +22,6 @@ $.extend( CZRBaseControlMths, {
           } );
   },
 
-  //////////////////////////////////////////////////
-  /// HELPERS
-  //////////////////////////////////////////////////
-  _capitalize : function( string ) {
-          if( ! _.isString(string) )
-            return string;
-          return string.charAt(0).toUpperCase() + string.slice(1);
-  },
-
-  _truncate : function( string, n, useWordBoundary ){
-          if ( _.isUndefined(string) )
-            return '';
-          var isTooLong = string.length > n,
-              s_ = isTooLong ? string.substr(0,n-1) : string;
-              s_ = (useWordBoundary && isTooLong) ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
-          return  isTooLong ? s_ + '...' : s_;
-  },
 
   //called before rendering a view
   //can be overriden to set a specific view template depending on the model properties

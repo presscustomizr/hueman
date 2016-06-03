@@ -72,7 +72,7 @@ $.extend( CZRElementMths, {
           //2) only needed when : add, remove, sort model(s).
           var is_model_update = ( _.size(from) == _.size(to) ) && ! _.isEmpty( _.difference(from, to) );
 
-          if ( 'postMessage' == api(control.id).transport && ! is_model_update && ! api.czr_has_part_refresh( control.id ) ) {
+          if ( 'postMessage' == api(control.id).transport && ! is_model_update && ! api.CZR_Helpers.has_part_refresh( control.id ) ) {
             control.previewer.refresh();
           }
   },

@@ -64,7 +64,7 @@ $.extend( CZRSocialMths, {
                       var _value = ( 0 === k ) ? '' : 'fa-' + icon_name.toLowerCase(),
                           _attributes = {
                             value : _value,
-                            html: control._capitalize(icon_name)
+                            html: api.CZR_Helpers.capitalize(icon_name)
                           };
                       if ( _value == _model['social-icon'] )
                         $.extend( _attributes, { selected : "selected" } );
@@ -135,7 +135,7 @@ $.extend( CZRSocialMths, {
                 var item = this.item,
                     control     = this.control,
                     _new_model  = _.clone( item.get() ),
-                    _new_title  = control._capitalize( _new_model['social-icon'].replace('fa-', '') ),
+                    _new_title  = api.CZR_Helpers.capitalize( _new_model['social-icon'].replace('fa-', '') ),
                     _new_color  = serverControlParams.defaultSocialColor;
 
                 //add text follow us... to the title
@@ -166,8 +166,8 @@ $.extend( CZRSocialMths, {
                   var item = this,
                       control     = item.item_control;
 
-                  title = title || ( 'string' === typeof(icon) ? control._capitalize( icon.replace( 'fa-', '') ) : '' );
-                  title = control._truncate(title, 20);
+                  title = title || ( 'string' === typeof(icon) ? api.CZR_Helpers.capitalize( icon.replace( 'fa-', '') ) : '' );
+                  title = api.CZR_Helpers.truncate(title, 20);
                   icon = icon || 'fa-' + control.social_icons[0];
                   color = color || serverControlParams.defaultSocialColor;
 
@@ -179,7 +179,7 @@ $.extend( CZRSocialMths, {
           writeViewTitle : function( model ) {
                   var item = this,
                       control     = item.item_control;
-                  var _title = control._capitalize( model['social-icon'].replace('fa-', '') );
+                  var _title = api.CZR_Helpers.capitalize( model['social-icon'].replace('fa-', '') );
 
                   $( '.' + control.css_attr.view_title , '#' + model.id ).html(
                     item._buildTitle( _title, model['social-icon'], model['social-color'] )

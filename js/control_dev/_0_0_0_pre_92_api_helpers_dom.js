@@ -1,11 +1,12 @@
 (function (api, $, _) {
-    //////////////////////////////////////////////////
+  api.CZR_Helpers = api.CZR_Helpers || {};
+  //////////////////////////////////////////////////
   /// ACTIONS AND DOM LISTENERS
   //////////////////////////////////////////////////
   //adds action to an existing event map
   //@event map = [ {event1}, {event2}, ... ]
   //@new_event = {  trigger   : event name , actions   : [ 'cb1', 'cb2', ... ] }
-  api.CZR_Dom = {
+  api.CZR_Helpers = $.extend( api.CZR_Helpers, {
         addActions : function( event_map, new_events, instance ) {
                 var control = this;
                 instance = instance || control;
@@ -115,5 +116,5 @@
 
                 });//_.map
         }
-  };
+  });//$.extend
 })( wp.customize , jQuery, _);

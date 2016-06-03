@@ -911,42 +911,70 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
   /* end monkey patch */
 
 })( wp.customize , jQuery, _);(function (api, $, _) {
-  /*****************************************************************************
-  * ADD SOME HELPERS AND PROPERTIES TO THE ALWAYS ACCESSIBLE API OBJECT.
-  *****************************************************************************/
-  api.czr_getDocSearchLink = function( text ) {
-    text = ! _.isString(text) ? '' : text;
-    var _searchtext = text.replace( / /g, '+'),
-        _url = [ serverControlParams.docURL, 'search?query=', _searchtext ].join('');
-    return [
-      '<a href="' + _url + '" title="' + serverControlParams.translatedStrings.readDocumentation + '" target="_blank">',
-      ' ',
-      '<span class="fa fa-question-circle-o"></span>'
-    ].join('');
-  };
+  api.CZR_Helpers = api.CZR_Helpers || {};
+  //////////////////////////////////////////////////
+  /// ACTIONS AND DOM LISTENERS
+  //////////////////////////////////////////////////
+  //adds action to an existing event map
+  //@event map = [ {event1}, {event2}, ... ]
+  //@new_event = {  trigger   : event name , actions   : [ 'cb1', 'cb2', ... ] }
+  api.CZR_Helpers = $.extend( api.CZR_Helpers, {
+        /*****************************************************************************
+        * ADD SOME HELPERS AND PROPERTIES TO THE ALWAYS ACCESSIBLE API OBJECT.
+        *****************************************************************************/
+        getDocSearchLink : function( text ) {
+                text = ! _.isString(text) ? '' : text;
+                var _searchtext = text.replace( / /g, '+'),
+                    _url = [ serverControlParams.docURL, 'search?query=', _searchtext ].join('');
+                return [
+                  '<a href="' + _url + '" title="' + serverControlParams.translatedStrings.readDocumentation + '" target="_blank">',
+                  ' ',
+                  '<span class="fa fa-question-circle-o"></span>'
+                ].join('');
+        },
 
 
-  /*
-  * @return string
-  * simple helper to build the setting id name
-  */
-  api.czr_build_setId = function ( name ) {
-    //exclude the WP built-in settings like blogdescription, show_on_front, etc
-    if ( _.contains( serverControlParams.wpBuiltinSettings, name ) )
-      return name;
-    return -1 == name.indexOf( serverControlParams.themeOptions ) ? [ serverControlParams.themeOptions +'[' , name  , ']' ].join('') : name;
-  };
+        /*
+        * @return string
+        * simple helper to build the setting id name
+        */
+        build_setId : function ( name ) {
+                //exclude the WP built-in settings like blogdescription, show_on_front, etc
+                if ( _.contains( serverControlParams.wpBuiltinSettings, name ) )
+                  return name;
+                return -1 == name.indexOf( serverControlParams.themeOptions ) ? [ serverControlParams.themeOptions +'[' , name  , ']' ].join('') : name;
+        },
 
-  //@return bool
-  //@uses api.czr_partials
-  api.czr_has_part_refresh = function( setId ) {
-    if ( ! _.has( api, 'czr_partials')  )
-      return;
-    return  _.contains( _.map( api.czr_partials.get(), function( partial, key ) {
-      return _.contains( partial.settings, setId );
-    }), true );
-  };
+        //@return bool
+        //@uses api.czr_partials
+        has_part_refresh : function( setId ) {
+                if ( ! _.has( api, 'czr_partials')  )
+                  return;
+                return  _.contains( _.map( api.czr_partials.get(), function( partial, key ) {
+                  return _.contains( partial.settings, setId );
+                }), true );
+        },
 
+
+        //////////////////////////////////////////////////
+        /// STRINGS HELPERS
+        //////////////////////////////////////////////////
+        capitalize : function( string ) {
+                if( ! _.isString(string) )
+                  return string;
+                return string.charAt(0).toUpperCase() + string.slice(1);
+        },
+
+        truncate : function( string, n, useWordBoundary ){
+                if ( _.isUndefined(string) )
+                  return '';
+                var isTooLong = string.length > n,
+                    s_ = isTooLong ? string.substr(0,n-1) : string;
+                    s_ = (useWordBoundary && isTooLong) ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
+                return  isTooLong ? s_ + '...' : s_;
+        }
+
+  });//$.extend
   //react to a ctx change
   //api.czr_wp_conditionals.callbacks.add( function( e, o) {
     //console.log('the wp conditionals have been updated', e, o );
@@ -956,13 +984,14 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
   //   console.log('WHAT ARE WE LISTENING TO?', e, o );
   // });
 })( wp.customize , jQuery, _);(function (api, $, _) {
-    //////////////////////////////////////////////////
+  api.CZR_Helpers = api.CZR_Helpers || {};
+  //////////////////////////////////////////////////
   /// ACTIONS AND DOM LISTENERS
   //////////////////////////////////////////////////
   //adds action to an existing event map
   //@event map = [ {event1}, {event2}, ... ]
   //@new_event = {  trigger   : event name , actions   : [ 'cb1', 'cb2', ... ] }
-  api.CZR_Dom = {
+  api.CZR_Helpers = $.extend( api.CZR_Helpers, {
         addActions : function( event_map, new_events, instance ) {
                 var control = this;
                 instance = instance || control;
@@ -1072,7 +1101,7 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
 
                 });//_.map
         }
-  };
+  });//$.extend
 })( wp.customize , jQuery, _);var CZRInputMths = CZRInputMths || {};
 
 //extends api.Value
@@ -1452,7 +1481,7 @@ $.extend( CZRItemMths , {
           //add a listener on view state change
           item.czr_View.callbacks.add( function() { return item.setupViewStateListeners.apply(item, arguments ); } );
 
-          api.CZR_Dom.setupDOMListeners( item.view_event_map , { model:item.model_val, dom_el:item.container }, item );//listeners for the view wrapper
+          api.CZR_Helpers.setupDOMListeners( item.view_event_map , { model:item.model_val, dom_el:item.container }, item );//listeners for the view wrapper
 
           //hook here
           control.doActions('after_viewSetup', item.container, { model : item.model_val , dom_el: item.container} );
@@ -1671,7 +1700,7 @@ $.extend( CZRItemMths , {
           //the view content
           $( view_content_template( model )).appendTo( $('.' + control.css_attr.view_content, item.container ) );
 
-          api.CZR_Dom.doActions( 'viewContentRendered' , item.container, {model : model }, item );
+          api.CZR_Helpers.doActions( 'viewContentRendered' , item.container, {model : model }, item );
 
           return this;
   },
@@ -1685,13 +1714,13 @@ $.extend( CZRItemMths , {
         var item = this,
             control = item.item_control,
             _model = _.clone( model || item.get() ),
-            _title = _.has( _model, 'title')? control._capitalize( _model.title ) : _model.id;
+            _title = _.has( _model, 'title')? api.CZR_Helpers.capitalize( _model.title ) : _model.id;
 
-        _title = control._truncate(_title, 20);
+        _title = api.CZR_Helpers.truncate(_title, 20);
         $( '.' + control.css_attr.view_title , '#' + _model.id ).text(_title );
 
         //add a hook here
-        api.CZR_Dom.doActions('after_writeViewTitle', item.container , _model, item );
+        api.CZR_Helpers.doActions('after_writeViewTitle', item.container , _model, item );
   },
 
 
@@ -1955,7 +1984,7 @@ $.extend( CZRElementMths, {
           //2) only needed when : add, remove, sort model(s).
           var is_model_update = ( _.size(from) == _.size(to) ) && ! _.isEmpty( _.difference(from, to) );
 
-          if ( 'postMessage' == api(control.id).transport && ! is_model_update && ! api.czr_has_part_refresh( control.id ) ) {
+          if ( 'postMessage' == api(control.id).transport && ! is_model_update && ! api.CZR_Helpers.has_part_refresh( control.id ) ) {
             control.previewer.refresh();
           }
   },
@@ -2333,7 +2362,7 @@ $.extend( CZRDynElementMths, {
           //refresh the preview frame (only needed if transport is postMessage )
           //must be a dom event not triggered
           //otherwise we are in the init collection case where the model are fetched and added from the setting in initialize
-          if ( 'postMessage' == api(this.id).transport && _.has( obj, 'dom_event') && ! _.has( obj.dom_event, 'isTrigger' ) && ! api.czr_has_part_refresh( control.id ) ) {
+          if ( 'postMessage' == api(this.id).transport && _.has( obj, 'dom_event') && ! _.has( obj.dom_event, 'isTrigger' ) && ! api.CZR_Helpers.has_part_refresh( control.id ) ) {
             control.previewer.refresh();
           }
   }
@@ -2526,23 +2555,6 @@ $.extend( CZRBaseControlMths, {
           } );
   },
 
-  //////////////////////////////////////////////////
-  /// HELPERS
-  //////////////////////////////////////////////////
-  _capitalize : function( string ) {
-          if( ! _.isString(string) )
-            return string;
-          return string.charAt(0).toUpperCase() + string.slice(1);
-  },
-
-  _truncate : function( string, n, useWordBoundary ){
-          if ( _.isUndefined(string) )
-            return '';
-          var isTooLong = string.length > n,
-              s_ = isTooLong ? string.substr(0,n-1) : string;
-              s_ = (useWordBoundary && isTooLong) ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
-          return  isTooLong ? s_ + '...' : s_;
-  },
 
   //called before rendering a view
   //can be overriden to set a specific view template depending on the model properties
@@ -3444,7 +3456,7 @@ $.extend( CZRWidgetAreasMths, {
           if ( ! $_alert_el.length ) {
             var _html = [
               '<span>' + serverControlParams.translatedStrings.locationWarning + '</span>',
-              api.czr_getDocSearchLink( serverControlParams.translatedStrings.locationWarning ),
+              api.CZR_Helpers.getDocSearchLink( serverControlParams.translatedStrings.locationWarning ),
             ].join('');
 
             $_alert_el = $('<div/>', {
@@ -3901,7 +3913,7 @@ $.extend( CZRSocialMths, {
                       var _value = ( 0 === k ) ? '' : 'fa-' + icon_name.toLowerCase(),
                           _attributes = {
                             value : _value,
-                            html: control._capitalize(icon_name)
+                            html: api.CZR_Helpers.capitalize(icon_name)
                           };
                       if ( _value == _model['social-icon'] )
                         $.extend( _attributes, { selected : "selected" } );
@@ -3972,7 +3984,7 @@ $.extend( CZRSocialMths, {
                 var item = this.item,
                     control     = this.control,
                     _new_model  = _.clone( item.get() ),
-                    _new_title  = control._capitalize( _new_model['social-icon'].replace('fa-', '') ),
+                    _new_title  = api.CZR_Helpers.capitalize( _new_model['social-icon'].replace('fa-', '') ),
                     _new_color  = serverControlParams.defaultSocialColor;
 
                 //add text follow us... to the title
@@ -4003,8 +4015,8 @@ $.extend( CZRSocialMths, {
                   var item = this,
                       control     = item.item_control;
 
-                  title = title || ( 'string' === typeof(icon) ? control._capitalize( icon.replace( 'fa-', '') ) : '' );
-                  title = control._truncate(title, 20);
+                  title = title || ( 'string' === typeof(icon) ? api.CZR_Helpers.capitalize( icon.replace( 'fa-', '') ) : '' );
+                  title = api.CZR_Helpers.truncate(title, 20);
                   icon = icon || 'fa-' + control.social_icons[0];
                   color = color || serverControlParams.defaultSocialColor;
 
@@ -4016,7 +4028,7 @@ $.extend( CZRSocialMths, {
           writeViewTitle : function( model ) {
                   var item = this,
                       control     = item.item_control;
-                  var _title = control._capitalize( model['social-icon'].replace('fa-', '') );
+                  var _title = api.CZR_Helpers.capitalize( model['social-icon'].replace('fa-', '') );
 
                   $( '.' + control.css_attr.view_title , '#' + model.id ).html(
                     item._buildTitle( _title, model['social-icon'], model['social-color'] )
@@ -4125,8 +4137,8 @@ $.extend( CZRSektionsMths, {
   //Extends with the events manager
   $.extend( CZRBaseControlMths, api.Events || {} );
   //Add the DOM helpers (addAction, ...) to the Control Base Class + Input Base Class
-  $.extend( CZRBaseControlMths, api.CZR_Dom || {} );
-  $.extend( CZRInputMths, api.CZR_Dom || {} );
+  $.extend( CZRBaseControlMths, api.CZR_Helpers || {} );
+  $.extend( CZRInputMths, api.CZR_Helpers || {} );
 
   //INPUTS => used as constructor when creating the collection of inputs
   api.CZRInput                 = api.Value.extend( CZRInputMths || {} );
@@ -4263,7 +4275,7 @@ $.extend( CZRSektionsMths, {
                     _id     = _cross.master,
                     _cb     = _cross.callback;
 
-                _id = api.czr_build_setId(_id);
+                _id = api.CZR_Helpers.build_setId(_id);
                 //if _cb returns true => show
                 return _cb( api.instance(_id).get() );
               },
@@ -4274,7 +4286,7 @@ $.extend( CZRSektionsMths, {
           */
           _prepare_visibilities : function( setId, o ) {
                 var self = this;
-                api( api.czr_build_setId(setId) , function (setting) {
+                api( api.CZR_Helpers.build_setId(setId) , function (setting) {
                   var _params = {
                     setting   : setting,
                     setId : setId,
@@ -4290,7 +4302,7 @@ $.extend( CZRSektionsMths, {
 
           _set_single_dependant_control_visibility : function( depSetId , _params ) {
                 var self = this;
-                api.control( api.czr_build_setId(depSetId) , function (control) {
+                api.control( api.CZR_Helpers.build_setId(depSetId) , function (control) {
                   var _visibility = function (to) {
                     var _action   = self._get_visibility_action( _params.setId , depSetId ),
                         _callback = self._get_visibility_cb( _params.setId , _action ),
@@ -4330,7 +4342,7 @@ $.extend( CZRSektionsMths, {
                 //1) WP version < 4.3 where site icon has been introduced
                 //2) User had not defined a favicon
                 //3) User has already set WP site icon
-                if ( ! api.has('site_icon') || ! api.control('site_icon') || ( api.has(api.czr_build_setId(serverControlParams.faviconOptionName)) && 0 === + api( api.czr_build_setId(serverControlParams.faviconOptionName) ).get() ) || + api('site_icon').get() > 0 )
+                if ( ! api.has('site_icon') || ! api.control('site_icon') || ( api.has(api.CZR_Helpers.build_setId(serverControlParams.faviconOptionName)) && 0 === + api( api.CZR_Helpers.build_setId(serverControlParams.faviconOptionName) ).get() ) || + api('site_icon').get() > 0 )
                   return;
 
                 var _oldDes     = api.control('site_icon').params.description;
@@ -4345,8 +4357,8 @@ $.extend( CZRSektionsMths, {
                     //reset the description to default
                     api.control('site_icon').container.find('.description').text(_oldDes);
                     //reset the previous favicon setting
-                    if ( api.has( api.czr_build_setId(serverControlParams.faviconOptionName) ) )
-                      api( api.czr_build_setId(serverControlParams.faviconOptionName) ).set("");
+                    if ( api.has( api.CZR_Helpers.build_setId(serverControlParams.faviconOptionName) ) )
+                      api( api.CZR_Helpers.build_setId(serverControlParams.faviconOptionName) ).set("");
                   }
                   else {
                     self._printFaviconNote(_newDes );
