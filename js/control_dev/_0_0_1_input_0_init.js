@@ -70,11 +70,13 @@ $.extend( CZRInputMths , {
     ready : function() {
             var input = this;
             input.setupDOMListeners( input.input_event_map , { dom_el : input.container }, input );
-            input.callbacks.add( function() { return input.setupInputListeners.apply(input, arguments ); } );
+            //Setup individual input listener
+            input.callbacks.add( function() { return input.inputReact.apply(input, arguments ); } );
     },
 
-
-    setupInputListeners : function( to, from) {
+    //react to a single input change
+    //update the collection of input
+    inputReact : function( to, from) {
             var input = this,
                 _current_item = input.item.get(),
                 _new_model        = _.clone( _current_item );//initialize it to the current value
@@ -82,6 +84,7 @@ $.extend( CZRInputMths , {
             _new_model =  ( ! _.isObject(_new_model) || _.isEmpty(_new_model) ) ? {} : _new_model;
             //set the new val to the changed property
             _new_model[input.id] = to;
+            //inform the item
             input.item.set(_new_model);
     },
 
@@ -96,10 +99,7 @@ $.extend( CZRInputMths , {
             input.set(_new_val);
 
             //say it to the dom
-            input.doActions(
-                input.id + ':changed',
-                input.container,
-                {}
-            );
+            //@todo use the api Events instead
+            input.trigger( input.id + ':changed', _new_val );
     }
 });//$.extend

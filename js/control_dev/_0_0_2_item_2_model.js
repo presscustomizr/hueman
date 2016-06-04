@@ -33,7 +33,7 @@ var CZRItemMths = CZRItemMths || {};
     removeItem : function() {
             var item = this,
                 element = this.item_element,
-                _new_collection = _.clone( element.czr_Item.czr_collection.get() );
+                _new_collection = _.clone( element.get() );
 
             //destroy the Item DOM el
             item._destroyView();
@@ -41,7 +41,7 @@ var CZRItemMths = CZRItemMths || {};
             //new collection
             //say it
             _new_collection = _.without( _new_collection, _.findWhere( _new_collection, {id: item.item_id }) );
-            element.czr_Item.czr_collection.set( _new_collection );
+            element.set( _new_collection );
             //hook here
             element.trigger('item_removed', item.get() );
             //remove the item from the collection

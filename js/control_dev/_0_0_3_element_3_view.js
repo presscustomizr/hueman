@@ -6,6 +6,26 @@
 //Listen to items collection changes and update the control setting
 var CZRElementMths = CZRElementMths || {};
 $.extend( CZRElementMths, {
+  //called before rendering a view
+  //can be overriden to set a specific view template depending on the model properties
+  //@return string
+  getTemplateEl : function( type, model ) {
+          var element = this, _el;
+          switch(type) {
+            case 'view' :
+              _el = element.viewTemplateEl;
+              break;
+            case 'view-content' :
+              _el = element.viewContentTemplateEl;
+              break;
+          }
+          if ( _.isEmpty(_el) ) {
+            console.log('No valid template has been found in getTemplateEl()');
+          } else {
+            return _el;
+          }
+  },
+
   //helper
   //get the $ view DOM el from the item id
   getViewEl : function( item_id ) {
@@ -18,7 +38,7 @@ $.extend( CZRElementMths, {
   //fired on views_sorted
   closeAllViews : function(item_id) {
           var element = this,
-              _current_collection = _.clone( element.czr_Item.czr_collection.get() ),
+              _current_collection = _.clone( element.get() ),
               _filtered_collection = _.filter( _current_collection , function( mod) { return mod.id != item_id; } );
 
           _.map( _filtered_collection, function(_item) {
@@ -80,7 +100,7 @@ $.extend( CZRElementMths, {
           $( '.' + element.control.css_attr.views_wrapper, element.container ).sortable( {
               handle: '.' + element.control.css_attr.sortable_handle,
               update: function( event, ui ) {
-                element.czr_Item.czr_collection.set( element._getSortedDOMCollection() );
+                element.set( element._getSortedDOMCollection() );
               }
             }
           );

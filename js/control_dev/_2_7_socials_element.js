@@ -8,6 +8,14 @@ $.extend( CZRSocialElementMths, {
           //run the parent initialize
           api.CZRDynElement.prototype.initialize.call( element, id, options );
 
+          //extend the element with new template Selectors
+          $.extend( element, {
+              viewPreAddEl : 'czr-element-social-pre-add-view-content',
+              viewTemplateEl : 'czr-element-item-view',
+              viewContentTemplateEl : 'czr-element-social-view-content',
+          } );
+
+
           this.social_icons = [
             '500px','adn','amazon','android','angellist','apple','behance','behance-square','bitbucket','bitbucket-square','black-tie','btc','buysellads','chrome','codepen','codiepie','connectdevelop','contao','dashcube','delicious','delicious','deviantart','digg','dribbble','dropbox','drupal','edge','empire','expeditedssl','facebook','facebook','facebook-f (alias)','facebook-official','facebook-square','firefox','flickr','fonticons','fort-awesome','forumbee','foursquare','get-pocket','gg','gg-circle','git','github','github','github-alt','github-square','git-square','google','google','google-plus','google-plus-square','google-wallet','gratipay','hacker-news','houzz','instagram','internet-explorer','ioxhost','joomla','jsfiddle','lastfm','lastfm-square','leanpub','linkedin','linkedin','linkedin-square','linux','maxcdn','meanpath','medium','mixcloud','modx','odnoklassniki','odnoklassniki-square','opencart','openid','opera','optin-monster','pagelines','paypal','pied-piper','pied-piper-alt','pinterest','pinterest-p','pinterest-square','product-hunt','qq','rebel','reddit','reddit-alien','reddit-square','renren','rss','rss-square','safari','scribd','sellsy','share-alt','share-alt-square','shirtsinbulk','simplybuilt','skyatlas','skype','slack','slideshare','soundcloud','spotify','stack-exchange','stack-overflow','steam','steam-square','stumbleupon','stumbleupon','stumbleupon-circle','tencent-weibo','trello','tripadvisor','tumblr','tumblr-square','twitch','twitter','twitter','twitter-square','usb','viacoin','vimeo','vimeo-square','vine','vk','weibo','weixin','whatsapp','wikipedia-w','windows','wordpress','xing','xing-square','yahoo','yahoo','y-combinator','yelp','youtube','youtube-play','youtube-square'
           ];
@@ -15,6 +23,7 @@ $.extend( CZRSocialElementMths, {
           element.inputConstructor = api.CZRInput.extend( element.CZRSocialsInputMths || {} );
           //EXTEND THE DEFAULT CONSTRUCTORS FOR MONOMODEL
           element.itemConstructor = api.CZRItem.extend( element.CZRSocialsItem || {} );
+
           //declares a default model
           this.defaultItemModel = {
             id : '',
@@ -26,6 +35,8 @@ $.extend( CZRSocialElementMths, {
           };
           //overrides the default success message
           this.modelAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
+
+          element.ready();
   },//initialize
 
 
@@ -33,16 +44,10 @@ $.extend( CZRSocialElementMths, {
   CZRSocialsInputMths : {
           ready : function() {
                   var input = this;
-
-                  input.addActions(
-                    'input_event_map',
-                    {
-                        trigger   : 'social-icon:changed',
-                        actions   : [ 'updateModelInputs' ]
-                    },
-                    input
-                  );
-
+                  //update the item model on social-icon change
+                  input.bind('social-icon:changed', function(){
+                      input.updateItemModel();
+                  });
                   api.CZRInput.prototype.ready.call( input);
           },
 
@@ -132,9 +137,8 @@ $.extend( CZRSocialElementMths, {
 
         //ACTIONS ON ICON CHANGE
         //Fired on 'social-icon:changed' for existing models
-        updateModelInputs : function() {
+        updateItemModel : function( _new_val ) {
                 var item = this.item,
-                    element     = this.element,
                     _new_model  = _.clone( item.get() ),
                     _new_title  = api.CZR_Helpers.capitalize( _new_model['social-icon'].replace('fa-', '') ),
                     _new_color  = serverControlParams.defaultSocialColor;
@@ -177,13 +181,14 @@ $.extend( CZRSocialElementMths, {
 
           //overrides the default parent method by a custom one
           //at this stage, the model passed in the obj is up to date
-          writeViewTitle : function( model ) {
+          writeItemViewTitle : function( model ) {
                   var item = this,
-                      element     = item.item_element;
-                  var _title = api.CZR_Helpers.capitalize( model['social-icon'].replace('fa-', '') );
+                      element     = item.item_element,
+                      _model = model || item.get(),
+                      _title = api.CZR_Helpers.capitalize( _model['social-icon'].replace('fa-', '') );
 
-                  $( '.' + element.control.css_attr.view_title , '#' + model.id ).html(
-                    item._buildTitle( _title, model['social-icon'], model['social-color'] )
+                  $( '.' + element.control.css_attr.view_title , item.container ).html(
+                    item._buildTitle( _title, _model['social-icon'], _model['social-color'] )
                   );
           }
 

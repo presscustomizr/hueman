@@ -10,18 +10,18 @@ var CZRElementMths = CZRElementMths || {};
 $.extend( CZRElementMths, {
 
   //@fired in element ready on api('ready')
-  populateCollection : function() {
+  populateItemCollection : function() {
           var element = this;
-          console.log('POPULATE ITEM COLLECTION?', element.savedItems );
+
           //populates the collection with the saved items
-          _.each( element.savedItems, function( item, key ) {
+          _.each( element.items, function( item, key ) {
                 //normalizes the item
                 item = element._normalizeItem(item, _.has( item, 'id' ) ? item.id : key );
                 if ( false === item ) {
                   throw new Error('fetchSavedCollection : an item could not be added in : ' + element.id );
                 }
                 //adds it to the collection
-                element.instantiateItem( item);
+                element.instantiateItem(item);
           });
 
           return this;
@@ -33,76 +33,53 @@ $.extend( CZRElementMths, {
             throw new Error('CZRElement::instantiateItem() : an item has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
           }
           var element = this;
-
           //Maybe prepare the item, make sure its id is set and unique
           item =  ( _.has( item, 'id') && element._isItemIdPossible( item.id) ) ? item : element._initNewItem( item || {} );
-
           //instanciate the item with the default constructor
           element.czr_Item.add( item.id, new element.itemConstructor( item.id, {
                 item_id : item.id,
-                item_val : item,
+                initial_input_values : item,
                 defaultItemModel : element.defaultItemModel,
                 item_control : element.control,
                 item_element : element,
                 is_added_by_user : is_added_by_user || false
           } ) );
+
+          //push it to the collection
+          element.updateItemsCollection( { item : item } );
+
+          //listen to each single item change
+          element.czr_Item(item.id).callbacks.add( function() { return element.itemReact.apply(element, arguments ); } );
   },
 
-  //registered callback by czr_collection.callbacks.add()
-  collectionListeners : function( to, from) {
+
+
+  //React to a single item change
+  //cb of element.czr_Item(item.id).callbacks
+  itemReact : function( to, from ) {
+        var element = this;
+          //update the collection
+          element.updateItemsCollection( {item : to });
+  },
+
+
+
+  //@param obj can be { collection : []}, or { item : {} }
+  updateItemsCollection : function( obj ) {
           var element = this,
-              _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
-              _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
-              _item_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
-              _collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && _.isEmpty(_item_updated);
-
-          //say it to the api
-          api(element.control.id).set( element.filterCollectionBeforeAjax(to) );
-
-           //SORTED COLLECTION
-          if ( _collection_sorted ) {
-                if ( _.has(element, 'czr_preItem') ) {
-                  element.czr_preItem('view_status').set('closed');
-                }
-                element.closeAllViews();
-                element.closeAllAlerts();
-          }
-
-          //refreshes the preview frame  :
-          //1) only needed if transport is postMessage, because is triggered by wp otherwise
-          //2) only needed when : add, remove, sort item(s).
-          var is_item_update = ( _.size(from) == _.size(to) ) && ! _.isEmpty( _.difference(from, to) );
-
-          if ( 'postMessage' == api(element.control.id).transport && ! is_item_update && ! api.CZR_Helpers.has_part_refresh( element.control.id ) ) {
-            element.control.previewer.refresh();
-          }
-  },
-
-
-  //an overridable method to act on the collection just before it is ajaxed
-  //@return the collection array
-  filterCollectionBeforeAjax : function(candidate_for_db) {
-          return candidate_for_db;
-  },
-
-
-  //@param item an object
-  //@parama key is an integer OPTIONAL
-  updateCollection : function( obj ) {
-          var element = this,
-              _current_collection = element.czr_Item.czr_collection.get();
+              _current_collection = element.get();
               _new_collection = _.clone(_current_collection);
 
           //if a collection is provided in the passed obj then simply refresh the collection
           //=> typically used when reordering the collection item with sortable or when a item is removed
           if ( _.has( obj, 'collection' ) ) {
             //reset the collection
-            element.czr_Item.czr_collection.set(obj.collection);
+            element.set(obj.collection);
             return;
           }
 
           if ( ! _.has(obj, 'item') ) {
-            throw new Error('updateCollection, no item provided ' + element.control.id + '. Aborting');
+            throw new Error('updateItemsCollection, no item provided ' + element.control.id + '. Aborting');
           }
           var item = _.clone(obj.item);
 
@@ -122,15 +99,16 @@ $.extend( CZRElementMths, {
           }
 
           //updates the collection value
-          element.czr_Item.czr_collection.set(_new_collection);
+          element.set(_new_collection);
   },
+
 
 
   //fire on sortable() update callback
   //@returns a sorted collection as an array of item objects
   _getSortedDOMCollection : function( obj ) {
           var element = this,
-              _old_collection = _.clone( element.czr_Item.czr_collection.get() ),
+              _old_collection = _.clone( element.get() ),
               _new_collection = [],
               _index = 0;
 

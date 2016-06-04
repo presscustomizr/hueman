@@ -1,7 +1,7 @@
 //extends api.Value
 //options:
   // item_id : item.id,
-  // item_val : item,
+  // initial_input_values : item,
   // defaultItemModel : element.defaultItemModel,
   // item_element : element,
   // is_added_by_user : is_added_by_user || false
@@ -11,36 +11,45 @@ $.extend( CZRItemMths , {
         if ( _.isUndefined(options.item_element) || _.isEmpty(options.item_element) ) {
           throw new Error('No element assigned to item ' + id + '. Aborting');
         }
-        api.Value.prototype.initialize.call( this, null, options );
-
         var item = this;
+        api.Value.prototype.initialize.call( item, null, options );
 
         //input.options = options;
         //write the options as properties, name is included
         $.extend( item, options || {} );
 
-        //setup listeners
-        item.callbacks.add( function() { return item.setupItemListeners.apply(item, arguments ); } );
+        //declares a default model
+        item.defaultItemModel = options.defaultItemModel || { id : '', title : '' };
+
+        //set initial values
+        item.set( $.extend( item.defaultItemModel, options.initial_input_values ) );
 
         //VIEW
         //czr_View stores the current expansion status of a given view => one value by created by item.id
         //czr_View can take 3 values : expanded, expanded_noscroll (=> used on view creation), closed
         item.czr_View = new api.Value();
-        item.setupView();
+
+        item.setupView( options.initial_input_values );
 
         //initialize to the provided value
-        item.set(options.item_val);
+        //the item model is a collection inputs
+        //It is populated on init ony => no input can be added dynamically afterwards
+        item.bind('input_collection_populated', function( input_collection ) {
+            //Setup individual item listener
+            item.callbacks.add( function() { return item.itemInternalReact.apply(item, arguments ); } );
+        });
 
 
-        //if a item is manually added : open it
+        //if an item is manually added : open it
         if ( item.is_added_by_user ) {
           item.setViewVisibility( {}, true );//empty obj because this method can be fired by the dom chain actions, always passing an object. true for added_by_user
         }
+        //item.setViewVisibility( {}, item.is_added_by_user );
 
   },//initialize
 
 
-  setupView : function() {
+  setupView : function( item_model ) {
           var item = this,
               element = this.item_element;
 
@@ -68,7 +77,7 @@ $.extend( CZRItemMths , {
                   }
           ];
 
-          item.container = item.renderView( item.item_val );
+          item.container = item.renderView( item_model );
           if ( _.isUndefined(item.container) || ! item.container.length ) {
             throw new Error( 'In setupView the Item view has not been rendered : ' + item.item_id );
           }
@@ -76,97 +85,47 @@ $.extend( CZRItemMths , {
           //set intial state
           item.czr_View.set('closed');
 
+          //always write the title
+          item.writeItemViewTitle();
+
           //add a listener on view state change
           item.czr_View.callbacks.add( function() { return item.setupViewStateListeners.apply(item, arguments ); } );
 
-          api.CZR_Helpers.setupDOMListeners( item.view_event_map , { model:item.item_val, dom_el:item.container }, item );//listeners for the view wrapper
+          api.CZR_Helpers.setupDOMListeners( item.view_event_map , { model:item_model, dom_el:item.container }, item );//listeners for the view wrapper
 
           //say it to the parent
-          element.trigger('view_setup', { model : item.item_val , dom_el: item.container} );
+          element.trigger('view_setup', { model : item_model , dom_el: item.container} );
   },
 
 
   setupViewStateListeners : function( to, from ) {
-      var item = this,
-          element = this.item_element,
-          $viewContent = $( '.' + element.control.css_attr.view_content, item.container );
+          var item = this,
+              item_model = item.get() || item.initial_input_values,//could not be set yet
+              element = this.item_element,
+              $viewContent = $( '.' + element.control.css_attr.view_content, item.container );
 
-      //render and setup view content if needed
-      if ( ! $.trim( $viewContent.html() ) ) {
-            item.renderViewContent();
-      }
-      //create the collection of inputs if needed
-      if ( ! _.has(item, 'czr_Input') ) {
-        item.setupInputCollection();
-      }
-      //expand
-      item._toggleViewExpansion( to );
-  },
-
-
-  //creates the inputs based on the rendered items
-  setupInputCollection : function() {
-        var item = this,
-            element = item.item_element;
-
-        //INPUTS => Setup as soon as the view content is rendered
-        //the item is a collection of inputs, each one has its own view element.
-        item.czr_Input = new api.Values();
-        //this can be overriden by extended classes to add and overrides methods
-        item.inputConstructor = element.inputConstructor;
-
-        if ( _.isEmpty(item.defaultItemModel) || _.isUndefined(item.defaultItemModel) ) {
-          throw new Error('No default model found in item ' + item.item_id + '. Aborting');
-        }
-
-        //prepare and sets the item value on api ready
-        //=> triggers the element rendering + DOM LISTENERS
-        var current_item = item.get();
-
-        if ( ! _.isObject(current_item) )
-          current_item = item.defaultItemModel;
-        else
-          current_item = $.extend( item.defaultItemModel, current_item );
-
-        //creates the inputs based on the rendered items
-        $( '.'+element.control.css_attr.sub_set_wrapper, item.container).each( function(_index) {
-
-              var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index,
-                  _value = _.has( current_item, _id) ? current_item[_id] : '';
-
-              item.czr_Input.add( _id, new item.inputConstructor( _id, {
-                  id : _id,
-                  type : $(this).attr('data-input-type'),
-                  input_value : _value,
-                  container : $(this),
-                  item : item,
-                  element : element
-              } ) );
-        });//each
-
-        // //listens and reacts to the items changes
-        // item.czr_Input.val.callbacks.add(function(to, from) {
-        //       //api(control.id).set(to);
-        //       //say it to the parent Item
-        //       item.set(to);
-        // });
-  },
-
-
-
-  setupItemListeners : function( to, from ) {
-        var item = this,
-            element = item.item_element;
-
-          element.updateCollection( {item : to });
-          //Always update the view title
-          item.writeViewTitle(to);
-
-          //send item to the preview. On update only, not on creation.
-          if ( ! _.isEmpty(from) || ! _.isUndefined(from) ) {
-            item._sendItem(to, from);
+          //render and setup view content if needed
+          if ( ! $.trim( $viewContent.html() ) ) {
+                item.renderViewContent( item_model );
           }
-  }
+          //create the collection of inputs if needed
+          if ( ! _.has(item, 'czr_Input') ) {
+            item.setupInputCollection();
+          }
+          //expand
+          item._toggleViewExpansion( to );
+  },
 
+  //React to a single item change
+  itemInternalReact : function( to, from ) {
+        var item = this;
+        //Always update the view title
+        item.writeItemViewTitle(to);
+
+        //send item to the preview. On update only, not on creation.
+        if ( ! _.isEmpty(from) || ! _.isUndefined(from) ) {
+          item._sendItem(to, from);
+        }
+  }
 
 });//$.extend

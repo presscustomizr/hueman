@@ -48,8 +48,6 @@ $.extend( CZRSektionsMths, {
         //Renders the blocks
         control.renderSektionBlocks(obj);
 
-        control.doActions( 'viewContentRendered' , obj.dom_el, obj );
-
         return this;
   },
 

@@ -12,12 +12,6 @@ $.extend( CZRElementControlMths, {
           var control = this;
           api.CZRBaseControl.prototype.initialize.call( control, id, options );
 
-          //extend the control with new template Selectors
-          $.extend( control, {
-              viewAlertEl : 'customize-control-' + options.params.type + '-alert',
-              viewPreAddEl : 'customize-control-' + options.params.type + '-pre-add-view-content',
-          } );
-
           //for now this is a collection with one item
           control.savedElements = [
               {
@@ -38,8 +32,8 @@ $.extend( CZRElementControlMths, {
           control.czr_Element = new api.Values();
 
           //czr_collection stores the element collection
-          control.czr_Element.czr_collection = new api.Value();
-          control.czr_Element.czr_collection.set([]);
+          control.czr_elementCollection = new api.Value();
+          control.czr_elementCollection.set([]);
   },
 
 
@@ -50,14 +44,15 @@ $.extend( CZRElementControlMths, {
   ready : function() {
           var control = this;
           api.bind( 'ready', function() {
-                control.populateCollection();
+                control.populateElementCollection();
 
-                control.czr_Element.czr_collection.callbacks.add( function() { return control.elementCollectionListeners.apply(element, arguments ); } );
+                //LISTEN TO ELEMENT COLLECTION
+                control.czr_elementCollection.callbacks.add( function() { return control.collectionReact.apply(control, arguments ); } );
           });
   },
 
   //@fired in control ready on api('ready')
-  populateCollection : function() {
+  populateElementCollection : function() {
           var control = this;
           //inits the collection with the saved elements
           //populates the collection with the saved element
@@ -93,23 +88,96 @@ $.extend( CZRElementControlMths, {
 
           //instanciate the element with the default constructor
           control.czr_Element.add( element.id, new constructor( element.id, {
+                id : element.id,
                 section : element.section,
                 block   : '',
-                type    : element.type,
+                type    : element.element_type,
                 items   : element.items,
                 control : control,
                 is_added_by_user : is_added_by_user || false
           } ) );
+
+          //push it to the collection
+          control.updateElementsCollection( {element : element });
   },
 
 
   //@todo
   _normalizeElement : function( element ) {
-    return element;
+        return element;
   },
 
-  elementCollectionListeners : function( to, from ) {
-          console.log('an element has changed in control : ' + control.id + '. to => from : ', to, from  );
-  }
 
+
+  //@param obj can be { collection : []}, or { element : {} }
+  updateElementsCollection : function( obj ) {
+          var control = this,
+              _current_collection = control.czr_elementCollection.get();
+              _new_collection = _.clone(_current_collection);
+
+          //if a collection is provided in the passed obj then simply refresh the collection
+          //=> typically used when reordering the collection element with sortable or when a element is removed
+          if ( _.has( obj, 'collection' ) ) {
+            //reset the collection
+            control.czr_elementCollection.set(obj.collection);
+            return;
+          }
+
+          if ( ! _.has(obj, 'element') ) {
+            throw new Error('updateItemsCollection, no element provided ' + control.id + '. Aborting');
+          }
+          var element = _.clone(obj.element);
+
+          //the element already exist in the collection
+          if ( _.findWhere( _new_collection, { id : element.id } ) ) {
+            _.each( _current_collection , function( _elt, _ind ) {
+              if ( _elt.id != element.id )
+                return;
+
+              //set the new val to the changed property
+              _new_collection[_ind] = element;
+            });
+          }
+          //the element has to be added
+          else {
+            _new_collection.push(element);
+          }
+          //Inform the control
+          control.czr_elementCollection.set(_new_collection);
+  },
+
+
+  //cb of control.czr_elementCollection.callbacks
+  collectionReact : function( to, from ) {
+        var control = this;
+
+        //refreshes the preview frame  :
+        //1) only needed if transport is postMessage, because is triggered by wp otherwise
+        //2) only needed when : add, remove, sort item(s).
+        var is_element_update = ( _.size(from) == _.size(to) ) && ! _.isEmpty( _.difference(from, to) );
+
+        if ( 'postMessage' == api(control.id).transport && ! is_element_update && ! api.CZR_Helpers.has_part_refresh( control.id ) ) {
+          control.previewer.refresh();
+        }
+
+        api(this.id).set( control.filterElementCollectionBeforeAjax(to) );
+  },
+
+  //an overridable method to act on the collection just before it is ajaxed
+  //@return the collection array
+  filterElementCollectionBeforeAjax : function(elements) {
+          var control = this;
+          if ( _.has( control.params, 'in_sektion' ) && control.params.in_sektion )
+            return elements;
+
+          //at this point we should be in the case of a single element collection, typically use to populate a regular setting
+          if ( _.size(elements) > 1 ) {
+            throw new Error('There should not be several elements in the collection of control : ' + control.id );
+          }
+          if ( ! _.isArray(elements) || _.isEmpty(elements) || ! _.has( elements[0], 'items' ) ) {
+            throw new Error('The setting value could not be populated in control : ' + control.id );
+          }
+          return elements[0].items;
+
+  }
 });//$.extend//CZRBaseControlMths

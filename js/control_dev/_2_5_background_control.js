@@ -134,8 +134,6 @@ $.extend( CZRBackgroundMths , {
 
                   $( view_content_template( extended_model )).appendTo( $('.' + control.css_attr.view_content, obj.dom_el ) );
 
-                  control.doActions( 'viewContentRendered' , obj.dom_el, obj );
-
                   return this;
           }
   }

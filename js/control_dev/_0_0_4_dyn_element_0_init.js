@@ -12,6 +12,11 @@ $.extend( CZRDynElementMths, {
           var element = this;
           api.CZRElement.prototype.initialize.call( element, id, options );
 
+          //extend the element with new template Selectors
+          $.extend( element, {
+              viewAlertEl : 'czr-element-item-alert',
+              viewPreAddEl : '',
+          } );
 
           //EXTENDS THE DEFAULT MONO MODEL CONSTRUCTOR WITH NEW METHODS
           //=> like remove item
@@ -86,7 +91,7 @@ $.extend( CZRDynElementMths, {
   setupPreItemInputCollection : function() {
           var element = this;
           //creates the inputs based on the rendered items
-          $('.' + element.control.css_attr.pre_add_wrapper, control.container).find( '.' + element.control.css_attr.sub_set_wrapper)
+          $('.' + element.control.css_attr.pre_add_wrapper, element.container).find( '.' + element.control.css_attr.sub_set_wrapper)
           .each( function(_index) {
                 var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index;
                 element.czr_preItemInput.add( _id, new element.preItemInputConstructor( _id, {
@@ -120,7 +125,7 @@ $.extend( CZRDynElementMths, {
           //refresh the preview frame (only needed if transport is postMessage )
           //must be a dom event not triggered
           //otherwise we are in the init collection case where the item are fetched and added from the setting in initialize
-          if ( 'postMessage' == api(this.id).transport && _.has( obj, 'dom_event') && ! _.has( obj.dom_event, 'isTrigger' ) && ! api.CZR_Helpers.has_part_refresh( element.control.id ) ) {
+          if ( 'postMessage' == api(element.control.id).transport && _.has( obj, 'dom_event') && ! _.has( obj.dom_event, 'isTrigger' ) && ! api.CZR_Helpers.has_part_refresh( element.control.id ) ) {
             element.control.previewer.refresh();
           }
   }

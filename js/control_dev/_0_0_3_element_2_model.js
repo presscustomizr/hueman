@@ -38,8 +38,9 @@ $.extend( CZRElementMths, {
   //helper
   //@return bool
   _isItemIdPossible : function( _id ) {
-          var element = this;
-          return ! _.isEmpty(_id) && ! _.findWhere( element.czr_Item.czr_collection.get(), { id : _id });
+          var element = this,
+              _collection = _.clone( element.get() );
+          return ! _.isEmpty(_id) && ! _.findWhere( _collection, { id : _id });
   },
 
   //the job of this function is to return a new item ready to be added to the collection
@@ -51,7 +52,7 @@ $.extend( CZRElementMths, {
               _id;
 
           //get the next available key of the collection
-          _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( element.czr_Item.czr_collection.get() );
+          _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( element.get() );
 
           if ( _.isNumber(_next_key) ) {
             _id = element.type + '_' + _next_key;

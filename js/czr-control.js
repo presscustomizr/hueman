@@ -1174,11 +1174,13 @@ $.extend( CZRInputMths , {
     ready : function() {
             var input = this;
             input.setupDOMListeners( input.input_event_map , { dom_el : input.container }, input );
-            input.callbacks.add( function() { return input.setupInputListeners.apply(input, arguments ); } );
+            //Setup individual input listener
+            input.callbacks.add( function() { return input.inputReact.apply(input, arguments ); } );
     },
 
-
-    setupInputListeners : function( to, from) {
+    //react to a single input change
+    //update the collection of input
+    inputReact : function( to, from) {
             var input = this,
                 _current_item = input.item.get(),
                 _new_model        = _.clone( _current_item );//initialize it to the current value
@@ -1186,6 +1188,7 @@ $.extend( CZRInputMths , {
             _new_model =  ( ! _.isObject(_new_model) || _.isEmpty(_new_model) ) ? {} : _new_model;
             //set the new val to the changed property
             _new_model[input.id] = to;
+            //inform the item
             input.item.set(_new_model);
     },
 
@@ -1200,11 +1203,8 @@ $.extend( CZRInputMths , {
             input.set(_new_val);
 
             //say it to the dom
-            input.doActions(
-                input.id + ':changed',
-                input.container,
-                {}
-            );
+            //@todo use the api Events instead
+            input.trigger( input.id + ':changed', _new_val );
     }
 });//$.extendvar CZRInputMths = CZRInputMths || {};
 $.extend( CZRInputMths , {
@@ -1402,7 +1402,7 @@ $.extend( CZRInputMths , {
 });//$.extend//extends api.Value
 //options:
   // item_id : item.id,
-  // item_val : item,
+  // initial_input_values : item,
   // defaultItemModel : element.defaultItemModel,
   // item_element : element,
   // is_added_by_user : is_added_by_user || false
@@ -1412,36 +1412,45 @@ $.extend( CZRItemMths , {
         if ( _.isUndefined(options.item_element) || _.isEmpty(options.item_element) ) {
           throw new Error('No element assigned to item ' + id + '. Aborting');
         }
-        api.Value.prototype.initialize.call( this, null, options );
-
         var item = this;
+        api.Value.prototype.initialize.call( item, null, options );
 
         //input.options = options;
         //write the options as properties, name is included
         $.extend( item, options || {} );
 
-        //setup listeners
-        item.callbacks.add( function() { return item.setupItemListeners.apply(item, arguments ); } );
+        //declares a default model
+        item.defaultItemModel = options.defaultItemModel || { id : '', title : '' };
+
+        //set initial values
+        item.set( $.extend( item.defaultItemModel, options.initial_input_values ) );
 
         //VIEW
         //czr_View stores the current expansion status of a given view => one value by created by item.id
         //czr_View can take 3 values : expanded, expanded_noscroll (=> used on view creation), closed
         item.czr_View = new api.Value();
-        item.setupView();
+
+        item.setupView( options.initial_input_values );
 
         //initialize to the provided value
-        item.set(options.item_val);
+        //the item model is a collection inputs
+        //It is populated on init ony => no input can be added dynamically afterwards
+        item.bind('input_collection_populated', function( input_collection ) {
+            //Setup individual item listener
+            item.callbacks.add( function() { return item.itemInternalReact.apply(item, arguments ); } );
+        });
 
 
-        //if a item is manually added : open it
+        //if an item is manually added : open it
         if ( item.is_added_by_user ) {
           item.setViewVisibility( {}, true );//empty obj because this method can be fired by the dom chain actions, always passing an object. true for added_by_user
         }
+        //item.setViewVisibility( {}, item.is_added_by_user );
 
   },//initialize
 
 
-  setupView : function() {
+  setupView : function( item_model ) {
           var item = this,
               element = this.item_element;
 
@@ -1469,7 +1478,7 @@ $.extend( CZRItemMths , {
                   }
           ];
 
-          item.container = item.renderView( item.item_val );
+          item.container = item.renderView( item_model );
           if ( _.isUndefined(item.container) || ! item.container.length ) {
             throw new Error( 'In setupView the Item view has not been rendered : ' + item.item_id );
           }
@@ -1477,34 +1486,58 @@ $.extend( CZRItemMths , {
           //set intial state
           item.czr_View.set('closed');
 
+          //always write the title
+          item.writeItemViewTitle();
+
           //add a listener on view state change
           item.czr_View.callbacks.add( function() { return item.setupViewStateListeners.apply(item, arguments ); } );
 
-          api.CZR_Helpers.setupDOMListeners( item.view_event_map , { model:item.item_val, dom_el:item.container }, item );//listeners for the view wrapper
+          api.CZR_Helpers.setupDOMListeners( item.view_event_map , { model:item_model, dom_el:item.container }, item );//listeners for the view wrapper
 
           //say it to the parent
-          element.trigger('view_setup', { model : item.item_val , dom_el: item.container} );
+          element.trigger('view_setup', { model : item_model , dom_el: item.container} );
   },
 
 
   setupViewStateListeners : function( to, from ) {
-      var item = this,
-          element = this.item_element,
-          $viewContent = $( '.' + element.control.css_attr.view_content, item.container );
+          var item = this,
+              item_model = item.get() || item.initial_input_values,//could not be set yet
+              element = this.item_element,
+              $viewContent = $( '.' + element.control.css_attr.view_content, item.container );
 
-      //render and setup view content if needed
-      if ( ! $.trim( $viewContent.html() ) ) {
-            item.renderViewContent();
-      }
-      //create the collection of inputs if needed
-      if ( ! _.has(item, 'czr_Input') ) {
-        item.setupInputCollection();
-      }
-      //expand
-      item._toggleViewExpansion( to );
+          //render and setup view content if needed
+          if ( ! $.trim( $viewContent.html() ) ) {
+                item.renderViewContent( item_model );
+          }
+          //create the collection of inputs if needed
+          if ( ! _.has(item, 'czr_Input') ) {
+            item.setupInputCollection();
+          }
+          //expand
+          item._toggleViewExpansion( to );
   },
 
+  //React to a single item change
+  itemInternalReact : function( to, from ) {
+        var item = this;
+        //Always update the view title
+        item.writeItemViewTitle(to);
 
+        //send item to the preview. On update only, not on creation.
+        if ( ! _.isEmpty(from) || ! _.isUndefined(from) ) {
+          item._sendItem(to, from);
+        }
+  }
+
+});//$.extend//extends api.Value
+//options:
+  // item_id : item.id,
+  // item_model : item,
+  // defaultItemModel : element.defaultItemModel,
+  // item_element : element,
+  // is_added_by_user : is_added_by_user || false
+var CZRItemMths = CZRItemMths || {};
+$.extend( CZRItemMths , {
   //creates the inputs based on the rendered items
   setupInputCollection : function() {
         var item = this,
@@ -1513,6 +1546,7 @@ $.extend( CZRItemMths , {
         //INPUTS => Setup as soon as the view content is rendered
         //the item is a collection of inputs, each one has its own view element.
         item.czr_Input = new api.Values();
+
         //this can be overriden by extended classes to add and overrides methods
         item.inputConstructor = element.inputConstructor;
 
@@ -1522,18 +1556,20 @@ $.extend( CZRItemMths , {
 
         //prepare and sets the item value on api ready
         //=> triggers the element rendering + DOM LISTENERS
-        var current_item = item.get();
+        var initial_input_values = item.initial_input_values;
 
-        if ( ! _.isObject(current_item) )
-          current_item = item.defaultItemModel;
+        if ( ! _.isObject(initial_input_values) )
+          initial_input_values = item.defaultItemModel;
         else
-          current_item = $.extend( item.defaultItemModel, current_item );
+          initial_input_values = $.extend( item.defaultItemModel, initial_input_values );
+
+        var input_collection = {};
 
         //creates the inputs based on the rendered items
         $( '.'+element.control.css_attr.sub_set_wrapper, item.container).each( function(_index) {
 
               var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index,
-                  _value = _.has( current_item, _id) ? current_item[_id] : '';
+                  _value = _.has( initial_input_values, _id) ? initial_input_values[_id] : '';
 
               item.czr_Input.add( _id, new item.inputConstructor( _id, {
                   id : _id,
@@ -1543,30 +1579,12 @@ $.extend( CZRItemMths , {
                   item : item,
                   element : element
               } ) );
+              //populate the collection
+              input_collection[_id] = _value;
         });//each
 
-        // //listens and reacts to the items changes
-        // item.czr_Input.val.callbacks.add(function(to, from) {
-        //       //api(control.id).set(to);
-        //       //say it to the parent Item
-        //       item.set(to);
-        // });
-  },
-
-
-
-  setupItemListeners : function( to, from ) {
-        var item = this,
-            element = item.item_element;
-
-          element.updateCollection( {item : to });
-          //Always update the view title
-          item.writeViewTitle(to);
-
-          //send item to the preview. On update only, not on creation.
-          if ( ! _.isEmpty(from) || ! _.isUndefined(from) ) {
-            item._sendItem(to, from);
-          }
+        //say it
+        item.trigger('input_collection_populated', $.extend( initial_input_values, input_collection ));
   }
 
 
@@ -1605,7 +1623,7 @@ var CZRItemMths = CZRItemMths || {};
     removeItem : function() {
             var item = this,
                 element = this.item_element,
-                _new_collection = _.clone( element.czr_Item.czr_collection.get() );
+                _new_collection = _.clone( element.get() );
 
             //destroy the Item DOM el
             item._destroyView();
@@ -1613,7 +1631,7 @@ var CZRItemMths = CZRItemMths || {};
             //new collection
             //say it
             _new_collection = _.without( _new_collection, _.findWhere( _new_collection, {id: item.item_id }) );
-            element.czr_Item.czr_collection.set( _new_collection );
+            element.set( _new_collection );
             //hook here
             element.trigger('item_removed', item.get() );
             //remove the item from the collection
@@ -1643,11 +1661,12 @@ $.extend( CZRItemMths , {
         var item = this,
             element = item.item_element;
             item_model = item_model || item.get();
+
         //do we have view template script?
-        if ( 0 === $( '#tmpl-' + element.control.getTemplateEl( 'view', item_model ) ).length )
+        if ( 0 === $( '#tmpl-' + element.getTemplateEl( 'view', item_model ) ).length )
           return false;//break the action chain
 
-        var view_template = wp.template( element.control.getTemplateEl( 'view', item_model ) );
+        var view_template = wp.template( element.getTemplateEl( 'view', item_model ) );
 
         //do we have an html template and a element container?
         if ( ! view_template  || ! element.container )
@@ -1656,22 +1675,11 @@ $.extend( CZRItemMths , {
         //has this item view already been rendered?
         if ( _.has(item, 'container') && false !== item.container.length )
           return;
-        console.log('item model ?', item_model);
+
         $_view_el = $('<li>', { class : element.control.css_attr.inner_view, 'data-id' : item_model.id,  id : item_model.id } );
         $( '.' + element.control.css_attr.views_wrapper , element.container).append( $_view_el );
         //the view skeleton
         $( view_template( item_model ) ).appendTo( $_view_el );
-
-
-        // if ( _.isEmpty($_view_el.html() ) ) {
-        //   $_view_el.append( item._getViewContent() );
-        // } else {
-        //   //var $_view_el = $('li[data-id="' + item.id + '"]');
-        //   //empty the html and append the updated content
-        //   $_view_el.html( item._getViewContent() );
-        // }
-
-        // item.doActions( 'viewContentRendered' , element.container, {} );
 
         return $_view_el;
   },
@@ -1680,17 +1688,16 @@ $.extend( CZRItemMths , {
   //renders saved items views and attach event handlers
   //the saved item look like :
   //array[ { id : 'sidebar-one', title : 'A Title One' }, {id : 'sidebar-two', title : 'A Title Two' }]
-  renderViewContent : function() {
+  renderViewContent : function( item_model ) {
           //=> an array of objects
           var item = this,
-              element = this.item_element,
-              item_model = _.clone( item.get() );
+              element = this.item_element;
 
           //do we have view content template script?
-          if ( 0 === $( '#tmpl-' + element.control.getTemplateEl( 'view-content', item_model ) ).length )
+          if ( 0 === $( '#tmpl-' + element.getTemplateEl( 'view-content', item_model ) ).length )
             return this;
 
-          var  view_content_template = wp.template( element.control.getTemplateEl( 'view-content', item_model ) );
+          var  view_content_template = wp.template( element.getTemplateEl( 'view-content', item_model ) );
 
           //do we have an html template and a control container?
           if ( ! view_content_template || ! element.container )
@@ -1699,7 +1706,7 @@ $.extend( CZRItemMths , {
           //the view content
           $( view_content_template( item_model )).appendTo( $('.' + element.control.css_attr.view_content, item.container ) );
 
-          api.CZR_Helpers.doActions( 'viewContentRendered' , item.container, {model : item_model }, item );
+          item.trigger( 'view_content_rendered' , {model : item_model } );
 
           return this;
   },
@@ -1708,16 +1715,15 @@ $.extend( CZRItemMths , {
 
 
 
-  //at this stage, the model passed in the obj is up to date
-  writeViewTitle : function( model ) {
+  //fired in setupItemListeners
+  writeItemViewTitle : function( item_model ) {
         var item = this,
             element = item.item_element,
-            _model = _.clone( model || item.get() ),
+            _model = item_model || item.get(),
             _title = _.has( _model, 'title')? api.CZR_Helpers.capitalize( _model.title ) : _model.id;
 
         _title = api.CZR_Helpers.truncate(_title, 20);
-        $( '.' + element.control.css_attr.view_title , '#' + _model.id ).text(_title );
-
+        $( '.' + element.control.css_attr.view_title , item.container ).text(_title );
         //add a hook here
         api.CZR_Helpers.doActions('after_writeViewTitle', item.container , _model, item );
   },
@@ -1729,21 +1735,20 @@ $.extend( CZRItemMths , {
   //Fired on click on edit_view_btn
   setViewVisibility : function( obj, is_added_by_user ) {
           var item = this,
-              element = this.item_element,
-              model_id = item.model_id;
+              element = this.item_element;
           if ( is_added_by_user ) {
             item.czr_View.set( 'expanded_noscroll' );
           } else {
-            element.closeAllViews(model_id);
+            element.closeAllViews( item.item_id );
             if ( _.has(element, 'czr_preItem') ) {
               element.czr_preItem('view_status').set( 'closed');
             }
-            item.czr_View.set( 'expanded' == item._getViewState(model_id) ? 'closed' : 'expanded' );
+            item.czr_View.set( 'expanded' == item._getViewState() ? 'closed' : 'expanded' );
           }
   },
 
 
-  _getViewState : function(model_id) {
+  _getViewState : function() {
           return -1 == this.czr_View.get().indexOf('expanded') ? 'closed' : 'expanded';
   },
 
@@ -1751,8 +1756,7 @@ $.extend( CZRItemMths , {
   //callback of czr_View() instance on change
   _toggleViewExpansion : function( status, duration ) {
           var item = this,
-              element = this.item_element,
-              model_id = item.model_id;
+              element = this.item_element;
 
           //slide Toggle and toggle the 'open' class
           $( '.' + element.control.css_attr.view_content , item.container ).slideToggle( {
@@ -1826,7 +1830,7 @@ $.extend( CZRItemMths , {
               var _is_open = ! $(this).hasClass('open') && $(this).is(':visible');
               $(this).toggleClass('open' , _is_open );
               //set the active class of the clicked icon
-              $( obj.dom_el ).find('.' + control.css_attr.display_alert_btn).toggleClass( 'active', _is_open );
+              $( obj.dom_el ).find('.' + element.control.css_attr.display_alert_btn).toggleClass( 'active', _is_open );
               //adjust scrolling to display the entire dialog block
               if ( _is_open )
                 element._adjustScrollExpandedBlock( item.container );
@@ -1836,7 +1840,7 @@ $.extend( CZRItemMths , {
 
 
   //removes the view dom element
-  _destroyView : function (model_id) {
+  _destroyView : function () {
           this.container.fadeOut( {
             duration : 400,
             done : function() {
@@ -1863,19 +1867,39 @@ var CZRElementMths = CZRElementMths || {};
 $.extend( CZRElementMths, {
 
   initialize: function( id, options ) {
+          if ( _.isUndefined(options.control) || _.isEmpty(options.control) ) {
+            throw new Error('No control assigned to element ' + id + '. Aborting');
+          }
+          api.Value.prototype.initialize.call( this, null, options );
+
           var element = this;
 
           //write the options as properties
           $.extend( element, options || {} );
+          //extend the element with new template Selectors
+          $.extend( element, {
+              viewPreAddEl : '',
+              viewTemplateEl : '',
+              viewContentTemplateEl : '',
+          } );
 
-          console.log('ELEMENT ?', element, options );
-          //@todo, the container could be specified for a given element
-          element.container = $( element.control.selector );
+          //initialize the element collection
+          element.set([]);//the element is a collection items => this is the collection
+
+          //Setup individual element listener
+          //element.callbacks.add( function() { return item.setupElementListeners.apply(element, arguments ); } );
+
+          if ( ! _.has( element.control.params, 'in_sektion' ) || ! element.control.params.in_sektion )
+            element.container = $( element.control.selector );
+          else {
+            throw new Error('The element container is not defined for element : ' + id + '. Aborting');
+          }
+
           //store the saved models => can be extended to add default models in children classes
           element.savedItems = options.items;
 
           //declares a default model
-          element.defaultItem = { id : '', title : '' };
+          element.defaultElementModel = { id : '', title : '' };
 
           //define a default Constructors
           element.itemConstructor = api.CZRItem;
@@ -1884,11 +1908,7 @@ $.extend( CZRElementMths, {
           //czr_model stores the each model value => one value by created by model.id
           element.czr_Item = new api.Values();
 
-          //czr_collection stores the item collection
-          element.czr_Item.czr_collection = new api.Value();
-          element.czr_Item.czr_collection.set([]);
-
-          element.ready();
+          //element.ready();
   },
 
 
@@ -1903,17 +1923,64 @@ $.extend( CZRElementMths, {
           //It's not listened to before the api is ready
           //=> the collection update on startup is done when the element is embedded and BEFORE the api is ready
           //=> won't trigger and change setting
-          api.bind( 'ready', function() {
-                element.populateCollection()._makeSortable();
+          element.populateItemCollection()._makeSortable();
 
-                //LISTEN TO ITEMS COLLECTION
-                //1) update the control setting value
-                //2) fire dom actions
-                element.czr_Item.czr_collection.callbacks.add( function() { return element.collectionListeners.apply(element, arguments ); } );
-          });
+          //listen to each single element change
+          element.callbacks.add( function() { return element.elementReact.apply(element, arguments ); } );
 
           //this element is ready
           //element.container.trigger('ready');
+  },
+
+
+
+  //cb of control.czr_Element(element.id).callbacks
+  elementReact : function( to, from ) {
+          //cb of : element.callbacks
+          var element = this,
+              control = element.control,
+              _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
+              _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
+              _item_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
+              _collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && _.isEmpty(_item_updated);
+
+           //Sorted collection case
+          if ( _collection_sorted ) {
+                if ( _.has(element, 'czr_preItem') ) {
+                  element.czr_preItem('view_status').set('closed');
+                }
+                element.closeAllViews();
+                element.closeAllAlerts();
+          }
+
+          // //refreshes the preview frame  :
+          // //1) only needed if transport is postMessage, because is triggered by wp otherwise
+          // //2) only needed when : add, remove, sort item(s).
+          // var is_item_update = ( _.size(from) == _.size(to) ) && ! _.isEmpty( _.difference(from, to) );
+
+          // if ( 'postMessage' == api(element.control.id).transport && ! is_item_update && ! api.CZR_Helpers.has_part_refresh( element.control.id ) ) {
+          //   element.control.previewer.refresh();
+          // }
+
+          //update the collection
+          //first update the element with the updated items.
+          //Then say it to the element collection
+          var _current_collection = control.czr_elementCollection.get(),
+              _current_element = _.findWhere( _current_collection, { id : element.id } ),
+              _new_element = _.clone( _current_element );
+
+          _new_element = $.extend(_new_element, { items : to } );
+
+          control.updateElementsCollection( {element : _new_element });
+
+          // //Always update the view title
+          // element.writeViewTitle(to);
+
+          // //@todo : do we need that ?
+          // //send element to the preview. On update only, not on creation.
+          // if ( ! _.isEmpty(from) || ! _.isUndefined(from) ) {
+          //   element._sendElement(to, from);
+          // }
   }
 
 });//$.extend//CZRBaseControlMths//MULTI CONTROL CLASS
@@ -1928,18 +1995,18 @@ var CZRElementMths = CZRElementMths || {};
 $.extend( CZRElementMths, {
 
   //@fired in element ready on api('ready')
-  populateCollection : function() {
+  populateItemCollection : function() {
           var element = this;
-          console.log('POPULATE ITEM COLLECTION?', element.savedItems );
+
           //populates the collection with the saved items
-          _.each( element.savedItems, function( item, key ) {
+          _.each( element.items, function( item, key ) {
                 //normalizes the item
                 item = element._normalizeItem(item, _.has( item, 'id' ) ? item.id : key );
                 if ( false === item ) {
                   throw new Error('fetchSavedCollection : an item could not be added in : ' + element.id );
                 }
                 //adds it to the collection
-                element.instantiateItem( item);
+                element.instantiateItem(item);
           });
 
           return this;
@@ -1951,76 +2018,53 @@ $.extend( CZRElementMths, {
             throw new Error('CZRElement::instantiateItem() : an item has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
           }
           var element = this;
-
           //Maybe prepare the item, make sure its id is set and unique
           item =  ( _.has( item, 'id') && element._isItemIdPossible( item.id) ) ? item : element._initNewItem( item || {} );
-
           //instanciate the item with the default constructor
           element.czr_Item.add( item.id, new element.itemConstructor( item.id, {
                 item_id : item.id,
-                item_val : item,
+                initial_input_values : item,
                 defaultItemModel : element.defaultItemModel,
                 item_control : element.control,
                 item_element : element,
                 is_added_by_user : is_added_by_user || false
           } ) );
+
+          //push it to the collection
+          element.updateItemsCollection( { item : item } );
+
+          //listen to each single item change
+          element.czr_Item(item.id).callbacks.add( function() { return element.itemReact.apply(element, arguments ); } );
   },
 
-  //registered callback by czr_collection.callbacks.add()
-  collectionListeners : function( to, from) {
+
+
+  //React to a single item change
+  //cb of element.czr_Item(item.id).callbacks
+  itemReact : function( to, from ) {
+        var element = this;
+          //update the collection
+          element.updateItemsCollection( {item : to });
+  },
+
+
+
+  //@param obj can be { collection : []}, or { item : {} }
+  updateItemsCollection : function( obj ) {
           var element = this,
-              _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
-              _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
-              _item_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
-              _collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && _.isEmpty(_item_updated);
-
-          //say it to the api
-          api(element.control.id).set( element.filterCollectionBeforeAjax(to) );
-
-           //SORTED COLLECTION
-          if ( _collection_sorted ) {
-                if ( _.has(element, 'czr_preItem') ) {
-                  element.czr_preItem('view_status').set('closed');
-                }
-                element.closeAllViews();
-                element.closeAllAlerts();
-          }
-
-          //refreshes the preview frame  :
-          //1) only needed if transport is postMessage, because is triggered by wp otherwise
-          //2) only needed when : add, remove, sort item(s).
-          var is_item_update = ( _.size(from) == _.size(to) ) && ! _.isEmpty( _.difference(from, to) );
-
-          if ( 'postMessage' == api(element.control.id).transport && ! is_item_update && ! api.CZR_Helpers.has_part_refresh( element.control.id ) ) {
-            element.control.previewer.refresh();
-          }
-  },
-
-
-  //an overridable method to act on the collection just before it is ajaxed
-  //@return the collection array
-  filterCollectionBeforeAjax : function(candidate_for_db) {
-          return candidate_for_db;
-  },
-
-
-  //@param item an object
-  //@parama key is an integer OPTIONAL
-  updateCollection : function( obj ) {
-          var element = this,
-              _current_collection = element.czr_Item.czr_collection.get();
+              _current_collection = element.get();
               _new_collection = _.clone(_current_collection);
 
           //if a collection is provided in the passed obj then simply refresh the collection
           //=> typically used when reordering the collection item with sortable or when a item is removed
           if ( _.has( obj, 'collection' ) ) {
             //reset the collection
-            element.czr_Item.czr_collection.set(obj.collection);
+            element.set(obj.collection);
             return;
           }
 
           if ( ! _.has(obj, 'item') ) {
-            throw new Error('updateCollection, no item provided ' + element.control.id + '. Aborting');
+            throw new Error('updateItemsCollection, no item provided ' + element.control.id + '. Aborting');
           }
           var item = _.clone(obj.item);
 
@@ -2040,15 +2084,16 @@ $.extend( CZRElementMths, {
           }
 
           //updates the collection value
-          element.czr_Item.czr_collection.set(_new_collection);
+          element.set(_new_collection);
   },
+
 
 
   //fire on sortable() update callback
   //@returns a sorted collection as an array of item objects
   _getSortedDOMCollection : function( obj ) {
           var element = this,
-              _old_collection = _.clone( element.czr_Item.czr_collection.get() ),
+              _old_collection = _.clone( element.get() ),
               _new_collection = [],
               _index = 0;
 
@@ -2114,8 +2159,9 @@ $.extend( CZRElementMths, {
   //helper
   //@return bool
   _isItemIdPossible : function( _id ) {
-          var element = this;
-          return ! _.isEmpty(_id) && ! _.findWhere( element.czr_Item.czr_collection.get(), { id : _id });
+          var element = this,
+              _collection = _.clone( element.get() );
+          return ! _.isEmpty(_id) && ! _.findWhere( _collection, { id : _id });
   },
 
   //the job of this function is to return a new item ready to be added to the collection
@@ -2127,7 +2173,7 @@ $.extend( CZRElementMths, {
               _id;
 
           //get the next available key of the collection
-          _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( element.czr_Item.czr_collection.get() );
+          _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( element.get() );
 
           if ( _.isNumber(_next_key) ) {
             _id = element.type + '_' + _next_key;
@@ -2166,6 +2212,26 @@ $.extend( CZRElementMths, {
 //Listen to items collection changes and update the control setting
 var CZRElementMths = CZRElementMths || {};
 $.extend( CZRElementMths, {
+  //called before rendering a view
+  //can be overriden to set a specific view template depending on the model properties
+  //@return string
+  getTemplateEl : function( type, model ) {
+          var element = this, _el;
+          switch(type) {
+            case 'view' :
+              _el = element.viewTemplateEl;
+              break;
+            case 'view-content' :
+              _el = element.viewContentTemplateEl;
+              break;
+          }
+          if ( _.isEmpty(_el) ) {
+            console.log('No valid template has been found in getTemplateEl()');
+          } else {
+            return _el;
+          }
+  },
+
   //helper
   //get the $ view DOM el from the item id
   getViewEl : function( item_id ) {
@@ -2178,7 +2244,7 @@ $.extend( CZRElementMths, {
   //fired on views_sorted
   closeAllViews : function(item_id) {
           var element = this,
-              _current_collection = _.clone( element.czr_Item.czr_collection.get() ),
+              _current_collection = _.clone( element.get() ),
               _filtered_collection = _.filter( _current_collection , function( mod) { return mod.id != item_id; } );
 
           _.map( _filtered_collection, function(_item) {
@@ -2240,7 +2306,7 @@ $.extend( CZRElementMths, {
           $( '.' + element.control.css_attr.views_wrapper, element.container ).sortable( {
               handle: '.' + element.control.css_attr.sortable_handle,
               update: function( event, ui ) {
-                element.czr_Item.czr_collection.set( element._getSortedDOMCollection() );
+                element.set( element._getSortedDOMCollection() );
               }
             }
           );
@@ -2259,6 +2325,11 @@ $.extend( CZRDynElementMths, {
           var element = this;
           api.CZRElement.prototype.initialize.call( element, id, options );
 
+          //extend the element with new template Selectors
+          $.extend( element, {
+              viewAlertEl : 'czr-element-item-alert',
+              viewPreAddEl : '',
+          } );
 
           //EXTENDS THE DEFAULT MONO MODEL CONSTRUCTOR WITH NEW METHODS
           //=> like remove item
@@ -2333,7 +2404,7 @@ $.extend( CZRDynElementMths, {
   setupPreItemInputCollection : function() {
           var element = this;
           //creates the inputs based on the rendered items
-          $('.' + element.control.css_attr.pre_add_wrapper, control.container).find( '.' + element.control.css_attr.sub_set_wrapper)
+          $('.' + element.control.css_attr.pre_add_wrapper, element.container).find( '.' + element.control.css_attr.sub_set_wrapper)
           .each( function(_index) {
                 var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index;
                 element.czr_preItemInput.add( _id, new element.preItemInputConstructor( _id, {
@@ -2367,7 +2438,7 @@ $.extend( CZRDynElementMths, {
           //refresh the preview frame (only needed if transport is postMessage )
           //must be a dom event not triggered
           //otherwise we are in the init collection case where the item are fetched and added from the setting in initialize
-          if ( 'postMessage' == api(this.id).transport && _.has( obj, 'dom_event') && ! _.has( obj.dom_event, 'isTrigger' ) && ! api.CZR_Helpers.has_part_refresh( element.control.id ) ) {
+          if ( 'postMessage' == api(element.control.id).transport && _.has( obj, 'dom_event') && ! _.has( obj.dom_event, 'isTrigger' ) && ! api.CZR_Helpers.has_part_refresh( element.control.id ) ) {
             element.control.previewer.refresh();
           }
   }
@@ -2546,6 +2617,14 @@ $.extend( CZRSocialElementMths, {
           //run the parent initialize
           api.CZRDynElement.prototype.initialize.call( element, id, options );
 
+          //extend the element with new template Selectors
+          $.extend( element, {
+              viewPreAddEl : 'czr-element-social-pre-add-view-content',
+              viewTemplateEl : 'czr-element-item-view',
+              viewContentTemplateEl : 'czr-element-social-view-content',
+          } );
+
+
           this.social_icons = [
             '500px','adn','amazon','android','angellist','apple','behance','behance-square','bitbucket','bitbucket-square','black-tie','btc','buysellads','chrome','codepen','codiepie','connectdevelop','contao','dashcube','delicious','delicious','deviantart','digg','dribbble','dropbox','drupal','edge','empire','expeditedssl','facebook','facebook','facebook-f (alias)','facebook-official','facebook-square','firefox','flickr','fonticons','fort-awesome','forumbee','foursquare','get-pocket','gg','gg-circle','git','github','github','github-alt','github-square','git-square','google','google','google-plus','google-plus-square','google-wallet','gratipay','hacker-news','houzz','instagram','internet-explorer','ioxhost','joomla','jsfiddle','lastfm','lastfm-square','leanpub','linkedin','linkedin','linkedin-square','linux','maxcdn','meanpath','medium','mixcloud','modx','odnoklassniki','odnoklassniki-square','opencart','openid','opera','optin-monster','pagelines','paypal','pied-piper','pied-piper-alt','pinterest','pinterest-p','pinterest-square','product-hunt','qq','rebel','reddit','reddit-alien','reddit-square','renren','rss','rss-square','safari','scribd','sellsy','share-alt','share-alt-square','shirtsinbulk','simplybuilt','skyatlas','skype','slack','slideshare','soundcloud','spotify','stack-exchange','stack-overflow','steam','steam-square','stumbleupon','stumbleupon','stumbleupon-circle','tencent-weibo','trello','tripadvisor','tumblr','tumblr-square','twitch','twitter','twitter','twitter-square','usb','viacoin','vimeo','vimeo-square','vine','vk','weibo','weixin','whatsapp','wikipedia-w','windows','wordpress','xing','xing-square','yahoo','yahoo','y-combinator','yelp','youtube','youtube-play','youtube-square'
           ];
@@ -2553,6 +2632,7 @@ $.extend( CZRSocialElementMths, {
           element.inputConstructor = api.CZRInput.extend( element.CZRSocialsInputMths || {} );
           //EXTEND THE DEFAULT CONSTRUCTORS FOR MONOMODEL
           element.itemConstructor = api.CZRItem.extend( element.CZRSocialsItem || {} );
+
           //declares a default model
           this.defaultItemModel = {
             id : '',
@@ -2564,6 +2644,8 @@ $.extend( CZRSocialElementMths, {
           };
           //overrides the default success message
           this.modelAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
+
+          element.ready();
   },//initialize
 
 
@@ -2571,16 +2653,10 @@ $.extend( CZRSocialElementMths, {
   CZRSocialsInputMths : {
           ready : function() {
                   var input = this;
-
-                  input.addActions(
-                    'input_event_map',
-                    {
-                        trigger   : 'social-icon:changed',
-                        actions   : [ 'updateModelInputs' ]
-                    },
-                    input
-                  );
-
+                  //update the item model on social-icon change
+                  input.bind('social-icon:changed', function(){
+                      input.updateItemModel();
+                  });
                   api.CZRInput.prototype.ready.call( input);
           },
 
@@ -2670,9 +2746,8 @@ $.extend( CZRSocialElementMths, {
 
         //ACTIONS ON ICON CHANGE
         //Fired on 'social-icon:changed' for existing models
-        updateModelInputs : function() {
+        updateItemModel : function( _new_val ) {
                 var item = this.item,
-                    element     = this.element,
                     _new_model  = _.clone( item.get() ),
                     _new_title  = api.CZR_Helpers.capitalize( _new_model['social-icon'].replace('fa-', '') ),
                     _new_color  = serverControlParams.defaultSocialColor;
@@ -2715,13 +2790,14 @@ $.extend( CZRSocialElementMths, {
 
           //overrides the default parent method by a custom one
           //at this stage, the model passed in the obj is up to date
-          writeViewTitle : function( model ) {
+          writeItemViewTitle : function( model ) {
                   var item = this,
-                      element     = item.item_element;
-                  var _title = api.CZR_Helpers.capitalize( model['social-icon'].replace('fa-', '') );
+                      element     = item.item_element,
+                      _model = model || item.get(),
+                      _title = api.CZR_Helpers.capitalize( _model['social-icon'].replace('fa-', '') );
 
-                  $( '.' + element.control.css_attr.view_title , '#' + model.id ).html(
-                    item._buildTitle( _title, model['social-icon'], model['social-color'] )
+                  $( '.' + element.control.css_attr.view_title , item.container ).html(
+                    item._buildTitle( _title, _model['social-icon'], _model['social-color'] )
                   );
           }
 
@@ -2743,33 +2819,6 @@ $.extend( CZRBaseControlMths, {
 
           //add a shortcut to the css properties declared in the php controls
           control.css_attr = _.has( serverControlParams , 'css_attr') ? serverControlParams.css_attr : {};
-
-          //extend the control with new template Selectors
-          $.extend( control, {
-            viewTemplateEl : 'customize-control-' + options.params.type + '-view',
-            viewContentTemplateEl : 'customize-control-' + options.params.type + '-view-content',
-          } );
-  },
-
-
-  //called before rendering a view
-  //can be overriden to set a specific view template depending on the model properties
-  //@return string
-  getTemplateEl : function( type, model ) {
-          var control = this, _el;
-          switch(type) {
-            case 'view' :
-              _el = control.viewTemplateEl;
-              break;
-            case 'view-content' :
-              _el = control.viewContentTemplateEl;
-              break;
-          }
-          if ( _.isEmpty(_el) ) {
-            console.log('No valid template has been found in getTemplateEl()');
-          } else {
-            return _el;
-          }
   },
 
   //@return void()
@@ -2791,12 +2840,6 @@ $.extend( CZRElementControlMths, {
           var control = this;
           api.CZRBaseControl.prototype.initialize.call( control, id, options );
 
-          //extend the control with new template Selectors
-          $.extend( control, {
-              viewAlertEl : 'customize-control-' + options.params.type + '-alert',
-              viewPreAddEl : 'customize-control-' + options.params.type + '-pre-add-view-content',
-          } );
-
           //for now this is a collection with one item
           control.savedElements = [
               {
@@ -2817,8 +2860,8 @@ $.extend( CZRElementControlMths, {
           control.czr_Element = new api.Values();
 
           //czr_collection stores the element collection
-          control.czr_Element.czr_collection = new api.Value();
-          control.czr_Element.czr_collection.set([]);
+          control.czr_elementCollection = new api.Value();
+          control.czr_elementCollection.set([]);
   },
 
 
@@ -2829,14 +2872,15 @@ $.extend( CZRElementControlMths, {
   ready : function() {
           var control = this;
           api.bind( 'ready', function() {
-                control.populateCollection();
+                control.populateElementCollection();
 
-                control.czr_Element.czr_collection.callbacks.add( function() { return control.elementCollectionListeners.apply(element, arguments ); } );
+                //LISTEN TO ELEMENT COLLECTION
+                control.czr_elementCollection.callbacks.add( function() { return control.collectionReact.apply(control, arguments ); } );
           });
   },
 
   //@fired in control ready on api('ready')
-  populateCollection : function() {
+  populateElementCollection : function() {
           var control = this;
           //inits the collection with the saved elements
           //populates the collection with the saved element
@@ -2872,25 +2916,98 @@ $.extend( CZRElementControlMths, {
 
           //instanciate the element with the default constructor
           control.czr_Element.add( element.id, new constructor( element.id, {
+                id : element.id,
                 section : element.section,
                 block   : '',
-                type    : element.type,
+                type    : element.element_type,
                 items   : element.items,
                 control : control,
                 is_added_by_user : is_added_by_user || false
           } ) );
+
+          //push it to the collection
+          control.updateElementsCollection( {element : element });
   },
 
 
   //@todo
   _normalizeElement : function( element ) {
-    return element;
+        return element;
   },
 
-  elementCollectionListeners : function( to, from ) {
-          console.log('an element has changed in control : ' + control.id + '. to => from : ', to, from  );
-  }
 
+
+  //@param obj can be { collection : []}, or { element : {} }
+  updateElementsCollection : function( obj ) {
+          var control = this,
+              _current_collection = control.czr_elementCollection.get();
+              _new_collection = _.clone(_current_collection);
+
+          //if a collection is provided in the passed obj then simply refresh the collection
+          //=> typically used when reordering the collection element with sortable or when a element is removed
+          if ( _.has( obj, 'collection' ) ) {
+            //reset the collection
+            control.czr_elementCollection.set(obj.collection);
+            return;
+          }
+
+          if ( ! _.has(obj, 'element') ) {
+            throw new Error('updateItemsCollection, no element provided ' + control.id + '. Aborting');
+          }
+          var element = _.clone(obj.element);
+
+          //the element already exist in the collection
+          if ( _.findWhere( _new_collection, { id : element.id } ) ) {
+            _.each( _current_collection , function( _elt, _ind ) {
+              if ( _elt.id != element.id )
+                return;
+
+              //set the new val to the changed property
+              _new_collection[_ind] = element;
+            });
+          }
+          //the element has to be added
+          else {
+            _new_collection.push(element);
+          }
+          //Inform the control
+          control.czr_elementCollection.set(_new_collection);
+  },
+
+
+  //cb of control.czr_elementCollection.callbacks
+  collectionReact : function( to, from ) {
+        var control = this;
+
+        //refreshes the preview frame  :
+        //1) only needed if transport is postMessage, because is triggered by wp otherwise
+        //2) only needed when : add, remove, sort item(s).
+        var is_element_update = ( _.size(from) == _.size(to) ) && ! _.isEmpty( _.difference(from, to) );
+
+        if ( 'postMessage' == api(control.id).transport && ! is_element_update && ! api.CZR_Helpers.has_part_refresh( control.id ) ) {
+          control.previewer.refresh();
+        }
+
+        api(this.id).set( control.filterElementCollectionBeforeAjax(to) );
+  },
+
+  //an overridable method to act on the collection just before it is ajaxed
+  //@return the collection array
+  filterElementCollectionBeforeAjax : function(elements) {
+          var control = this;
+          if ( _.has( control.params, 'in_sektion' ) && control.params.in_sektion )
+            return elements;
+
+          //at this point we should be in the case of a single element collection, typically use to populate a regular setting
+          if ( _.size(elements) > 1 ) {
+            throw new Error('There should not be several elements in the collection of control : ' + control.id );
+          }
+          if ( ! _.isArray(elements) || _.isEmpty(elements) || ! _.has( elements[0], 'items' ) ) {
+            throw new Error('The setting value could not be populated in control : ' + control.id );
+          }
+          return elements[0].items;
+
+  }
 });//$.extend//CZRBaseControlMths
 var CZRMultiplePickerMths = CZRMultiplePickerMths || {};
 /* Multiple Picker */
@@ -3250,8 +3367,6 @@ $.extend( CZRBackgroundMths , {
                     );
 
                   $( view_content_template( extended_model )).appendTo( $('.' + control.css_attr.view_content, obj.dom_el ) );
-
-                  control.doActions( 'viewContentRendered' , obj.dom_el, obj );
 
                   return this;
           }
@@ -4206,8 +4321,6 @@ $.extend( CZRSektionsMths, {
 
         //Renders the blocks
         control.renderSektionBlocks(obj);
-
-        control.doActions( 'viewContentRendered' , obj.dom_el, obj );
 
         return this;
   },
