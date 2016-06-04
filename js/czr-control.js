@@ -2872,10 +2872,13 @@ $.extend( CZRElementControlMths, {
   ready : function() {
           var control = this;
           api.bind( 'ready', function() {
-                control.populateElementCollection();
-
-                //LISTEN TO ELEMENT COLLECTION
-                control.czr_elementCollection.callbacks.add( function() { return control.collectionReact.apply(control, arguments ); } );
+                api.section(control.section()).expanded.bind(function(to) {
+                      if ( ! to || ! _.isEmpty( control.czr_elementCollection.get() ) )
+                        return;
+                      control.populateElementCollection();
+                      //LISTEN TO ELEMENT COLLECTION
+                      control.czr_elementCollection.callbacks.add( function() { return control.collectionReact.apply(control, arguments ); } );
+                });
           });
   },
 
@@ -2904,10 +2907,10 @@ $.extend( CZRElementControlMths, {
 
   instantiateElement : function( element, constructor, is_added_by_user ) {
           if ( ! _.has( element,'id') ) {
-            throw new Error('CZRElement::instantiateModel() : an element has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
+            throw new Error('CZRElement::instantiateElement() : an element has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
           }
           if ( _.isUndefined(constructor) ) {
-            throw new Error('CZRElement::instantiateModel() : no constructor found for element type : ' + element.element_type +'. Aborted.' );
+            throw new Error('CZRElement::instantiateElement() : no constructor found for element type : ' + element.element_type +'. Aborted.' );
           }
           var control = this;
 
@@ -2952,7 +2955,7 @@ $.extend( CZRElementControlMths, {
           }
 
           if ( ! _.has(obj, 'element') ) {
-            throw new Error('updateItemsCollection, no element provided ' + control.id + '. Aborting');
+            throw new Error('updateElementsCollection, no element provided ' + control.id + '. Aborting');
           }
           var element = _.clone(obj.element);
 
