@@ -63,7 +63,42 @@ $.extend( CZRInputMths , {
                     }
             ];
 
+            //synchronizer setup
+            input.setupSynchronizer();
+
             input.ready();
+    },
+
+
+    setupSynchronizer: function() {
+            var input       = this,
+                $_input_el  = input.container.find('[data-type]'),
+                is_input    = input.container.find('[data-type]').is('input'),
+                input_type  = is_input ? input.container.find('[data-type]').attr('type') : false,
+                is_select   = input.container.find('[data-type]').is('select'),
+                is_textarea = input.container.find('[data-type]').is('textarea');
+
+
+            input.syncElement = new api.Element( input.container.find('[data-type]') );
+            input.syncElement.set( input() );
+            input.syncElement.sync( input );
+            input.callbacks.add( function(to) {
+                  //set the synchronized element vat
+                  input.syncElement.set( to );
+
+                  //refresh specific input types
+                  if ( is_input && 'checkbox' == input_type ) {
+                    $_input_el.iCheck('update');
+                  }
+
+                  if ( is_input && 'color' == input.type ) {
+                    $_input_el.wpColorPicker('color', to );
+                  }
+                  if ( is_select ) {
+                    $_input_el.trigger('change');
+                  }
+            });
+
     },
 
 

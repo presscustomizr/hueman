@@ -1167,7 +1167,42 @@ $.extend( CZRInputMths , {
                     }
             ];
 
+            //synchronizer setup
+            input.setupSynchronizer();
+
             input.ready();
+    },
+
+
+    setupSynchronizer: function() {
+            var input       = this,
+                $_input_el  = input.container.find('[data-type]'),
+                is_input    = input.container.find('[data-type]').is('input'),
+                input_type  = is_input ? input.container.find('[data-type]').attr('type') : false,
+                is_select   = input.container.find('[data-type]').is('select'),
+                is_textarea = input.container.find('[data-type]').is('textarea');
+
+
+            input.syncElement = new api.Element( input.container.find('[data-type]') );
+            input.syncElement.set( input() );
+            input.syncElement.sync( input );
+            input.callbacks.add( function(to) {
+                  //set the synchronized element vat
+                  input.syncElement.set( to );
+
+                  //refresh specific input types
+                  if ( is_input && 'checkbox' == input_type ) {
+                    $_input_el.iCheck('update');
+                  }
+
+                  if ( is_input && 'color' == input.type ) {
+                    $_input_el.wpColorPicker('color', to );
+                  }
+                  if ( is_select ) {
+                    $_input_el.trigger('change');
+                  }
+            });
+
     },
 
 
@@ -2755,19 +2790,9 @@ $.extend( CZRSocialElementMths, {
                 //add text follow us... to the title
                 _new_title = [ serverControlParams.translatedStrings.followUs, _new_title].join(' ');
 
-                //if current item is not the pre Item, update the
-                if ( _.has(item , 'container') ) {
-                    $('input[data-type="title"]', item.container ).val( _new_title );
-                    $('input[data-type="social-link"]', item.container ).val( '' );
-                    $('input[data-type="social-color"]', item.container ).wpColorPicker('color', _new_color );
-                }
-
-                //set the new val to the changed property
-                _new_model.title = _new_title;
-                _new_model['social-link'] = '';
-                _new_model['social-color'] = _new_color;
-
-                item.set(_new_model);
+                item.czr_Input('title').set( _new_title );
+                item.czr_Input('social-link').set( '' );
+                item.czr_Input('social-color').set( _new_color );
         },
 
   },//CZRSocialsInputMths

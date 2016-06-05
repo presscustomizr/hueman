@@ -146,19 +146,9 @@ $.extend( CZRSocialElementMths, {
                 //add text follow us... to the title
                 _new_title = [ serverControlParams.translatedStrings.followUs, _new_title].join(' ');
 
-                //if current item is not the pre Item, update the
-                if ( _.has(item , 'container') ) {
-                    $('input[data-type="title"]', item.container ).val( _new_title );
-                    $('input[data-type="social-link"]', item.container ).val( '' );
-                    $('input[data-type="social-color"]', item.container ).wpColorPicker('color', _new_color );
-                }
-
-                //set the new val to the changed property
-                _new_model.title = _new_title;
-                _new_model['social-link'] = '';
-                _new_model['social-color'] = _new_color;
-
-                item.set(_new_model);
+                item.czr_Input('title').set( _new_title );
+                item.czr_Input('social-link').set( '' );
+                item.czr_Input('social-color').set( _new_color );
         },
 
   },//CZRSocialsInputMths
