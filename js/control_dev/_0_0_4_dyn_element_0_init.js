@@ -62,27 +62,26 @@ $.extend( CZRDynElementMths, {
 
   ready : function() {
           var element = this;
-          api.bind( 'ready', function() {
-                //Setup the element event listeners
-                element.setupDOMListeners( element.element_event_map , { dom_el : element.container } );
+          //Setup the element event listeners
+          element.setupDOMListeners( element.element_event_map , { dom_el : element.container } );
 
-                //PRE ADD MODEL SETUP
-                element.czr_preItem('item').set( element.getDefaultModel() );
+          //PRE ADD MODEL SETUP
+          element.czr_preItem('item').set( element.getDefaultModel() );
 
-                //Add view rendered listeners
-                element.czr_preItem('view_content').callbacks.add(function( to, from ) {
-                  if ( _.isUndefined(from) ) {
-                    //provide a constructor for the inputs
-                    element.preItemInputConstructor = element.inputConstructor;//api.CZRInput;
-                    element.setupPreItemInputCollection();
-                  }
-                });
-
-                //add state listeners
-                element.czr_preItem('view_status').callbacks.add( function( to, from ) {
-                  element._togglePreItemViewExpansion( to );
-                });
+          //Add view rendered listeners
+          element.czr_preItem('view_content').callbacks.add(function( to, from ) {
+                if ( _.isUndefined(from) ) {
+                  //provide a constructor for the inputs
+                  element.preItemInputConstructor = element.inputConstructor;//api.CZRInput;
+                  element.setupPreItemInputCollection();
+                }
           });
+
+          //add state listeners
+          element.czr_preItem('view_status').callbacks.add( function( to, from ) {
+                element._togglePreItemViewExpansion( to );
+          });
+
 
           api.CZRElement.prototype.ready.call( element );
   },//ready()
@@ -99,7 +98,8 @@ $.extend( CZRDynElementMths, {
                     type : $(this).attr('data-input-type'),
                     container : $(this),
                     item : element.czr_preItem('item'),
-                    element : element
+                    element : element,
+                    is_preItemInput : true
                 } ) );
           });//each
   },

@@ -7,7 +7,8 @@ var CZRInputMths = CZRInputMths || {};
 // value : $(this).find('[data-type]').val(),
 // container : $(this),
 // item : item (Value instance, has a parent element)
-// element : element
+// element : element,
+// is_preItemInput : true
 $.extend( CZRInputMths , {
     initialize: function( name, options ) {
             if ( _.isUndefined(options.item ) || _.isEmpty(options.item) ) {

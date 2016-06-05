@@ -1111,7 +1111,8 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
 // value : $(this).find('[data-type]').val(),
 // container : $(this),
 // item : item (Value instance, has a parent element)
-// element : element
+// element : element,
+// is_preItemInput : true
 $.extend( CZRInputMths , {
     initialize: function( name, options ) {
             if ( _.isUndefined(options.item ) || _.isEmpty(options.item) ) {
@@ -2410,27 +2411,26 @@ $.extend( CZRDynElementMths, {
 
   ready : function() {
           var element = this;
-          api.bind( 'ready', function() {
-                //Setup the element event listeners
-                element.setupDOMListeners( element.element_event_map , { dom_el : element.container } );
+          //Setup the element event listeners
+          element.setupDOMListeners( element.element_event_map , { dom_el : element.container } );
 
-                //PRE ADD MODEL SETUP
-                element.czr_preItem('item').set( element.getDefaultModel() );
+          //PRE ADD MODEL SETUP
+          element.czr_preItem('item').set( element.getDefaultModel() );
 
-                //Add view rendered listeners
-                element.czr_preItem('view_content').callbacks.add(function( to, from ) {
-                  if ( _.isUndefined(from) ) {
-                    //provide a constructor for the inputs
-                    element.preItemInputConstructor = element.inputConstructor;//api.CZRInput;
-                    element.setupPreItemInputCollection();
-                  }
-                });
-
-                //add state listeners
-                element.czr_preItem('view_status').callbacks.add( function( to, from ) {
-                  element._togglePreItemViewExpansion( to );
-                });
+          //Add view rendered listeners
+          element.czr_preItem('view_content').callbacks.add(function( to, from ) {
+                if ( _.isUndefined(from) ) {
+                  //provide a constructor for the inputs
+                  element.preItemInputConstructor = element.inputConstructor;//api.CZRInput;
+                  element.setupPreItemInputCollection();
+                }
           });
+
+          //add state listeners
+          element.czr_preItem('view_status').callbacks.add( function( to, from ) {
+                element._togglePreItemViewExpansion( to );
+          });
+
 
           api.CZRElement.prototype.ready.call( element );
   },//ready()
@@ -2447,7 +2447,8 @@ $.extend( CZRDynElementMths, {
                     type : $(this).attr('data-input-type'),
                     container : $(this),
                     item : element.czr_preItem('item'),
-                    element : element
+                    element : element,
+                    is_preItemInput : true
                 } ) );
           });//each
   },
@@ -2535,7 +2536,7 @@ $.extend( CZRDynElementMths, {
           //is this view already rendered ?
           if ( ! _.isEmpty( element.czr_preItem('view_content').get() ) )
             return;
-
+          console.log('renderPreItemView');
           //do we have view template script?
           if ( ! _.has(element, 'viewPreAddEl') ||  0 === $( '#tmpl-' + element.viewPreAddEl ).length )
             return this;
@@ -2616,7 +2617,7 @@ $.extend( CZRDynElementMths, {
           element.toggleSuccessMessage('on');
           setTimeout( function() {
                 element.czr_preItem('view_status').set( 'closed');
-                element.czr_preItem('item').set(element.getDefaultModel());
+                element.czr_preItem('item').set( element.getDefaultModel() );
                 element.toggleSuccessMessage('off').destroyPreItemView();
           } , 3000);
   },
@@ -2780,19 +2781,34 @@ $.extend( CZRSocialElementMths, {
 
 
         //ACTIONS ON ICON CHANGE
-        //Fired on 'social-icon:changed' for existing models
+        //Fired on 'social-icon:changed'
+        //Don't fire in pre item case
         updateItemModel : function( _new_val ) {
-                var item = this.item,
-                    _new_model  = _.clone( item.get() ),
+                var input = this,
+                    item = this.item,
+                    is_preItemInput = _.has( input, 'is_preItemInput' ) && input.is_preItemInput;
+
+                //check if we are in the pre Item case => if so, the social-icon might be empty
+                if ( ! _.has( item.get(), 'social-icon') || _.isEmpty( item.get()['social-icon'] ) )
+                  return;
+
+                var _new_model  = _.clone( item.get() ),
                     _new_title  = api.CZR_Helpers.capitalize( _new_model['social-icon'].replace('fa-', '') ),
-                    _new_color  = serverControlParams.defaultSocialColor;
+                    _new_color  = serverControlParams.defaultSocialColor,
+                    inputCollection = is_preItemInput ? input.element.czr_preItemInput : item.czr_Input;
 
                 //add text follow us... to the title
                 _new_title = [ serverControlParams.translatedStrings.followUs, _new_title].join(' ');
 
-                item.czr_Input('title').set( _new_title );
-                item.czr_Input('social-link').set( '' );
-                item.czr_Input('social-color').set( _new_color );
+                if ( is_preItemInput ) {
+                  _new_model = $.extend(_new_model, { title : _new_title } );
+                  item.set( _new_model );
+                } else {
+                  item.czr_Input('title').set( _new_title );
+                  item.czr_Input('social-link').set( '' );
+                  item.czr_Input('social-color').set( _new_color );
+                }
+
         },
 
   },//CZRSocialsInputMths

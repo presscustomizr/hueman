@@ -18,7 +18,7 @@ $.extend( CZRDynElementMths, {
           //is this view already rendered ?
           if ( ! _.isEmpty( element.czr_preItem('view_content').get() ) )
             return;
-
+          console.log('renderPreItemView');
           //do we have view template script?
           if ( ! _.has(element, 'viewPreAddEl') ||  0 === $( '#tmpl-' + element.viewPreAddEl ).length )
             return this;
@@ -99,7 +99,7 @@ $.extend( CZRDynElementMths, {
           element.toggleSuccessMessage('on');
           setTimeout( function() {
                 element.czr_preItem('view_status').set( 'closed');
-                element.czr_preItem('item').set(element.getDefaultModel());
+                element.czr_preItem('item').set( element.getDefaultModel() );
                 element.toggleSuccessMessage('off').destroyPreItemView();
           } , 3000);
   },

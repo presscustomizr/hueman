@@ -136,19 +136,34 @@ $.extend( CZRSocialElementMths, {
 
 
         //ACTIONS ON ICON CHANGE
-        //Fired on 'social-icon:changed' for existing models
+        //Fired on 'social-icon:changed'
+        //Don't fire in pre item case
         updateItemModel : function( _new_val ) {
-                var item = this.item,
-                    _new_model  = _.clone( item.get() ),
+                var input = this,
+                    item = this.item,
+                    is_preItemInput = _.has( input, 'is_preItemInput' ) && input.is_preItemInput;
+
+                //check if we are in the pre Item case => if so, the social-icon might be empty
+                if ( ! _.has( item.get(), 'social-icon') || _.isEmpty( item.get()['social-icon'] ) )
+                  return;
+
+                var _new_model  = _.clone( item.get() ),
                     _new_title  = api.CZR_Helpers.capitalize( _new_model['social-icon'].replace('fa-', '') ),
-                    _new_color  = serverControlParams.defaultSocialColor;
+                    _new_color  = serverControlParams.defaultSocialColor,
+                    inputCollection = is_preItemInput ? input.element.czr_preItemInput : item.czr_Input;
 
                 //add text follow us... to the title
                 _new_title = [ serverControlParams.translatedStrings.followUs, _new_title].join(' ');
 
-                item.czr_Input('title').set( _new_title );
-                item.czr_Input('social-link').set( '' );
-                item.czr_Input('social-color').set( _new_color );
+                if ( is_preItemInput ) {
+                  _new_model = $.extend(_new_model, { title : _new_title } );
+                  item.set( _new_model );
+                } else {
+                  item.czr_Input('title').set( _new_title );
+                  item.czr_Input('social-link').set( '' );
+                  item.czr_Input('social-color').set( _new_color );
+                }
+
         },
 
   },//CZRSocialsInputMths
