@@ -70,10 +70,11 @@ $.extend( CZRDynElementMths, {
 
           //Add view rendered listeners
           element.czr_preItem('view_content').callbacks.add(function( to, from ) {
-                if ( _.isUndefined(from) ) {
-                  //provide a constructor for the inputs
-                  element.preItemInputConstructor = element.inputConstructor;//api.CZRInput;
-                  element.setupPreItemInputCollection();
+                //first rendering + further renderings
+                if ( _.isUndefined(from) || _.isEmpty(from) ) {
+                    //provide a constructor for the inputs
+                    element.preItemInputConstructor = element.inputConstructor;//api.CZRInput;
+                    element.setupPreItemInputCollection();
                 }
           });
 
@@ -81,7 +82,6 @@ $.extend( CZRDynElementMths, {
           element.czr_preItem('view_status').callbacks.add( function( to, from ) {
                 element._togglePreItemViewExpansion( to );
           });
-
 
           api.CZRElement.prototype.ready.call( element );
   },//ready()
@@ -117,7 +117,12 @@ $.extend( CZRDynElementMths, {
 
           element.instantiateItem(item, true); //true == Added by user
 
-          element.closeResetPreItem();
+          element.toggleSuccessMessage('on');
+          setTimeout( function() {
+                element.czr_preItem('view_status').set( 'closed');
+                element.czr_preItem('item').set( element.getDefaultModel() );
+                element.toggleSuccessMessage('off').destroyPreItemView();
+          } , 3000);
 
           element.trigger('item_added', item );
           //element.doActions( 'item_added_by_user' , element.container, { item : item , dom_event : obj.dom_event } );

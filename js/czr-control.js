@@ -2049,18 +2049,19 @@ $.extend( CZRElementMths, {
   },
 
 
-  instantiateItem : function( item,is_added_by_user ) {
+  instantiateItem : function( item, is_added_by_user ) {
           if ( ! _.has( item,'id') ) {
             throw new Error('CZRElement::instantiateItem() : an item has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
           }
           var element = this;
           //Maybe prepare the item, make sure its id is set and unique
           item =  ( _.has( item, 'id') && element._isItemIdPossible( item.id) ) ? item : element._initNewItem( item || {} );
+
           //instanciate the item with the default constructor
           element.czr_Item.add( item.id, new element.itemConstructor( item.id, {
                 item_id : item.id,
                 initial_input_values : item,
-                defaultItemModel : element.defaultItemModel,
+                defaultItemModel : _.clone( element.defaultItemModel ),
                 item_control : element.control,
                 item_element : element,
                 is_added_by_user : is_added_by_user || false
@@ -2419,10 +2420,11 @@ $.extend( CZRDynElementMths, {
 
           //Add view rendered listeners
           element.czr_preItem('view_content').callbacks.add(function( to, from ) {
-                if ( _.isUndefined(from) ) {
-                  //provide a constructor for the inputs
-                  element.preItemInputConstructor = element.inputConstructor;//api.CZRInput;
-                  element.setupPreItemInputCollection();
+                //first rendering + further renderings
+                if ( _.isUndefined(from) || _.isEmpty(from) ) {
+                    //provide a constructor for the inputs
+                    element.preItemInputConstructor = element.inputConstructor;//api.CZRInput;
+                    element.setupPreItemInputCollection();
                 }
           });
 
@@ -2430,7 +2432,6 @@ $.extend( CZRDynElementMths, {
           element.czr_preItem('view_status').callbacks.add( function( to, from ) {
                 element._togglePreItemViewExpansion( to );
           });
-
 
           api.CZRElement.prototype.ready.call( element );
   },//ready()
@@ -2466,7 +2467,12 @@ $.extend( CZRDynElementMths, {
 
           element.instantiateItem(item, true); //true == Added by user
 
-          element.closeResetPreItem();
+          element.toggleSuccessMessage('on');
+          setTimeout( function() {
+                element.czr_preItem('view_status').set( 'closed');
+                element.czr_preItem('item').set( element.getDefaultModel() );
+                element.toggleSuccessMessage('off').destroyPreItemView();
+          } , 3000);
 
           element.trigger('item_added', item );
           //element.doActions( 'item_added_by_user' , element.container, { item : item , dom_event : obj.dom_event } );
@@ -2530,13 +2536,11 @@ $.extend( CZRDynElementMths, {
   /// PRE ADD MODEL DIALOG AND VIEW
   //////////////////////////////////////////////////
   renderPreItemView : function( obj ) {
-          //=> an array of objects
           var element = this;
-
           //is this view already rendered ?
           if ( ! _.isEmpty( element.czr_preItem('view_content').get() ) )
             return;
-          console.log('renderPreItemView');
+
           //do we have view template script?
           if ( ! _.has(element, 'viewPreAddEl') ||  0 === $( '#tmpl-' + element.viewPreAddEl ).length )
             return this;
@@ -2549,7 +2553,6 @@ $.extend( CZRDynElementMths, {
             return this;
 
           var $_pre_add_el = $('.' + element.control.css_attr.pre_add_view_content, element.container );
-
           $_pre_add_el.prepend( pre_add_template() );
 
           //store it
@@ -2565,13 +2568,16 @@ $.extend( CZRDynElementMths, {
           return $('.' +  element.control.css_attr.pre_add_view_content, element.container );
   },
 
+  //@return void
+  //destroy preItem content dom element + set the associated api value
   destroyPreItemView : function() {
           var element = this;
-          $('.' +  element.control.css_attr.pre_add_view_content, element.container ).find('.czr-sub-set').remove();
+          $('.' +  element.control.css_attr.pre_add_view_content, element.container ).find('.' +  element.control.css_attr.sub_set_wrapper).remove();
           element.czr_preItem('view_content').set('');
   },
 
-   //toggles the visibility of the Remove View Block
+
+  //toggles the visibility of the Remove View Block
   //@param : obj = { event : {}, item : {}, view : ${} }
   setPreItemViewVisibility : function(obj) {
           var element = this;
@@ -2611,16 +2617,6 @@ $.extend( CZRDynElementMths, {
           } );
   },
 
-  //Fired in addItem()
-  closeResetPreItem : function() {
-          var element = this;
-          element.toggleSuccessMessage('on');
-          setTimeout( function() {
-                element.czr_preItem('view_status').set( 'closed');
-                element.czr_preItem('item').set( element.getDefaultModel() );
-                element.toggleSuccessMessage('off').destroyPreItemView();
-          } , 3000);
-  },
 
   toggleSuccessMessage : function(status) {
           var element = this,
@@ -2655,9 +2651,9 @@ $.extend( CZRSocialElementMths, {
 
           //extend the element with new template Selectors
           $.extend( element, {
-              viewPreAddEl : 'czr-element-social-pre-add-view-content',
-              viewTemplateEl : 'czr-element-item-view',
-              viewContentTemplateEl : 'czr-element-social-view-content',
+                viewPreAddEl : 'czr-element-social-pre-add-view-content',
+                viewTemplateEl : 'czr-element-item-view',
+                viewContentTemplateEl : 'czr-element-social-view-content',
           } );
 
 
@@ -2671,15 +2667,16 @@ $.extend( CZRSocialElementMths, {
 
           //declares a default model
           this.defaultItemModel = {
-            id : '',
-            title : '' ,
-            'social-icon' : '',
-            'social-link' : '',
-            'social-color' : serverControlParams.defaultSocialColor,
-            'social-target' : 1
+                id : '',
+                title : '' ,
+                'social-icon' : '',
+                'social-link' : '',
+                'social-color' : serverControlParams.defaultSocialColor,
+                'social-target' : 1
           };
+
           //overrides the default success message
-          this.modelAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
+          this.itemAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
 
           element.ready();
   },//initialize
@@ -2724,17 +2721,17 @@ $.extend( CZRSocialElementMths, {
                 });
 
                 function addIcon( state ) {
-                  if (! state.id) { return state.text; }
-                  var $state = $(
-                    '<span class="fa ' + state.element.value.toLowerCase() + '">&nbsp;&nbsp;' + state.text + '</span>'
-                  );
-                  return $state;
+                      if (! state.id) { return state.text; }
+                      var $state = $(
+                        '<span class="fa ' + state.element.value.toLowerCase() + '">&nbsp;&nbsp;' + state.text + '</span>'
+                      );
+                      return $state;
                 }
 
                 //fire select2
                 $( 'select[data-type="social-icon"]', input.container ).select2( {
-                    templateResult: addIcon,
-                    templateSelection: addIcon
+                        templateResult: addIcon,
+                        templateSelection: addIcon
                 });
         },
 
@@ -2742,18 +2739,18 @@ $.extend( CZRSocialElementMths, {
                 var input      = this;
 
                 $( 'input[type=checkbox]', input.container ).each( function(e) {
-                  if ( 0 !== $(this).closest('div[class^="icheckbox"]').length )
-                    return;
+                      if ( 0 !== $(this).closest('div[class^="icheckbox"]').length )
+                        return;
 
-                  $(this).iCheck({
-                    checkboxClass: 'icheckbox_flat-grey',
-                    checkedClass: 'checked',
-                    radioClass: 'iradio_flat-grey',
-                  })
-                  .on( 'ifChanged', function(e){
-                    $(this).val( false === $(this).is(':checked') ? 0 : 1 );
-                    $(e.currentTarget).trigger('change');
-                  });
+                      $(this).iCheck({
+                            checkboxClass: 'icheckbox_flat-grey',
+                            checkedClass: 'checked',
+                            radioClass: 'iradio_flat-grey',
+                      })
+                      .on( 'ifChanged', function(e){
+                            $(this).val( false === $(this).is(':checked') ? 0 : 1 );
+                            $(e.currentTarget).trigger('change');
+                      });
                 });
         },
 
@@ -2763,19 +2760,25 @@ $.extend( CZRSocialElementMths, {
                     element     = input.element;
 
                 $( 'input[data-type="social-color"]', input.container ).wpColorPicker( {
-                  defaultColor : 'rgba(255,255,255,0.7)',
-                  change : function( e, o ) {
-                    //if the input val is not updated here, it's not detected right away.
-                    //weird
-                    //is there a "change complete" kind of event for iris ?
-                    $(this).val(o.color.toString());
-                    $(this).trigger('colorpickerchange');
-                  }
+                          defaultColor : 'rgba(255,255,255,0.7)',
+                          change : function( e, o ) {
+                                //if the input val is not updated here, it's not detected right away.
+                                //weird
+                                //is there a "change complete" kind of event for iris ?
+                                //hack to reset the color to default...@todo => use another color picker.
+                                if ( _.has(o, 'color') && 16777215 == o.color._color )
+                                  $(this).val( 'rgba(255,255,255,0.7)' );
+                                else
+                                  $(this).val( o.color.toString() );
+
+                                $(this).trigger('colorpickerchange');
+                          }
                 });
+
                 //when the picker opens, it might be below the visible viewport.
                 //No built-in event available to react on this in the wpColorPicker unfortunately
                 $( 'input[data-type="social-color"]', input.container ).closest('div').on('click keydown', function() {
-                  element._adjustScrollExpandedBlock( input.container );
+                      element._adjustScrollExpandedBlock( input.container );
                 });
         },
 
@@ -2801,7 +2804,7 @@ $.extend( CZRSocialElementMths, {
                 _new_title = [ serverControlParams.translatedStrings.followUs, _new_title].join(' ');
 
                 if ( is_preItemInput ) {
-                  _new_model = $.extend(_new_model, { title : _new_title } );
+                  _new_model = $.extend( _new_model, { title : _new_title, 'social-color' : _new_color } );
                   item.set( _new_model );
                 } else {
                   item.czr_Input('title').set( _new_title );

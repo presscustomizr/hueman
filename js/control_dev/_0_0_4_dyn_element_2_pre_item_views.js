@@ -12,13 +12,11 @@ $.extend( CZRDynElementMths, {
   /// PRE ADD MODEL DIALOG AND VIEW
   //////////////////////////////////////////////////
   renderPreItemView : function( obj ) {
-          //=> an array of objects
           var element = this;
-
           //is this view already rendered ?
           if ( ! _.isEmpty( element.czr_preItem('view_content').get() ) )
             return;
-          console.log('renderPreItemView');
+
           //do we have view template script?
           if ( ! _.has(element, 'viewPreAddEl') ||  0 === $( '#tmpl-' + element.viewPreAddEl ).length )
             return this;
@@ -31,7 +29,6 @@ $.extend( CZRDynElementMths, {
             return this;
 
           var $_pre_add_el = $('.' + element.control.css_attr.pre_add_view_content, element.container );
-
           $_pre_add_el.prepend( pre_add_template() );
 
           //store it
@@ -47,13 +44,16 @@ $.extend( CZRDynElementMths, {
           return $('.' +  element.control.css_attr.pre_add_view_content, element.container );
   },
 
+  //@return void
+  //destroy preItem content dom element + set the associated api value
   destroyPreItemView : function() {
           var element = this;
-          $('.' +  element.control.css_attr.pre_add_view_content, element.container ).find('.czr-sub-set').remove();
+          $('.' +  element.control.css_attr.pre_add_view_content, element.container ).find('.' +  element.control.css_attr.sub_set_wrapper).remove();
           element.czr_preItem('view_content').set('');
   },
 
-   //toggles the visibility of the Remove View Block
+
+  //toggles the visibility of the Remove View Block
   //@param : obj = { event : {}, item : {}, view : ${} }
   setPreItemViewVisibility : function(obj) {
           var element = this;
@@ -93,16 +93,6 @@ $.extend( CZRDynElementMths, {
           } );
   },
 
-  //Fired in addItem()
-  closeResetPreItem : function() {
-          var element = this;
-          element.toggleSuccessMessage('on');
-          setTimeout( function() {
-                element.czr_preItem('view_status').set( 'closed');
-                element.czr_preItem('item').set( element.getDefaultModel() );
-                element.toggleSuccessMessage('off').destroyPreItemView();
-          } , 3000);
-  },
 
   toggleSuccessMessage : function(status) {
           var element = this,

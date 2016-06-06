@@ -28,18 +28,19 @@ $.extend( CZRElementMths, {
   },
 
 
-  instantiateItem : function( item,is_added_by_user ) {
+  instantiateItem : function( item, is_added_by_user ) {
           if ( ! _.has( item,'id') ) {
             throw new Error('CZRElement::instantiateItem() : an item has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
           }
           var element = this;
           //Maybe prepare the item, make sure its id is set and unique
           item =  ( _.has( item, 'id') && element._isItemIdPossible( item.id) ) ? item : element._initNewItem( item || {} );
+
           //instanciate the item with the default constructor
           element.czr_Item.add( item.id, new element.itemConstructor( item.id, {
                 item_id : item.id,
                 initial_input_values : item,
-                defaultItemModel : element.defaultItemModel,
+                defaultItemModel : _.clone( element.defaultItemModel ),
                 item_control : element.control,
                 item_element : element,
                 is_added_by_user : is_added_by_user || false
