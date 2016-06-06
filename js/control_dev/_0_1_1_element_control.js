@@ -25,8 +25,8 @@ $.extend( CZRElementControlMths, {
 
           //define a default Constructor
           control.elementConstructors = {
-            //czr_sidebars   : api.CZRWidgetAreasControl,
-            czr_social_element    : api.CZRSocialElement,
+              czr_widget_areas_element   : api.CZRWidgetAreaElement,
+              czr_social_element    : api.CZRSocialElement
           };
 
           control.czr_Element = new api.Values();
@@ -44,13 +44,13 @@ $.extend( CZRElementControlMths, {
   ready : function() {
           var control = this;
           api.bind( 'ready', function() {
-                api.section(control.section()).expanded.bind(function(to) {
-                      if ( ! to || ! _.isEmpty( control.czr_elementCollection.get() ) )
-                        return;
-                      control.populateElementCollection();
-                      //LISTEN TO ELEMENT COLLECTION
-                      control.czr_elementCollection.callbacks.add( function() { return control.collectionReact.apply(control, arguments ); } );
-                });
+                //do we really need this check ?
+                //=> the question is : what can trigger the api.('ready') event ?
+                if ( ! _.isEmpty( control.czr_elementCollection.get() ) )
+                  return;
+                control.populateElementCollection();
+                //LISTEN TO ELEMENT COLLECTION
+                control.czr_elementCollection.callbacks.add( function() { return control.collectionReact.apply(control, arguments ); } );
           });
   },
 
@@ -121,9 +121,9 @@ $.extend( CZRElementControlMths, {
           //if a collection is provided in the passed obj then simply refresh the collection
           //=> typically used when reordering the collection element with sortable or when a element is removed
           if ( _.has( obj, 'collection' ) ) {
-            //reset the collection
-            control.czr_elementCollection.set(obj.collection);
-            return;
+                //reset the collection
+                control.czr_elementCollection.set(obj.collection);
+                return;
           }
 
           if ( ! _.has(obj, 'element') ) {
@@ -133,18 +133,19 @@ $.extend( CZRElementControlMths, {
 
           //the element already exist in the collection
           if ( _.findWhere( _new_collection, { id : element.id } ) ) {
-            _.each( _current_collection , function( _elt, _ind ) {
-              if ( _elt.id != element.id )
-                return;
+                _.each( _current_collection , function( _elt, _ind ) {
+                      if ( _elt.id != element.id )
+                        return;
 
-              //set the new val to the changed property
-              _new_collection[_ind] = element;
-            });
+                      //set the new val to the changed property
+                      _new_collection[_ind] = element;
+                });
           }
           //the element has to be added
           else {
-            _new_collection.push(element);
+                _new_collection.push(element);
           }
+
           //Inform the control
           control.czr_elementCollection.set(_new_collection);
   },
@@ -152,19 +153,26 @@ $.extend( CZRElementControlMths, {
 
   //cb of control.czr_elementCollection.callbacks
   collectionReact : function( to, from ) {
-        var control = this;
+        var control = this,
+            _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
+            _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
+            _element_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
+            is_element_update = _.isEmpty( _element_updated ),
+            is_collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && ! is_element_update;
+
+        //say it to the setting
+        api(this.id).set( control.filterElementCollectionBeforeAjax(to) );
 
         //refreshes the preview frame  :
         //1) only needed if transport is postMessage, because is triggered by wp otherwise
-        //2) only needed when : add, remove, sort item(s).
-        var is_element_update = ( _.size(from) == _.size(to) ) && ! _.isEmpty( _.difference(from, to) );
-
-        if ( 'postMessage' == api(control.id).transport && ! is_element_update && ! api.CZR_Helpers.has_part_refresh( control.id ) ) {
-          control.previewer.refresh();
+        //2) only needed when : add, remove, sort item(s)
+        //element update case
+        if ( 'postMessage' == api(control.id).transport && ! api.CZR_Helpers.has_part_refresh( control.id ) ) {
+            if ( is_collection_sorted )
+                control.previewer.refresh();
         }
-
-        api(this.id).set( control.filterElementCollectionBeforeAjax(to) );
   },
+
 
   //an overridable method to act on the collection just before it is ajaxed
   //@return the collection array

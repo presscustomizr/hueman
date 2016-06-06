@@ -22,6 +22,7 @@
 
   //ELEMENT COLLECTION
   api.CZRSocialElement         = api.CZRDynElement.extend( CZRSocialElementMths || {} );
+  api.CZRWidgetAreaElement     = api.CZRDynElement.extend( CZRWidgetAreaElementMths || {} );
 
   //CONTROLS
   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMths || {} );
@@ -48,6 +49,7 @@
 
         czr_multiple_picker : api.CZRMultiplePickerControl,
         czr_layouts    : api.CZRLayoutControl,
+
         //czr_background : api.CZRBackgroundControl,
         //czr_sektions   : api.CZRSektionsControl
   });

@@ -59,8 +59,8 @@ $.extend( CZRElementMths, {
   //cb of element.czr_Item(item.id).callbacks
   itemReact : function( to, from ) {
         var element = this;
-          //update the collection
-          element.updateItemsCollection( {item : to });
+        //update the collection
+        element.updateItemsCollection( {item : to });
   },
 
 
@@ -74,29 +74,29 @@ $.extend( CZRElementMths, {
           //if a collection is provided in the passed obj then simply refresh the collection
           //=> typically used when reordering the collection item with sortable or when a item is removed
           if ( _.has( obj, 'collection' ) ) {
-            //reset the collection
-            element.set(obj.collection);
-            return;
+                //reset the collection
+                element.set(obj.collection);
+                return;
           }
 
           if ( ! _.has(obj, 'item') ) {
-            throw new Error('updateItemsCollection, no item provided ' + element.control.id + '. Aborting');
+              throw new Error('updateItemsCollection, no item provided ' + element.control.id + '. Aborting');
           }
           var item = _.clone(obj.item);
 
           //the item already exist in the collection
           if ( _.findWhere( _new_collection, { id : item.id } ) ) {
-            _.map( _current_collection , function( _item, _ind ) {
-              if ( _item.id != item.id )
-                return;
+                _.each( _current_collection , function( _item, _ind ) {
+                      if ( _item.id != item.id )
+                        return;
 
-              //set the new val to the changed property
-              _new_collection[_ind] = item;
-            });
+                      //set the new val to the changed property
+                      _new_collection[_ind] = item;
+                });
           }
           //the item has to be added
           else {
-            _new_collection.push(item);
+              _new_collection.push(item);
           }
 
           //updates the collection value
@@ -107,7 +107,7 @@ $.extend( CZRElementMths, {
 
   //fire on sortable() update callback
   //@returns a sorted collection as an array of item objects
-  _getSortedDOMCollection : function( obj ) {
+  _getSortedDOMCollection : function( ) {
           var element = this,
               _old_collection = _.clone( element.get() ),
               _new_collection = [],
@@ -115,23 +115,23 @@ $.extend( CZRElementMths, {
 
           //re-build the collection from the DOM
           $( '.' + element.control.css_attr.inner_view, element.container ).each( function() {
-            var _item = _.findWhere( _old_collection, {id: $(this).attr('data-id') });
-            //do we have a match in the existing collection ?
-            if ( ! _item )
-              return;
+              var _item = _.findWhere( _old_collection, {id: $(this).attr('data-id') });
+              //do we have a match in the existing collection ?
+              if ( ! _item )
+                return;
 
-            _new_collection[_index] = _item;
+              _new_collection[_index] = _item;
 
-            _index ++;
+              _index ++;
           });
 
           //make sure the new collection is not empty...
           if ( 0 === _new_collection.length )
-            return _old_collection;
+              return _old_collection;
 
           //make sure we have the exact same items as before in the sorted collection
           if ( ! _.isEmpty( _.difference( _old_collection, _new_collection ) ) )
-            return _old_collection;
+              return _old_collection;
 
           return _new_collection;
   }

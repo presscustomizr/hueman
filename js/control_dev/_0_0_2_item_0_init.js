@@ -116,16 +116,17 @@ $.extend( CZRItemMths , {
           item._toggleViewExpansion( to );
   },
 
+
   //React to a single item change
   itemInternalReact : function( to, from ) {
-        var item = this;
-        //Always update the view title
-        item.writeItemViewTitle(to);
+          var item = this;
+          //Always update the view title
+          item.writeItemViewTitle(to);
 
-        //send item to the preview. On update only, not on creation.
-        if ( ! _.isEmpty(from) || ! _.isUndefined(from) ) {
-          item._sendItem(to, from);
-        }
+          //send item to the preview. On update only, not on creation.
+          if ( ! _.isEmpty(from) || ! _.isUndefined(from) ) {
+            item._sendItem(to, from);
+          }
   }
 
 });//$.extend

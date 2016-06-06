@@ -906,10 +906,10 @@ body .select2-container {
 
 
 /* sidebar specifics */
-.customize-control-czr_sidebars .czr-inner-view .czr-custom-model {
+.czr_widget_areas_element .czr-inner-view .czr-custom-model {
   background: #3b8dbd;
 }
-.customize-control-czr_sidebars .czr-inner-view .czr-custom-model:hover {
+. .czr-inner-view .czr-custom-model:hover {
   background: #aaa;
 }
 .czr-inner-view .czr-view-header:hover {
@@ -944,7 +944,7 @@ body .select2-container {
   font-style: italic;
 }
 /* sidebar specifics */
-.customize-control-czr_sidebars .czr-view-title {
+.czr_widget_areas_element .czr-view-title {
   color: #fff;
 }
 
@@ -978,7 +978,7 @@ body .select2-container {
   box-shadow: none;
 }
 /* sidebar specifics */
-.customize-control-czr_sidebars .czr-view-buttons a {
+.czr_widget_areas_element .czr-view-buttons a {
   color: #fff;
 }
 
@@ -995,10 +995,10 @@ body .select2-container {
 }
 
 /* sidebar specifics */
-.customize-control-czr_sidebars .czr-edit-view:hover, .customize-control-czr_sidebars .czr-view-buttons .czr-edit-view.active {
+.czr_widget_areas_element .czr-edit-view:hover, .czr_widget_areas_element .czr-view-buttons .czr-edit-view.active {
   color: #000000;
 }
-.customize-control-czr_sidebars .czr-builtin-model .czr-edit-view:hover, .customize-control-czr_sidebars .czr-builtin-model .czr-edit-view.active {
+.czr_widget_areas_element .czr-builtin-model .czr-edit-view:hover, .czr_widget_areas_element .czr-builtin-model .czr-edit-view.active {
   color: #00a0d2;
 }
 

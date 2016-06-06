@@ -30,14 +30,17 @@ $.extend( CZRSocialElementMths, {
                 title : '' ,
                 'social-icon' : '',
                 'social-link' : '',
-                'social-color' : serverControlParams.defaultSocialColor,
+                'social-color' : serverControlParams.social_el_params.defaultSocialColor,
                 'social-target' : 1
           };
 
           //overrides the default success message
           this.itemAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
-
-          element.ready();
+          api.section( element.control.section() ).expanded.bind(function(to) {
+                if ( ! to || ! _.isEmpty( element.get() ) )
+                  return;
+                element.ready();
+          });
   },//initialize
 
 
@@ -156,7 +159,7 @@ $.extend( CZRSocialElementMths, {
 
                 var _new_model  = _.clone( item.get() ),
                     _new_title  = api.CZR_Helpers.capitalize( _new_model['social-icon'].replace('fa-', '') ),
-                    _new_color  = serverControlParams.defaultSocialColor,
+                    _new_color  = serverControlParams.social_el_params.defaultSocialColor,
                     inputCollection = is_preItemInput ? input.element.czr_preItemInput : item.czr_Input;
 
                 //add text follow us... to the title
@@ -186,7 +189,7 @@ $.extend( CZRSocialElementMths, {
                   title = title || ( 'string' === typeof(icon) ? api.CZR_Helpers.capitalize( icon.replace( 'fa-', '') ) : '' );
                   title = api.CZR_Helpers.truncate(title, 20);
                   icon = icon || 'fa-' + element.social_icons[0];
-                  color = color || serverControlParams.defaultSocialColor;
+                  color = color || serverControlParams.social_el_params.defaultSocialColor;
 
                   return '<div><span class="fa ' + icon + '" style="color:' + color + '"></span> ' + title + '</div>';
           },

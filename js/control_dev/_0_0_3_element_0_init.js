@@ -57,7 +57,7 @@ $.extend( CZRElementMths, {
           //czr_model stores the each model value => one value by created by model.id
           element.czr_Item = new api.Values();
 
-          //element.ready();
+          //element.ready(); => fired by children
   },
 
 
@@ -72,7 +72,7 @@ $.extend( CZRElementMths, {
           //It's not listened to before the api is ready
           //=> the collection update on startup is done when the element is embedded and BEFORE the api is ready
           //=> won't trigger and change setting
-          element.populateItemCollection()._makeSortable();
+          element.populateItemCollection()._makeItemsSortable();
 
           //listen to each single element change
           element.callbacks.add( function() { return element.elementReact.apply(element, arguments ); } );
