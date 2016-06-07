@@ -622,6 +622,7 @@ $.extend( CZRInputMths , {
                   select : 'setupSelect',
                   upload : 'setupImageUploader',
                   color : 'setupColorPicker',
+                  content_picker : 'setupContentPicker',
                   password : ''
             };
 
@@ -832,6 +833,105 @@ $.extend( CZRInputMths , {
             });
         });
     }
+});//$.extend/* Fix caching, select2 default one seems to not correctly work, or it doesn't what I think it should */
+var CZRInputMths = CZRInputMths || {};
+$.extend( CZRInputMths , {
+  setupContentPicker: function() {
+    var input  = this;
+
+    input.pages = [];
+    input.object = ['page']; //this.control.params.object_types  - array('page', 'post')
+    input.type   = 'post_type'; //this.control.params.type  - post_type
+    _.bindAll( input, 'submit');
+    input.selectedData = [];//input.setupSelectedContents();
+    input.container.find('.czr-input').append('<select data-type_="content-picker-select" class="js-example-basic-single"></select>');
+    
+    input.container.find('select').select2({
+      placeholder: {
+        id: '-1', // the value of the option
+        title: 'Select'
+      },
+      data : input.selectedData,
+      allowClear: true,
+      ajax: {
+        url: serverControlParams.AjaxUrl,
+        type: 'POST',
+        cache: true,
+        dataType: 'json',
+        delay: 250,
+        debug: true,
+        data: function ( params ) {
+          var page = params.page ? params.page - 1 : 0;
+          page = params.term ? params.page : page;
+          return {
+            action: params.term ? "search-available-content-items-customizer" : "load-available-content-items-customizer",
+            search: params.term, 
+            wp_customize: 'on',
+            page: page,
+            type: input.type,
+            object: input.object
+          };
+        },
+        transport: function (params, success, failure) {
+          var $request = $.ajax(params);
+
+          $request.then(success);
+          $request.fail(failure);
+
+          return $request;
+        },
+        processResults: function (data, params) {
+          if ( ! data.success )
+            return { results: [] };
+
+          return {
+            results: data.data.items,
+            pagination: { more: data.data.items.length == 10 }
+          };
+        },  
+      },
+      templateSelection: input.czrFormatItem,
+      templateResult: input.czrFormatItem,
+      escapeMarkup: function (markup) { return markup; },
+   })
+   .on('select2:select', input.submit )
+   .on('select2:unselect', input.submit );
+  },
+  czrFormatItem: function (item) {
+      if (item.loading) return item.text;
+      var markup = "<div class='content-picker-item clearfix'>" +
+        "<div class='content-item-bar'>" +
+          "<span class='item-title'>" + item.title + "</span>";
+
+      if (item.type_label) {
+        markup += "<span class='item-type'>" + item.type_label + "</span>";
+      }
+
+      markup += "</div></div>";
+
+      return markup;
+  },
+  setupSelectedContents : function() {
+    var input = this,
+    _attributes = {
+      value : '2',
+      title: 'Sample page',
+    };
+    return [_attributes];
+  },
+  submit: function( event ) {
+    var item = event.params.data;
+    console.log( item );
+    if ( ! item.selected ) {
+      this.container.find('input').val('').trigger('change');
+    }else {
+      $_el = { 'id'    : item.object_id,
+        'type'  : item.object,
+        'title'  : item.title
+      };
+      this.container.find('input').val(JSON.stringify($_el)).trigger('change');
+    }
+  },
 });//$.extend//extends api.Value
 var CZRItemMths = CZRItemMths || {};
 $.extend( CZRItemMths , {
@@ -2320,7 +2420,44 @@ $.extend( CZRWidgetAreaElementMths, {
   }
 
 
-});//$.extend()//BASE CONTROL CLASS
+});//$.extend()//extends api.CZRDynElement
+
+var CZRFeaturedPageElementMths = CZRFeaturedPageElementMths || {};
+
+$.extend( CZRFeaturedPageElementMths, {
+  initialize: function( id, options ) {
+          var element = this;
+          api.CZRDynElement.prototype.initialize.call( element, id, options );
+          $.extend( element, {
+                viewPreAddEl : 'czr-element-fp-pre-add-view-content',
+                viewTemplateEl : 'czr-element-item-view',
+                viewContentTemplateEl : 'czr-element-fp-view-content',
+          } );
+          element.inputConstructor = api.CZRInput.extend( element.CZRFeaturedPagesInputMths || {} );
+          element.itemConstructor = api.CZRItem.extend( element.CZRFeaturedPagesItem || {} );
+          this.defaultItemModel = {
+                id : '',
+                title : '' ,
+                'fp-post'  : '',
+                'fp-title' : '',
+                'fp-text'  : ''
+          };
+          this.itemAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
+          api.section( element.control.section() ).expanded.bind(function(to) {
+                if ( ! to || ! _.isEmpty( element.get() ) )
+                  return;
+                element.ready();
+          });
+  },//initialize
+
+
+
+  CZRFeaturedPagesInputMths : {
+  },//CZRSocialsInputMths
+
+  CZRFeaturedPagesItem : {
+  }
+});//BASE CONTROL CLASS
 
 var CZRBaseControlMths = CZRBaseControlMths || {};
 
@@ -2355,7 +2492,8 @@ $.extend( CZRElementControlMths, {
           ];
           control.elementConstructors = {
               czr_widget_areas_element   : api.CZRWidgetAreaElement,
-              czr_social_element    : api.CZRSocialElement
+              czr_social_element    : api.CZRSocialElement,
+              czr_fp_element    : api.CZRFeaturedPageElement
           };
 
           control.czr_Element = new api.Values();
@@ -2789,6 +2927,8 @@ $.extend( CZRSektionsMths, {
   api.CZRDynElement            = api.CZRElement.extend( CZRDynElementMths || {} );
   api.CZRSocialElement         = api.CZRDynElement.extend( CZRSocialElementMths || {} );
   api.CZRWidgetAreaElement     = api.CZRDynElement.extend( CZRWidgetAreaElementMths || {} );
+  
+  api.CZRFeaturedPageElement   = api.CZRDynElement.extend( CZRFeaturedPageElementMths || {} );
   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMths || {} );
   api.CZRElementsControl       = api.CZRBaseControl.extend( CZRElementControlMths || {} );
 

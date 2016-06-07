@@ -23,6 +23,8 @@
   //ELEMENT COLLECTION
   api.CZRSocialElement         = api.CZRDynElement.extend( CZRSocialElementMths || {} );
   api.CZRWidgetAreaElement     = api.CZRDynElement.extend( CZRWidgetAreaElementMths || {} );
+  
+  api.CZRFeaturedPageElement   = api.CZRDynElement.extend( CZRFeaturedPageElementMths || {} );
 
   //CONTROLS
   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMths || {} );
