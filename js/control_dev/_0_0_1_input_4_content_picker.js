@@ -8,8 +8,8 @@ $.extend( CZRInputMths , {
 
     /* Dummy for the prototype purpose */
     input.object = ['cat']; //this.control.params.object_types  - array('page', 'post')
-    input.type   = 'taxonomy'; //this.control.params.type  - post_type
-
+    input.type   = 'post_type'; //this.control.params.type  - post_type
+ 
     //binding             
     _.bindAll( input, 'submit');
 
@@ -63,9 +63,10 @@ $.extend( CZRInputMths , {
 
           _.each( items, function( item ) {
             _results.push({
-              id   : item.id,
-              text : item.title,
-              type : item.type_label
+              id         : item.id,
+              text       : item.title,
+              type_label : item.type_label,
+              type       : item.type
             });
           });
           return {
@@ -77,7 +78,9 @@ $.extend( CZRInputMths , {
       templateSelection: input.czrFormatItem,
       templateResult: input.czrFormatItem,
       escapeMarkup: function (markup) { return markup; },
-   });
+   })
+   .on('select2:select', input.submit )
+   .on('select2:unselect', input.submit );  
    //input.setupSelectedContents();
   },
   czrFormatItem: function (item) {
@@ -86,8 +89,8 @@ $.extend( CZRInputMths , {
         "<div class='content-item-bar'>" +
           "<span class='item-title'>" + item.text + "</span>";
 
-      if ( item.type ) {
-        markup += "<span class='item-type'>" + item.type + "</span>";
+      if ( item.type_label ) {
+        markup += "<span class='item-type'>" + item.type_label + "</span>";
       }
 
       markup += "</div></div>";
@@ -103,5 +106,57 @@ $.extend( CZRInputMths , {
       //selected: 'selected'
     };
     return [_attributes];
+  },
+  // Adds a selected menu item to the menu.
+  submit: function( event ) {
+    var item  = event.params.data,
+        input = this,
+     _new_val = '';
+    //If NOT MULTI
+    //for the multi we need to match the removed one
+    if ( item.selected ) {
+      _new_val = {
+        'id'         :  item.id,
+        'type_label' :  item.type_label,
+        'title'      :  item.text,
+        'type'       :  item.type
+      };
+    }
+    input.set(_new_val);
+    input.trigger( input.id + ':changed', _new_val );
+  },
+ /*
+  * override to "nothing" as we have to set the model value to 
+  * an object and not to the "val" of the select (which is just the ID)
+  * Though, since we already split the pickers for type (taxonomy||post_type)
+  * and before adding all the data of the selected content (for type == post_type)
+  * we want to retrieve them via ajax the ID should be enough, we then will retrieve
+  * title, excerpt, featured page ecc. ecc. via ajax, hence no real needs to save the
+  * whole object as model.
+  * But still we have a problem when we want to store a val which is an object,
+  * or we have to json stringify it, and reverse stringify when using it
+  *
+  * Also for a situation like:
+  * <input data-type ..>
+  * <select data-type ..>
+  *
+  * updateInput + setupSynchronizer both in place => infinite loop
+  *
+  * An array of ID should be allowed as <input> val, will be treated as a comma separeted
+  * values, so it will be just a matter of how to treat it.
+  *
+  * Even better .. wouldn't be possible to use even not an <input> or anyway not the value
+  * attibute but something like data-value? We could fill it with whatever we want.
+  *
+  * We can event think that the czr input will not call "val()" but a "value"(get/set) callback,
+  * which in the base class is "val" but can be extended with.. "data('val')
+  * 
+  * 
+  */
+  //override
+  setupSynchronizer: function( obj ){
+  },
+  //override
+  updateInput: function( obj ){
   }
 });//$.extend

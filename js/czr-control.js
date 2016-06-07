@@ -705,7 +705,8 @@ $.extend( CZRInputMths , {
             input.set(_new_val);
             input.trigger( input.id + ':changed', _new_val );
     }
-});//$.extendvar CZRInputMths = CZRInputMths || {};
+});//$.extend
+var CZRInputMths = CZRInputMths || {};
 $.extend( CZRInputMths , {
     setupImageUploader : function() {
          var input  = this;
@@ -841,7 +842,7 @@ $.extend( CZRInputMths , {
 
     input.pages = [];
     input.object = ['cat']; //this.control.params.object_types  - array('page', 'post')
-    input.type   = 'taxonomy'; //this.control.params.type  - post_type
+    input.type   = 'post_type'; //this.control.params.type  - post_type
     _.bindAll( input, 'submit');
     input.selectedData = [];//input.setupSelectedContents();
     input.container.find('.czr-input').append('<select data-type="content-picker-select" class="js-example-basic-single"></select>');
@@ -889,9 +890,10 @@ $.extend( CZRInputMths , {
 
           _.each( items, function( item ) {
             _results.push({
-              id   : item.id,
-              text : item.title,
-              type : item.type_label
+              id         : item.id,
+              text       : item.title,
+              type_label : item.type_label,
+              type       : item.type
             });
           });
           return {
@@ -903,7 +905,9 @@ $.extend( CZRInputMths , {
       templateSelection: input.czrFormatItem,
       templateResult: input.czrFormatItem,
       escapeMarkup: function (markup) { return markup; },
-   });
+   })
+   .on('select2:select', input.submit )
+   .on('select2:unselect', input.submit );  
   },
   czrFormatItem: function (item) {
       if ( item.loading ) return item.text;
@@ -911,8 +915,8 @@ $.extend( CZRInputMths , {
         "<div class='content-item-bar'>" +
           "<span class='item-title'>" + item.text + "</span>";
 
-      if ( item.type ) {
-        markup += "<span class='item-type'>" + item.type + "</span>";
+      if ( item.type_label ) {
+        markup += "<span class='item-type'>" + item.type_label + "</span>";
       }
 
       markup += "</div></div>";
@@ -926,6 +930,25 @@ $.extend( CZRInputMths , {
       title: 'Sample page',
     };
     return [_attributes];
+  },
+  submit: function( event ) {
+    var item  = event.params.data,
+        input = this,
+     _new_val = '';
+    if ( item.selected ) {
+      _new_val = {
+        'id'         :  item.id,
+        'type_label' :  item.type_label,
+        'title'      :  item.text,
+        'type'       :  item.type
+      };
+    }
+    input.set(_new_val);
+    input.trigger( input.id + ':changed', _new_val );
+  },
+  setupSynchronizer: function( obj ){
+  },
+  updateInput: function( obj ){
   }
 });//$.extend
 var CZRItemMths = CZRItemMths || {};
