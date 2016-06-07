@@ -840,16 +840,16 @@ $.extend( CZRInputMths , {
     var input  = this;
 
     input.pages = [];
-    input.object = ['page']; //this.control.params.object_types  - array('page', 'post')
-    input.type   = 'post_type'; //this.control.params.type  - post_type
+    input.object = ['cat']; //this.control.params.object_types  - array('page', 'post')
+    input.type   = 'taxonomy'; //this.control.params.type  - post_type
     _.bindAll( input, 'submit');
     input.selectedData = [];//input.setupSelectedContents();
-    input.container.find('.czr-input').append('<select data-type_="content-picker-select" class="js-example-basic-single"></select>');
+    input.container.find('.czr-input').append('<select data-type="content-picker-select" class="js-example-basic-single"></select>');
     
     input.container.find('select').select2({
       placeholder: {
         id: '-1', // the value of the option
-        title: 'Select'
+        text: 'Select'
       },
       data : input.selectedData,
       allowClear: true,
@@ -884,8 +884,18 @@ $.extend( CZRInputMths , {
           if ( ! data.success )
             return { results: [] };
 
+          var items   = data.data.items,
+              _results = [];
+
+          _.each( items, function( item ) {
+            _results.push({
+              id   : item.id,
+              text : item.title,
+              type : item.type_label
+            });
+          });
           return {
-            results: data.data.items,
+            results: _results,
             pagination: { more: data.data.items.length == 10 }
           };
         },  
@@ -893,18 +903,16 @@ $.extend( CZRInputMths , {
       templateSelection: input.czrFormatItem,
       templateResult: input.czrFormatItem,
       escapeMarkup: function (markup) { return markup; },
-   })
-   .on('select2:select', input.submit )
-   .on('select2:unselect', input.submit );
+   });
   },
   czrFormatItem: function (item) {
-      if (item.loading) return item.text;
+      if ( item.loading ) return item.text;
       var markup = "<div class='content-picker-item clearfix'>" +
         "<div class='content-item-bar'>" +
-          "<span class='item-title'>" + item.title + "</span>";
+          "<span class='item-title'>" + item.text + "</span>";
 
-      if (item.type_label) {
-        markup += "<span class='item-type'>" + item.type_label + "</span>";
+      if ( item.type ) {
+        markup += "<span class='item-type'>" + item.type + "</span>";
       }
 
       markup += "</div></div>";
@@ -918,21 +926,8 @@ $.extend( CZRInputMths , {
       title: 'Sample page',
     };
     return [_attributes];
-  },
-  submit: function( event ) {
-    var item = event.params.data;
-    console.log( item );
-    if ( ! item.selected ) {
-      this.container.find('input').val('').trigger('change');
-    }else {
-      $_el = { 'id'    : item.object_id,
-        'type'  : item.object,
-        'title'  : item.title
-      };
-      this.container.find('input').val(JSON.stringify($_el)).trigger('change');
-    }
-  },
-});//$.extend//extends api.Value
+  }
+});//$.extend
 var CZRItemMths = CZRItemMths || {};
 $.extend( CZRItemMths , {
   initialize: function( id, options ) {
@@ -2955,6 +2950,7 @@ $.extend( CZRSektionsMths, {
   }
 
 })( wp.customize, jQuery, _);
+
 (function (api, $, _) {
   var $_nav_section_container,
       translatedStrings = serverControlParams.translatedStrings || {};
