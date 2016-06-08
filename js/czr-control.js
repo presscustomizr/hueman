@@ -851,7 +851,7 @@ $.extend( CZRInputMths , {
     input.container.find('select').select2({
       placeholder: {
         id: '-1', // the value of the option
-        text: 'Select'
+        title: 'Select'
       },
       data : input.setupSelectedContents(),
       allowClear: true,
@@ -893,7 +893,7 @@ $.extend( CZRInputMths , {
           _.each( items, function( item ) {
             _results.push({
               id          : item.id,
-              text        : item.title,
+              title       : item.title,
               type_label  : item.type_label,
               object_type : item.object
             });
@@ -913,7 +913,7 @@ $.extend( CZRInputMths , {
       if ( item.loading ) return item.text;
       var markup = "<div class='content-picker-item clearfix'>" +
         "<div class='content-item-bar'>" +
-          "<span class='item-title'>" + item.text + "</span>";
+          "<span class='item-title'>" + item.title + "</span>";
 
       if ( item.type_label ) {
         markup += "<span class='item-type'>" + item.type_label + "</span>";
@@ -925,16 +925,12 @@ $.extend( CZRInputMths , {
   },
   setupSelectedContents : function() {
     var input = this,
-    _attributes = {
-      'id'          :  '1016',
-      'type_label'  :  'Articolo',
-      'text'        :  'Template: Featured Image (Vertical)',
-      'object_type' :  'page'
-    };
-    return [ _attributes ];
+       _model = input.get();
+       
+    return _model;
   },
   setupSynchronizer: function(){
-    if ( this.container.find('[data-type*="content-picker-select"]') ){
+    if ( this.container.find('[data-type*="content-picker-select"]').length ){
       return;
     }//else
     _setupSynchronizer.call( this );
@@ -951,7 +947,7 @@ $.extend( CZRInputMths , {
           return {
             'id'          :  _item.id,
             'type_label'  :  _item.type_label,
-            'title'       :  _item.text,
+            'title'       :  _item.title,
             'object_type' :  _item.object_type
           };
         });
@@ -2484,16 +2480,38 @@ $.extend( CZRFeaturedPageElementMths, {
 
 
 
-  CZRFeaturedPagesInputMths : {/*
+  CZRFeaturedPagesInputMths : {
     ready : function() {
       var input = this;
-      input.bind('social-icon:changed', function(){
+      input.bind('fp-post:changed', function(){
         input.updateItemModel();
       });
       api.CZRInput.prototype.ready.call( input);
-    },*/
-  },//CZRFeaturedPagesInputMths
+    },
+    updateItemModel : function( _new_val ) {
 
+      var input = this,
+          item = this.item,
+          is_preItemInput = _.has( input, 'is_preItemInput' ) && input.is_preItemInput;
+      if ( ! _.has( item.get(), 'fp-post') || _.isEmpty( item.get()['fp-post'] ) )
+        return;
+
+      var _new_model  = _.clone( item.get() );
+
+      var _fp_post        = _new_model['fp-post'][0],
+          _new_title      = _fp_post.title,
+          inputCollection = is_preItemInput ? input.element.czr_preItemInput : item.czr_Input;
+
+      if ( is_preItemInput ) {
+        $.extend( _new_model, { title : _new_title, 'fp-title' : _new_title } );
+        item.set( _new_model );
+      } else {
+        $.extend( _new_model, { title : _new_title } );
+        item.set( _new_model );
+        item.czr_Input('fp-title').set( _new_title );
+      }
+    },
+  },//CZRFeaturedPagesInputMths
   CZRFeaturedPagesItem : {
   }
 });//BASE CONTROL CLASS
