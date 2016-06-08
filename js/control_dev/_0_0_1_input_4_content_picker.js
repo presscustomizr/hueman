@@ -23,11 +23,10 @@ $.extend( CZRInputMths , {
         title: 'Select'
       },
       data : input.setupSelectedContents(),
-      allowClear: true,
+//      allowClear: true,
       ajax: {
         url: serverControlParams.AjaxUrl,
         type: 'POST',
-        cache: true,
         dataType: 'json',
         delay: 250,
         debug: true,
@@ -45,14 +44,14 @@ $.extend( CZRInputMths , {
             CZRCpNonce: serverControlParams.CZRCpNonce
           };
         },
-        transport: function (params, success, failure) {
+       /* transport: function (params, success, failure) {
           var $request = $.ajax(params);
 
           $request.then(success);
           $request.fail(failure);
 
           return $request;
-        },
+        },*/
         processResults: function (data, params) {
           if ( ! data.success )
             return { results: [] };
@@ -129,7 +128,7 @@ $.extend( CZRInputMths , {
   */
   //override
   setupSynchronizer: function(){
-    /* TODO */
+    // TODO
     if ( this.container.find('[data-type*="content-picker-select"]').length ){
       return;
     }//else

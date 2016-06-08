@@ -121,8 +121,12 @@ $.extend( CZRInputMths , {
             _new_model =  ( ! _.isObject(_new_model) || _.isEmpty(_new_model) ) ? {} : _new_model;
             //set the new val to the changed property
             _new_model[input.id] = to;
+
             //inform the item
             input.item.set(_new_model);
+            //inform that an api changed
+            input.trigger( input.id + ':changed', to );
+//console.log(to);
     },
 
 
@@ -134,9 +138,10 @@ $.extend( CZRInputMths , {
                 _new_val          = $( $_changed_input, obj.dom_el ).val();
 
             input.set(_new_val);
-
-            //say it to the dom
-            //@todo use the api Events instead
-            input.trigger( input.id + ':changed', _new_val );
+            /* Handled in the inputReact, in the future we might want
+             * to inform that the change was "dome" driven
+             */
+            //inform api Event
+            //input.trigger( input.id + ':changed', _new_val );
     }
 });//$.extend

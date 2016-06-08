@@ -694,6 +694,7 @@ $.extend( CZRInputMths , {
             _new_model =  ( ! _.isObject(_new_model) || _.isEmpty(_new_model) ) ? {} : _new_model;
             _new_model[input.id] = to;
             input.item.set(_new_model);
+            input.trigger( input.id + ':changed', to );
     },
 
 
@@ -703,7 +704,6 @@ $.extend( CZRInputMths , {
                 _new_val          = $( $_changed_input, obj.dom_el ).val();
 
             input.set(_new_val);
-            input.trigger( input.id + ':changed', _new_val );
     }
 });//$.extend
 var CZRInputMths = CZRInputMths || {};
@@ -854,11 +854,9 @@ $.extend( CZRInputMths , {
         title: 'Select'
       },
       data : input.setupSelectedContents(),
-      allowClear: true,
       ajax: {
         url: serverControlParams.AjaxUrl,
         type: 'POST',
-        cache: true,
         dataType: 'json',
         delay: 250,
         debug: true,
@@ -874,14 +872,6 @@ $.extend( CZRInputMths , {
             object: input.object,
             CZRCpNonce: serverControlParams.CZRCpNonce
           };
-        },
-        transport: function (params, success, failure) {
-          var $request = $.ajax(params);
-
-          $request.then(success);
-          $request.fail(failure);
-
-          return $request;
         },
         processResults: function (data, params) {
           if ( ! data.success )
@@ -960,7 +950,6 @@ $.extend( CZRInputMths , {
     _updateInput.call( this, obj );
   }
 });//$.extend
-
 var CZRItemMths = CZRItemMths || {};
 $.extend( CZRItemMths , {
   initialize: function( id, options ) {
@@ -1873,7 +1862,7 @@ $.extend( CZRSocialElementMths, {
 
   },//CZRSocialsItem
 
-});//extends api.CZRDynElement
+});
 
 var CZRWidgetAreaElementMths = CZRWidgetAreaElementMths || {};
 
@@ -2486,6 +2475,9 @@ $.extend( CZRFeaturedPageElementMths, {
       input.bind('fp-post:changed', function(){
         input.updateItemModel();
       });
+      input.bind('fp-title:changed', function(){
+        input.updateItemTitle();
+      });
       api.CZRInput.prototype.ready.call( input);
     },
     updateItemModel : function( _new_val ) {
@@ -2506,15 +2498,26 @@ $.extend( CZRFeaturedPageElementMths, {
         $.extend( _new_model, { title : _new_title, 'fp-title' : _new_title } );
         item.set( _new_model );
       } else {
-        $.extend( _new_model, { title : _new_title } );
-        item.set( _new_model );
         item.czr_Input('fp-title').set( _new_title );
       }
+    },
+    updateItemTitle : function( _new_val ) {
+      var input = this,
+          item = this.item,
+          is_preItemInput = _.has( input, 'is_preItemInput' ) && input.is_preItemInput;
+
+      if ( is_preItemInput )
+        return;
+      var _new_model  = _.clone( item.get() ),
+          _new_title  = _new_model['fp-title'];
+
+      $.extend( _new_model, { title : _new_title} );
+      item.set( _new_model );
     },
   },//CZRFeaturedPagesInputMths
   CZRFeaturedPagesItem : {
   }
-});//BASE CONTROL CLASS
+});
 
 var CZRBaseControlMths = CZRBaseControlMths || {};
 
