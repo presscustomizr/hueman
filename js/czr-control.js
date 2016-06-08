@@ -836,6 +836,9 @@ $.extend( CZRInputMths , {
     }
 });//$.extend/* Fix caching, select2 default one seems to not correctly work, or it doesn't what I think it should */
 var CZRInputMths = CZRInputMths || {};
+var _updateInput       = CZRInputMths.updateInput;
+    _setupSynchronizer = CZRInputMths.setupSynchronizer;
+
 $.extend( CZRInputMths , {
   setupContentPicker: function() {
     var input  = this;
@@ -843,7 +846,6 @@ $.extend( CZRInputMths , {
     input.pages = [];
     input.object = ['cat']; //this.control.params.object_types  - array('page', 'post')
     input.type   = 'post_type'; //this.control.params.type  - post_type
-    input.selectedData = [];//input.setupSelectedContents();
     input.container.find('.czr-input').append('<select data-type="content-picker-select" class="js-example-basic-simple"></select>');
     
     input.container.find('select').select2({
@@ -851,7 +853,7 @@ $.extend( CZRInputMths , {
         id: '-1', // the value of the option
         text: 'Select'
       },
-      data : input.selectedData,
+      data : input.setupSelectedContents(),
       allowClear: true,
       ajax: {
         url: serverControlParams.AjaxUrl,
@@ -890,10 +892,10 @@ $.extend( CZRInputMths , {
 
           _.each( items, function( item ) {
             _results.push({
-              id         : item.id,
-              text       : item.title,
-              type_label : item.type_label,
-              type       : item.type
+              id          : item.id,
+              text        : item.title,
+              type_label  : item.type_label,
+              object_type : item.object
             });
           });
           return {
@@ -924,45 +926,42 @@ $.extend( CZRInputMths , {
   setupSelectedContents : function() {
     var input = this,
     _attributes = {
-      value : '2',
-      title: 'Sample page',
+      'id'          :  '1016',
+      'type_label'  :  'Articolo',
+      'text'        :  'Template: Featured Image (Vertical)',
+      'object_type' :  'page'
     };
-    return [_attributes];
+    return [ _attributes ];
   },
-  submit: function( event ) {
-    var item  = event.params.data,
-        input = this,
-     _new_val = '';
-    if ( item.selected ) {
-      _new_val = {
-        'id'         :  item.id,
-        'type_label' :  item.type_label,
-        'title'      :  item.text,
-        'type'       :  item.type
-      };
-    }
-    input.set(_new_val);
-    input.trigger( input.id + ':changed', _new_val );
-  },
-  setupSynchronizer: function( obj ){
+  setupSynchronizer: function(){
+    if ( this.container.find('[data-type*="content-picker-select"]') ){
+      return;
+    }//else
+    _setupSynchronizer.call( this );
   },
   updateInput: function( obj ){
-    var input = this,
-        $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
-        _new_val          = $( $_changed_input, obj.dom_el ).select2('data');
-    if ( _new_val.length ) {
-      _new_val = _.map( _new_val, function( _item ){ 
-        return {
-          'id'         :  _item.id,
-          'type_label' :  _item.type_label,
-          'title'      :  _item.text,
-          'type'       :  _item.type
-        };
-      });
-    }
+    if ( ( "undefined" != typeof obj ) &&
+            ( 'content-picker-select' == $(obj.dom_event.currentTarget, obj.dom_el).data('type') ) ){
 
-    input.set(_new_val);
-    input.trigger( input.id + ':changed', _new_val );
+      var input = this,
+          $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
+          _new_val          = $( $_changed_input, obj.dom_el ).select2('data');
+      if ( _new_val.length ) {
+        _new_val = _.map( _new_val, function( _item ){ 
+          return {
+            'id'          :  _item.id,
+            'type_label'  :  _item.type_label,
+            'title'       :  _item.text,
+            'object_type' :  _item.object_type
+          };
+        });
+      }
+
+      input.set(_new_val);
+      input.trigger( input.id + ':changed', _new_val );
+      return;
+    }//else
+    _updateInput.call( this, obj );
   }
 });//$.extend
 
@@ -2459,34 +2458,41 @@ var CZRFeaturedPageElementMths = CZRFeaturedPageElementMths || {};
 
 $.extend( CZRFeaturedPageElementMths, {
   initialize: function( id, options ) {
-          var element = this;
-          api.CZRDynElement.prototype.initialize.call( element, id, options );
-          $.extend( element, {
-                viewPreAddEl : 'czr-element-fp-pre-add-view-content',
-                viewTemplateEl : 'czr-element-item-view',
-                viewContentTemplateEl : 'czr-element-fp-view-content',
-          } );
-          element.inputConstructor = api.CZRInput.extend( element.CZRFeaturedPagesInputMths || {} );
-          element.itemConstructor = api.CZRItem.extend( element.CZRFeaturedPagesItem || {} );
-          this.defaultItemModel = {
-                id : '',
-                title : '' ,
-                'fp-post'  : '',
-                'fp-title' : '',
-                'fp-text'  : ''
-          };
-          this.itemAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
-          api.section( element.control.section() ).expanded.bind(function(to) {
-                if ( ! to || ! _.isEmpty( element.get() ) )
-                  return;
-                element.ready();
-          });
+    var element = this;
+    api.CZRDynElement.prototype.initialize.call( element, id, options );
+    $.extend( element, {
+          viewPreAddEl : 'czr-element-fp-pre-add-view-content',
+          viewTemplateEl : 'czr-element-item-view',
+          viewContentTemplateEl : 'czr-element-fp-view-content',
+    } );
+    element.inputConstructor = api.CZRInput.extend( element.CZRFeaturedPagesInputMths || {} );
+    element.itemConstructor = api.CZRItem.extend( element.CZRFeaturedPagesItem || {} );
+    this.defaultItemModel = {
+        id : '',
+        title : '' ,
+        'fp-post'  : '',
+        'fp-title' : '',
+        'fp-text'  : ''
+    };
+    this.itemAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
+    api.section( element.control.section() ).expanded.bind(function(to) {
+      if ( ! to || ! _.isEmpty( element.get() ) )
+        return;
+      element.ready();
+    });
   },//initialize
 
 
 
-  CZRFeaturedPagesInputMths : {
-  },//CZRSocialsInputMths
+  CZRFeaturedPagesInputMths : {/*
+    ready : function() {
+      var input = this;
+      input.bind('social-icon:changed', function(){
+        input.updateItemModel();
+      });
+      api.CZRInput.prototype.ready.call( input);
+    },*/
+  },//CZRFeaturedPagesInputMths
 
   CZRFeaturedPagesItem : {
   }

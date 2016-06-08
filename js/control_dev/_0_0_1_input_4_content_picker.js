@@ -1,5 +1,9 @@
 /* Fix caching, select2 default one seems to not correctly work, or it doesn't what I think it should */
 var CZRInputMths = CZRInputMths || {};
+//save original methods
+var _updateInput       = CZRInputMths.updateInput;
+    _setupSynchronizer = CZRInputMths.setupSynchronizer;
+
 $.extend( CZRInputMths , {
   setupContentPicker: function() {
     var input  = this;
@@ -10,9 +14,6 @@ $.extend( CZRInputMths , {
     input.object = ['cat']; //this.control.params.object_types  - array('page', 'post')
     input.type   = 'post_type'; //this.control.params.type  - post_type
 
-    //setup selectedData
-    input.selectedData = [];//input.setupSelectedContents();
-    
     /* Methodize this or use a template */
     input.container.find('.czr-input').append('<select data-type="content-picker-select" class="js-example-basic-simple"></select>');
     
@@ -21,7 +22,7 @@ $.extend( CZRInputMths , {
         id: '-1', // the value of the option
         text: 'Select'
       },
-      data : input.selectedData,
+      data : input.setupSelectedContents(),
       allowClear: true,
       ajax: {
         url: serverControlParams.AjaxUrl,
@@ -61,10 +62,10 @@ $.extend( CZRInputMths , {
 
           _.each( items, function( item ) {
             _results.push({
-              id         : item.id,
-              text       : item.title,
-              type_label : item.type_label,
-              type       : item.type
+              id          : item.id,
+              text        : item.title,
+              type_label  : item.type_label,
+              object_type : item.object
             });
           });
           return {
@@ -77,9 +78,6 @@ $.extend( CZRInputMths , {
       templateResult: input.czrFormatItem,
       escapeMarkup: function (markup) { return markup; },
    });
-   //.on('select2:select', input.submit )
-   //.on('select2:unselect', input.submit );  
-   //input.setupSelectedContents();
   },
   czrFormatItem: function (item) {
       if ( item.loading ) return item.text;
@@ -96,14 +94,18 @@ $.extend( CZRInputMths , {
       return markup;
   },
   setupSelectedContents : function() {
-    /* TODO */
+    /* TODO: retrieve info from the template? or params */
     var input = this,
     _attributes = {
-      value : '2',
-      title: 'Sample page',
-      //selected: 'selected'
+      'id'          :  '1016',
+      //'value'
+      'type_label'  :  'Articolo',
+      //_item.type_label,
+      'text'        :  'Template: Featured Image (Vertical)',
+      //_item.text,
+      'object_type' :  'page'
     };
-    return [_attributes];
+    return [ _attributes ];
   },
  /*
   * override to "nothing" as we have to set the model value to 
@@ -134,29 +136,40 @@ $.extend( CZRInputMths , {
   * 
   */
   //override
-  setupSynchronizer: function( obj ){
+  setupSynchronizer: function(){
+    if ( this.container.find('[data-type*="content-picker-select"]') ){
+      return;
+    }//else
+    //call the standard method
+    _setupSynchronizer.call( this );
   },
   //override
   updateInput: function( obj ){
-    var input = this,
-        $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
-        _new_val          = $( $_changed_input, obj.dom_el ).select2('data');
+    if ( ( "undefined" != typeof obj ) &&
+            ( 'content-picker-select' == $(obj.dom_event.currentTarget, obj.dom_el).data('type') ) ){
 
-    //purge useless select2 fields
-    if ( _new_val.length ) {
-      _new_val = _.map( _new_val, function( _item ){ 
-        return {
-          'id'         :  _item.id,
-          'type_label' :  _item.type_label,
-          'title'      :  _item.text,
-          'type'       :  _item.type
-        };
-      });
-    }
+      var input = this,
+          $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
+          _new_val          = $( $_changed_input, obj.dom_el ).select2('data');
 
-    input.set(_new_val);
-    //say it to the dom
-    //@todo use the api Events instead
-    input.trigger( input.id + ':changed', _new_val );
+      //purge useless select2 fields
+      if ( _new_val.length ) {
+        _new_val = _.map( _new_val, function( _item ){ 
+          return {
+            'id'          :  _item.id,
+            'type_label'  :  _item.type_label,
+            'title'       :  _item.text,
+            'object_type' :  _item.object_type
+          };
+        });
+      }
+
+      input.set(_new_val);
+      //say it to the dom
+      //@todo use the api Events instead
+      input.trigger( input.id + ':changed', _new_val );
+      return;
+    }//else
+    _updateInput.call( this, obj );
   }
 });//$.extend
