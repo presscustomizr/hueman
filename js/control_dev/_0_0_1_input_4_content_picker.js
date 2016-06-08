@@ -9,15 +9,12 @@ $.extend( CZRInputMths , {
     /* Dummy for the prototype purpose */
     input.object = ['cat']; //this.control.params.object_types  - array('page', 'post')
     input.type   = 'post_type'; //this.control.params.type  - post_type
- 
-    //binding             
-    _.bindAll( input, 'submit');
 
     //setup selectedData
     input.selectedData = [];//input.setupSelectedContents();
     
-    /* Methodize this */
-    input.container.find('.czr-input').append('<select data-type="content-picker-select" class="js-example-basic-single"></select>');
+    /* Methodize this or use a template */
+    input.container.find('.czr-input').append('<select data-type="content-picker-select" class="js-example-basic-simple"></select>');
     
     input.container.find('select').select2({
       placeholder: {
@@ -79,9 +76,9 @@ $.extend( CZRInputMths , {
       templateSelection: input.czrFormatItem,
       templateResult: input.czrFormatItem,
       escapeMarkup: function (markup) { return markup; },
-   })
-   .on('select2:select', input.submit )
-   .on('select2:unselect', input.submit );  
+   });
+   //.on('select2:select', input.submit )
+   //.on('select2:unselect', input.submit );  
    //input.setupSelectedContents();
   },
   czrFormatItem: function (item) {
@@ -107,24 +104,6 @@ $.extend( CZRInputMths , {
       //selected: 'selected'
     };
     return [_attributes];
-  },
-  // Adds a selected menu item to the menu.
-  submit: function( event ) {
-    var item  = event.params.data,
-        input = this,
-     _new_val = '';
-    //If NOT MULTI
-    //for the multi we need to match the removed one
-    if ( item.selected ) {
-      _new_val = {
-        'id'         :  item.id,
-        'type_label' :  item.type_label,
-        'title'      :  item.text,
-        'type'       :  item.type
-      };
-    }
-    input.set(_new_val);
-    input.trigger( input.id + ':changed', _new_val );
   },
  /*
   * override to "nothing" as we have to set the model value to 
@@ -159,5 +138,25 @@ $.extend( CZRInputMths , {
   },
   //override
   updateInput: function( obj ){
+    var input = this,
+        $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
+        _new_val          = $( $_changed_input, obj.dom_el ).select2('data');
+
+    //purge useless select2 fields
+    if ( _new_val.length ) {
+      _new_val = _.map( _new_val, function( _item ){ 
+        return {
+          'id'         :  _item.id,
+          'type_label' :  _item.type_label,
+          'title'      :  _item.text,
+          'type'       :  _item.type
+        };
+      });
+    }
+
+    input.set(_new_val);
+    //say it to the dom
+    //@todo use the api Events instead
+    input.trigger( input.id + ':changed', _new_val );
   }
 });//$.extend

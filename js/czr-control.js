@@ -843,9 +843,8 @@ $.extend( CZRInputMths , {
     input.pages = [];
     input.object = ['cat']; //this.control.params.object_types  - array('page', 'post')
     input.type   = 'post_type'; //this.control.params.type  - post_type
-    _.bindAll( input, 'submit');
     input.selectedData = [];//input.setupSelectedContents();
-    input.container.find('.czr-input').append('<select data-type="content-picker-select" class="js-example-basic-single"></select>');
+    input.container.find('.czr-input').append('<select data-type="content-picker-select" class="js-example-basic-simple"></select>');
     
     input.container.find('select').select2({
       placeholder: {
@@ -906,9 +905,7 @@ $.extend( CZRInputMths , {
       templateSelection: input.czrFormatItem,
       templateResult: input.czrFormatItem,
       escapeMarkup: function (markup) { return markup; },
-   })
-   .on('select2:select', input.submit )
-   .on('select2:unselect', input.submit );  
+   });
   },
   czrFormatItem: function (item) {
       if ( item.loading ) return item.text;
@@ -950,6 +947,22 @@ $.extend( CZRInputMths , {
   setupSynchronizer: function( obj ){
   },
   updateInput: function( obj ){
+    var input = this,
+        $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
+        _new_val          = $( $_changed_input, obj.dom_el ).select2('data');
+    if ( _new_val.length ) {
+      _new_val = _.map( _new_val, function( _item ){ 
+        return {
+          'id'         :  _item.id,
+          'type_label' :  _item.type_label,
+          'title'      :  _item.text,
+          'type'       :  _item.type
+        };
+      });
+    }
+
+    input.set(_new_val);
+    input.trigger( input.id + ':changed', _new_val );
   }
 });//$.extend
 
