@@ -870,7 +870,8 @@ $.extend( CZRInputMths , {
             wp_customize: 'on',
             page: page,
             type: input.type,
-            object: input.object
+            object: input.object,
+            CZRCpNonce: serverControlParams.CZRCpNonce
           };
         },
         transport: function (params, success, failure) {
@@ -951,6 +952,7 @@ $.extend( CZRInputMths , {
   updateInput: function( obj ){
   }
 });//$.extend
+
 var CZRItemMths = CZRItemMths || {};
 $.extend( CZRItemMths , {
   initialize: function( id, options ) {
