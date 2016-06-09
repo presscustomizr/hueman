@@ -114,7 +114,6 @@ $.extend( CZRInputMths , {
     //react to a single input change
     //update the collection of input
     inputReact : function( to, from) {
-      console.log(to);
             var input = this,
                 _current_item = input.item.get(),
                 _new_model        = _.clone( _current_item );//initialize it to the current value

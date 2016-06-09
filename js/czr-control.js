@@ -688,7 +688,6 @@ $.extend( CZRInputMths , {
             input.callbacks.add( function() { return input.inputReact.apply(input, arguments ); } );
     },
     inputReact : function( to, from) {
-      console.log(to);
             var input = this,
                 _current_item = input.item.get(),
                 _new_model        = _.clone( _current_item );//initialize it to the current value
@@ -714,21 +713,37 @@ var CZRInputMths = CZRInputMths || {};
 $.extend( CZRInputMths , {
     setupImageUploader : function() {
 
-         var input  = this;
-         if ( ! input.container )
-           return this;
+        var input        = this,
+             _model      = input.get();
+        input.attachment = {};    
+        if ( ! input.container )
+          return this;
+        if ( _model ) {
+          wp.media.attachment( _model ).fetch().done( function() {
+            input.attachment = this.attributes;
+            if ( ! input.renderImageUploaderTemplate() )
+              return;  
+            input.czrImgUploaderBinding();    
+          });
+        }else {
+          if ( ! input.renderImageUploaderTemplate() )
+            return;
+            
+          input.czrImgUploaderBinding();
+        }
 
-         if ( ! input.renderImageUploaderTemplate() )
-           return;
-         _.bindAll( input, 'czrImgUploadRestoreDefault', 'czrImgUploadRemoveFile', 'czrImgUploadOpenFrame', 'czrImgUploadSelect');
-         input.container.on( 'click keydown', '.upload-button', input.czrImgUploadOpenFrame );
-         input.container.on( 'click keydown', '.thumbnail-image img', input.czrImgUploadOpenFrame );
-         input.container.on( 'click keydown', '.remove-button', input.czrImgUploadRemoveFile );
-         input.container.on( 'click keydown', '.default-button', input.czrImgUploadRestoreDefault );
+  },
+  czrImgUploaderBinding : function() {
+    var input = this;
+    _.bindAll( input, 'czrImgUploadRestoreDefault', 'czrImgUploadRemoveFile', 'czrImgUploadOpenFrame', 'czrImgUploadSelect');
+    input.container.on( 'click keydown', '.upload-button', input.czrImgUploadOpenFrame );
+    input.container.on( 'click keydown', '.thumbnail-image img', input.czrImgUploadOpenFrame );
+    input.container.on( 'click keydown', '.remove-button', input.czrImgUploadRemoveFile );
+    input.container.on( 'click keydown', '.default-button', input.czrImgUploadRestoreDefault );
 
-         input.bind( input.id + ':changed', function( to, from ){
-            input.renderImageUploaderTemplate();
-         });
+    input.bind( input.id + ':changed', function( to, from ){
+       input.renderImageUploaderTemplate();
+    });  
   },
   czrImgUploadOpenFrame: function( event ) {
         if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
@@ -772,7 +787,8 @@ $.extend( CZRInputMths , {
           return;
         }
         event.preventDefault();
-        input.container.find('input').val( element.params.defaultAttachment.url ).trigger('change');
+        input.attachment = {};
+        input.set( {} );
   },
   czrImgUploadRemoveFile: function( event ) {
         var input = this,
@@ -782,10 +798,8 @@ $.extend( CZRInputMths , {
           return;
         }
         event.preventDefault();
-
         input.attachment = {};
-
-        input.container.find('input').val( '' ).trigger('change');
+        input.set('');
   },
   czrImgUploadSelect: function() {
         var node,
@@ -793,13 +807,11 @@ $.extend( CZRInputMths , {
             element = input.element,
             attachment   = input.frame.state().get( 'selection' ).first().toJSON(),  // Get the attachment from the modal frame.
             mejsSettings = window._wpmejsSettings || {};
-
         input.attachment = attachment;
         input.set(attachment.id);
   },
   renderImageUploaderTemplate: function() {
        var input  = this;
-        console.log( input.attachment );
        if ( 0 === $( '#tmpl-czr-input-img-uploader-view-content' ).length )
          return;
 
@@ -811,28 +823,20 @@ $.extend( CZRInputMths , {
 
        if ( ! $_view_el.length )
          return;
-       var _model = {};
-       $.extend( _model , {
-          button_labels : this.getUploaderLabels(),
-          settings      : { default: 'ID' },
-          attachment    : input.attachment || {}
-       }); 
+              
+       var _template_params = {
+          button_labels : input.getUploaderLabels(),
+          settings      : input.id,
+          attachment    : input.attachment,
+          canUpload     : true
+       }; 
 
-       console.log( _model );
-       $_view_el.html( view_template( _model ) );
+       $_view_el.html( view_template( _template_params) );
 
        return true;
   },
   getUploaderLabels : function() {
-    return {
-          'select'       : 'Select Image' ,
-           'change'       : 'Change Image' ,
-           'remove'       : 'Remove' ,
-           'default'      : 'Default',
-           'placeholder'  : 'No image selected' ,
-           'frame_title'  : 'Select Image' ,
-           'frame_button' : 'Choose Image'
-    };
+    return serverControlParams.imgUploaderParams.button_labels;
   }
 });//$.extendvar CZRInputMths = CZRInputMths || {};
 $.extend( CZRInputMths , {
