@@ -973,7 +973,6 @@ $.extend( CZRInputMths , {
     _updateInput.call( this, obj );
   }
 });//$.extend
-
 var CZRItemMths = CZRItemMths || {};
 $.extend( CZRItemMths , {
   initialize: function( id, options ) {
@@ -1717,24 +1716,7 @@ $.extend( CZRDynModuleMths, {
           return this;
   }
 
-});//$.extend//CZRBaseControlMths
-var CZRColumnMths = CZRColumnMths || {};
-$.extend( CZRColumnMths , {
-    initialize: function( name, options ) {
-          var column = this;
-          api.Value.prototype.initialize.call( column, null, options );
-          $.extend( column, options || {} );
-
-          column.render();
-    },
-
-    render : function() {
-          var column   = this;
-          $view     = $( wp.template('czr-sektion-column')( {id: column.id}) );
-          $view.appendTo( $('.czr-column-wrapper', column.sektion.container ) );
-          return $view;
-    }
-});//$.extend//extends api.CZRDynModule
+});//$.extend//CZRBaseControlMths//extends api.CZRDynModule
 
 var CZRSektionMths = CZRSektionMths || {};
 
@@ -1748,10 +1730,12 @@ $.extend( CZRSektionMths, {
                 viewContentTemplateEl : 'czr-module-sektion-view-content',
           } );
           this.defaultItemModel = {
-            id : '',
-            'sektion-layout' : 1,
+              id : '',
+              'sektion-layout' : 1,
+              columns : []
           };
 
+          console.log('MODULE ID', id);
           console.log(' sektion savedItems', module.savedItems );
           module.itemConstructor = api.CZRItem.extend( module.CZRSektionItem || {} );
 
@@ -1782,9 +1766,6 @@ $.extend( CZRSektionMths, {
             }
           );
           module.dragInstance.on('over', function( el, container, source ) {
-                console.log('el', el);
-                console.log('is over', container);
-                console.log('coming from ', source);
                 if ( $(container).hasClass('czr-dragula-fake-container') ) {
                     _target_sekId = $(container).closest('[data-id]').attr('data-id');
                     console.log( 'taget sek', _target_sekId );
@@ -1799,37 +1780,41 @@ $.extend( CZRSektionMths, {
                 module.czr_Item.each( function( _sektion ){
                     _sektion.container.removeClass('czr-show-fake-container');
                 });
+          }).on('drop', function(el, target, source, sibling ) {
+                console.log('element ' + el + ' has been droped in :', target );
           });
-  },
 
+          var scroll = autoScroller([
+                     module.control.container.closest('.accordion-section-content')[0]
+                  ],
+                  {
+                    direction: "vertical",
+                    margin: 20,
+                    pixels: 10,
+                    scrollWhenOutside: true,
+                    autoScroll: function(){
+                        return this.down && module.dragInstance.dragging;
+                    }
+                  }
+        );
+  },//initDragula
 
+});//extends api.CZRDynModule
 
+var CZRSektionMths = CZRSektionMths || {};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+$.extend( CZRSektionMths, {
 
   CZRSektionItem : {
           initialize: function(id, options ) {
                   var sekItem = this;
 
                   api.CZRItem.prototype.initialize.call( sekItem, null, options );
-
                   sekItem.czr_Columns = new api.Values();
+
                   var _sektion_model = sekItem.get();
+                  sekItem.czr_columnCollection = new api.Value();
+                  sekItem.czr_columnCollection.set([]);
 
                   console.log("in sektion item initialize", id, options, sekItem.get() );
 
@@ -1839,18 +1824,17 @@ $.extend( CZRSektionMths, {
 
                   sekItem.dragulizeSektion();
                   sekItem.bind('item_content_rendered', function() {
-                        var columns = parseInt( _sektion_model['sektion-layout'] || 1, 10 );
-                        for( var i = 1; i < columns + 1 ; i++ ) {
-                            sekItem.instanciateColumn( i );
-                        }
-                        sekItem.item_module.dragInstance.containers.push( $( '.czr-column-wrapper', sekItem.container )[0] );
-                        sekItem.czr_View.callbacks.add( function(to) {
-                              console.log('in view cb');
-                              if ( 'closed' == to )
-                                return;
-                              sekItem.container.removeClass('czr-show-fake-container');
-                        });
-
+                          var columns = parseInt( _sektion_model['sektion-layout'] || 1, 10 );
+                          for( var i = 1; i < columns + 1 ; i++ ) {
+                              sekItem.instanciateColumn( i );
+                          }
+                          sekItem.item_module.dragInstance.containers.push( $( '.czr-column-wrapper', sekItem.container )[0] );
+                          sekItem.czr_View.callbacks.add( function(to) {
+                                console.log('in view cb');
+                                if ( 'closed' == to )
+                                  return;
+                                sekItem.container.removeClass('czr-show-fake-container');
+                          });
                   });//'item_content_rendered'
 
           },
@@ -1867,20 +1851,73 @@ $.extend( CZRSektionMths, {
           instanciateColumn : function( index ) {
                   console.log('in instantiate column', index );
                   var sekItem = this,
-                      col_id = 'col_' + index;
-                  sekItem.czr_Columns.add( col_id, new api.CZRColumn( col_id, {
+                      col_id = 'col_' + index,
+                      column_model = {
                         id : col_id,
                         sektion : sekItem
-                  } ) );
+                      };
+                  sekItem.czr_Columns.add( col_id, new api.CZRColumn( col_id, column_model ) );
+                  sekItem.updateColumnCollection( {column : column_model });
           },
+          updateColumnCollection : function( obj ) {
+                  var sekItem = this,
+                      _current_collection = sekItem.czr_columnCollection.get();
+                      _new_collection = _.clone(_current_collection);
+                  if ( _.has( obj, 'collection' ) ) {
+                        sekItem.czr_columnCollection.set(obj.collection);
+                        return;
+                  }
 
-          dragulizeColumns : function() {
-                  var sekItem = this;
+                  if ( ! _.has(obj, 'column') ) {
+                    throw new Error('updateColumnCollection, no column provided ' + sekItem.id + '. Aborting');
+                  }
+                  var column = _.clone(obj.column);
+                  if ( _.findWhere( _new_collection, { id : column.id } ) ) {
+                        _.each( _current_collection , function( _elt, _ind ) {
+                              if ( _elt.id != column.id )
+                                return;
+                              _new_collection[_ind] = column;
+                        });
+                  }
+                  else {
+                        _new_collection.push(column);
+                  }
+                  sekItem.czr_columnCollection.set(_new_collection);
+          },
+          collectionReact : function( to, from ) {
+                var sekItem = this,
+                    _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
+                    _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
+                    _module_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
+                    is_module_update = _.isEmpty( _module_updated ),
+                    is_collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && ! is_module_update;
+                var _current_sek_model = sekItem.get(),
+                    _new_sek_model = _.clone( _current_sek_model );
 
-          }
+                _new_sek_model.columns = to;
+                console.log('_new_sek_model', _new_sek_model );
+                sekItem.set( _new_sek_model );
+          },
   }//Sektion
 
-});//extends api.CZRDynModule
+});
+var CZRColumnMths = CZRColumnMths || {};
+$.extend( CZRColumnMths , {
+    initialize: function( name, options ) {
+          var column = this;
+          api.Value.prototype.initialize.call( column, null, options );
+          $.extend( column, options || {} );
+
+          column.render();
+    },
+
+    render : function() {
+          var column   = this;
+          $view     = $( wp.template('czr-sektion-column')( {id: column.id}) );
+          $view.appendTo( $('.czr-column-wrapper', column.sektion.container ) );
+          return $view;
+    }
+});//$.extend//extends api.CZRDynModule
 
 var CZRSocialModuleMths = CZRSocialModuleMths || {};
 
@@ -2058,7 +2095,6 @@ $.extend( CZRSocialModuleMths, {
   },//CZRSocialsItem
 
 });
-
 
 var CZRWidgetAreaModuleMths = CZRWidgetAreaModuleMths || {};
 
