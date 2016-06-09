@@ -1,6 +1,7 @@
 var CZRInputMths = CZRInputMths || {};
 $.extend( CZRInputMths , {
     setupImageUploader : function() {
+
          var input  = this;
 
          //do we have an html template and a input container?
@@ -20,7 +21,7 @@ $.extend( CZRInputMths , {
          input.container.on( 'click keydown', '.remove-button', input.czrImgUploadRemoveFile );
          input.container.on( 'click keydown', '.default-button', input.czrImgUploadRestoreDefault );
 
-         input.bind( function( to, from ){
+         input.bind( input.id + ':changed', function( to, from ){
             input.renderImageUploaderTemplate();
          });
 
@@ -61,15 +62,17 @@ $.extend( CZRInputMths , {
   czrImgUploadInitFrame: function() {
       var input = this,
           element = input.element;
-
+      
+      var button_labels = this.getUploaderLabels();
+          
        input.frame = wp.media({
          button: {
-             text: element.params.button_labels.frame_button
+             text: button_labels.frame_button
          },
          states: [
              new wp.media.controller.Library({
-               title:     element.params.button_labels.frame_title,
-               library:   wp.media.query({ type: element.params.mime_type }),
+               title:     button_labels.frame_title,
+               library:   wp.media.query({ type: 'image' }),
                multiple:  false,
                date:      false
              })
@@ -91,11 +94,10 @@ $.extend( CZRInputMths , {
         }
         event.preventDefault();
 
-        element.params.attachment = element.params.defaultAttachment;
+        //element.params.attachment = element.params.defaultAttachment;
 
         // Set the input; the callback takes care of rendering.
         input.container.find('input').val( element.params.defaultAttachment.url ).trigger('change');
-
   },
 
   /**
@@ -112,7 +114,7 @@ $.extend( CZRInputMths , {
         }
         event.preventDefault();
 
-        element.params.attachment = {};
+        input.attachment = {};
 
         input.container.find('input').val( '' ).trigger('change');
   },
@@ -129,9 +131,10 @@ $.extend( CZRInputMths , {
             attachment   = input.frame.state().get( 'selection' ).first().toJSON(),  // Get the attachment from the modal frame.
             mejsSettings = window._wpmejsSettings || {};
 
-        element.params.attachment = attachment;
+        input.attachment = attachment;
 
-        input.container.find('input').val( attachment.id ).trigger('change');
+        //input.container.find('input').val( attachment.id ).trigger('change');
+        input.set(attachment.id);
   },
 
 
@@ -142,12 +145,12 @@ $.extend( CZRInputMths , {
   //////////////////////////////////////////////////
   renderImageUploaderTemplate: function() {
        var input  = this;
-
+        console.log( input.attachment );
         //do we have view template script?
-       if ( 0 === $( '#tmpl-czr-img-uploader-view-content' ).length )
+       if ( 0 === $( '#tmpl-czr-input-img-uploader-view-content' ).length )
          return;
 
-       var view_template = wp.template('czr-img-uploader-view-content');
+       var view_template = wp.template('czr-input-img-uploader-view-content');
 
        //  //do we have an html template and a element container?
        if ( ! view_template  || ! input.container )
@@ -157,9 +160,30 @@ $.extend( CZRInputMths , {
 
        if ( ! $_view_el.length )
          return;
+       //console.log( input.element.params );
+       var _model = {};
+       $.extend( _model , {
+          button_labels : this.getUploaderLabels(),
+          settings      : { default: 'ID' },
+          attachment    : input.attachment || {}
+       }); 
 
-       $_view_el.html( view_template( input.element.params ) );
+       console.log( _model );
+       $_view_el.html( view_template( _model ) );
 
        return true;
+  },
+  getUploaderLabels : function() {
+    //get from the server control parmas or jsonize somwhere?
+    //image related properties
+    return {
+          'select'       : 'Select Image' ,
+           'change'       : 'Change Image' ,
+           'remove'       : 'Remove' ,
+           'default'      : 'Default',
+           'placeholder'  : 'No image selected' ,
+           'frame_title'  : 'Select Image' ,
+           'frame_button' : 'Choose Image'
+    };
   }
 });//$.extend

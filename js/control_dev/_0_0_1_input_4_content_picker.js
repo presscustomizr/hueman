@@ -8,7 +8,6 @@ $.extend( CZRInputMths , {
   setupContentPicker: function() {
     var input  = this;
 
-    input.pages = [];
 
     /* Dummy for the prototype purpose */
     input.object = ['cat']; //this.control.params.object_types  - array('page', 'post')

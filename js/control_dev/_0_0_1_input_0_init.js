@@ -114,6 +114,7 @@ $.extend( CZRInputMths , {
     //react to a single input change
     //update the collection of input
     inputReact : function( to, from) {
+      console.log(to);
             var input = this,
                 _current_item = input.item.get(),
                 _new_model        = _.clone( _current_item );//initialize it to the current value
@@ -135,7 +136,7 @@ $.extend( CZRInputMths , {
             var input           = this,
                 $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
                 _new_val          = $( $_changed_input, obj.dom_el ).val();
-
+console.log(_new_val);
             //Do nothing if the value hasn't really changed
             //For synced elements this might be called after the inputReact
             //so going re-setting the same val => fixes issue with iCheck

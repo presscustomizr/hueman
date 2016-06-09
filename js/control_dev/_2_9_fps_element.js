@@ -26,7 +26,8 @@ $.extend( CZRFeaturedPageElementMths, {
         title : '' ,
         'fp-post'  : '',
         'fp-title' : '',
-        'fp-text'  : ''
+        'fp-text'  : '',
+        'fp-image' : '',
     };
 
     //overrides the default success message
