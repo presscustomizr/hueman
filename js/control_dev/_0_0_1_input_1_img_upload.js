@@ -1,28 +1,49 @@
 var CZRInputMths = CZRInputMths || {};
 $.extend( CZRInputMths , {
     setupImageUploader : function() {
-         var input  = this;
 
-         //do we have an html template and a input container?
-         if ( ! input.container )
-           return this;
+        var input        = this,
+             _model      = input.get();
 
-         if ( ! input.renderImageUploaderTemplate() )
-           return;
+        //an instance field where we'll store the current attachment
+        input.attachment = {};    
 
-         //Bind events
-         // Shortcut so that we don't have to use _.bind every time we add a callback.
-         _.bindAll( input, 'czrImgUploadRestoreDefault', 'czrImgUploadRemoveFile', 'czrImgUploadOpenFrame', 'czrImgUploadSelect');
+        //do we have an html template and a input container?
+        if ( ! input.container )
+          return this;
 
-         // Bind events, with delegation to facilitate re-rendering.
-         input.container.on( 'click keydown', '.upload-button', input.czrImgUploadOpenFrame );
-         input.container.on( 'click keydown', '.thumbnail-image img', input.czrImgUploadOpenFrame );
-         input.container.on( 'click keydown', '.remove-button', input.czrImgUploadRemoveFile );
-         input.container.on( 'click keydown', '.default-button', input.czrImgUploadRestoreDefault );
+        //set the image if it exists
+        if ( _model ) {
+          wp.media.attachment( _model ).fetch().done( function() {
+            input.attachment = this.attributes;
+            if ( ! input.renderImageUploaderTemplate() )
+              return;  
+            input.czrImgUploaderBinding();    
+          });
+        }else {
+          if ( ! input.renderImageUploaderTemplate() )
+            return;
+            
+          input.czrImgUploaderBinding();
+        }
 
-         input.bind( function( to, from ){
-            input.renderImageUploaderTemplate();
-         });
+  },
+  czrImgUploaderBinding : function() {
+    var input = this;
+    //Bind events
+    // Shortcut so that we don't have to use _.bind every time we add a callback.
+    _.bindAll( input, 'czrImgUploadRestoreDefault', 'czrImgUploadRemoveFile', 'czrImgUploadOpenFrame', 'czrImgUploadSelect');
+
+    // Bind events, with delegation to facilitate re-rendering.
+    input.container.on( 'click keydown', '.upload-button', input.czrImgUploadOpenFrame );
+    input.container.on( 'click keydown', '.thumbnail-image img', input.czrImgUploadOpenFrame );
+    input.container.on( 'click keydown', '.remove-button', input.czrImgUploadRemoveFile );
+    input.container.on( 'click keydown', '.default-button', input.czrImgUploadRestoreDefault );
+
+    input.bind( input.id + ':changed', function( to, from ){
+       input.renderImageUploaderTemplate();
+    });  
+
 
          // control.setting.bind( function( value, old_val, something ) {
          //   //TODO, scope to the actual background image input as at the moment it reacts to watever value changes in the setting
@@ -35,9 +56,8 @@ $.extend( CZRInputMths , {
 
          //   //re-render the template
          //   control.renderImageUploaderTemplate();
-         // });
+         // });  
   },
-
   /**
   * Open the media modal.
   */
@@ -61,15 +81,17 @@ $.extend( CZRInputMths , {
   czrImgUploadInitFrame: function() {
       var input = this,
           element = input.element;
-
+      
+      var button_labels = this.getUploaderLabels();
+          
        input.frame = wp.media({
          button: {
-             text: element.params.button_labels.frame_button
+             text: button_labels.frame_button
          },
          states: [
              new wp.media.controller.Library({
-               title:     element.params.button_labels.frame_title,
-               library:   wp.media.query({ type: element.params.mime_type }),
+               title:     button_labels.frame_title,
+               library:   wp.media.query({ type: 'image' }),
                multiple:  false,
                date:      false
              })
@@ -90,12 +112,12 @@ $.extend( CZRInputMths , {
           return;
         }
         event.preventDefault();
+        /*Todo*/
 
-        element.params.attachment = element.params.defaultAttachment;
-
-        // Set the input; the callback takes care of rendering.
-        input.container.find('input').val( element.params.defaultAttachment.url ).trigger('change');
-
+        //reset the attachment class field to the default img
+        input.attachment = {};
+        //set the model 
+        input.set( {} );
   },
 
   /**
@@ -111,10 +133,10 @@ $.extend( CZRInputMths , {
           return;
         }
         event.preventDefault();
-
-        element.params.attachment = {};
-
-        input.container.find('input').val( '' ).trigger('change');
+        //reset the attachment class field
+        input.attachment = {};
+        //set the model
+        input.set('');
   },
 
 
@@ -128,10 +150,10 @@ $.extend( CZRInputMths , {
             element = input.element,
             attachment   = input.frame.state().get( 'selection' ).first().toJSON(),  // Get the attachment from the modal frame.
             mejsSettings = window._wpmejsSettings || {};
-
-        element.params.attachment = attachment;
-
-        input.container.find('input').val( attachment.id ).trigger('change');
+        //save the attachment in a class field
+        input.attachment = attachment;
+        //set the model
+        input.set(attachment.id);
   },
 
 
@@ -144,10 +166,10 @@ $.extend( CZRInputMths , {
        var input  = this;
 
         //do we have view template script?
-       if ( 0 === $( '#tmpl-czr-img-uploader-view-content' ).length )
+       if ( 0 === $( '#tmpl-czr-input-img-uploader-view-content' ).length )
          return;
 
-       var view_template = wp.template('czr-img-uploader-view-content');
+       var view_template = wp.template('czr-input-img-uploader-view-content');
 
        //  //do we have an html template and a element container?
        if ( ! view_template  || ! input.container )
@@ -157,9 +179,19 @@ $.extend( CZRInputMths , {
 
        if ( ! $_view_el.length )
          return;
+              
+       var _template_params = {
+          button_labels : input.getUploaderLabels(),
+          settings      : input.id,
+          attachment    : input.attachment,
+          canUpload     : true
+       }; 
 
-       $_view_el.html( view_template( input.element.params ) );
+       $_view_el.html( view_template( _template_params) );
 
        return true;
+  },
+  getUploaderLabels : function() {
+    return serverControlParams.imgUploaderParams.button_labels;
   }
 });//$.extend

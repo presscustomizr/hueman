@@ -27,7 +27,8 @@ $.extend( CZRElementControlMths, {
           control.elementConstructors = {
               czr_widget_areas_element   : api.CZRWidgetAreaElement,
               czr_social_element    : api.CZRSocialElement,
-              czr_sektion_element    : api.CZRSektionElement
+              czr_sektion_element    : api.CZRSektionElement,
+              czr_fp_element    : api.CZRFeaturedPageElement
           };
 
           control.czr_Element = new api.Values();

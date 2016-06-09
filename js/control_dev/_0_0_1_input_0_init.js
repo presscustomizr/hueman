@@ -36,6 +36,7 @@ $.extend( CZRInputMths , {
                   select : 'setupSelect',
                   upload : 'setupImageUploader',
                   color : 'setupColorPicker',
+                  content_picker : 'setupContentPicker',
                   password : ''
             };
 
@@ -120,8 +121,11 @@ $.extend( CZRInputMths , {
             _new_model =  ( ! _.isObject(_new_model) || _.isEmpty(_new_model) ) ? {} : _new_model;
             //set the new val to the changed property
             _new_model[input.id] = to;
+
             //inform the item
             input.item.set(_new_model);
+            //inform that an api changed
+            input.trigger( input.id + ':changed', to );
     },
 
 
@@ -131,11 +135,19 @@ $.extend( CZRInputMths , {
             var input           = this,
                 $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
                 _new_val          = $( $_changed_input, obj.dom_el ).val();
-
+console.log(_new_val);
+            //Do nothing if the value hasn't really changed
+            //For synced elements this might be called after the inputReact
+            //so going re-setting the same val => fixes issue with iCheck
+            //not updated passing from true => false => true
+            if ( _new_val == input.get() )
+              return;
+            
             input.set(_new_val);
-
-            //say it to the dom
-            //@todo use the api Events instead
-            input.trigger( input.id + ':changed', _new_val );
+            /* Handled in the inputReact, in the future we might want
+             * to inform that the change was "dome" driven
+             */
+            //inform api Event
+            //input.trigger( input.id + ':changed', _new_val );
     }
 });//$.extend

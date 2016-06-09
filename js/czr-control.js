@@ -622,6 +622,7 @@ $.extend( CZRInputMths , {
                   select : 'setupSelect',
                   upload : 'setupImageUploader',
                   color : 'setupColorPicker',
+                  content_picker : 'setupContentPicker',
                   password : ''
             };
 
@@ -693,6 +694,7 @@ $.extend( CZRInputMths , {
             _new_model =  ( ! _.isObject(_new_model) || _.isEmpty(_new_model) ) ? {} : _new_model;
             _new_model[input.id] = to;
             input.item.set(_new_model);
+            input.trigger( input.id + ':changed', to );
     },
 
 
@@ -700,28 +702,48 @@ $.extend( CZRInputMths , {
             var input           = this,
                 $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
                 _new_val          = $( $_changed_input, obj.dom_el ).val();
-
+console.log(_new_val);
+            if ( _new_val == input.get() )
+              return;
+            
             input.set(_new_val);
-            input.trigger( input.id + ':changed', _new_val );
     }
-});//$.extendvar CZRInputMths = CZRInputMths || {};
+});//$.extend
+var CZRInputMths = CZRInputMths || {};
 $.extend( CZRInputMths , {
     setupImageUploader : function() {
-         var input  = this;
-         if ( ! input.container )
-           return this;
 
-         if ( ! input.renderImageUploaderTemplate() )
-           return;
-         _.bindAll( input, 'czrImgUploadRestoreDefault', 'czrImgUploadRemoveFile', 'czrImgUploadOpenFrame', 'czrImgUploadSelect');
-         input.container.on( 'click keydown', '.upload-button', input.czrImgUploadOpenFrame );
-         input.container.on( 'click keydown', '.thumbnail-image img', input.czrImgUploadOpenFrame );
-         input.container.on( 'click keydown', '.remove-button', input.czrImgUploadRemoveFile );
-         input.container.on( 'click keydown', '.default-button', input.czrImgUploadRestoreDefault );
+        var input        = this,
+             _model      = input.get();
+        input.attachment = {};    
+        if ( ! input.container )
+          return this;
+        if ( _model ) {
+          wp.media.attachment( _model ).fetch().done( function() {
+            input.attachment = this.attributes;
+            if ( ! input.renderImageUploaderTemplate() )
+              return;  
+            input.czrImgUploaderBinding();    
+          });
+        }else {
+          if ( ! input.renderImageUploaderTemplate() )
+            return;
+            
+          input.czrImgUploaderBinding();
+        }
 
-         input.bind( function( to, from ){
-            input.renderImageUploaderTemplate();
-         });
+  },
+  czrImgUploaderBinding : function() {
+    var input = this;
+    _.bindAll( input, 'czrImgUploadRestoreDefault', 'czrImgUploadRemoveFile', 'czrImgUploadOpenFrame', 'czrImgUploadSelect');
+    input.container.on( 'click keydown', '.upload-button', input.czrImgUploadOpenFrame );
+    input.container.on( 'click keydown', '.thumbnail-image img', input.czrImgUploadOpenFrame );
+    input.container.on( 'click keydown', '.remove-button', input.czrImgUploadRemoveFile );
+    input.container.on( 'click keydown', '.default-button', input.czrImgUploadRestoreDefault );
+
+    input.bind( input.id + ':changed', function( to, from ){
+       input.renderImageUploaderTemplate();
+    });  
   },
   czrImgUploadOpenFrame: function( event ) {
         if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
@@ -739,15 +761,17 @@ $.extend( CZRInputMths , {
   czrImgUploadInitFrame: function() {
       var input = this,
           element = input.element;
-
+      
+      var button_labels = this.getUploaderLabels();
+          
        input.frame = wp.media({
          button: {
-             text: element.params.button_labels.frame_button
+             text: button_labels.frame_button
          },
          states: [
              new wp.media.controller.Library({
-               title:     element.params.button_labels.frame_title,
-               library:   wp.media.query({ type: element.params.mime_type }),
+               title:     button_labels.frame_title,
+               library:   wp.media.query({ type: 'image' }),
                multiple:  false,
                date:      false
              })
@@ -763,10 +787,8 @@ $.extend( CZRInputMths , {
           return;
         }
         event.preventDefault();
-
-        element.params.attachment = element.params.defaultAttachment;
-        input.container.find('input').val( element.params.defaultAttachment.url ).trigger('change');
-
+        input.attachment = {};
+        input.set( {} );
   },
   czrImgUploadRemoveFile: function( event ) {
         var input = this,
@@ -776,10 +798,8 @@ $.extend( CZRInputMths , {
           return;
         }
         event.preventDefault();
-
-        element.params.attachment = {};
-
-        input.container.find('input').val( '' ).trigger('change');
+        input.attachment = {};
+        input.set('');
   },
   czrImgUploadSelect: function() {
         var node,
@@ -787,17 +807,15 @@ $.extend( CZRInputMths , {
             element = input.element,
             attachment   = input.frame.state().get( 'selection' ).first().toJSON(),  // Get the attachment from the modal frame.
             mejsSettings = window._wpmejsSettings || {};
-
-        element.params.attachment = attachment;
-
-        input.container.find('input').val( attachment.id ).trigger('change');
+        input.attachment = attachment;
+        input.set(attachment.id);
   },
   renderImageUploaderTemplate: function() {
        var input  = this;
-       if ( 0 === $( '#tmpl-czr-img-uploader-view-content' ).length )
+       if ( 0 === $( '#tmpl-czr-input-img-uploader-view-content' ).length )
          return;
 
-       var view_template = wp.template('czr-img-uploader-view-content');
+       var view_template = wp.template('czr-input-img-uploader-view-content');
        if ( ! view_template  || ! input.container )
         return;
 
@@ -805,10 +823,20 @@ $.extend( CZRInputMths , {
 
        if ( ! $_view_el.length )
          return;
+              
+       var _template_params = {
+          button_labels : input.getUploaderLabels(),
+          settings      : input.id,
+          attachment    : input.attachment,
+          canUpload     : true
+       }; 
 
-       $_view_el.html( view_template( input.element.params ) );
+       $_view_el.html( view_template( _template_params) );
 
        return true;
+  },
+  getUploaderLabels : function() {
+    return serverControlParams.imgUploaderParams.button_labels;
   }
 });//$.extendvar CZRInputMths = CZRInputMths || {};
 $.extend( CZRInputMths , {
@@ -832,7 +860,120 @@ $.extend( CZRInputMths , {
             });
         });
     }
-});//$.extend//extends api.Value
+});//$.extend/* Fix caching, select2 default one seems to not correctly work, or it doesn't what I think it should */
+var CZRInputMths = CZRInputMths || {};
+var _updateInput       = CZRInputMths.updateInput;
+    _setupSynchronizer = CZRInputMths.setupSynchronizer;
+
+$.extend( CZRInputMths , {
+  setupContentPicker: function() {
+    var input  = this;
+    input.object = ['cat']; //this.control.params.object_types  - array('page', 'post')
+    input.type   = 'post_type'; //this.control.params.type  - post_type
+    input.container.find('.czr-input').append('<select data-type="content-picker-select" class="js-example-basic-simple"></select>');
+    
+    input.container.find('select').select2({
+      placeholder: {
+        id: '-1', // the value of the option
+        title: 'Select'
+      },
+      data : input.setupSelectedContents(),
+      ajax: {
+        url: serverControlParams.AjaxUrl,
+        type: 'POST',
+        dataType: 'json',
+        delay: 250,
+        debug: true,
+        data: function ( params ) {
+          var page = params.page ? params.page - 1 : 0;
+          page = params.term ? params.page : page;
+          return {
+            action: params.term ? "search-available-content-items-customizer" : "load-available-content-items-customizer",
+            search: params.term, 
+            wp_customize: 'on',
+            page: page,
+            type: input.type,
+            object: input.object,
+            CZRCpNonce: serverControlParams.CZRCpNonce
+          };
+        },
+        processResults: function (data, params) {
+          if ( ! data.success )
+            return { results: [] };
+
+          var items   = data.data.items,
+              _results = [];
+
+          _.each( items, function( item ) {
+            _results.push({
+              id          : item.id,
+              title       : item.title,
+              type_label  : item.type_label,
+              object_type : item.object
+            });
+          });
+          return {
+            results: _results,
+            pagination: { more: data.data.items.length == 10 }
+          };
+        },  
+      },
+      templateSelection: input.czrFormatItem,
+      templateResult: input.czrFormatItem,
+      escapeMarkup: function (markup) { return markup; },
+   });
+  },
+  czrFormatItem: function (item) {
+      if ( item.loading ) return item.text;
+      var markup = "<div class='content-picker-item clearfix'>" +
+        "<div class='content-item-bar'>" +
+          "<span class='item-title'>" + item.title + "</span>";
+
+      if ( item.type_label ) {
+        markup += "<span class='item-type'>" + item.type_label + "</span>";
+      }
+
+      markup += "</div></div>";
+
+      return markup;
+  },
+  setupSelectedContents : function() {
+    var input = this,
+       _model = input.get();
+       
+    return _model;
+  },
+  setupSynchronizer: function(){
+    if ( this.container.find('[data-type*="content-picker-select"]').length ){
+      return;
+    }//else
+    _setupSynchronizer.call( this );
+  },
+  updateInput: function( obj ){
+    if ( ( "undefined" != typeof obj ) &&
+            ( 'content-picker-select' == $(obj.dom_event.currentTarget, obj.dom_el).data('type') ) ){
+
+      var input = this,
+          $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
+          _new_val          = $( $_changed_input, obj.dom_el ).select2('data');
+      if ( _new_val.length ) {
+        _new_val = _.map( _new_val, function( _item ){ 
+          return {
+            'id'          :  _item.id,
+            'type_label'  :  _item.type_label,
+            'title'       :  _item.title,
+            'object_type' :  _item.object_type
+          };
+        });
+      }
+
+      input.set(_new_val);
+      return;
+    }//else
+    _updateInput.call( this, obj );
+  }
+});//$.extend
+
 var CZRItemMths = CZRItemMths || {};
 $.extend( CZRItemMths , {
   initialize: function( id, options ) {
@@ -1916,7 +2057,8 @@ $.extend( CZRSocialElementMths, {
 
   },//CZRSocialsItem
 
-});//extends api.CZRDynElement
+});
+
 
 var CZRWidgetAreaElementMths = CZRWidgetAreaElementMths || {};
 
@@ -2491,7 +2633,89 @@ $.extend( CZRWidgetAreaElementMths, {
   }
 
 
-});//$.extend()//BASE CONTROL CLASS
+});//$.extend()//extends api.CZRDynElement
+
+var CZRFeaturedPageElementMths = CZRFeaturedPageElementMths || {};
+
+$.extend( CZRFeaturedPageElementMths, {
+  initialize: function( id, options ) {
+    var element = this;
+    api.CZRDynElement.prototype.initialize.call( element, id, options );
+    $.extend( element, {
+          viewPreAddEl : 'czr-element-fp-pre-add-view-content',
+          viewTemplateEl : 'czr-element-item-view',
+          viewContentTemplateEl : 'czr-element-fp-view-content',
+    } );
+    element.inputConstructor = api.CZRInput.extend( element.CZRFeaturedPagesInputMths || {} );
+    element.itemConstructor = api.CZRItem.extend( element.CZRFeaturedPagesItem || {} );
+    this.defaultItemModel = {
+        id : '',
+        title : '' ,
+        'fp-post'  : '',
+        'fp-title' : '',
+        'fp-text'  : '',
+        'fp-image' : '',
+    };
+    this.itemAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
+    api.section( element.control.section() ).expanded.bind(function(to) {
+      if ( ! to || ! _.isEmpty( element.get() ) )
+        return;
+      element.ready();
+    });
+  },//initialize
+
+
+
+  CZRFeaturedPagesInputMths : {
+    ready : function() {
+      var input = this;
+      input.bind('fp-post:changed', function(){
+        input.updateItemModel();
+      });
+      input.bind('fp-title:changed', function(){
+        input.updateItemTitle();
+      });
+      api.CZRInput.prototype.ready.call( input);
+    },
+    updateItemModel : function( _new_val ) {
+
+      var input = this,
+          item = this.item,
+          is_preItemInput = _.has( input, 'is_preItemInput' ) && input.is_preItemInput;
+      if ( ! _.has( item.get(), 'fp-post') || _.isEmpty( item.get()['fp-post'] ) )
+        return;
+
+      var _new_model  = _.clone( item.get() );
+
+      var _fp_post        = _new_model['fp-post'][0],
+          _new_title      = _fp_post.title,
+          inputCollection = is_preItemInput ? input.element.czr_preItemInput : item.czr_Input;
+
+      if ( is_preItemInput ) {
+        $.extend( _new_model, { title : _new_title, 'fp-title' : _new_title } );
+        item.set( _new_model );
+      } else {
+        item.czr_Input('fp-title').set( _new_title );
+      }
+    },
+    updateItemTitle : function( _new_val ) {
+      var input = this,
+          item = this.item,
+          is_preItemInput = _.has( input, 'is_preItemInput' ) && input.is_preItemInput;
+
+      if ( is_preItemInput )
+        return;
+      var _new_model  = _.clone( item.get() ),
+          _new_title  = _new_model['fp-title'];
+
+      $.extend( _new_model, { title : _new_title} );
+      item.set( _new_model );
+    },
+  },//CZRFeaturedPagesInputMths
+  CZRFeaturedPagesItem : {
+  }
+});
+
 
 var CZRBaseControlMths = CZRBaseControlMths || {};
 
@@ -2527,7 +2751,8 @@ $.extend( CZRElementControlMths, {
           control.elementConstructors = {
               czr_widget_areas_element   : api.CZRWidgetAreaElement,
               czr_social_element    : api.CZRSocialElement,
-              czr_sektion_element    : api.CZRSektionElement
+              czr_sektion_element    : api.CZRSektionElement,
+              czr_fp_element    : api.CZRFeaturedPageElement
           };
 
           control.czr_Element = new api.Values();
@@ -2922,6 +3147,7 @@ $.extend( CZRBackgroundMths , {
   api.CZRSocialElement         = api.CZRDynElement.extend( CZRSocialElementMths || {} );
   api.CZRWidgetAreaElement     = api.CZRDynElement.extend( CZRWidgetAreaElementMths || {} );
   api.CZRSektionElement        = api.CZRDynElement.extend( CZRSektionMths || {} );
+  api.CZRFeaturedPageElement   = api.CZRDynElement.extend( CZRFeaturedPageElementMths || {} );
   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMths || {} );
   api.CZRElementsControl       = api.CZRBaseControl.extend( CZRElementControlMths || {} );
 
@@ -2954,6 +3180,7 @@ $.extend( CZRBackgroundMths , {
   }
 
 })( wp.customize, jQuery, _);
+
 (function (api, $, _) {
   var $_nav_section_container,
       translatedStrings = serverControlParams.translatedStrings || {};
