@@ -702,7 +702,6 @@ $.extend( CZRInputMths , {
             var input           = this,
                 $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
                 _new_val          = $( $_changed_input, obj.dom_el ).val();
-console.log(_new_val);
             if ( _new_val == input.get() )
               return;
 
@@ -742,7 +741,13 @@ $.extend( CZRInputMths , {
     input.container.on( 'click keydown', '.default-button', input.czrImgUploadRestoreDefault );
 
     input.bind( input.id + ':changed', function( to, from ){
-       input.renderImageUploaderTemplate();
+      console.log( input.attachment.id );
+      if ( input.attachment.id != to ) {
+        wp.media.attachment( to ).fetch().done( function() {
+          input.attachment = this.attributes;
+          input.renderImageUploaderTemplate();
+        });
+      }
     });
   },
   czrImgUploadOpenFrame: function( event ) {
@@ -973,7 +978,6 @@ $.extend( CZRInputMths , {
     _updateInput.call( this, obj );
   }
 });//$.extend
-
 var CZRItemMths = CZRItemMths || {};
 $.extend( CZRItemMths , {
   initialize: function( id, options ) {
@@ -2059,7 +2063,6 @@ $.extend( CZRSocialModuleMths, {
 
 });
 
-
 var CZRWidgetAreaModuleMths = CZRWidgetAreaModuleMths || {};
 
 $.extend( CZRWidgetAreaModuleMths, {
@@ -2696,6 +2699,34 @@ $.extend( CZRFeaturedPageModuleMths, {
         item.set( _new_model );
       } else {
         item.czr_Input('fp-title').set( _new_title );
+        var request = wp.ajax.post( 'get-fp-post', {
+          'wp_customize': 'on',
+          'id'          : _fp_post.id
+        } );
+
+        request.done( function( data ){
+          var _post_info = data.post_info;
+
+          if ( 0 !== _post_info.length ) {
+            var _to_update = {};
+            if ( _post_info.thumbnail )
+              $.extend( _to_update, { 'fp-image': _post_info.thumbnail } );
+            if ( _post_info.excerpt )
+              $.extend( _to_update, { 'fp-text': _post_info.excerpt } );
+            _.each( _to_update, function( value, id ){
+              item.czr_Input( id ).set( value );
+            });
+            console.log( item.get() );
+          }
+        });
+
+        request.fail(function( data ) {
+          if ( typeof console !== 'undefined' && console.error ) {
+            console.error( data );
+          }
+        });
+        request.always(function() { /* TODO */
+        });
       }
     },
     updateItemTitle : function( _new_val ) {
@@ -2752,7 +2783,7 @@ $.extend( CZRModuleControlMths, {
               czr_widget_areas_module   : api.CZRWidgetAreaModule,
               czr_social_module    : api.CZRSocialModule,
               czr_sektion_module    : api.CZRSektionModule,
-              czr_fp_module    : api.CZRFeaturedPageModule
+              czr_fp_module    : api.CZRFeaturedPageModule,
           };
 
           control.czr_Module = new api.Values();

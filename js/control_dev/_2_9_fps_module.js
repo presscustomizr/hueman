@@ -79,6 +79,44 @@ $.extend( CZRFeaturedPageModuleMths, {
         item.set( _new_model );
       } else {
         item.czr_Input('fp-title').set( _new_title );
+
+        //AJAX STUFF
+
+        //retrieve some ajax info
+        var request = wp.ajax.post( 'get-fp-post', {
+          'wp_customize': 'on',
+          'id'          : _fp_post.id
+          //nonce needed USE 1 for everything?
+        } );
+
+        request.done( function( data ){
+          var _post_info = data.post_info;
+
+          if ( 0 !== _post_info.length ) {
+            var _to_update = {};
+            if ( _post_info.thumbnail )
+              $.extend( _to_update, { 'fp-image': _post_info.thumbnail } );
+            if ( _post_info.excerpt )
+              $.extend( _to_update, { 'fp-text': _post_info.excerpt } );
+
+            //UPDATING THE MODEL DOESN'T UPDATE THE TEXT'S VALS.. why?
+            _.each( _to_update, function( value, id ){
+              item.czr_Input( id ).set( value );
+            });
+           /* console.log( _new_model );  
+            item.set( $.extend(_new_model, _to_update) );*/
+            console.log( item.get() );
+          }
+        });
+
+        request.fail(function( data ) {
+          if ( typeof console !== 'undefined' && console.error ) {
+            console.error( data );
+          }
+        });
+        request.always(function() { /* TODO */
+        //  availableMenuItemContainer.find( '.accordion-section-title' ).removeClass( 'loading' );
+        });
       }
     },
     updateItemTitle : function( _new_val ) {

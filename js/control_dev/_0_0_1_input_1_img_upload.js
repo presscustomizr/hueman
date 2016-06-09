@@ -41,7 +41,16 @@ $.extend( CZRInputMths , {
     input.container.on( 'click keydown', '.default-button', input.czrImgUploadRestoreDefault );
 
     input.bind( input.id + ':changed', function( to, from ){
-       input.renderImageUploaderTemplate();
+      //retrieve new image if to is different from the saved one
+      //NEED A BETTER WAY!
+      //WE NEED an ATOMIC REFRESH!!!
+      console.log( input.attachment.id );
+      if ( input.attachment.id != to ) {
+        wp.media.attachment( to ).fetch().done( function() {
+          input.attachment = this.attributes;
+          input.renderImageUploaderTemplate();
+        });
+      }
     });
 
 
