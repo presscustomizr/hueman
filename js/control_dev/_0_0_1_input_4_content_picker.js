@@ -157,9 +157,6 @@ $.extend( CZRInputMths , {
       }
 
       input.set(_new_val);
-      //say it to the dom
-      //@todo use the api Events instead
-      input.trigger( input.id + ':changed', _new_val );
       return;
     }//else
     _updateInput.call( this, obj );

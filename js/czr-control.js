@@ -702,7 +702,9 @@ $.extend( CZRInputMths , {
             var input           = this,
                 $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
                 _new_val          = $( $_changed_input, obj.dom_el ).val();
-
+            if ( _new_val == input.get() )
+              return;
+            
             input.set(_new_val);
     }
 });//$.extend
@@ -944,12 +946,12 @@ $.extend( CZRInputMths , {
       }
 
       input.set(_new_val);
-      input.trigger( input.id + ':changed', _new_val );
       return;
     }//else
     _updateInput.call( this, obj );
   }
 });//$.extend
+
 var CZRItemMths = CZRItemMths || {};
 $.extend( CZRItemMths , {
   initialize: function( id, options ) {
@@ -1864,6 +1866,7 @@ $.extend( CZRSocialElementMths, {
 
 });
 
+
 var CZRWidgetAreaElementMths = CZRWidgetAreaElementMths || {};
 
 $.extend( CZRWidgetAreaElementMths, {
@@ -2518,6 +2521,7 @@ $.extend( CZRFeaturedPageElementMths, {
   CZRFeaturedPagesItem : {
   }
 });
+
 
 var CZRBaseControlMths = CZRBaseControlMths || {};
 

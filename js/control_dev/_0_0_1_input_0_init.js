@@ -126,7 +126,6 @@ $.extend( CZRInputMths , {
             input.item.set(_new_model);
             //inform that an api changed
             input.trigger( input.id + ':changed', to );
-//console.log(to);
     },
 
 
@@ -137,6 +136,13 @@ $.extend( CZRInputMths , {
                 $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
                 _new_val          = $( $_changed_input, obj.dom_el ).val();
 
+            //Do nothing if the value hasn't really changed
+            //For synced elements this might be called after the inputReact
+            //so going re-setting the same val => fixes issue with iCheck
+            //not updated passing from true => false => true
+            if ( _new_val == input.get() )
+              return;
+            
             input.set(_new_val);
             /* Handled in the inputReact, in the future we might want
              * to inform that the change was "dome" driven
