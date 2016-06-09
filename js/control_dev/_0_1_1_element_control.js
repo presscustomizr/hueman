@@ -26,7 +26,8 @@ $.extend( CZRElementControlMths, {
           //define a default Constructor
           control.elementConstructors = {
               czr_widget_areas_element   : api.CZRWidgetAreaElement,
-              czr_social_element    : api.CZRSocialElement
+              czr_social_element    : api.CZRSocialElement,
+              czr_sektion_element    : api.CZRSektionElement
           };
 
           control.czr_Element = new api.Values();

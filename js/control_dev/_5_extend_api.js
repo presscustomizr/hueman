@@ -1,3 +1,4 @@
+
 (function (api, $, _) {
   //Extends all constructores with the events manager
   $.extend( CZRBaseControlMths, api.Events || {} );
@@ -20,9 +21,13 @@
   api.CZRElement               = api.Value.extend( CZRElementMths || {} );
   api.CZRDynElement            = api.CZRElement.extend( CZRDynElementMths || {} );
 
+  //COLUMNS => used as constructor
+  api.CZRColumn                = api.Value.extend( CZRColumnMths || {} );
+
   //ELEMENT COLLECTION
   api.CZRSocialElement         = api.CZRDynElement.extend( CZRSocialElementMths || {} );
   api.CZRWidgetAreaElement     = api.CZRDynElement.extend( CZRWidgetAreaElementMths || {} );
+  api.CZRSektionElement        = api.CZRDynElement.extend( CZRSektionMths || {} );
 
   //CONTROLS
   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMths || {} );
@@ -37,7 +42,7 @@
   api.CZRLayoutControl         = api.Control.extend( CZRLayoutSelectMths || {} );
   api.CZRMultiplePickerControl = api.Control.extend( CZRMultiplePickerMths || {} );
 
-  //api.CZRSektionsControl       = api.CZRDynElement.extend( CZRSektionsMths || {} );
+
 
   $.extend( api.controlConstructor, {
         czr_upload     : api.CZRUploadControl,
@@ -48,11 +53,15 @@
         czr_elements : api.CZRElementsControl,
 
         czr_multiple_picker : api.CZRMultiplePickerControl,
-        czr_layouts    : api.CZRLayoutControl,
+        czr_layouts    : api.CZRLayoutControl
 
         //czr_background : api.CZRBackgroundControl,
         //czr_sektions   : api.CZRSektionsControl
   });
+
+
+
+
 
   if ( 'function' == typeof api.CroppedImageControl ) {
     api.CZRCroppedImageControl   = api.CroppedImageControl.extend( CZRCroppedImageMths || {} );

@@ -1329,12 +1329,56 @@ span.select2-results, body .select2-container {
 /* OVERRIDE WP CUSTOMIZER */
 
 /* SEKTIONS AND BLOCKS */
-.czr-block {
+.czr-column {
   width: 88%;
   float: left;
   padding: 0 5%;
   border: 2px dotted #aaa;
   text-align: center;
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+
+/* DRAGULA */
+.gu-mirror {
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 999999 !important;
+  opacity: 0.8;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
+}
+.gu-hide {
+  display: none !important;
+}
+.gu-unselectable {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+.gu-transit {
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
+}
+
+/* CUSTOM FOR DRAGULA */
+.czr-dragula-fake-container {
+  display: none;
+  float: left;
+  height: 60px;
+  width: 96%;
+  margin: 2%;
+  border: 2px dotted #aaa;
+  text-align: center;
+  line-height: 30px;
+}
+.czr-show-fake-container .czr-dragula-fake-container {
+  display: block;
 }/* HEADER AND SCOPE SWITCHER */
 .wp-customizer .wp-full-overlay-sidebar .wp-full-overlay-header {
   height: 85px;

@@ -18,7 +18,7 @@ $.extend( CZRElementMths, {
                 //normalizes the item
                 item = element._normalizeItem(item, _.has( item, 'id' ) ? item.id : key );
                 if ( false === item ) {
-                  throw new Error('fetchSavedCollection : an item could not be added in : ' + element.id );
+                  throw new Error('populateItemCollection : an item could not be added in : ' + element.id );
                 }
                 //adds it to the collection
                 element.instantiateItem(item);
@@ -51,6 +51,8 @@ $.extend( CZRElementMths, {
 
           //listen to each single item change
           element.czr_Item(item.id).callbacks.add( function() { return element.itemReact.apply(element, arguments ); } );
+
+          element.trigger('item_instanciated', item );
   },
 
 

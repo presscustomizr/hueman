@@ -106,7 +106,11 @@ $.extend( CZRItemMths , {
 
           //render and setup view content if needed
           if ( ! $.trim( $viewContent.html() ) ) {
-                item.renderViewContent( item_model );
+              var $item_content = item.renderViewContent( item_model );
+              if ( ! _.isUndefined($item_content) && false !== $item_content ) {
+                console.log('RENDERED?', item.id );
+                item.trigger('item_content_rendered');
+              }
           }
           //create the collection of inputs if needed
           if ( ! _.has(item, 'czr_Input') ) {
