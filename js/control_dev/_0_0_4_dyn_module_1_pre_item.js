@@ -5,9 +5,9 @@
 //renders the control view
 //Listen to items collection changes and update the control setting
 
-var CZRDynElementMths = CZRDynElementMths || {};
+var CZRDynModuleMths = CZRDynModuleMths || {};
 
-$.extend( CZRDynElementMths, {
+$.extend( CZRDynModuleMths, {
   // updatePreModel : function(obj) {
   //       //get the changed property and val
   //       //=> all html input have data-type attribute corresponding to the ones stored in the item

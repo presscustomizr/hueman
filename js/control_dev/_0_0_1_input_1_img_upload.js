@@ -6,7 +6,7 @@ $.extend( CZRInputMths , {
              _model      = input.get();
 
         //an instance field where we'll store the current attachment
-        input.attachment = {};    
+        input.attachment = {};
 
         //do we have an html template and a input container?
         if ( ! input.container )
@@ -17,13 +17,13 @@ $.extend( CZRInputMths , {
           wp.media.attachment( _model ).fetch().done( function() {
             input.attachment = this.attributes;
             if ( ! input.renderImageUploaderTemplate() )
-              return;  
-            input.czrImgUploaderBinding();    
+              return;
+            input.czrImgUploaderBinding();
           });
         }else {
           if ( ! input.renderImageUploaderTemplate() )
             return;
-            
+
           input.czrImgUploaderBinding();
         }
 
@@ -42,7 +42,7 @@ $.extend( CZRInputMths , {
 
     input.bind( input.id + ':changed', function( to, from ){
        input.renderImageUploaderTemplate();
-    });  
+    });
 
 
          // control.setting.bind( function( value, old_val, something ) {
@@ -56,7 +56,7 @@ $.extend( CZRInputMths , {
 
          //   //re-render the template
          //   control.renderImageUploaderTemplate();
-         // });  
+         // });
   },
   /**
   * Open the media modal.
@@ -80,10 +80,10 @@ $.extend( CZRInputMths , {
   */
   czrImgUploadInitFrame: function() {
       var input = this,
-          element = input.element;
-      
+          module = input.module;
+
       var button_labels = this.getUploaderLabels();
-          
+
        input.frame = wp.media({
          button: {
              text: button_labels.frame_button
@@ -106,7 +106,7 @@ $.extend( CZRInputMths , {
   */
   czrImgUploadRestoreDefault: function( event ) {
         var input = this,
-          element = input.element;
+          module = input.module;
 
         if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
           return;
@@ -116,7 +116,7 @@ $.extend( CZRInputMths , {
 
         //reset the attachment class field to the default img
         input.attachment = {};
-        //set the model 
+        //set the model
         input.set( {} );
   },
 
@@ -127,7 +127,7 @@ $.extend( CZRInputMths , {
   */
   czrImgUploadRemoveFile: function( event ) {
         var input = this,
-          element = input.element;
+          module = input.module;
 
         if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
           return;
@@ -147,7 +147,7 @@ $.extend( CZRInputMths , {
   czrImgUploadSelect: function() {
         var node,
             input = this,
-            element = input.element,
+            module = input.module,
             attachment   = input.frame.state().get( 'selection' ).first().toJSON(),  // Get the attachment from the modal frame.
             mejsSettings = window._wpmejsSettings || {};
         //save the attachment in a class field
@@ -171,21 +171,21 @@ $.extend( CZRInputMths , {
 
        var view_template = wp.template('czr-input-img-uploader-view-content');
 
-       //  //do we have an html template and a element container?
+       //  //do we have an html template and a module container?
        if ( ! view_template  || ! input.container )
         return;
 
-       var $_view_el    = input.container.find('.' + input.element.control.css_attr.img_upload_container );
+       var $_view_el    = input.container.find('.' + input.module.control.css_attr.img_upload_container );
 
        if ( ! $_view_el.length )
          return;
-              
+
        var _template_params = {
           button_labels : input.getUploaderLabels(),
           settings      : input.id,
           attachment    : input.attachment,
           canUpload     : true
-       }; 
+       };
 
        $_view_el.html( view_template( _template_params) );
 

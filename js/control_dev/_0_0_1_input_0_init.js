@@ -6,16 +6,16 @@ var CZRInputMths = CZRInputMths || {};
 // type : $(this).attr('data-input-type'),
 // value : $(this).find('[data-type]').val(),
 // container : $(this),
-// item : item (Value instance, has a parent element)
-// element : element,
+// item : item (Value instance, has a parent module)
+// module : module,
 // is_preItemInput : true
 $.extend( CZRInputMths , {
     initialize: function( name, options ) {
             if ( _.isUndefined(options.item ) || _.isEmpty(options.item) ) {
               throw new Error('No item assigned to input ' + options.id + '. Aborting');
             }
-            if ( _.isUndefined(options.element ) ) {
-              throw new Error('No element assigned to input ' + options.id + '. Aborting');
+            if ( _.isUndefined(options.module ) ) {
+              throw new Error('No module assigned to input ' + options.id + '. Aborting');
             }
 
             api.Value.prototype.initialize.call( this, null, options );
@@ -85,7 +85,7 @@ $.extend( CZRInputMths , {
             input.syncElement.set( input() );
             input.syncElement.sync( input );
             input.callbacks.add( function(to) {
-                  //set the synchronized element vat
+                  //set the synchronized module vat
                   input.syncElement.set( to );
 
                   //refresh specific input types
@@ -142,7 +142,7 @@ console.log(_new_val);
             //not updated passing from true => false => true
             if ( _new_val == input.get() )
               return;
-            
+
             input.set(_new_val);
             /* Handled in the inputReact, in the future we might want
              * to inform that the change was "dome" driven

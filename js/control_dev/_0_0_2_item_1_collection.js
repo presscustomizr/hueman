@@ -2,29 +2,29 @@
 //options:
   // item_id : item.id,
   // item_model : item,
-  // defaultItemModel : element.defaultItemModel,
-  // item_element : element,
+  // defaultItemModel : module.defaultItemModel,
+  // item_module : module,
   // is_added_by_user : is_added_by_user || false
 var CZRItemMths = CZRItemMths || {};
 $.extend( CZRItemMths , {
   //creates the inputs based on the rendered items
   setupInputCollection : function() {
         var item = this,
-            element = item.item_element;
+            module = item.item_module;
 
         //INPUTS => Setup as soon as the view content is rendered
-        //the item is a collection of inputs, each one has its own view element.
+        //the item is a collection of inputs, each one has its own view module.
         item.czr_Input = new api.Values();
 
         //this can be overriden by extended classes to add and overrides methods
-        item.inputConstructor = element.inputConstructor;
+        item.inputConstructor = module.inputConstructor;
 
         if ( _.isEmpty(item.defaultItemModel) || _.isUndefined(item.defaultItemModel) ) {
           throw new Error('No default model found in item ' + item.item_id + '. Aborting');
         }
 
         //prepare and sets the item value on api ready
-        //=> triggers the element rendering + DOM LISTENERS
+        //=> triggers the module rendering + DOM LISTENERS
         var initial_input_values = item.initial_input_values;
 
         if ( ! _.isObject(initial_input_values) )
@@ -35,7 +35,7 @@ $.extend( CZRItemMths , {
         var input_collection = {};
 
         //creates the inputs based on the rendered items
-        $( '.'+element.control.css_attr.sub_set_wrapper, item.container).each( function(_index) {
+        $( '.'+module.control.css_attr.sub_set_wrapper, item.container).each( function(_index) {
 
               var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index,
                   _value = _.has( initial_input_values, _id) ? initial_input_values[_id] : '';
@@ -46,7 +46,7 @@ $.extend( CZRItemMths , {
                   input_value : _value,
                   container : $(this),
                   item : item,
-                  element : element
+                  module : module
               } ) );
               //populate the collection
               input_collection[_id] = _value;

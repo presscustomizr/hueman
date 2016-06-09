@@ -606,8 +606,8 @@ $.extend( CZRInputMths , {
             if ( _.isUndefined(options.item ) || _.isEmpty(options.item) ) {
               throw new Error('No item assigned to input ' + options.id + '. Aborting');
             }
-            if ( _.isUndefined(options.element ) ) {
-              throw new Error('No element assigned to input ' + options.id + '. Aborting');
+            if ( _.isUndefined(options.module ) ) {
+              throw new Error('No module assigned to input ' + options.id + '. Aborting');
             }
 
             api.Value.prototype.initialize.call( this, null, options );
@@ -705,7 +705,7 @@ $.extend( CZRInputMths , {
 console.log(_new_val);
             if ( _new_val == input.get() )
               return;
-            
+
             input.set(_new_val);
     }
 });//$.extend
@@ -715,20 +715,20 @@ $.extend( CZRInputMths , {
 
         var input        = this,
              _model      = input.get();
-        input.attachment = {};    
+        input.attachment = {};
         if ( ! input.container )
           return this;
         if ( _model ) {
           wp.media.attachment( _model ).fetch().done( function() {
             input.attachment = this.attributes;
             if ( ! input.renderImageUploaderTemplate() )
-              return;  
-            input.czrImgUploaderBinding();    
+              return;
+            input.czrImgUploaderBinding();
           });
         }else {
           if ( ! input.renderImageUploaderTemplate() )
             return;
-            
+
           input.czrImgUploaderBinding();
         }
 
@@ -743,7 +743,7 @@ $.extend( CZRInputMths , {
 
     input.bind( input.id + ':changed', function( to, from ){
        input.renderImageUploaderTemplate();
-    });  
+    });
   },
   czrImgUploadOpenFrame: function( event ) {
         if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
@@ -760,10 +760,10 @@ $.extend( CZRInputMths , {
   },
   czrImgUploadInitFrame: function() {
       var input = this,
-          element = input.element;
-      
+          module = input.module;
+
       var button_labels = this.getUploaderLabels();
-          
+
        input.frame = wp.media({
          button: {
              text: button_labels.frame_button
@@ -781,7 +781,7 @@ $.extend( CZRInputMths , {
   },
   czrImgUploadRestoreDefault: function( event ) {
         var input = this,
-          element = input.element;
+          module = input.module;
 
         if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
           return;
@@ -792,7 +792,7 @@ $.extend( CZRInputMths , {
   },
   czrImgUploadRemoveFile: function( event ) {
         var input = this,
-          element = input.element;
+          module = input.module;
 
         if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
           return;
@@ -804,7 +804,7 @@ $.extend( CZRInputMths , {
   czrImgUploadSelect: function() {
         var node,
             input = this,
-            element = input.element,
+            module = input.module,
             attachment   = input.frame.state().get( 'selection' ).first().toJSON(),  // Get the attachment from the modal frame.
             mejsSettings = window._wpmejsSettings || {};
         input.attachment = attachment;
@@ -819,17 +819,17 @@ $.extend( CZRInputMths , {
        if ( ! view_template  || ! input.container )
         return;
 
-       var $_view_el    = input.container.find('.' + input.element.control.css_attr.img_upload_container );
+       var $_view_el    = input.container.find('.' + input.module.control.css_attr.img_upload_container );
 
        if ( ! $_view_el.length )
          return;
-              
+
        var _template_params = {
           button_labels : input.getUploaderLabels(),
           settings      : input.id,
           attachment    : input.attachment,
           canUpload     : true
-       }; 
+       };
 
        $_view_el.html( view_template( _template_params) );
 
@@ -977,8 +977,8 @@ $.extend( CZRInputMths , {
 var CZRItemMths = CZRItemMths || {};
 $.extend( CZRItemMths , {
   initialize: function( id, options ) {
-        if ( _.isUndefined(options.item_element) || _.isEmpty(options.item_element) ) {
-          throw new Error('No element assigned to item ' + id + '. Aborting');
+        if ( _.isUndefined(options.item_module) || _.isEmpty(options.item_module) ) {
+          throw new Error('No module assigned to item ' + id + '. Aborting');
         }
         var item = this;
         api.Value.prototype.initialize.call( item, null, options );
@@ -1000,24 +1000,24 @@ $.extend( CZRItemMths , {
 
   setupView : function( item_model ) {
           var item = this,
-              element = this.item_element;
+              module = this.item_module;
 
           item.view_event_map = [
                   {
                     trigger   : 'click keydown',
-                    selector  : [ '.' + element.control.css_attr.display_alert_btn, '.' + element.control.css_attr.cancel_alert_btn ].join(','),
+                    selector  : [ '.' + module.control.css_attr.display_alert_btn, '.' + module.control.css_attr.cancel_alert_btn ].join(','),
                     name      : 'toggle_remove_alert',
                     actions   : ['toggleRemoveAlertVisibility']
                   },
                   {
                     trigger   : 'click keydown',
-                    selector  : '.' + element.control.css_attr.remove_view_btn,
+                    selector  : '.' + module.control.css_attr.remove_view_btn,
                     name      : 'remove_item',
                     actions   : ['removeItem']
                   },
                   {
                     trigger   : 'click keydown',
-                    selector  : [ '.' + element.control.css_attr.edit_view_btn, '.' + element.control.css_attr.view_title ].join(','),
+                    selector  : [ '.' + module.control.css_attr.edit_view_btn, '.' + module.control.css_attr.view_title ].join(','),
                     name      : 'edit_view',
                     actions   : ['setViewVisibility']
                   }
@@ -1032,15 +1032,15 @@ $.extend( CZRItemMths , {
           item.czr_View.callbacks.add( function() { return item.setupViewStateListeners.apply(item, arguments ); } );
 
           api.CZR_Helpers.setupDOMListeners( item.view_event_map , { model:item_model, dom_el:item.container }, item );//listeners for the view wrapper
-          element.trigger('view_setup', { model : item_model , dom_el: item.container} );
+          module.trigger('view_setup', { model : item_model , dom_el: item.container} );
   },
 
 
   setupViewStateListeners : function( to, from ) {
           var item = this,
               item_model = item.get() || item.initial_input_values,//could not be set yet
-              element = this.item_element,
-              $viewContent = $( '.' + element.control.css_attr.view_content, item.container );
+              module = this.item_module,
+              $viewContent = $( '.' + module.control.css_attr.view_content, item.container );
           if ( ! $.trim( $viewContent.html() ) ) {
               var $item_content = item.renderViewContent( item_model );
               if ( ! _.isUndefined($item_content) && false !== $item_content ) {
@@ -1066,9 +1066,9 @@ var CZRItemMths = CZRItemMths || {};
 $.extend( CZRItemMths , {
   setupInputCollection : function() {
         var item = this,
-            element = item.item_element;
+            module = item.item_module;
         item.czr_Input = new api.Values();
-        item.inputConstructor = element.inputConstructor;
+        item.inputConstructor = module.inputConstructor;
 
         if ( _.isEmpty(item.defaultItemModel) || _.isUndefined(item.defaultItemModel) ) {
           throw new Error('No default model found in item ' + item.item_id + '. Aborting');
@@ -1081,7 +1081,7 @@ $.extend( CZRItemMths , {
           initial_input_values = $.extend( item.defaultItemModel, initial_input_values );
 
         var input_collection = {};
-        $( '.'+element.control.css_attr.sub_set_wrapper, item.container).each( function(_index) {
+        $( '.'+module.control.css_attr.sub_set_wrapper, item.container).each( function(_index) {
 
               var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index,
                   _value = _.has( initial_input_values, _id) ? initial_input_values[_id] : '';
@@ -1092,7 +1092,7 @@ $.extend( CZRItemMths , {
                   input_value : _value,
                   container : $(this),
                   item : item,
-                  element : element
+                  module : module
               } ) );
               input_collection[_id] = _value;
         });//each
@@ -1106,7 +1106,7 @@ var CZRItemMths = CZRItemMths || {};
   $.extend( CZRItemMths , {
     _sendItem : function( to, from ) {
           var item = this,
-              element = item.item_element,
+              module = item.item_module,
               _changed_props = [];
           _.each( from, function( _val, _key ) {
                 if ( _val != to[_key] )
@@ -1114,24 +1114,24 @@ var CZRItemMths = CZRItemMths || {};
           });
 
           _.each( _changed_props, function( _prop ) {
-                element.control.previewer.send( 'sub_setting', {
-                      set_id : element.control.id,
+                module.control.previewer.send( 'sub_setting', {
+                      set_id : module.control.id,
                       item_id : to.id,
                       changed_prop : _prop,
                       value : to[_prop]
                 });
-                element.trigger('item_sent', { item : to , dom_el: item.container, changed_prop : _prop } );
+                module.trigger('item_sent', { item : to , dom_el: item.container, changed_prop : _prop } );
           });
     },
     removeItem : function() {
             var item = this,
-                element = this.item_element,
-                _new_collection = _.clone( element.get() );
+                module = this.item_module,
+                _new_collection = _.clone( module.get() );
             item._destroyView();
             _new_collection = _.without( _new_collection, _.findWhere( _new_collection, {id: item.item_id }) );
-            element.set( _new_collection );
-            element.trigger('item_removed', item.get() );
-            element.czr_Item.remove(item.item_id);
+            module.set( _new_collection );
+            module.trigger('item_removed', item.get() );
+            module.czr_Item.remove(item.item_id);
     },
     getModel : function(id) {
             return this.get();
@@ -1143,33 +1143,33 @@ var CZRItemMths = CZRItemMths || {};
 $.extend( CZRItemMths , {
   renderView : function( item_model ) {
         var item = this,
-            element = item.item_element;
+            module = item.item_module;
             item_model = item_model || item.get();
-        if ( 0 === $( '#tmpl-' + element.getTemplateEl( 'view', item_model ) ).length )
+        if ( 0 === $( '#tmpl-' + module.getTemplateEl( 'view', item_model ) ).length )
           return false;//break the action chain
 
-        var view_template = wp.template( element.getTemplateEl( 'view', item_model ) );
-        if ( ! view_template  || ! element.container )
+        var view_template = wp.template( module.getTemplateEl( 'view', item_model ) );
+        if ( ! view_template  || ! module.container )
           return;
         if ( _.has(item, 'container') && false !== item.container.length )
           return;
 
-        $_view_el = $('<li>', { class : element.control.css_attr.inner_view, 'data-id' : item_model.id,  id : item_model.id } );
-        $( '.' + element.control.css_attr.views_wrapper , element.container).append( $_view_el );
+        $_view_el = $('<li>', { class : module.control.css_attr.inner_view, 'data-id' : item_model.id,  id : item_model.id } );
+        $( '.' + module.control.css_attr.views_wrapper , module.container).append( $_view_el );
         $( view_template( item_model ) ).appendTo( $_view_el );
 
         return $_view_el;
   },
   renderViewContent : function( item_model ) {
           var item = this,
-              element = this.item_element;
-          if ( 0 === $( '#tmpl-' + element.getTemplateEl( 'view-content', item_model ) ).length )
+              module = this.item_module;
+          if ( 0 === $( '#tmpl-' + module.getTemplateEl( 'view-content', item_model ) ).length )
             return this;
 
-          var  view_content_template = wp.template( element.getTemplateEl( 'view-content', item_model ) );
-          if ( ! view_content_template || ! element.container )
+          var  view_content_template = wp.template( module.getTemplateEl( 'view-content', item_model ) );
+          if ( ! view_content_template || ! module.container )
             return this;
-          $( view_content_template( item_model )).appendTo( $('.' + element.control.css_attr.view_content, item.container ) );
+          $( view_content_template( item_model )).appendTo( $('.' + module.control.css_attr.view_content, item.container ) );
 
           item.trigger( 'view_content_rendered' , {model : item_model } );
 
@@ -1177,23 +1177,23 @@ $.extend( CZRItemMths , {
   },
   writeItemViewTitle : function( item_model ) {
         var item = this,
-            element = item.item_element,
+            module = item.item_module,
             _model = item_model || item.get(),
             _title = _.has( _model, 'title')? api.CZR_Helpers.capitalize( _model.title ) : _model.id;
 
         _title = api.CZR_Helpers.truncate(_title, 20);
-        $( '.' + element.control.css_attr.view_title , item.container ).text(_title );
+        $( '.' + module.control.css_attr.view_title , item.container ).text(_title );
         api.CZR_Helpers.doActions('after_writeViewTitle', item.container , _model, item );
   },
   setViewVisibility : function( obj, is_added_by_user ) {
           var item = this,
-              element = this.item_element;
+              module = this.item_module;
           if ( is_added_by_user ) {
             item.czr_View.set( 'expanded_noscroll' );
           } else {
-            element.closeAllViews( item.item_id );
-            if ( _.has(element, 'czr_preItem') ) {
-              element.czr_preItem('view_status').set( 'closed');
+            module.closeAllViews( item.item_id );
+            if ( _.has(module, 'czr_preItem') ) {
+              module.czr_preItem('view_status').set( 'closed');
             }
             item.czr_View.set( 'expanded' == item._getViewState() ? 'closed' : 'expanded' );
           }
@@ -1205,15 +1205,15 @@ $.extend( CZRItemMths , {
   },
   _toggleViewExpansion : function( status, duration ) {
           var item = this,
-              element = this.item_element;
-          $( '.' + element.control.css_attr.view_content , item.container ).slideToggle( {
+              module = this.item_module;
+          $( '.' + module.control.css_attr.view_content , item.container ).slideToggle( {
               duration : duration || 200,
               done : function() {
                 var _is_expanded = 'closed' != status;
 
                 item.container.toggleClass('open' , _is_expanded );
-                element.closeAllAlerts();
-                var $_edit_icon = $(this).siblings().find('.' + element.control.css_attr.edit_view_btn );
+                module.closeAllAlerts();
+                var $_edit_icon = $(this).siblings().find('.' + module.control.css_attr.edit_view_btn );
 
                 $_edit_icon.toggleClass('active' , _is_expanded );
                 if ( _is_expanded )
@@ -1221,31 +1221,31 @@ $.extend( CZRItemMths , {
                 else
                   $_edit_icon.removeClass('fa-minus-square').addClass('fa-pencil').attr('title', serverControlParams.translatedStrings.edit );
                 if ( 'expanded' == status )
-                  element._adjustScrollExpandedBlock( item.container );
+                  module._adjustScrollExpandedBlock( item.container );
               }//done callback
             } );
   },
   toggleRemoveAlertVisibility : function(obj) {
           var item = this,
-              element = this.item_element,
-              $_alert_el = $( '.' + element.control.css_attr.remove_alert_wrapper, item.container ),
+              module = this.item_module,
+              $_alert_el = $( '.' + module.control.css_attr.remove_alert_wrapper, item.container ),
               $_clicked = obj.dom_event;
-          element.closeAllViews();
-          if ( _.has(element, 'czr_preItem') ) {
-            element.czr_preItem('view_status').set( 'closed');
+          module.closeAllViews();
+          if ( _.has(module, 'czr_preItem') ) {
+            module.czr_preItem('view_status').set( 'closed');
           }
-          $('.' + element.control.css_attr.remove_alert_wrapper, item.container ).not($_alert_el).each( function() {
+          $('.' + module.control.css_attr.remove_alert_wrapper, item.container ).not($_alert_el).each( function() {
             if ( $(this).hasClass('open') ) {
               $(this).slideToggle( {
                 duration : 200,
                 done : function() {
                   $(this).toggleClass('open' , false );
-                  $(this).siblings().find('.' + element.control.css_attr.display_alert_btn).toggleClass('active' , false );
+                  $(this).siblings().find('.' + module.control.css_attr.display_alert_btn).toggleClass('active' , false );
                 }
               } );
             }
           });
-          var alert_template = wp.template( element.viewAlertEl );
+          var alert_template = wp.template( module.viewAlertEl );
           if ( ! alert_template  || ! item.container )
             return this;
 
@@ -1255,9 +1255,9 @@ $.extend( CZRItemMths , {
             done : function() {
               var _is_open = ! $(this).hasClass('open') && $(this).is(':visible');
               $(this).toggleClass('open' , _is_open );
-              $( obj.dom_el ).find('.' + element.control.css_attr.display_alert_btn).toggleClass( 'active', _is_open );
+              $( obj.dom_el ).find('.' + module.control.css_attr.display_alert_btn).toggleClass( 'active', _is_open );
               if ( _is_open )
-                element._adjustScrollExpandedBlock( item.container );
+                module._adjustScrollExpandedBlock( item.container );
             }
           } );
   },
@@ -1270,77 +1270,77 @@ $.extend( CZRItemMths , {
           });
   },
 });//$.extend
-var CZRElementMths = CZRElementMths || {};
+var CZRModuleMths = CZRModuleMths || {};
 
-$.extend( CZRElementMths, {
+$.extend( CZRModuleMths, {
 
   initialize: function( id, options ) {
           if ( _.isUndefined(options.control) || _.isEmpty(options.control) ) {
-            throw new Error('No control assigned to element ' + id + '. Aborting');
+            throw new Error('No control assigned to module ' + id + '. Aborting');
           }
           api.Value.prototype.initialize.call( this, null, options );
 
-          var element = this;
-          $.extend( element, options || {} );
-          $.extend( element, {
+          var module = this;
+          $.extend( module, options || {} );
+          $.extend( module, {
               viewPreAddEl : '',
               viewTemplateEl : '',
               viewContentTemplateEl : '',
           } );
-          element.set([]);//the element is a collection items => this is the collection
+          module.set([]);//the module is a collection items => this is the collection
 
-          if ( ! _.has( element.control.params, 'in_sektion' ) || ! element.control.params.in_sektion )
-            element.container = $( element.control.selector );
+          if ( ! _.has( module.control.params, 'in_sektion' ) || ! module.control.params.in_sektion )
+            module.container = $( module.control.selector );
           else {
-            throw new Error('The element container is not defined for element : ' + id + '. Aborting');
+            throw new Error('The module container is not defined for module : ' + id + '. Aborting');
           }
-          element.savedItems = options.items;
-          element.defaultElementModel = { id : '', title : '' };
-          element.itemConstructor = api.CZRItem;
-          element.inputConstructor = api.CZRInput;
-          element.czr_Item = new api.Values();
+          module.savedItems = options.items;
+          module.defaultModuleModel = { id : '', title : '' };
+          module.itemConstructor = api.CZRItem;
+          module.inputConstructor = api.CZRInput;
+          module.czr_Item = new api.Values();
   },
   ready : function() {
-          var element = this;
-          element.populateItemCollection()._makeItemsSortable();
-          element.callbacks.add( function() { return element.elementReact.apply(element, arguments ); } );
+          var module = this;
+          module.populateItemCollection()._makeItemsSortable();
+          module.callbacks.add( function() { return module.moduleReact.apply(module, arguments ); } );
   },
-  elementReact : function( to, from ) {
-          var element = this,
-              control = element.control,
+  moduleReact : function( to, from ) {
+          var module = this,
+              control = module.control,
               _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
               _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
               _item_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
               _collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && _.isEmpty(_item_updated);
           if ( _collection_sorted ) {
-                if ( _.has(element, 'czr_preItem') ) {
-                  element.czr_preItem('view_status').set('closed');
+                if ( _.has(module, 'czr_preItem') ) {
+                  module.czr_preItem('view_status').set('closed');
                 }
-                element.closeAllViews();
-                element.closeAllAlerts();
+                module.closeAllViews();
+                module.closeAllAlerts();
           }
-          var _current_collection = control.czr_elementCollection.get(),
-              _current_element = _.findWhere( _current_collection, { id : element.id } ),
-              _new_element = _.clone( _current_element );
+          var _current_collection = control.czr_moduleCollection.get(),
+              _current_module = _.findWhere( _current_collection, { id : module.id } ),
+              _new_module = _.clone( _current_module );
 
-          _new_element = $.extend(_new_element, { items : to } );
+          _new_module = $.extend(_new_module, { items : to } );
 
-          control.updateElementsCollection( {element : _new_element });
+          control.updateModulesCollection( {module : _new_module });
   }
 
 });//$.extend//CZRBaseControlMths//MULTI CONTROL CLASS
 
-var CZRElementMths = CZRElementMths || {};
+var CZRModuleMths = CZRModuleMths || {};
 
-$.extend( CZRElementMths, {
+$.extend( CZRModuleMths, {
   populateItemCollection : function() {
-          var element = this;
-          _.each( element.items, function( item, key ) {
-                item = element._normalizeItem(item, _.has( item, 'id' ) ? item.id : key );
+          var module = this;
+          _.each( module.items, function( item, key ) {
+                item = module._normalizeItem(item, _.has( item, 'id' ) ? item.id : key );
                 if ( false === item ) {
-                  throw new Error('populateItemCollection : an item could not be added in : ' + element.id );
+                  throw new Error('populateItemCollection : an item could not be added in : ' + module.id );
                 }
-                element.instantiateItem(item);
+                module.instantiateItem(item);
           });
 
           return this;
@@ -1349,38 +1349,38 @@ $.extend( CZRElementMths, {
 
   instantiateItem : function( item, is_added_by_user ) {
           if ( ! _.has( item,'id') ) {
-            throw new Error('CZRElement::instantiateItem() : an item has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
+            throw new Error('CZRModule::instantiateItem() : an item has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
           }
-          var element = this;
-          item =  ( _.has( item, 'id') && element._isItemIdPossible( item.id) ) ? item : element._initNewItem( item || {} );
-          element.czr_Item.add( item.id, new element.itemConstructor( item.id, {
+          var module = this;
+          item =  ( _.has( item, 'id') && module._isItemIdPossible( item.id) ) ? item : module._initNewItem( item || {} );
+          module.czr_Item.add( item.id, new module.itemConstructor( item.id, {
                 item_id : item.id,
                 initial_input_values : item,
-                defaultItemModel : _.clone( element.defaultItemModel ),
-                item_control : element.control,
-                item_element : element,
+                defaultItemModel : _.clone( module.defaultItemModel ),
+                item_control : module.control,
+                item_module : module,
                 is_added_by_user : is_added_by_user || false
           } ) );
-          element.updateItemsCollection( { item : item } );
-          element.czr_Item(item.id).callbacks.add( function() { return element.itemReact.apply(element, arguments ); } );
+          module.updateItemsCollection( { item : item } );
+          module.czr_Item(item.id).callbacks.add( function() { return module.itemReact.apply(module, arguments ); } );
 
-          element.trigger('item_instanciated', item );
+          module.trigger('item_instanciated', item );
   },
   itemReact : function( to, from ) {
-        var element = this;
-        element.updateItemsCollection( {item : to });
+        var module = this;
+        module.updateItemsCollection( {item : to });
   },
   updateItemsCollection : function( obj ) {
-          var element = this,
-              _current_collection = element.get();
+          var module = this,
+              _current_collection = module.get();
               _new_collection = _.clone(_current_collection);
           if ( _.has( obj, 'collection' ) ) {
-                element.set(obj.collection);
+                module.set(obj.collection);
                 return;
           }
 
           if ( ! _.has(obj, 'item') ) {
-              throw new Error('updateItemsCollection, no item provided ' + element.control.id + '. Aborting');
+              throw new Error('updateItemsCollection, no item provided ' + module.control.id + '. Aborting');
           }
           var item = _.clone(obj.item);
           if ( _.findWhere( _new_collection, { id : item.id } ) ) {
@@ -1393,14 +1393,14 @@ $.extend( CZRElementMths, {
           else {
               _new_collection.push(item);
           }
-          element.set(_new_collection);
+          module.set(_new_collection);
   },
   _getSortedDOMCollection : function( ) {
-          var element = this,
-              _old_collection = _.clone( element.get() ),
+          var module = this,
+              _old_collection = _.clone( module.get() ),
               _new_collection = [],
               _index = 0;
-          $( '.' + element.control.css_attr.inner_view, element.container ).each( function() {
+          $( '.' + module.control.css_attr.inner_view, module.container ).each( function() {
               var _item = _.findWhere( _old_collection, {id: $(this).attr('data-id') });
               if ( ! _item )
                 return;
@@ -1418,12 +1418,12 @@ $.extend( CZRElementMths, {
   }
 });//$.extend//CZRBaseControlMths//MULTI CONTROL CLASS
 
-var CZRElementMths = CZRElementMths || {};
+var CZRModuleMths = CZRModuleMths || {};
 
-$.extend( CZRElementMths, {
+$.extend( CZRModuleMths, {
   getDefaultModel : function( id ) {
-          var element = this;
-          return $.extend( _.clone(element.defaultItem), { id : id || '' } );
+          var module = this;
+          return $.extend( _.clone(module.defaultItem), { id : id || '' } );
   },
   _normalizeItem : function( item, key ) {
           if ( ! _.isObject(item) )
@@ -1432,18 +1432,18 @@ $.extend( CZRElementMths, {
           return item;
   },
   _isItemIdPossible : function( _id ) {
-          var element = this,
-              _collection = _.clone( element.get() );
+          var module = this,
+              _collection = _.clone( module.get() );
           return ! _.isEmpty(_id) && ! _.findWhere( _collection, { id : _id });
   },
   _initNewItem : function( _item , _next_key ) {
-          var element = this,
+          var module = this,
               _new_item = { id : '' },
               _id;
-          _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( element.get() );
+          _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( module.get() );
 
           if ( _.isNumber(_next_key) ) {
-            _id = element.type + '_' + _next_key;
+            _id = module.type + '_' + _next_key;
           }
           else {
             _id = _next_key;
@@ -1454,56 +1454,56 @@ $.extend( CZRElementMths, {
             _new_item = $.extend( _item, { id : _id } );
           else
             _new_item = this.getDefaultModel( _id );
-          if ( _.has(_new_item, 'id') && element._isItemIdPossible(_id) ) {
-            _.map( element.getDefaultModel() , function( value, property ){
+          if ( _.has(_new_item, 'id') && module._isItemIdPossible(_id) ) {
+            _.map( module.getDefaultModel() , function( value, property ){
               if ( ! _.has(_new_item, property) )
                 _new_item[property] = value;
             });
 
             return _new_item;
           }
-          return element._initNewItem( _new_item, _next_key + 1);
+          return module._initNewItem( _new_item, _next_key + 1);
   }
 
 });//$.extend//MULTI CONTROL CLASS
-var CZRElementMths = CZRElementMths || {};
-$.extend( CZRElementMths, {
+var CZRModuleMths = CZRModuleMths || {};
+$.extend( CZRModuleMths, {
   getTemplateEl : function( type, model ) {
-          var element = this, _el;
+          var module = this, _el;
           switch(type) {
                 case 'view' :
-                  _el = element.viewTemplateEl;
+                  _el = module.viewTemplateEl;
                   break;
                 case 'view-content' :
-                  _el = element.viewContentTemplateEl;
+                  _el = module.viewContentTemplateEl;
                   break;
           }
           if ( _.isEmpty(_el) ) {
-               throw new Error('No valid template has been found in getTemplateEl() ' + element.id + '. Aborting');
+               throw new Error('No valid template has been found in getTemplateEl() ' + module.id + '. Aborting');
           } else {
               return _el;
           }
   },
   getViewEl : function( item_id ) {
-          var element = this;
-          return $( '[data-id = "' + item_id + '"]', element.container );
+          var module = this;
+          return $( '[data-id = "' + item_id + '"]', module.container );
   },
   closeAllViews : function(item_id) {
-          var element = this,
-              _current_collection = _.clone( element.get() ),
+          var module = this,
+              _current_collection = _.clone( module.get() ),
               _filtered_collection = _.filter( _current_collection , function( mod) { return mod.id != item_id; } );
 
           _.each( _filtered_collection, function(_item) {
-                if ( element.czr_Item.has(_item.id) && 'expanded' == element.czr_Item(_item.id)._getViewState(_item.id) )
-                  element.czr_Item(_item.id).czr_View.set( 'closed' ); // => will fire the cb _toggleViewExpansion
+                if ( module.czr_Item.has(_item.id) && 'expanded' == module.czr_Item(_item.id)._getViewState(_item.id) )
+                  module.czr_Item(_item.id).czr_View.set( 'closed' ); // => will fire the cb _toggleViewExpansion
            } );
   },
   _adjustScrollExpandedBlock : function( $_block_el, adjust ) {
           if ( ! $_block_el.length )
             return;
-          var element = this,
-               $_elementSection = $( '.accordion-section-content', element.section.container ),//was api.section( control.section() )
-              _currentScrollTopVal = $_elementSection.scrollTop(),
+          var module = this,
+               $_moduleSection = $( '.accordion-section-content', module.section.container ),//was api.section( control.section() )
+              _currentScrollTopVal = $_moduleSection.scrollTop(),
               _scrollDownVal,
               _adjust = adjust || 90;
 
@@ -1511,7 +1511,7 @@ $.extend( CZRElementMths, {
                 if ( ( $_block_el.offset().top + $_block_el.height() + _adjust ) > $(window.top).height() ) {
                     _scrollDownVal = $_block_el.offset().top + $_block_el.height() + _adjust - $(window.top).height();
                     if ( _scrollDownVal > 0 ) {
-                        $_elementSection.animate({
+                        $_moduleSection.animate({
                             scrollTop:  _currentScrollTopVal + _scrollDownVal
                         }, 500);
                     }
@@ -1519,14 +1519,14 @@ $.extend( CZRElementMths, {
           }, 50);
   },
   closeAllAlerts : function() {
-          var element = this;
-          $('.' + element.control.css_attr.remove_alert_wrapper, element.container ).each( function() {
+          var module = this;
+          $('.' + module.control.css_attr.remove_alert_wrapper, module.container ).each( function() {
                 if ( $(this).hasClass('open') ) {
                       $(this).slideToggle( {
                             duration : 100,
                             done : function() {
                               $(this).toggleClass('open' , false );
-                              $(this).siblings().find('.' + element.control.css_attr.display_alert_btn).toggleClass('active' , false );
+                              $(this).siblings().find('.' + module.control.css_attr.display_alert_btn).toggleClass('active' , false );
                             }
                       } );
                 }
@@ -1535,156 +1535,156 @@ $.extend( CZRElementMths, {
   _makeItemsSortable : function(obj) {
           if ( wp.media.isTouchDevice || ! $.fn.sortable )
             return;
-          var element = this;
-          $( '.' + element.control.css_attr.views_wrapper, element.container ).sortable( {
-                handle: '.' + element.control.css_attr.sortable_handle,
+          var module = this;
+          $( '.' + module.control.css_attr.views_wrapper, module.container ).sortable( {
+                handle: '.' + module.control.css_attr.sortable_handle,
                 update: function( event, ui ) {
-                    element.set( element._getSortedDOMCollection() );
+                    module.set( module._getSortedDOMCollection() );
                 }
               }
           );
   }
 });//$.extend//MULTI CONTROL CLASS
 
-var CZRDynElementMths = CZRDynElementMths || {};
+var CZRDynModuleMths = CZRDynModuleMths || {};
 
-$.extend( CZRDynElementMths, {
+$.extend( CZRDynModuleMths, {
   initialize: function( id, options ) {
-          var element = this;
-          api.CZRElement.prototype.initialize.call( element, id, options );
-          $.extend( element, {
-              viewAlertEl : 'czr-element-item-alert',
+          var module = this;
+          api.CZRModule.prototype.initialize.call( module, id, options );
+          $.extend( module, {
+              viewAlertEl : 'czr-module-item-alert',
               viewPreAddEl : '',
           } );
-          element.czr_preItem = new api.Values();
-          element.czr_preItem.create('item');
-          element.czr_preItem.create('view_content');
-          element.czr_preItem.create('view_status');
-          element.czr_preItem('view_status').set('closed');
-          element.czr_preItemInput = new api.Values();
-          element.itemAddedMessage = serverControlParams.translatedStrings.successMessage;
-          element.element_event_map = [
+          module.czr_preItem = new api.Values();
+          module.czr_preItem.create('item');
+          module.czr_preItem.create('view_content');
+          module.czr_preItem.create('view_status');
+          module.czr_preItem('view_status').set('closed');
+          module.czr_preItemInput = new api.Values();
+          module.itemAddedMessage = serverControlParams.translatedStrings.successMessage;
+          module.module_event_map = [
                 {
                   trigger   : 'click keydown',
-                  selector  : [ '.' + element.control.css_attr.open_pre_add_btn, '.' + element.control.css_attr.cancel_pre_add_btn ].join(','),
+                  selector  : [ '.' + module.control.css_attr.open_pre_add_btn, '.' + module.control.css_attr.cancel_pre_add_btn ].join(','),
                   name      : 'pre_add_item',
                   actions   : ['renderPreItemView','setPreItemViewVisibility'],
                 },
                 {
                   trigger   : 'click keydown',
-                  selector  : '.' + element.control.css_attr.add_new_btn, //'.czr-add-new',
+                  selector  : '.' + module.control.css_attr.add_new_btn, //'.czr-add-new',
                   name      : 'add_item',
                   actions   : ['closeAllViews', 'addItem'],
                 }
-          ];//element.element_event_map
+          ];//module.module_event_map
   },
 
 
   ready : function() {
-          var element = this;
-          element.setupDOMListeners( element.element_event_map , { dom_el : element.container } );
-          element.czr_preItem('item').set( element.getDefaultModel() );
-          element.czr_preItem('view_content').callbacks.add(function( to, from ) {
+          var module = this;
+          module.setupDOMListeners( module.module_event_map , { dom_el : module.container } );
+          module.czr_preItem('item').set( module.getDefaultModel() );
+          module.czr_preItem('view_content').callbacks.add(function( to, from ) {
                 if ( _.isUndefined(from) || _.isEmpty(from) ) {
-                    element.preItemInputConstructor = element.inputConstructor;//api.CZRInput;
-                    element.setupPreItemInputCollection();
+                    module.preItemInputConstructor = module.inputConstructor;//api.CZRInput;
+                    module.setupPreItemInputCollection();
                 }
           });
-          element.czr_preItem('view_status').callbacks.add( function( to, from ) {
-                element._togglePreItemViewExpansion( to );
+          module.czr_preItem('view_status').callbacks.add( function( to, from ) {
+                module._togglePreItemViewExpansion( to );
           });
 
-          api.CZRElement.prototype.ready.call( element );
+          api.CZRModule.prototype.ready.call( module );
   },//ready()
 
 
   setupPreItemInputCollection : function() {
-          var element = this;
-          $('.' + element.control.css_attr.pre_add_wrapper, element.container).find( '.' + element.control.css_attr.sub_set_wrapper)
+          var module = this;
+          $('.' + module.control.css_attr.pre_add_wrapper, module.container).find( '.' + module.control.css_attr.sub_set_wrapper)
           .each( function(_index) {
                 var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index;
-                element.czr_preItemInput.add( _id, new element.preItemInputConstructor( _id, {
+                module.czr_preItemInput.add( _id, new module.preItemInputConstructor( _id, {
                     id : _id,
                     type : $(this).attr('data-input-type'),
                     container : $(this),
-                    item : element.czr_preItem('item'),
-                    element : element,
+                    item : module.czr_preItem('item'),
+                    module : module,
                     is_preItemInput : true
                 } ) );
           });//each
   },
   addItem : function(obj) {
-          var element = this,
-              item = element.czr_preItem('item').get();
+          var module = this,
+              item = module.czr_preItem('item').get();
 
           if ( _.isEmpty(item) || ! _.isObject(item) ) {
-            throw new Error('addItem : an item should be an object and not empty. In : ' + element.id +'. Aborted.' );
+            throw new Error('addItem : an item should be an object and not empty. In : ' + module.id +'. Aborted.' );
           }
 
-          element.instantiateItem(item, true); //true == Added by user
+          module.instantiateItem(item, true); //true == Added by user
 
-          element.toggleSuccessMessage('on');
+          module.toggleSuccessMessage('on');
           setTimeout( function() {
-                element.czr_preItem('view_status').set( 'closed');
-                element.czr_preItem('item').set( element.getDefaultModel() );
-                element.toggleSuccessMessage('off').destroyPreItemView();
+                module.czr_preItem('view_status').set( 'closed');
+                module.czr_preItem('item').set( module.getDefaultModel() );
+                module.toggleSuccessMessage('off').destroyPreItemView();
           } , 3000);
 
-          element.trigger('item_added', item );
-          if ( 'postMessage' == api(element.control.id).transport && _.has( obj, 'dom_event') && ! _.has( obj.dom_event, 'isTrigger' ) && ! api.CZR_Helpers.has_part_refresh( element.control.id ) ) {
-            element.control.previewer.refresh();
+          module.trigger('item_added', item );
+          if ( 'postMessage' == api(module.control.id).transport && _.has( obj, 'dom_event') && ! _.has( obj.dom_event, 'isTrigger' ) && ! api.CZR_Helpers.has_part_refresh( module.control.id ) ) {
+            module.control.previewer.refresh();
           }
   }
 
 });//$.extend//MULTI CONTROL CLASS
 
-var CZRDynElementMths = CZRDynElementMths || {};
+var CZRDynModuleMths = CZRDynModuleMths || {};
 
-$.extend( CZRDynElementMths, {
+$.extend( CZRDynModuleMths, {
 
 });//$.extend//CZRBaseControlMths//MULTI CONTROL CLASS
 
-var CZRDynElementMths = CZRDynElementMths || {};
+var CZRDynModuleMths = CZRDynModuleMths || {};
 
-$.extend( CZRDynElementMths, {
+$.extend( CZRDynModuleMths, {
   renderPreItemView : function( obj ) {
-          var element = this;
-          if ( ! _.isEmpty( element.czr_preItem('view_content').get() ) )
+          var module = this;
+          if ( ! _.isEmpty( module.czr_preItem('view_content').get() ) )
             return;
-          if ( ! _.has(element, 'viewPreAddEl') ||  0 === $( '#tmpl-' + element.viewPreAddEl ).length )
+          if ( ! _.has(module, 'viewPreAddEl') ||  0 === $( '#tmpl-' + module.viewPreAddEl ).length )
             return this;
-          var pre_add_template = wp.template( element.viewPreAddEl );
-          if ( ! pre_add_template  || ! element.container )
+          var pre_add_template = wp.template( module.viewPreAddEl );
+          if ( ! pre_add_template  || ! module.container )
             return this;
 
-          var $_pre_add_el = $('.' + element.control.css_attr.pre_add_view_content, element.container );
+          var $_pre_add_el = $('.' + module.control.css_attr.pre_add_view_content, module.container );
           $_pre_add_el.prepend( pre_add_template() );
-          element.czr_preItem('view_content').set( pre_add_template() );
-          element.trigger( 'pre_add_view_rendered' , {item : {}, dom_el : $_pre_add_el});
+          module.czr_preItem('view_content').set( pre_add_template() );
+          module.trigger( 'pre_add_view_rendered' , {item : {}, dom_el : $_pre_add_el});
   },
   _getPreItemView : function() {
-          var element = this;
-          return $('.' +  element.control.css_attr.pre_add_view_content, element.container );
+          var module = this;
+          return $('.' +  module.control.css_attr.pre_add_view_content, module.container );
   },
   destroyPreItemView : function() {
-          var element = this;
-          $('.' +  element.control.css_attr.pre_add_view_content, element.container ).find('.' +  element.control.css_attr.sub_set_wrapper).remove();
-          element.czr_preItem('view_content').set('');
+          var module = this;
+          $('.' +  module.control.css_attr.pre_add_view_content, module.container ).find('.' +  module.control.css_attr.sub_set_wrapper).remove();
+          module.czr_preItem('view_content').set('');
   },
   setPreItemViewVisibility : function(obj) {
-          var element = this;
+          var module = this;
 
-          element.closeAllViews();
-          element.czr_preItem('view_status').set( 'expanded' == element.czr_preItem('view_status').get() ? 'closed' : 'expanded' );
+          module.closeAllViews();
+          module.czr_preItem('view_status').set( 'expanded' == module.czr_preItem('view_status').get() ? 'closed' : 'expanded' );
   },
   _togglePreItemViewExpansion : function( status) {
-          var element = this,
-            $_pre_add_el = $( '.' +  element.control.css_attr.pre_add_view_content, element.container );
+          var module = this,
+            $_pre_add_el = $( '.' +  module.control.css_attr.pre_add_view_content, module.container );
           $_pre_add_el.slideToggle( {
             duration : 200,
             done : function() {
                   var _is_expanded = 'closed' != status,
-                      $_btn = $( '.' +  element.control.css_attr.open_pre_add_btn, element.container );
+                      $_btn = $( '.' +  module.control.css_attr.open_pre_add_btn, module.container );
 
                   $(this).toggleClass('open' , _is_expanded );
                   if ( _is_expanded )
@@ -1692,18 +1692,18 @@ $.extend( CZRDynElementMths, {
                   else
                     $_btn.find('.fa').removeClass('fa-minus-square').addClass('fa-plus-square');
                   $_btn.toggleClass( 'active', _is_expanded );
-                  $( element.container ).toggleClass(  element.control.css_attr.adding_new, _is_expanded );
-                  element._adjustScrollExpandedBlock( $(this), 120 );
+                  $( module.container ).toggleClass(  module.control.css_attr.adding_new, _is_expanded );
+                  module._adjustScrollExpandedBlock( $(this), 120 );
             }//done
           } );
   },
 
 
   toggleSuccessMessage : function(status) {
-          var element = this,
-              _message = element.itemAddedMessage,
-              $_pre_add_wrapper = $('.' + element.control.css_attr.pre_add_wrapper, element.container );
-              $_success_wrapper = $('.' + element.control.css_attr.pre_add_success, element.container );
+          var module = this,
+              _message = module.itemAddedMessage,
+              $_pre_add_wrapper = $('.' + module.control.css_attr.pre_add_wrapper, module.container );
+              $_success_wrapper = $('.' + module.control.css_attr.pre_add_success, module.container );
 
           if ( 'on' == status ) {
               $_success_wrapper.find('p').text(_message);
@@ -1713,7 +1713,7 @@ $.extend( CZRDynElementMths, {
           } else {
               $_success_wrapper.attr('style','');
           }
-          element.container.toggleClass('czr-model-added', 'on' == status );
+          module.container.toggleClass('czr-model-added', 'on' == status );
           return this;
   }
 
@@ -1734,43 +1734,43 @@ $.extend( CZRColumnMths , {
           $view.appendTo( $('.czr-column-wrapper', column.sektion.container ) );
           return $view;
     }
-});//$.extend//extends api.CZRDynElement
+});//$.extend//extends api.CZRDynModule
 
 var CZRSektionMths = CZRSektionMths || {};
 
 $.extend( CZRSektionMths, {
   initialize: function( id, options ) {
-          var element = this;
-          api.CZRDynElement.prototype.initialize.call( element, id, options );
-          $.extend( element, {
-                viewPreAddEl : 'czr-element-sektion-pre-add-view-content',
-                viewTemplateEl : 'czr-element-sektion-item-view',
-                viewContentTemplateEl : 'czr-element-sektion-view-content',
+          var module = this;
+          api.CZRDynModule.prototype.initialize.call( module, id, options );
+          $.extend( module, {
+                viewPreAddEl : 'czr-module-sektion-pre-add-view-content',
+                viewTemplateEl : 'czr-module-sektion-item-view',
+                viewContentTemplateEl : 'czr-module-sektion-view-content',
           } );
           this.defaultItemModel = {
             id : '',
             'sektion-layout' : 1,
           };
 
-          console.log(' sektion savedItems', element.savedItems );
-          element.itemConstructor = api.CZRItem.extend( element.CZRSektionItem || {} );
+          console.log(' sektion savedItems', module.savedItems );
+          module.itemConstructor = api.CZRItem.extend( module.CZRSektionItem || {} );
 
-          api.section( element.control.section() ).expanded.bind(function(to) {
-                if ( ! to || ! _.isEmpty( element.get() ) )
+          api.section( module.control.section() ).expanded.bind(function(to) {
+                if ( ! to || ! _.isEmpty( module.get() ) )
                   return;
-                element.ready();
+                module.ready();
           });
 
-          if ( ! _.has( element ,'dragInstance' ) )
-            element.initDragula();
+          if ( ! _.has( module ,'dragInstance' ) )
+            module.initDragula();
 
 
   },//initialize
 
 
   initDragula : function() {
-          var element = this;
-          element.dragInstance = dragula({
+          var module = this;
+          module.dragInstance = dragula({
               moves: function (el, source, handle, sibling) {
                   console.log("handle.className === 'czr-column'", handle.className === 'czr-column');
                    console.log('in moves cb', el, source, handle, sibling );
@@ -1781,22 +1781,22 @@ $.extend( CZRSektionMths, {
               }
             }
           );
-          element.dragInstance.on('over', function( el, container, source ) {
+          module.dragInstance.on('over', function( el, container, source ) {
                 console.log('el', el);
                 console.log('is over', container);
                 console.log('coming from ', source);
                 if ( $(container).hasClass('czr-dragula-fake-container') ) {
                     _target_sekId = $(container).closest('[data-id]').attr('data-id');
                     console.log( 'taget sek', _target_sekId );
-                    element.czr_Item(_target_sekId).czr_View.set('expanded');
+                    module.czr_Item(_target_sekId).czr_View.set('expanded');
                 }
           });
-          element.dragInstance.on('drag', function( el, source ){
-                element.czr_Item.each( function( _sektion ){
+          module.dragInstance.on('drag', function( el, source ){
+                module.czr_Item.each( function( _sektion ){
                     _sektion.container.toggleClass('czr-show-fake-container', 'closed' == _sektion.czr_View.get() );
                 });
           }).on('dragend', function( el, source ){
-                element.czr_Item.each( function( _sektion ){
+                module.czr_Item.each( function( _sektion ){
                     _sektion.container.removeClass('czr-show-fake-container');
                 });
           });
@@ -1843,7 +1843,7 @@ $.extend( CZRSektionMths, {
                         for( var i = 1; i < columns + 1 ; i++ ) {
                             sekItem.instanciateColumn( i );
                         }
-                        sekItem.item_element.dragInstance.containers.push( $( '.czr-column-wrapper', sekItem.container )[0] );
+                        sekItem.item_module.dragInstance.containers.push( $( '.czr-column-wrapper', sekItem.container )[0] );
                         sekItem.czr_View.callbacks.add( function(to) {
                               console.log('in view cb');
                               if ( 'closed' == to )
@@ -1857,10 +1857,10 @@ $.extend( CZRSektionMths, {
 
           dragulizeSektion : function() {
                   var sekItem = this,
-                      element = this.item_element;
+                      module = this.item_module;
                       _drag_container = $( '.czr-dragula-fake-container', sekItem.container )[0];
 
-                   element.dragInstance.containers.push( _drag_container );
+                   module.dragInstance.containers.push( _drag_container );
           },
 
 
@@ -1880,26 +1880,26 @@ $.extend( CZRSektionMths, {
           }
   }//Sektion
 
-});//extends api.CZRDynElement
+});//extends api.CZRDynModule
 
-var CZRSocialElementMths = CZRSocialElementMths || {};
+var CZRSocialModuleMths = CZRSocialModuleMths || {};
 
-$.extend( CZRSocialElementMths, {
+$.extend( CZRSocialModuleMths, {
   initialize: function( id, options ) {
-          var element = this;
-          api.CZRDynElement.prototype.initialize.call( element, id, options );
-          $.extend( element, {
-                viewPreAddEl : 'czr-element-social-pre-add-view-content',
-                viewTemplateEl : 'czr-element-item-view',
-                viewContentTemplateEl : 'czr-element-social-view-content',
+          var module = this;
+          api.CZRDynModule.prototype.initialize.call( module, id, options );
+          $.extend( module, {
+                viewPreAddEl : 'czr-module-social-pre-add-view-content',
+                viewTemplateEl : 'czr-module-item-view',
+                viewContentTemplateEl : 'czr-module-social-view-content',
           } );
 
 
           this.social_icons = [
             '500px','adn','amazon','android','angellist','apple','behance','behance-square','bitbucket','bitbucket-square','black-tie','btc','buysellads','chrome','codepen','codiepie','connectdevelop','contao','dashcube','delicious','delicious','deviantart','digg','dribbble','dropbox','drupal','edge','empire','expeditedssl','facebook','facebook','facebook-f (alias)','facebook-official','facebook-square','firefox','flickr','fonticons','fort-awesome','forumbee','foursquare','get-pocket','gg','gg-circle','git','github','github','github-alt','github-square','git-square','google','google','google-plus','google-plus-square','google-wallet','gratipay','hacker-news','houzz','instagram','internet-explorer','ioxhost','joomla','jsfiddle','lastfm','lastfm-square','leanpub','linkedin','linkedin','linkedin-square','linux','maxcdn','meanpath','medium','mixcloud','modx','odnoklassniki','odnoklassniki-square','opencart','openid','opera','optin-monster','pagelines','paypal','pied-piper','pied-piper-alt','pinterest','pinterest-p','pinterest-square','product-hunt','qq','rebel','reddit','reddit-alien','reddit-square','renren','rss','rss-square','safari','scribd','sellsy','share-alt','share-alt-square','shirtsinbulk','simplybuilt','skyatlas','skype','slack','slideshare','soundcloud','spotify','stack-exchange','stack-overflow','steam','steam-square','stumbleupon','stumbleupon','stumbleupon-circle','tencent-weibo','trello','tripadvisor','tumblr','tumblr-square','twitch','twitter','twitter','twitter-square','usb','viacoin','vimeo','vimeo-square','vine','vk','weibo','weixin','whatsapp','wikipedia-w','windows','wordpress','xing','xing-square','yahoo','yahoo','y-combinator','yelp','youtube','youtube-play','youtube-square'
           ];
-          element.inputConstructor = api.CZRInput.extend( element.CZRSocialsInputMths || {} );
-          element.itemConstructor = api.CZRItem.extend( element.CZRSocialsItem || {} );
+          module.inputConstructor = api.CZRInput.extend( module.CZRSocialsInputMths || {} );
+          module.itemConstructor = api.CZRItem.extend( module.CZRSocialsItem || {} );
           this.defaultItemModel = {
                 id : '',
                 title : '' ,
@@ -1909,13 +1909,13 @@ $.extend( CZRSocialElementMths, {
                 'social-target' : 1
           };
           this.itemAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
-          api.section( element.control.section() ).expanded.bind(function(to) {
-                if ( ! to || ! _.isEmpty( element.get() ) )
+          api.section( module.control.section() ).expanded.bind(function(to) {
+                if ( ! to || ! _.isEmpty( module.get() ) )
                   return;
-                element.ready();
+                module.ready();
           });
 
-          console.log(' social savedItems', element.savedItems );
+          console.log(' social savedItems', module.savedItems );
   },//initialize
 
 
@@ -1933,8 +1933,8 @@ $.extend( CZRSocialElementMths, {
           setupSelect : function() {
                 var input      = this,
                     item = input.item,
-                    element     = input.element,
-                    socialList = element.social_icons,
+                    module     = input.module,
+                    socialList = module.social_icons,
                     _model = item.get();
                 if ( _.isEmpty(_model.id) ) {
                   socialList = _.union( [serverControlParams.translatedStrings.selectSocialIcon], socialList );
@@ -1986,7 +1986,7 @@ $.extend( CZRSocialElementMths, {
         setupColorPicker : function( obj ) {
                 var input      = this,
                     item = input.item,
-                    element     = input.element;
+                    module     = input.module;
 
                 $( 'input[data-type="social-color"]', input.container ).wpColorPicker( {
                           defaultColor : 'rgba(255,255,255,0.7)',
@@ -2000,7 +2000,7 @@ $.extend( CZRSocialElementMths, {
                           }
                 });
                 $( 'input[data-type="social-color"]', input.container ).closest('div').on('click keydown', function() {
-                      element._adjustScrollExpandedBlock( input.container );
+                      module._adjustScrollExpandedBlock( input.container );
                 });
         },
         updateItemModel : function( _new_val ) {
@@ -2013,7 +2013,7 @@ $.extend( CZRSocialElementMths, {
                 var _new_model  = _.clone( item.get() ),
                     _new_title  = api.CZR_Helpers.capitalize( _new_model['social-icon'].replace('fa-', '') ),
                     _new_color  = serverControlParams.social_el_params.defaultSocialColor,
-                    inputCollection = is_preItemInput ? input.element.czr_preItemInput : item.czr_Input;
+                    inputCollection = is_preItemInput ? input.module.czr_preItemInput : item.czr_Input;
                 _new_title = [ serverControlParams.translatedStrings.followUs, _new_title].join(' ');
 
                 if ( is_preItemInput ) {
@@ -2035,22 +2035,22 @@ $.extend( CZRSocialElementMths, {
   CZRSocialsItem : {
           _buildTitle : function( title, icon, color ) {
                   var item = this,
-                      element     = item.item_element;
+                      module     = item.item_module;
 
                   title = title || ( 'string' === typeof(icon) ? api.CZR_Helpers.capitalize( icon.replace( 'fa-', '') ) : '' );
                   title = api.CZR_Helpers.truncate(title, 20);
-                  icon = icon || 'fa-' + element.social_icons[0];
+                  icon = icon || 'fa-' + module.social_icons[0];
                   color = color || serverControlParams.social_el_params.defaultSocialColor;
 
                   return '<div><span class="fa ' + icon + '" style="color:' + color + '"></span> ' + title + '</div>';
           },
           writeItemViewTitle : function( model ) {
                   var item = this,
-                      element     = item.item_element,
+                      module     = item.item_module,
                       _model = model || item.get(),
                       _title = api.CZR_Helpers.capitalize( _model['social-icon'].replace('fa-', '') );
 
-                  $( '.' + element.control.css_attr.view_title , item.container ).html(
+                  $( '.' + module.control.css_attr.view_title , item.container ).html(
                     item._buildTitle( _title, _model['social-icon'], _model['social-color'] )
                   );
           }
@@ -2060,24 +2060,24 @@ $.extend( CZRSocialElementMths, {
 });
 
 
-var CZRWidgetAreaElementMths = CZRWidgetAreaElementMths || {};
+var CZRWidgetAreaModuleMths = CZRWidgetAreaModuleMths || {};
 
-$.extend( CZRWidgetAreaElementMths, {
+$.extend( CZRWidgetAreaModuleMths, {
   initialize: function( id, options ) {
-          var element = this;
+          var module = this;
 
-          api.CZRDynElement.prototype.initialize.call( this, id, options );
-          $.extend( element, {
-                viewPreAddEl : 'czr-element-widgets-pre-add-view-content',
-                viewTemplateEl : 'czr-element-item-view',
-                viewContentTemplateEl : 'czr-element-widgets-view-content',
+          api.CZRDynModule.prototype.initialize.call( this, id, options );
+          $.extend( module, {
+                viewPreAddEl : 'czr-module-widgets-pre-add-view-content',
+                viewTemplateEl : 'czr-module-item-view',
+                viewContentTemplateEl : 'czr-module-widgets-view-content',
           } );
-          element.inputConstructor = api.CZRInput.extend( element.CZRWZonesInputMths || {} );
-          element.itemConstructor = api.CZRItem.extend( element.CZRWZonesItem || {} );
+          module.inputConstructor = api.CZRInput.extend( module.CZRWZonesInputMths || {} );
+          module.itemConstructor = api.CZRItem.extend( module.CZRWZonesItem || {} );
 
-          element.serverParams = serverControlParams.widget_area_el_params || {};
-          element.contexts = _.has( element.serverParams , 'sidebar_contexts') ? element.serverParams.sidebar_contexts : {};
-          element.context_match_map = {
+          module.serverParams = serverControlParams.widget_area_el_params || {};
+          module.contexts = _.has( module.serverParams , 'sidebar_contexts') ? module.serverParams.sidebar_contexts : {};
+          module.context_match_map = {
                   is_404 : '404',
                   is_category : 'archive-category',
                   is_home : 'home',
@@ -2085,55 +2085,55 @@ $.extend( CZRWidgetAreaElementMths, {
                   is_search : 'search',
                   is_single : 'single'
           };
-          element.savedItems = _.union(
-                  _.has(element.serverParams, 'default_zones') ? element.serverParams.default_zones : [],
-                  element.savedItems
+          module.savedItems = _.union(
+                  _.has(module.serverParams, 'default_zones') ? module.serverParams.default_zones : [],
+                  module.savedItems
           );
 
-          element.locations = _.has( element.serverParams , 'sidebar_locations') ? element.serverParams.sidebar_locations : {};
-          element.defaultItemModel = {
+          module.locations = _.has( module.serverParams , 'sidebar_locations') ? module.serverParams.sidebar_locations : {};
+          module.defaultItemModel = {
                   id : '',
                   title : serverControlParams.translatedStrings.widgetZone,
-                  contexts : _.without( _.keys(element.contexts), '_all_' ),//the server list of contexts is an object, we only need the keys, whitout _all_
-                  locations : [ element.serverParams.defaultWidgetLocation ],
+                  contexts : _.without( _.keys(module.contexts), '_all_' ),//the server list of contexts is an object, we only need the keys, whitout _all_
+                  locations : [ module.serverParams.defaultWidgetLocation ],
                   description : ''
           };
           this.itemAddedMessage = serverControlParams.translatedStrings.widgetZoneAdded;
           this.listenToSidebarInsights();
-          element.czr_preItem.create('location_alert_view_state');
-          element.czr_preItem('location_alert_view_state').set('closed');
-          element.czr_preItem('location_alert_view_state').callbacks.add( function( to, from ) {
-                    element._toggleLocationAlertExpansion( element.container, to );
+          module.czr_preItem.create('location_alert_view_state');
+          module.czr_preItem('location_alert_view_state').set('closed');
+          module.czr_preItem('location_alert_view_state').callbacks.add( function( to, from ) {
+                    module._toggleLocationAlertExpansion( module.container, to );
           });
-          element.bind( 'item_added', function( model ) {
-                  element.addWidgetSidebar( model );
+          module.bind( 'item_added', function( model ) {
+                  module.addWidgetSidebar( model );
           });
 
-          element.bind( 'item_removed' , function(model) {
-                  element.removeWidgetSidebar( model );
+          module.bind( 'item_removed' , function(model) {
+                  module.removeWidgetSidebar( model );
           });
           var fixTopMargin = new api.Values();
           fixTopMargin.create('fixed_for_current_session');
           fixTopMargin.create('value');
 
-          api.section(element.serverParams.dynWidgetSection).fixTopMargin = fixTopMargin;
-          api.section(element.serverParams.dynWidgetSection).fixTopMargin('fixed_for_current_session').set(false);
-          api.section(element.serverParams.dynWidgetSection).expanded.callbacks.add( function() { return element.widgetSectionReact.apply(element, arguments ); } );
+          api.section(module.serverParams.dynWidgetSection).fixTopMargin = fixTopMargin;
+          api.section(module.serverParams.dynWidgetSection).fixTopMargin('fixed_for_current_session').set(false);
+          api.section(module.serverParams.dynWidgetSection).expanded.callbacks.add( function() { return module.widgetSectionReact.apply(module, arguments ); } );
           api.panel('widgets').expanded.callbacks.add( function(to, from) {
-                element.widgetPanelReact();//setup some visual adjustments, must be ran each time panel is closed or expanded
-                if ( ! to || ! _.isEmpty( element.get() ) )
+                module.widgetPanelReact();//setup some visual adjustments, must be ran each time panel is closed or expanded
+                if ( ! to || ! _.isEmpty( module.get() ) )
                     return;
-                element.ready();
+                module.ready();
           });
   },//initialize
   ready : function() {
-          var element = this;
-          api.CZRDynElement.prototype.ready.call( element );
-          element.czr_preItem('view_status').callbacks.add( function( to, from ) {
+          var module = this;
+          api.CZRDynModule.prototype.ready.call( module );
+          module.czr_preItem('view_status').callbacks.add( function( to, from ) {
                 if ( 'expanded' != to )
                   return;
-                element.czr_preItemInput('locations')._setupLocationSelect( true );//true for refresh
-                element.czr_preItemInput('locations').mayBeDisplayModelAlert();
+                module.czr_preItemInput('locations')._setupLocationSelect( true );//true for refresh
+                module.czr_preItemInput('locations').mayBeDisplayModelAlert();
           });
   },
 
@@ -2170,8 +2170,8 @@ $.extend( CZRWidgetAreaElementMths, {
                   var input      = this,
                       input_contexts = input.get(),
                       item = input.item,
-                      element     = input.element;
-                  _.each( element.contexts, function( title, key ) {
+                      module     = input.module;
+                  _.each( module.contexts, function( title, key ) {
                         var _attributes = {
                               value : key,
                               html: title
@@ -2187,10 +2187,10 @@ $.extend( CZRWidgetAreaElementMths, {
                   var input      = this,
                       input_locations = input.get(),
                       item = input.item,
-                      element     = input.element,
+                      module     = input.module,
                       available_locs = api.sidebar_insights('available_locations').get();
                   if ( ! $( 'select[data-type="locations"]', input.container ).children().length ) {
-                        _.each( element.locations, function( title, key ) {
+                        _.each( module.locations, function( title, key ) {
                               var _attributes = {
                                     value : key,
                                     html: title
@@ -2223,7 +2223,7 @@ $.extend( CZRWidgetAreaElementMths, {
           mayBeDisplayModelAlert : function() {
                   var input      = this,
                       item = input.item,
-                      element     = input.element;
+                      module     = input.module;
                   if ( ! _.has( item.get(), 'locations') || _.isEmpty( item.get()['locations'] ) )
                     return;
 
@@ -2233,7 +2233,7 @@ $.extend( CZRWidgetAreaElementMths, {
                         return ! _.contains(available_locs, loc);
                       });
                   if ( ! _.has( item.get(), 'id' ) || _.isEmpty( item.get().id ) ) {
-                        element.czr_preItem('location_alert_view_state').set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
+                        module.czr_preItem('location_alert_view_state').set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
                   } else {
                         item.czr_itemLocationAlert.set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
                   }
@@ -2257,18 +2257,18 @@ $.extend( CZRWidgetAreaElementMths, {
   CZRWZonesItem : {
           initialize : function( id, options ) {
                   var item = this,
-                      element = item.item_element;
+                      module = item.item_module;
                   item.czr_itemLocationAlert = new api.Value();
 
                   api.CZRItem.prototype.initialize.call( item, null, options );
           },
           setupView : function() {
                   var item = this,
-                      element = item.item_element;
+                      module = item.item_module;
                   api.CZRItem.prototype.setupView.call(item);
                   item.czr_itemLocationAlert.set('closed');
                   item.czr_itemLocationAlert.callbacks.add( function( to, from ) {
-                        element._toggleLocationAlertExpansion( item.container , to );
+                        module._toggleLocationAlertExpansion( item.container , to );
                   });
                   item.writeSubtitleInfos(item.get());
                   item.czr_View.callbacks.add( function( to, from ) {
@@ -2287,7 +2287,7 @@ $.extend( CZRWidgetAreaElementMths, {
           },
           writeSubtitleInfos : function(model) {
                   var item = this,
-                      element = item.item_element,
+                      module = item.item_module,
                       _model = _.clone( model || item.get() ),
                       _locations = [],
                       _contexts = [],
@@ -2297,19 +2297,19 @@ $.extend( CZRWidgetAreaElementMths, {
                     return this;
                   _model.locations =_.isString(_model.locations) ? [_model.locations] : _model.locations;
                   _.each( _model.locations, function( loc ) {
-                        if ( _.has( element.locations , loc ) )
-                          _locations.push(element.locations[loc]);
+                        if ( _.has( module.locations , loc ) )
+                          _locations.push(module.locations[loc]);
                         else
                           _locations.push(loc);
                     }
                   );
                   _model.contexts =_.isString(_model.contexts) ? [_model.contexts] : _model.contexts;
                   if ( item._hasModelAllContexts( model ) ) {
-                    _contexts.push(element.contexts._all_);
+                    _contexts.push(module.contexts._all_);
                   } else {
                     _.each( _model.contexts, function( con ) {
-                            if ( _.has( element.contexts , con ) )
-                              _contexts.push(element.contexts[con]);
+                            if ( _.has( module.contexts , con ) )
+                              _contexts.push(module.contexts[con]);
                             else
                               _contexts.push(con);
                           }
@@ -2326,10 +2326,10 @@ $.extend( CZRWidgetAreaElementMths, {
 
                   if ( ! $('.czr-zone-infos', item.container ).length ) {
                         var $_zone_infos = $('<div/>', {
-                          class : [ 'czr-zone-infos' , element.control.css_attr.sortable_handle ].join(' '),
+                          class : [ 'czr-zone-infos' , module.control.css_attr.sortable_handle ].join(' '),
                           html : _html
                         });
-                        $( '.' + element.control.css_attr.view_buttons, item.container ).after($_zone_infos);
+                        $( '.' + module.control.css_attr.view_buttons, item.container ).after($_zone_infos);
                   } else {
                         $('.czr-zone-infos', item.container ).html(_html);
                   }
@@ -2349,21 +2349,21 @@ $.extend( CZRWidgetAreaElementMths, {
           },
           setModelUpdateTimer : function() {
                   var item = this,
-                      element = item.item_element;
+                      module = item.item_module;
 
                   clearTimeout( $.data(this, 'modelUpdateTimer') );
                   $.data(
                       this,
                       'modelUpdateTimer',
                       setTimeout( function() {
-                          element.control.refreshPreview();
+                          module.control.refreshPreview();
                       } , 1000)
                   );//$.data
           },
           _hasModelAllContexts : function( model ) {
                   var item = this,
-                      element = item.item_element,
-                      elementContexts = _.keys(element.contexts);
+                      module = item.item_module,
+                      moduleContexts = _.keys(module.contexts);
 
                   model = model || this.get();
 
@@ -2372,12 +2372,12 @@ $.extend( CZRWidgetAreaElementMths, {
 
                   if ( _.contains( model.contexts, '_all_') )
                     return true;
-                  return _.isEmpty( _.difference( _.without(elementContexts, '_all_') , model.contexts ) );
+                  return _.isEmpty( _.difference( _.without(moduleContexts, '_all_') , model.contexts ) );
           },
           _getMatchingContexts : function( defaults ) {
-                  var element = this,
+                  var module = this,
                       _current = api.czr_wp_conditionals.get() || {},
-                      _matched = _.filter(element.context_match_map, function( hu, wp ) { return true === _current[wp]; });
+                      _matched = _.filter(module.context_match_map, function( hu, wp ) { return true === _current[wp]; });
 
                   return _.isEmpty( _matched ) ? defaults : _matched;
 
@@ -2387,10 +2387,10 @@ $.extend( CZRWidgetAreaElementMths, {
           if ( ! _.isObject(model) && _.isEmpty(sidebar_data) ) {
             throw new Error('No valid input were provided to add a new Widget Zone.');
           }
-          var element = this,
+          var module = this,
               _model        = ! _.isEmpty(model) ? _.clone(model) : sidebar_data,
               _new_sidebar  = _.isEmpty(model) ? sidebar_data : $.extend(
-                _.clone( _.findWhere( api.Widgets.data.registeredSidebars, { id: element.serverParams.defaultWidgetSidebar } ) ),
+                _.clone( _.findWhere( api.Widgets.data.registeredSidebars, { id: module.serverParams.defaultWidgetSidebar } ) ),
                 {
                   name : _model.title,
                   id : _model.id
@@ -2398,14 +2398,14 @@ $.extend( CZRWidgetAreaElementMths, {
               );
           api.Widgets.registeredSidebars.add( _new_sidebar );
           var _params = $.extend(
-                  _.clone( api.section( "sidebar-widgets-" + element.serverParams.defaultWidgetSidebar ).params ),
+                  _.clone( api.section( "sidebar-widgets-" + module.serverParams.defaultWidgetSidebar ).params ),
                   {
                     id : "sidebar-widgets-" + _model.id,
                     instanceNumber: _.max(api.settings.sections, function(sec){ return sec.instanceNumber; }).instanceNumber + 1,
                     sidebarId: _new_sidebar.id,
                     title: _new_sidebar.name,
-                    description : 'undefined' != typeof(sidebar_data) ? sidebar_data.description : api.section( "sidebar-widgets-" + element.serverParams.defaultWidgetSidebar ).params.description,
-                    priority: _.max( _.omit( api.settings.sections, element.serverParams.dynWidgetSection), function(sec){ return sec.instanceNumber; }).priority + 1,
+                    description : 'undefined' != typeof(sidebar_data) ? sidebar_data.description : api.section( "sidebar-widgets-" + module.serverParams.defaultWidgetSidebar ).params.description,
+                    priority: _.max( _.omit( api.settings.sections, module.serverParams.dynWidgetSection), function(sec){ return sec.instanceNumber; }).priority + 1,
                   }
           );
 
@@ -2413,7 +2413,7 @@ $.extend( CZRWidgetAreaElementMths, {
           api.settings.sections[ _params.id ] = _params.id;
           var _new_set_id = 'sidebars_widgets['+_model.id+']',
               _new_set    = $.extend(
-                _.clone( api.settings.settings['sidebars_widgets[' + element.serverParams.defaultWidgetSidebar + ']'] ),
+                _.clone( api.settings.settings['sidebars_widgets[' + module.serverParams.defaultWidgetSidebar + ']'] ),
                 {
                   value:[]
                 }
@@ -2425,14 +2425,14 @@ $.extend( CZRWidgetAreaElementMths, {
                   dirty: false
           } );
           var _cloned_control = $.extend(
-                    _.clone( api.settings.controls['sidebars_widgets[' + element.serverParams.defaultWidgetSidebar + ']'] ),
+                    _.clone( api.settings.controls['sidebars_widgets[' + module.serverParams.defaultWidgetSidebar + ']'] ),
                     {
                       settings : { default : _new_set_id }
                 }),
               _new_control = {};
           _.each( _cloned_control, function( param, key ) {
                   if ( 'string' == typeof(param) ) {
-                    param = param.replace( element.serverParams.defaultWidgetSidebar , _model.id );
+                    param = param.replace( module.serverParams.defaultWidgetSidebar , _model.id );
                   }
                   _new_control[key] = param;
           });
@@ -2465,28 +2465,28 @@ $.extend( CZRWidgetAreaElementMths, {
                   api.control.remove( 'sidebars_widgets['+model.id+']' );
                   delete api.settings.controls['sidebars_widgets['+model.id+']'];
           }
-          this.element.trigger('widget_zone_removed', { model : model, section_id : "sidebar-widgets-" + model.id , setting_id : 'sidebars_widgets['+model.id+']' });
+          this.module.trigger('widget_zone_removed', { model : model, section_id : "sidebar-widgets-" + model.id , setting_id : 'sidebars_widgets['+model.id+']' });
   },
   widgetPanelReact : function() {
-          var element = this;
+          var module = this;
           var _top_margin = api.panel('widgets').container.find( '.control-panel-content' ).css('margin-top');
-          api.section(element.serverParams.dynWidgetSection).fixTopMargin('value').set( _top_margin );
+          api.section(module.serverParams.dynWidgetSection).fixTopMargin('value').set( _top_margin );
 
-          var _section_content = api.section(element.serverParams.dynWidgetSection).container.find( '.accordion-section-content' ),
+          var _section_content = api.section(module.serverParams.dynWidgetSection).container.find( '.accordion-section-content' ),
             _panel_content = api.panel('widgets').container.find( '.control-panel-content' ),
             _set_margins = function() {
                   _section_content.css( 'margin-top', '' );
-                  _panel_content.css('margin-top', api.section(element.serverParams.dynWidgetSection).fixTopMargin('value').get() );
+                  _panel_content.css('margin-top', api.section(module.serverParams.dynWidgetSection).fixTopMargin('value').get() );
             };
           api.bind( 'pane-contents-reflowed', _.debounce( function() {
                   _set_margins();
           }, 150 ) );
-          element.closeAllViews();
-          element.czr_preItem('view_status').set('closed');
+          module.closeAllViews();
+          module.czr_preItem('view_status').set('closed');
   },//widgetPanelReact()
   widgetSectionReact : function( to, from ) {
-          var element = this,
-              section =  api.section(element.serverParams.dynWidgetSection),
+          var module = this,
+              section =  api.section(module.serverParams.dynWidgetSection),
               container = section.container.closest( '.wp-full-overlay-sidebar-content' ),
               content = section.container.find( '.accordion-section-content' ),
               overlay = section.container.closest( '.wp-full-overlay' ),
@@ -2503,38 +2503,38 @@ $.extend( CZRWidgetAreaElementMths, {
             container.scrollTop( 0 );
           }
 
-          element.closeAllViews();
+          module.closeAllViews();
 
           content.slideToggle();
   },
   listenToSidebarInsights : function() {
-          var element = this;
+          var module = this;
           api.sidebar_insights('registered').callbacks.add( function( _registered_zones ) {
-                  var _current_collection = _.clone( element.get() );
+                  var _current_collection = _.clone( module.get() );
                   _.map(_current_collection, function( _model ) {
-                    if ( ! element.getViewEl(_model.id).length )
+                    if ( ! module.getViewEl(_model.id).length )
                       return;
 
-                    element.getViewEl(_model.id).css('display' , _.contains( _registered_zones, _model.id ) ? 'block' : 'none' );
+                    module.getViewEl(_model.id).css('display' , _.contains( _registered_zones, _model.id ) ? 'block' : 'none' );
                   });
           });
           api.sidebar_insights('inactives').callbacks.add( function( _inactives_zones ) {
-                  var _current_collection = _.clone( element.get() );
+                  var _current_collection = _.clone( module.get() );
                   _.map(_current_collection, function( _model ) {
-                    if ( ! element.getViewEl(_model.id).length )
+                    if ( ! module.getViewEl(_model.id).length )
                       return;
 
                     if ( _.contains( _inactives_zones, _model.id ) ) {
-                      element.getViewEl( _model.id ).addClass('inactive');
-                      if ( ! element.getViewEl( _model.id ).find('.czr-inactive-alert').length )
-                        element.getViewEl( _model.id ).find('.czr-view-title').append(
+                      module.getViewEl( _model.id ).addClass('inactive');
+                      if ( ! module.getViewEl( _model.id ).find('.czr-inactive-alert').length )
+                        module.getViewEl( _model.id ).find('.czr-view-title').append(
                           $('<span/>', {class : "czr-inactive-alert", html : " [ " + serverControlParams.translatedStrings.inactiveWidgetZone + " ]" })
                         );
                     }
                     else {
-                      element.getViewEl( _model.id ).removeClass('inactive');
-                      if ( element.getViewEl( _model.id ).find('.czr-inactive-alert').length )
-                        element.getViewEl( _model.id ).find('.czr-inactive-alert').remove();
+                      module.getViewEl( _model.id ).removeClass('inactive');
+                      if ( module.getViewEl( _model.id ).find('.czr-inactive-alert').length )
+                        module.getViewEl( _model.id ).find('.czr-inactive-alert').remove();
                     }
                   });
           });
@@ -2555,7 +2555,7 @@ $.extend( CZRWidgetAreaElementMths, {
   _adjustScrollExpandedBlock : function( $_block_el, adjust ) {
           if ( ! $_block_el.length )
             return;
-          var element = this,
+          var module = this,
               _currentScrollTopVal = $('.wp-full-overlay-sidebar-content').scrollTop(),
               _scrollDownVal,
               _adjust = adjust || 90;
@@ -2569,16 +2569,16 @@ $.extend( CZRWidgetAreaElementMths, {
           }, 50);
   },
   getDefaultModel : function(id) {
-          var element = this,
-              _current_collection = element.get(),
-              _default = _.clone( element.defaultItemModel ),
+          var module = this,
+              _current_collection = module.get(),
+              _default = _.clone( module.defaultItemModel ),
               _default_contexts = _default.contexts;
           return $.extend( _default, {
               title : 'Widget Zone ' +  ( _.size(_current_collection)*1 + 1 )
             });
   },
   getTemplateEl : function( type, model ) {
-          var element = this, _el;
+          var module = this, _el;
           if ( 'view' == type ) {
             type = ( _.has(model, 'is_builtin') && model.is_builtin ) ? 'view-reduced' : type;
           } else if ( 'view-content' == type ) {
@@ -2587,16 +2587,16 @@ $.extend( CZRWidgetAreaElementMths, {
 
           switch(type) {
                 case 'view' :
-                  _el = element.viewTemplateEl;
+                  _el = module.viewTemplateEl;
                   break;
                 case 'view-content' :
-                  _el = element.viewContentTemplateEl;
+                  _el = module.viewContentTemplateEl;
                   break;
                 case 'view-reduced' :
-                  _el = 'czr-element-widgets-view-reduced';
+                  _el = 'czr-module-widgets-view-reduced';
                   break;
                 case 'view-content-reduced' :
-                  _el = 'czr-element-widgets-view-content-reduced';
+                  _el = 'czr-module-widgets-view-content-reduced';
                   break;
           }
 
@@ -2633,21 +2633,21 @@ $.extend( CZRWidgetAreaElementMths, {
   }
 
 
-});//$.extend()//extends api.CZRDynElement
+});//$.extend()//extends api.CZRDynModule
 
-var CZRFeaturedPageElementMths = CZRFeaturedPageElementMths || {};
+var CZRFeaturedPageModuleMths = CZRFeaturedPageModuleMths || {};
 
-$.extend( CZRFeaturedPageElementMths, {
+$.extend( CZRFeaturedPageModuleMths, {
   initialize: function( id, options ) {
-    var element = this;
-    api.CZRDynElement.prototype.initialize.call( element, id, options );
-    $.extend( element, {
-          viewPreAddEl : 'czr-element-fp-pre-add-view-content',
-          viewTemplateEl : 'czr-element-item-view',
-          viewContentTemplateEl : 'czr-element-fp-view-content',
+    var module = this;
+    api.CZRDynModule.prototype.initialize.call( module, id, options );
+    $.extend( module, {
+          viewPreAddEl : 'czr-module-fp-pre-add-view-content',
+          viewTemplateEl : 'czr-module-item-view',
+          viewContentTemplateEl : 'czr-module-fp-view-content',
     } );
-    element.inputConstructor = api.CZRInput.extend( element.CZRFeaturedPagesInputMths || {} );
-    element.itemConstructor = api.CZRItem.extend( element.CZRFeaturedPagesItem || {} );
+    module.inputConstructor = api.CZRInput.extend( module.CZRFeaturedPagesInputMths || {} );
+    module.itemConstructor = api.CZRItem.extend( module.CZRFeaturedPagesItem || {} );
     this.defaultItemModel = {
         id : '',
         title : '' ,
@@ -2657,10 +2657,10 @@ $.extend( CZRFeaturedPageElementMths, {
         'fp-image' : '',
     };
     this.itemAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
-    api.section( element.control.section() ).expanded.bind(function(to) {
-      if ( ! to || ! _.isEmpty( element.get() ) )
+    api.section( module.control.section() ).expanded.bind(function(to) {
+      if ( ! to || ! _.isEmpty( module.get() ) )
         return;
-      element.ready();
+      module.ready();
     });
   },//initialize
 
@@ -2689,7 +2689,7 @@ $.extend( CZRFeaturedPageElementMths, {
 
       var _fp_post        = _new_model['fp-post'][0],
           _new_title      = _fp_post.title,
-          inputCollection = is_preItemInput ? input.element.czr_preItemInput : item.czr_Input;
+          inputCollection = is_preItemInput ? input.module.czr_preItemInput : item.czr_Input;
 
       if ( is_preItemInput ) {
         $.extend( _new_model, { title : _new_title, 'fp-title' : _new_title } );
@@ -2732,130 +2732,130 @@ $.extend( CZRBaseControlMths, {
 
 });//$.extend//CZRBaseControlMths//BASE CONTROL CLASS
 
-var CZRElementControlMths = CZRElementControlMths || {};
+var CZRModuleControlMths = CZRModuleControlMths || {};
 
-$.extend( CZRElementControlMths, {
+$.extend( CZRModuleControlMths, {
 
   initialize: function( id, options ) {
           var control = this;
           api.CZRBaseControl.prototype.initialize.call( control, id, options );
-          control.savedElements = [
+          control.savedModules = [
               {
                 id : options.params.section + '_' + options.params.type,
                 section : options.params.section,
                 block   : '',
-                element_type    : options.params.element_type,
+                module_type    : options.params.module_type,
                 items   : api(control.id).get()
               }
           ];
-          control.elementConstructors = {
-              czr_widget_areas_element   : api.CZRWidgetAreaElement,
-              czr_social_element    : api.CZRSocialElement,
-              czr_sektion_element    : api.CZRSektionElement,
-              czr_fp_element    : api.CZRFeaturedPageElement
+          control.moduleConstructors = {
+              czr_widget_areas_module   : api.CZRWidgetAreaModule,
+              czr_social_module    : api.CZRSocialModule,
+              czr_sektion_module    : api.CZRSektionModule,
+              czr_fp_module    : api.CZRFeaturedPageModule
           };
 
-          control.czr_Element = new api.Values();
-          control.czr_elementCollection = new api.Value();
-          control.czr_elementCollection.set([]);
+          control.czr_Module = new api.Values();
+          control.czr_moduleCollection = new api.Value();
+          control.czr_moduleCollection.set([]);
   },
   ready : function() {
           var control = this;
           api.bind( 'ready', function() {
-                if ( ! _.isEmpty( control.czr_elementCollection.get() ) )
+                if ( ! _.isEmpty( control.czr_moduleCollection.get() ) )
                   return;
-                control.populateElementCollection();
-                control.czr_elementCollection.callbacks.add( function() { return control.collectionReact.apply(control, arguments ); } );
+                control.populateModuleCollection();
+                control.czr_moduleCollection.callbacks.add( function() { return control.collectionReact.apply(control, arguments ); } );
           });
   },
-  populateElementCollection : function() {
+  populateModuleCollection : function() {
           var control = this;
-          _.each( control.savedElements, function( element, key ) {
-                element = control._normalizeElement( element );
-                if ( ! _.isObject(element) || _.isEmpty(element) ) {
-                  throw new Error('Populate Element Collection : an element could not be added in : ' + control.id );
+          _.each( control.savedModules, function( module, key ) {
+                module = control._normalizeModule( module );
+                if ( ! _.isObject(module) || _.isEmpty(module) ) {
+                  throw new Error('Populate Module Collection : an module could not be added in : ' + control.id );
                 }
-                if ( _.isUndefined( control.elementConstructors[ element.element_type] ) ) {
-                  throw new Error('Populate Element Collection : no constructor found for type : ' +  element.element_type );
+                if ( _.isUndefined( control.moduleConstructors[ module.module_type] ) ) {
+                  throw new Error('Populate Module Collection : no constructor found for type : ' +  module.module_type );
                 }
-                control.instantiateElement( element, control.elementConstructors[ element.element_type] );
+                control.instantiateModule( module, control.moduleConstructors[ module.module_type] );
           });
 
           return this;
   },
 
 
-  instantiateElement : function( element, constructor, is_added_by_user ) {
-          if ( ! _.has( element,'id') ) {
-            throw new Error('CZRElement::instantiateElement() : an element has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
+  instantiateModule : function( module, constructor, is_added_by_user ) {
+          if ( ! _.has( module,'id') ) {
+            throw new Error('CZRModule::instantiateModule() : an module has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
           }
           if ( _.isUndefined(constructor) ) {
-            throw new Error('CZRElement::instantiateElement() : no constructor found for element type : ' + element.element_type +'. Aborted.' );
+            throw new Error('CZRModule::instantiateModule() : no constructor found for module type : ' + module.module_type +'. Aborted.' );
           }
           var control = this;
-          control.czr_Element.add( element.id, new constructor( element.id, {
-                id : element.id,
-                section : element.section,
+          control.czr_Module.add( module.id, new constructor( module.id, {
+                id : module.id,
+                section : module.section,
                 block   : '',
-                type    : element.element_type,
-                items   : element.items,
+                type    : module.module_type,
+                items   : module.items,
                 control : control,
                 is_added_by_user : is_added_by_user || false
           } ) );
-          control.updateElementsCollection( {element : element });
+          control.updateModulesCollection( {module : module });
   },
-  _normalizeElement : function( element ) {
-        return element;
+  _normalizeModule : function( module ) {
+        return module;
   },
-  updateElementsCollection : function( obj ) {
+  updateModulesCollection : function( obj ) {
           var control = this,
-              _current_collection = control.czr_elementCollection.get();
+              _current_collection = control.czr_moduleCollection.get();
               _new_collection = _.clone(_current_collection);
           if ( _.has( obj, 'collection' ) ) {
-                control.czr_elementCollection.set(obj.collection);
+                control.czr_moduleCollection.set(obj.collection);
                 return;
           }
 
-          if ( ! _.has(obj, 'element') ) {
-            throw new Error('updateElementsCollection, no element provided ' + control.id + '. Aborting');
+          if ( ! _.has(obj, 'module') ) {
+            throw new Error('updateModulesCollection, no module provided ' + control.id + '. Aborting');
           }
-          var element = _.clone(obj.element);
-          if ( _.findWhere( _new_collection, { id : element.id } ) ) {
+          var module = _.clone(obj.module);
+          if ( _.findWhere( _new_collection, { id : module.id } ) ) {
                 _.each( _current_collection , function( _elt, _ind ) {
-                      if ( _elt.id != element.id )
+                      if ( _elt.id != module.id )
                         return;
-                      _new_collection[_ind] = element;
+                      _new_collection[_ind] = module;
                 });
           }
           else {
-                _new_collection.push(element);
+                _new_collection.push(module);
           }
-          control.czr_elementCollection.set(_new_collection);
+          control.czr_moduleCollection.set(_new_collection);
   },
   collectionReact : function( to, from ) {
         var control = this,
             _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
             _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
-            _element_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
-            is_element_update = _.isEmpty( _element_updated ),
-            is_collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && ! is_element_update;
-        api(this.id).set( control.filterElementCollectionBeforeAjax(to) );
+            _module_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
+            is_module_update = _.isEmpty( _module_updated ),
+            is_collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && ! is_module_update;
+        api(this.id).set( control.filterModuleCollectionBeforeAjax(to) );
         if ( 'postMessage' == api(control.id).transport && ! api.CZR_Helpers.has_part_refresh( control.id ) ) {
             if ( is_collection_sorted )
                 control.previewer.refresh();
         }
   },
-  filterElementCollectionBeforeAjax : function(elements) {
+  filterModuleCollectionBeforeAjax : function(modules) {
           var control = this;
           if ( _.has( control.params, 'in_sektion' ) && control.params.in_sektion )
-            return elements;
-          if ( _.size(elements) > 1 ) {
-            throw new Error('There should not be several elements in the collection of control : ' + control.id );
+            return modules;
+          if ( _.size(modules) > 1 ) {
+            throw new Error('There should not be several modules in the collection of control : ' + control.id );
           }
-          if ( ! _.isArray(elements) || _.isEmpty(elements) || ! _.has( elements[0], 'items' ) ) {
+          if ( ! _.isArray(modules) || _.isEmpty(modules) || ! _.has( modules[0], 'items' ) ) {
             throw new Error('The setting value could not be populated in control : ' + control.id );
           }
-          return elements[0].items;
+          return modules[0].items;
 
   }
 });//$.extend//CZRBaseControlMths
@@ -3133,23 +3133,23 @@ $.extend( CZRBackgroundMths , {
 });//$.extend
 (function (api, $, _) {
   $.extend( CZRBaseControlMths, api.Events || {} );
-  $.extend( CZRElementMths, api.Events || {} );
+  $.extend( CZRModuleMths, api.Events || {} );
   $.extend( CZRItemMths, api.Events || {} );
   $.extend( CZRInputMths, api.Events || {} );
   $.extend( CZRBaseControlMths, api.CZR_Helpers || {} );
   $.extend( CZRInputMths, api.CZR_Helpers || {} );
-  $.extend( CZRElementMths, api.CZR_Helpers || {} );
+  $.extend( CZRModuleMths, api.CZR_Helpers || {} );
   api.CZRInput                 = api.Value.extend( CZRInputMths || {} );
   api.CZRItem                  = api.Value.extend( CZRItemMths || {} );
-  api.CZRElement               = api.Value.extend( CZRElementMths || {} );
-  api.CZRDynElement            = api.CZRElement.extend( CZRDynElementMths || {} );
+  api.CZRModule               = api.Value.extend( CZRModuleMths || {} );
+  api.CZRDynModule            = api.CZRModule.extend( CZRDynModuleMths || {} );
   api.CZRColumn                = api.Value.extend( CZRColumnMths || {} );
-  api.CZRSocialElement         = api.CZRDynElement.extend( CZRSocialElementMths || {} );
-  api.CZRWidgetAreaElement     = api.CZRDynElement.extend( CZRWidgetAreaElementMths || {} );
-  api.CZRSektionElement        = api.CZRDynElement.extend( CZRSektionMths || {} );
-  api.CZRFeaturedPageElement   = api.CZRDynElement.extend( CZRFeaturedPageElementMths || {} );
+  api.CZRSocialModule         = api.CZRDynModule.extend( CZRSocialModuleMths || {} );
+  api.CZRWidgetAreaModule     = api.CZRDynModule.extend( CZRWidgetAreaModuleMths || {} );
+  api.CZRSektionModule        = api.CZRDynModule.extend( CZRSektionMths || {} );
+  api.CZRFeaturedPageModule   = api.CZRDynModule.extend( CZRFeaturedPageModuleMths || {} );
   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMths || {} );
-  api.CZRElementsControl       = api.CZRBaseControl.extend( CZRElementControlMths || {} );
+  api.CZRModulesControl       = api.CZRBaseControl.extend( CZRModuleControlMths || {} );
 
 
   api.CZRUploadControl         = api.Control.extend( CZRUploadMths || {} );
@@ -3161,7 +3161,7 @@ $.extend( CZRBackgroundMths , {
   $.extend( api.controlConstructor, {
         czr_upload     : api.CZRUploadControl,
 
-        czr_elements : api.CZRElementsControl,
+        czr_modules : api.CZRModulesControl,
 
         czr_multiple_picker : api.CZRMultiplePickerControl,
         czr_layouts    : api.CZRLayoutControl

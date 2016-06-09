@@ -1,32 +1,32 @@
-//extends api.CZRDynElement
+//extends api.CZRDynModule
 
-var CZRWidgetAreaElementMths = CZRWidgetAreaElementMths || {};
+var CZRWidgetAreaModuleMths = CZRWidgetAreaModuleMths || {};
 
-$.extend( CZRWidgetAreaElementMths, {
+$.extend( CZRWidgetAreaModuleMths, {
   initialize: function( id, options ) {
-          var element = this;
+          var module = this;
 
-          api.CZRDynElement.prototype.initialize.call( this, id, options );
+          api.CZRDynModule.prototype.initialize.call( this, id, options );
 
-          //extend the element with new template Selectors
-          $.extend( element, {
-                viewPreAddEl : 'czr-element-widgets-pre-add-view-content',
-                viewTemplateEl : 'czr-element-item-view',
-                viewContentTemplateEl : 'czr-element-widgets-view-content',
+          //extend the module with new template Selectors
+          $.extend( module, {
+                viewPreAddEl : 'czr-module-widgets-pre-add-view-content',
+                viewTemplateEl : 'czr-module-item-view',
+                viewContentTemplateEl : 'czr-module-widgets-view-content',
           } );
 
           //EXTEND THE DEFAULT CONSTRUCTORS FOR INPUT
-          element.inputConstructor = api.CZRInput.extend( element.CZRWZonesInputMths || {} );
+          module.inputConstructor = api.CZRInput.extend( module.CZRWZonesInputMths || {} );
           //EXTEND THE DEFAULT CONSTRUCTORS FOR MONOMODEL
-          element.itemConstructor = api.CZRItem.extend( element.CZRWZonesItem || {} );
+          module.itemConstructor = api.CZRItem.extend( module.CZRWZonesItem || {} );
 
-          element.serverParams = serverControlParams.widget_area_el_params || {};
+          module.serverParams = serverControlParams.widget_area_el_params || {};
 
           //add a shortcut to the server side json properties
-          element.contexts = _.has( element.serverParams , 'sidebar_contexts') ? element.serverParams.sidebar_contexts : {};
+          module.contexts = _.has( module.serverParams , 'sidebar_contexts') ? module.serverParams.sidebar_contexts : {};
 
           //context match map
-          element.context_match_map = {
+          module.context_match_map = {
                   is_404 : '404',
                   is_category : 'archive-category',
                   is_home : 'home',
@@ -37,19 +37,19 @@ $.extend( CZRWidgetAreaElementMths, {
 
           //extend the saved model property
           //adds the default widget zones
-          element.savedItems = _.union(
-                  _.has(element.serverParams, 'default_zones') ? element.serverParams.default_zones : [],
-                  element.savedItems
+          module.savedItems = _.union(
+                  _.has(module.serverParams, 'default_zones') ? module.serverParams.default_zones : [],
+                  module.savedItems
           );
 
-          element.locations = _.has( element.serverParams , 'sidebar_locations') ? element.serverParams.sidebar_locations : {};
+          module.locations = _.has( module.serverParams , 'sidebar_locations') ? module.serverParams.sidebar_locations : {};
 
           //declares a default model
-          element.defaultItemModel = {
+          module.defaultItemModel = {
                   id : '',
                   title : serverControlParams.translatedStrings.widgetZone,
-                  contexts : _.without( _.keys(element.contexts), '_all_' ),//the server list of contexts is an object, we only need the keys, whitout _all_
-                  locations : [ element.serverParams.defaultWidgetLocation ],
+                  contexts : _.without( _.keys(module.contexts), '_all_' ),//the server list of contexts is an object, we only need the keys, whitout _all_
+                  locations : [ module.serverParams.defaultWidgetLocation ],
                   description : ''
           };
 
@@ -62,22 +62,22 @@ $.extend( CZRWidgetAreaElementMths, {
 
 
           //AVAILABLE LOCATIONS FOR THE PRE MODEL
-          //1) add an observable value to element.czr_preItem to handle the alert visibility
-          element.czr_preItem.create('location_alert_view_state');
-          element.czr_preItem('location_alert_view_state').set('closed');
+          //1) add an observable value to module.czr_preItem to handle the alert visibility
+          module.czr_preItem.create('location_alert_view_state');
+          module.czr_preItem('location_alert_view_state').set('closed');
           //2) add state listeners
-          element.czr_preItem('location_alert_view_state').callbacks.add( function( to, from ) {
-                    element._toggleLocationAlertExpansion( element.container, to );
+          module.czr_preItem('location_alert_view_state').callbacks.add( function( to, from ) {
+                    module._toggleLocationAlertExpansion( module.container, to );
           });
 
 
           //REACT ON ADD / REMOVE ITEMS
-          element.bind( 'item_added', function( model ) {
-                  element.addWidgetSidebar( model );
+          module.bind( 'item_added', function( model ) {
+                  module.addWidgetSidebar( model );
           });
 
-          element.bind( 'item_removed' , function(model) {
-                  element.removeWidgetSidebar( model );
+          module.bind( 'item_removed' , function(model) {
+                  module.removeWidgetSidebar( model );
           });
 
 
@@ -86,23 +86,23 @@ $.extend( CZRWidgetAreaElementMths, {
           fixTopMargin.create('fixed_for_current_session');
           fixTopMargin.create('value');
 
-          api.section(element.serverParams.dynWidgetSection).fixTopMargin = fixTopMargin;
-          api.section(element.serverParams.dynWidgetSection).fixTopMargin('fixed_for_current_session').set(false);
+          api.section(module.serverParams.dynWidgetSection).fixTopMargin = fixTopMargin;
+          api.section(module.serverParams.dynWidgetSection).fixTopMargin('fixed_for_current_session').set(false);
 
 
           //setup reactions on widget section expansion
           //change the expanded behaviour for the widget zone section
-          api.section(element.serverParams.dynWidgetSection).expanded.callbacks.add( function() { return element.widgetSectionReact.apply(element, arguments ); } );
+          api.section(module.serverParams.dynWidgetSection).expanded.callbacks.add( function() { return module.widgetSectionReact.apply(module, arguments ); } );
 
           //bind actions on widget panel expansion and widget zone section expansion
-          //Fire the element
+          //Fire the module
           api.panel('widgets').expanded.callbacks.add( function(to, from) {
-                element.widgetPanelReact();//setup some visual adjustments, must be ran each time panel is closed or expanded
+                module.widgetPanelReact();//setup some visual adjustments, must be ran each time panel is closed or expanded
 
-                //Fire the element if not done already
-                if ( ! to || ! _.isEmpty( element.get() ) )
+                //Fire the module if not done already
+                if ( ! to || ! _.isEmpty( module.get() ) )
                     return;
-                element.ready();
+                module.ready();
           });
   },//initialize
 
@@ -111,20 +111,20 @@ $.extend( CZRWidgetAreaElementMths, {
 
 
 
-  //@todo : add the element.czr_preItem('view_content').callbacks.add(function( to, from ) {}
+  //@todo : add the module.czr_preItem('view_content').callbacks.add(function( to, from ) {}
   //=> to replace pre_add_view_rendered action
   ready : function() {
-          var element = this;
-          api.CZRDynElement.prototype.ready.call( element );
+          var module = this;
+          api.CZRDynModule.prototype.ready.call( module );
 
           //add state listener on pre Item view
-          element.czr_preItem('view_status').callbacks.add( function( to, from ) {
+          module.czr_preItem('view_status').callbacks.add( function( to, from ) {
                 if ( 'expanded' != to )
                   return;
                 //refresh the location list
-                element.czr_preItemInput('locations')._setupLocationSelect( true );//true for refresh
+                module.czr_preItemInput('locations')._setupLocationSelect( true );//true for refresh
                 //refresh the location alert message
-                element.czr_preItemInput('locations').mayBeDisplayModelAlert();
+                module.czr_preItemInput('locations').mayBeDisplayModelAlert();
           });
   },
 
@@ -168,10 +168,10 @@ $.extend( CZRWidgetAreaElementMths, {
                   var input      = this,
                       input_contexts = input.get(),
                       item = input.item,
-                      element     = input.element;
+                      module     = input.module;
 
                   //generates the contexts options
-                  _.each( element.contexts, function( title, key ) {
+                  _.each( module.contexts, function( title, key ) {
                         var _attributes = {
                               value : key,
                               html: title
@@ -192,13 +192,13 @@ $.extend( CZRWidgetAreaElementMths, {
                   var input      = this,
                       input_locations = input.get(),
                       item = input.item,
-                      element     = input.element,
+                      module     = input.module,
                       available_locs = api.sidebar_insights('available_locations').get();
 
                   //generates the locations options
                   //append them if not set yet
                   if ( ! $( 'select[data-type="locations"]', input.container ).children().length ) {
-                        _.each( element.locations, function( title, key ) {
+                        _.each( module.locations, function( title, key ) {
                               var _attributes = {
                                     value : key,
                                     html: title
@@ -237,7 +237,7 @@ $.extend( CZRWidgetAreaElementMths, {
           mayBeDisplayModelAlert : function() {
                   var input      = this,
                       item = input.item,
-                      element     = input.element;
+                      module     = input.module;
 
                   //check if we are in the pre Item case => if so, the locations might be empty
                   if ( ! _.has( item.get(), 'locations') || _.isEmpty( item.get()['locations'] ) )
@@ -251,7 +251,7 @@ $.extend( CZRWidgetAreaElementMths, {
 
                   //check if we are in the pre Item case => if so, the id is empty
                   if ( ! _.has( item.get(), 'id' ) || _.isEmpty( item.get().id ) ) {
-                        element.czr_preItem('location_alert_view_state').set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
+                        module.czr_preItem('location_alert_view_state').set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
                   } else {
                         item.czr_itemLocationAlert.set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
                   }
@@ -275,7 +275,7 @@ $.extend( CZRWidgetAreaElementMths, {
   CZRWZonesItem : {
           initialize : function( id, options ) {
                   var item = this,
-                      element = item.item_element;
+                      module = item.item_module;
 
                   //Add some observable values for this item
                   item.czr_itemLocationAlert = new api.Value();
@@ -288,7 +288,7 @@ $.extend( CZRWidgetAreaElementMths, {
           //extend parent setupview
           setupView : function() {
                   var item = this,
-                      element = item.item_element;
+                      module = item.item_module;
                   api.CZRItem.prototype.setupView.call(item);
 
                   /// ALERT FOR NOT AVAILABLE LOCATION
@@ -296,7 +296,7 @@ $.extend( CZRWidgetAreaElementMths, {
 
                   //add a state listener on expansion change
                   item.czr_itemLocationAlert.callbacks.add( function( to, from ) {
-                        element._toggleLocationAlertExpansion( item.container , to );
+                        module._toggleLocationAlertExpansion( item.container , to );
                   });
 
                   //update item title
@@ -332,7 +332,7 @@ $.extend( CZRWidgetAreaElementMths, {
           //Write html informations under the title : location(s) and context(s)
           writeSubtitleInfos : function(model) {
                   var item = this,
-                      element = item.item_element,
+                      module = item.item_module,
                       _model = _.clone( model || item.get() ),
                       _locations = [],
                       _contexts = [],
@@ -344,8 +344,8 @@ $.extend( CZRWidgetAreaElementMths, {
                   //generate the locations and the contexts text from the json data if exists
                   _model.locations =_.isString(_model.locations) ? [_model.locations] : _model.locations;
                   _.each( _model.locations, function( loc ) {
-                        if ( _.has( element.locations , loc ) )
-                          _locations.push(element.locations[loc]);
+                        if ( _.has( module.locations , loc ) )
+                          _locations.push(module.locations[loc]);
                         else
                           _locations.push(loc);
                     }
@@ -356,11 +356,11 @@ $.extend( CZRWidgetAreaElementMths, {
 
                   //all contexts cases ?
                   if ( item._hasModelAllContexts( model ) ) {
-                    _contexts.push(element.contexts._all_);
+                    _contexts.push(module.contexts._all_);
                   } else {
                     _.each( _model.contexts, function( con ) {
-                            if ( _.has( element.contexts , con ) )
-                              _contexts.push(element.contexts[con]);
+                            if ( _.has( module.contexts , con ) )
+                              _contexts.push(module.contexts[con]);
                             else
                               _contexts.push(con);
                           }
@@ -385,10 +385,10 @@ $.extend( CZRWidgetAreaElementMths, {
 
                   if ( ! $('.czr-zone-infos', item.container ).length ) {
                         var $_zone_infos = $('<div/>', {
-                          class : [ 'czr-zone-infos' , element.control.css_attr.sortable_handle ].join(' '),
+                          class : [ 'czr-zone-infos' , module.control.css_attr.sortable_handle ].join(' '),
                           html : _html
                         });
-                        $( '.' + element.control.css_attr.view_buttons, item.container ).after($_zone_infos);
+                        $( '.' + module.control.css_attr.view_buttons, item.container ).after($_zone_infos);
                   } else {
                         $('.czr-zone-infos', item.container ).html(_html);
                   }
@@ -437,7 +437,7 @@ $.extend( CZRWidgetAreaElementMths, {
           //2 seconds delay
           setModelUpdateTimer : function() {
                   var item = this,
-                      element = item.item_element;
+                      module = item.item_module;
 
                   clearTimeout( $.data(this, 'modelUpdateTimer') );
                   $.data(
@@ -445,7 +445,7 @@ $.extend( CZRWidgetAreaElementMths, {
                       'modelUpdateTimer',
                       setTimeout( function() {
                           //refresh preview
-                          element.control.refreshPreview();
+                          module.control.refreshPreview();
                       } , 1000)
                   );//$.data
           },
@@ -455,8 +455,8 @@ $.extend( CZRWidgetAreaElementMths, {
           //takes the model unique id
           _hasModelAllContexts : function( model ) {
                   var item = this,
-                      element = item.item_element,
-                      elementContexts = _.keys(element.contexts);
+                      module = item.item_module,
+                      moduleContexts = _.keys(module.contexts);
 
                   model = model || this.get();
 
@@ -467,14 +467,14 @@ $.extend( CZRWidgetAreaElementMths, {
                     return true;
 
                   //case when model does not have _all_ but all the others
-                  return _.isEmpty( _.difference( _.without(elementContexts, '_all_') , model.contexts ) );
+                  return _.isEmpty( _.difference( _.without(moduleContexts, '_all_') , model.contexts ) );
           },
 
           //@param contexts = array of contexts
           _getMatchingContexts : function( defaults ) {
-                  var element = this,
+                  var module = this,
                       _current = api.czr_wp_conditionals.get() || {},
-                      _matched = _.filter(element.context_match_map, function( hu, wp ) { return true === _current[wp]; });
+                      _matched = _.filter(module.context_match_map, function( hu, wp ) { return true === _current[wp]; });
 
                   return _.isEmpty( _matched ) ? defaults : _matched;
 
@@ -543,10 +543,10 @@ $.extend( CZRWidgetAreaElementMths, {
 
           //ADD the new sidebar to the existing collection
           //Clone the serverControlParams.defaultWidgetSidebar sidebar
-          var element = this,
+          var module = this,
               _model        = ! _.isEmpty(model) ? _.clone(model) : sidebar_data,
               _new_sidebar  = _.isEmpty(model) ? sidebar_data : $.extend(
-                _.clone( _.findWhere( api.Widgets.data.registeredSidebars, { id: element.serverParams.defaultWidgetSidebar } ) ),
+                _.clone( _.findWhere( api.Widgets.data.registeredSidebars, { id: module.serverParams.defaultWidgetSidebar } ) ),
                 {
                   name : _model.title,
                   id : _model.id
@@ -562,15 +562,15 @@ $.extend( CZRWidgetAreaElementMths, {
 
           //ADD the sidebar section
           var _params = $.extend(
-                  _.clone( api.section( "sidebar-widgets-" + element.serverParams.defaultWidgetSidebar ).params ),
+                  _.clone( api.section( "sidebar-widgets-" + module.serverParams.defaultWidgetSidebar ).params ),
                   {
                     id : "sidebar-widgets-" + _model.id,
                     instanceNumber: _.max(api.settings.sections, function(sec){ return sec.instanceNumber; }).instanceNumber + 1,
                     sidebarId: _new_sidebar.id,
                     title: _new_sidebar.name,
-                    description : 'undefined' != typeof(sidebar_data) ? sidebar_data.description : api.section( "sidebar-widgets-" + element.serverParams.defaultWidgetSidebar ).params.description,
-                    //always set the new priority to the maximum + 1 ( element.serverParams.dynWidgetSection is excluded from this calculation because it must always be at the bottom )
-                    priority: _.max( _.omit( api.settings.sections, element.serverParams.dynWidgetSection), function(sec){ return sec.instanceNumber; }).priority + 1,
+                    description : 'undefined' != typeof(sidebar_data) ? sidebar_data.description : api.section( "sidebar-widgets-" + module.serverParams.defaultWidgetSidebar ).params.description,
+                    //always set the new priority to the maximum + 1 ( module.serverParams.dynWidgetSection is excluded from this calculation because it must always be at the bottom )
+                    priority: _.max( _.omit( api.settings.sections, module.serverParams.dynWidgetSection), function(sec){ return sec.instanceNumber; }).priority + 1,
                   }
           );
 
@@ -580,10 +580,10 @@ $.extend( CZRWidgetAreaElementMths, {
           api.settings.sections[ _params.id ] = _params.id;
 
           //ADD A SETTING
-          //Clone the element.serverParams.defaultWidgetSidebar sidebar widget area setting
+          //Clone the module.serverParams.defaultWidgetSidebar sidebar widget area setting
           var _new_set_id = 'sidebars_widgets['+_model.id+']',
               _new_set    = $.extend(
-                _.clone( api.settings.settings['sidebars_widgets[' + element.serverParams.defaultWidgetSidebar + ']'] ),
+                _.clone( api.settings.settings['sidebars_widgets[' + module.serverParams.defaultWidgetSidebar + ']'] ),
                 {
                   value:[]
                 }
@@ -603,7 +603,7 @@ $.extend( CZRWidgetAreaElementMths, {
 
           //ADD A CONTROL
           var _cloned_control = $.extend(
-                    _.clone( api.settings.controls['sidebars_widgets[' + element.serverParams.defaultWidgetSidebar + ']'] ),
+                    _.clone( api.settings.controls['sidebars_widgets[' + module.serverParams.defaultWidgetSidebar + ']'] ),
                     {
                       settings : { default : _new_set_id }
                 }),
@@ -613,7 +613,7 @@ $.extend( CZRWidgetAreaElementMths, {
           //replace  serverControlParams.defaultWidgetSidebar  by the new sidebar id
           _.each( _cloned_control, function( param, key ) {
                   if ( 'string' == typeof(param) ) {
-                    param = param.replace( element.serverParams.defaultWidgetSidebar , _model.id );
+                    param = param.replace( module.serverParams.defaultWidgetSidebar , _model.id );
                   }
                   _new_control[key] = param;
           });
@@ -677,7 +677,7 @@ $.extend( CZRWidgetAreaElementMths, {
           }
 
           //say it
-          this.element.trigger('widget_zone_removed', { model : model, section_id : "sidebar-widgets-" + model.id , setting_id : 'sidebars_widgets['+model.id+']' });
+          this.module.trigger('widget_zone_removed', { model : model, section_id : "sidebar-widgets-" + model.id , setting_id : 'sidebars_widgets['+model.id+']' });
   },
 
 
@@ -689,16 +689,16 @@ $.extend( CZRWidgetAreaElementMths, {
   ////////////////////////////////////////
   //cb of : api.panel('widgets').expanded.callbacks.add
   widgetPanelReact : function() {
-          var element = this;
+          var module = this;
           //will be used for adjustments
           var _top_margin = api.panel('widgets').container.find( '.control-panel-content' ).css('margin-top');
-          api.section(element.serverParams.dynWidgetSection).fixTopMargin('value').set( _top_margin );
+          api.section(module.serverParams.dynWidgetSection).fixTopMargin('value').set( _top_margin );
 
-          var _section_content = api.section(element.serverParams.dynWidgetSection).container.find( '.accordion-section-content' ),
+          var _section_content = api.section(module.serverParams.dynWidgetSection).container.find( '.accordion-section-content' ),
             _panel_content = api.panel('widgets').container.find( '.control-panel-content' ),
             _set_margins = function() {
                   _section_content.css( 'margin-top', '' );
-                  _panel_content.css('margin-top', api.section(element.serverParams.dynWidgetSection).fixTopMargin('value').get() );
+                  _panel_content.css('margin-top', api.section(module.serverParams.dynWidgetSection).fixTopMargin('value').get() );
             };
 
           // Fix the top margin after reflow.
@@ -707,15 +707,15 @@ $.extend( CZRWidgetAreaElementMths, {
           }, 150 ) );
 
           //Close all views on widget panel expansion/clos
-          element.closeAllViews();
-          element.czr_preItem('view_status').set('closed');
+          module.closeAllViews();
+          module.czr_preItem('view_status').set('closed');
   },//widgetPanelReact()
 
 
-  //cb of api.section(element.serverParams.dynWidgetSection).expanded.callbacks
+  //cb of api.section(module.serverParams.dynWidgetSection).expanded.callbacks
   widgetSectionReact : function( to, from ) {
-          var element = this,
-              section =  api.section(element.serverParams.dynWidgetSection),
+          var module = this,
+              section =  api.section(module.serverParams.dynWidgetSection),
               container = section.container.closest( '.wp-full-overlay-sidebar-content' ),
               content = section.container.find( '.accordion-section-content' ),
               overlay = section.container.closest( '.wp-full-overlay' ),
@@ -733,7 +733,7 @@ $.extend( CZRWidgetAreaElementMths, {
             container.scrollTop( 0 );
           }
 
-          element.closeAllViews();
+          module.closeAllViews();
 
           content.slideToggle();
   },
@@ -746,37 +746,37 @@ $.extend( CZRWidgetAreaElementMths, {
   /// REACT TO THEM
   ////////////////////////////////////////
   listenToSidebarInsights : function() {
-          var element = this;
+          var module = this;
 
           //VISIBILITY BASED ON THE SIDEBAR INSIGHTS
           api.sidebar_insights('registered').callbacks.add( function( _registered_zones ) {
-                  var _current_collection = _.clone( element.get() );
+                  var _current_collection = _.clone( module.get() );
                   _.map(_current_collection, function( _model ) {
-                    if ( ! element.getViewEl(_model.id).length )
+                    if ( ! module.getViewEl(_model.id).length )
                       return;
 
-                    element.getViewEl(_model.id).css('display' , _.contains( _registered_zones, _model.id ) ? 'block' : 'none' );
+                    module.getViewEl(_model.id).css('display' , _.contains( _registered_zones, _model.id ) ? 'block' : 'none' );
                   });
           });
 
           //OPACITY SIDEBAR INSIGHTS BASED
           api.sidebar_insights('inactives').callbacks.add( function( _inactives_zones ) {
-                  var _current_collection = _.clone( element.get() );
+                  var _current_collection = _.clone( module.get() );
                   _.map(_current_collection, function( _model ) {
-                    if ( ! element.getViewEl(_model.id).length )
+                    if ( ! module.getViewEl(_model.id).length )
                       return;
 
                     if ( _.contains( _inactives_zones, _model.id ) ) {
-                      element.getViewEl( _model.id ).addClass('inactive');
-                      if ( ! element.getViewEl( _model.id ).find('.czr-inactive-alert').length )
-                        element.getViewEl( _model.id ).find('.czr-view-title').append(
+                      module.getViewEl( _model.id ).addClass('inactive');
+                      if ( ! module.getViewEl( _model.id ).find('.czr-inactive-alert').length )
+                        module.getViewEl( _model.id ).find('.czr-view-title').append(
                           $('<span/>', {class : "czr-inactive-alert", html : " [ " + serverControlParams.translatedStrings.inactiveWidgetZone + " ]" })
                         );
                     }
                     else {
-                      element.getViewEl( _model.id ).removeClass('inactive');
-                      if ( element.getViewEl( _model.id ).find('.czr-inactive-alert').length )
-                        element.getViewEl( _model.id ).find('.czr-inactive-alert').remove();
+                      module.getViewEl( _model.id ).removeClass('inactive');
+                      if ( module.getViewEl( _model.id ).find('.czr-inactive-alert').length )
+                        module.getViewEl( _model.id ).find('.czr-inactive-alert').remove();
                     }
                   });
           });
@@ -814,11 +814,11 @@ $.extend( CZRWidgetAreaElementMths, {
   ////////////////////////////////////////
   //fired in _toggleViewExpansion()
   //has to be overriden for the widget zones control because this control is embedded directly in a panel and not in a section
-  //therefore the element to animate the scrollTop is not the section container but $('.wp-full-overlay-sidebar-content')
+  //therefore the module to animate the scrollTop is not the section container but $('.wp-full-overlay-sidebar-content')
   _adjustScrollExpandedBlock : function( $_block_el, adjust ) {
           if ( ! $_block_el.length )
             return;
-          var element = this,
+          var module = this,
               _currentScrollTopVal = $('.wp-full-overlay-sidebar-content').scrollTop(),
               _scrollDownVal,
               _adjust = adjust || 90;
@@ -837,13 +837,13 @@ $.extend( CZRWidgetAreaElementMths, {
   //overrides the parent class default model getter
   //=> add a dynamic title
   getDefaultModel : function(id) {
-          var element = this,
-              _current_collection = element.get(),
-              _default = _.clone( element.defaultItemModel ),
+          var module = this,
+              _current_collection = module.get(),
+              _default = _.clone( module.defaultItemModel ),
               _default_contexts = _default.contexts;
           return $.extend( _default, {
               title : 'Widget Zone ' +  ( _.size(_current_collection)*1 + 1 )
-              //contexts : element._getMatchingContexts( _default_contexts )
+              //contexts : module._getMatchingContexts( _default_contexts )
             });
   },
 
@@ -851,7 +851,7 @@ $.extend( CZRWidgetAreaElementMths, {
   //overrides the default method to set a specific default view template if the model is a default setting
   //@return string
   getTemplateEl : function( type, model ) {
-          var element = this, _el;
+          var module = this, _el;
           //force view-content type to view-reduced if the model is a built-in (primary, secondary, footer-1, ...)
           if ( 'view' == type ) {
             type = ( _.has(model, 'is_builtin') && model.is_builtin ) ? 'view-reduced' : type;
@@ -861,16 +861,16 @@ $.extend( CZRWidgetAreaElementMths, {
 
           switch(type) {
                 case 'view' :
-                  _el = element.viewTemplateEl;
+                  _el = module.viewTemplateEl;
                   break;
                 case 'view-content' :
-                  _el = element.viewContentTemplateEl;
+                  _el = module.viewContentTemplateEl;
                   break;
                 case 'view-reduced' :
-                  _el = 'czr-element-widgets-view-reduced';
+                  _el = 'czr-module-widgets-view-reduced';
                   break;
                 case 'view-content-reduced' :
-                  _el = 'czr-element-widgets-view-content-reduced';
+                  _el = 'czr-module-widgets-view-content-reduced';
                   break;
           }
 

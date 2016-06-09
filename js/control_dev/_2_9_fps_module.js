@@ -1,24 +1,24 @@
-//extends api.CZRDynElement
+//extends api.CZRDynModule
 
-var CZRFeaturedPageElementMths = CZRFeaturedPageElementMths || {};
+var CZRFeaturedPageModuleMths = CZRFeaturedPageModuleMths || {};
 
-$.extend( CZRFeaturedPageElementMths, {
+$.extend( CZRFeaturedPageModuleMths, {
   initialize: function( id, options ) {
-    var element = this;
+    var module = this;
     //run the parent initialize
-    api.CZRDynElement.prototype.initialize.call( element, id, options );
+    api.CZRDynModule.prototype.initialize.call( module, id, options );
 
-    //extend the element with new template Selectors
-    $.extend( element, {
-          viewPreAddEl : 'czr-element-fp-pre-add-view-content',
-          viewTemplateEl : 'czr-element-item-view',
-          viewContentTemplateEl : 'czr-element-fp-view-content',
+    //extend the module with new template Selectors
+    $.extend( module, {
+          viewPreAddEl : 'czr-module-fp-pre-add-view-content',
+          viewTemplateEl : 'czr-module-item-view',
+          viewContentTemplateEl : 'czr-module-fp-view-content',
     } );
 
     //EXTEND THE DEFAULT CONSTRUCTORS FOR INPUT
-    element.inputConstructor = api.CZRInput.extend( element.CZRFeaturedPagesInputMths || {} );
+    module.inputConstructor = api.CZRInput.extend( module.CZRFeaturedPagesInputMths || {} );
     //EXTEND THE DEFAULT CONSTRUCTORS FOR MONOMODEL
-    element.itemConstructor = api.CZRItem.extend( element.CZRFeaturedPagesItem || {} );
+    module.itemConstructor = api.CZRItem.extend( module.CZRFeaturedPagesItem || {} );
 
     //declares a default model
     this.defaultItemModel = {
@@ -32,10 +32,10 @@ $.extend( CZRFeaturedPageElementMths, {
 
     //overrides the default success message
     this.itemAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
-    api.section( element.control.section() ).expanded.bind(function(to) {
-      if ( ! to || ! _.isEmpty( element.get() ) )
+    api.section( module.control.section() ).expanded.bind(function(to) {
+      if ( ! to || ! _.isEmpty( module.get() ) )
         return;
-      element.ready();
+      module.ready();
     });
   },//initialize
 
@@ -72,7 +72,7 @@ $.extend( CZRFeaturedPageElementMths, {
 
       var _fp_post        = _new_model['fp-post'][0],
           _new_title      = _fp_post.title,
-          inputCollection = is_preItemInput ? input.element.czr_preItemInput : item.czr_Input;
+          inputCollection = is_preItemInput ? input.module.czr_preItemInput : item.czr_Input;
 
       if ( is_preItemInput ) {
         $.extend( _new_model, { title : _new_title, 'fp-title' : _new_title } );

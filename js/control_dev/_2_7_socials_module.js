@@ -1,18 +1,18 @@
-//extends api.CZRDynElement
+//extends api.CZRDynModule
 
-var CZRSocialElementMths = CZRSocialElementMths || {};
+var CZRSocialModuleMths = CZRSocialModuleMths || {};
 
-$.extend( CZRSocialElementMths, {
+$.extend( CZRSocialModuleMths, {
   initialize: function( id, options ) {
-          var element = this;
+          var module = this;
           //run the parent initialize
-          api.CZRDynElement.prototype.initialize.call( element, id, options );
+          api.CZRDynModule.prototype.initialize.call( module, id, options );
 
-          //extend the element with new template Selectors
-          $.extend( element, {
-                viewPreAddEl : 'czr-element-social-pre-add-view-content',
-                viewTemplateEl : 'czr-element-item-view',
-                viewContentTemplateEl : 'czr-element-social-view-content',
+          //extend the module with new template Selectors
+          $.extend( module, {
+                viewPreAddEl : 'czr-module-social-pre-add-view-content',
+                viewTemplateEl : 'czr-module-item-view',
+                viewContentTemplateEl : 'czr-module-social-view-content',
           } );
 
 
@@ -20,9 +20,9 @@ $.extend( CZRSocialElementMths, {
             '500px','adn','amazon','android','angellist','apple','behance','behance-square','bitbucket','bitbucket-square','black-tie','btc','buysellads','chrome','codepen','codiepie','connectdevelop','contao','dashcube','delicious','delicious','deviantart','digg','dribbble','dropbox','drupal','edge','empire','expeditedssl','facebook','facebook','facebook-f (alias)','facebook-official','facebook-square','firefox','flickr','fonticons','fort-awesome','forumbee','foursquare','get-pocket','gg','gg-circle','git','github','github','github-alt','github-square','git-square','google','google','google-plus','google-plus-square','google-wallet','gratipay','hacker-news','houzz','instagram','internet-explorer','ioxhost','joomla','jsfiddle','lastfm','lastfm-square','leanpub','linkedin','linkedin','linkedin-square','linux','maxcdn','meanpath','medium','mixcloud','modx','odnoklassniki','odnoklassniki-square','opencart','openid','opera','optin-monster','pagelines','paypal','pied-piper','pied-piper-alt','pinterest','pinterest-p','pinterest-square','product-hunt','qq','rebel','reddit','reddit-alien','reddit-square','renren','rss','rss-square','safari','scribd','sellsy','share-alt','share-alt-square','shirtsinbulk','simplybuilt','skyatlas','skype','slack','slideshare','soundcloud','spotify','stack-exchange','stack-overflow','steam','steam-square','stumbleupon','stumbleupon','stumbleupon-circle','tencent-weibo','trello','tripadvisor','tumblr','tumblr-square','twitch','twitter','twitter','twitter-square','usb','viacoin','vimeo','vimeo-square','vine','vk','weibo','weixin','whatsapp','wikipedia-w','windows','wordpress','xing','xing-square','yahoo','yahoo','y-combinator','yelp','youtube','youtube-play','youtube-square'
           ];
           //EXTEND THE DEFAULT CONSTRUCTORS FOR INPUT
-          element.inputConstructor = api.CZRInput.extend( element.CZRSocialsInputMths || {} );
+          module.inputConstructor = api.CZRInput.extend( module.CZRSocialsInputMths || {} );
           //EXTEND THE DEFAULT CONSTRUCTORS FOR MONOMODEL
-          element.itemConstructor = api.CZRItem.extend( element.CZRSocialsItem || {} );
+          module.itemConstructor = api.CZRItem.extend( module.CZRSocialsItem || {} );
 
           //declares a default model
           this.defaultItemModel = {
@@ -36,13 +36,13 @@ $.extend( CZRSocialElementMths, {
 
           //overrides the default success message
           this.itemAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
-          api.section( element.control.section() ).expanded.bind(function(to) {
-                if ( ! to || ! _.isEmpty( element.get() ) )
+          api.section( module.control.section() ).expanded.bind(function(to) {
+                if ( ! to || ! _.isEmpty( module.get() ) )
                   return;
-                element.ready();
+                module.ready();
           });
 
-          console.log(' social savedItems', element.savedItems );
+          console.log(' social savedItems', module.savedItems );
   },//initialize
 
 
@@ -61,8 +61,8 @@ $.extend( CZRSocialElementMths, {
           setupSelect : function() {
                 var input      = this,
                     item = input.item,
-                    element     = input.element,
-                    socialList = element.social_icons,
+                    module     = input.module,
+                    socialList = module.social_icons,
                     _model = item.get();
 
                 //check if we are in the pre Item case => if so, the id is empty
@@ -121,7 +121,7 @@ $.extend( CZRSocialElementMths, {
         setupColorPicker : function( obj ) {
                 var input      = this,
                     item = input.item,
-                    element     = input.element;
+                    module     = input.module;
 
                 $( 'input[data-type="social-color"]', input.container ).wpColorPicker( {
                           defaultColor : 'rgba(255,255,255,0.7)',
@@ -142,7 +142,7 @@ $.extend( CZRSocialElementMths, {
                 //when the picker opens, it might be below the visible viewport.
                 //No built-in event available to react on this in the wpColorPicker unfortunately
                 $( 'input[data-type="social-color"]', input.container ).closest('div').on('click keydown', function() {
-                      element._adjustScrollExpandedBlock( input.container );
+                      module._adjustScrollExpandedBlock( input.container );
                 });
         },
 
@@ -162,7 +162,7 @@ $.extend( CZRSocialElementMths, {
                 var _new_model  = _.clone( item.get() ),
                     _new_title  = api.CZR_Helpers.capitalize( _new_model['social-icon'].replace('fa-', '') ),
                     _new_color  = serverControlParams.social_el_params.defaultSocialColor,
-                    inputCollection = is_preItemInput ? input.element.czr_preItemInput : item.czr_Input;
+                    inputCollection = is_preItemInput ? input.module.czr_preItemInput : item.czr_Input;
 
                 //add text follow us... to the title
                 _new_title = [ serverControlParams.translatedStrings.followUs, _new_title].join(' ');
@@ -186,11 +186,11 @@ $.extend( CZRSocialElementMths, {
   CZRSocialsItem : {
           _buildTitle : function( title, icon, color ) {
                   var item = this,
-                      element     = item.item_element;
+                      module     = item.item_module;
 
                   title = title || ( 'string' === typeof(icon) ? api.CZR_Helpers.capitalize( icon.replace( 'fa-', '') ) : '' );
                   title = api.CZR_Helpers.truncate(title, 20);
-                  icon = icon || 'fa-' + element.social_icons[0];
+                  icon = icon || 'fa-' + module.social_icons[0];
                   color = color || serverControlParams.social_el_params.defaultSocialColor;
 
                   return '<div><span class="fa ' + icon + '" style="color:' + color + '"></span> ' + title + '</div>';
@@ -200,11 +200,11 @@ $.extend( CZRSocialElementMths, {
           //at this stage, the model passed in the obj is up to date
           writeItemViewTitle : function( model ) {
                   var item = this,
-                      element     = item.item_element,
+                      module     = item.item_module,
                       _model = model || item.get(),
                       _title = api.CZR_Helpers.capitalize( _model['social-icon'].replace('fa-', '') );
 
-                  $( '.' + element.control.css_attr.view_title , item.container ).html(
+                  $( '.' + module.control.css_attr.view_title , item.container ).html(
                     item._buildTitle( _title, _model['social-icon'], _model['social-color'] )
                   );
           }

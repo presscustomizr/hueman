@@ -1,21 +1,21 @@
-//extends api.CZRDynElement
-//This element populates the sektions setting.
+//extends api.CZRDynModule
+//This module populates the sektions setting.
 //The each sektion is composed of columns (=> columns on front end)
-//Each columns of elements ( => content element on front end like slider, text block, etc)
+//Each columns of modules ( => content module on front end like slider, text block, etc)
 
 var CZRSektionMths = CZRSektionMths || {};
 
 $.extend( CZRSektionMths, {
   initialize: function( id, options ) {
-          var element = this;
+          var module = this;
           //run the parent initialize
-          api.CZRDynElement.prototype.initialize.call( element, id, options );
+          api.CZRDynModule.prototype.initialize.call( module, id, options );
 
-          //extend the element with new template Selectors
-          $.extend( element, {
-                viewPreAddEl : 'czr-element-sektion-pre-add-view-content',
-                viewTemplateEl : 'czr-element-sektion-item-view',
-                viewContentTemplateEl : 'czr-element-sektion-view-content',
+          //extend the module with new template Selectors
+          $.extend( module, {
+                viewPreAddEl : 'czr-module-sektion-pre-add-view-content',
+                viewTemplateEl : 'czr-module-sektion-item-view',
+                viewContentTemplateEl : 'czr-module-sektion-view-content',
           } );
 
           //declares a default model
@@ -24,29 +24,29 @@ $.extend( CZRSektionMths, {
             'sektion-layout' : 1,
           };
 
-          console.log(' sektion savedItems', element.savedItems );
+          console.log(' sektion savedItems', module.savedItems );
 
           //EXTEND THE DEFAULT CONSTRUCTORS FOR MONOMODEL
-          element.itemConstructor = api.CZRItem.extend( element.CZRSektionItem || {} );
+          module.itemConstructor = api.CZRItem.extend( module.CZRSektionItem || {} );
 
-          api.section( element.control.section() ).expanded.bind(function(to) {
-                if ( ! to || ! _.isEmpty( element.get() ) )
+          api.section( module.control.section() ).expanded.bind(function(to) {
+                if ( ! to || ! _.isEmpty( module.get() ) )
                   return;
-                element.ready();
+                module.ready();
           });
 
-          if ( ! _.has( element ,'dragInstance' ) )
-            element.initDragula();
+          if ( ! _.has( module ,'dragInstance' ) )
+            module.initDragula();
 
 
   },//initialize
 
 
   initDragula : function() {
-          var element = this;
+          var module = this;
 
           //instantiate dragula without container => they will be pushed on sektion items instantiation
-          element.dragInstance = dragula({
+          module.dragInstance = dragula({
               moves: function (el, source, handle, sibling) {
                   console.log("handle.className === 'czr-column'", handle.className === 'czr-column');
                    console.log('in moves cb', el, source, handle, sibling );
@@ -59,7 +59,7 @@ $.extend( CZRSektionMths, {
                   //   return;
                   // }
 
-                  // return true; // elements are always draggable by default
+                  // return true; // modules are always draggable by default
               },
               // invalidTarget : function(el, handle) {
               //     console.log('invalidTarget', el, handle );
@@ -73,7 +73,7 @@ $.extend( CZRSektionMths, {
           );
 
           //expand a closed sektion on over
-          element.dragInstance.on('over', function( el, container, source ) {
+          module.dragInstance.on('over', function( el, container, source ) {
                 console.log('el', el);
                 console.log('is over', container);
                 console.log('coming from ', source);
@@ -81,20 +81,20 @@ $.extend( CZRSektionMths, {
                     //get the sekItem id
                     _target_sekId = $(container).closest('[data-id]').attr('data-id');
                     console.log( 'taget sek', _target_sekId );
-                    element.czr_Item(_target_sekId).czr_View.set('expanded');
+                    module.czr_Item(_target_sekId).czr_View.set('expanded');
                 }
           });
 
 
           //react to drag start
-          element.dragInstance.on('drag', function( el, source ){
+          module.dragInstance.on('drag', function( el, source ){
                 //display the fake container to all closed sek items
-                element.czr_Item.each( function( _sektion ){
+                module.czr_Item.each( function( _sektion ){
                     _sektion.container.toggleClass('czr-show-fake-container', 'closed' == _sektion.czr_View.get() );
                 });
           }).on('dragend', function( el, source ){
                 //display the fake container to all closed sek items
-                element.czr_Item.each( function( _sektion ){
+                module.czr_Item.each( function( _sektion ){
                     _sektion.container.removeClass('czr-show-fake-container');
                 });
           });
@@ -145,7 +145,7 @@ $.extend( CZRSektionMths, {
                             sekItem.instanciateColumn( i );
                         }
                         //dragulize columns
-                        sekItem.item_element.dragInstance.containers.push( $( '.czr-column-wrapper', sekItem.container )[0] );
+                        sekItem.item_module.dragInstance.containers.push( $( '.czr-column-wrapper', sekItem.container )[0] );
 
                         //each item view must clean the dragula class
                         sekItem.czr_View.callbacks.add( function(to) {
@@ -161,10 +161,10 @@ $.extend( CZRSektionMths, {
 
           dragulizeSektion : function() {
                   var sekItem = this,
-                      element = this.item_element;
+                      module = this.item_module;
                       _drag_container = $( '.czr-dragula-fake-container', sekItem.container )[0];
 
-                   element.dragInstance.containers.push( _drag_container );
+                   module.dragInstance.containers.push( _drag_container );
           },
 
 

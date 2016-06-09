@@ -2,14 +2,14 @@
 //options:
   // item_id : item.id,
   // initial_input_values : item,
-  // defaultItemModel : element.defaultItemModel,
-  // item_element : element,
+  // defaultItemModel : module.defaultItemModel,
+  // item_module : module,
   // is_added_by_user : is_added_by_user || false
 var CZRItemMths = CZRItemMths || {};
 $.extend( CZRItemMths , {
   initialize: function( id, options ) {
-        if ( _.isUndefined(options.item_element) || _.isEmpty(options.item_element) ) {
-          throw new Error('No element assigned to item ' + id + '. Aborting');
+        if ( _.isUndefined(options.item_module) || _.isEmpty(options.item_module) ) {
+          throw new Error('No module assigned to item ' + id + '. Aborting');
         }
         var item = this;
         api.Value.prototype.initialize.call( item, null, options );
@@ -51,27 +51,27 @@ $.extend( CZRItemMths , {
 
   setupView : function( item_model ) {
           var item = this,
-              element = this.item_element;
+              module = this.item_module;
 
           item.view_event_map = [
                   //toggles remove view alert
                   {
                     trigger   : 'click keydown',
-                    selector  : [ '.' + element.control.css_attr.display_alert_btn, '.' + element.control.css_attr.cancel_alert_btn ].join(','),
+                    selector  : [ '.' + module.control.css_attr.display_alert_btn, '.' + module.control.css_attr.cancel_alert_btn ].join(','),
                     name      : 'toggle_remove_alert',
                     actions   : ['toggleRemoveAlertVisibility']
                   },
                   //removes item and destroys its view
                   {
                     trigger   : 'click keydown',
-                    selector  : '.' + element.control.css_attr.remove_view_btn,
+                    selector  : '.' + module.control.css_attr.remove_view_btn,
                     name      : 'remove_item',
                     actions   : ['removeItem']
                   },
                   //edit view
                   {
                     trigger   : 'click keydown',
-                    selector  : [ '.' + element.control.css_attr.edit_view_btn, '.' + element.control.css_attr.view_title ].join(','),
+                    selector  : [ '.' + module.control.css_attr.edit_view_btn, '.' + module.control.css_attr.view_title ].join(','),
                     name      : 'edit_view',
                     actions   : ['setViewVisibility']
                   }
@@ -94,15 +94,15 @@ $.extend( CZRItemMths , {
           api.CZR_Helpers.setupDOMListeners( item.view_event_map , { model:item_model, dom_el:item.container }, item );//listeners for the view wrapper
 
           //say it to the parent
-          element.trigger('view_setup', { model : item_model , dom_el: item.container} );
+          module.trigger('view_setup', { model : item_model , dom_el: item.container} );
   },
 
 
   setupViewStateListeners : function( to, from ) {
           var item = this,
               item_model = item.get() || item.initial_input_values,//could not be set yet
-              element = this.item_element,
-              $viewContent = $( '.' + element.control.css_attr.view_content, item.container );
+              module = this.item_module,
+              $viewContent = $( '.' + module.control.css_attr.view_content, item.container );
 
           //render and setup view content if needed
           if ( ! $.trim( $viewContent.html() ) ) {

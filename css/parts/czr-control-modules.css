@@ -85,7 +85,7 @@
 
 
 /* sidebar specifics */
-.czr_widget_areas_element .czr-inner-view .czr-custom-model {
+.czr_widget_areas_module .czr-inner-view .czr-custom-model {
   background: #3b8dbd;
 }
 . .czr-inner-view .czr-custom-model:hover {
@@ -123,7 +123,7 @@
   font-style: italic;
 }
 /* sidebar specifics */
-.czr_widget_areas_element .czr-view-title {
+.czr_widget_areas_module .czr-view-title {
   color: #fff;
 }
 
@@ -157,7 +157,7 @@
   box-shadow: none;
 }
 /* sidebar specifics */
-.czr_widget_areas_element .czr-view-buttons a {
+.czr_widget_areas_module .czr-view-buttons a {
   color: #fff;
 }
 
@@ -174,10 +174,10 @@
 }
 
 /* sidebar specifics */
-.czr_widget_areas_element .czr-edit-view:hover, .czr_widget_areas_element .czr-view-buttons .czr-edit-view.active {
+.czr_widget_areas_module .czr-edit-view:hover, .czr_widget_areas_module .czr-view-buttons .czr-edit-view.active {
   color: #000000;
 }
-.czr_widget_areas_element .czr-builtin-model .czr-edit-view:hover, .czr_widget_areas_element .czr-builtin-model .czr-edit-view.active {
+.czr_widget_areas_module .czr-builtin-model .czr-edit-view:hover, .czr_widget_areas_module .czr-builtin-model .czr-edit-view.active {
   color: #00a0d2;
 }
 
