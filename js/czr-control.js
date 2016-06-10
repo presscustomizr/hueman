@@ -699,8 +699,7 @@ $.extend( CZRInputMths , {
 
 
     updateInput : function( obj ) {
-      console.log( obj );
-            var input           = this,
+            var input             = this,
                 $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
                 _new_val          = $( $_changed_input, obj.dom_el ).val();
             if ( _new_val == input.get() )
@@ -714,7 +713,7 @@ $.extend( CZRInputMths , {
     setupImageUploader : function() {
 
         var input        = this,
-             _model      = input.get();
+            _model       = input.get();
         input.attachment = {};
         if ( ! input.container )
           return this;
@@ -742,105 +741,112 @@ $.extend( CZRInputMths , {
     input.container.on( 'click keydown', '.default-button', input.czrImgUploadRestoreDefault );
 
     input.bind( input.id + ':changed', function( to, from ){
-      console.log( input.attachment.id );
-      if ( input.attachment.id != to ) {
+      if ( ( input.attachment && input.attachment.id != to ) && from !== to ) {
+        if ( ! to ) {
+          input.attachment = {};
+          input.renderImageUploaderTemplate();
+        }
         wp.media.attachment( to ).fetch().done( function() {
           input.attachment = this.attributes;
           input.renderImageUploaderTemplate();
         });
+      }//Standard reaction, the image has been updated by the user
+      else if ( input.attachment && input.attachment.id === to ) {
+        input.renderImageUploaderTemplate();
       }
     });
   },
   czrImgUploadOpenFrame: function( event ) {
-        if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
-          return;
-        }
+    if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
+      return;
+    }
 
-        event.preventDefault();
+    event.preventDefault();
 
-        if ( ! this.frame ) {
-          this.czrImgUploadInitFrame();
-        }
+    if ( ! this.frame ) {
+      this.czrImgUploadInitFrame();
+    }
 
-        this.frame.open();
+    this.frame.open();
   },
   czrImgUploadInitFrame: function() {
-      var input = this,
-          module = input.module;
+    var input = this,
+        module = input.module;
 
-      var button_labels = this.getUploaderLabels();
+    var button_labels = this.getUploaderLabels();
 
-       input.frame = wp.media({
-         button: {
-             text: button_labels.frame_button
-         },
-         states: [
-             new wp.media.controller.Library({
-               title:     button_labels.frame_title,
-               library:   wp.media.query({ type: 'image' }),
-               multiple:  false,
-               date:      false
-             })
-         ]
-       });
-       input.frame.on( 'select', input.czrImgUploadSelect );
+     input.frame = wp.media({
+       button: {
+           text: button_labels.frame_button
+       },
+       states: [
+           new wp.media.controller.Library({
+             title:     button_labels.frame_title,
+             library:   wp.media.query({ type: 'image' }),
+             multiple:  false,
+             date:      false
+           })
+       ]
+     });
+     input.frame.on( 'select', input.czrImgUploadSelect );
   },
   czrImgUploadRestoreDefault: function( event ) {
-        var input = this,
-          module = input.module;
+    var input = this,
+      module = input.module;
 
-        if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
-          return;
-        }
-        event.preventDefault();
-        input.attachment = {};
-        input.set( {} );
+    if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
+      return;
+    }
+    event.preventDefault();
+    input.attachment = {};
+    input.set( {} );
   },
   czrImgUploadRemoveFile: function( event ) {
-        var input = this,
-          module = input.module;
+    var input = this,
+      module = input.module;
 
-        if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
-          return;
-        }
-        event.preventDefault();
-        input.attachment = {};
-        input.set('');
+    if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
+      return;
+    }
+    event.preventDefault();
+    input.attachment = {};
+    input.set('');
   },
   czrImgUploadSelect: function() {
-        var node,
-            input = this,
-            module = input.module,
-            attachment   = input.frame.state().get( 'selection' ).first().toJSON(),  // Get the attachment from the modal frame.
-            mejsSettings = window._wpmejsSettings || {};
-        input.attachment = attachment;
-        input.set(attachment.id);
+    var node,
+        input = this,
+        module = input.module,
+        attachment   = input.frame.state().get( 'selection' ).first().toJSON(),  // Get the attachment from the modal frame.
+        mejsSettings = window._wpmejsSettings || {};
+    input.attachment = attachment;
+    input.set(attachment.id);
   },
   renderImageUploaderTemplate: function() {
-       var input  = this;
-       if ( 0 === $( '#tmpl-czr-input-img-uploader-view-content' ).length )
-         return;
+   var input  = this;
+   if ( 0 === $( '#tmpl-czr-input-img-uploader-view-content' ).length )
+     return;
 
-       var view_template = wp.template('czr-input-img-uploader-view-content');
-       if ( ! view_template  || ! input.container )
-        return;
+   var view_template = wp.template('czr-input-img-uploader-view-content');
+   if ( ! view_template  || ! input.container )
+    return;
 
-       var $_view_el    = input.container.find('.' + input.module.control.css_attr.img_upload_container );
+   var $_view_el    = input.container.find('.' + input.module.control.css_attr.img_upload_container );
 
-       if ( ! $_view_el.length )
-         return;
+   if ( ! $_view_el.length )
+     return;
 
-       var _template_params = {
-          button_labels : input.getUploaderLabels(),
-          settings      : input.id,
-          attachment    : input.attachment,
-          canUpload     : true
-       };
+   var _template_params = {
+      button_labels : input.getUploaderLabels(),
+      settings      : input.id,
+      attachment    : input.attachment,
+      canUpload     : true
+   };
 
-       $_view_el.html( view_template( _template_params) );
+   $_view_el.html( view_template( _template_params) );
 
-       return true;
+   return true;
   },
+
   getUploaderLabels : function() {
     return serverControlParams.imgUploaderParams.button_labels;
   }
@@ -876,15 +882,15 @@ $.extend( CZRInputMths , {
     input.type   = 'post_type'; //this.control.params.type  - post_type
     input.container.find('.czr-input').append('<select data-select-type="content-picker-select" class="js-example-basic-simple"></select>');
     _event_map = [
-                    {
-                      trigger   : 'change',
-                      selector  : 'select[data-select-type]',
-                      name      : 'set_input_value',
-                      actions   : 'updateContentPickerModel'
-                    }
+        {
+          trigger   : 'change',
+          selector  : 'select[data-select-type]',
+          name      : 'set_input_value',
+          actions   : 'updateContentPickerModel'
+        }
     ];
-    input.setupDOMListeners( _event_map , { dom_el : input.container }, input );    
 
+    input.setupDOMListeners( _event_map , { dom_el : input.container }, input );    
     input.setupContentSelecter();
   },
 
@@ -965,6 +971,7 @@ $.extend( CZRInputMths , {
        
     return _model;
   },
+   
   updateContentPickerModel: function( obj ){
     var input = this,
         $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
@@ -2705,35 +2712,7 @@ $.extend( CZRFeaturedPageModuleMths, {
         $.extend( _new_model, { title : _new_title, 'fp-title' : _new_title } );
         item.set( _new_model );
       } else {
-        item.czr_Input('fp-title').set( _new_title );
-        var request = wp.ajax.post( 'get-fp-post', {
-          'wp_customize': 'on',
-          'id'          : _fp_post.id
-        } );
-
-        request.done( function( data ){
-          var _post_info = data.post_info;
-
-          if ( 0 !== _post_info.length ) {
-            var _to_update = {};
-            if ( _post_info.thumbnail )
-              $.extend( _to_update, { 'fp-image': _post_info.thumbnail } );
-            if ( _post_info.excerpt )
-              $.extend( _to_update, { 'fp-text': _post_info.excerpt } );
-            _.each( _to_update, function( value, id ){
-              item.czr_Input( id ).set( value );
-            });
-            console.log( item.get() );
-          }
-        });
-
-        request.fail(function( data ) {
-          if ( typeof console !== 'undefined' && console.error ) {
-            console.error( data );
-          }
-        });
-        request.always(function() { /* TODO */
-        });
+        this.setContentAjaxInfo( _fp_post.id, {'fp-title' : _new_title} );
       }
     },
     updateItemTitle : function( _new_val ) {
@@ -2749,6 +2728,35 @@ $.extend( CZRFeaturedPageModuleMths, {
       $.extend( _new_model, { title : _new_title} );
       item.set( _new_model );
     },
+
+    setContentAjaxInfo : function( _post_id, _additional_inputs ) {
+      var item             = this.item,
+        _to_update         = _additional_inputs || {},
+        request;
+      request = wp.ajax.post( 'get-fp-post', {
+          'wp_customize': 'on',
+          'id'          : _post_id
+      });
+
+      request.done( function( data ){
+        var _post_info = data.post_info;
+
+        if ( 0 !== _post_info.length ) {
+          $.extend( _to_update, { 'fp-image' : _post_info.thumbnail, 'fp-text' : _post_info.excerpt } );
+          console.log( _to_update );
+        }
+      });
+      request.fail(function( data ) {
+        if ( typeof console !== 'undefined' && console.error ) {
+          console.error( data );
+        }
+      });
+      request.always(function() { 
+        _.each( _to_update, function( value, id ){
+          item.czr_Input( id ).set( value );
+        });
+      });
+    }
   },//CZRFeaturedPagesInputMths
   CZRFeaturedPagesItem : {
   }

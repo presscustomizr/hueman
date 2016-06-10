@@ -23,8 +23,8 @@ $.extend( CZRInputMths , {
           actions   : 'updateContentPickerModel'
         }
     ];
-    input.setupDOMListeners( _event_map , { dom_el : input.container }, input );    
 
+    input.setupDOMListeners( _event_map , { dom_el : input.container }, input );    
     input.setupContentSelecter();
   },
 
@@ -115,7 +115,7 @@ $.extend( CZRInputMths , {
        
     return _model;
   },
-  
+   
   updateContentPickerModel: function( obj ){
     var input = this,
         $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),

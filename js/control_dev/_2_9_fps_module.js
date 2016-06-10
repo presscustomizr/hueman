@@ -78,45 +78,7 @@ $.extend( CZRFeaturedPageModuleMths, {
         $.extend( _new_model, { title : _new_title, 'fp-title' : _new_title } );
         item.set( _new_model );
       } else {
-        item.czr_Input('fp-title').set( _new_title );
-
-        //AJAX STUFF
-
-        //retrieve some ajax info
-        var request = wp.ajax.post( 'get-fp-post', {
-          'wp_customize': 'on',
-          'id'          : _fp_post.id
-          //nonce needed USE 1 for everything?
-        } );
-
-        request.done( function( data ){
-          var _post_info = data.post_info;
-
-          if ( 0 !== _post_info.length ) {
-            var _to_update = {};
-            if ( _post_info.thumbnail )
-              $.extend( _to_update, { 'fp-image': _post_info.thumbnail } );
-            if ( _post_info.excerpt )
-              $.extend( _to_update, { 'fp-text': _post_info.excerpt } );
-
-            //UPDATING THE MODEL DOESN'T UPDATE THE TEXT'S VALS.. why?
-            _.each( _to_update, function( value, id ){
-              item.czr_Input( id ).set( value );
-            });
-           /* console.log( _new_model );  
-            item.set( $.extend(_new_model, _to_update) );*/
-            console.log( item.get() );
-          }
-        });
-
-        request.fail(function( data ) {
-          if ( typeof console !== 'undefined' && console.error ) {
-            console.error( data );
-          }
-        });
-        request.always(function() { /* TODO */
-        //  availableMenuItemContainer.find( '.accordion-section-title' ).removeClass( 'loading' );
-        });
+        this.setContentAjaxInfo( _fp_post.id, {'fp-title' : _new_title} );
       }
     },
     updateItemTitle : function( _new_val ) {
@@ -132,6 +94,43 @@ $.extend( CZRFeaturedPageModuleMths, {
       $.extend( _new_model, { title : _new_title} );
       item.set( _new_model );
     },
+
+    setContentAjaxInfo : function( _post_id, _additional_inputs ) {
+      var item             = this.item,
+        _to_update         = _additional_inputs || {},
+        request;
+      
+
+      //AJAX STUFF
+      //retrieve some ajax info
+      request = wp.ajax.post( 'get-fp-post', {
+          'wp_customize': 'on',
+          'id'          : _post_id
+          //nonce needed USE 1 for everything?
+      });
+
+      request.done( function( data ){
+        var _post_info = data.post_info;
+
+        if ( 0 !== _post_info.length ) {
+          $.extend( _to_update, { 'fp-image' : _post_info.thumbnail, 'fp-text' : _post_info.excerpt } );
+          console.log( _to_update );
+        }
+      });
+      request.fail(function( data ) {
+        if ( typeof console !== 'undefined' && console.error ) {
+          console.error( data );
+        }
+      });
+      request.always(function() { 
+        //UPDATING THE MODEL DOESN'T UPDATE THE TEXT'S VALS.. why?
+        //we set all the relevant input vals here => means that the preview will receive
+        //as many messages as the inputs are
+        _.each( _to_update, function( value, id ){
+          item.czr_Input( id ).set( value );
+        });
+      });
+    }
   },//CZRFeaturedPagesInputMths
   CZRFeaturedPagesItem : {
   }
