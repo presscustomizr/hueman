@@ -31,7 +31,7 @@ $.extend( CZRFeaturedPageModuleMths, {
     };
 
     //overrides the default success message
-    this.itemAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
+    this.itemAddedMessage = serverControlParams.translatedStrings.featuredPageAdded;
     api.section( module.control.section() ).expanded.bind(function(to) {
       if ( ! to || ! _.isEmpty( module.get() ) )
         return;

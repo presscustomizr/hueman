@@ -770,8 +770,7 @@ $.extend( CZRInputMths , {
     this.frame.open();
   },
   czrImgUploadInitFrame: function() {
-    var input = this,
-        module = input.module;
+    var input = this;
 
     var button_labels = this.getUploaderLabels();
 
@@ -791,8 +790,7 @@ $.extend( CZRInputMths , {
      input.frame.on( 'select', input.czrImgUploadSelect );
   },
   czrImgUploadRestoreDefault: function( event ) {
-    var input = this,
-      module = input.module;
+    var input = this;
 
     if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
       return;
@@ -802,8 +800,7 @@ $.extend( CZRInputMths , {
     input.set( {} );
   },
   czrImgUploadRemoveFile: function( event ) {
-    var input = this,
-      module = input.module;
+    var input = this;
 
     if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
       return;
@@ -815,7 +812,6 @@ $.extend( CZRInputMths , {
   czrImgUploadSelect: function() {
     var node,
         input = this,
-        module = input.module,
         attachment   = input.frame.state().get( 'selection' ).first().toJSON(),  // Get the attachment from the modal frame.
         mejsSettings = window._wpmejsSettings || {};
     input.attachment = attachment;
@@ -848,7 +844,17 @@ $.extend( CZRInputMths , {
   },
 
   getUploaderLabels : function() {
-    return serverControlParams.imgUploaderParams.button_labels;
+    var _ts = serverControlParams.translatedStrings;
+
+    return { 
+      'select'      : _ts.select_image,
+      'change'      : _ts.change_image,
+      'remove'      : _ts.remove_image,
+      'default'     : _ts.default_image,
+      'placeholder' : _ts.placeholder_image,
+      'frame_title' : _ts.frame_title_image,
+      'frame_button': _ts.frame_button_image
+    };
   }
 });//$.extendvar CZRInputMths = CZRInputMths || {};
 $.extend( CZRInputMths , {
@@ -1382,7 +1388,7 @@ $.extend( CZRModuleMths, {
           module.updateItemsCollection( { item : item } );
           module.czr_Item(item.id).callbacks.add( function() { return module.itemReact.apply(module, arguments ); } );
 
-          module.trigger('item_instanciated', item );
+          module.trigger('item_instanciated', { item: item, is_added_by_user : is_added_by_user || false } );
   },
   itemReact : function( to, from ) {
         var module = this;
@@ -2673,7 +2679,7 @@ $.extend( CZRFeaturedPageModuleMths, {
         'fp-text'  : '',
         'fp-image' : '',
     };
-    this.itemAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
+    this.itemAddedMessage = serverControlParams.translatedStrings.featuredPageAdded;
     api.section( module.control.section() ).expanded.bind(function(to) {
       if ( ! to || ! _.isEmpty( module.get() ) )
         return;

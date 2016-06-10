@@ -80,8 +80,7 @@ $.extend( CZRInputMths , {
   * Create a media modal select frame, and store it so the instance can be reused when needed.
   */
   czrImgUploadInitFrame: function() {
-    var input = this,
-        module = input.module;
+    var input = this;
 
     var button_labels = this.getUploaderLabels();
 
@@ -106,8 +105,7 @@ $.extend( CZRInputMths , {
   * Reset the setting to the default value.
   */
   czrImgUploadRestoreDefault: function( event ) {
-    var input = this,
-      module = input.module;
+    var input = this;
 
     if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
       return;
@@ -127,8 +125,7 @@ $.extend( CZRInputMths , {
   * @param {object} event jQuery Event object
   */
   czrImgUploadRemoveFile: function( event ) {
-    var input = this,
-      module = input.module;
+    var input = this;
 
     if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
       return;
@@ -148,7 +145,6 @@ $.extend( CZRInputMths , {
   czrImgUploadSelect: function() {
     var node,
         input = this,
-        module = input.module,
         attachment   = input.frame.state().get( 'selection' ).first().toJSON(),  // Get the attachment from the modal frame.
         mejsSettings = window._wpmejsSettings || {};
     //save the attachment in a class field
@@ -194,6 +190,16 @@ $.extend( CZRInputMths , {
   },
 
   getUploaderLabels : function() {
-    return serverControlParams.imgUploaderParams.button_labels;
+    var _ts = serverControlParams.translatedStrings;
+
+    return { 
+      'select'      : _ts.select_image,
+      'change'      : _ts.change_image,
+      'remove'      : _ts.remove_image,
+      'default'     : _ts.default_image,
+      'placeholder' : _ts.placeholder_image,
+      'frame_title' : _ts.frame_title_image,
+      'frame_button': _ts.frame_button_image
+    };
   }
 });//$.extend
