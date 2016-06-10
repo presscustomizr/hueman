@@ -2690,8 +2690,9 @@ $.extend( CZRFeaturedPageModuleMths, {
   },//initialize
   addItem : function(obj) {
     
-    var module = this,
-        item_model = module.czr_preItem('item').get();
+    var module     = this,
+        item       = module.czr_preItem('item'),
+        item_model = item.get();
 
     if ( _.isEmpty(item_model) || ! _.isObject(item_model) ) {
         throw new Error('addItem : an item should be an object and not empty. In : ' + module.id +'. Aborted.' );
@@ -2702,12 +2703,11 @@ $.extend( CZRFeaturedPageModuleMths, {
       return;
 
     _fp_post = _fp_post[0];
-    var request = module.CZRFeaturedPagesItem.setContentAjaxInfo.call( module.czr_preItem('item'), _fp_post.id );
-    var _always = request.always;
-    request.always( function() { 
-      _always(); 
+    var request = module.CZRFeaturedPagesItem.setContentAjaxInfo( _fp_post.id );
+    request.add_always_callback( function( _to_update ) { 
+      item.set( $.extend( item_model, _to_update) );
       api.CZRDynModule.prototype.addItem.call( module, obj );
-    });  
+    });
   },
 
 
@@ -2739,7 +2739,12 @@ $.extend( CZRFeaturedPageModuleMths, {
         $.extend( _new_model, { title : _new_title, 'fp-title' : _new_title } );
         item.set( _new_model );
       } else {
-        item.setContentAjaxInfo( _fp_post.id, {'fp-title' : _new_title} );
+        var request = item.setContentAjaxInfo( _fp_post.id, {'fp-title' : _new_title} );
+        request.add_always_callback( function( _to_update ) { 
+          _.each( _to_update, function( value, id ){
+            item.czr_Input( id ).set( value );
+          });
+        });
       }
     },
 
@@ -2759,13 +2764,19 @@ $.extend( CZRFeaturedPageModuleMths, {
   },//CZRFeaturedPagesInputMths
   CZRFeaturedPagesItem : {
     setContentAjaxInfo : function( _post_id, _additional_inputs ) {
-      var item               = this,
-          _to_update         = _additional_inputs || {},
-          request;
-      request = wp.ajax.post( 'get-fp-post', {
+      var _to_update         = _additional_inputs || {},
+          request            = {};
+
+      request.always_callbacks = [];
+      request.add_always_callback = function(cb) {
+        request.always_callbacks.push( cb );
+      };
+      $.extend( request, wp.ajax.post( 'get-fp-post', {
           'wp_customize': 'on',
           'id'          : _post_id
-      });
+      }) );
+
+
       request.done( function( data ){
         var _post_info = data.post_info;
 
@@ -2773,19 +2784,19 @@ $.extend( CZRFeaturedPageModuleMths, {
           $.extend( _to_update, { 'fp-image' : _post_info.thumbnail, 'fp-text' : _post_info.excerpt } );
         }
       });
+
       request.fail(function( data ) {
         if ( typeof console !== 'undefined' && console.error ) {
           console.error( data );
         }
       });
+
       request.always(function() {
-        if ( typeof item.czr_Input !== "undefined")
-          _.each( _to_update, function( value, id ){
-            item.czr_Input( id ).set( value );
-          });
-        else
-          item.set( $.extend( item.get(), _to_update) );
+        _.each( request.always_callbacks, function( cb ){
+          cb(_to_update);    
+        });
       });
+
       return request;
     }    
   }
