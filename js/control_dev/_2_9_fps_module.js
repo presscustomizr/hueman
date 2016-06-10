@@ -29,25 +29,7 @@ $.extend( CZRFeaturedPageModuleMths, {
         'fp-text'  : '',
         'fp-image' : '',
     };
-    
-    module.bind( 'item_instanciated', function( data ) { 
-      var item_model = data.item,
-          item       = module.czr_Item(item_model.id),
-          is_added_by_user = data.is_added_by_user;
 
- 
-      if ( ! is_added_by_user )
-        return;
-
-      var _fp_post        = item_model['fp-post'];
-      if ( typeof _fp_post  == "undefined" )
-        return;
-
-      _fp_post = _fp_post[0];
-      item.setContentAjaxInfo( _fp_post.id );
-    });
-
-      
     //overrides the default success message
     this.itemAddedMessage = serverControlParams.translatedStrings.featuredPageAdded;
     api.section( module.control.section() ).expanded.bind(function(to) {
@@ -57,7 +39,35 @@ $.extend( CZRFeaturedPageModuleMths, {
     });
 
   },//initialize
+  
+  //@override
+  // wait for the ajax result!
+  //the item is manually added.
+  //We should have a pre Item
+  addItem : function(obj) {
+    
+    var module = this,
+        item_model = module.czr_preItem('item').get();
 
+    if ( _.isEmpty(item_model) || ! _.isObject(item_model) ) {
+        throw new Error('addItem : an item should be an object and not empty. In : ' + module.id +'. Aborted.' );
+    }
+
+    var _fp_post        = item_model['fp-post'];
+    if ( typeof _fp_post  == "undefined" )
+      return;
+
+    _fp_post = _fp_post[0];
+    var request = module.CZRFeaturedPagesItem.setContentAjaxInfo.call( module.czr_preItem('item'), _fp_post.id );
+
+    //extend ajax request always cb
+    /* TODO: WITH EVENTS */
+    var _always = request.always;
+    request.always( function() { 
+      _always(); 
+      api.CZRDynModule.prototype.addItem.call( module, obj );
+    });  
+  },
 
 
   CZRFeaturedPagesInputMths : {
@@ -71,7 +81,6 @@ $.extend( CZRFeaturedPageModuleMths, {
       input.bind('fp-title:changed', function(){
         input.updateItemTitle();
       });
-      
       api.CZRInput.prototype.ready.call( input );
     },
 
@@ -121,7 +130,6 @@ $.extend( CZRFeaturedPageModuleMths, {
       var item               = this,
           _to_update         = _additional_inputs || {},
           request;
-
       
       //AJAX STUFF
       //retrieve some ajax info
@@ -130,7 +138,6 @@ $.extend( CZRFeaturedPageModuleMths, {
           'id'          : _post_id
           //nonce needed USE 1 for everything?
       });
-
       request.done( function( data ){
         var _post_info = data.post_info;
 
@@ -143,14 +150,18 @@ $.extend( CZRFeaturedPageModuleMths, {
           console.error( data );
         }
       });
-      request.always(function() { 
-        //UPDATING THE MODEL DOESN'T UPDATE THE TEXT'S VALS.. why?
-        //we set all the relevant input vals here => means that the preview will receive
-        //as many messages as the inputs are
-        _.each( _to_update, function( value, id ){
-          item.czr_Input( id ).set( value );
-        });
+      request.always(function() {
+        //two cases 
+        //a) item
+        //b) pre item
+        if ( typeof item.czr_Input !== "undefined")
+          _.each( _to_update, function( value, id ){
+            item.czr_Input( id ).set( value );
+          });
+        else
+          item.set( $.extend( item.get(), _to_update) );
       });
+      return request;
     }    
   }
 });

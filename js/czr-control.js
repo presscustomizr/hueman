@@ -1608,6 +1608,7 @@ $.extend( CZRDynModuleMths, {
           var module = this;
           module.setupDOMListeners( module.module_event_map , { dom_el : module.container } );
           module.czr_preItem('item').set( module.getDefaultModel() );
+          module.czr_preItem('item').set( module.getDefaultModel() );
           module.czr_preItem('view_content').callbacks.add(function( to, from ) {
                 if ( _.isUndefined(from) || _.isEmpty(from) ) {
                     module.preItemInputConstructor = module.inputConstructor;//api.CZRInput;
@@ -2679,23 +2680,6 @@ $.extend( CZRFeaturedPageModuleMths, {
         'fp-text'  : '',
         'fp-image' : '',
     };
-    
-    module.bind( 'item_instanciated', function( data ) { 
-      var item_model = data.item,
-          item       = module.czr_Item(item_model.id),
-          is_added_by_user = data.is_added_by_user;
-
- 
-      if ( ! is_added_by_user )
-        return;
-
-      var _fp_post        = item_model['fp-post'];
-      if ( typeof _fp_post  == "undefined" )
-        return;
-
-      _fp_post = _fp_post[0];
-      item.setContentAjaxInfo( _fp_post.id );
-    });
     this.itemAddedMessage = serverControlParams.translatedStrings.featuredPageAdded;
     api.section( module.control.section() ).expanded.bind(function(to) {
       if ( ! to || ! _.isEmpty( module.get() ) )
@@ -2704,7 +2688,27 @@ $.extend( CZRFeaturedPageModuleMths, {
     });
 
   },//initialize
+  addItem : function(obj) {
+    
+    var module = this,
+        item_model = module.czr_preItem('item').get();
 
+    if ( _.isEmpty(item_model) || ! _.isObject(item_model) ) {
+        throw new Error('addItem : an item should be an object and not empty. In : ' + module.id +'. Aborted.' );
+    }
+
+    var _fp_post        = item_model['fp-post'];
+    if ( typeof _fp_post  == "undefined" )
+      return;
+
+    _fp_post = _fp_post[0];
+    var request = module.CZRFeaturedPagesItem.setContentAjaxInfo.call( module.czr_preItem('item'), _fp_post.id );
+    var _always = request.always;
+    request.always( function() { 
+      _always(); 
+      api.CZRDynModule.prototype.addItem.call( module, obj );
+    });  
+  },
 
 
   CZRFeaturedPagesInputMths : {
@@ -2716,7 +2720,6 @@ $.extend( CZRFeaturedPageModuleMths, {
       input.bind('fp-title:changed', function(){
         input.updateItemTitle();
       });
-      
       api.CZRInput.prototype.ready.call( input );
     },
     updateItemModel : function( _new_val ) {
@@ -2763,7 +2766,6 @@ $.extend( CZRFeaturedPageModuleMths, {
           'wp_customize': 'on',
           'id'          : _post_id
       });
-
       request.done( function( data ){
         var _post_info = data.post_info;
 
@@ -2776,11 +2778,15 @@ $.extend( CZRFeaturedPageModuleMths, {
           console.error( data );
         }
       });
-      request.always(function() { 
-        _.each( _to_update, function( value, id ){
-          item.czr_Input( id ).set( value );
-        });
+      request.always(function() {
+        if ( typeof item.czr_Input !== "undefined")
+          _.each( _to_update, function( value, id ){
+            item.czr_Input( id ).set( value );
+          });
+        else
+          item.set( $.extend( item.get(), _to_update) );
       });
+      return request;
     }    
   }
 });
