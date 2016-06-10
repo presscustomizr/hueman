@@ -132,10 +132,10 @@ $.extend( CZRInputMths , {
     updateInput : function( obj ) {
             //get the changed property and val
             //=> all html input have data-type attribute corresponding to the ones stored in the model
-            var input           = this,
+            var input             = this,
                 $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
                 _new_val          = $( $_changed_input, obj.dom_el ).val();
-console.log(_new_val);
+
             //Do nothing if the value hasn't really changed
             //For synced elements this might be called after the inputReact
             //so going re-setting the same val => fixes issue with iCheck

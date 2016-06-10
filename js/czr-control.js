@@ -699,10 +699,9 @@ $.extend( CZRInputMths , {
 
 
     updateInput : function( obj ) {
-            var input           = this,
+            var input             = this,
                 $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
                 _new_val          = $( $_changed_input, obj.dom_el ).val();
-console.log(_new_val);
             if ( _new_val == input.get() )
               return;
 
@@ -714,8 +713,9 @@ $.extend( CZRInputMths , {
     setupImageUploader : function() {
 
         var input        = this,
-             _model      = input.get();
-        input.attachment = {};
+            _model       = input.get();
+        input.attachment   = {};
+        input.defaultImage = {};
         if ( ! input.container )
           return this;
         if ( _model ) {
@@ -731,7 +731,6 @@ $.extend( CZRInputMths , {
 
           input.czrImgUploaderBinding();
         }
-
   },
   czrImgUploaderBinding : function() {
     var input = this;
@@ -742,101 +741,120 @@ $.extend( CZRInputMths , {
     input.container.on( 'click keydown', '.default-button', input.czrImgUploadRestoreDefault );
 
     input.bind( input.id + ':changed', function( to, from ){
-       input.renderImageUploaderTemplate();
+      if ( ( input.attachment && input.attachment.id != to ) && from !== to ) {
+        if ( ! to ) {
+          input.attachment = {};
+          input.renderImageUploaderTemplate();
+        }
+        wp.media.attachment( to ).fetch().done( function() {
+          input.attachment = this.attributes;
+          input.renderImageUploaderTemplate();
+        });
+      }//Standard reaction, the image has been updated by the user
+      else if ( input.attachment && input.attachment.id === to ) {
+        input.renderImageUploaderTemplate();
+      }
     });
   },
   czrImgUploadOpenFrame: function( event ) {
-        if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
-          return;
-        }
+    if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
+      return;
+    }
 
-        event.preventDefault();
+    event.preventDefault();
 
-        if ( ! this.frame ) {
-          this.czrImgUploadInitFrame();
-        }
+    if ( ! this.frame ) {
+      this.czrImgUploadInitFrame();
+    }
 
-        this.frame.open();
+    this.frame.open();
   },
   czrImgUploadInitFrame: function() {
-      var input = this,
-          module = input.module;
+    var input = this;
 
-      var button_labels = this.getUploaderLabels();
+    var button_labels = this.getUploaderLabels();
 
-       input.frame = wp.media({
-         button: {
-             text: button_labels.frame_button
-         },
-         states: [
-             new wp.media.controller.Library({
-               title:     button_labels.frame_title,
-               library:   wp.media.query({ type: 'image' }),
-               multiple:  false,
-               date:      false
-             })
-         ]
-       });
-       input.frame.on( 'select', input.czrImgUploadSelect );
+     input.frame = wp.media({
+       button: {
+           text: button_labels.frame_button
+       },
+       states: [
+           new wp.media.controller.Library({
+             title:     button_labels.frame_title,
+             library:   wp.media.query({ type: 'image' }),
+             multiple:  false,
+             date:      false
+           })
+       ]
+     });
+     input.frame.on( 'select', input.czrImgUploadSelect );
   },
   czrImgUploadRestoreDefault: function( event ) {
-        var input = this,
-          module = input.module;
+    var input = this;
 
-        if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
-          return;
-        }
-        event.preventDefault();
-        input.attachment = {};
-        input.set( {} );
+    if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
+      return;
+    }
+    event.preventDefault();
+    input.attachment = {};
+    input.set( {} );
   },
   czrImgUploadRemoveFile: function( event ) {
-        var input = this,
-          module = input.module;
+    var input = this;
 
-        if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
-          return;
-        }
-        event.preventDefault();
-        input.attachment = {};
-        input.set('');
+    if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
+      return;
+    }
+    event.preventDefault();
+    input.attachment = {};
+    input.set('');
   },
   czrImgUploadSelect: function() {
-        var node,
-            input = this,
-            module = input.module,
-            attachment   = input.frame.state().get( 'selection' ).first().toJSON(),  // Get the attachment from the modal frame.
-            mejsSettings = window._wpmejsSettings || {};
-        input.attachment = attachment;
-        input.set(attachment.id);
+    var node,
+        input = this,
+        attachment   = input.frame.state().get( 'selection' ).first().toJSON(),  // Get the attachment from the modal frame.
+        mejsSettings = window._wpmejsSettings || {};
+    input.attachment = attachment;
+    input.set(attachment.id);
   },
   renderImageUploaderTemplate: function() {
-       var input  = this;
-       if ( 0 === $( '#tmpl-czr-input-img-uploader-view-content' ).length )
-         return;
+   var input  = this;
+   if ( 0 === $( '#tmpl-czr-input-img-uploader-view-content' ).length )
+     return;
 
-       var view_template = wp.template('czr-input-img-uploader-view-content');
-       if ( ! view_template  || ! input.container )
-        return;
+   var view_template = wp.template('czr-input-img-uploader-view-content');
+   if ( ! view_template  || ! input.container )
+    return;
 
-       var $_view_el    = input.container.find('.' + input.module.control.css_attr.img_upload_container );
+   var $_view_el    = input.container.find('.' + input.module.control.css_attr.img_upload_container );
 
-       if ( ! $_view_el.length )
-         return;
+   if ( ! $_view_el.length )
+     return;
 
-       var _template_params = {
-          button_labels : input.getUploaderLabels(),
-          settings      : input.id,
-          attachment    : input.attachment,
-          canUpload     : true
-       };
+   var _template_params = {
+      button_labels : input.getUploaderLabels(),
+      settings      : input.id,
+      attachment    : input.attachment,
+      canUpload     : true
+   };
 
-       $_view_el.html( view_template( _template_params) );
+   $_view_el.html( view_template( _template_params) );
 
-       return true;
+   return true;
   },
+
   getUploaderLabels : function() {
-    return serverControlParams.imgUploaderParams.button_labels;
+    var _ts = serverControlParams.translatedStrings;
+
+    return { 
+      'select'      : _ts.select_image,
+      'change'      : _ts.change_image,
+      'remove'      : _ts.remove_image,
+      'default'     : _ts.default_image,
+      'placeholder' : _ts.placeholder_image,
+      'frame_title' : _ts.frame_title_image,
+      'frame_button': _ts.frame_button_image
+    };
   }
 });//$.extendvar CZRInputMths = CZRInputMths || {};
 $.extend( CZRInputMths , {
@@ -862,16 +880,29 @@ $.extend( CZRInputMths , {
     }
 });//$.extend/* Fix caching, select2 default one seems to not correctly work, or it doesn't what I think it should */
 var CZRInputMths = CZRInputMths || {};
-var _updateInput       = CZRInputMths.updateInput;
-    _setupSynchronizer = CZRInputMths.setupSynchronizer;
-
 $.extend( CZRInputMths , {
   setupContentPicker: function() {
-    var input  = this;
-    input.object = ['cat']; //this.control.params.object_types  - array('page', 'post')
+    var input  = this,
+    _event_map = [];
+    input.object = ['post']; //this.control.params.object_types  - array('page', 'post')
     input.type   = 'post_type'; //this.control.params.type  - post_type
-    input.container.find('.czr-input').append('<select data-type="content-picker-select" class="js-example-basic-simple"></select>');
-    
+    input.container.find('.czr-input').append('<select data-select-type="content-picker-select" class="js-example-basic-simple"></select>');
+    _event_map = [
+        {
+          trigger   : 'change',
+          selector  : 'select[data-select-type]',
+          name      : 'set_input_value',
+          actions   : 'updateContentPickerModel'
+        }
+    ];
+
+    input.setupDOMListeners( _event_map , { dom_el : input.container }, input );    
+    input.setupContentSelecter();
+  },
+
+  setupContentSelecter : function() {
+    var input = this;
+
     input.container.find('select').select2({
       placeholder: {
         id: '-1', // the value of the option
@@ -918,12 +949,14 @@ $.extend( CZRInputMths , {
           };
         },  
       },
-      templateSelection: input.czrFormatItem,
-      templateResult: input.czrFormatItem,
+      templateSelection: input.czrFormatContentSelected,
+      templateResult: input.czrFormatContentSelected,
       escapeMarkup: function (markup) { return markup; },
    });
   },
-  czrFormatItem: function (item) {
+
+
+  czrFormatContentSelected: function (item) {
       if ( item.loading ) return item.text;
       var markup = "<div class='content-picker-item clearfix'>" +
         "<div class='content-item-bar'>" +
@@ -937,40 +970,32 @@ $.extend( CZRInputMths , {
 
       return markup;
   },
+
   setupSelectedContents : function() {
     var input = this,
        _model = input.get();
        
     return _model;
   },
-  setupSynchronizer: function(){
-    if ( this.container.find('[data-type*="content-picker-select"]').length ){
-      return;
-    }//else
-    _setupSynchronizer.call( this );
-  },
-  updateInput: function( obj ){
-    if ( ( "undefined" != typeof obj ) &&
-            ( 'content-picker-select' == $(obj.dom_event.currentTarget, obj.dom_el).data('type') ) ){
+   
+  updateContentPickerModel: function( obj ){
+    var input = this,
+        $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
+        _new_val          = $( $_changed_input, obj.dom_el ).select2('data');
+    if ( _new_val.length ) {
+      _new_val = _.map( _new_val, function( _item ){ 
+        return {
+          'id'          :  _item.id,
+          'type_label'  :  _item.type_label,
+          'title'       :  _item.title,
+          'object_type' :  _item.object_type
+        };
+      });
+    }
 
-      var input = this,
-          $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
-          _new_val          = $( $_changed_input, obj.dom_el ).select2('data');
-      if ( _new_val.length ) {
-        _new_val = _.map( _new_val, function( _item ){ 
-          return {
-            'id'          :  _item.id,
-            'type_label'  :  _item.type_label,
-            'title'       :  _item.title,
-            'object_type' :  _item.object_type
-          };
-        });
-      }
+    input.set(_new_val);
+    return;
 
-      input.set(_new_val);
-      return;
-    }//else
-    _updateInput.call( this, obj );
   }
 });//$.extend
 var CZRItemMths = CZRItemMths || {};
@@ -1363,7 +1388,7 @@ $.extend( CZRModuleMths, {
           module.updateItemsCollection( { item : item } );
           module.czr_Item(item.id).callbacks.add( function() { return module.itemReact.apply(module, arguments ); } );
 
-          module.trigger('item_instanciated', item );
+          module.trigger('item_instanciated', { item: item, is_added_by_user : is_added_by_user || false } );
   },
   itemReact : function( to, from ) {
         var module = this;
@@ -1582,6 +1607,7 @@ $.extend( CZRDynModuleMths, {
   ready : function() {
           var module = this;
           module.setupDOMListeners( module.module_event_map , { dom_el : module.container } );
+          module.czr_preItem('item').set( module.getDefaultModel() );
           module.czr_preItem('item').set( module.getDefaultModel() );
           module.czr_preItem('view_content').callbacks.add(function( to, from ) {
                 if ( _.isUndefined(from) || _.isEmpty(from) ) {
@@ -2692,14 +2718,35 @@ $.extend( CZRFeaturedPageModuleMths, {
         'fp-text'  : '',
         'fp-image' : '',
     };
-    this.itemAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
+    this.itemAddedMessage = serverControlParams.translatedStrings.featuredPageAdded;
     api.section( module.control.section() ).expanded.bind(function(to) {
       if ( ! to || ! _.isEmpty( module.get() ) )
         return;
       module.ready();
     });
-  },//initialize
 
+  },//initialize
+  addItem : function(obj) {
+    
+    var module     = this,
+        item       = module.czr_preItem('item'),
+        item_model = item.get();
+
+    if ( _.isEmpty(item_model) || ! _.isObject(item_model) ) {
+        throw new Error('addItem : an item should be an object and not empty. In : ' + module.id +'. Aborted.' );
+    }
+
+    var _fp_post        = item_model['fp-post'];
+    if ( typeof _fp_post  == "undefined" )
+      return;
+
+    _fp_post = _fp_post[0];
+    var request = module.CZRFeaturedPagesItem.setContentAjaxInfo( _fp_post.id );
+    request.add_always_callback( function( _to_update ) { 
+      item.set( $.extend( item_model, _to_update) );
+      api.CZRDynModule.prototype.addItem.call( module, obj );
+    });
+  },
 
 
   CZRFeaturedPagesInputMths : {
@@ -2711,7 +2758,7 @@ $.extend( CZRFeaturedPageModuleMths, {
       input.bind('fp-title:changed', function(){
         input.updateItemTitle();
       });
-      api.CZRInput.prototype.ready.call( input);
+      api.CZRInput.prototype.ready.call( input );
     },
     updateItemModel : function( _new_val ) {
 
@@ -2721,9 +2768,8 @@ $.extend( CZRFeaturedPageModuleMths, {
       if ( ! _.has( item.get(), 'fp-post') || _.isEmpty( item.get()['fp-post'] ) )
         return;
 
-      var _new_model  = _.clone( item.get() );
-
-      var _fp_post        = _new_model['fp-post'][0],
+      var _new_model      = _.clone( item.get() ),
+          _fp_post        = _new_model['fp-post'][0],
           _new_title      = _fp_post.title,
           inputCollection = is_preItemInput ? input.module.czr_preItemInput : item.czr_Input;
 
@@ -2731,9 +2777,15 @@ $.extend( CZRFeaturedPageModuleMths, {
         $.extend( _new_model, { title : _new_title, 'fp-title' : _new_title } );
         item.set( _new_model );
       } else {
-        item.czr_Input('fp-title').set( _new_title );
+        var request = item.setContentAjaxInfo( _fp_post.id, {'fp-title' : _new_title} );
+        request.add_always_callback( function( _to_update ) { 
+          _.each( _to_update, function( value, id ){
+            item.czr_Input( id ).set( value );
+          });
+        });
       }
     },
+
     updateItemTitle : function( _new_val ) {
       var input = this,
           item = this.item,
@@ -2749,6 +2801,42 @@ $.extend( CZRFeaturedPageModuleMths, {
     },
   },//CZRFeaturedPagesInputMths
   CZRFeaturedPagesItem : {
+    setContentAjaxInfo : function( _post_id, _additional_inputs ) {
+      var _to_update         = _additional_inputs || {},
+          request            = {};
+
+      request.always_callbacks = [];
+      request.add_always_callback = function(cb) {
+        request.always_callbacks.push( cb );
+      };
+      $.extend( request, wp.ajax.post( 'get-fp-post', {
+          'wp_customize': 'on',
+          'id'          : _post_id
+      }) );
+
+
+      request.done( function( data ){
+        var _post_info = data.post_info;
+
+        if ( 0 !== _post_info.length ) {
+          $.extend( _to_update, { 'fp-image' : _post_info.thumbnail, 'fp-text' : _post_info.excerpt } );
+        }
+      });
+
+      request.fail(function( data ) {
+        if ( typeof console !== 'undefined' && console.error ) {
+          console.error( data );
+        }
+      });
+
+      request.always(function() {
+        _.each( request.always_callbacks, function( cb ){
+          cb(_to_update);    
+        });
+      });
+
+      return request;
+    }    
   }
 });
 
@@ -2788,7 +2876,7 @@ $.extend( CZRModuleControlMths, {
               czr_widget_areas_module   : api.CZRWidgetAreaModule,
               czr_social_module    : api.CZRSocialModule,
               czr_sektion_module    : api.CZRSektionModule,
-              czr_fp_module    : api.CZRFeaturedPageModule
+              czr_fp_module    : api.CZRFeaturedPageModule,
           };
 
           control.czr_Module = new api.Values();
