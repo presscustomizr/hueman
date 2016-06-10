@@ -59,16 +59,17 @@ $.extend( CZRFeaturedPageModuleMths, {
       return;
 
     _fp_post = _fp_post[0];
-    var request = module.CZRFeaturedPagesItem.setContentAjaxInfo( _fp_post.id );
-    
-    //extend ajax request always cb
+
+
     /* TODO: WITH EVENTS */
-    request.add_always_callback( function( _to_update ) { 
+    var always_callback =  function( _to_update ) { 
       item.set( $.extend( item_model, _to_update) );
       api.CZRDynModule.prototype.addItem.call( module, obj );
-    });
-  },
+    };
 
+    var request = module.CZRFeaturedPagesItem.setContentAjaxInfo( _fp_post.id, {}, always_callback );
+    
+  },
 
   CZRFeaturedPagesInputMths : {
     ready : function() {
@@ -106,14 +107,14 @@ $.extend( CZRFeaturedPageModuleMths, {
         $.extend( _new_model, { title : _new_title, 'fp-title' : _new_title } );
         item.set( _new_model );
       } else {
-        //extend ajax request always cb
         /* TODO: WITH EVENTS */
-        var request = item.setContentAjaxInfo( _fp_post.id, {'fp-title' : _new_title} );
-        request.add_always_callback( function( _to_update ) { 
+        var always_callback =  function( _to_update ) { 
           _.each( _to_update, function( value, id ){
-            item.czr_Input( id ).set( value );
+              item.czr_Input( id ).set( value );
           });
-        });
+        };
+
+        var request = item.setContentAjaxInfo( _fp_post.id, {'fp-title' : _new_title}, always_callback );
       }
     },
 
@@ -132,15 +133,11 @@ $.extend( CZRFeaturedPageModuleMths, {
     },
   },//CZRFeaturedPagesInputMths
   CZRFeaturedPagesItem : {
-    setContentAjaxInfo : function( _post_id, _additional_inputs ) {
+    setContentAjaxInfo : function( _post_id, _additional_inputs, always_callback ) {
       //called be called from the input and from the item
       var _to_update         = _additional_inputs || {},
           request            = {};
 
-      request.always_callbacks = [];
-      request.add_always_callback = function(cb) {
-        request.always_callbacks.push( cb );
-      };
 
       //AJAX STUFF
       //retrieve some ajax info
@@ -149,7 +146,6 @@ $.extend( CZRFeaturedPageModuleMths, {
           'id'          : _post_id
           //nonce needed USE 1 for everything?
       }) );
-
 
       request.done( function( data ){
         var _post_info = data.post_info;
@@ -166,9 +162,9 @@ $.extend( CZRFeaturedPageModuleMths, {
       });
 
       request.always(function() {
-        _.each( request.always_callbacks, function( cb ){
-          cb(_to_update);    
-        });
+          console.log( typeof always_callback );
+        if ( "function" === typeof always_callback )
+          always_callback( _to_update );    
       });
 
       return request;
