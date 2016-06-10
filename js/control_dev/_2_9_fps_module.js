@@ -32,6 +32,7 @@ $.extend( CZRFeaturedPageModuleMths, {
     
     module.bind( 'item_instanciated', function( data ) { 
       var item_model = data.item,
+          item       = module.czr_Item(item_model.id),
           is_added_by_user = data.is_added_by_user;
 
  
@@ -43,7 +44,7 @@ $.extend( CZRFeaturedPageModuleMths, {
         return;
 
       _fp_post = _fp_post[0];
-      module.CZRFeaturedPagesInputMths.setContentAjaxInfo( module.czr_Item(item_model.id), _fp_post.id );
+      item.setContentAjaxInfo( _fp_post.id );
     });
 
       
@@ -96,7 +97,7 @@ $.extend( CZRFeaturedPageModuleMths, {
         $.extend( _new_model, { title : _new_title, 'fp-title' : _new_title } );
         item.set( _new_model );
       } else {
-        this.setContentAjaxInfo( item, _fp_post.id, {'fp-title' : _new_title} );
+        item.setContentAjaxInfo( _fp_post.id, {'fp-title' : _new_title} );
       }
     },
 
@@ -113,11 +114,12 @@ $.extend( CZRFeaturedPageModuleMths, {
       $.extend( _new_model, { title : _new_title} );
       item.set( _new_model );
     },
-
-    setContentAjaxInfo : function( item, _post_id, _additional_inputs ) {
-      
+  },//CZRFeaturedPagesInputMths
+  CZRFeaturedPagesItem : {
+    setContentAjaxInfo : function( _post_id, _additional_inputs ) {
       //called be called from the input and from the item
-      var _to_update         = _additional_inputs || {},
+      var item               = this,
+          _to_update         = _additional_inputs || {},
           request;
 
       
@@ -149,8 +151,6 @@ $.extend( CZRFeaturedPageModuleMths, {
           item.czr_Input( id ).set( value );
         });
       });
-    }
-  },//CZRFeaturedPagesInputMths
-  CZRFeaturedPagesItem : {
+    }    
   }
 });
