@@ -130,6 +130,7 @@ $.extend( CZRInputMths , {
 
 
     updateInput : function( obj ) {
+      console.log( obj );
             //get the changed property and val
             //=> all html input have data-type attribute corresponding to the ones stored in the model
             var input           = this,

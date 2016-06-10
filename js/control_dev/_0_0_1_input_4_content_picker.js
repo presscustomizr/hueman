@@ -1,21 +1,36 @@
 /* Fix caching, select2 default one seems to not correctly work, or it doesn't what I think it should */
 var CZRInputMths = CZRInputMths || {};
-//save original methods
-var _updateInput       = CZRInputMths.updateInput;
-    _setupSynchronizer = CZRInputMths.setupSynchronizer;
-
 $.extend( CZRInputMths , {
   setupContentPicker: function() {
-    var input  = this;
-
+    var input  = this,
+    _event_map = [];
 
     /* Dummy for the prototype purpose */
-    input.object = ['cat']; //this.control.params.object_types  - array('page', 'post')
+    input.object = ['post']; //this.control.params.object_types  - array('page', 'post')
     input.type   = 'post_type'; //this.control.params.type  - post_type
 
     /* Methodize this or use a template */
-    input.container.find('.czr-input').append('<select data-type="content-picker-select" class="js-example-basic-simple"></select>');
-    
+    input.container.find('.czr-input').append('<select data-select-type="content-picker-select" class="js-example-basic-simple"></select>');
+
+ 
+    //binding
+    _event_map = [
+        //set input value
+        {
+          trigger   : 'change',
+          selector  : 'select[data-select-type]',
+          name      : 'set_input_value',
+          actions   : 'updateContentPickerModel'
+        }
+    ];
+    input.setupDOMListeners( _event_map , { dom_el : input.container }, input );    
+
+    input.setupContentSelecter();
+  },
+
+  setupContentSelecter : function() {
+    var input = this;
+
     input.container.find('select').select2({
       placeholder: {
         id: '-1', // the value of the option
@@ -72,12 +87,14 @@ $.extend( CZRInputMths , {
           };
         },  
       },
-      templateSelection: input.czrFormatItem,
-      templateResult: input.czrFormatItem,
+      templateSelection: input.czrFormatContentSelected,
+      templateResult: input.czrFormatContentSelected,
       escapeMarkup: function (markup) { return markup; },
    });
   },
-  czrFormatItem: function (item) {
+
+
+  czrFormatContentSelected: function (item) {
       if ( item.loading ) return item.text;
       var markup = "<div class='content-picker-item clearfix'>" +
         "<div class='content-item-bar'>" +
@@ -91,73 +108,33 @@ $.extend( CZRInputMths , {
 
       return markup;
   },
+
   setupSelectedContents : function() {
     var input = this,
        _model = input.get();
        
     return _model;
   },
- /*
-  * override to "nothing" as we have to set the model value to 
-  * an object and not to the "val" of the select (which is just the ID)
-  * Though, since we already split the pickers for type (taxonomy||post_type)
-  * and before adding all the data of the selected content (for type == post_type)
-  * we want to retrieve them via ajax the ID should be enough, we then will retrieve
-  * title, excerpt, featured page ecc. ecc. via ajax, hence no real needs to save the
-  * whole object as model.
-  * But still we have a problem when we want to store a val which is an object,
-  * or we have to json stringify it, and reverse stringify when using it
-  *
-  * Also for a situation like:
-  * <input data-type ..>
-  * <select data-type ..>
-  *
-  * updateInput + setupSynchronizer both in place => infinite loop
-  *
-  * An array of ID should be allowed as <input> val, will be treated as a comma separeted
-  * values, so it will be just a matter of how to treat it.
-  *
-  * Even better .. wouldn't be possible to use even not an <input> or anyway not the value
-  * attibute but something like data-value? We could fill it with whatever we want.
-  *
-  * We can event think that the czr input will not call "val()" but a "value"(get/set) callback,
-  * which in the base class is "val" but can be extended with.. "data('val')
-  * 
-  * 
-  */
-  //override
-  setupSynchronizer: function(){
-    // TODO
-    if ( this.container.find('[data-type*="content-picker-select"]').length ){
-      return;
-    }//else
-    //call the standard method
-    _setupSynchronizer.call( this );
-  },
-  //override
-  updateInput: function( obj ){
-    if ( ( "undefined" != typeof obj ) &&
-            ( 'content-picker-select' == $(obj.dom_event.currentTarget, obj.dom_el).data('type') ) ){
+  
+  updateContentPickerModel: function( obj ){
+    var input = this,
+        $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
+        _new_val          = $( $_changed_input, obj.dom_el ).select2('data');
 
-      var input = this,
-          $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
-          _new_val          = $( $_changed_input, obj.dom_el ).select2('data');
+    //purge useless select2 fields
+    if ( _new_val.length ) {
+      _new_val = _.map( _new_val, function( _item ){ 
+        return {
+          'id'          :  _item.id,
+          'type_label'  :  _item.type_label,
+          'title'       :  _item.title,
+          'object_type' :  _item.object_type
+        };
+      });
+    }
 
-      //purge useless select2 fields
-      if ( _new_val.length ) {
-        _new_val = _.map( _new_val, function( _item ){ 
-          return {
-            'id'          :  _item.id,
-            'type_label'  :  _item.type_label,
-            'title'       :  _item.title,
-            'object_type' :  _item.object_type
-          };
-        });
-      }
+    input.set(_new_val);
+    return;
 
-      input.set(_new_val);
-      return;
-    }//else
-    _updateInput.call( this, obj );
   }
 });//$.extend

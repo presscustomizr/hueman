@@ -699,6 +699,7 @@ $.extend( CZRInputMths , {
 
 
     updateInput : function( obj ) {
+      console.log( obj );
             var input           = this,
                 $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
                 _new_val          = $( $_changed_input, obj.dom_el ).val();
@@ -867,16 +868,29 @@ $.extend( CZRInputMths , {
     }
 });//$.extend/* Fix caching, select2 default one seems to not correctly work, or it doesn't what I think it should */
 var CZRInputMths = CZRInputMths || {};
-var _updateInput       = CZRInputMths.updateInput;
-    _setupSynchronizer = CZRInputMths.setupSynchronizer;
-
 $.extend( CZRInputMths , {
   setupContentPicker: function() {
-    var input  = this;
-    input.object = ['cat']; //this.control.params.object_types  - array('page', 'post')
+    var input  = this,
+    _event_map = [];
+    input.object = ['post']; //this.control.params.object_types  - array('page', 'post')
     input.type   = 'post_type'; //this.control.params.type  - post_type
-    input.container.find('.czr-input').append('<select data-type="content-picker-select" class="js-example-basic-simple"></select>');
-    
+    input.container.find('.czr-input').append('<select data-select-type="content-picker-select" class="js-example-basic-simple"></select>');
+    _event_map = [
+                    {
+                      trigger   : 'change',
+                      selector  : 'select[data-select-type]',
+                      name      : 'set_input_value',
+                      actions   : 'updateContentPickerModel'
+                    }
+    ];
+    input.setupDOMListeners( _event_map , { dom_el : input.container }, input );    
+
+    input.setupContentSelecter();
+  },
+
+  setupContentSelecter : function() {
+    var input = this;
+
     input.container.find('select').select2({
       placeholder: {
         id: '-1', // the value of the option
@@ -923,12 +937,14 @@ $.extend( CZRInputMths , {
           };
         },  
       },
-      templateSelection: input.czrFormatItem,
-      templateResult: input.czrFormatItem,
+      templateSelection: input.czrFormatContentSelected,
+      templateResult: input.czrFormatContentSelected,
       escapeMarkup: function (markup) { return markup; },
    });
   },
-  czrFormatItem: function (item) {
+
+
+  czrFormatContentSelected: function (item) {
       if ( item.loading ) return item.text;
       var markup = "<div class='content-picker-item clearfix'>" +
         "<div class='content-item-bar'>" +
@@ -942,40 +958,31 @@ $.extend( CZRInputMths , {
 
       return markup;
   },
+
   setupSelectedContents : function() {
     var input = this,
        _model = input.get();
        
     return _model;
   },
-  setupSynchronizer: function(){
-    if ( this.container.find('[data-type*="content-picker-select"]').length ){
-      return;
-    }//else
-    _setupSynchronizer.call( this );
-  },
-  updateInput: function( obj ){
-    if ( ( "undefined" != typeof obj ) &&
-            ( 'content-picker-select' == $(obj.dom_event.currentTarget, obj.dom_el).data('type') ) ){
+  updateContentPickerModel: function( obj ){
+    var input = this,
+        $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
+        _new_val          = $( $_changed_input, obj.dom_el ).select2('data');
+    if ( _new_val.length ) {
+      _new_val = _.map( _new_val, function( _item ){ 
+        return {
+          'id'          :  _item.id,
+          'type_label'  :  _item.type_label,
+          'title'       :  _item.title,
+          'object_type' :  _item.object_type
+        };
+      });
+    }
 
-      var input = this,
-          $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
-          _new_val          = $( $_changed_input, obj.dom_el ).select2('data');
-      if ( _new_val.length ) {
-        _new_val = _.map( _new_val, function( _item ){ 
-          return {
-            'id'          :  _item.id,
-            'type_label'  :  _item.type_label,
-            'title'       :  _item.title,
-            'object_type' :  _item.object_type
-          };
-        });
-      }
+    input.set(_new_val);
+    return;
 
-      input.set(_new_val);
-      return;
-    }//else
-    _updateInput.call( this, obj );
   }
 });//$.extend
 var CZRItemMths = CZRItemMths || {};
