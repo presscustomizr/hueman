@@ -714,7 +714,8 @@ $.extend( CZRInputMths , {
 
         var input        = this,
             _model       = input.get();
-        input.attachment = {};
+        input.attachment   = {};
+        input.defaultImage = {};
         if ( ! input.container )
           return this;
         if ( _model ) {
@@ -730,7 +731,6 @@ $.extend( CZRInputMths , {
 
           input.czrImgUploaderBinding();
         }
-
   },
   czrImgUploaderBinding : function() {
     var input = this;
@@ -2679,12 +2679,29 @@ $.extend( CZRFeaturedPageModuleMths, {
         'fp-text'  : '',
         'fp-image' : '',
     };
+    
+    module.bind( 'item_instanciated', function( data ) { 
+      var item_model = data.item,
+          is_added_by_user = data.is_added_by_user;
+
+ 
+      if ( ! is_added_by_user )
+        return;
+
+      var _fp_post        = item_model['fp-post'];
+      if ( typeof _fp_post  == "undefined" )
+        return;
+
+      _fp_post = _fp_post[0];
+      module.CZRFeaturedPagesInputMths.setContentAjaxInfo( module.czr_Item(item_model.id), _fp_post.id );
+    });
     this.itemAddedMessage = serverControlParams.translatedStrings.featuredPageAdded;
     api.section( module.control.section() ).expanded.bind(function(to) {
       if ( ! to || ! _.isEmpty( module.get() ) )
         return;
       module.ready();
     });
+
   },//initialize
 
 
@@ -2698,7 +2715,8 @@ $.extend( CZRFeaturedPageModuleMths, {
       input.bind('fp-title:changed', function(){
         input.updateItemTitle();
       });
-      api.CZRInput.prototype.ready.call( input);
+      
+      api.CZRInput.prototype.ready.call( input );
     },
     updateItemModel : function( _new_val ) {
 
@@ -2708,9 +2726,8 @@ $.extend( CZRFeaturedPageModuleMths, {
       if ( ! _.has( item.get(), 'fp-post') || _.isEmpty( item.get()['fp-post'] ) )
         return;
 
-      var _new_model  = _.clone( item.get() );
-
-      var _fp_post        = _new_model['fp-post'][0],
+      var _new_model      = _.clone( item.get() ),
+          _fp_post        = _new_model['fp-post'][0],
           _new_title      = _fp_post.title,
           inputCollection = is_preItemInput ? input.module.czr_preItemInput : item.czr_Input;
 
@@ -2718,9 +2735,10 @@ $.extend( CZRFeaturedPageModuleMths, {
         $.extend( _new_model, { title : _new_title, 'fp-title' : _new_title } );
         item.set( _new_model );
       } else {
-        this.setContentAjaxInfo( _fp_post.id, {'fp-title' : _new_title} );
+        this.setContentAjaxInfo( item, _fp_post.id, {'fp-title' : _new_title} );
       }
     },
+
     updateItemTitle : function( _new_val ) {
       var input = this,
           item = this.item,
@@ -2735,10 +2753,9 @@ $.extend( CZRFeaturedPageModuleMths, {
       item.set( _new_model );
     },
 
-    setContentAjaxInfo : function( _post_id, _additional_inputs ) {
-      var item             = this.item,
-        _to_update         = _additional_inputs || {},
-        request;
+    setContentAjaxInfo : function( item, _post_id, _additional_inputs ) {
+      var _to_update         = _additional_inputs || {},
+          request;
       request = wp.ajax.post( 'get-fp-post', {
           'wp_customize': 'on',
           'id'          : _post_id
@@ -2749,7 +2766,6 @@ $.extend( CZRFeaturedPageModuleMths, {
 
         if ( 0 !== _post_info.length ) {
           $.extend( _to_update, { 'fp-image' : _post_info.thumbnail, 'fp-text' : _post_info.excerpt } );
-          console.log( _to_update );
         }
       });
       request.fail(function( data ) {

@@ -6,7 +6,8 @@ $.extend( CZRInputMths , {
             _model       = input.get();
 
         //an instance field where we'll store the current attachment
-        input.attachment = {};
+        input.attachment   = {};
+        input.defaultImage = {};
 
         //do we have an html template and a input container?
         if ( ! input.container )
@@ -26,7 +27,6 @@ $.extend( CZRInputMths , {
 
           input.czrImgUploaderBinding();
         }
-
   },
   czrImgUploaderBinding : function() {
     var input = this;
