@@ -18,7 +18,7 @@ var CZRItemMths = CZRItemMths || {};
           _.each( _changed_props, function( _prop ) {
                 module.control.previewer.send( 'sub_setting', {
                       set_id : module.control.id,
-                      item_id : to.id,
+                      id : to.id,
                       changed_prop : _prop,
                       value : to[_prop]
                 });
@@ -40,12 +40,12 @@ var CZRItemMths = CZRItemMths || {};
 
             //new collection
             //say it
-            _new_collection = _.without( _new_collection, _.findWhere( _new_collection, {id: item.item_id }) );
+            _new_collection = _.without( _new_collection, _.findWhere( _new_collection, {id: item.id }) );
             module.set( _new_collection );
             //hook here
             module.trigger('item_removed', item.get() );
             //remove the item from the collection
-            module.czr_Item.remove(item.item_id);
+            module.czr_Item.remove(item.id);
     },
 
     //@return the item {...} from the collection

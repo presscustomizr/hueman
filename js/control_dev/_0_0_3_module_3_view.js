@@ -28,18 +28,18 @@ $.extend( CZRModuleMths, {
 
   //helper
   //get the $ view DOM el from the item id
-  getViewEl : function( item_id ) {
+  getViewEl : function( id ) {
           var module = this;
-          return $( '[data-id = "' + item_id + '"]', module.container );
+          return $( '[data-id = "' + id + '"]', module.container );
   },
 
 
   //fired on add_item
   //fired on views_sorted
-  closeAllViews : function(item_id) {
+  closeAllViews : function(id) {
           var module = this,
               _current_collection = _.clone( module.get() ),
-              _filtered_collection = _.filter( _current_collection , function( mod) { return mod.id != item_id; } );
+              _filtered_collection = _.filter( _current_collection , function( mod) { return mod.id != id; } );
 
           _.each( _filtered_collection, function(_item) {
                 if ( module.czr_Item.has(_item.id) && 'expanded' == module.czr_Item(_item.id)._getViewState(_item.id) )

@@ -29,10 +29,12 @@
   api.CZRWidgetAreaModule     = api.CZRDynModule.extend( CZRWidgetAreaModuleMths || {} );
   api.CZRSektionModule        = api.CZRDynModule.extend( CZRSektionMths || {} );
   api.CZRFeaturedPageModule   = api.CZRDynModule.extend( CZRFeaturedPageModuleMths || {} );
+  api.CZRTextModule           = api.CZRModule.extend( CZRTextModuleMths || {} );
 
   //CONTROLS
   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMths || {} );
-  api.CZRModulesControl       = api.CZRBaseControl.extend( CZRModuleControlMths || {} );
+  api.CZRBaseModuleControl    = api.CZRBaseControl.extend( CZRBaseModuleControlMths || {} );
+  api.CZRMultiModulesControl        = api.CZRBaseModuleControl.extend( CZRMultiModuleControlMths || {} );
 
   //api.CZRBackgroundControl     = api.CZRItemControl.extend( CZRBackgroundMths || {} );
 
@@ -51,7 +53,8 @@
         //czr_sidebars   : api.CZRWidgetAreasControl,
         //czr_socials    : api.CZRSocialControl,
 
-        czr_modules : api.CZRModulesControl,
+        czr_modules : api.CZRBaseModuleControl,
+        czr_multi_modules : api.CZRMultiModulesControl,
 
         czr_multiple_picker : api.CZRMultiplePickerControl,
         czr_layouts    : api.CZRLayoutControl

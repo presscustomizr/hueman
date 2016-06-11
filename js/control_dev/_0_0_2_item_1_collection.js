@@ -1,6 +1,6 @@
 //extends api.Value
 //options:
-  // item_id : item.id,
+  // id : item.id,
   // item_model : item,
   // defaultItemModel : module.defaultItemModel,
   // item_module : module,
@@ -20,40 +20,43 @@ $.extend( CZRItemMths , {
         item.inputConstructor = module.inputConstructor;
 
         if ( _.isEmpty(item.defaultItemModel) || _.isUndefined(item.defaultItemModel) ) {
-          throw new Error('No default model found in item ' + item.item_id + '. Aborting');
+          throw new Error('No default model found in item ' + item.id + '. Aborting');
         }
 
         //prepare and sets the item value on api ready
         //=> triggers the module rendering + DOM LISTENERS
-        var initial_input_values = item.initial_input_values;
+        var initial_item_model = item.initial_item_model;
 
-        if ( ! _.isObject(initial_input_values) )
-          initial_input_values = item.defaultItemModel;
+        if ( ! _.isObject(initial_item_model) )
+          initial_item_model = item.defaultItemModel;
         else
-          initial_input_values = $.extend( item.defaultItemModel, initial_input_values );
+          initial_item_model = $.extend( item.defaultItemModel, initial_item_model );
 
         var input_collection = {};
 
         //creates the inputs based on the rendered items
         $( '.'+module.control.css_attr.sub_set_wrapper, item.container).each( function(_index) {
-
+              if ( ! $(this).find('[data-type]').length ) {
+                  console.log('No data-type found in the input wrapper index : ' + _index + ' in item : '+ item.id );
+                  return;
+              }
               var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index,
-                  _value = _.has( initial_input_values, _id) ? initial_input_values[_id] : '';
+                  _value = _.has( initial_item_model, _id) ? initial_item_model[_id] : '';
 
               item.czr_Input.add( _id, new item.inputConstructor( _id, {
-                  id : _id,
-                  type : $(this).attr('data-input-type'),
-                  input_value : _value,
-                  container : $(this),
-                  item : item,
-                  module : module
+                    id : _id,
+                    type : $(this).attr('data-input-type'),
+                    input_value : _value,
+                    container : $(this),
+                    item : item,
+                    module : module
               } ) );
               //populate the collection
               input_collection[_id] = _value;
         });//each
 
         //say it
-        item.trigger('input_collection_populated', $.extend( initial_input_values, input_collection ));
+        item.trigger('input_collection_populated', $.extend( initial_item_model, input_collection ));
   }
 
 

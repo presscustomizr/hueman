@@ -1330,9 +1330,10 @@ span.select2-results, body .select2-container {
 
 /* SEKTIONS AND BLOCKS */
 .czr-column {
-  width: 88%;
+  width: 99%;
+  margin-bottom: 1%;
   float: left;
-  padding: 0 5%;
+  padding: 2% 0%;
   border: 2px dotted #aaa;
   text-align: center;
   cursor: move;
@@ -1340,6 +1341,28 @@ span.select2-results, body .select2-container {
   cursor: -moz-grab;
   cursor: -webkit-grab;
 }
+.add-new-module {
+  margin-top: 1%;
+}
+.czr-static-module-wrapper {
+  width: 100%;
+  float: left;
+}
+.czr-single-module {
+  width: 100%;
+  float: left;
+  min-height: 20px;
+}
+
+.czr-single-module textarea {
+  max-width: 100%;
+}
+
+#customize-theme-controls .czr-single-module .czr-inner-view.open {
+  border: 1px solid #d27e00;
+  width: 96%;
+}
+
 
 
 /* DRAGULA */

@@ -1,7 +1,7 @@
 //extends api.Value
 //options:
-  // item_id : item.id,
-  // initial_input_values : item,
+  // id : item.id,
+  // initial_item_model : item,
   // defaultItemModel : module.defaultItemModel,
   // item_module : module,
   // is_added_by_user : is_added_by_user || false
@@ -11,25 +11,32 @@ $.extend( CZRItemMths , {
         if ( _.isUndefined(options.item_module) || _.isEmpty(options.item_module) ) {
           throw new Error('No module assigned to item ' + id + '. Aborting');
         }
+
         var item = this;
         api.Value.prototype.initialize.call( item, null, options );
+
+        //will store the embedded and content rendered state
+        item.embedded = $.Deferred();
+        item.contentRendered = $.Deferred();
 
         //input.options = options;
         //write the options as properties, name is included
         $.extend( item, options || {} );
 
         //declares a default model
-        item.defaultItemModel = options.defaultItemModel || { id : '', title : '' };
+        item.defaultItemModel = _.clone( options.defaultItemModel ) || { id : '', title : '' };
 
         //set initial values
-        item.set( $.extend( item.defaultItemModel, options.initial_input_values ) );
+        var _initial_model = $.extend( item.defaultItemModel, options.initial_item_model );
+        //this won't be listened to at this stage
+        item.set( _initial_model );
 
         //VIEW
         //czr_View stores the current expansion status of a given view => one value by created by item.id
         //czr_View can take 3 values : expanded, expanded_noscroll (=> used on view creation), closed
         item.czr_View = new api.Value();
 
-        item.setupView( options.initial_input_values );
+        item.setupView( _initial_model );
 
         //initialize to the provided value
         //the item model is a collection inputs
@@ -77,39 +84,49 @@ $.extend( CZRItemMths , {
                   }
           ];
 
-          item.container = item.renderView( item_model );
-          if ( _.isUndefined(item.container) || ! item.container.length ) {
-            throw new Error( 'In setupView the Item view has not been rendered : ' + item.item_id );
-          }
-
           //set intial state
           item.czr_View.set('closed');
 
-          //always write the title
-          item.writeItemViewTitle();
+          item.container = item.renderView( item_model );
+          if ( _.isUndefined(item.container) || ! item.container.length ) {
+              throw new Error( 'In setupView the Item view has not been rendered : ' + item.id );
+          } else {
+              //say it
+              item.embedded.resolve();
+          }
 
-          //add a listener on view state change
-          item.czr_View.callbacks.add( function() { return item.setupViewStateListeners.apply(item, arguments ); } );
+          //defer actions on item view embedded
+          item.embedded.done( function() {
+                //always write the title
+                item.writeItemViewTitle();
 
-          api.CZR_Helpers.setupDOMListeners( item.view_event_map , { model:item_model, dom_el:item.container }, item );//listeners for the view wrapper
+                //add a listener on view state change
+                item.czr_View.callbacks.add( function() { return item.setupViewStateListeners.apply(item, arguments ); } );
 
-          //say it to the parent
-          module.trigger('view_setup', { model : item_model , dom_el: item.container} );
+                api.CZR_Helpers.setupDOMListeners(
+                      item.view_event_map,//actions to execute
+                      { model:item_model, dom_el:item.container },//model + dom scope
+                      item //instance where to look for the cb methods
+                );//listeners for the view wrapper
+
+                //say it to the parent
+                //@todo : do we still need that ?
+                module.trigger('view_setup', { model : item_model , dom_el: item.container} );
+          });
   },
 
 
   setupViewStateListeners : function( to, from ) {
           var item = this,
-              item_model = item.get() || item.initial_input_values,//could not be set yet
-              module = this.item_module,
-              $viewContent = $( '.' + module.control.css_attr.view_content, item.container );
+              item_model = item.get() || item.initial_item_model,//could not be set yet
+              module = this.item_module;
 
           //render and setup view content if needed
-          if ( ! $.trim( $viewContent.html() ) ) {
+          if ( 'pending' == item.contentRendered.state() ) {
               var $item_content = item.renderViewContent( item_model );
               if ( ! _.isUndefined($item_content) && false !== $item_content ) {
-                console.log('RENDERED?', item.id );
-                item.trigger('item_content_rendered');
+                //say it
+                item.contentRendered.resolve();
               }
           }
           //create the collection of inputs if needed

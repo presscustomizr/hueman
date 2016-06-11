@@ -15,22 +15,27 @@ $.extend( CZRItemMths , {
             item_model = item_model || item.get();
 
         //do we have view template script?
-        if ( 0 === $( '#tmpl-' + module.getTemplateEl( 'view', item_model ) ).length )
-          return false;//break the action chain
+        if ( 0 === $( '#tmpl-' + module.getTemplateEl( 'view', item_model ) ).length ) {
+          throw new Error('No template for item ' + item.id + '. The template script id should be : #tmpl-' + module.getTemplateEl( 'view', item_model ) );
+        }
 
         var view_template = wp.template( module.getTemplateEl( 'view', item_model ) );
+
 
         //do we have an html template and a module container?
         if ( ! view_template  || ! module.container )
           return;
 
         //has this item view already been rendered?
-        if ( _.has(item, 'container') && false !== item.container.length )
-          return;
+        if ( 'resolved' == item.embedded.state() )
+          return item.container;
 
         $_view_el = $('<li>', { class : module.control.css_attr.inner_view, 'data-id' : item_model.id,  id : item_model.id } );
+
+        //append the item view to the module view wrapper
         $( '.' + module.control.css_attr.views_wrapper , module.container).append( $_view_el );
-        //the view skeleton
+
+        //then, append the item view skeleton
         $( view_template( item_model ) ).appendTo( $_view_el );
 
         return $_view_el;
@@ -51,14 +56,15 @@ $.extend( CZRItemMths , {
 
           var  view_content_template = wp.template( module.getTemplateEl( 'view-content', item_model ) );
 
-          //do we have an html template and a control container?
-          if ( ! view_content_template || ! module.container )
+          //do we have an html template ?
+          if ( ! view_content_template )
             return this;
 
           //the view content
           $( view_content_template( item_model )).appendTo( $('.' + module.control.css_attr.view_content, item.container ) );
 
-          item.trigger( 'view_content_rendered' , {model : item_model } );
+          //say it
+          //item.trigger( 'view_content_rendered' , {model : item_model } );
 
           return this;
   },
@@ -91,7 +97,7 @@ $.extend( CZRItemMths , {
           if ( is_added_by_user ) {
             item.czr_View.set( 'expanded_noscroll' );
           } else {
-            module.closeAllViews( item.item_id );
+            module.closeAllViews( item.id );
             if ( _.has(module, 'czr_preItem') ) {
               module.czr_preItem('view_status').set( 'closed');
             }

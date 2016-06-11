@@ -14,12 +14,13 @@ $.extend( CZRModuleMths, {
           var module = this;
 
           //populates the collection with the saved items
-          _.each( module.items, function( item, key ) {
+          _.each( module.savedItems, function( item, key ) {
                 //normalizes the item
                 item = module._normalizeItem(item, _.has( item, 'id' ) ? item.id : key );
                 if ( false === item ) {
                   throw new Error('populateItemCollection : an item could not be added in : ' + module.id );
                 }
+
                 //adds it to the collection
                 module.instantiateItem(item);
           });
@@ -38,8 +39,8 @@ $.extend( CZRModuleMths, {
 
           //instanciate the item with the default constructor
           module.czr_Item.add( item.id, new module.itemConstructor( item.id, {
-                item_id : item.id,
-                initial_input_values : item,
+                id : item.id,
+                initial_item_model : item,
                 defaultItemModel : _.clone( module.defaultItemModel ),
                 item_control : module.control,
                 item_module : module,

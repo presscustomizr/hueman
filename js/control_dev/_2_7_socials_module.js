@@ -41,8 +41,6 @@ $.extend( CZRSocialModuleMths, {
                   return;
                 module.ready();
           });
-
-          console.log(' social savedItems', module.savedItems );
   },//initialize
 
 

@@ -14,7 +14,7 @@ $.extend( CZRSektionMths, {
                   api.CZRItem.prototype.initialize.call( sekItem, null, options );
 
                   //the column values
-                  sekItem.czr_Columns = new api.Values();
+                  sekItem.czr_Column = new api.Values();
 
                   var _sektion_model = sekItem.get();
 
@@ -24,35 +24,39 @@ $.extend( CZRSektionMths, {
                   sekItem.czr_columnCollection.set([]);
                   //sekItem.updateColumnCollection( {collection : options.columns } );
 
-                  //react to column collection changes
-                  //sekItem.czr_columnCollection.callbacks.add( function() { return sekItem.collectionReact.apply(sekItem, arguments ); } );
-
-                  console.log("in sektion item initialize", id, options, sekItem.get() );
-
                   if ( ! _.has(_sektion_model, 'sektion-layout') ) {
-                    throw new Error('In Sektion Item initialize, no layout provided for ' + id + '. Aborting');
+                    throw new Error('In Sektion Item initialize, no layout provided for ' + sekItem.id + '. Aborting');
                   }
 
-                  sekItem.dragulizeSektion();
+                  console.log('in sektion initial', options );
+                  //instantiate the columns on when item is embedded
+                  sekItem.embedded.done(function() {
+                        _.each( options.initial_item_model.columns , function( _column ) {
+                              sekItem.instanciateColumn( _column );
+                        });
 
-                  //defer the column instantiation when the sek content is rendered
-                  sekItem.bind('item_content_rendered', function() {
-                          //instantiate the columns based on the layout on init
-                          var columns = parseInt( _sektion_model['sektion-layout'] || 1, 10 );
-                          for( var i = 1; i < columns + 1 ; i++ ) {
-                              sekItem.instanciateColumn( i );
-                          }
+                        //dragulize when embedded
+                        sekItem.dragulizeSektion();
+                  });
+
+
+                  //defer actions when the sek content is rendered :
+                  //collection listener
+                  //dragulization
+                  sekItem.contentRendered.done(function() {
+                          //react to column collection changes
+                          sekItem.czr_columnCollection.callbacks.add( function() { return sekItem.collectionReact.apply(sekItem, arguments ); } );
+
                           //dragulize columns
                           sekItem.item_module.dragInstance.containers.push( $( '.czr-column-wrapper', sekItem.container )[0] );
 
                           //each item view must clean the dragula class
                           sekItem.czr_View.callbacks.add( function(to) {
-                                console.log('in view cb');
                                 if ( 'closed' == to )
                                   return;
                                 sekItem.container.removeClass('czr-show-fake-container');
                           });
-                  });//'item_content_rendered'
+                  });//embedded.done
 
           },
 
@@ -65,16 +69,18 @@ $.extend( CZRSektionMths, {
           },
 
 
-          instanciateColumn : function( index ) {
-                  console.log('in instantiate column', index );
+          instanciateColumn : function( column, is_added_by_user  ) {
                   var sekItem = this,
-                      col_id = 'col_' + index,
-                      column_model = {
-                        id : col_id,
-                        sektion : sekItem
-                      };
+                      column_model = _.clone( column );
                   //instanciate the column with the default constructor
-                  sekItem.czr_Columns.add( col_id, new api.CZRColumn( col_id, column_model ) );
+                  sekItem.czr_Column.add( column.id , new api.CZRColumn( column.id, {
+                        id : column.id,
+                        initial_column_model : column_model,
+                        sektion : sekItem,
+                        module : sekItem.item_module.id,
+                        control : sekItem.item_module.control.id,
+                        is_added_by_user : is_added_by_user || false
+                  } ) );
 
                   //push it to the collection
                   //won't be listened to on
@@ -97,10 +103,13 @@ $.extend( CZRSektionMths, {
                   }
 
                   if ( ! _.has(obj, 'column') ) {
-                    throw new Error('updateColumnCollection, no column provided ' + sekItem.id + '. Aborting');
+                    throw new Error('updateColumnCollection, no column provided in sektion ' + sekItem.id + '. Aborting');
                   }
                   var column = _.clone(obj.column);
 
+                  if ( ! _.has(column, 'id') ) {
+                    throw new Error('updateColumnCollection, no id provided for a column in sektion' + sekItem.id + '. Aborting');
+                  }
                   //the module already exist in the collection
                   if ( _.findWhere( _new_collection, { id : column.id } ) ) {
                         _.each( _current_collection , function( _elt, _ind ) {
@@ -123,6 +132,7 @@ $.extend( CZRSektionMths, {
 
           //cb of control.czr_columnCollection.callbacks
           collectionReact : function( to, from ) {
+                console.log('in sektion collection react', to, from );
                 var sekItem = this,
                     _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
                     _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},

@@ -39,7 +39,7 @@ $.extend( CZRDynModuleMths, {
           module.itemAddedMessage = serverControlParams.translatedStrings.successMessage;
 
           ////////////////////////////////////////////////////
-          /// CONTROL EVENT MAP
+          /// MODULE DOM EVENT MAP
           ////////////////////////////////////////////////////
           module.module_event_map = [
                 //pre add new item : open the dialog box
@@ -122,7 +122,7 @@ $.extend( CZRDynModuleMths, {
                 module.czr_preItem('view_status').set( 'closed');
                 module.czr_preItem('item').set( module.getDefaultModel() );
                 module.toggleSuccessMessage('off').destroyPreItemView();
-          } , 3000);
+          } , 2500 );
 
           module.trigger('item_added', item );
           //module.doActions( 'item_added_by_user' , module.container, { item : item , dom_event : obj.dom_event } );

@@ -33,21 +33,20 @@ $.extend( CZRModuleMths, {
           } );
 
           //initialize the module collection
+          //this will be populated on ready()
           module.set([]);//the module is a collection items => this is the collection
 
           //Setup individual module listener
           //module.callbacks.add( function() { return item.setupModuleListeners.apply(module, arguments ); } );
 
+          //@todo improve this check
           if ( ! _.has( module.control.params, 'in_sektion' ) || ! module.control.params.in_sektion )
             module.container = $( module.control.selector );
-          else {
-            throw new Error('The module container is not defined for module : ' + id + '. Aborting');
-          }
 
           //store the saved models => can be extended to add default models in children classes
           module.savedItems = options.items;
 
-          //declares a default model
+          //declares a default item model
           module.defaultModuleModel = { id : '', title : '' };
 
           //define a default Constructors

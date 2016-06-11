@@ -4,9 +4,9 @@
 //this will become our base constructor for main complex controls
 //EARLY SETUP
 
-var CZRModuleControlMths = CZRModuleControlMths || {};
+var CZRBaseModuleControlMths = CZRBaseModuleControlMths || {};
 
-$.extend( CZRModuleControlMths, {
+$.extend( CZRBaseModuleControlMths, {
 
   initialize: function( id, options ) {
           var control = this;
@@ -14,21 +14,21 @@ $.extend( CZRModuleControlMths, {
 
           //for now this is a collection with one item
           control.savedModules = [
-              {
-                id : options.params.section + '_' + options.params.type,
-                section : options.params.section,
-                block   : '',
-                module_type    : options.params.module_type,
-                items   : api(control.id).get()
-              }
+                {
+                  id : options.params.section + '_' + options.params.type,
+                  section : options.params.section,
+                  block   : '',
+                  module_type : options.params.module_type,
+                  items   : api(control.id).get()
+                }
           ];
 
           //define a default Constructor
           control.moduleConstructors = {
-              czr_widget_areas_module   : api.CZRWidgetAreaModule,
-              czr_social_module    : api.CZRSocialModule,
-              czr_sektion_module    : api.CZRSektionModule,
-              czr_fp_module    : api.CZRFeaturedPageModule
+                czr_widget_areas_module   : api.CZRWidgetAreaModule,
+                czr_social_module    : api.CZRSocialModule,
+                czr_sektion_module    : api.CZRSektionModule,
+                czr_fp_module    : api.CZRFeaturedPageModule
           };
 
           control.czr_Module = new api.Values();
@@ -52,7 +52,7 @@ $.extend( CZRModuleControlMths, {
                   return;
                 control.populateModuleCollection();
                 //LISTEN TO ELEMENT COLLECTION
-                control.czr_moduleCollection.callbacks.add( function() { return control.collectionReact.apply(control, arguments ); } );
+                control.czr_moduleCollection.callbacks.add( function() { return control.collectionReact.apply( control, arguments ); } );
           });
   },
 
@@ -65,7 +65,7 @@ $.extend( CZRModuleControlMths, {
                 //normalizes the module
                 module = control._normalizeModule( module );
                 if ( ! _.isObject(module) || _.isEmpty(module) ) {
-                  throw new Error('Populate Module Collection : an module could not be added in : ' + control.id );
+                  throw new Error('Populate Module Collection : a module could not be added in : ' + control.id );
                 }
                 if ( _.isUndefined( control.moduleConstructors[ module.module_type] ) ) {
                   throw new Error('Populate Module Collection : no constructor found for type : ' +  module.module_type );
@@ -83,14 +83,23 @@ $.extend( CZRModuleControlMths, {
           if ( ! _.has( module,'id') ) {
             throw new Error('CZRModule::instantiateModule() : an module has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
           }
-          if ( _.isUndefined(constructor) ) {
-            throw new Error('CZRModule::instantiateModule() : no constructor found for module type : ' + module.module_type +'. Aborted.' );
-          }
+
           var control = this;
 
           //Maybe prepare the module, make sure its id is set and unique
           //module =  ( _.has( module, 'id') && control._isModuleIdPossible( module.id) ) ? module : control._initNewModule( module || {} );
 
+          //is a constructor provided ?
+          //if not try to look in the module object if we an find one
+          if ( _.isUndefined(constructor) ) {
+              if ( _.has( module, 'module_type' ) ) {
+                constructor = control.moduleConstructors[ module.module_type];
+              }
+          }
+
+          if ( _.isUndefined(constructor) ) {
+            throw new Error('CZRModule::instantiateModule() : no constructor found for module type : ' + module.module_type +'. Aborted.' );
+          }
           //instanciate the module with the default constructor
           control.czr_Module.add( module.id, new constructor( module.id, {
                 id : module.id,
