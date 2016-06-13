@@ -21,25 +21,36 @@ $.extend( CZRInputMths , {
         });
   },
 
-  setupContentRendering : function( to, from) {
+  setupContentRendering : function( to, from ) {
     var input = this;
-
 
     //retrieve new image if 'to' is different from the saved one
     //NEED A BETTER WAY?
     if ( ( input.attachment.id != to ) && from !== to ) {
       if ( ! to ) {
         input.attachment = {};
-        input.renderImageUploaderTemplate();
+        if ( input.renderImageUploaderTemplate() )
+          input.contentRendered.resolve();
       }
       wp.media.attachment( to ).fetch().done( function() {
         input.attachment       = this.attributes;
-        input.renderImageUploaderTemplate();
+        if ( input.renderImageUploaderTemplate() )
+          input.contentRendered.resolve();
       });
     }//Standard reaction, the image has been updated by the user
     else if ( input.attachment && input.attachment.id === to ) {
-      input.renderImageUploaderTemplate();
+      if ( input.renderImageUploaderTemplate() )
+        input.contentRendered.resolve();
     }
+
+    input.contentRendered.done( function(){ input.czrImgUploaderContentRendered(); });
+     
+    return input.contentRendered;
+  },
+  
+  czrImgUploaderContentRendered : function() {
+    var input = this;
+    input.trigger( input.id + ':content_rendered' );
   },
 
   czrImgUploaderBinding : function() {
@@ -58,6 +69,7 @@ $.extend( CZRInputMths , {
       input.setupContentRendering(to,from);
     });
   },
+
   /**
   * Open the media modal.
   */
@@ -166,9 +178,6 @@ $.extend( CZRInputMths , {
     };
 
     $_view_el.html( view_template( _template_params) );
-
-    input.contentRendered.resolve();
-    input.trigger( input.id + ':content_rendered' );
 
     return true;
   },

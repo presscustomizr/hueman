@@ -81,27 +81,22 @@ $.extend( CZRFeaturedPageModuleMths, {
       input.bind( 'fp-title:changed', function(){
         input.updateItemTitle();
       });
-
-      api.CZRInput.prototype.ready.call( input );
-    },
-    //override czr img uploader input constructor
-    //we need this otherwise we cannot add the buttons to the input container
-    //when the input model is not, as the template will be rendered before the ready 
-    //method is called
-    setupImageUploader:  function(){
-      var input = this;
-      //temporary
-      input.bind( 'fp-image:content_rendered', function(){
-        input.addResetDefaultButton();
-      });
-
-      //see add a reset to default image button
+      //retrieve fp image tb on reset to default button click keydown
       input.container.on('click keydown', '.default-fpimage-button', function(){
         input.setThumbnailAjax();
       });
-
-      api.CZRInput.prototype.setupImageUploader.call( input );
+      api.CZRInput.prototype.ready.call( input );
     },
+    
+    czrImgUploaderContentRendered:  function(){
+      var input = this;
+      //temporary
+      input.addResetDefaultButton();
+
+      api.CZRInput.prototype.czrImgUploaderContentRendered.call( input );
+    },
+
+
     //ACTIONS ON fp-title change
     //Fired on 'fp-title:changed'
     //Don't fire in pre item case

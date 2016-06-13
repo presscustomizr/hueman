@@ -725,21 +725,33 @@ $.extend( CZRInputMths , {
         });
   },
 
-  setupContentRendering : function( to, from) {
+  setupContentRendering : function( to, from ) {
     var input = this;
     if ( ( input.attachment.id != to ) && from !== to ) {
       if ( ! to ) {
         input.attachment = {};
-        input.renderImageUploaderTemplate();
+        if ( input.renderImageUploaderTemplate() )
+          input.contentRendered.resolve();
       }
       wp.media.attachment( to ).fetch().done( function() {
         input.attachment       = this.attributes;
-        input.renderImageUploaderTemplate();
+        if ( input.renderImageUploaderTemplate() )
+          input.contentRendered.resolve();
       });
     }//Standard reaction, the image has been updated by the user
     else if ( input.attachment && input.attachment.id === to ) {
-      input.renderImageUploaderTemplate();
+      if ( input.renderImageUploaderTemplate() )
+        input.contentRendered.resolve();
     }
+
+    input.contentRendered.done( function(){ input.czrImgUploaderContentRendered(); });
+     
+    return input.contentRendered;
+  },
+  
+  czrImgUploaderContentRendered : function() {
+    var input = this;
+    input.trigger( input.id + ':content_rendered' );
   },
 
   czrImgUploaderBinding : function() {
@@ -827,9 +839,6 @@ $.extend( CZRInputMths , {
     };
 
     $_view_el.html( view_template( _template_params) );
-
-    input.contentRendered.resolve();
-    input.trigger( input.id + ':content_rendered' );
 
     return true;
   },
@@ -2769,19 +2778,17 @@ $.extend( CZRFeaturedPageModuleMths, {
       input.bind( 'fp-title:changed', function(){
         input.updateItemTitle();
       });
-
-      api.CZRInput.prototype.ready.call( input );
-    },
-    setupImageUploader:  function(){
-      var input = this;
-      input.bind( 'fp-image:content_rendered', function(){
-        input.addResetDefaultButton();
-      });
       input.container.on('click keydown', '.default-fpimage-button', function(){
         input.setThumbnailAjax();
       });
+      api.CZRInput.prototype.ready.call( input );
+    },
+    
+    czrImgUploaderContentRendered:  function(){
+      var input = this;
+      input.addResetDefaultButton();
 
-      api.CZRInput.prototype.setupImageUploader.call( input );
+      api.CZRInput.prototype.czrImgUploaderContentRendered.call( input );
     },
     updateItemModel : function( _new_val ) {
 
