@@ -26,7 +26,10 @@
                 instance = instance || control;
                 //loop on the event map and map the relevant callbacks by event name
                 _.map( event_map , function( _event ) {
-                  //LISTEN TO THE DOM
+                  if ( ! _.isString( _event.selector ) || _.isEmpty( _event.selector ) ) {
+                    throw new Error( 'setupDOMListeners : selector must be a string not empty. Aborting setup of action(s) : ' + _event.actions.join(',') );
+                  }
+                  //LISTEN TO THE DOM => USES EVENT DELEGATION
                   obj.dom_el.on( _event.trigger , _event.selector, function( e, event_params ) {
                     //particular treatment
                     if ( api.utils.isKeydownButNotEnterEvent( e ) ) {

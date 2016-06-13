@@ -6,7 +6,7 @@
 var CZRSektionMths = CZRSektionMths || {};
 
 $.extend( CZRSektionMths, {
-
+  //extends api.CZRItem
   CZRSektionItem : {
           initialize: function(id, options ) {
                   var sekItem = this;
@@ -29,8 +29,13 @@ $.extend( CZRSektionMths, {
                   }
 
                   console.log('in sektion initial', options );
-                  //instantiate the columns on when item is embedded
+
+                  //instantiate the columns when the sektion item is embedded
                   sekItem.embedded.done(function() {
+                        console.log('sektion is embedded');
+                        //react to column collection changes
+                        sekItem.czr_columnCollection.callbacks.add( function() { return sekItem.collectionReact.apply(sekItem, arguments ); } );
+
                         _.each( options.initial_item_model.columns , function( _column ) {
                               sekItem.instanciateColumn( _column );
                         });
@@ -44,9 +49,7 @@ $.extend( CZRSektionMths, {
                   //collection listener
                   //dragulization
                   sekItem.contentRendered.done(function() {
-                          //react to column collection changes
-                          sekItem.czr_columnCollection.callbacks.add( function() { return sekItem.collectionReact.apply(sekItem, arguments ); } );
-
+                          console.log('sektion content is rendered');
                           //dragulize columns
                           sekItem.item_module.dragInstance.containers.push( $( '.czr-column-wrapper', sekItem.container )[0] );
 
@@ -72,6 +75,17 @@ $.extend( CZRSektionMths, {
           instanciateColumn : function( column, is_added_by_user  ) {
                   var sekItem = this,
                       column_model = _.clone( column );
+                  //does this column have modules ?
+                  var _all_modules = api.control( api.CZR_Helpers.build_setId( 'module-collection') ).czr_moduleCollection.get(),
+                      _column_modules = _.findWhere( _all_modules, { column_id : column.id });
+
+                  if ( ! _.isEmpty( _column_modules) ) {
+                    console.log('HAS COLUMN MODULES?', column.id, _column_modules );
+                    console.log('column_model', column_model );
+                    //column_model.modules.push( )
+                  }
+
+
                   //instanciate the column with the default constructor
                   sekItem.czr_Column.add( column.id , new api.CZRColumn( column.id, {
                         id : column.id,
@@ -124,7 +138,6 @@ $.extend( CZRSektionMths, {
                   else {
                         _new_collection.push(column);
                   }
-
                   //Inform the sekItem
                   sekItem.czr_columnCollection.set(_new_collection);
           },

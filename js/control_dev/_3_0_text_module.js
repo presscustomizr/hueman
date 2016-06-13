@@ -15,7 +15,7 @@ $.extend( CZRTextModuleMths, {
                 viewContentTemplateEl : 'czr-module-text-view-content',
           } );
 
-          console.log(' text module options', options );
+          //console.log(' text module options', options );
           // //EXTEND THE DEFAULT CONSTRUCTORS FOR INPUT
           // module.inputConstructor = api.CZRInput.extend( module.CZRSocialsInputMths || {} );
           //EXTEND THE DEFAULT CONSTRUCTORS FOR MONOMODEL
@@ -26,6 +26,8 @@ $.extend( CZRTextModuleMths, {
                 id : '',
                 text : ''
           };
+
+          //console.log(' NEW TEXT MODEL : ', module._initNewItem( module.defaultItemModel ) );
 
           //this is a static module. We only have one item
           module.savedItems = _.isEmpty( options.items ) ? [ module._initNewItem( module.defaultItemModel ) ] : options.items;
@@ -59,7 +61,7 @@ $.extend( CZRTextModuleMths, {
         var module_wrapper_tmpl = wp.template( module.singleModuleWrapper ),
             tmpl_data = {
                 id : module.id,
-                type : module.type
+                type : module.module_type
             };
 
         var $_module_el = $(  module_wrapper_tmpl( tmpl_data ) );
@@ -82,14 +84,14 @@ $.extend( CZRTextModuleMths, {
 
   _getColumn : function() {
           var module = this;
-          return module.sektion.czr_Column(module.column);
+          return module.sektion.czr_Column( module.column_id );
   },
 
   _getSektion : function() {
 
   },
 
-
+  //extends api.CZRItem
   CZRTextItem : {
           //overrides parent
           setupView : function( item_model ) {
@@ -107,16 +109,22 @@ $.extend( CZRTextModuleMths, {
 
                 //defer actions on item view embedded
                 item.embedded.done( function() {
-                      //add a listener on view state change
-                      //=> view content rendering + takes care of input instantation
-                      item.czr_View.callbacks.add( function() { return item.setupViewStateListeners.apply(item, arguments ); } );
+                        var item_model = item.get() || item.initial_item_model;//could not be set yet
 
-                      //we don't need to hide the item, there's only one.
-                      item.setViewVisibility( {}, true );
+                      //render and setup view content if needed
+                        if ( 'pending' == item.contentRendered.state() ) {
+                            var $item_content = item.renderViewContent( item_model );
+                            if ( ! _.isUndefined($item_content) && false !== $item_content ) {
+                              //say it
+                              item.contentRendered.resolve();
+                            }
+                        }
+                        //create the collection of inputs if needed
+                        if ( ! _.has(item, 'czr_Input') ) {
+                          item.setupInputCollection();
+                        }
                 });
           },
-
-
   }
 
 });

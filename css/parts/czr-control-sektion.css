@@ -30,7 +30,11 @@
   max-width: 100%;
 }
 
-#customize-theme-controls .czr-single-module .czr-inner-view.open {
+.czr-single-module .czr-inner-view .czr-view-content {
+  display: block;
+}
+
+#customize-theme-controls .czr-single-module .czr-inner-view {
   border: 1px solid #d27e00;
   width: 96%;
 }

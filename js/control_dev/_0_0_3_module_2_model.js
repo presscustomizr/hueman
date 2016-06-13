@@ -14,7 +14,7 @@ $.extend( CZRModuleMths, {
   //Each chid class can override the default item and the following method
   getDefaultModel : function( id ) {
           var module = this;
-          return $.extend( _.clone(module.defaultItem), { id : id || '' } );
+          return $.extend( _.clone( module.defaultItemModel ), { id : id || '' } );
   },
 
 
@@ -55,7 +55,7 @@ $.extend( CZRModuleMths, {
           _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( module.get() );
 
           if ( _.isNumber(_next_key) ) {
-            _id = module.type + '_' + _next_key;
+            _id = module.module_type + '_' + _next_key;
           }
           else {
             _id = _next_key;

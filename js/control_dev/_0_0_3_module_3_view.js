@@ -51,7 +51,7 @@ $.extend( CZRModuleMths, {
   //make sure a given jQuery block is fully visible
   //@param $(el)
   _adjustScrollExpandedBlock : function( $_block_el, adjust ) {
-          if ( ! $_block_el.length )
+          if ( ! $_block_el.length || _.isUndefined( this.getModuleSection() ) )
             return;
           var module = this,
                $_moduleSection = $( '.accordion-section-content', module.section.container ),//was api.section( control.section() )
@@ -70,6 +70,7 @@ $.extend( CZRModuleMths, {
                 }
           }, 50);
   },
+
 
 
   //close alert wrapper

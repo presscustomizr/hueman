@@ -31,36 +31,8 @@ $.extend( CZRSektionMths, {
             modules : [],
           };
 
-          console.log('MODULE ID', id );
-
-          //We need to update the save items with the column collection if not set.
-          var _new_sektions = _.clone( module.savedItems ),
-              _default_sektion = _.clone( module.defaultItemModel );
-
-          _.each( module.savedItems, function( _sek , _key ) {
-                  var _def = _.clone( _default_sektion ),
-                      _new_sek = $.extend( _def, _sek),
-                      _columns = [];
-
-                  if( _.isEmpty( _new_sek.columns ) ) {
-                          var _col_nb = parseInt(_new_sek['sektion-layout'] || 1, 10 );
-                          for( i = 1; i < _col_nb + 1 ; i++ ) {
-                                var _default_column = _.clone( module.defaultColumnModel ),
-                                    _new_col_model = {
-                                          id : module.generateColId( _new_sek.id, i ),
-                                          sektion : _new_sek.id
-                                    };
-                                    _col_model = $.extend( _default_column, _new_col_model );
-
-                                _columns.push( _col_model);
-                          }//for
-                  }//if
-                  _new_sektions[_key].columns = _columns;
-          });//_.each
-
-          module.savedItems =  _new_sektions;
-
-          console.log('sektions ready for instantiation on init',  module.savedItems );
+          console.log('SEKTION MODULE ID', id );
+          console.log('SAVED SEKTION ITEMS', module.savedItems );
 
           //EXTEND THE DEFAULT CONSTRUCTORS FOR MONOMODEL
           module.itemConstructor = api.CZRItem.extend( module.CZRSektionItem || {} );
@@ -74,8 +46,49 @@ $.extend( CZRSektionMths, {
           if ( ! _.has( module ,'dragInstance' ) )
             module.initDragula();
 
-
   },//initialize
+
+
+
+  //overrides the parent to generate the column collection that is used in the sektion item instanciation params
+  getInitialItemModel : function( _sek ) {
+          var module = this,
+              _new_sektions = _.clone( module.savedItems ),
+              _default_sektion = _.clone( module.defaultItemModel ),
+              _def = _.clone( _default_sektion ),
+              _new_sek = $.extend( _def, _sek ),
+              _columns = [];
+
+              if( _.isEmpty( _new_sek.columns ) ) {
+                      console.log('IS EMPTY COLUMNS');
+                      var _col_nb = parseInt(_new_sek['sektion-layout'] || 1, 10 );
+                      for( i = 1; i < _col_nb + 1 ; i++ ) {
+                            var _default_column = _.clone( module.defaultColumnModel ),
+                                _new_col_model = {
+                                      id : module.generateColId( _new_sek.id, i ),
+                                      sektion : _new_sek.id
+                                };
+                                _col_model = $.extend( _default_column, _new_col_model );
+
+                            _columns.push( _col_model);
+                      }//for
+
+                      _new_sek.columns = _columns;
+              }//if
+
+              return _new_sek;
+
+  },
+
+
+  //React to a single item change
+  //cb of module.czr_Item(item.id).callbacks
+  itemReact : function( to, from ) {
+        console.log('in sektion react', to, from );
+        var module = this;
+        //update the collection
+        module.updateItemsCollection( {item : to });
+  },
 
 
   generateColId : function( sekId, index ) {

@@ -111,6 +111,8 @@ $.extend( CZRDynModuleMths, {
           var module = this,
               item = module.czr_preItem('item').get();
 
+          console.log('in add item', module.czr_preItem('item').get() );
+
           if ( _.isEmpty(item) || ! _.isObject(item) ) {
             throw new Error('addItem : an item should be an object and not empty. In : ' + module.id +'. Aborted.' );
           }

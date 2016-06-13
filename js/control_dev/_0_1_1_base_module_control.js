@@ -36,6 +36,8 @@ $.extend( CZRBaseModuleControlMths, {
           //czr_collection stores the module collection
           control.czr_moduleCollection = new api.Value();
           control.czr_moduleCollection.set([]);
+
+
   },
 
 
@@ -50,6 +52,7 @@ $.extend( CZRBaseModuleControlMths, {
                 //=> the question is : what can trigger the api.('ready') event ?
                 if ( ! _.isEmpty( control.czr_moduleCollection.get() ) )
                   return;
+
                 control.populateModuleCollection();
                 //LISTEN TO ELEMENT COLLECTION
                 control.czr_moduleCollection.callbacks.add( function() { return control.collectionReact.apply( control, arguments ); } );
@@ -105,8 +108,8 @@ $.extend( CZRBaseModuleControlMths, {
                 id : module.id,
                 section : module.section,
                 block   : '',
-                type    : module.module_type,
-                items   : module.items,
+                module_type    : module.module_type,
+                items   : _.clone( module.items ),
                 control : control,
                 is_added_by_user : is_added_by_user || false
           } ) );

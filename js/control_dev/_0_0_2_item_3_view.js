@@ -117,7 +117,7 @@ $.extend( CZRItemMths , {
               module = this.item_module;
 
           //slide Toggle and toggle the 'open' class
-          $( '.' + module.control.css_attr.view_content , item.container ).slideToggle( {
+          $( '.' + module.control.css_attr.view_content , item.container ).first().slideToggle( {
               duration : duration || 200,
               done : function() {
                 var _is_expanded = 'closed' != status;

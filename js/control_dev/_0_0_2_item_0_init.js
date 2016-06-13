@@ -48,9 +48,9 @@ $.extend( CZRItemMths , {
 
 
         //if an item is manually added : open it
-        if ( item.is_added_by_user ) {
-          item.setViewVisibility( {}, true );//empty obj because this method can be fired by the dom chain actions, always passing an object. true for added_by_user
-        }
+        // if ( item.is_added_by_user ) {
+        //   item.setViewVisibility( {}, true );//empty obj because this method can be fired by the dom chain actions, always passing an object. true for added_by_user
+        // }
         //item.setViewVisibility( {}, item.is_added_by_user );
 
   },//initialize
@@ -84,7 +84,7 @@ $.extend( CZRItemMths , {
                   }
           ];
 
-          //set intial state
+          //set initial state
           item.czr_View.set('closed');
 
           item.container = item.renderView( item_model );
@@ -97,6 +97,7 @@ $.extend( CZRItemMths , {
 
           //defer actions on item view embedded
           item.embedded.done( function() {
+            console.log('JOIE ?');
                 //always write the title
                 item.writeItemViewTitle();
 
@@ -115,12 +116,13 @@ $.extend( CZRItemMths , {
           });
   },
 
-
+  //cb of item.czr_View.callbacks.add()
   setupViewStateListeners : function( to, from ) {
           var item = this,
               item_model = item.get() || item.initial_item_model,//could not be set yet
               module = this.item_module;
 
+          console.log('item.contentRendered.state()', item.contentRendered.state());
           //render and setup view content if needed
           if ( 'pending' == item.contentRendered.state() ) {
               var $item_content = item.renderViewContent( item_model );

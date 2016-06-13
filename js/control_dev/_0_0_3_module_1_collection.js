@@ -34,13 +34,14 @@ $.extend( CZRModuleMths, {
             throw new Error('CZRModule::instantiateItem() : an item has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
           }
           var module = this;
+
           //Maybe prepare the item, make sure its id is set and unique
           item =  ( _.has( item, 'id') && module._isItemIdPossible( item.id) ) ? item : module._initNewItem( item || {} );
 
           //instanciate the item with the default constructor
           module.czr_Item.add( item.id, new module.itemConstructor( item.id, {
                 id : item.id,
-                initial_item_model : item,
+                initial_item_model : module.getInitialItemModel( item ),
                 defaultItemModel : _.clone( module.defaultItemModel ),
                 item_control : module.control,
                 item_module : module,
@@ -48,12 +49,18 @@ $.extend( CZRModuleMths, {
           } ) );
 
           //push it to the collection
-          module.updateItemsCollection( { item : item } );
+          module.updateItemsCollection( { item : module.getInitialItemModel( item ) } );
 
           //listen to each single item change
           module.czr_Item(item.id).callbacks.add( function() { return module.itemReact.apply(module, arguments ); } );
 
           module.trigger('item_instanciated', item );
+  },
+
+
+  //overridable
+  getInitialItemModel : function( item ) {
+          return item;
   },
 
 

@@ -7,7 +7,7 @@
 //ELEMENT OPTIONS :
   // section : module.section,
   // block   : '',
-  // type    : module.type,
+  // module_type    : module.module_type,
   // items   : module.items,
   // control : control,
   // is_added_by_user : is_added_by_user || false
@@ -25,6 +25,7 @@ $.extend( CZRModuleMths, {
 
           //write the options as properties
           $.extend( module, options || {} );
+
           //extend the module with new template Selectors
           $.extend( module, {
               viewPreAddEl : '',
@@ -117,7 +118,9 @@ $.extend( CZRModuleMths, {
               _current_module = _.findWhere( _current_collection, { id : module.id } ),
               _new_module = _.clone( _current_module );
 
-          _new_module = $.extend(_new_module, { items : to } );
+          _new_module = $.extend( _new_module, { items : to } );
+
+          console.log('IN MODULE REACT', _new_module );
 
           control.updateModulesCollection( {module : _new_module });
 
@@ -129,6 +132,11 @@ $.extend( CZRModuleMths, {
           // if ( ! _.isEmpty(from) || ! _.isUndefined(from) ) {
           //   module._sendModule(to, from);
           // }
+  },
+
+  //@todo : create a smart helper to get either the wp api section or the czr api sektion, depending on the module context
+  getModuleSection : function() {
+          return this.section;
   }
 
 });//$.extend//CZRBaseControlMths
