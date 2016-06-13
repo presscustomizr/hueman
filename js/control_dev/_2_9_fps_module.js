@@ -61,7 +61,6 @@ $.extend( CZRFeaturedPageModuleMths, {
     _fp_post = _fp_post[0];
 
 
-    /* TODO: WITH EVENTS */
     var always_callback =  function( _to_update ) { 
       item.set( $.extend( item_model, _to_update) );
       api.CZRDynModule.prototype.addItem.call( module, obj );
@@ -107,13 +106,13 @@ $.extend( CZRFeaturedPageModuleMths, {
         $.extend( _new_model, { title : _new_title, 'fp-title' : _new_title } );
         item.set( _new_model );
       } else {
-        /* TODO: WITH EVENTS */
+
         var always_callback =  function( _to_update ) { 
           _.each( _to_update, function( value, id ){
               item.czr_Input( id ).set( value );
           });
         };
-
+        //pass the fp-title so it gets updated after the ajax callback
         var request = item.setContentAjaxInfo( _fp_post.id, {'fp-title' : _new_title}, always_callback );
       }
     },
@@ -126,12 +125,13 @@ $.extend( CZRFeaturedPageModuleMths, {
       if ( is_preItemInput )
         return;
       var _new_model  = _.clone( item.get() ),
-          _new_title  = _new_model['fp-title'];
+          _new_title  = "undefined" !== typeof _new_model['fp-title'] ? _new_model['fp-title'] : '';
 
       $.extend( _new_model, { title : _new_title} );
       item.set( _new_model );
     },
   },//CZRFeaturedPagesInputMths
+
   CZRFeaturedPagesItem : {
     setContentAjaxInfo : function( _post_id, _additional_inputs, always_callback ) {
       //called be called from the input and from the item
@@ -143,7 +143,8 @@ $.extend( CZRFeaturedPageModuleMths, {
       //retrieve some ajax info
       $.extend( request, wp.ajax.post( 'get-fp-post', {
           'wp_customize': 'on',
-          'id'          : _post_id
+          'id'          : _post_id,
+          'CZRFPNonce'  : serverControlParams.CZRFPNonce
           //nonce needed USE 1 for everything?
       }) );
 
@@ -162,12 +163,23 @@ $.extend( CZRFeaturedPageModuleMths, {
       });
 
       request.always(function() {
-          console.log( typeof always_callback );
         if ( "function" === typeof always_callback )
           always_callback( _to_update );    
       });
 
       return request;
+    },
+
+    //overrides the default parent method by a custom one
+    //at this stage, the model passed in the obj is up to date
+    writeItemViewTitle : function( model ) {
+      var item = this,
+                module  = item.item_module,
+                _model = model || item.get(),
+                _title = _model.title ? _model.title : serverControlParams.translatedStrings.featuredPageTitle;
+      
+      _title = api.CZR_Helpers.truncate(_title, 25);                
+      $( '.' + module.control.css_attr.view_title , item.container ).html( _title );
     }    
   }
 });

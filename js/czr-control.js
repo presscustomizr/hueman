@@ -1742,7 +1742,24 @@ $.extend( CZRDynModuleMths, {
           return this;
   }
 
-});//$.extend//CZRBaseControlMths//extends api.CZRDynModule
+});//$.extend//CZRBaseControlMths
+var CZRColumnMths = CZRColumnMths || {};
+$.extend( CZRColumnMths , {
+    initialize: function( name, options ) {
+          var column = this;
+          api.Value.prototype.initialize.call( column, null, options );
+          $.extend( column, options || {} );
+
+          column.render();
+    },
+
+    render : function() {
+          var column   = this;
+          $view     = $( wp.template('czr-sektion-column')( {id: column.id}) );
+          $view.appendTo( $('.czr-column-wrapper', column.sektion.container ) );
+          return $view;
+    }
+});//$.extend//extends api.CZRDynModule
 
 var CZRSektionMths = CZRSektionMths || {};
 
@@ -2741,6 +2758,8 @@ $.extend( CZRFeaturedPageModuleMths, {
       return;
 
     _fp_post = _fp_post[0];
+
+
     var always_callback =  function( _to_update ) { 
       item.set( $.extend( item_model, _to_update) );
       api.CZRDynModule.prototype.addItem.call( module, obj );
@@ -2778,12 +2797,12 @@ $.extend( CZRFeaturedPageModuleMths, {
         $.extend( _new_model, { title : _new_title, 'fp-title' : _new_title } );
         item.set( _new_model );
       } else {
+
         var always_callback =  function( _to_update ) { 
           _.each( _to_update, function( value, id ){
               item.czr_Input( id ).set( value );
           });
         };
-
         var request = item.setContentAjaxInfo( _fp_post.id, {'fp-title' : _new_title}, always_callback );
       }
     },
@@ -2796,19 +2815,21 @@ $.extend( CZRFeaturedPageModuleMths, {
       if ( is_preItemInput )
         return;
       var _new_model  = _.clone( item.get() ),
-          _new_title  = _new_model['fp-title'];
+          _new_title  = "undefined" !== typeof _new_model['fp-title'] ? _new_model['fp-title'] : '';
 
       $.extend( _new_model, { title : _new_title} );
       item.set( _new_model );
     },
   },//CZRFeaturedPagesInputMths
+
   CZRFeaturedPagesItem : {
     setContentAjaxInfo : function( _post_id, _additional_inputs, always_callback ) {
       var _to_update         = _additional_inputs || {},
           request            = {};
       $.extend( request, wp.ajax.post( 'get-fp-post', {
           'wp_customize': 'on',
-          'id'          : _post_id
+          'id'          : _post_id,
+          'CZRFPNonce'  : serverControlParams.CZRFPNonce
       }) );
 
       request.done( function( data ){
@@ -2826,15 +2847,24 @@ $.extend( CZRFeaturedPageModuleMths, {
       });
 
       request.always(function() {
-          console.log( typeof always_callback );
         if ( "function" === typeof always_callback )
           always_callback( _to_update );    
       });
 
       return request;
+    },
+    writeItemViewTitle : function( model ) {
+      var item = this,
+                module  = item.item_module,
+                _model = model || item.get(),
+                _title = _model.title ? _model.title : serverControlParams.translatedStrings.featuredPageTitle;
+      
+      _title = api.CZR_Helpers.truncate(_title, 25);                
+      $( '.' + module.control.css_attr.view_title , item.container ).html( _title );
     }    
   }
 });
+
 
 var CZRBaseControlMths = CZRBaseControlMths || {};
 
