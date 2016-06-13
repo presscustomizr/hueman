@@ -738,8 +738,8 @@ $.extend( CZRInputMths , {
         if ( input.renderImageUploaderTemplate() )
           input.contentRendered.resolve();
       });
-    }//Standard reaction, the image has been updated by the user
-    else if ( input.attachment && input.attachment.id === to ) {
+    }//Standard reaction, the image has been updated by the user or init
+    else if ( ! input.attachment.id || input.attachment.id === to ) {
       if ( input.renderImageUploaderTemplate() )
         input.contentRendered.resolve();
     }
@@ -2925,6 +2925,67 @@ $.extend( CZRFeaturedPageModuleMths, {
   }
 });
 
+var CZRSlideModuleMths = CZRSlideModuleMths || {};
+
+$.extend( CZRSlideModuleMths, {
+  initialize: function( id, options ) {
+    var module = this;
+    api.CZRDynModule.prototype.initialize.call( module, id, options );
+    $.extend( module, {
+          viewPreAddEl : 'czr-module-slide-pre-add-view-content',
+          viewTemplateEl : 'czr-module-item-view',
+          viewContentTemplateEl : 'czr-module-slide-view-content',
+    } );
+    module.inputConstructor = api.CZRInput.extend( module.CZRSliderInputMths || {} );
+    module.itemConstructor = api.CZRItem.extend( module.CZRSliderItem || {} );
+    this.defaultItemModel = {
+        id : '',
+        title : '' ,
+        'slide-background' : '',
+        'slide-title'      : '',
+        'slide-subtitle'   : '',
+    };
+    this.itemAddedMessage = serverControlParams.translatedStrings.slideAdded;
+    api.section( module.control.section() ).expanded.bind(function(to) {
+      if ( ! to || ! _.isEmpty( module.get() ) )
+        return;
+      module.ready();
+    });
+  },//initialize
+
+
+  CZRSliderInputMths : {
+    ready : function() {
+      var input = this;
+      input.bind('slide-title:changed', function(){
+        input.updateItemTitle();
+      });
+      api.CZRInput.prototype.ready.call( input);
+    },
+    updateItemTitle : function( _new_val ) {
+      var input = this,
+          item = this.item,
+          is_preItemInput = _.has( input, 'is_preItemInput' ) && input.is_preItemInput;
+
+      var _new_model  = _.clone( item.get() ),
+          _new_title  = _new_model['slide-title'];
+
+      $.extend( _new_model, { title : _new_title} );
+      item.set( _new_model );
+    },
+  },//CZRSlidersInputMths
+  CZRSliderItem : {
+    writeItemViewTitle : function( model ) {
+      var item = this,
+                module  = item.item_module,
+                _model = model || item.get(),
+                _title = _model.title ? _model.title : serverControlParams.translatedStrings.slideTitle;
+      
+      _title = api.CZR_Helpers.truncate(_title, 25);                
+      $( '.' + module.control.css_attr.view_title , item.container ).html( _title );
+    }  
+  }
+});//BASE CONTROL CLASS
 
 var CZRBaseControlMths = CZRBaseControlMths || {};
 
@@ -2962,6 +3023,7 @@ $.extend( CZRModuleControlMths, {
               czr_social_module    : api.CZRSocialModule,
               czr_sektion_module    : api.CZRSektionModule,
               czr_fp_module    : api.CZRFeaturedPageModule,
+              czr_slide_module    : api.CZRSlideModule,
           };
 
           control.czr_Module = new api.Values();
@@ -3357,6 +3419,8 @@ $.extend( CZRBackgroundMths , {
   api.CZRWidgetAreaModule     = api.CZRDynModule.extend( CZRWidgetAreaModuleMths || {} );
   api.CZRSektionModule        = api.CZRDynModule.extend( CZRSektionMths || {} );
   api.CZRFeaturedPageModule   = api.CZRDynModule.extend( CZRFeaturedPageModuleMths || {} );
+
+  api.CZRSlideModule          = api.CZRDynModule.extend( CZRSlideModuleMths || {} );
   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMths || {} );
   api.CZRModulesControl       = api.CZRBaseControl.extend( CZRModuleControlMths || {} );
 

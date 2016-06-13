@@ -30,6 +30,8 @@
   api.CZRSektionModule        = api.CZRDynModule.extend( CZRSektionMths || {} );
   api.CZRFeaturedPageModule   = api.CZRDynModule.extend( CZRFeaturedPageModuleMths || {} );
 
+  api.CZRSlideModule          = api.CZRDynModule.extend( CZRSlideModuleMths || {} );
+
   //CONTROLS
   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMths || {} );
   api.CZRModulesControl       = api.CZRBaseControl.extend( CZRModuleControlMths || {} );
