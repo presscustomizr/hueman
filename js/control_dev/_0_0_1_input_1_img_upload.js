@@ -13,6 +13,8 @@ $.extend( CZRInputMths , {
         if ( ! input.container )
           return this;
 
+      
+
         //set the image if it exists
         if ( _model ) {
           wp.media.attachment( _model ).fetch().done( function() {
@@ -24,7 +26,6 @@ $.extend( CZRInputMths , {
         }else {
           if ( ! input.renderImageUploaderTemplate() )
             return;
-
           input.czrImgUploaderBinding();
         }
   },
@@ -32,18 +33,16 @@ $.extend( CZRInputMths , {
     var input = this;
     //Bind events
     // Shortcut so that we don't have to use _.bind every time we add a callback.
-    _.bindAll( input, 'czrImgUploadRestoreDefault', 'czrImgUploadRemoveFile', 'czrImgUploadOpenFrame', 'czrImgUploadSelect');
+    _.bindAll( input, 'czrImgUploadRemoveFile', 'czrImgUploadOpenFrame', 'czrImgUploadSelect');
 
     // Bind events, with delegation to facilitate re-rendering.
     input.container.on( 'click keydown', '.upload-button', input.czrImgUploadOpenFrame );
     input.container.on( 'click keydown', '.thumbnail-image img', input.czrImgUploadOpenFrame );
     input.container.on( 'click keydown', '.remove-button', input.czrImgUploadRemoveFile );
-    input.container.on( 'click keydown', '.default-button', input.czrImgUploadRestoreDefault );
 
     input.bind( input.id + ':changed', function( to, from ){
-      //retrieve new image if to is different from the saved one
-      //NEED A BETTER WAY!
-      //WE NEED an ATOMIC REFRESH!!!
+      //retrieve new image if 'to' is different from the saved one
+      //NEED A BETTER WAY?
       if ( ( input.attachment && input.attachment.id != to ) && from !== to ) {
         if ( ! to ) {
           input.attachment = {};
@@ -99,24 +98,6 @@ $.extend( CZRInputMths , {
      });
      // When a file is selected, run a callback.
      input.frame.on( 'select', input.czrImgUploadSelect );
-  },
-
-  /**
-  * Reset the setting to the default value.
-  */
-  czrImgUploadRestoreDefault: function( event ) {
-    var input = this;
-
-    if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
-      return;
-    }
-    event.preventDefault();
-    /*Todo*/
-
-    //reset the attachment class field to the default img
-    input.attachment = {};
-    //set the model
-    input.set( {} );
   },
 
   /**
@@ -185,6 +166,7 @@ $.extend( CZRInputMths , {
    };
 
    $_view_el.html( view_template( _template_params) );
+   input.trigger( input.id + ':template_rendered', _template_params );
 
    return true;
   },
