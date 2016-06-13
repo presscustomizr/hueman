@@ -12,19 +12,22 @@ $.extend( CZRInputMths , {
         if ( ! input.container )
           return this;
 
-        this.contentRendered = this.setupContentRendering( _model, {} );
+        this.contentRendered = $.Deferred();
+        this.setupContentRendering( _model, {} );
+
+        //valid just in the init
         this.contentRendered.done( function(){
           input.czrImgUploaderBinding();
         });
   },
-  //@return $.Deferred
+
   setupContentRendering : function( to, from) {
-    var input = this,
-        contentRendered = $.Deferred();
+    var input = this;
+
 
     //retrieve new image if 'to' is different from the saved one
     //NEED A BETTER WAY?
-    if ( ( input.attachment && input.attachment.id != to ) && from !== to ) {
+    if ( ( input.attachment.id != to ) && from !== to ) {
       if ( ! to ) {
         input.attachment = {};
         input.renderImageUploaderTemplate();
@@ -37,8 +40,6 @@ $.extend( CZRInputMths , {
     else if ( input.attachment && input.attachment.id === to ) {
       input.renderImageUploaderTemplate();
     }
-
-    return contentRendered;
   },
 
   czrImgUploaderBinding : function() {
@@ -53,7 +54,8 @@ $.extend( CZRInputMths , {
     input.container.on( 'click keydown', '.remove-button', input.czrImgUploadRemoveFile );
 
     input.bind( input.id + ':changed', function( to, from ){
-      input.contentRendered = input.setupContentRendering(to,from);
+      input.contentRendered = $.Deferred();
+      input.setupContentRendering(to,from);
     });
   },
   /**

@@ -718,15 +718,16 @@ $.extend( CZRInputMths , {
         if ( ! input.container )
           return this;
 
-        this.contentRendered = this.setupContentRendering( _model, {} );
+        this.contentRendered = $.Deferred();
+        this.setupContentRendering( _model, {} );
         this.contentRendered.done( function(){
           input.czrImgUploaderBinding();
         });
   },
+
   setupContentRendering : function( to, from) {
-    var input = this,
-        contentRendered = $.Deferred();
-    if ( ( input.attachment && input.attachment.id != to ) && from !== to ) {
+    var input = this;
+    if ( ( input.attachment.id != to ) && from !== to ) {
       if ( ! to ) {
         input.attachment = {};
         input.renderImageUploaderTemplate();
@@ -739,8 +740,6 @@ $.extend( CZRInputMths , {
     else if ( input.attachment && input.attachment.id === to ) {
       input.renderImageUploaderTemplate();
     }
-
-    return contentRendered;
   },
 
   czrImgUploaderBinding : function() {
@@ -751,7 +750,8 @@ $.extend( CZRInputMths , {
     input.container.on( 'click keydown', '.remove-button', input.czrImgUploadRemoveFile );
 
     input.bind( input.id + ':changed', function( to, from ){
-      input.contentRendered = input.setupContentRendering(to,from);
+      input.contentRendered = $.Deferred();
+      input.setupContentRendering(to,from);
     });
   },
   czrImgUploadOpenFrame: function( event ) {
