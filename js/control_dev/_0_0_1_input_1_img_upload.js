@@ -7,28 +7,40 @@ $.extend( CZRInputMths , {
 
         //an instance field where we'll store the current attachment
         input.attachment   = {};
-        input.defaultImage = {};
 
         //do we have an html template and a input container?
         if ( ! input.container )
           return this;
 
-      
-
-        //set the image if it exists
-        if ( _model ) {
-          wp.media.attachment( _model ).fetch().done( function() {
-            input.attachment = this.attributes;
-            if ( ! input.renderImageUploaderTemplate() )
-              return;
-            input.czrImgUploaderBinding();
-          });
-        }else {
-          if ( ! input.renderImageUploaderTemplate() )
-            return;
+        this.contentRendered = this.setupContentRendering( _model, {} );
+        this.contentRendered.done( function(){
           input.czrImgUploaderBinding();
-        }
+        });
   },
+  //@return $.Deferred
+  setupContentRendering : function( to, from) {
+    var input = this,
+        contentRendered = $.Deferred();
+
+    //retrieve new image if 'to' is different from the saved one
+    //NEED A BETTER WAY?
+    if ( ( input.attachment && input.attachment.id != to ) && from !== to ) {
+      if ( ! to ) {
+        input.attachment = {};
+        input.renderImageUploaderTemplate();
+      }
+      wp.media.attachment( to ).fetch().done( function() {
+        input.attachment       = this.attributes;
+        input.renderImageUploaderTemplate();
+      });
+    }//Standard reaction, the image has been updated by the user
+    else if ( input.attachment && input.attachment.id === to ) {
+      input.renderImageUploaderTemplate();
+    }
+
+    return contentRendered;
+  },
+
   czrImgUploaderBinding : function() {
     var input = this;
     //Bind events
@@ -41,21 +53,7 @@ $.extend( CZRInputMths , {
     input.container.on( 'click keydown', '.remove-button', input.czrImgUploadRemoveFile );
 
     input.bind( input.id + ':changed', function( to, from ){
-      //retrieve new image if 'to' is different from the saved one
-      //NEED A BETTER WAY?
-      if ( ( input.attachment && input.attachment.id != to ) && from !== to ) {
-        if ( ! to ) {
-          input.attachment = {};
-          input.renderImageUploaderTemplate();
-        }
-        wp.media.attachment( to ).fetch().done( function() {
-          input.attachment = this.attributes;
-          input.renderImageUploaderTemplate();
-        });
-      }//Standard reaction, the image has been updated by the user
-      else if ( input.attachment && input.attachment.id === to ) {
-        input.renderImageUploaderTemplate();
-      }
+      input.contentRendered = input.setupContentRendering(to,from);
     });
   },
   /**
@@ -141,34 +139,36 @@ $.extend( CZRInputMths , {
   /// HELPERS
   //////////////////////////////////////////////////
   renderImageUploaderTemplate: function() {
-   var input  = this;
+    var input  = this;
 
     //do we have view template script?
-   if ( 0 === $( '#tmpl-czr-input-img-uploader-view-content' ).length )
+    if ( 0 === $( '#tmpl-czr-input-img-uploader-view-content' ).length )
+      return;
+
+    var view_template = wp.template('czr-input-img-uploader-view-content');
+
+    //  //do we have an html template and a module container?
+    if ( ! view_template  || ! input.container )
      return;
 
-   var view_template = wp.template('czr-input-img-uploader-view-content');
+    var $_view_el    = input.container.find('.' + input.module.control.css_attr.img_upload_container );
 
-   //  //do we have an html template and a module container?
-   if ( ! view_template  || ! input.container )
-    return;
+    if ( ! $_view_el.length )
+      return;
 
-   var $_view_el    = input.container.find('.' + input.module.control.css_attr.img_upload_container );
-
-   if ( ! $_view_el.length )
-     return;
-
-   var _template_params = {
+    var _template_params = {
       button_labels : input.getUploaderLabels(),
       settings      : input.id,
       attachment    : input.attachment,
       canUpload     : true
-   };
+    };
 
-   $_view_el.html( view_template( _template_params) );
-   input.trigger( input.id + ':template_rendered', _template_params );
+    $_view_el.html( view_template( _template_params) );
 
-   return true;
+    input.contentRendered.resolve();
+    input.trigger( input.id + ':content_rendered' );
+
+    return true;
   },
 
   getUploaderLabels : function() {

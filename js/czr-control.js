@@ -715,22 +715,34 @@ $.extend( CZRInputMths , {
         var input        = this,
             _model       = input.get();
         input.attachment   = {};
-        input.defaultImage = {};
         if ( ! input.container )
           return this;
-        if ( _model ) {
-          wp.media.attachment( _model ).fetch().done( function() {
-            input.attachment = this.attributes;
-            if ( ! input.renderImageUploaderTemplate() )
-              return;
-            input.czrImgUploaderBinding();
-          });
-        }else {
-          if ( ! input.renderImageUploaderTemplate() )
-            return;
+
+        this.contentRendered = this.setupContentRendering( _model, {} );
+        this.contentRendered.done( function(){
           input.czrImgUploaderBinding();
-        }
+        });
   },
+  setupContentRendering : function( to, from) {
+    var input = this,
+        contentRendered = $.Deferred();
+    if ( ( input.attachment && input.attachment.id != to ) && from !== to ) {
+      if ( ! to ) {
+        input.attachment = {};
+        input.renderImageUploaderTemplate();
+      }
+      wp.media.attachment( to ).fetch().done( function() {
+        input.attachment       = this.attributes;
+        input.renderImageUploaderTemplate();
+      });
+    }//Standard reaction, the image has been updated by the user
+    else if ( input.attachment && input.attachment.id === to ) {
+      input.renderImageUploaderTemplate();
+    }
+
+    return contentRendered;
+  },
+
   czrImgUploaderBinding : function() {
     var input = this;
     _.bindAll( input, 'czrImgUploadRemoveFile', 'czrImgUploadOpenFrame', 'czrImgUploadSelect');
@@ -739,19 +751,7 @@ $.extend( CZRInputMths , {
     input.container.on( 'click keydown', '.remove-button', input.czrImgUploadRemoveFile );
 
     input.bind( input.id + ':changed', function( to, from ){
-      if ( ( input.attachment && input.attachment.id != to ) && from !== to ) {
-        if ( ! to ) {
-          input.attachment = {};
-          input.renderImageUploaderTemplate();
-        }
-        wp.media.attachment( to ).fetch().done( function() {
-          input.attachment = this.attributes;
-          input.renderImageUploaderTemplate();
-        });
-      }//Standard reaction, the image has been updated by the user
-      else if ( input.attachment && input.attachment.id === to ) {
-        input.renderImageUploaderTemplate();
-      }
+      input.contentRendered = input.setupContentRendering(to,from);
     });
   },
   czrImgUploadOpenFrame: function( event ) {
@@ -806,30 +806,32 @@ $.extend( CZRInputMths , {
     input.set(attachment.id);
   },
   renderImageUploaderTemplate: function() {
-   var input  = this;
-   if ( 0 === $( '#tmpl-czr-input-img-uploader-view-content' ).length )
+    var input  = this;
+    if ( 0 === $( '#tmpl-czr-input-img-uploader-view-content' ).length )
+      return;
+
+    var view_template = wp.template('czr-input-img-uploader-view-content');
+    if ( ! view_template  || ! input.container )
      return;
 
-   var view_template = wp.template('czr-input-img-uploader-view-content');
-   if ( ! view_template  || ! input.container )
-    return;
+    var $_view_el    = input.container.find('.' + input.module.control.css_attr.img_upload_container );
 
-   var $_view_el    = input.container.find('.' + input.module.control.css_attr.img_upload_container );
+    if ( ! $_view_el.length )
+      return;
 
-   if ( ! $_view_el.length )
-     return;
-
-   var _template_params = {
+    var _template_params = {
       button_labels : input.getUploaderLabels(),
       settings      : input.id,
       attachment    : input.attachment,
       canUpload     : true
-   };
+    };
 
-   $_view_el.html( view_template( _template_params) );
-   input.trigger( input.id + ':template_rendered', _template_params );
+    $_view_el.html( view_template( _template_params) );
 
-   return true;
+    input.contentRendered.resolve();
+    input.trigger( input.id + ':content_rendered' );
+
+    return true;
   },
 
   getUploaderLabels : function() {
@@ -2772,7 +2774,7 @@ $.extend( CZRFeaturedPageModuleMths, {
     },
     setupImageUploader:  function(){
       var input = this;
-      input.bind( 'fp-image:template_rendered', function(){
+      input.bind( 'fp-image:content_rendered', function(){
         input.addResetDefaultButton();
       });
       input.container.on('click keydown', '.default-fpimage-button', function(){
@@ -2848,7 +2850,7 @@ $.extend( CZRFeaturedPageModuleMths, {
             input = item.czr_Input('fp-image');
 
         if ( 0 !== thumbnail.length ) {
-          $('.fpimage-reset-messages .success', input.container ).show('fast').delay(2000).fadeOut();
+          $('.fpimage-reset-messages .success', input.container ).show('fast').fadeOut();
           input.set( thumbnail );
         }else {
           $('.fpimage-reset-messages .warning', input.container ).show('fast').delay(2000).fadeOut();

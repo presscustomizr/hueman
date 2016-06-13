@@ -91,7 +91,7 @@ $.extend( CZRFeaturedPageModuleMths, {
     setupImageUploader:  function(){
       var input = this;
       //temporary
-      input.bind( 'fp-image:template_rendered', function(){
+      input.bind( 'fp-image:content_rendered', function(){
         input.addResetDefaultButton();
       });
 
@@ -179,7 +179,7 @@ $.extend( CZRFeaturedPageModuleMths, {
             input = item.czr_Input('fp-image');
 
         if ( 0 !== thumbnail.length ) {
-          $('.fpimage-reset-messages .success', input.container ).show('fast').delay(2000).fadeOut();
+          $('.fpimage-reset-messages .success', input.container ).show('fast').fadeOut();
           input.set( thumbnail );
         }else {
           $('.fpimage-reset-messages .warning', input.container ).show('fast').delay(2000).fadeOut();
