@@ -17,14 +17,14 @@
   //ITEMS => used as constructor when creating the collection of models
   api.CZRItem                  = api.Value.extend( CZRItemMths || {} );
 
-  //ELEMENTS => used as constructor when creating the collection of modules
+  //MODULES => used as constructor when creating the collection of modules
   api.CZRModule               = api.Value.extend( CZRModuleMths || {} );
   api.CZRDynModule            = api.CZRModule.extend( CZRDynModuleMths || {} );
 
   //COLUMNS => used as constructor
   api.CZRColumn                = api.Value.extend( CZRColumnMths || {} );
 
-  //ELEMENT COLLECTION
+  //MODULE COLLECTION
   api.CZRSocialModule         = api.CZRDynModule.extend( CZRSocialModuleMths || {} );
   api.CZRWidgetAreaModule     = api.CZRDynModule.extend( CZRWidgetAreaModuleMths || {} );
   api.CZRSektionModule        = api.CZRDynModule.extend( CZRSektionMths || {} );
