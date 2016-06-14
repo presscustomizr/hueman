@@ -132,7 +132,7 @@ $.extend( CZRInputMths , {
     updateInput : function( obj ) {
             //get the changed property and val
             //=> all html input have data-type attribute corresponding to the ones stored in the model
-            var input           = this,
+            var input             = this,
                 $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
                 _new_val          = $( $_changed_input, obj.dom_el ).val();
 

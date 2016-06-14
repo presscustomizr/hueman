@@ -54,7 +54,7 @@ $.extend( CZRModuleMths, {
           //listen to each single item change
           module.czr_Item(item.id).callbacks.add( function() { return module.itemReact.apply(module, arguments ); } );
 
-          module.trigger('item_instanciated', item );
+          module.trigger('item_instanciated', { item: item, is_added_by_user : is_added_by_user || false } );
   },
 
 

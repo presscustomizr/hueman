@@ -67,6 +67,7 @@ $.extend( CZRDynModuleMths, {
 
           //PRE ADD MODEL SETUP
           module.czr_preItem('item').set( module.getDefaultModel() );
+          module.czr_preItem('item').set( module.getDefaultModel() );
 
           //Add view rendered listeners
           module.czr_preItem('view_content').callbacks.add(function( to, from ) {
