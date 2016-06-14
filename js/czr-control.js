@@ -714,141 +714,140 @@ $.extend( CZRInputMths , {
 var CZRInputMths = CZRInputMths || {};
 $.extend( CZRInputMths , {
     setupImageUploader : function() {
+          var input        = this,
+              _model       = input.get();
+          input.attachment   = {};
+          if ( ! input.container )
+            return this;
 
-        var input        = this,
-            _model       = input.get();
-        input.attachment   = {};
-        if ( ! input.container )
-          return this;
-
-        this.contentRendered = $.Deferred();
-        this.setupContentRendering( _model, {} );
-        this.contentRendered.done( function(){
-          input.czrImgUploaderBinding();
-        });
+          this.contentRendered = $.Deferred();
+          this.setupContentRendering( _model, {} );
+          this.contentRendered.done( function(){
+            input.czrImgUploaderBinding();
+          });
   },
 
   setupContentRendering : function( to, from) {
-    var input = this;
-    if ( ( input.attachment.id != to ) && from !== to ) {
-      if ( ! to ) {
-        input.attachment = {};
-        input.renderImageUploaderTemplate();
-      }
-      wp.media.attachment( to ).fetch().done( function() {
-        input.attachment       = this.attributes;
-        input.renderImageUploaderTemplate();
-      });
-    }//Standard reaction, the image has been updated by the user
-    else if ( input.attachment && input.attachment.id === to ) {
-      input.renderImageUploaderTemplate();
-    }
+        var input = this;
+        if ( ( input.attachment.id != to ) && from !== to ) {
+              if ( ! to ) {
+                input.attachment = {};
+                input.renderImageUploaderTemplate();
+              }
+              wp.media.attachment( to ).fetch().done( function() {
+                input.attachment       = this.attributes;
+                input.renderImageUploaderTemplate();
+              });
+        }//Standard reaction, the image has been updated by the user
+        else if ( input.attachment && input.attachment.id === to ) {
+              input.renderImageUploaderTemplate();
+        }
   },
 
   czrImgUploaderBinding : function() {
-    var input = this;
-    _.bindAll( input, 'czrImgUploadRemoveFile', 'czrImgUploadOpenFrame', 'czrImgUploadSelect');
-    input.container.on( 'click keydown', '.upload-button', input.czrImgUploadOpenFrame );
-    input.container.on( 'click keydown', '.thumbnail-image img', input.czrImgUploadOpenFrame );
-    input.container.on( 'click keydown', '.remove-button', input.czrImgUploadRemoveFile );
+        var input = this;
+        _.bindAll( input, 'czrImgUploadRemoveFile', 'czrImgUploadOpenFrame', 'czrImgUploadSelect');
+        input.container.on( 'click keydown', '.upload-button', input.czrImgUploadOpenFrame );
+        input.container.on( 'click keydown', '.thumbnail-image img', input.czrImgUploadOpenFrame );
+        input.container.on( 'click keydown', '.remove-button', input.czrImgUploadRemoveFile );
 
-    input.bind( input.id + ':changed', function( to, from ){
-      input.contentRendered = $.Deferred();
-      input.setupContentRendering(to,from);
-    });
+        input.bind( input.id + ':changed', function( to, from ){
+              input.contentRendered = $.Deferred();
+              input.setupContentRendering(to,from);
+        });
   },
   czrImgUploadOpenFrame: function( event ) {
-    if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
-      return;
-    }
+        if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
+          return;
+        }
 
-    event.preventDefault();
+        event.preventDefault();
 
-    if ( ! this.frame ) {
-      this.czrImgUploadInitFrame();
-    }
+        if ( ! this.frame ) {
+          this.czrImgUploadInitFrame();
+        }
 
-    this.frame.open();
+        this.frame.open();
   },
   czrImgUploadInitFrame: function() {
-    var input = this;
+        var input = this;
 
-    var button_labels = this.getUploaderLabels();
+        var button_labels = this.getUploaderLabels();
 
-     input.frame = wp.media({
-       button: {
-           text: button_labels.frame_button
-       },
-       states: [
-           new wp.media.controller.Library({
-             title:     button_labels.frame_title,
-             library:   wp.media.query({ type: 'image' }),
-             multiple:  false,
-             date:      false
-           })
-       ]
-     });
-     input.frame.on( 'select', input.czrImgUploadSelect );
+         input.frame = wp.media({
+               button: {
+                   text: button_labels.frame_button
+               },
+               states: [
+                   new wp.media.controller.Library({
+                     title:     button_labels.frame_title,
+                     library:   wp.media.query({ type: 'image' }),
+                     multiple:  false,
+                     date:      false
+                   })
+               ]
+         });
+         input.frame.on( 'select', input.czrImgUploadSelect );
   },
   czrImgUploadRemoveFile: function( event ) {
-    var input = this;
+        var input = this;
 
-    if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
-      return;
-    }
-    event.preventDefault();
-    input.attachment = {};
-    input.set('');
+        if ( api.utils.isKeydownButNotEnterEvent( event ) ) {
+          return;
+        }
+        event.preventDefault();
+        input.attachment = {};
+        input.set('');
   },
   czrImgUploadSelect: function() {
-    var node,
-        input = this,
-        attachment   = input.frame.state().get( 'selection' ).first().toJSON(),  // Get the attachment from the modal frame.
-        mejsSettings = window._wpmejsSettings || {};
-    input.attachment = attachment;
-    input.set(attachment.id);
+        var node,
+            input = this,
+            attachment   = input.frame.state().get( 'selection' ).first().toJSON(),  // Get the attachment from the modal frame.
+            mejsSettings = window._wpmejsSettings || {};
+        input.attachment = attachment;
+        input.set(attachment.id);
   },
   renderImageUploaderTemplate: function() {
-    var input  = this;
-    if ( 0 === $( '#tmpl-czr-input-img-uploader-view-content' ).length )
-      return;
+        var input  = this;
+        if ( 0 === $( '#tmpl-czr-input-img-uploader-view-content' ).length )
+          return;
 
-    var view_template = wp.template('czr-input-img-uploader-view-content');
-    if ( ! view_template  || ! input.container )
-     return;
+        var view_template = wp.template('czr-input-img-uploader-view-content');
+        if ( ! view_template  || ! input.container )
+         return;
 
-    var $_view_el    = input.container.find('.' + input.module.control.css_attr.img_upload_container );
+        var $_view_el    = input.container.find('.' + input.module.control.css_attr.img_upload_container );
 
-    if ( ! $_view_el.length )
-      return;
+        if ( ! $_view_el.length )
+          return;
 
-    var _template_params = {
-      button_labels : input.getUploaderLabels(),
-      settings      : input.id,
-      attachment    : input.attachment,
-      canUpload     : true
-    };
+        var _template_params = {
+          button_labels : input.getUploaderLabels(),
+          settings      : input.id,
+          attachment    : input.attachment,
+          canUpload     : true
+        };
 
-    $_view_el.html( view_template( _template_params) );
+        $_view_el.html( view_template( _template_params) );
 
-    input.contentRendered.resolve();
-    input.trigger( input.id + ':content_rendered' );
+        input.contentRendered.resolve();
+        input.trigger( input.id + ':content_rendered' );
 
-    return true;
+        return true;
   },
 
   getUploaderLabels : function() {
-    var _ts = serverControlParams.translatedStrings;
+        var _ts = serverControlParams.translatedStrings;
 
-    return { 
-      'select'      : _ts.select_image,
-      'change'      : _ts.change_image,
-      'remove'      : _ts.remove_image,
-      'default'     : _ts.default_image,
-      'placeholder' : _ts.placeholder_image,
-      'frame_title' : _ts.frame_title_image,
-      'frame_button': _ts.frame_button_image
-    };
+        return {
+            'select'      : _ts.select_image,
+            'change'      : _ts.change_image,
+            'remove'      : _ts.remove_image,
+            'default'     : _ts.default_image,
+            'placeholder' : _ts.placeholder_image,
+            'frame_title' : _ts.frame_title_image,
+            'frame_button': _ts.frame_button_image
+        };
   }
 });//$.extendvar CZRInputMths = CZRInputMths || {};
 $.extend( CZRInputMths , {
@@ -876,120 +875,119 @@ $.extend( CZRInputMths , {
 var CZRInputMths = CZRInputMths || {};
 $.extend( CZRInputMths , {
   setupContentPicker: function() {
-    var input  = this,
-    _event_map = [];
-    input.object = ['post']; //this.control.params.object_types  - array('page', 'post')
-    input.type   = 'post_type'; //this.control.params.type  - post_type
-    input.container.find('.czr-input').append('<select data-select-type="content-picker-select" class="js-example-basic-simple"></select>');
-    _event_map = [
-        {
-          trigger   : 'change',
-          selector  : 'select[data-select-type]',
-          name      : 'set_input_value',
-          actions   : 'updateContentPickerModel'
-        }
-    ];
+          var input  = this,
+          _event_map = [];
+          input.object = ['post']; //this.control.params.object_types  - array('page', 'post')
+          input.type   = 'post_type'; //this.control.params.type  - post_type
+          input.container.find('.czr-input').append('<select data-select-type="content-picker-select" class="js-example-basic-simple"></select>');
+          _event_map = [
+              {
+                trigger   : 'change',
+                selector  : 'select[data-select-type]',
+                name      : 'set_input_value',
+                actions   : 'updateContentPickerModel'
+              }
+          ];
 
-    input.setupDOMListeners( _event_map , { dom_el : input.container }, input );    
-    input.setupContentSelecter();
+          input.setupDOMListeners( _event_map , { dom_el : input.container }, input );
+          input.setupContentSelecter();
   },
 
   setupContentSelecter : function() {
-    var input = this;
+          var input = this;
 
-    input.container.find('select').select2({
-      placeholder: {
-        id: '-1', // the value of the option
-        title: 'Select'
-      },
-      data : input.setupSelectedContents(),
-      ajax: {
-        url: serverControlParams.AjaxUrl,
-        type: 'POST',
-        dataType: 'json',
-        delay: 250,
-        debug: true,
-        data: function ( params ) {
-          var page = params.page ? params.page - 1 : 0;
-          page = params.term ? params.page : page;
-          return {
-            action: params.term ? "search-available-content-items-customizer" : "load-available-content-items-customizer",
-            search: params.term, 
-            wp_customize: 'on',
-            page: page,
-            type: input.type,
-            object: input.object,
-            CZRCpNonce: serverControlParams.CZRCpNonce
-          };
-        },
-        processResults: function (data, params) {
-          if ( ! data.success )
-            return { results: [] };
+          input.container.find('select').select2({
+            placeholder: {
+              id: '-1', // the value of the option
+              title: 'Select'
+            },
+            data : input.setupSelectedContents(),
+            ajax: {
+                  url: serverControlParams.AjaxUrl,
+                  type: 'POST',
+                  dataType: 'json',
+                  delay: 250,
+                  debug: true,
+                  data: function ( params ) {
+                        var page = params.page ? params.page - 1 : 0;
+                        page = params.term ? params.page : page;
+                        return {
+                              action: params.term ? "search-available-content-items-customizer" : "load-available-content-items-customizer",
+                              search: params.term,
+                              wp_customize: 'on',
+                              page: page,
+                              type: input.type,
+                              object: input.object,
+                              CZRCpNonce: serverControlParams.CZRCpNonce
+                        };
+              },
+              processResults: function (data, params) {
+                    if ( ! data.success )
+                      return { results: [] };
 
-          var items   = data.data.items,
-              _results = [];
+                    var items   = data.data.items,
+                        _results = [];
 
-          _.each( items, function( item ) {
-            _results.push({
-              id          : item.id,
-              title       : item.title,
-              type_label  : item.type_label,
-              object_type : item.object
-            });
-          });
-          return {
-            results: _results,
-            pagination: { more: data.data.items.length == 10 }
-          };
-        },  
-      },
-      templateSelection: input.czrFormatContentSelected,
-      templateResult: input.czrFormatContentSelected,
-      escapeMarkup: function (markup) { return markup; },
-   });
+                    _.each( items, function( item ) {
+                      _results.push({
+                        id          : item.id,
+                        title       : item.title,
+                        type_label  : item.type_label,
+                        object_type : item.object
+                      });
+                    });
+                    return {
+                      results: _results,
+                      pagination: { more: data.data.items.length == 10 }
+                    };
+              },
+            },
+            templateSelection: input.czrFormatContentSelected,
+            templateResult: input.czrFormatContentSelected,
+            escapeMarkup: function (markup) { return markup; },
+         });
   },
 
 
   czrFormatContentSelected: function (item) {
-      if ( item.loading ) return item.text;
-      var markup = "<div class='content-picker-item clearfix'>" +
-        "<div class='content-item-bar'>" +
-          "<span class='item-title'>" + item.title + "</span>";
+          if ( item.loading ) return item.text;
+          var markup = "<div class='content-picker-item clearfix'>" +
+            "<div class='content-item-bar'>" +
+              "<span class='item-title'>" + item.title + "</span>";
 
-      if ( item.type_label ) {
-        markup += "<span class='item-type'>" + item.type_label + "</span>";
-      }
+          if ( item.type_label ) {
+            markup += "<span class='item-type'>" + item.type_label + "</span>";
+          }
 
-      markup += "</div></div>";
+          markup += "</div></div>";
 
-      return markup;
+          return markup;
   },
 
   setupSelectedContents : function() {
-    var input = this,
-       _model = input.get();
-       
-    return _model;
+        var input = this,
+           _model = input.get();
+
+        return _model;
   },
-   
+
   updateContentPickerModel: function( obj ){
-    var input = this,
-        $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
-        _new_val          = $( $_changed_input, obj.dom_el ).select2('data');
-    if ( _new_val.length ) {
-      _new_val = _.map( _new_val, function( _item ){ 
-        return {
-          'id'          :  _item.id,
-          'type_label'  :  _item.type_label,
-          'title'       :  _item.title,
-          'object_type' :  _item.object_type
-        };
-      });
-    }
+        var input = this,
+            $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
+            _new_val          = $( $_changed_input, obj.dom_el ).select2('data');
+        if ( _new_val.length ) {
+          _new_val = _.map( _new_val, function( _item ){
+            return {
+              'id'          :  _item.id,
+              'type_label'  :  _item.type_label,
+              'title'       :  _item.title,
+              'object_type' :  _item.object_type
+            };
+          });
+        }
 
-    input.set(_new_val);
-    return;
-
+        input.set(_new_val);
+        return;
   }
 });//$.extend
 var CZRItemMths = CZRItemMths || {};
@@ -2874,213 +2872,224 @@ var CZRFeaturedPageModuleMths = CZRFeaturedPageModuleMths || {};
 
 $.extend( CZRFeaturedPageModuleMths, {
   initialize: function( id, options ) {
-    var module = this;
-    api.CZRDynModule.prototype.initialize.call( module, id, options );
-    $.extend( module, {
-          viewPreAddEl : 'czr-module-fp-pre-add-view-content',
-          viewTemplateEl : 'czr-module-item-view',
-          viewContentTemplateEl : 'czr-module-fp-view-content',
-    } );
-    module.inputConstructor = api.CZRInput.extend( module.CZRFeaturedPagesInputMths || {} );
-    module.itemConstructor = api.CZRItem.extend( module.CZRFeaturedPagesItem || {} );
-    this.defaultItemModel = {
-        id : '',
-        title : '' ,
-        'fp-post'  : '',
-        'fp-title' : '',
-        'fp-text'  : '',
-        'fp-image' : '',
-    };
-    this.itemAddedMessage = serverControlParams.translatedStrings.featuredPageAdded;
-    api.section( module.control.section() ).expanded.bind(function(to) {
-      if ( ! to || ! _.isEmpty( module.get() ) )
-        return;
-      module.ready();
-    });
+          var module = this;
+          api.CZRDynModule.prototype.initialize.call( module, id, options );
+          $.extend( module, {
+                viewPreAddEl : 'czr-module-fp-pre-add-view-content',
+                viewTemplateEl : 'czr-module-item-view',
+                viewContentTemplateEl : 'czr-module-fp-view-content',
+          } );
+          module.inputConstructor = api.CZRInput.extend( module.CZRFeaturedPagesInputMths || {} );
+          module.itemConstructor = api.CZRItem.extend( module.CZRFeaturedPagesItem || {} );
+          this.defaultItemModel = {
+              id : '',
+              title : '' ,
+              'fp-post'  : '',
+              'fp-title' : '',
+              'fp-text'  : '',
+              'fp-image' : '',
+          };
+          this.itemAddedMessage = serverControlParams.translatedStrings.featuredPageAdded;
+          api.section( module.control.section() ).expanded.bind(function(to) {
+            if ( ! to || ! _.isEmpty( module.get() ) )
+              return;
+            module.ready();
+          });
 
   },//initialize
   addItem : function(obj) {
-    
-    var module     = this,
-        item       = module.czr_preItem('item'),
-        item_model = item.get();
 
-    if ( _.isEmpty(item_model) || ! _.isObject(item_model) ) {
-        throw new Error('addItem : an item should be an object and not empty. In : ' + module.id +'. Aborted.' );
-    }
+          var module     = this,
+              item       = module.czr_preItem('item'),
+              item_model = item.get();
 
-    var _fp_post        = item_model['fp-post'];
-    if ( typeof _fp_post  == "undefined" )
-      return;
+          if ( _.isEmpty(item_model) || ! _.isObject(item_model) ) {
+              throw new Error('addItem : an item should be an object and not empty. In : ' + module.id +'. Aborted.' );
+          }
 
-    _fp_post = _fp_post[0];
+          var _fp_post        = item_model['fp-post'];
+          if ( typeof _fp_post  == "undefined" )
+            return;
 
+          _fp_post = _fp_post[0];
+          var done_callback =  function( _to_update ) {
+                item.set( $.extend( item_model, _to_update) );
+                api.CZRDynModule.prototype.addItem.call( module, obj );
+          };
 
-    var done_callback =  function( _to_update ) { 
-      item.set( $.extend( item_model, _to_update) );
-      api.CZRDynModule.prototype.addItem.call( module, obj );
-    };
+          var request = module.CZRFeaturedPagesItem.setContentAjaxInfo( _fp_post.id, {}, done_callback );
 
-    var request = module.CZRFeaturedPagesItem.setContentAjaxInfo( _fp_post.id, {}, done_callback );
-    
   },
 
+
+
+
+
+
+
   CZRFeaturedPagesInputMths : {
-    ready : function() {
-      var input = this;
-      input.bind( 'fp-post:changed', function(){
-        input.updateItemModel();
-      });
-      input.bind( 'fp-title:changed', function(){
-        input.updateItemTitle();
-      });
+          ready : function() {
+                  var input = this;
+                  input.bind( 'fp-post:changed', function(){
+                    input.updateItemModel();
+                  });
+                  input.bind( 'fp-title:changed', function(){
+                    input.updateItemTitle();
+                  });
 
-      api.CZRInput.prototype.ready.call( input );
-    },
-    setupImageUploader:  function(){
-      var input = this;
-      input.bind( 'fp-image:content_rendered', function(){
-        input.addResetDefaultButton();
-      });
-      input.container.on('click keydown', '.default-fpimage-button', function(){
-        input.setThumbnailAjax();
-      });
+                  api.CZRInput.prototype.ready.call( input );
+          },
+          setupImageUploader:  function(){
+                  var input = this;
+                  input.bind( 'fp-image:content_rendered', function(){
+                    input.addResetDefaultButton();
+                  });
+                  input.container.on('click keydown', '.default-fpimage-button', function(){
+                    input.setThumbnailAjax();
+                  });
 
-      api.CZRInput.prototype.setupImageUploader.call( input );
-    },
-    updateItemModel : function( _new_val ) {
+                  api.CZRInput.prototype.setupImageUploader.call( input );
+          },
+          updateItemModel : function( _new_val ) {
 
-      var input = this,
-          item = this.item,
-          is_preItemInput = _.has( input, 'is_preItemInput' ) && input.is_preItemInput;
-      if ( ! _.has( item.get(), 'fp-post') || _.isEmpty( item.get()['fp-post'] ) )
-        return;
+                  var input = this,
+                      item = this.item,
+                      is_preItemInput = _.has( input, 'is_preItemInput' ) && input.is_preItemInput;
+                  if ( ! _.has( item.get(), 'fp-post') || _.isEmpty( item.get()['fp-post'] ) )
+                    return;
 
-      var _new_model      = _.clone( item.get() ),
-          _fp_post        = _new_model['fp-post'][0],
-          _new_title      = _fp_post.title,
-          inputCollection = is_preItemInput ? input.module.czr_preItemInput : item.czr_Input;
+                  var _new_model      = _.clone( item.get() ),
+                      _fp_post        = _new_model['fp-post'][0],
+                      _new_title      = _fp_post.title,
+                      inputCollection = is_preItemInput ? input.module.czr_preItemInput : item.czr_Input;
 
-      if ( is_preItemInput ) {
-        $.extend( _new_model, { title : _new_title, 'fp-title' : _new_title } );
-        item.set( _new_model );
-      } else {
+                  if ( is_preItemInput ) {
+                        $.extend( _new_model, { title : _new_title, 'fp-title' : _new_title } );
+                        item.set( _new_model );
+                  } else {
 
-        var done_callback =  function( _to_update ) { 
-          _.each( _to_update, function( value, id ){
-              item.czr_Input( id ).set( value );
-          });
-        };
-        var request = item.setContentAjaxInfo( _fp_post.id, {'fp-title' : _new_title}, done_callback );
-      }
-    },
-
-
-    updateItemTitle : function( _new_val ) {
-      var input = this,
-          item = this.item,
-          is_preItemInput = _.has( input, 'is_preItemInput' ) && input.is_preItemInput;
-
-      if ( is_preItemInput )
-        return;
-      var _new_model  = _.clone( item.get() ),
-          _new_title  = "undefined" !== typeof _new_model['fp-title'] ? _new_model['fp-title'] : '';
-
-      $.extend( _new_model, { title : _new_title} );
-      item.set( _new_model );
-    },
+                        var done_callback =  function( _to_update ) {
+                          _.each( _to_update, function( value, id ){
+                              item.czr_Input( id ).set( value );
+                          });
+                        };
+                        var request = item.setContentAjaxInfo( _fp_post.id, {'fp-title' : _new_title}, done_callback );
+                  }
+          },
 
 
-    setThumbnailAjax : function() {
-      var item     = this.item,
-          _fp_post = item.czr_Input('fp-post').get(),
-          _post_id;
+          updateItemTitle : function( _new_val ) {
+                  var input = this,
+                      item = this.item,
+                      is_preItemInput = _.has( input, 'is_preItemInput' ) && input.is_preItemInput;
 
-      if ( typeof _fp_post  == "undefined" )
-        return;
+                  if ( is_preItemInput )
+                    return;
+                  var _new_model  = _.clone( item.get() ),
+                      _new_title  = "undefined" !== typeof _new_model['fp-title'] ? _new_model['fp-title'] : '';
 
-      _fp_post = _fp_post[0];
-      _post_id = _fp_post.id;
-
-      $('.fpimage-reset-messages p').hide();
-      request = wp.ajax.post( 'get-fp-post-tb', {
-          'wp_customize': 'on',
-          'id'          : _post_id,
-          'CZRFPNonce'  : serverControlParams.CZRFPNonce
-      });
+                  $.extend( _new_model, { title : _new_title} );
+                  item.set( _new_model );
+          },
 
 
-      request.done( function( data ){
-        var thumbnail = data,
-            input = item.czr_Input('fp-image');
+          setThumbnailAjax : function() {
+                  var item     = this.item,
+                      _fp_post = item.czr_Input('fp-post').get(),
+                      _post_id;
 
-        if ( 0 !== thumbnail.length ) {
-          $('.fpimage-reset-messages .success', input.container ).show('fast').fadeOut();
-          input.set( thumbnail );
-        }else {
-          $('.fpimage-reset-messages .warning', input.container ).show('fast').delay(2000).fadeOut();
-        }
-      });
+                  if ( typeof _fp_post  == "undefined" )
+                    return;
 
-      request.fail(function( data ) {
-        if ( typeof console !== 'undefined' && console.error ) {
-          console.error( data );
-        }
-      });
-    },
+                  _fp_post = _fp_post[0];
+                  _post_id = _fp_post.id;
 
-    addResetDefaultButton : function( $_template_params ) {
-      var input        = this,
-          item         = input.item,
-          buttonLabel  = serverControlParams.translatedStrings.featuredPageImgReset,
-          successMess  = serverControlParams.translatedStrings.featuredPageResetSucc,
-          errMess      = serverControlParams.translatedStrings.featuredPageResetErr,
-          messages     = '<div class="fpimage-reset-messages" style="clear:both"><p class="success" style="display:none">'+successMess+'</p><p class="warning" style="display:none">'+errMess+'</p></div>';
+                  $('.fpimage-reset-messages p').hide();
+                  request = wp.ajax.post( 'get-fp-post-tb', {
+                          'wp_customize': 'on',
+                          'id'          : _post_id,
+                          'CZRFPNonce'  : serverControlParams.CZRFPNonce
+                  });
 
-      $('.actions', input.container)
-        .append('<button type="button" class="button default-fpimage-button">'+ buttonLabel +'</button>');
-      $('.fpimage-reset-messages', input.container ).detach();
-      $(input.container).append( messages );
-    }
+
+                  request.done( function( data ){
+                          var thumbnail = data,
+                              input = item.czr_Input('fp-image');
+
+                          if ( 0 !== thumbnail.length ) {
+                            $('.fpimage-reset-messages .success', input.container ).show('fast').fadeOut();
+                            input.set( thumbnail );
+                          }else {
+                            $('.fpimage-reset-messages .warning', input.container ).show('fast').delay(2000).fadeOut();
+                          }
+                  });
+
+                  request.fail(function( data ) {
+                          if ( typeof console !== 'undefined' && console.error ) {
+                            console.error( data );
+                          }
+                  });
+          },
+
+          addResetDefaultButton : function( $_template_params ) {
+                  var input        = this,
+                      item         = input.item,
+                      buttonLabel  = serverControlParams.translatedStrings.featuredPageImgReset,
+                      successMess  = serverControlParams.translatedStrings.featuredPageResetSucc,
+                      errMess      = serverControlParams.translatedStrings.featuredPageResetErr,
+                      messages     = '<div class="fpimage-reset-messages" style="clear:both"><p class="success" style="display:none">'+successMess+'</p><p class="warning" style="display:none">'+errMess+'</p></div>';
+
+                  $('.actions', input.container)
+                    .append('<button type="button" class="button default-fpimage-button">'+ buttonLabel +'</button>');
+                  $('.fpimage-reset-messages', input.container ).detach();
+                  $(input.container).append( messages );
+          }
   },//CZRFeaturedPagesInputMths
 
+
+
+
+
+
+
+
   CZRFeaturedPagesItem : {
-    setContentAjaxInfo : function( _post_id, _additional_inputs, done_callback ) {
-      var _to_update         = _additional_inputs || {};
-      request = wp.ajax.post( 'get-fp-post', {
-          'wp_customize': 'on',
-          'id'          : _post_id,
-          'CZRFPNonce'  : serverControlParams.CZRFPNonce
-      });
+          setContentAjaxInfo : function( _post_id, _additional_inputs, done_callback ) {
+                  var _to_update         = _additional_inputs || {};
+                  request = wp.ajax.post( 'get-fp-post', {
+                        'wp_customize': 'on',
+                        'id'          : _post_id,
+                        'CZRFPNonce'  : serverControlParams.CZRFPNonce
+                  });
 
-      request.done( function( data ){
-        var _post_info = data.post_info;
+                  request.done( function( data ){
+                        var _post_info = data.post_info;
 
-        if ( 0 !== _post_info.length ) {
-          $.extend( _to_update, { 'fp-image' : _post_info.thumbnail, 'fp-text' : _post_info.excerpt } );
-          if ( "function" === typeof done_callback )
-            done_callback( _to_update );
+                        if ( 0 !== _post_info.length ) {
+                          $.extend( _to_update, { 'fp-image' : _post_info.thumbnail, 'fp-text' : _post_info.excerpt } );
+                          if ( "function" === typeof done_callback )
+                            done_callback( _to_update );
+                        }
+                  });
+
+                  request.fail(function( data ) {
+                        if ( typeof console !== 'undefined' && console.error ) {
+                          console.error( data );
+                        }
+                  });
+
+                  return request;
+          },
+          writeItemViewTitle : function( model ) {
+                  var item = this,
+                            module  = item.item_module,
+                            _model = model || item.get(),
+                            _title = _model.title ? _model.title : serverControlParams.translatedStrings.featuredPageTitle;
+
+                  _title = api.CZR_Helpers.truncate(_title, 25);
+                  $( '.' + module.control.css_attr.view_title , item.container ).html( _title );
+                }
         }
-      });
-
-      request.fail(function( data ) {
-        if ( typeof console !== 'undefined' && console.error ) {
-          console.error( data );
-        }
-      });
-
-      return request;
-    },
-    writeItemViewTitle : function( model ) {
-      var item = this,
-                module  = item.item_module,
-                _model = model || item.get(),
-                _title = _model.title ? _model.title : serverControlParams.translatedStrings.featuredPageTitle;
-      
-      _title = api.CZR_Helpers.truncate(_title, 25);                
-      $( '.' + module.control.css_attr.view_title , item.container ).html( _title );
-    }    
-  }
 });
 var CZRTextModuleMths = CZRTextModuleMths || {};
 
