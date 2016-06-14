@@ -35,8 +35,8 @@ $.extend( CZRInputMths , {
                 input.attachment       = this.attributes;
                 input.renderImageUploaderTemplate();
               });
-        }//Standard reaction, the image has been updated by the user
-        else if ( input.attachment && input.attachment.id === to ) {
+        }//Standard reaction, the image has been updated by the user or init
+        else if (  ! input.attachment.id || input.attachment.id === to ) {
               input.renderImageUploaderTemplate();
         }
   },

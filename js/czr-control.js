@@ -727,7 +727,6 @@ $.extend( CZRInputMths , {
           });
   },
 
-<<<<<<< HEAD
   setupContentRendering : function( to, from) {
         var input = this;
         if ( ( input.attachment.id != to ) && from !== to ) {
@@ -739,39 +738,10 @@ $.extend( CZRInputMths , {
                 input.attachment       = this.attributes;
                 input.renderImageUploaderTemplate();
               });
-        }//Standard reaction, the image has been updated by the user
-        else if ( input.attachment && input.attachment.id === to ) {
+        }//Standard reaction, the image has been updated by the user or init
+        else if (  ! input.attachment.id || input.attachment.id === to ) {
               input.renderImageUploaderTemplate();
         }
-=======
-  setupContentRendering : function( to, from ) {
-    var input = this;
-    if ( ( input.attachment.id != to ) && from !== to ) {
-      if ( ! to ) {
-        input.attachment = {};
-        if ( input.renderImageUploaderTemplate() )
-          input.contentRendered.resolve();
-      }
-      wp.media.attachment( to ).fetch().done( function() {
-        input.attachment       = this.attributes;
-        if ( input.renderImageUploaderTemplate() )
-          input.contentRendered.resolve();
-      });
-    }//Standard reaction, the image has been updated by the user or init
-    else if ( ! input.attachment.id || input.attachment.id === to ) {
-      if ( input.renderImageUploaderTemplate() )
-        input.contentRendered.resolve();
-    }
-
-    input.contentRendered.done( function(){ input.czrImgUploaderContentRendered(); });
-     
-    return input.contentRendered;
-  },
-  
-  czrImgUploaderContentRendered : function() {
-    var input = this;
-    input.trigger( input.id + ':content_rendered' );
->>>>>>> slider-prototype
   },
 
   czrImgUploaderBinding : function() {
@@ -860,14 +830,10 @@ $.extend( CZRInputMths , {
 
         $_view_el.html( view_template( _template_params) );
 
-<<<<<<< HEAD
         input.contentRendered.resolve();
         input.trigger( input.id + ':content_rendered' );
 
         return true;
-=======
-    return true;
->>>>>>> slider-prototype
   },
 
   getUploaderLabels : function() {
@@ -2962,7 +2928,6 @@ $.extend( CZRFeaturedPageModuleMths, {
 
 
   CZRFeaturedPagesInputMths : {
-<<<<<<< HEAD
           ready : function() {
                   var input = this;
                   input.bind( 'fp-post:changed', function(){
@@ -2986,29 +2951,6 @@ $.extend( CZRFeaturedPageModuleMths, {
                   api.CZRInput.prototype.setupImageUploader.call( input );
           },
           updateItemModel : function( _new_val ) {
-=======
-    ready : function() {
-      var input = this;
-      input.bind( 'fp-post:changed', function(){
-        input.updateItemModel();
-      });
-      input.bind( 'fp-title:changed', function(){
-        input.updateItemTitle();
-      });
-      input.container.on('click keydown', '.default-fpimage-button', function(){
-        input.setThumbnailAjax();
-      });
-      api.CZRInput.prototype.ready.call( input );
-    },
-    
-    czrImgUploaderContentRendered:  function(){
-      var input = this;
-      input.addResetDefaultButton();
-
-      api.CZRInput.prototype.czrImgUploaderContentRendered.call( input );
-    },
-    updateItemModel : function( _new_val ) {
->>>>>>> slider-prototype
 
                   var input = this,
                       item = this.item,
@@ -3246,61 +3188,61 @@ var CZRSlideModuleMths = CZRSlideModuleMths || {};
 
 $.extend( CZRSlideModuleMths, {
   initialize: function( id, options ) {
-    var module = this;
-    api.CZRDynModule.prototype.initialize.call( module, id, options );
-    $.extend( module, {
-          viewPreAddEl : 'czr-module-slide-pre-add-view-content',
-          viewTemplateEl : 'czr-module-item-view',
-          viewContentTemplateEl : 'czr-module-slide-view-content',
-    } );
-    module.inputConstructor = api.CZRInput.extend( module.CZRSliderInputMths || {} );
-    module.itemConstructor = api.CZRItem.extend( module.CZRSliderItem || {} );
-    this.defaultItemModel = {
-        id : '',
-        title : '' ,
-        'slide-background' : '',
-        'slide-title'      : '',
-        'slide-subtitle'   : '',
-    };
-    this.itemAddedMessage = serverControlParams.translatedStrings.slideAdded;
-    api.section( module.control.section() ).expanded.bind(function(to) {
-      if ( ! to || ! _.isEmpty( module.get() ) )
-        return;
-      module.ready();
-    });
+          var module = this;
+          api.CZRDynModule.prototype.initialize.call( module, id, options );
+          $.extend( module, {
+                viewPreAddEl : 'czr-module-slide-pre-add-view-content',
+                viewTemplateEl : 'czr-module-item-view',
+                viewContentTemplateEl : 'czr-module-slide-view-content',
+          } );
+          module.inputConstructor = api.CZRInput.extend( module.CZRSliderInputMths || {} );
+          module.itemConstructor = api.CZRItem.extend( module.CZRSliderItem || {} );
+          this.defaultItemModel = {
+              id : '',
+              title : '',
+              'slide-background' : '',
+              'slide-title'      : '',
+              'slide-subtitle'   : '',
+          };
+          this.itemAddedMessage = serverControlParams.translatedStrings.slideAdded;
+          api.section( module.control.section() ).expanded.bind(function(to) {
+            if ( ! to || ! _.isEmpty( module.get() ) )
+              return;
+            module.ready();
+          });
   },//initialize
 
 
   CZRSliderInputMths : {
-    ready : function() {
-      var input = this;
-      input.bind('slide-title:changed', function(){
-        input.updateItemTitle();
-      });
-      api.CZRInput.prototype.ready.call( input);
-    },
-    updateItemTitle : function( _new_val ) {
-      var input = this,
-          item = this.item,
-          is_preItemInput = _.has( input, 'is_preItemInput' ) && input.is_preItemInput;
+          ready : function() {
+                var input = this;
+                input.bind('slide-title:changed', function(){
+                  input.updateItemTitle();
+                });
+                api.CZRInput.prototype.ready.call( input);
+          },
+          updateItemTitle : function( _new_val ) {
+                var input = this,
+                    item = this.item,
+                    is_preItemInput = _.has( input, 'is_preItemInput' ) && input.is_preItemInput;
 
-      var _new_model  = _.clone( item.get() ),
-          _new_title  = _new_model['slide-title'];
+                var _new_model  = _.clone( item.get() ),
+                    _new_title  = _new_model['slide-title'];
 
-      $.extend( _new_model, { title : _new_title} );
-      item.set( _new_model );
-    },
+                $.extend( _new_model, { title : _new_title} );
+                item.set( _new_model );
+          },
   },//CZRSlidersInputMths
   CZRSliderItem : {
-    writeItemViewTitle : function( model ) {
-      var item = this,
-                module  = item.item_module,
-                _model = model || item.get(),
-                _title = _model.title ? _model.title : serverControlParams.translatedStrings.slideTitle;
-      
-      _title = api.CZR_Helpers.truncate(_title, 25);                
-      $( '.' + module.control.css_attr.view_title , item.container ).html( _title );
-    }  
+          writeItemViewTitle : function( model ) {
+                var item = this,
+                          module  = item.item_module,
+                          _model = model || item.get(),
+                          _title = _model.title ? _model.title : serverControlParams.translatedStrings.slideTitle;
+                
+                _title = api.CZR_Helpers.truncate(_title, 25);                
+                $( '.' + module.control.css_attr.view_title , item.container ).html( _title );
+          }  
   }
 });//BASE CONTROL CLASS
 
@@ -3336,18 +3278,11 @@ $.extend( CZRBaseModuleControlMths, {
                 }
           ];
           control.moduleConstructors = {
-<<<<<<< HEAD
                 czr_widget_areas_module   : api.CZRWidgetAreaModule,
                 czr_social_module    : api.CZRSocialModule,
                 czr_sektion_module    : api.CZRSektionModule,
-                czr_fp_module    : api.CZRFeaturedPageModule
-=======
-              czr_widget_areas_module   : api.CZRWidgetAreaModule,
-              czr_social_module    : api.CZRSocialModule,
-              czr_sektion_module    : api.CZRSektionModule,
-              czr_fp_module    : api.CZRFeaturedPageModule,
-              czr_slide_module    : api.CZRSlideModule,
->>>>>>> slider-prototype
+                czr_fp_module    : api.CZRFeaturedPageModule,
+                czr_slide_module    : api.CZRSlideModule
           };
 
           control.czr_Module = new api.Values();
@@ -3900,12 +3835,9 @@ $.extend( CZRBackgroundMths , {
   api.CZRWidgetAreaModule     = api.CZRDynModule.extend( CZRWidgetAreaModuleMths || {} );
   api.CZRSektionModule        = api.CZRDynModule.extend( CZRSektionMths || {} );
   api.CZRFeaturedPageModule   = api.CZRDynModule.extend( CZRFeaturedPageModuleMths || {} );
-<<<<<<< HEAD
   api.CZRTextModule           = api.CZRModule.extend( CZRTextModuleMths || {} );
-=======
 
   api.CZRSlideModule          = api.CZRDynModule.extend( CZRSlideModuleMths || {} );
->>>>>>> slider-prototype
   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMths || {} );
   api.CZRBaseModuleControl    = api.CZRBaseControl.extend( CZRBaseModuleControlMths || {} );
   api.CZRMultiModulesControl        = api.CZRBaseModuleControl.extend( CZRMultiModuleControlMths || {} );
