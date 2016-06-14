@@ -26,14 +26,17 @@ $.extend( CZRItemMths , {
         if ( ! view_template  || ! module.container )
           return;
 
+        console.log('item.embedded.state()', item.embedded.state() );
+
         //has this item view already been rendered?
         if ( 'resolved' == item.embedded.state() )
           return item.container;
 
         $_view_el = $('<li>', { class : module.control.css_attr.inner_view, 'data-id' : item_model.id,  id : item_model.id } );
 
-        //append the item view to the module view wrapper
-        $( '.' + module.control.css_attr.views_wrapper , module.container).append( $_view_el );
+        //append the item view to the first module view wrapper
+        //!!note : => there could be additional sub view wrapper inside !!
+        $( '.' + module.control.css_attr.views_wrapper , module.container).first().append( $_view_el );
 
         //then, append the item view skeleton
         $( view_template( item_model ) ).appendTo( $_view_el );

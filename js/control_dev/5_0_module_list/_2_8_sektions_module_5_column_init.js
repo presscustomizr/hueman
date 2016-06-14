@@ -20,12 +20,12 @@ $.extend( CZRColumnMths , {
 
           column.embedded = $.Deferred();
 
-           //stores the column collection
+          //stores the column collection
           //set the initial value
           column.czr_columnModuleCollection = new api.Value();
           column.czr_columnModuleCollection.set([]);
 
-          //set the instance value
+          //set the column instance value
           column.set( column.initial_column_model );
 
           console.log( 'column.initial_column_model', column.initial_column_model);
@@ -37,7 +37,6 @@ $.extend( CZRColumnMths , {
                 column.container = column.render();
                 //say it
                 column.embedded.resolve();
-
           });
 
           ////////////////////////////////////////////////////

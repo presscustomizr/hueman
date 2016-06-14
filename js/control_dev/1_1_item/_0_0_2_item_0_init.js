@@ -97,7 +97,6 @@ $.extend( CZRItemMths , {
 
           //defer actions on item view embedded
           item.embedded.done( function() {
-            console.log('JOIE ?');
                 //always write the title
                 item.writeItemViewTitle();
 
@@ -109,10 +108,6 @@ $.extend( CZRItemMths , {
                       { model:item_model, dom_el:item.container },//model + dom scope
                       item //instance where to look for the cb methods
                 );//listeners for the view wrapper
-
-                //say it to the parent
-                //@todo : do we still need that ?
-                module.trigger('view_setup', { model : item_model , dom_el: item.container} );
           });
   },
 
