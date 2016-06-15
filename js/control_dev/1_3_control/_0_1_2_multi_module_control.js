@@ -86,15 +86,21 @@ $.extend( CZRMultiModuleControlMths, {
 
 
 
-
+  //fired when the main sektion module has synchronised its if with the module-collection control
   registerModulesOnInit : function( sektion_module_id ) {
           var control = this;
           _.each( api(control.id).get(), function( _mod, _key ) {
-                  console.log('POPULATE THE SAVED MODULE COLLECTION ON INIT : _mod', _mod, _mod.sektion_id );
+                  console.log('POPULATE THE SAVED MODULE COLLECTION ON INIT :', _mod, _mod.sektion_id );
                   //we need the sektion object
                   //First let's find the sektion module id
-                  var _sektion_control = api.control( api.CZR_Helpers.build_setId( 'sektions') ),
-                      _sektion = _sektion_control.czr_Module( sektion_module_id ).czr_Item( _mod.sektion_id );
+                  var _sektion_control = api.control( api.CZR_Helpers.build_setId( 'sektions') );
+
+                  if ( ! _sektion_control.czr_Module( sektion_module_id ).czr_Item.has( _mod.sektion_id ) ) {
+                    console.log('Warning Module ' + _mod.id + ' has no sektion to be embedded to.');
+                    return;
+                  }
+
+                  var _sektion = _sektion_control.czr_Module( sektion_module_id ).czr_Item( _mod.sektion_id );
 
                   console.log('_sektion_module_id', sektion_module_id );
                   console.log('_sektion', _sektion, _mod.sektion_id, _sektion_control.czr_Module( sektion_module_id ).get() );
@@ -110,14 +116,6 @@ $.extend( CZRMultiModuleControlMths, {
                   //=> the instantiation will take place later, on column instantiation
                   control.updateModulesCollection( {module : _mod } );
           });
-  },
-
-
-
-
-
-  generateModuleId : function( module_type ) {
-          return module_type + '_' + ( this.czr_moduleCollection.get().length + 1 );
   },
 
 
@@ -162,26 +160,18 @@ $.extend( CZRMultiModuleControlMths, {
           //@todo : improve this.
           if ( ! _.isEmpty( module.id ) && control.czr_Module.has( module.id ) ) {
                 throw new Error('The module id already exists in the collection in control : ' + control.id );
-          } else if ( _.isEmpty( module.id ) ) {
-                module.id = control.generateModuleId( 'czr_text_module' );
           }
 
-          var _module_candidate_model = $.extend( module, { control : control }),
-              //normalize it now
-              _default_module_model = _.clone( control.defautAPIModuleModel ),
-              _module_model = $.extend( _default_module_model, _module_candidate_model );
+          console.log('Module Model Raw : ', module );
 
-          console.log('module model before instantiation : ', _module_model );
-
-          //is the module ready for API instanciation ?
-          if ( ! control.isModuleAPIready( _module_model ) )
-            return;
+          var module_api_ready = control.prepareModuleForAPI( module );
+          console.log('Module model ready for instantiation : ', control.prepareModuleForAPI( module_api_ready ) );
 
           //instanciate the module with the default constructor
-          control.czr_Module.add( module.id, new constructor( module.id, _module_model ) );
+          control.czr_Module.add( module.id, new constructor( module.id, control.prepareModuleForAPI( module_api_ready ) ) );
 
           //push it to the collection of the module-collection control
-          control.updateModulesCollection( {module : module } );
+          control.updateModulesCollection( {module : module_api_ready } );
   },
 
 
@@ -195,57 +185,85 @@ $.extend( CZRMultiModuleControlMths, {
   // items : [],
   // is_added_by_user : false
   // to be instantiated in the API, the module model must have all the required properties defined in the defaultAPIModel properly set
-  isModuleAPIready : function( module_candidate ) {
+  prepareModuleForAPI : function( module_candidate ) {
         if ( ! _.isObject( module_candidate ) ) {
-            throw new Error('MultiModule Control::IsModuleAPIready : a module must be an object to be instantiated. Aborting.');
+            throw new Error('MultiModule Control::prepareModuleForAPI : a module must be an object to be instantiated. Aborting.');
         }
-        var control = this;
+
+        var control = this,
+            api_ready_module = {};
+
         _.each( control.defautAPIModuleModel, function( _value, _key ) {
-              if ( ! _.has( module_candidate, _key ) ) {
-                  throw new Error('MultiModule Control::IsModuleAPIready : a module is missing the property : ' + _key + ' . Aborting.');
-              }
               var _candidate_val = module_candidate[_key];
               switch( _key ) {
                     case 'id' :
-                      if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
-                          throw new Error('MultiModule Control::IsModuleAPIready : a module id must a string not empty');
-                      }
+                        if ( _.isEmpty( _candidate_val ) ) {
+                            api_ready_module[_key] = control.generateModuleId( module_candidate.module_type );
+                        } else {
+                            api_ready_module[_key] = _candidate_val;
+                        }
                     break;
                     case 'module_type' :
-                      if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
-                          throw new Error('MultiModule Control::IsModuleAPIready : a module type must a string not empty');
-                      }
+                        if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
+                            throw new Error('MultiModule Control::prepareModuleForAPI : a module type must a string not empty');
+                        }
+                        api_ready_module[_key] = _candidate_val;
                     break;
                     case  'column_id' :
-                      if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
-                          throw new Error('MultiModule Control::IsModuleAPIready : a module column id must a string not empty');
-                      }
+                        if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
+                            throw new Error('MultiModule Control::prepareModuleForAPI : a module column id must a string not empty');
+                        }
+                        api_ready_module[_key] = _candidate_val;
                     break;
                     case  'sektion' :
-                      if ( ! _.isObject( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
-                          throw new Error('MultiModule Control::IsModuleAPIready : a module sektion must be an object not empty');
-                      }
+                        if ( ! _.isObject( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
+                            throw new Error('MultiModule Control::prepareModuleForAPI : a module sektion must be an object not empty');
+                        }
+                        api_ready_module[_key] = _candidate_val;
+                    break;
+                    case  'sektion_id' :
+                        if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
+                            throw new Error('MultiModule Control::prepareModuleForAPI : a module sektion id must be a string not empty');
+                        }
+                        api_ready_module[_key] = _candidate_val;
                     break;
                     case  'control' :
-                      if ( ! _.isObject( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
-                          throw new Error('MultiModule Control::IsModuleAPIready : a module control must be an object not empty');
-                      }
+                        api_ready_module[_key] = control;//this
                     break;
                     case 'items' :
-                      if ( ! _.isArray( _candidate_val )  ) {
-                          throw new Error('MultiModule Control::IsModuleAPIready : a module item list must be an array');
-                      }
+                        if ( ! _.isArray( _candidate_val )  ) {
+                            throw new Error('MultiModule Control::prepareModuleForAPI : a module item list must be an array');
+                        }
+                        api_ready_module[_key] = _candidate_val;
                     break;
                     case 'is_added_by_user' :
-                      if ( ! _.isBoolean( _candidate_val )  ) {
-                          throw new Error('MultiModule Control::IsModuleAPIready : the module param "is_added_by_user" must be a boolean');
-                      }
+                        if ( ! _.isBoolean( _candidate_val )  ) {
+                            throw new Error('MultiModule Control::prepareModuleForAPI : the module param "is_added_by_user" must be a boolean');
+                        }
+                        api_ready_module[_key] = _candidate_val;
                     break;
               }//switch
         });
-        return true;
+        return api_ready_module;
   },
 
+
+  //recursive
+  generateModuleId : function( module_type, key ) {
+          var control = this;
+          key = key || control.czr_moduleCollection.get().length + 1;
+          var id_candidate = module_type + '_' + key;
+
+          //do we have a module collection value ?
+          if ( ! _.has(control, 'czr_moduleCollection') || ! _.isArray( control.czr_moduleCollection.get() ) ) {
+                throw new Error('The module collection does not exist or is not properly set in control : ' + control.id );
+          }
+          //make sure the module is not already instantiated
+          if ( control.czr_Module.has( id_candidate ) )
+            return control.generateModuleId( module_type, key++ );
+
+          return id_candidate;
+  },
 
 
   //@param obj can be { collection : []}, or { module : {} }
@@ -325,6 +343,7 @@ $.extend( CZRMultiModuleControlMths, {
               _filtered_collection = _.clone( collection );
 
           _.each( collection , function( _mod, _key ) {
+                console.log('in filterModuleCollectionBeforeAjax', _mod );
                 _filtered_collection[_key] = control.prepareModuleForDB( _mod );
           });
 

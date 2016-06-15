@@ -10,19 +10,12 @@ $.extend( CZRSektionMths, {
   CZRSektionItem : {
           initialize: function(id, options ) {
                   var sekItem = this;
-
                   api.CZRItem.prototype.initialize.call( sekItem, null, options );
 
-                  //the column values
-                  sekItem.czr_Column = new api.Values();
+                  var _sektion_model = sekItem.get(),
+                      module = options.item_module;
 
-                  var _sektion_model = sekItem.get();
-
-                  //stores the column collection
-                  //set the initial value
-                  sekItem.czr_columnCollection = new api.Value();
-                  sekItem.czr_columnCollection.set([]);
-                  //sekItem.updateColumnCollection( {collection : options.columns } );
+                  console.log( _sektion_model );
 
                   if ( ! _.has(_sektion_model, 'sektion-layout') ) {
                     throw new Error('In Sektion Item initialize, no layout provided for ' + sekItem.id + '. Aborting');
@@ -33,11 +26,16 @@ $.extend( CZRSektionMths, {
                   //instantiate the columns when the sektion item is embedded
                   sekItem.embedded.done(function() {
                         console.log('sektion is embedded');
-                        //react to column collection changes
-                        sekItem.czr_columnCollection.callbacks.add( function() { return sekItem.collectionReact.apply(sekItem, arguments ); } );
 
                         _.each( options.initial_item_model.columns , function( _column ) {
-                              sekItem.instanciateColumn( _column );
+                              //When fetched from DB, the column model looks like :
+                              //{
+                              //  id : '',//string
+                              //  sektion_id : '',//string
+                              //  modules : [],//collection of module id strings
+                              //}
+                              //=> we need to extend it with sektion instance
+                              module.instanciateColumn( $.extend( _column, { sektion : sekItem } ) );
                         });
 
                         //dragulize when embedded
@@ -169,7 +167,7 @@ $.extend( CZRSektionMths, {
                 //     if ( is_collection_sorted )
                 //         control.previewer.refresh();
                 // }
-          },
+          }
   }//Sektion
 
 });

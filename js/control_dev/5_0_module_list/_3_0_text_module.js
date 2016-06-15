@@ -83,8 +83,11 @@ $.extend( CZRTextModuleMths, {
 
 
   _getColumn : function() {
-          var module = this;
-          return module.sektion.czr_Column( module.column_id );
+          var module = this,
+              sektion_control = api.control( api.CZR_Helpers.build_setId( 'sektions') ),
+              main_sektion_module_id = module.control.syncSektionModule.get();
+
+          return sektion_control.czr_Module(main_sektion_module_id).czr_Column( module.column_id );
   },
 
   _getSektion : function() {
