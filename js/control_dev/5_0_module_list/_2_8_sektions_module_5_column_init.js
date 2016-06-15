@@ -4,12 +4,12 @@ var CZRColumnMths = CZRColumnMths || {};
 
 //extends api.Value
 //a column is instanciated with the typical set of options :
-// id : column.id,
-// initial_column_model : column_model,
-// sektion : sekItem, => sektion instance
-// module : sekItem.item_module.id,
-// control : sekItem.item_module.control.id,
-// is_added_by_user : is_added_by_user || false
+// id : '',
+// modules : [],
+// sektion_id : '',
+// module_id : '',
+// control_id : '',
+// is_added_by_user : false
 $.extend( CZRColumnMths , {
     initialize: function( name, options ) {
           var column = this;
@@ -26,9 +26,9 @@ $.extend( CZRColumnMths , {
           column.czr_columnModuleCollection.set([]);
 
           //set the column instance value
-          column.set( column.initial_column_model );
+          column.set( column.modules );
 
-          console.log( 'column.initial_column_model', column.initial_column_model);
+          console.log( 'column.module', column.modules );
           console.log( 'column options', options );
 
           //defer the column rendering when the parent sektion content is rendered
@@ -123,19 +123,29 @@ $.extend( CZRColumnMths , {
     //=> in the future, the module to instantiate will be stored in a pre module Value(), just like the pre Item idea
     //
     //Fired on column instanciation => to populate the saved module collection of this column
+    //the defautAPIModuleModel looks like :
+    //id : '',
+    // module_type : '',
+    // column_id : '',
+    // sektion : {},// => the sektion instance
+    // sektion_id : '',
+    // control : {},// => the control instance
+    // items : [],
+    // is_added_by_user : false
     userAddedModule : function( obj, module_id   ) {
-          var column = this;
-          api.control( api.CZR_Helpers.build_setId( 'module-collection') ).trigger(
-              'user-module-candidate',
-              {
-                  id : '',//will be populated by the module collection class
-                  module_type : 'czr_text_module',
-                  column_id : column.id,
-                  sektion : column.sektion,
-                  sektion_id : column.sektion.id,
-                  items : [],
-                  is_added_by_user : true
-              }
+          var column = this,
+              module_collection_control = api.control( api.CZR_Helpers.build_setId( 'module-collection') ),
+              defautAPIModuleModel = _.clone( module_collection_control.defautAPIModuleModel );
+
+          module_collection_control.trigger(
+                'user-module-candidate',
+                $.extend( defautAPIModuleModel, {
+                      module_type : 'czr_text_module',
+                      column_id : column.id,
+                      sektion : column.sektion,//instance
+                      sektion_id : column.sektion.id,
+                      is_added_by_user : true
+                } )
           );
 
     },
@@ -180,6 +190,7 @@ $.extend( CZRColumnMths , {
             //Inform the column
             column.czr_columnModuleCollection.set(_new_collection);
     },
+
 
     columnModuleCollectionReact : function( to, from ) {
             console.log('COLUM MODULE COLLECTION REACT');
