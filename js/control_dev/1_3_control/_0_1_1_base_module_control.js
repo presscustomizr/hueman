@@ -43,7 +43,7 @@ $.extend( CZRBaseModuleControlMths, {
 
 
   //////////////////////////////////
-  ///READY = CONTROL ELEMENT EMBEDDED ON THE PAGE
+  ///READY = CONTROL DOM ELEMENT EMBEDDED ON THE PAGE
   ///FIRED BEFORE API READY
   //////////////////////////////////
   ready : function() {
@@ -55,7 +55,7 @@ $.extend( CZRBaseModuleControlMths, {
                   return;
 
                 control.populateModuleCollection();
-                //LISTEN TO ELEMENT COLLECTION
+                //LISTEN TO MODULE COLLECTION
                 control.czr_moduleCollection.callbacks.add( function() { return control.collectionReact.apply( control, arguments ); } );
           });
   },

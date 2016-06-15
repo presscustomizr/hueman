@@ -4,7 +4,7 @@
 //Setup the collection of items
 //renders the control view
 //Listen to items collection changes and update the control setting
-//ELEMENT OPTIONS :
+//MODULE OPTIONS :
   // section : module.section,
   // block   : '',
   // module_type    : module.module_type,
@@ -63,7 +63,7 @@ $.extend( CZRModuleMths, {
 
 
   //////////////////////////////////
-  ///READY = CONTROL ELEMENT EMBEDDED ON THE PAGE
+  ///READY = CONTROL DOM ELEMENT EMBEDDED ON THE PAGE
   ///FIRED BEFORE API READY
   //////////////////////////////////
   ready : function() {
