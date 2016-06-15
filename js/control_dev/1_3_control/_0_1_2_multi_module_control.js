@@ -26,6 +26,7 @@ $.extend( CZRMultiModuleControlMths, {
                 module_type : '',
                 column_id : '',
                 sektion : {},// => the sektion instance
+                sektion_id : '',
                 control : {},// => the control instance
                 items : [],
                 is_added_by_user : false
@@ -35,6 +36,9 @@ $.extend( CZRMultiModuleControlMths, {
           $.extend( control.moduleConstructors , {
                   czr_text_module : api.CZRTextModule,
           });
+
+          //store the module ID of the synchronized sektions
+          control.syncSektionModule = new api.Value();
 
           //declares the API collection of module instances
           control.czr_Module = new api.Values();
@@ -50,59 +54,64 @@ $.extend( CZRMultiModuleControlMths, {
 
 
   //////////////////////////////////
-  ///READY = CONTROL ELEMENT EMBEDDED ON THE PAGE
+  ///READY = CONTROL DOM ELEMENT EMBEDDED ON THE PAGE
   ///FIRED BEFORE API READY
   //////////////////////////////////
   ready : function() {
           var control = this;
           api.bind( 'ready', function() {
-                //populate the collection on with the saved modules on init
-                _.each( api(control.id).get(), function( _mod, _key ) {
-                      console.log('_mod', _mod, _mod.sektion_id );
-                      //we need the sektion object
-                      //First let's find the sektion module id
-                      var _sektion_control = api.control( api.CZR_Helpers.build_setId( 'sektions') );
-                          _sektion_module_id = '';
-                      _.each( _sektion_control.czr_moduleCollection.get(), function( _Module, _Key ) {
-                            if ( ! _.isUndefined( _.findWhere( _Module.items, { id : _mod.sektion_id } ) ) )
-                                  _sektion_module_id = _Module.id;
-                      });
 
-                      var _sektion = _sektion_control.czr_Module(_sektion_module_id).czr_Item(_mod.sektion_id);
-                      console.log('_sektion', _sektion );
+                //POPULATE THE SAVED MODULE COLLECTION WHEN THE SYNCHRONIZED SEKTIONS SETTING HAS PROVIDED ITS MODULE ID
+                control.syncSektionModule.bind( function(to, from) {
+                      //the from must be virgin
+                      if ( ! _.isUndefined( from ) )
+                        return;
 
-                      if ( _.isUndefined( _sektion ) ) {
-                        throw new Error('sektion instance missing to instantiate module : ' + _mod.id );
-                      }
-                      //instanciate and add it to the collection
-                      control.instantiateModule( _mod, {} ); //module, constructor
+                      control.registerModulesOnInit( to );
+
+                      console.log('SETUP MODULE COLLECTION LISTENER NOW');
+                      //LISTEN TO ELEMENT COLLECTION
+                      control.czr_moduleCollection.callbacks.add( function() { return control.collectionReact.apply( control, arguments ); } );
                 });
 
-                //LISTEN TO ELEMENT COLLECTION
-                control.czr_moduleCollection.callbacks.add( function() { return control.collectionReact.apply( control, arguments ); } );
 
                 //LISTEN TO MODULE CANDIDATES ADDED BY USER
                 control.bind( 'user-module-candidate', function( _module ) {
                       //instanciate and add it to the collection
                       control.instantiateModule( _module, {} ); //module, constructor
                 });
-
-                //LISTEN TO MODULE CANDIDATES SAVED IN DB
-                //looks like { id : '', sektion : --instance-- }
-                control.bind( 'db-module-candidate', function( _mod ) {
-                      //get the module model from the module collection
-                      var _module = _.findWhere( api(control.id).get() , { id : _mod.id } );
-                      console.log('db-module-candidate', _mod, _module  );
-                      if ( _.isUndefined( _module ) )
-                        return;
-
-                      //amend the module with the provided sektion instance
-                      //add it to the collection
-                      _module.sektion = _mod.sektion;
-                      control.instantiateModule( _module, {} ); //module, constructor
-                });
           });
   },
+
+
+
+
+
+  registerModulesOnInit : function( sektion_module_id ) {
+          var control = this;
+          _.each( api(control.id).get(), function( _mod, _key ) {
+                  console.log('POPULATE THE SAVED MODULE COLLECTION ON INIT : _mod', _mod, _mod.sektion_id );
+                  //we need the sektion object
+                  //First let's find the sektion module id
+                  var _sektion_control = api.control( api.CZR_Helpers.build_setId( 'sektions') ),
+                      _sektion = _sektion_control.czr_Module( sektion_module_id ).czr_Item( _mod.sektion_id );
+
+                  console.log('_sektion_module_id', sektion_module_id );
+                  console.log('_sektion', _sektion, _mod.sektion_id, _sektion_control.czr_Module( sektion_module_id ).get() );
+
+                  if ( _.isUndefined( _sektion ) ) {
+                    throw new Error('sektion instance missing. Impossible to instantiate module : ' + _mod.id );
+                  }
+
+                  //add the sektion instance before update the api collection
+                  $.extend( _mod, {sektion : _sektion} );
+
+                  //push it to the collection of the module-collection control
+                  //=> the instantiation will take place later, on column instantiation
+                  control.updateModulesCollection( {module : _mod } );
+          });
+  },
+
 
 
 
@@ -150,16 +159,16 @@ $.extend( CZRMultiModuleControlMths, {
           //on init, the module collection is populated with module already having an id
           //For now, let's check if the id is empty and is not already part of the collection.
 
-
+          //@todo : improve this.
           if ( ! _.isEmpty( module.id ) && control.czr_Module.has( module.id ) ) {
                 throw new Error('The module id already exists in the collection in control : ' + control.id );
-          } else {
+          } else if ( _.isEmpty( module.id ) ) {
                 module.id = control.generateModuleId( 'czr_text_module' );
           }
 
           var _module_candidate_model = $.extend( module, { control : control }),
               //normalize it now
-              _default_module_model = _.clone( control.defautDatabaseModuleModel ),
+              _default_module_model = _.clone( control.defautAPIModuleModel ),
               _module_model = $.extend( _default_module_model, _module_candidate_model );
 
           console.log('module model before instantiation : ', _module_model );
@@ -173,13 +182,6 @@ $.extend( CZRMultiModuleControlMths, {
 
           //push it to the collection of the module-collection control
           control.updateModulesCollection( {module : module } );
-
-          //push it to the collection of the sektions control
-          _module_model.sektion.czr_Column( _module_model.column_id ).updateColumnModuleCollection(
-            {
-              module : _module_model
-            }
-          );
   },
 
 
@@ -346,7 +348,7 @@ $.extend( CZRMultiModuleControlMths, {
             db_ready_module = {};
 
         _.each( control.defautDatabaseModuleModel, function( _value, _key ) {
-              if ( 'sektion_id' != _key && ! _.has( module_db_candidate, _key ) ) {
+              if ( ! _.has( module_db_candidate, _key ) ) {
                   throw new Error('MultiModule Control::prepareModuleForDB : a module is missing the property : ' + _key + ' . Aborting.');
               }
 
