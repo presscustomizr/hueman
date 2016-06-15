@@ -1,6 +1,6 @@
 (function (api, $, _) {
   //WHAT IS A SCOPE ?
-  //A scope is an object describing a set of options for a given customization scope
+  //A scope is an object describing a set of options for a given customization context
   //It is constructed by the czr_scopeModel constructor
   //it has a model with the following properties
   // - a name : 'global', 'all_posts'
@@ -47,9 +47,9 @@
   //
   //
   // WHAT IS THE SCOPE PRIORITY CONCEPT ?
-  // Since a given option can be customized at different scope levels, a priority must be defined.
+  // Since a given option can have its value set differently for each scope level, a priority must be defined, in order to know what is the value to use.
   //
-  // The scope priority defines which option value will be used if this option has been customized in several scopes.
+  //  => The scope priority defines which option value will be used if this option has been customized in several scopes.
   //
   // There are 3 main levels of scopes :
   // 1) GLOBAL : the options applied to the entire website. Those are saved in the regular (the old) theme options
