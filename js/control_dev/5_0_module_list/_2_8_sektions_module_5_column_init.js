@@ -6,7 +6,7 @@ var CZRColumnMths = CZRColumnMths || {};
 //a column is instanciated with the typical set of options :
 // id : column.id,
 // initial_column_model : column_model,
-// sektion : sekItem,
+// sektion : sekItem, => sektion instance
 // module : sekItem.item_module.id,
 // control : sekItem.item_module.control.id,
 // is_added_by_user : is_added_by_user || false
@@ -57,15 +57,33 @@ $.extend( CZRColumnMths , {
           //2) setup the DOM event handler
           column.embedded.done(function() {
                 console.log('in column embedded', column.get() );
+                //at this point, the question is : are the modules assigned to this column instantiated ?
+                //if not => let's instantiate them. => this should not change the module collection czr_moduleCollection of the module-collection control
+                //=> because they should already be registered.
                 _.each( column.get().modules, function( _mod ) {
-                          api.control( api.CZR_Helpers.build_setId( 'module-collection') ).trigger(
-                                  'db-module-candidate',
-                                  {
-                                      id : _mod.id,
-                                      sektion : column.sektion
-                                  }
+                          var module_collection_control = api.control( api.CZR_Helpers.build_setId( 'module-collection') );
+                          //is this module already instantiated ?
+                          if ( module_collection_control.czr_Module.has(_mod.id) )
+                            return;
+
+                          console.log('in Column '+ column.id +' Module ' + _mod.id + ' is not instantiated yet. Do it.');
+                          //first let's try to get it from the collection
+                          var _module_candidate = _.findWhere( module_collection_control.czr_moduleCollection.get() , { id : _mod.id } );
+                          //we have a candidate. Let's instantiate it
+                          console.log('module candidate', _module_candidate );
+                          module_collection_control.instantiateModule( _module_candidate, {} );
+
+                          //push it to the collection of the sektions control
+                          //@todo => shall we make sure that the module has actually been instatiated by the module-collection control?
+                          if ( ! module_collection_control.czr_Module.has( _module_candidate.id ) )
+                            return;
+                          column.updateColumnModuleCollection(
+                            {
+                              module : _module_candidate
+                            }
                           );
                 } );
+
                 //react to column collection changes
                 column.callbacks.add( function() { return column.columnReact.apply(column, arguments ); } );
                 //react to the column module collection changes
@@ -114,6 +132,7 @@ $.extend( CZRColumnMths , {
                   module_type : 'czr_text_module',
                   column_id : column.id,
                   sektion : column.sektion,
+                  sektion_id : column.sektion.id,
                   items : [],
                   is_added_by_user : true
               }
@@ -163,6 +182,7 @@ $.extend( CZRColumnMths , {
     },
 
     columnModuleCollectionReact : function( to, from ) {
+            console.log('COLUM MODULE COLLECTION REACT');
             var column = this,
                 _current_column_model = column.get(),
                 _new_column_model = _.clone( _current_column_model ),

@@ -34,19 +34,27 @@ $.extend( CZRSektionMths, {
           console.log('SEKTION MODULE ID', id );
           console.log('SAVED SEKTION ITEMS', module.savedItems );
 
-          //EXTEND THE DEFAULT CONSTRUCTORS FOR MONOMODEL
+          //EXTEND THE DEFAULT CONSTRUCTORS FOR SEKTION ITEMS
           module.itemConstructor = api.CZRItem.extend( module.CZRSektionItem || {} );
 
           api.section( module.control.section() ).expanded.bind(function(to) {
                 if ( ! to || ! _.isEmpty( module.get() ) )
                   return;
+
+                //unleash hell
                 module.ready();
+
+                console.log('INFORM', id );
+                //inform the synchronized module-collection control of its synchronized sektions module id
+                api.control( api.CZR_Helpers.build_setId( 'module-collection') ).syncSektionModule.set( id );
           });
 
           if ( ! _.has( module ,'dragInstance' ) )
             module.initDragula();
 
   },//initialize
+
+
 
 
 
@@ -81,6 +89,7 @@ $.extend( CZRSektionMths, {
   },
 
 
+
   //React to a single item change
   //cb of module.czr_Item(item.id).callbacks
   itemReact : function( to, from ) {
@@ -89,6 +98,7 @@ $.extend( CZRSektionMths, {
         //update the collection
         module.updateItemsCollection( {item : to });
   },
+
 
 
   generateColId : function( sekId, index ) {

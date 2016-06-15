@@ -76,14 +76,14 @@ $.extend( CZRSektionMths, {
                   var sekItem = this,
                       column_model = _.clone( column );
                   //does this column have modules ?
-                  var _all_modules = api.control( api.CZR_Helpers.build_setId( 'module-collection') ).czr_moduleCollection.get(),
-                      _column_modules = _.findWhere( _all_modules, { column_id : column.id });
+                  // var _all_modules = api.control( api.CZR_Helpers.build_setId( 'module-collection') ).czr_moduleCollection.get(),
+                  //     _column_modules = _.findWhere( _all_modules, { column_id : column.id });
 
-                  if ( ! _.isEmpty( _column_modules) ) {
-                    console.log('HAS COLUMN MODULES?', column.id, _column_modules );
-                    console.log('column_model', column_model );
-                    //column_model.modules.push( )
-                  }
+                  // if ( ! _.isEmpty( _column_modules) ) {
+                  //   console.log('HAS COLUMN MODULES?', column.id, _column_modules );
+                  //   console.log('column_model', column_model );
+                  //   //column_model.modules.push( )
+                  // }
 
 
                   //instanciate the column with the default constructor

@@ -40,7 +40,7 @@ $.extend( CZRTextModuleMths, {
               module.embedded.resolve();
           }
 
-          console.log('text module.savedItems', module.savedItems );
+          //console.log('text module.savedItems', module.savedItems );
           module.ready();
   },//initialize
 
