@@ -184,7 +184,7 @@ $.extend( CZRSocialModuleMths, {
   CZRSocialsItem : {
           _buildTitle : function( title, icon, color ) {
                   var item = this,
-                      module     = item.item_module;
+                      module     = item.module;
 
                   title = title || ( 'string' === typeof(icon) ? api.CZR_Helpers.capitalize( icon.replace( 'fa-', '') ) : '' );
                   title = api.CZR_Helpers.truncate(title, 20);
@@ -198,7 +198,7 @@ $.extend( CZRSocialModuleMths, {
           //at this stage, the model passed in the obj is up to date
           writeItemViewTitle : function( model ) {
                   var item = this,
-                      module     = item.item_module,
+                      module     = item.module,
                       _model = model || item.get(),
                       _title = api.CZR_Helpers.capitalize( _model['social-icon'].replace('fa-', '') );
 

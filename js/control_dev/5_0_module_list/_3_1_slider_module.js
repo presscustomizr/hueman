@@ -48,7 +48,7 @@ $.extend( CZRSlideModuleMths, {
                 });
                 api.CZRInput.prototype.ready.call( input);
           },
-      
+
           //ACTIONS ON slide-title change
           //Fired on 'slide-title:changed'
           //Don't fire in pre item case
@@ -69,12 +69,12 @@ $.extend( CZRSlideModuleMths, {
           //at this stage, the model passed in the obj is up to date
           writeItemViewTitle : function( model ) {
                 var item = this,
-                          module  = item.item_module,
+                          module  = item.module,
                           _model = model || item.get(),
                           _title = _model.title ? _model.title : serverControlParams.translatedStrings.slideTitle;
-                
-                _title = api.CZR_Helpers.truncate(_title, 25);                
+
+                _title = api.CZR_Helpers.truncate(_title, 25);
                 $( '.' + module.control.css_attr.view_title , item.container ).html( _title );
-          }  
+          }
   }
 });

@@ -113,7 +113,7 @@ $.extend( CZRBackgroundMths , {
           renderViewContent : function() {
                   //=> an array of objects
                   var item = this,
-                      control = this.item_control,
+                      control = this.control,
                       model = _.clone( item.get() );
 
                   //do we have view content template script?

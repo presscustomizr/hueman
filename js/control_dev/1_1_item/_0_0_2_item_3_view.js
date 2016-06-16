@@ -11,7 +11,7 @@ $.extend( CZRItemMths , {
   renderView : function( item_model ) {
         //=> an array of objects
         var item = this,
-            module = item.item_module;
+            module = item.module;
             item_model = item_model || item.get();
 
         //do we have view template script?
@@ -51,7 +51,7 @@ $.extend( CZRItemMths , {
   renderViewContent : function( item_model ) {
           //=> an array of objects
           var item = this,
-              module = this.item_module;
+              module = this.module;
 
           //do we have view content template script?
           if ( 0 === $( '#tmpl-' + module.getTemplateEl( 'view-content', item_model ) ).length )
@@ -79,7 +79,7 @@ $.extend( CZRItemMths , {
   //fired in setupItemListeners
   writeItemViewTitle : function( item_model ) {
         var item = this,
-            module = item.item_module,
+            module = item.module,
             _model = item_model || item.get(),
             _title = _.has( _model, 'title')? api.CZR_Helpers.capitalize( _model.title ) : _model.id;
 
@@ -96,7 +96,7 @@ $.extend( CZRItemMths , {
   //Fired on click on edit_view_btn
   setViewVisibility : function( obj, is_added_by_user ) {
           var item = this,
-              module = this.item_module;
+              module = this.module;
           if ( is_added_by_user ) {
             item.czr_View.set( 'expanded_noscroll' );
           } else {
@@ -117,7 +117,7 @@ $.extend( CZRItemMths , {
   //callback of czr_View() instance on change
   _toggleViewExpansion : function( status, duration ) {
           var item = this,
-              module = this.item_module;
+              module = this.module;
 
           //slide Toggle and toggle the 'open' class
           $( '.' + module.control.css_attr.view_content , item.container ).first().slideToggle( {
@@ -152,7 +152,7 @@ $.extend( CZRItemMths , {
   //@param : obj = { event : {}, model : {}, view : ${} }
   toggleRemoveAlertVisibility : function(obj) {
           var item = this,
-              module = this.item_module,
+              module = this.module,
               $_alert_el = $( '.' + module.control.css_attr.remove_alert_wrapper, item.container ),
               $_clicked = obj.dom_event;
 

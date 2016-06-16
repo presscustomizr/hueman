@@ -19,7 +19,7 @@ $.extend( CZRSektionMths, {
           } );
 
           //SEKTIONS
-          //declares a default model (overrides)
+          //declares a default model (overrides parent module)
           module.defaultItemModel = {
                 id : '',
                 'sektion-layout' : 1,
@@ -51,7 +51,7 @@ $.extend( CZRSektionMths, {
           module.czr_columnCollection.set([]);
 
           //react to column collection changes
-          //module.czr_columnCollection.callbacks.add( function() { return module.columnCollectionReact.apply(module, arguments ); } );
+          module.czr_columnCollection.callbacks.add( function() { return module.columnCollectionReact.apply(module, arguments ); } );
 
           //EXTEND THE DEFAULT CONSTRUCTORS FOR SEKTION ITEMS
           module.itemConstructor = api.CZRItem.extend( module.CZRSektionItem || {} );
@@ -59,15 +59,13 @@ $.extend( CZRSektionMths, {
 
           //FIRE
           api.section( module.control.section() ).expanded.bind(function(to) {
-                if ( ! to || ! _.isEmpty( module.get() ) )
+                if ( 'resolved' == module.isReady.state() )
                   return;
-
                 //unleash hell
                 module.ready();
 
-                console.log('INFORM', id );
-                //inform the synchronized module-collection control of its synchronized sektions module id
-                api.control( api.CZR_Helpers.build_setId( 'module-collection') ).syncSektionModule.set( id );
+                //provide the synchronized module-collection control with its synchronized sektions module instance
+                api.control( api.CZR_Helpers.build_setId( 'module-collection') ).syncSektionModule.set( module );
           });
 
           if ( ! _.has( module ,'dragInstance' ) )
@@ -80,50 +78,131 @@ $.extend( CZRSektionMths, {
 
 
 
-  //overrides the parent
-  //=> to generate the column collection that is used in the sektion item instanciation params
-  getInitialItemModel : function( _sek ) {
-          var module = this,
-              _default_sektion = _.clone( module.defaultItemModel ),
-              _def = _.clone( _default_sektion ),
-              _new_sek = $.extend( _def, _sek ),
-              _columns = [];
 
-              if( _.isEmpty( _new_sek.columns ) ) {
-                      console.log('IS EMPTY COLUMNS', _sek );
-                      var _col_nb = parseInt(_new_sek['sektion-layout'] || 1, 10 );
-                      for( i = 1; i < _col_nb + 1 ; i++ ) {
-                            var _default_column = _.clone( module.defaultDBColumnModel );
-                            //     _new_col_model = {
-                            //           //id : module.generateColId(),
-                            //           sektion_id : _new_sek.id
-                            //     };
-                            //     _col_model = $.extend( _default_column, _new_col_model );
 
-                            _columns.push( _default_column );
-                      }//for
 
-                      _new_sek.columns = _columns;
-              }//if
 
-              return _new_sek;
 
-  },
 
+
+  /////////////////////////////////////////////////////////////////////////
+  /// SEKTION
+  ////////////////////////////////////////////////////////////////////////
 
 
   //React to a single item change
   //cb of module.czr_Item(item.id).callbacks
   itemReact : function( to, from ) {
-        console.log('in sektion react', to, from );
-        var module = this;
+        console.log('IN ITEM REACT (OVERRIDES PARENT)', to, from );
+        var module = this,
+            sektion_candidate = _.clone(to);
+        console.log('sektion_candidate BEFORE', sektion_candidate );
+        //we want to make sure that the item model is compliant with default model
+        sektion_candidate = module.prepareSekItemForDB( sektion_candidate );
+        console.log('sektion_candidate AFTER', sektion_candidate );
         //update the collection
-        module.updateItemsCollection( {item : to });
+        module.updateItemsCollection( {item : sektion_candidate });
+  },
+
+
+
+  //the sektion item model must have only the property set in
+  //module.defaultItemModel = {
+  //       id : '',
+  //       'sektion-layout' : 1,
+  //       columns : []
+  // };
+  prepareSekItemForDB : function( sektion_candidate ) {
+        var module = this,
+            db_ready_sektItem = {};
+
+        _.each( module.defaultItemModel, function( _value, _key ) {
+            var _candidate_val = sektion_candidate[_key];
+            switch( _key ) {
+                  case 'id' :
+                      if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
+                          throw new Error('The sekItem id property must be a not empty string');
+                      }
+                      db_ready_sektItem[_key] = _candidate_val;
+                  break;
+                  case 'sektion-layout' :
+                      if ( ! _.isNumber( parseInt( _candidate_val, 10 ) ) || ( parseInt( _candidate_val, 10 ) < 1 ) ) {
+                          throw new Error('The sekItem layout property must be an int number > 0');
+                      }
+                      db_ready_sektItem[_key] = _candidate_val;
+                  break;
+                  case 'columns' :
+                      if ( ! _.isArray( _candidate_val ) ) {
+                          throw new Error('The sekItem columns property must be an array');
+                      }
+                      var _db_ready_columns = [];
+                      _.each( _candidate_val, function( _col ) {
+                            var _db_ready_col = module.prepareColumnForDB(_col);
+                            _db_ready_columns.push( _db_ready_col );
+                      });
+                      console.log(' _db_ready_columns',  _db_ready_columns);
+                      db_ready_sektItem[_key] = _db_ready_columns;
+                  break;
+            }
+        });//each
+
+        return db_ready_sektItem;
+  },
+
+
+  //Each column shall be described by an object like the following one :
+  //module.defaultDBColumnModel = {
+  //       id : '',
+  //       sektion_id : '',
+  //       modules : [],
+  // };
+  prepareColumnForDB : function( column_candidate ) {
+        var module = this,
+            _db_ready_col = {};
+            console.log('column_candidatecolumn_candidatecolumn_candidate', column_candidate );
+        _.each( module.defaultDBColumnModel, function( _value, _key ){
+              var _candidate_val = column_candidate[_key];
+              switch( _key ) {
+                  case 'id' :
+                      if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
+                          throw new Error('The column id property must be a not empty string');
+                      }
+                      _db_ready_col[_key] = _candidate_val;
+                  break;
+                  case 'sektion_id' :
+                      if ( _.isString( _candidate_val ) && ! _.isEmpty( _candidate_val ) ) {
+                          _db_ready_col[_key] = _candidate_val;
+                      } else if ( _.has(column_candidate, 'sektion') ) {
+                          _db_ready_col[_key] = column_candidate.sektion.id;
+                      } else {
+                          throw new Error('The column sektion-id property must be a not empty string');
+                      }
+                  break;
+                  case 'modules' :
+                      if ( ! _.isArray( _candidate_val ) ) {
+                          throw new Error('The column modules property must be an array');
+                      }
+                      _db_ready_col[_key] = _candidate_val;
+                  break;
+              }
+
+        } );
+        return _db_ready_col;
   },
 
 
 
 
+
+
+
+
+
+
+
+  /////////////////////////////////////////////////////////////////////////
+  /// COLUMN
+  ////////////////////////////////////////////////////////////////////////
   //At this point, the column model has been fetched from DB, or manually added.
   //It must look like
   //{
@@ -132,7 +211,7 @@ $.extend( CZRSektionMths, {
   //  sektion_id : '',//string
   //  modules : [],//collection of module id strings
   //}
-  instanciateColumn : function( _column, is_added_by_user  ) {
+  instantiateColumn : function( _column, is_added_by_user  ) {
         var module = this,
             column_model = _.clone( _column );
 
@@ -215,6 +294,7 @@ $.extend( CZRSektionMths, {
 
   //@param obj can be { collection : []}, or { module : {} }
   updateColumnCollection : function( obj ) {
+        console.log('IN UPDATE GLOBAL COLUMN COLLECTION', obj );
         var module = this,
             _current_collection = module.czr_columnCollection.get();
             _new_collection = _.clone(_current_collection);
@@ -249,28 +329,38 @@ $.extend( CZRSektionMths, {
         else {
               _new_collection.push(column);
         }
-        //Inform the sekItem
+
+        //Inform the column sektion
+        column.sektion.updateSektionColumnCollection( { column : column });
+        //Inform the global column collection
         module.czr_columnCollection.set(_new_collection);
   },
 
 
   //cb of control.czr_columnCollection.callbacks
+  //The job of this function is to set the column collection in their respective sektItems
   columnCollectionReact : function( to, from ) {
-        console.log('in sektion collection react', to, from );
-        var sekItem = this,
-            _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
-            _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
-            _module_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
-            is_module_update = _.isEmpty( _module_updated ),
-            is_collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && ! is_module_update;
+        // console.log('IN Global Column collection react', to, from );
+        // var module = this,
+        //     _to_add = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
+        //     _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
+        //     _column_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
+        //     is_column_update = _.isEmpty( _column_updated ),
+        //     is_column_collection_sorted = _.isEmpty(_to_add) && _.isEmpty(_to_remove)  && ! is_column_update;
 
+        // console.log( '_to_add', _to_add );
+        // console.log( '_to_remove', _to_remove );
+        // console.log( 'is_column_update', is_column_update );
+        // console.log( 'is_column_collection_sorted', is_column_collection_sorted );
         //say it to the sektion
-        var _current_sek_model = sekItem.get(),
-            _new_sek_model = _.clone( _current_sek_model );
+        // var _current_sek_model = sekItem.get(),
+        //     _new_sek_model = _.clone( _current_sek_model );
 
-        _new_sek_model.columns = to;
-        console.log('_new_sek_model', _new_sek_model );
-        sekItem.set( _new_sek_model );
+        //loop the new column collection
+        //=> set each sektion column collection
+        // _.each( to, function( _col, key ) {
+        //       _col.sektion.updateSektionColumnCollection( { column : _col });
+        // });
 
         //refreshes the preview frame  :
         //1) only needed if transport is postMessage, because is triggered by wp otherwise
@@ -294,7 +384,6 @@ $.extend( CZRSektionMths, {
         if ( ! _.has(module, 'czr_columnCollection') || ! _.isArray( module.czr_columnCollection.get() ) ) {
               throw new Error('The column collection does not exist or is not properly set in module : ' + module.id );
         }
-        console.log( 'id_candidate', id_candidate );
         //make sure the column is not already instantiated
         if ( module.czr_Column.has( id_candidate ) )
           return module.generateColId( key++ );
@@ -303,6 +392,49 @@ $.extend( CZRSektionMths, {
   },
 
 
+  //@return bool
+  moduleExistsInOneColumnMax : function( module_id ) {
+        return 2 > this.getModuleColumn( module_id ).length;
+  },
+
+
+  //@return an array of columns
+  //=> a module can't be embedded in several columns at a time
+  //if the returned array has more than one item, it should trigger an Error.
+  getModuleColumn : function( module_id ) {
+        var module = this,
+            _mod_columns = [];
+        _.each( module.czr_columnCollection.get(), function( _col, _key ) {
+              if ( _.findWhere( _col.modules, { id : module_id } ) )
+                _mod_columns.push( _col.id );
+        });
+        return _mod_columns;
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /////////////////////////////////////////////////////////////////////////
+  /// DRAGULA
+  ////////////////////////////////////////////////////////////////////////
   initDragula : function() {
           var module = this;
 

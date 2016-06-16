@@ -46,6 +46,11 @@ $.extend( CZRMultiModuleControlMths, {
           //czr_collection stores the module collection
           control.czr_moduleCollection = new api.Value();
           control.czr_moduleCollection.set([]);
+
+          //listen to the module-collection setting changes
+          //=> synchronize the columns in the sektion setting
+          api(control.id).callbacks.add( function() { return control.syncColumn.apply( control, arguments ); } );
+
   },
 
 
@@ -61,7 +66,7 @@ $.extend( CZRMultiModuleControlMths, {
           var control = this;
           api.bind( 'ready', function() {
 
-                //POPULATE THE SAVED MODULE COLLECTION WHEN THE SYNCHRONIZED SEKTIONS SETTING HAS PROVIDED ITS MODULE ID
+                //POPULATE THE SAVED MODULE COLLECTION WHEN THE SYNCHRONIZED SEKTIONS SETTING HAS PROVIDED ITS INSTANCE
                 control.syncSektionModule.bind( function(to, from) {
                       //the from must be virgin
                       if ( ! _.isUndefined( from ) )
@@ -87,7 +92,8 @@ $.extend( CZRMultiModuleControlMths, {
 
 
   //fired when the main sektion module has synchronised its if with the module-collection control
-  registerModulesOnInit : function( sektion_module_id ) {
+  registerModulesOnInit : function( sektion_module_instance ) {
+          console.log('IN REGISTER MODULES ON INIT', sektion_module_instance.id  );
           var control = this;
           _.each( api(control.id).get(), function( _mod, _key ) {
                   console.log('POPULATE THE SAVED MODULE COLLECTION ON INIT :', _mod, _mod.sektion_id );
@@ -95,15 +101,15 @@ $.extend( CZRMultiModuleControlMths, {
                   //First let's find the sektion module id
                   var _sektion_control = api.control( api.CZR_Helpers.build_setId( 'sektions') );
 
-                  if ( ! _sektion_control.czr_Module( sektion_module_id ).czr_Item.has( _mod.sektion_id ) ) {
+                  if ( ! sektion_module_instance.czr_Item.has( _mod.sektion_id ) ) {
                     console.log('Warning Module ' + _mod.id + ' has no sektion to be embedded to.');
                     return;
                   }
 
-                  var _sektion = _sektion_control.czr_Module( sektion_module_id ).czr_Item( _mod.sektion_id );
+                  var _sektion = sektion_module_instance.czr_Item( _mod.sektion_id );
 
-                  console.log('_sektion_module_id', sektion_module_id );
-                  console.log('_sektion', _sektion, _mod.sektion_id, _sektion_control.czr_Module( sektion_module_id ).get() );
+                  console.log('_sektion_module_id', sektion_module_instance.id );
+                  console.log('_sektion', _sektion, _mod.sektion_id, sektion_module_instance.get() );
 
                   if ( _.isUndefined( _sektion ) ) {
                     throw new Error('sektion instance missing. Impossible to instantiate module : ' + _mod.id );
@@ -237,10 +243,10 @@ $.extend( CZRMultiModuleControlMths, {
                         api_ready_module[_key] = _candidate_val;
                     break;
                     case 'is_added_by_user' :
-                        if ( ! _.isBoolean( _candidate_val )  ) {
-                            throw new Error('MultiModule Control::prepareModuleForAPI : the module param "is_added_by_user" must be a boolean');
-                        }
-                        api_ready_module[_key] = _candidate_val;
+                        // if ( ! _.isBoolean( _candidate_val )  ) {
+                        //     throw new Error('MultiModule Control::prepareModuleForAPI : the module param "is_added_by_user" must be a boolean');
+                        // }
+                        api_ready_module[_key] = _candidate_val || false;
                     break;
               }//switch
         });
@@ -360,7 +366,7 @@ $.extend( CZRMultiModuleControlMths, {
   // items : [],
   //};
   prepareModuleForDB : function ( module_db_candidate ) {
-          if ( ! _.isObject( module_db_candidate ) ) {
+        if ( ! _.isObject( module_db_candidate ) ) {
             throw new Error('MultiModule Control::prepareModuleForDB : a module must be an object. Aborting.');
         }
         var control = this,
@@ -409,5 +415,23 @@ $.extend( CZRMultiModuleControlMths, {
               }//switch
         });
         return db_ready_module;
+  },
+
+
+  //cb of : api(control.id).callbacks.
+  syncColumn : function( to, from ) {
+        console.log('IN SYNC COLUM', to , from );
+        var control = this,
+            main_sektion_module_instance = control.syncSektionModule.get(),
+            _to_add = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
+            _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
+            _module_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
+            is_module_update = _.isEmpty( _module_updated ),
+            is_collection_sorted = _.isEmpty(_to_add) && _.isEmpty(_to_remove)  && ! is_module_update;
+
+        _.each( to, function( _mod, _key ){
+                main_sektion_module_instance.czr_Column( _mod.column_id ).updateColumnModuleCollection( { module : _mod } );
+        });
+        control.trigger( 'columns-synchronized', to );
   }
 });//$.extend//CZRBaseControlMths

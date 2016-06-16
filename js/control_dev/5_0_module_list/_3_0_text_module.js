@@ -84,10 +84,9 @@ $.extend( CZRTextModuleMths, {
 
   _getColumn : function() {
           var module = this,
-              sektion_control = api.control( api.CZR_Helpers.build_setId( 'sektions') ),
-              main_sektion_module_id = module.control.syncSektionModule.get();
+              main_sektion_module_instance = module.control.syncSektionModule.get();
 
-          return sektion_control.czr_Module(main_sektion_module_id).czr_Column( module.column_id );
+          return main_sektion_module_instance.czr_Column( module.column_id );
   },
 
   _getSektion : function() {
@@ -99,7 +98,7 @@ $.extend( CZRTextModuleMths, {
           //overrides parent
           setupView : function( item_model ) {
                 var item = this,
-                    module = this.item_module;
+                    module = this.module;
 
                 item.container = item.renderView( item_model );
                 if ( _.isUndefined(item.container) || ! item.container.length ) {

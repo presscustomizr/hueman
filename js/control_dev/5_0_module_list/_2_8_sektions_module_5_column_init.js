@@ -6,7 +6,7 @@ var CZRColumnMths = CZRColumnMths || {};
 //a column is instanciated with the typical set of options :
 // id : '',
 // modules : [],
-// sektion_id : '',
+// sektion : {},//sektion instance
 // module_id : '',
 // control_id : '',
 // is_added_by_user : false
@@ -23,12 +23,15 @@ $.extend( CZRColumnMths , {
           //stores the column collection
           //set the initial value
           column.czr_columnModuleCollection = new api.Value();
-          column.czr_columnModuleCollection.set([]);
+          column.czr_columnModuleCollection.set( column.modules );
 
           //set the column instance value
-          column.set( column.modules );
+          column.set( options );
 
-          console.log( 'column.module', column.modules );
+          //the modules are stored only with their id in a column
+          column.defautModuleModelInColumn = { id : '' };
+
+          console.log( 'column.modules', column.modules );
           console.log( 'column options', options );
 
           //defer the column rendering when the parent sektion content is rendered
@@ -56,11 +59,12 @@ $.extend( CZRColumnMths , {
           //1) populate the column module collection
           //2) setup the DOM event handler
           column.embedded.done(function() {
-                console.log('in column embedded', column.get() );
+                console.log('in column embedded. Current module collection for column : ' + this.id , column.czr_columnModuleCollection.get() );
+
                 //at this point, the question is : are the modules assigned to this column instantiated ?
                 //if not => let's instantiate them. => this should not change the module collection czr_moduleCollection of the module-collection control
                 //=> because they should already be registered.
-                _.each( column.get().modules, function( _mod ) {
+                _.each( column.czr_columnModuleCollection.get() , function( _mod ) {
                           var module_collection_control = api.control( api.CZR_Helpers.build_setId( 'module-collection') );
                           //is this module already instantiated ?
                           if ( module_collection_control.czr_Module.has(_mod.id) )
@@ -75,31 +79,26 @@ $.extend( CZRColumnMths , {
 
                           //push it to the collection of the sektions control
                           //@todo => shall we make sure that the module has actually been instatiated by the module-collection control?
-                          if ( ! module_collection_control.czr_Module.has( _module_candidate.id ) )
-                            return;
-                          column.updateColumnModuleCollection(
-                            {
-                              module : _module_candidate
-                            }
-                          );
+                          // if ( ! module_collection_control.czr_Module.has( _module_candidate.id ) )
+                          //   return;
+
+                          column.updateColumnModuleCollection( { module : _module_candidate });
                 } );
 
-                //react to column collection changes
+                //react to column value changes
                 column.callbacks.add( function() { return column.columnReact.apply(column, arguments ); } );
+
+
                 //react to the column module collection changes
-                column.czr_columnModuleCollection.callbacks.add( function() { return column.columnModuleCollectionReact.apply(column, arguments ); } );
+                column.czr_columnModuleCollection.callbacks.add( function() { return column.columnModuleCollectionReact.apply( column, arguments ); } );
 
                 //Setup the column event listeners
                 api.CZR_Helpers.setupDOMListeners(
-                    column.column_event_map,//actions to execute
-                    { dom_el : column.container },//dom scope
-                    column//instance where to look for the cb methods
+                        column.column_event_map,//actions to execute
+                        { dom_el : column.container },//dom scope
+                        column//instance where to look for the cb methods
                 );
           });
-    },
-
-    populatesModulesCollection : function() {
-
     },
 
 
@@ -111,11 +110,13 @@ $.extend( CZRColumnMths , {
           return $view;
     },
 
+
     //cb of column.callbacks.add()
     //the job is this callback is to inform the parent sektion collection that something happened
     //typically, a module has been added
     columnReact : function( to ,from ) {
-          this.sektion.updateColumnCollection( {column : to });
+          console.log('IN COLUMN REACT : ', to, from );
+          this.sektion.module.updateColumnCollection( {column : to });
     },
 
 
@@ -152,6 +153,7 @@ $.extend( CZRColumnMths , {
 
 
     updateColumnModuleCollection : function( obj ) {
+            console.log('IN UPDATE COLUMN MODULE COLLECTION', obj );
             var column = this,
                 _current_collection = column.czr_columnModuleCollection.get();
                 _new_collection = _.clone( _current_collection );
@@ -168,32 +170,64 @@ $.extend( CZRColumnMths , {
               throw new Error('updateColumnModuleCollection, no module provided in column ' + column.id + '. Aborting');
             }
 
-            var module = _.clone(obj.module);
+            //1) The module id must be a not empty string
+            //2) The module shall not exist in another column
+            var module = column.prepareModuleForColumnAPI( _.clone(obj.module) );
 
-            if ( ! _.has(column, 'id') ) {
-              throw new Error('updateColumnModuleCollection, no id provided for a module in column' + column.id + '. Aborting');
-            }
+            console.log('MODULE READY FOR COLUMN API ?', module );
+
             //the module already exist in the collection
             if ( _.findWhere( _new_collection, { id : module.id } ) ) {
                   _.each( _current_collection , function( _elt, _ind ) {
-                        if ( _elt.id != module.id )
-                          return;
+                          if ( _elt.id != module.id )
+                            return;
 
-                        //set the new val to the changed property
-                        _new_collection[_ind] = module;
+                          //set the new val to the changed property
+                          _new_collection[_ind] = module;
                   });
             }
-            //the module has to be added
+            //otherwise,the module has to be added
             else {
                   _new_collection.push(module);
             }
-            //Inform the column
-            column.czr_columnModuleCollection.set(_new_collection);
+
+            //set the collection
+            column.czr_columnModuleCollection.set( _new_collection );
     },
 
 
+
+    //column.defautModuleModelInColumn = { id : '' };
+    prepareModuleForColumnAPI : function( module_candidate ) {
+            if ( ! _.isObject( module_candidate ) ) {
+                throw new Error('prepareModuleForColumnAPI : a module must be an object.');
+            }
+            var column = this,
+                api_ready_module = {};
+
+            _.each( column.defautModuleModelInColumn, function( _value, _key ) {
+                    var _candidate_val = module_candidate[ _key ];
+                    switch( _key ) {
+                          case 'id' :
+                            if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
+                                throw new Error('prepareModuleForColumnAPI : a module id must a string not empty');
+                            }
+                            if ( ! column.sektion.module.moduleExistsInOneColumnMax( module_candidate.id ) ) {
+                                throw new Error('A module can not be embedded in more than one column at a time. Module ' + module_candidate.id + ' exists in several columns : ' +  column.sektion.module.getModuleColumn( module_candidate.id ).join(',') );
+                            }
+                            api_ready_module[ _key ] = _candidate_val;
+                          break;
+                    }//switch
+            });//each
+            return api_ready_module;
+    },
+
+
+
+    //cb of : column.czr_columnModuleCollection.callbacks.add()
+    //the job of this method is to update the column instance value with a new collection of modules
     columnModuleCollectionReact : function( to, from ) {
-            console.log('COLUM MODULE COLLECTION REACT');
+            console.log('COLUM MODULE COLLECTION REACT', to, from );
             var column = this,
                 _current_column_model = column.get(),
                 _new_column_model = _.clone( _current_column_model ),
@@ -203,7 +237,7 @@ $.extend( CZRColumnMths , {
                 _new_module_collection[_key] = { id : _mod.id };
             });
 
-            //say it to the column
+            //say it to the column instance
             _new_column_model.modules = _new_module_collection;
             column.set( _new_column_model );
     },

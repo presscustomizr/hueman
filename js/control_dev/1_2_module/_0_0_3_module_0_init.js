@@ -22,6 +22,9 @@ $.extend( CZRModuleMths, {
           api.Value.prototype.initialize.call( this, null, options );
 
           var module = this;
+          //store the state of ready.
+          //=> we don't want the ready method to be fired several times
+          module.isReady = $.Deferred();
 
           //write the options as properties
           $.extend( module, options || {} );
@@ -44,18 +47,32 @@ $.extend( CZRModuleMths, {
           if ( ! _.has( module.control.params, 'in_sektion' ) || ! module.control.params.in_sektion )
             module.container = $( module.control.selector );
 
+
+          //ITEMS
           //store the saved models => can be extended to add default models in children classes
           module.savedItems = options.items;
 
+          //declares a default Item API model
+          module.defaultAPIitemModel = {
+                id : '',
+                initial_item_model : {},
+                defaultItemModel : {},
+                control : {},//control instance
+                module : {},//module instance
+                is_added_by_user : false
+          };
+
           //declares a default item model
-          module.defaultModuleModel = { id : '', title : '' };
+          module.defaultItemModel = { id : '', title : '' };
 
           //define a default Constructors
           module.itemConstructor = api.CZRItem;
-          module.inputConstructor = api.CZRInput;
-
           //czr_model stores the each model value => one value by created by model.id
           module.czr_Item = new api.Values();
+
+
+          //INPUTS
+          module.inputConstructor = api.CZRInput;
 
           //module.ready(); => fired by children
   },
@@ -78,7 +95,7 @@ $.extend( CZRModuleMths, {
           module.callbacks.add( function() { return module.moduleReact.apply(module, arguments ); } );
 
           //this module is ready
-          //module.container.trigger('ready');
+          module.isReady.resolve();
   },
 
 
@@ -120,7 +137,7 @@ $.extend( CZRModuleMths, {
 
           _new_module = $.extend( _new_module, { items : to } );
 
-          console.log('IN MODULE REACT', _new_module );
+          console.log('IN BASE MODULE INIT REACT', _new_module );
 
           control.updateModulesCollection( {module : _new_module });
 

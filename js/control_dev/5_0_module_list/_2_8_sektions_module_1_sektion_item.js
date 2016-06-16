@@ -13,21 +13,24 @@ $.extend( CZRSektionMths, {
                   api.CZRItem.prototype.initialize.call( sekItem, null, options );
 
                   var _sektion_model = sekItem.get(),
-                      module = options.item_module;
-
-                  console.log( _sektion_model );
+                      module = options.module;
 
                   if ( ! _.has(_sektion_model, 'sektion-layout') ) {
-                    throw new Error('In Sektion Item initialize, no layout provided for ' + sekItem.id + '. Aborting');
+                      throw new Error('In Sektion Item initialize, no layout provided for ' + sekItem.id + '.');
                   }
 
-                  console.log('in sektion initial', options );
+                  //
+                  sekItem.isReady.done( function() {
+                        //To set the sekItem value now won't be listened too
+                        //=> the item callback is declared on 'input_collection_populated'
+                        _sektion_model = sekItem.maybeSetColumnsOnInit( _sektion_model );
+                        sekItem.set( _sektion_model );
 
-                  //instantiate the columns when the sektion item is embedded
-                  sekItem.embedded.done(function() {
-                        console.log('sektion is embedded');
+                        if ( _.isEmpty( sekItem.get().columns ) ) {
+                            throw new Error('In Sektion Item, the sektion ' + sekItem.id + ' has no column(s) set (and should have sat least one at this stage ! ).');
+                        }
 
-                        _.each( options.initial_item_model.columns , function( _column ) {
+                        _.each( sekItem.get().columns , function( _column ) {
                               //When fetched from DB, the column model looks like :
                               //{
                               //  id : '',//string
@@ -35,10 +38,17 @@ $.extend( CZRSektionMths, {
                               //  modules : [],//collection of module id strings
                               //}
                               //=> we need to extend it with sektion instance
-                              module.instanciateColumn( $.extend( _column, { sektion : sekItem } ) );
+                              //instantiate the column and push it to the global column collection
+                              module.instantiateColumn( $.extend( _column, { sektion : sekItem } ) );
                         });
 
-                        //dragulize when embedded
+
+                  });
+
+
+                  //instantiate the columns when the sektion item is embedded
+                  sekItem.embedded.done(function() {
+                        //dragulize sektion when embedded
                         sekItem.dragulizeSektion();
                   });
 
@@ -47,9 +57,8 @@ $.extend( CZRSektionMths, {
                   //collection listener
                   //dragulization
                   sekItem.contentRendered.done(function() {
-                          console.log('sektion content is rendered');
                           //dragulize columns
-                          sekItem.item_module.dragInstance.containers.push( $( '.czr-column-wrapper', sekItem.container )[0] );
+                          sekItem.module.dragInstance.containers.push( $( '.czr-column-wrapper', sekItem.container )[0] );
 
                           //each item view must clean the dragula class
                           sekItem.czr_View.callbacks.add( function(to) {
@@ -61,112 +70,104 @@ $.extend( CZRSektionMths, {
 
           },
 
+
+          //overrides the parent
+          //=> to generate the column collection that is used in the sektion item instanciation params
+          //If a new sektion is added by a user, the columns must be generated baseed on the choosen layout
+          //When a sektion item is fetched from the DB, the column should already by there.
+          maybeSetColumnsOnInit : function( _sektion_model ) {
+                  var sekItem = this,
+                      module = sekItem.module,
+                      _def = _.clone( sekItem.defaultItemModel ),
+                      _new_sek = $.extend( _def, _sektion_model ),
+                      _new_columns = [];
+
+                      //is this sektionItem already existing in the setting value ?
+                      //=> if so, it should have columns.
+                      // if ( ! _.isUndefined( _.findWhere( api(module.control.id).get() , { id : _new_sek.id } ) ) ) {
+                      //       throw new Error( 'Sektion ' + _new_sek.id + ' already exists in the setting item collection and should have columns' );
+                      // }
+                      //if the sektion has no column yet, let's add them, based on the current layout
+                      if ( _.isEmpty( _new_sek.columns ) ) {
+                              var _col_nb = parseInt(_new_sek['sektion-layout'] || 1, 10 ),
+                                  column_initial_key = module.czr_columnCollection.get().length + 1;
+                              for( i = 1; i < _col_nb + 1 ; i++ ) {
+                                    var _default_column = _.clone( module.defaultDBColumnModel ),
+                                        _new_col_model = {
+                                              id : module.generateColId( column_initial_key ),
+                                              sektion_id : _new_sek.id
+                                        };
+                                        _col_model = $.extend( _default_column, _new_col_model );
+
+                                    _new_columns.push( _default_column );
+                                    column_initial_key++;
+                              }//for
+
+                              _new_sek.columns = _new_columns;
+                      }//if
+
+                      return _new_sek;
+
+          },
+
+
+          //update the sektion columns model property if
+          updateSektionColumnCollection : function( obj ) {
+                console.log('IN UPDATE SEKTION ' + this.id + ' COLUMN COLLECTION', obj );
+                var sekItem = this,
+                    _current_sektion_model = sekItem.get(),
+                    _new_sektion_model = _.clone(_current_sektion_model);
+
+                console.log('_current_sektion_model', _current_sektion_model );
+                //if a collection is provided in the passed obj then simply refresh the collection
+                //=> typically used when reordering the collection module with sortable or when a column is removed
+                if ( _.has( obj, 'collection' ) ) {
+                      //reset the collection
+                      _new_sektion_model.columns = obj.collection;
+                      return;
+                }
+
+                if ( ! _.has(obj, 'column') ) {
+                  throw new Error('updateSektionColumnCollection, no column provided in sekItem ' + sekItem.id + '.');
+                }
+                var column = _.clone(obj.column);
+
+                if ( ! _.has(column, 'id') ) {
+                  throw new Error('updateSektionColumnCollection, no id provided for a column in sekItem ' + sekItem.id + '.');
+                }
+
+                //the column already exist in the sektion
+                if ( _.findWhere( _new_sektion_model.columns, { id : column.id } ) ) {
+                    console.log('COLUMN EXISTS? ' , _new_sektion_model.columns );
+                      _.each( _new_sektion_model.columns , function( _col, _ind ) {
+                            if ( _col.id != column.id )
+                              return;
+
+                            //set the new col
+                            _new_sektion_model.columns[_ind] = column;
+                      });
+                }
+                //the module has to be added
+                else {
+                      console.log('COLUMN TO ADD ');
+                      _new_sektion_model.columns.push(column);
+                }
+                console.log('NEW SEKTION MODEL', _new_sektion_model, _.isEqual(_current_sektion_model, _new_sektion_model)  );
+                console.log('sekItem.isReady.state()', sekItem.isReady.state() );
+                //sekItem.set({ id});
+                //update the item
+                //sekItem.set( _new_sektion_model );
+                sekItem.module.itemReact( _new_sektion_model );
+          },
+
+
+
           dragulizeSektion : function() {
                   var sekItem = this,
-                      module = this.item_module;
+                      module = this.module;
                       _drag_container = $( '.czr-dragula-fake-container', sekItem.container )[0];
 
                    module.dragInstance.containers.push( _drag_container );
-          },
-
-
-          instanciateColumn : function( column, is_added_by_user  ) {
-                  var sekItem = this,
-                      column_model = _.clone( column );
-                  //does this column have modules ?
-                  // var _all_modules = api.control( api.CZR_Helpers.build_setId( 'module-collection') ).czr_moduleCollection.get(),
-                  //     _column_modules = _.findWhere( _all_modules, { column_id : column.id });
-
-                  // if ( ! _.isEmpty( _column_modules) ) {
-                  //   console.log('HAS COLUMN MODULES?', column.id, _column_modules );
-                  //   console.log('column_model', column_model );
-                  //   //column_model.modules.push( )
-                  // }
-
-
-                  //instanciate the column with the default constructor
-                  sekItem.czr_Column.add( column.id , new api.CZRColumn( column.id, {
-                        id : column.id,
-                        initial_column_model : column_model,
-                        sektion : sekItem,
-                        module : sekItem.item_module.id,
-                        control : sekItem.item_module.control.id,
-                        is_added_by_user : is_added_by_user || false
-                  } ) );
-
-                  //push it to the collection
-                  //won't be listened to on
-                  sekItem.updateColumnCollection( {column : column_model });
-          },
-
-
-          //@param obj can be { collection : []}, or { module : {} }
-          updateColumnCollection : function( obj ) {
-                  var sekItem = this,
-                      _current_collection = sekItem.czr_columnCollection.get();
-                      _new_collection = _.clone(_current_collection);
-
-                  //if a collection is provided in the passed obj then simply refresh the collection
-                  //=> typically used when reordering the collection module with sortable or when a column is removed
-                  if ( _.has( obj, 'collection' ) ) {
-                        //reset the collection
-                        sekItem.czr_columnCollection.set(obj.collection);
-                        return;
-                  }
-
-                  if ( ! _.has(obj, 'column') ) {
-                    throw new Error('updateColumnCollection, no column provided in sektion ' + sekItem.id + '. Aborting');
-                  }
-                  var column = _.clone(obj.column);
-
-                  if ( ! _.has(column, 'id') ) {
-                    throw new Error('updateColumnCollection, no id provided for a column in sektion' + sekItem.id + '. Aborting');
-                  }
-                  //the module already exist in the collection
-                  if ( _.findWhere( _new_collection, { id : column.id } ) ) {
-                        _.each( _current_collection , function( _elt, _ind ) {
-                              if ( _elt.id != column.id )
-                                return;
-
-                              //set the new val to the changed property
-                              _new_collection[_ind] = column;
-                        });
-                  }
-                  //the module has to be added
-                  else {
-                        _new_collection.push(column);
-                  }
-                  //Inform the sekItem
-                  sekItem.czr_columnCollection.set(_new_collection);
-          },
-
-
-          //cb of control.czr_columnCollection.callbacks
-          collectionReact : function( to, from ) {
-                console.log('in sektion collection react', to, from );
-                var sekItem = this,
-                    _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
-                    _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
-                    _module_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
-                    is_module_update = _.isEmpty( _module_updated ),
-                    is_collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && ! is_module_update;
-
-                //say it to the sektion
-                var _current_sek_model = sekItem.get(),
-                    _new_sek_model = _.clone( _current_sek_model );
-
-                _new_sek_model.columns = to;
-                console.log('_new_sek_model', _new_sek_model );
-                sekItem.set( _new_sek_model );
-
-                //refreshes the preview frame  :
-                //1) only needed if transport is postMessage, because is triggered by wp otherwise
-                //2) only needed when : add, remove, sort item(s)
-                //module update case
-                // if ( 'postMessage' == api(control.id).transport && ! api.CZR_Helpers.has_part_refresh( control.id ) ) {
-                //     if ( is_collection_sorted )
-                //         control.previewer.refresh();
-                // }
           }
   }//Sektion
 

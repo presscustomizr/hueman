@@ -3,14 +3,14 @@
   // id : item.id,
   // item_model : item,
   // defaultItemModel : module.defaultItemModel,
-  // item_module : module,
+  // module : module,
   // is_added_by_user : is_added_by_user || false
 var CZRItemMths = CZRItemMths || {};
 $.extend( CZRItemMths , {
   //creates the inputs based on the rendered items
   setupInputCollection : function() {
         var item = this,
-            module = item.item_module;
+            module = item.module;
 
         //INPUTS => Setup as soon as the view content is rendered
         //the item is a collection of inputs, each one has its own view module.

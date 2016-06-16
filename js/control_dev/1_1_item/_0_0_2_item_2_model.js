@@ -6,7 +6,7 @@ var CZRItemMths = CZRItemMths || {};
     //the entire collection is sent anyway on api(setId).set( value ), and accessible in the preview via api(setId).bind( fn( to) )
     _sendItem : function( to, from ) {
           var item = this,
-              module = item.item_module,
+              module = item.module,
               _changed_props = [];
 
           //which property(ies) has(ve) changed ?
@@ -32,7 +32,7 @@ var CZRItemMths = CZRItemMths || {};
     //for dynamic multi input modules
     removeItem : function() {
             var item = this,
-                module = this.item_module,
+                module = this.module,
                 _new_collection = _.clone( module.get() );
 
             //destroy the Item DOM el

@@ -34,28 +34,76 @@ $.extend( CZRModuleMths, {
             throw new Error('CZRModule::instantiateItem() : an item has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
           }
           var module = this;
-
-          //Maybe prepare the item, make sure its id is set and unique
-          item =  ( _.has( item, 'id') && module._isItemIdPossible( item.id) ) ? item : module._initNewItem( item || {} );
-
+          //Prepare the item, make sure its id is set and unique
+          item_candidate = module.prepareItemForAPI( item );
           //instanciate the item with the default constructor
-          module.czr_Item.add( item.id, new module.itemConstructor( item.id, {
-                id : item.id,
-                initial_item_model : module.getInitialItemModel( item ),
-                defaultItemModel : _.clone( module.defaultItemModel ),
-                item_control : module.control,
-                item_module : module,
-                is_added_by_user : is_added_by_user || false
-          } ) );
-
+          module.czr_Item.add( item.id, new module.itemConstructor( item.id, item_candidate ) );
           //push it to the collection
           module.updateItemsCollection( { item : module.getInitialItemModel( item ) } );
-
           //listen to each single item change
           module.czr_Item(item.id).callbacks.add( function() { return module.itemReact.apply(module, arguments ); } );
-
+          //the item is now ready and will listen to changes
+          module.czr_Item(item.id).ready();
+          //@todo not sure this is needed now.
           module.trigger('item_instanciated', { item: item, is_added_by_user : is_added_by_user || false } );
   },
+
+
+
+  //@return an API ready item object with the following properties
+  //id : '',
+  // initial_item_model : {},
+  // defaultItemModel : {},
+  // control : {},//control instance
+  // module : {},//module instance
+  // is_added_by_user : false
+  prepareItemForAPI : function( item_candidate ) {
+          var module = this,
+              api_ready_item = {};
+              //normalize it now
+              // _default_module_model = _.clone( control.defautAPIModuleModel ),
+              // _module_model = $.extend( _default_module_model, _module_candidate_model );
+          if ( ! _.isObject( item_candidate ) ) {
+                throw new Error('prepareitemForAPI : a item must be an object to be instantiated.');
+            }
+
+          _.each( module.defaultAPIitemModel, function( _value, _key ) {
+                var _candidate_val = item_candidate[_key];
+                switch( _key ) {
+                      case 'id' :
+                          if ( _.isUndefined( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
+                              api_ready_item[_key] = module._initNewItem( item_candidate || {} ).id;
+                          } else {
+                              if ( ! module._isItemIdPossible( _candidate_val ) )
+                                api_ready_item[_key] = module._initNewItem( item_candidate || {} ).id;
+                              else
+                                api_ready_item[_key] = _candidate_val;
+                          }
+                      break;
+                      case 'initial_item_model' :
+                          api_ready_item[_key] = module.getInitialItemModel( item_candidate );
+                          if ( ! _.isObject( api_ready_item[_key] ) ) {
+                              throw new Error('prepareitemForAPI : initial_item_model must be an object in :  ' + item_candidate.id);
+                          }
+                      break;
+                      case  'defaultItemModel' :
+                          api_ready_item[_key] = _.clone( module.defaultItemModel );
+                      break;
+                      case  'control' :
+                          api_ready_item[_key] = module.control;
+                      break;
+                      case  'module' :
+                          api_ready_item[_key] = module;
+                      break;
+                      case 'is_added_by_user' :
+                          api_ready_item[_key] =  _.isBoolean( _candidate_val ) ? _candidate_val : false;
+                      break;
+                }//switch
+          });
+          return api_ready_item;
+  },
+
+
 
 
   //overridable

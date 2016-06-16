@@ -264,7 +264,7 @@ $.extend( CZRFeaturedPageModuleMths, {
           //at this stage, the model passed in the obj is up to date
           writeItemViewTitle : function( model ) {
                   var item = this,
-                            module  = item.item_module,
+                            module  = item.module,
                             _model = model || item.get(),
                             _title = _model.title ? _model.title : serverControlParams.translatedStrings.featuredPageTitle;
 

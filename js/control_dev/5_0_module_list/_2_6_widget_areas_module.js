@@ -275,7 +275,7 @@ $.extend( CZRWidgetAreaModuleMths, {
   CZRWZonesItem : {
           initialize : function( id, options ) {
                   var item = this,
-                      module = item.item_module;
+                      module = item.module;
 
                   //Add some observable values for this item
                   item.czr_itemLocationAlert = new api.Value();
@@ -288,7 +288,7 @@ $.extend( CZRWidgetAreaModuleMths, {
           //extend parent setupview
           setupView : function() {
                   var item = this,
-                      module = item.item_module;
+                      module = item.module;
                   api.CZRItem.prototype.setupView.call(item);
 
                   /// ALERT FOR NOT AVAILABLE LOCATION
@@ -332,7 +332,7 @@ $.extend( CZRWidgetAreaModuleMths, {
           //Write html informations under the title : location(s) and context(s)
           writeSubtitleInfos : function(model) {
                   var item = this,
-                      module = item.item_module,
+                      module = item.module,
                       _model = _.clone( model || item.get() ),
                       _locations = [],
                       _contexts = [],
@@ -437,7 +437,7 @@ $.extend( CZRWidgetAreaModuleMths, {
           //2 seconds delay
           setModelUpdateTimer : function() {
                   var item = this,
-                      module = item.item_module;
+                      module = item.module;
 
                   clearTimeout( $.data(this, 'modelUpdateTimer') );
                   $.data(
@@ -455,7 +455,7 @@ $.extend( CZRWidgetAreaModuleMths, {
           //takes the model unique id
           _hasModelAllContexts : function( model ) {
                   var item = this,
-                      module = item.item_module,
+                      module = item.module,
                       moduleContexts = _.keys(module.contexts);
 
                   model = model || this.get();

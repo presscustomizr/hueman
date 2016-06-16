@@ -3,18 +3,22 @@
   // id : item.id,
   // initial_item_model : item,
   // defaultItemModel : module.defaultItemModel,
-  // item_module : module,
+  // module : module,
   // is_added_by_user : is_added_by_user || false
 var CZRItemMths = CZRItemMths || {};
 $.extend( CZRItemMths , {
   initialize: function( id, options ) {
-        if ( _.isUndefined(options.item_module) || _.isEmpty(options.item_module) ) {
+        if ( _.isUndefined(options.module) || _.isEmpty(options.module) ) {
           throw new Error('No module assigned to item ' + id + '. Aborting');
         }
 
         var item = this;
         api.Value.prototype.initialize.call( item, null, options );
 
+        //DEFERRED STATES
+        //store the state of ready.
+        //=> we don't want the ready method to be fired several times
+        item.isReady = $.Deferred();
         //will store the embedded and content rendered state
         item.embedded = $.Deferred();
         item.contentRendered = $.Deferred();
@@ -42,6 +46,7 @@ $.extend( CZRItemMths , {
         //the item model is a collection inputs
         //It is populated on init ony => no input can be added dynamically afterwards
         item.bind('input_collection_populated', function( input_collection ) {
+          console.log('JOIE ?');
             //Setup individual item listener
             item.callbacks.add( function() { return item.itemInternalReact.apply(item, arguments ); } );
         });
@@ -55,10 +60,16 @@ $.extend( CZRItemMths , {
 
   },//initialize
 
+  //overridable method
+  //Fired after item instantiation.
+  //The item.callbacks are declared.
+  ready : function() {
+        this.isReady.resolve();
+  },
 
   setupView : function( item_model ) {
           var item = this,
-              module = this.item_module;
+              module = this.module;
 
           item.view_event_map = [
                   //toggles remove view alert
@@ -115,7 +126,7 @@ $.extend( CZRItemMths , {
   setupViewStateListeners : function( to, from ) {
           var item = this,
               item_model = item.get() || item.initial_item_model,//could not be set yet
-              module = this.item_module;
+              module = this.module;
 
           console.log('item.contentRendered.state()', item.contentRendered.state());
           //render and setup view content if needed
@@ -137,6 +148,7 @@ $.extend( CZRItemMths , {
 
   //React to a single item change
   itemInternalReact : function( to, from ) {
+    console.log('IN ITEM INTERNAL REACT', to ,from );
           var item = this;
           //Always update the view title
           item.writeItemViewTitle(to);
