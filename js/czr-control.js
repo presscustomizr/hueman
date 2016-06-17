@@ -1858,7 +1858,7 @@ $.extend( CZRSektionMths, {
   itemReact : function( to, from ) {
         console.log('IN ITEM REACT (OVERRIDES PARENT)', to, from );
         var module = this,
-            sektion_candidate = _.clone(to);
+            sektion_candidate = $.extend(true, {}, to);
         console.log('sektion_candidate BEFORE', sektion_candidate );
         sektion_candidate = module.prepareSekItemForDB( sektion_candidate );
         console.log('sektion_candidate AFTER', sektion_candidate );
@@ -2022,6 +2022,30 @@ $.extend( CZRSektionMths, {
         module.czr_columnCollection.set(_new_collection);
   },
   columnCollectionReact : function( to, from ) {
+        console.log('IN Global Column collection react. DIFFERENCE ? ', to, from, _.difference(to,from)[0] );
+        var module = this,
+            _to_add = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
+            _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
+            _column_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(to,from)[0] : {},
+            is_column_update = ! _.isEmpty( _column_updated ),
+            is_column_collection_sorted = _.isEmpty(_to_add) && _.isEmpty(_to_remove)  && ! is_column_update;
+
+        if ( is_column_update ) {
+              console.log('THE COLUMN ' + _column_updated.id + ' HAS BEEN UPDATED.', _column_updated );
+              var _current_sek_model = _column_updated.sektion.get(),
+                  _new_sek_model = $.extend(true, {}, _current_sek_model),//_.clone() is not enough there, we need a deep cloning.
+                  _new_col = {};
+              _.each( _current_sek_model.columns, function( _col, _key ){
+                    if ( _col.id != _column_updated.id )
+                      return;
+                    _new_sek_model.columns[_key] = _column_updated;
+              } );
+
+              console.log( '_.isEqual( _current_sek_model, _new_sek_model );', _.isEqual( _current_sek_model, _new_sek_model ), _current_sek_model , _new_sek_model );
+
+              console.log('SEKTION ' + _column_updated.sektion.id + ' HAS TO BE UPDATED.', _new_sek_model );
+              _column_updated.sektion.set( _new_sek_model );
+        }
   },
   generateColId : function( key ) {
         var module = this;
@@ -2278,7 +2302,8 @@ $.extend( CZRColumnMths , {
           return $view;
     },
     columnReact : function( to ,from ) {
-          console.log('IN COLUMN REACT : ', to, from );
+          var column = this;
+          console.log('THE MODEL OF THE COLUMN ' + column.id + ' HAS BEEN UPDATED. TIME TO UPDATE THE PARENT SEKTION ITEM', to, from );
           this.sektion.module.updateColumnCollection( {column : to });
     },
     userAddedModule : function( obj, module_id   ) {
@@ -2326,6 +2351,8 @@ $.extend( CZRColumnMths , {
             else {
                   _new_collection.push(module);
             }
+
+            console.log('NEW MODULE COLLECTION IN COLUMN : ' + column.id + ' : ', _new_collection );
             column.czr_columnModuleCollection.set( _new_collection );
     },
     prepareModuleForColumnAPI : function( module_candidate ) {
@@ -2362,6 +2389,8 @@ $.extend( CZRColumnMths , {
                 _new_module_collection[_key] = { id : _mod.id };
             });
             _new_column_model.modules = _new_module_collection;
+
+            console.log('COLUMN ' + column.id + ' MODEL UPDATED (before updating the sektion) : ', _new_column_model );
             column.set( _new_column_model );
     },
 
@@ -3751,7 +3780,7 @@ $.extend( CZRMultiModuleControlMths, {
           control.czr_Module.add( module.id, new constructor( module.id, control.prepareModuleForAPI( module_api_ready ) ) );
 
           control.czr_Module( module.id ).isReady.done( function() {
-                console.log('MODULE READY : control.czr_Module( module.id ).get()', control.czr_Module( module.id ).get() );
+                console.log('MODULE '+ module.id + ' : ADD IT TO THE MODULE COLLECTION. Module Model : ', control.czr_Module( module.id ).get() );
                 control.updateModulesCollection( {module : module_api_ready } );
           });
 
@@ -3868,6 +3897,22 @@ $.extend( CZRMultiModuleControlMths, {
   },
   syncColumn : function( to, from ) {
         console.log('IN SYNC COLUM', to , from );
+        var control = this,
+            main_sektion_module_instance = control.syncSektionModule.get();
+        var added_mod = _.filter( to, function( _mod, _key ){
+            return ! _.findWhere( from, { id : _mod.id } );
+        } );
+
+        console.log('added_mod', added_mod );
+
+        if ( ! _.isEmpty(added_mod) ) {
+              _.each( added_mod, function( _mod ) {
+                      console.log('MOD TO ADD',_mod );
+                      console.log('MODULE ' + _mod.id + ' MUST BE ADDED TO COLUMN ' + _mod.column_id );
+                      main_sektion_module_instance.czr_Column( _mod.column_id ).updateColumnModuleCollection( { module : _mod } );
+              });
+        }
+        control.trigger( 'columns-synchronized', to );
   },
   filterModuleCollectionBeforeAjax : function( collection ) {
           var control = this,

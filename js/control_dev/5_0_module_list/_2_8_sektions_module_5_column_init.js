@@ -135,7 +135,8 @@ $.extend( CZRColumnMths , {
     //the job is this callback is to inform the parent sektion collection that something happened
     //typically, a module has been added
     columnReact : function( to ,from ) {
-          console.log('IN COLUMN REACT : ', to, from );
+          var column = this;
+          console.log('THE MODEL OF THE COLUMN ' + column.id + ' HAS BEEN UPDATED. TIME TO UPDATE THE PARENT SEKTION ITEM', to, from );
           this.sektion.module.updateColumnCollection( {column : to });
     },
 
@@ -211,6 +212,7 @@ $.extend( CZRColumnMths , {
                   _new_collection.push(module);
             }
 
+            console.log('NEW MODULE COLLECTION IN COLUMN : ' + column.id + ' : ', _new_collection );
             //set the collection
             column.czr_columnModuleCollection.set( _new_collection );
     },
@@ -259,6 +261,8 @@ $.extend( CZRColumnMths , {
 
             //say it to the column instance
             _new_column_model.modules = _new_module_collection;
+
+            console.log('COLUMN ' + column.id + ' MODEL UPDATED (before updating the sektion) : ', _new_column_model );
             column.set( _new_column_model );
     },
 

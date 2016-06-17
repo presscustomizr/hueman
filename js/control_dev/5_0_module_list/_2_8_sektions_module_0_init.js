@@ -95,7 +95,7 @@ $.extend( CZRSektionMths, {
   itemReact : function( to, from ) {
         console.log('IN ITEM REACT (OVERRIDES PARENT)', to, from );
         var module = this,
-            sektion_candidate = _.clone(to);
+            sektion_candidate = $.extend(true, {}, to);
         console.log('sektion_candidate BEFORE', sektion_candidate );
         //we want to make sure that the item model is compliant with default model
         sektion_candidate = module.prepareSekItemForDB( sektion_candidate );
@@ -339,21 +339,34 @@ $.extend( CZRSektionMths, {
   //cb of control.czr_columnCollection.callbacks
   //The job of this function is to set the column collection in their respective sektItems
   columnCollectionReact : function( to, from ) {
-        // console.log('IN Global Column collection react', to, from );
-        // var module = this,
-        //     _to_add = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
-        //     _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
-        //     _column_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
-        //     is_column_update = _.isEmpty( _column_updated ),
-        //     is_column_collection_sorted = _.isEmpty(_to_add) && _.isEmpty(_to_remove)  && ! is_column_update;
+        console.log('IN Global Column collection react. DIFFERENCE ? ', to, from, _.difference(to,from)[0] );
+        var module = this,
+            _to_add = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
+            _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
+            _column_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(to,from)[0] : {},
+            is_column_update = ! _.isEmpty( _column_updated ),
+            is_column_collection_sorted = _.isEmpty(_to_add) && _.isEmpty(_to_remove)  && ! is_column_update;
 
-        // console.log( '_to_add', _to_add );
-        // console.log( '_to_remove', _to_remove );
-        // console.log( 'is_column_update', is_column_update );
-        // console.log( 'is_column_collection_sorted', is_column_collection_sorted );
-        //say it to the sektion
-        // var _current_sek_model = sekItem.get(),
-        //     _new_sek_model = _.clone( _current_sek_model );
+        if ( is_column_update ) {
+              console.log('THE COLUMN ' + _column_updated.id + ' HAS BEEN UPDATED.', _column_updated );
+              //say it to the sektion
+              var _current_sek_model = _column_updated.sektion.get(),
+                  _new_sek_model = $.extend(true, {}, _current_sek_model),//_.clone() is not enough there, we need a deep cloning.
+                  _new_col = {};
+
+              //find the column and update it
+              _.each( _current_sek_model.columns, function( _col, _key ){
+                    if ( _col.id != _column_updated.id )
+                      return;
+                    _new_sek_model.columns[_key] = _column_updated;
+              } );
+
+              console.log( '_.isEqual( _current_sek_model, _new_sek_model );', _.isEqual( _current_sek_model, _new_sek_model ), _current_sek_model , _new_sek_model );
+
+              console.log('SEKTION ' + _column_updated.sektion.id + ' HAS TO BE UPDATED.', _new_sek_model );
+              _column_updated.sektion.set( _new_sek_model );
+        }
+
 
         //loop the new column collection
         //=> set each sektion column collection
