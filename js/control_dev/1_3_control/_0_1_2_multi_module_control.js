@@ -74,7 +74,7 @@ $.extend( CZRMultiModuleControlMths, {
 
                       control.registerModulesOnInit( to );
 
-                      console.log('SETUP MODULE COLLECTION LISTENER NOW');
+                      console.log('SETUP MODULE COLLECTION LISTENER NOW ? ');
                       //LISTEN TO ELEMENT COLLECTION
                       control.czr_moduleCollection.callbacks.add( function() { return control.collectionReact.apply( control, arguments ); } );
                 });
@@ -94,8 +94,10 @@ $.extend( CZRMultiModuleControlMths, {
   //fired when the main sektion module has synchronised its if with the module-collection control
   registerModulesOnInit : function( sektion_module_instance ) {
           console.log('IN REGISTER MODULES ON INIT', sektion_module_instance.id  );
-          var control = this;
-          _.each( api(control.id).get(), function( _mod, _key ) {
+          var control = this,
+              saved_modules = $.extend( true, {}, api(control.id).get() );//deep clone
+
+          _.each( saved_modules, function( _mod, _key ) {
                   console.log('POPULATE THE SAVED MODULE COLLECTION ON INIT :', _mod, _mod.sektion_id );
                   //we need the sektion object
                   //First let's find the sektion module id
@@ -326,6 +328,7 @@ $.extend( CZRMultiModuleControlMths, {
             is_module_update = _.isEmpty( _module_updated ),
             is_collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && ! is_module_update;
 
+        console.log('MODULE COLLECTION BEFORE SET : ', control.filterModuleCollectionBeforeAjax(to) );
         //say it to the setting
         api(this.id).set( control.filterModuleCollectionBeforeAjax(to) );
 
@@ -375,11 +378,11 @@ $.extend( CZRMultiModuleControlMths, {
   //}
   filterModuleCollectionBeforeAjax : function( collection ) {
           var control = this,
-              _filtered_collection = _.clone( collection );
+              _filtered_collection = $.extend( true, [], collection );
 
           _.each( collection , function( _mod, _key ) {
-                console.log('in filterModuleCollectionBeforeAjax', _mod );
-                _filtered_collection[_key] = control.prepareModuleForDB( _mod );
+                var db_ready_mod = $.extend( true, {}, _mod );
+                _filtered_collection[_key] = control.prepareModuleForDB( db_ready_mod );
           });
 
           return _filtered_collection;

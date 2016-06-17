@@ -105,7 +105,7 @@ $.extend( CZRTextModuleMths, {
                 //defer actions on item view embedded
                 item.embedded.done( function() {
                         var item_model = item.get() || item.initial_item_model;//could not be set yet
-
+                        console.log('item_model', item_model);
                       //render and setup view content if needed
                         if ( 'pending' == item.contentRendered.state() ) {
                             var $item_content = item.renderViewContent( item_model );

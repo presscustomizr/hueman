@@ -645,7 +645,7 @@ $.extend( CZRInputMths , {
             input.input_event_map = [
                     {
                       trigger   : $.trim( ['change', trigger_map[input.type] || '' ].join(' ') ),//was 'propertychange change click keyup input',//colorpickerchange is a custom colorpicker event @see method setupColorPicker => otherwise we don't
-                      selector  : 'input[data-type], select[data-type]',
+                      selector  : 'input[data-type], select[data-type], textarea[data-type]',
                       name      : 'set_input_value',
                       actions   : 'updateInput'
                     }
@@ -663,7 +663,8 @@ $.extend( CZRInputMths , {
                 input_type  = is_input ? input.container.find('[data-type]').attr('type') : false,
                 is_select   = input.container.find('[data-type]').is('select'),
                 is_textarea = input.container.find('[data-type]').is('textarea');
-
+            if ( is_textarea )
+              return;
 
             input.syncElement = new api.Element( input.container.find('[data-type]') );
             input.syncElement.set( input() );
@@ -2048,6 +2049,7 @@ $.extend( CZRSektionMths, {
         }
   },
   generateColId : function( key ) {
+    console.log('in generate Col id : ', key );
         var module = this;
         key = key || module.czr_columnCollection.get().length + 1;
         var id_candidate = 'col_' + key;
@@ -2055,7 +2057,7 @@ $.extend( CZRSektionMths, {
               throw new Error('The column collection does not exist or is not properly set in module : ' + module.id );
         }
         if ( module.czr_Column.has( id_candidate ) )
-          return module.generateColId( key++ );
+          return module.generateColId( key ++ );
 
         return id_candidate;
   },
@@ -3441,6 +3443,7 @@ $.extend( CZRTextModuleMths, {
                 }
                 item.embedded.done( function() {
                         var item_model = item.get() || item.initial_item_model;//could not be set yet
+                        console.log('item_model', item_model);
                         if ( 'pending' == item.contentRendered.state() ) {
                             var $item_content = item.renderViewContent( item_model );
                             if ( ! _.isUndefined($item_content) && false !== $item_content ) {
@@ -3716,7 +3719,7 @@ $.extend( CZRMultiModuleControlMths, {
 
                       control.registerModulesOnInit( to );
 
-                      console.log('SETUP MODULE COLLECTION LISTENER NOW');
+                      console.log('SETUP MODULE COLLECTION LISTENER NOW ? ');
                       control.czr_moduleCollection.callbacks.add( function() { return control.collectionReact.apply( control, arguments ); } );
                 });
                 control.bind( 'user-module-candidate', function( _module ) {
@@ -3726,8 +3729,10 @@ $.extend( CZRMultiModuleControlMths, {
   },
   registerModulesOnInit : function( sektion_module_instance ) {
           console.log('IN REGISTER MODULES ON INIT', sektion_module_instance.id  );
-          var control = this;
-          _.each( api(control.id).get(), function( _mod, _key ) {
+          var control = this,
+              saved_modules = $.extend( true, {}, api(control.id).get() );//deep clone
+
+          _.each( saved_modules, function( _mod, _key ) {
                   console.log('POPULATE THE SAVED MODULE COLLECTION ON INIT :', _mod, _mod.sektion_id );
                   var _sektion_control = api.control( api.CZR_Helpers.build_setId( 'sektions') );
 
@@ -3889,6 +3894,8 @@ $.extend( CZRMultiModuleControlMths, {
             _module_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
             is_module_update = _.isEmpty( _module_updated ),
             is_collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && ! is_module_update;
+
+        console.log('MODULE COLLECTION BEFORE SET : ', control.filterModuleCollectionBeforeAjax(to) );
         api(this.id).set( control.filterModuleCollectionBeforeAjax(to) );
         if ( 'postMessage' == api(control.id).transport && ! api.CZR_Helpers.has_part_refresh( control.id ) ) {
             if ( is_collection_sorted )
@@ -3916,11 +3923,11 @@ $.extend( CZRMultiModuleControlMths, {
   },
   filterModuleCollectionBeforeAjax : function( collection ) {
           var control = this,
-              _filtered_collection = _.clone( collection );
+              _filtered_collection = $.extend( true, [], collection );
 
           _.each( collection , function( _mod, _key ) {
-                console.log('in filterModuleCollectionBeforeAjax', _mod );
-                _filtered_collection[_key] = control.prepareModuleForDB( _mod );
+                var db_ready_mod = $.extend( true, {}, _mod );
+                _filtered_collection[_key] = control.prepareModuleForDB( db_ready_mod );
           });
 
           return _filtered_collection;

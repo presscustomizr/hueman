@@ -59,7 +59,7 @@ $.extend( CZRInputMths , {
                     //set input value
                     {
                       trigger   : $.trim( ['change', trigger_map[input.type] || '' ].join(' ') ),//was 'propertychange change click keyup input',//colorpickerchange is a custom colorpicker event @see method setupColorPicker => otherwise we don't
-                      selector  : 'input[data-type], select[data-type]',
+                      selector  : 'input[data-type], select[data-type], textarea[data-type]',
                       name      : 'set_input_value',
                       actions   : 'updateInput'
                     }
@@ -80,6 +80,10 @@ $.extend( CZRInputMths , {
                 is_select   = input.container.find('[data-type]').is('select'),
                 is_textarea = input.container.find('[data-type]').is('textarea');
 
+            //@hack => todo
+            //for text area inputs, the synchronizer is buggy
+            if ( is_textarea )
+              return;
 
             input.syncElement = new api.Element( input.container.find('[data-type]') );
             input.syncElement.set( input() );

@@ -388,6 +388,7 @@ $.extend( CZRSektionMths, {
 
   //recursive
   generateColId : function( key ) {
+    console.log('in generate Col id : ', key );
         var module = this;
         key = key || module.czr_columnCollection.get().length + 1;
         var id_candidate = 'col_' + key;
@@ -398,7 +399,7 @@ $.extend( CZRSektionMths, {
         }
         //make sure the column is not already instantiated
         if ( module.czr_Column.has( id_candidate ) )
-          return module.generateColId( key++ );
+          return module.generateColId( key ++ );
 
         return id_candidate;
   },
