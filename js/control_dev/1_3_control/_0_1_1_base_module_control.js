@@ -108,11 +108,11 @@ $.extend( CZRBaseModuleControlMths, {
           control.czr_Module.add( module.id, new constructor( module.id, {
                 id : module.id,
                 section : module.section,
-                block   : '',
                 module_type    : module.module_type,
                 items   : _.clone( module.items ),
                 control : control,
-                is_added_by_user : is_added_by_user || false
+                is_added_by_user : is_added_by_user || false,
+                is_sortable : true
           } ) );
 
           //push it to the collection

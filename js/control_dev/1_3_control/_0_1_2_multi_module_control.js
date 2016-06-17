@@ -176,8 +176,13 @@ $.extend( CZRMultiModuleControlMths, {
           //instanciate the module with the default constructor
           control.czr_Module.add( module.id, new constructor( module.id, control.prepareModuleForAPI( module_api_ready ) ) );
 
-          //push it to the collection of the module-collection control
-          control.updateModulesCollection( {module : module_api_ready } );
+          control.czr_Module( module.id ).isReady.done( function() {
+                console.log('MODULE READY : control.czr_Module( module.id ).get()', control.czr_Module( module.id ).get() );
+                //push it to the collection of the module-collection control
+                //=> updates the wp api setting
+                control.updateModulesCollection( {module : module_api_ready } );
+          });
+
   },
 
 
@@ -335,6 +340,23 @@ $.extend( CZRMultiModuleControlMths, {
   },
 
 
+  //cb of : api(control.id).callbacks.
+  syncColumn : function( to, from ) {
+        console.log('IN SYNC COLUM', to , from );
+        // var control = this,
+        //     main_sektion_module_instance = control.syncSektionModule.get(),
+        //     _to_add = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
+        //     _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
+        //     _module_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
+        //     is_module_update = _.isEmpty( _module_updated ),
+        //     is_collection_sorted = _.isEmpty(_to_add) && _.isEmpty(_to_remove)  && ! is_module_update;
+
+        // _.each( to, function( _mod, _key ){
+        //         main_sektion_module_instance.czr_Column( _mod.column_id ).updateColumnModuleCollection( { module : _mod } );
+        // });
+        // control.trigger( 'columns-synchronized', to );
+  },
+
   //an overridable method to act on the collection just before it is ajaxed
   //We want to filter the module collection so that each module saved in db looks like :
   //{
@@ -415,23 +437,5 @@ $.extend( CZRMultiModuleControlMths, {
               }//switch
         });
         return db_ready_module;
-  },
-
-
-  //cb of : api(control.id).callbacks.
-  syncColumn : function( to, from ) {
-        console.log('IN SYNC COLUM', to , from );
-        var control = this,
-            main_sektion_module_instance = control.syncSektionModule.get(),
-            _to_add = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
-            _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
-            _module_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
-            is_module_update = _.isEmpty( _module_updated ),
-            is_collection_sorted = _.isEmpty(_to_add) && _.isEmpty(_to_remove)  && ! is_module_update;
-
-        _.each( to, function( _mod, _key ){
-                main_sektion_module_instance.czr_Column( _mod.column_id ).updateColumnModuleCollection( { module : _mod } );
-        });
-        control.trigger( 'columns-synchronized', to );
   }
 });//$.extend//CZRBaseControlMths

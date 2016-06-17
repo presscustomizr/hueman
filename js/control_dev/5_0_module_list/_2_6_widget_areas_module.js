@@ -100,8 +100,8 @@ $.extend( CZRWidgetAreaModuleMths, {
                 module.widgetPanelReact();//setup some visual adjustments, must be ran each time panel is closed or expanded
 
                 //Fire the module if not done already
-                if ( ! to || ! _.isEmpty( module.get() ) )
-                    return;
+                if ( 'resolved' == module.isReady.state() )
+                  return;
                 module.ready();
           });
   },//initialize

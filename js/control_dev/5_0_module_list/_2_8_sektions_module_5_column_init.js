@@ -18,6 +18,7 @@ $.extend( CZRColumnMths , {
           //write the options as properties, name is included
           $.extend( column, options || {} );
 
+          column.isReady = $.Deferred();
           column.embedded = $.Deferred();
 
           //stores the column collection
@@ -42,6 +43,8 @@ $.extend( CZRColumnMths , {
                 column.embedded.resolve();
           });
 
+
+
           ////////////////////////////////////////////////////
           /// COLUM DOM EVENT MAP
           ////////////////////////////////////////////////////
@@ -55,11 +58,14 @@ $.extend( CZRColumnMths , {
                 },
           ];//module.module_event_map
 
+
+
+
           //when column is embedded :
           //1) populate the column module collection
           //2) setup the DOM event handler
           column.embedded.done(function() {
-                console.log('in column embedded. Current module collection for column : ' + this.id , column.czr_columnModuleCollection.get() );
+                console.log('in column embedded. Current module collection for column : ' + column.id , column.czr_columnModuleCollection.get() );
 
                 //at this point, the question is : are the modules assigned to this column instantiated ?
                 //if not => let's instantiate them. => this should not change the module collection czr_moduleCollection of the module-collection control
@@ -100,6 +106,20 @@ $.extend( CZRColumnMths , {
                 );
           });
     },
+
+
+    //overridable method
+    //Fired if column is instantiated.
+    ready : function() {
+          var column = this;
+          //=>allows us to use the following event base method : column.isReady.done( function() {} ):
+          column.isReady.resolve();
+
+          //push it to the module collection
+          console.log('column.get() ? ', column.get() );
+          column.sektion.module.updateColumnCollection( {column : column.get() });
+    },
+
 
 
     //fired on parent section contentRendered.done()

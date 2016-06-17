@@ -1010,8 +1010,7 @@ $.extend( CZRItemMths , {
 
         item.setupView( _initial_model );
         item.bind('input_collection_populated', function( input_collection ) {
-          console.log('JOIE ?');
-            item.callbacks.add( function() { return item.itemInternalReact.apply(item, arguments ); } );
+              item.callbacks.add( function() { return item.itemInternalReact.apply(item, arguments ); } );
         });
 
   },//initialize
@@ -1335,11 +1334,19 @@ $.extend( CZRModuleMths, {
           module.itemConstructor = api.CZRItem;
           module.czr_Item = new api.Values();
           module.inputConstructor = api.CZRInput;
+
+          module.isReady.done( function() {
+                module.populateItemCollection();
+                if ( module.is_sortable )
+                  module._makeItemsSortable();
+                module.callbacks.add( function() { return module.moduleReact.apply(module, arguments ); } );
+                console.log('MODULE IS READY', module.id );
+          });
+
   },
   ready : function() {
           var module = this;
-          module.populateItemCollection()._makeItemsSortable();
-          module.callbacks.add( function() { return module.moduleReact.apply(module, arguments ); } );
+
           module.isReady.resolve();
   },
   moduleReact : function( to, from ) {
@@ -1940,7 +1947,7 @@ $.extend( CZRSektionMths, {
 
         console.log('extended column model before api instantiation : ', column_model );
         module.czr_Column.add( column_model.id , new api.CZRColumn( column_model.id, column_model ) );
-        module.updateColumnCollection( {column : column_model });
+        module.czr_Column(column_model.id).ready();
   },
   prepareColumnForAPI : function( column_candidate ) {
       var module = this,
@@ -2012,7 +2019,6 @@ $.extend( CZRSektionMths, {
         else {
               _new_collection.push(column);
         }
-        column.sektion.updateSektionColumnCollection( { column : column });
         module.czr_columnCollection.set(_new_collection);
   },
   columnCollectionReact : function( to, from ) {
@@ -2113,7 +2119,8 @@ $.extend( CZRSektionMths, {
                         }
 
                         _.each( sekItem.get().columns , function( _column ) {
-                              module.instantiateColumn( $.extend( _column, { sektion : sekItem } ) );
+                              var column_candidate = _.clone( _column );
+                              module.instantiateColumn( $.extend( column_candidate, { sektion : sekItem } ) );
                         });
 
 
@@ -2214,6 +2221,7 @@ $.extend( CZRColumnMths , {
           api.Value.prototype.initialize.call( column, null, options );
           $.extend( column, options || {} );
 
+          column.isReady = $.Deferred();
           column.embedded = $.Deferred();
           column.czr_columnModuleCollection = new api.Value();
           column.czr_columnModuleCollection.set( column.modules );
@@ -2235,7 +2243,7 @@ $.extend( CZRColumnMths , {
                 },
           ];//module.module_event_map
           column.embedded.done(function() {
-                console.log('in column embedded. Current module collection for column : ' + this.id , column.czr_columnModuleCollection.get() );
+                console.log('in column embedded. Current module collection for column : ' + column.id , column.czr_columnModuleCollection.get() );
                 _.each( column.czr_columnModuleCollection.get() , function( _mod ) {
                           var module_collection_control = api.control( api.CZR_Helpers.build_setId( 'module-collection') );
                           if ( module_collection_control.czr_Module.has(_mod.id) )
@@ -2256,6 +2264,12 @@ $.extend( CZRColumnMths , {
                         column//instance where to look for the cb methods
                 );
           });
+    },
+    ready : function() {
+          var column = this;
+          column.isReady.resolve();
+          console.log('column.get() ? ', column.get() );
+          column.sektion.module.updateColumnCollection( {column : column.get() });
     },
     render : function() {
           var column   = this;
@@ -2382,7 +2396,7 @@ $.extend( CZRSocialModuleMths, {
           };
           this.itemAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
           api.section( module.control.section() ).expanded.bind(function(to) {
-                if ( ! to || ! _.isEmpty( module.get() ) )
+                if ( 'resolved' == module.isReady.state() )
                   return;
                 module.ready();
           });
@@ -2590,8 +2604,8 @@ $.extend( CZRWidgetAreaModuleMths, {
           api.section(module.serverParams.dynWidgetSection).expanded.callbacks.add( function() { return module.widgetSectionReact.apply(module, arguments ); } );
           api.panel('widgets').expanded.callbacks.add( function(to, from) {
                 module.widgetPanelReact();//setup some visual adjustments, must be ran each time panel is closed or expanded
-                if ( ! to || ! _.isEmpty( module.get() ) )
-                    return;
+                if ( 'resolved' == module.isReady.state() )
+                  return;
                 module.ready();
           });
   },//initialize
@@ -3127,8 +3141,8 @@ $.extend( CZRFeaturedPageModuleMths, {
           };
           this.itemAddedMessage = serverControlParams.translatedStrings.featuredPageAdded;
           api.section( module.control.section() ).expanded.bind(function(to) {
-            if ( ! to || ! _.isEmpty( module.get() ) )
-              return;
+            if ( 'resolved' == module.isReady.state() )
+                  return;
             module.ready();
           });
 
@@ -3333,6 +3347,7 @@ $.extend( CZRTextModuleMths, {
   initialize: function( id, options ) {
           var module = this;
           api.CZRModule.prototype.initialize.call( module, id, options );
+          module.is_sortable = false;
           $.extend( module, {
                 singleModuleWrapper : 'czr-single-module-wrapper',
                 viewTemplateEl : 'czr-module-text-item-view',
@@ -3371,14 +3386,6 @@ $.extend( CZRTextModuleMths, {
         $( '.czr-static-module-wrapper' , module._getColumn().container).append( $_module_el );
 
         return $_module_el;
-  },
-
-
-  ready : function() {
-          var module = this;
-
-          module.populateItemCollection();
-          module.callbacks.add( function() { return module.moduleReact.apply(module, arguments ); } );
   },
 
 
@@ -3442,7 +3449,7 @@ $.extend( CZRSlideModuleMths, {
           };
           this.itemAddedMessage = serverControlParams.translatedStrings.slideAdded;
           api.section( module.control.section() ).expanded.bind(function(to) {
-            if ( ! to || ! _.isEmpty( module.get() ) )
+            if ( 'resolved' == module.isReady.state() )
               return;
             module.ready();
           });
@@ -3572,11 +3579,11 @@ $.extend( CZRBaseModuleControlMths, {
           control.czr_Module.add( module.id, new constructor( module.id, {
                 id : module.id,
                 section : module.section,
-                block   : '',
                 module_type    : module.module_type,
                 items   : _.clone( module.items ),
                 control : control,
-                is_added_by_user : is_added_by_user || false
+                is_added_by_user : is_added_by_user || false,
+                is_sortable : true
           } ) );
           control.updateModulesCollection( {module : module });
   },
@@ -3742,7 +3749,12 @@ $.extend( CZRMultiModuleControlMths, {
           var module_api_ready = control.prepareModuleForAPI( module );
           console.log('Module model ready for instantiation : ', control.prepareModuleForAPI( module_api_ready ) );
           control.czr_Module.add( module.id, new constructor( module.id, control.prepareModuleForAPI( module_api_ready ) ) );
-          control.updateModulesCollection( {module : module_api_ready } );
+
+          control.czr_Module( module.id ).isReady.done( function() {
+                console.log('MODULE READY : control.czr_Module( module.id ).get()', control.czr_Module( module.id ).get() );
+                control.updateModulesCollection( {module : module_api_ready } );
+          });
+
   },
   prepareModuleForAPI : function( module_candidate ) {
         if ( ! _.isObject( module_candidate ) ) {
@@ -3854,6 +3866,9 @@ $.extend( CZRMultiModuleControlMths, {
                 control.previewer.refresh();
         }
   },
+  syncColumn : function( to, from ) {
+        console.log('IN SYNC COLUM', to , from );
+  },
   filterModuleCollectionBeforeAjax : function( collection ) {
           var control = this,
               _filtered_collection = _.clone( collection );
@@ -3913,21 +3928,6 @@ $.extend( CZRMultiModuleControlMths, {
               }//switch
         });
         return db_ready_module;
-  },
-  syncColumn : function( to, from ) {
-        console.log('IN SYNC COLUM', to , from );
-        var control = this,
-            main_sektion_module_instance = control.syncSektionModule.get(),
-            _to_add = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
-            _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
-            _module_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
-            is_module_update = _.isEmpty( _module_updated ),
-            is_collection_sorted = _.isEmpty(_to_add) && _.isEmpty(_to_remove)  && ! is_module_update;
-
-        _.each( to, function( _mod, _key ){
-                main_sektion_module_instance.czr_Column( _mod.column_id ).updateColumnModuleCollection( { module : _mod } );
-        });
-        control.trigger( 'columns-synchronized', to );
   }
 });//$.extend//CZRBaseControlMths
 var CZRMultiplePickerMths = CZRMultiplePickerMths || {};

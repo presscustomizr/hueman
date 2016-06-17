@@ -75,26 +75,36 @@ $.extend( CZRModuleMths, {
           module.inputConstructor = api.CZRInput;
 
           //module.ready(); => fired by children
+
+          module.isReady.done( function() {
+                //Important note : this event refreshes the customizer setting value
+                //It's not listened to before the api is ready
+                //=> the collection update on startup is done when the module is embedded and BEFORE the api is ready
+                //=> won't trigger and change setting
+                module.populateItemCollection();
+
+                //the is_sortable property is set when instantiating a module
+                //it can be overriden by a module in its initialize method
+                if ( module.is_sortable )
+                  module._makeItemsSortable();
+
+                //listen to each single module change
+                module.callbacks.add( function() { return module.moduleReact.apply(module, arguments ); } );
+
+                //this module is ready
+                console.log('MODULE IS READY', module.id );
+          });
+
   },
 
 
 
   //////////////////////////////////
-  ///READY = CONTROL DOM ELEMENT EMBEDDED ON THE PAGE
-  ///FIRED BEFORE API READY
+  ///READY
   //////////////////////////////////
   ready : function() {
           var module = this;
-          //Important note : this event refreshes the customizer setting value
-          //It's not listened to before the api is ready
-          //=> the collection update on startup is done when the module is embedded and BEFORE the api is ready
-          //=> won't trigger and change setting
-          module.populateItemCollection()._makeItemsSortable();
 
-          //listen to each single module change
-          module.callbacks.add( function() { return module.moduleReact.apply(module, arguments ); } );
-
-          //this module is ready
           module.isReady.resolve();
   },
 

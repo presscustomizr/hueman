@@ -228,9 +228,8 @@ $.extend( CZRSektionMths, {
         //=> makes sure that the column is ready for instanciation
         module.czr_Column.add( column_model.id , new api.CZRColumn( column_model.id, column_model ) );
 
-        //push it to the collection
-        //won't be listened to on
-        module.updateColumnCollection( {column : column_model });
+        //the column is now ready and will listen to changes
+        module.czr_Column(column_model.id).ready();
   },
 
 
@@ -331,7 +330,7 @@ $.extend( CZRSektionMths, {
         }
 
         //Inform the column sektion
-        column.sektion.updateSektionColumnCollection( { column : column });
+        //column.sektion.updateSektionColumnCollection( { column : column });
         //Inform the global column collection
         module.czr_columnCollection.set(_new_collection);
   },

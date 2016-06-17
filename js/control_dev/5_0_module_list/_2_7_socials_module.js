@@ -37,7 +37,7 @@ $.extend( CZRSocialModuleMths, {
           //overrides the default success message
           this.itemAddedMessage = serverControlParams.translatedStrings.socialLinkAdded;
           api.section( module.control.section() ).expanded.bind(function(to) {
-                if ( ! to || ! _.isEmpty( module.get() ) )
+                if ( 'resolved' == module.isReady.state() )
                   return;
                 module.ready();
           });

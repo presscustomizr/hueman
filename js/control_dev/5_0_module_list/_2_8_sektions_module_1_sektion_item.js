@@ -39,7 +39,8 @@ $.extend( CZRSektionMths, {
                               //}
                               //=> we need to extend it with sektion instance
                               //instantiate the column and push it to the global column collection
-                              module.instantiateColumn( $.extend( _column, { sektion : sekItem } ) );
+                              var column_candidate = _.clone( _column );
+                              module.instantiateColumn( $.extend( column_candidate, { sektion : sekItem } ) );
                         });
 
 

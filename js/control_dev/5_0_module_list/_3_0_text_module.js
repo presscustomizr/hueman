@@ -8,6 +8,9 @@ $.extend( CZRTextModuleMths, {
           //run the parent initialize
           api.CZRModule.prototype.initialize.call( module, id, options );
 
+          //this module is not sortable
+          module.is_sortable = false;
+
           //extend the module with new template Selectors
           $.extend( module, {
                 singleModuleWrapper : 'czr-single-module-wrapper',
@@ -69,16 +72,6 @@ $.extend( CZRTextModuleMths, {
         $( '.czr-static-module-wrapper' , module._getColumn().container).append( $_module_el );
 
         return $_module_el;
-  },
-
-
-  ready : function() {
-          var module = this;
-
-          module.populateItemCollection();
-
-          //listen to module change
-          module.callbacks.add( function() { return module.moduleReact.apply(module, arguments ); } );
   },
 
 

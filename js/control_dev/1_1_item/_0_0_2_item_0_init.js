@@ -46,9 +46,8 @@ $.extend( CZRItemMths , {
         //the item model is a collection inputs
         //It is populated on init ony => no input can be added dynamically afterwards
         item.bind('input_collection_populated', function( input_collection ) {
-          console.log('JOIE ?');
-            //Setup individual item listener
-            item.callbacks.add( function() { return item.itemInternalReact.apply(item, arguments ); } );
+              //Setup individual item listener
+              item.callbacks.add( function() { return item.itemInternalReact.apply(item, arguments ); } );
         });
 
 
@@ -61,7 +60,7 @@ $.extend( CZRItemMths , {
   },//initialize
 
   //overridable method
-  //Fired after item instantiation.
+  //Fired if the item has been instantiated
   //The item.callbacks are declared.
   ready : function() {
         this.isReady.resolve();
