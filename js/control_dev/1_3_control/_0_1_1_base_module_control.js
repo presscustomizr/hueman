@@ -29,7 +29,8 @@ $.extend( CZRBaseModuleControlMths, {
                 czr_social_module    : api.CZRSocialModule,
                 czr_sektion_module    : api.CZRSektionModule,
                 czr_fp_module    : api.CZRFeaturedPageModule,
-                czr_slide_module    : api.CZRSlideModule
+                czr_slide_module    : api.CZRSlideModule,
+                czr_text_editor_module  : api.CZRTextEditorModule
           };
 
           control.czr_Module = new api.Values();

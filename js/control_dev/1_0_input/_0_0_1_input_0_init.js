@@ -37,6 +37,7 @@ $.extend( CZRInputMths , {
                   upload : 'setupImageUploader',
                   color : 'setupColorPicker',
                   content_picker : 'setupContentPicker',
+                  text_editor    : 'setupTextEditor',
                   password : ''
             };
 

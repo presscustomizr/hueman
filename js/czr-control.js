@@ -626,6 +626,7 @@ $.extend( CZRInputMths , {
                   upload : 'setupImageUploader',
                   color : 'setupColorPicker',
                   content_picker : 'setupContentPicker',
+                  text_editor    : 'setupTextEditor',
                   password : ''
             };
 
@@ -991,6 +992,93 @@ $.extend( CZRInputMths , {
         return;
   }
 });//$.extend
+var CZRInputMths = CZRInputMths || {};
+$.extend( CZRInputMths , {
+    setupTextEditor : function() {
+          var input        = this,
+              _model       = input.get();
+          if ( ! input.container )
+            return this;
+
+          if ( ! input.czrRenderInputTextEditorTemplate() )
+            return;
+
+          input.editor      = tinyMCE.get( 'czr-customize-content_editor' );
+          input.textarea    = $( '#czr-customize-content_editor' );
+          input.textpreview = input.container.find('textarea');
+          input.czrUpdateTextPreview();
+
+          input.czrTextEditorBinding();
+  },
+
+  czrTextEditorBinding : function() {
+          var input = this,
+              editor = input.editor,
+              textarea = input.textarea;
+
+          input.bind( input.id + ':changed', input.czrUpdateTextPreview );
+          _.bindAll( input, 'czrOnVisualEditorChange', 'czrOnTextEditorChange' );
+          
+
+          input.container.on( 'click', '.text_editor-button', function() {
+            $(document.body).toggleClass('czr-customize-content_editor-pane-open');
+            var expanded = $( document.body ).hasClass('czr-customize-content_editor-pane-open');
+   
+            if ( expanded ) {
+              editor.setContent( wp.editor.autop( input.get() ) );
+              editor.on( 'input change keyup', input.czrOnVisualEditorChange );
+              textarea.on( 'input', input.czrOnTextEditorChange );
+            } else {
+              editor.off( 'input change keyup', input.czrOnVisualEditorChange );
+              textarea.off( 'input', input.czrOnTextEditorChange );
+            }
+          } );
+
+  },
+
+  czrOnVisualEditorChange : function() {
+          var input = this,
+              editor = input.editor,
+              value;
+
+          value = wp.editor.removep( editor.getContent() );    
+          input.set(value);
+  },
+
+  czrOnTextEditorChange : function() {
+          var input = this,
+              textarea = input.textarea,
+              value;
+
+          value = textarea.val();
+          input.set(value);
+  },
+  czrUpdateTextPreview: function() {
+      var input   = this,
+          input_model = input.get(),
+          value;
+      value = input_model.replace(/(<([^>]+)>)/ig,"");
+      if ( value.length > 30 )
+        value = value.substring(0, 34) + '...';
+
+      input.textpreview.val( value );
+  },
+  czrRenderInputTextEditorTemplate: function() {
+          var input  = this;
+          if ( 0 === $( '#tmpl-czr-input-text_editor-view-content' ).length )
+            return;
+
+          var view_template = wp.template('czr-input-text_editor-view-content'),
+                  $_view_el = input.container.find('input');
+          if ( ! view_template  || ! input.container )
+            return;
+
+          $_view_el.after( view_template( this.get() ) );
+
+          return true;
+  },
+
+});//$.extend//extends api.Value
 var CZRItemMths = CZRItemMths || {};
 $.extend( CZRItemMths , {
   initialize: function( id, options ) {
@@ -3519,6 +3607,63 @@ $.extend( CZRSlideModuleMths, {
                 $( '.' + module.control.css_attr.view_title , item.container ).html( _title );
           }
   }
+});//extends api.CZRDynModule
+
+var CZRTextEditorModuleMths = CZRTextEditorModuleMths || {};
+
+$.extend( CZRTextEditorModuleMths, {
+  initialize: function( id, options ) {
+          var module = this;
+          api.CZRModule.prototype.initialize.call( module, id, options );
+          module.is_sortable = false;
+          $.extend( module, {
+                singleModuleWrapper : 'czr-single-module-wrapper',
+                viewTemplateEl : 'czr-module-item-view',
+                viewContentTemplateEl : 'czr-module-text_editor-view-content',
+          } );
+          module.inputConstructor = api.CZRInput.extend( module.CZRTextEditorInputMths || {} );
+          module.itemConstructor = api.CZRItem.extend( module.CZRTextEditorItem || {} );
+          this.defaultItemModel   = {
+            id : '',
+            text: ''
+          };
+          module.savedItems = _.isEmpty( options.items ) ? [ module._initNewItem( module.defaultItemModel ) ] : options.items;
+ 
+          module.embedded = $.Deferred();
+          
+          var module_wrapper_tmpl = wp.template( module.singleModuleWrapper ),
+            tmpl_data = {
+                id : module.id,
+                type : module.module_type
+            };
+
+          var $_module_el = $(  module_wrapper_tmpl( tmpl_data ) );
+
+          api.section( module.control.section() ).expanded.bind(function(to) {
+
+            if ( ! to || ! _.isEmpty( module.get() ) )
+              return;
+
+            if ( false !== module.container.length ) {
+              module.container.append( $_module_el );
+              module.embedded.resolve();
+            }
+
+            module.ready();
+          });
+  },//initialize
+
+
+
+
+  CZRTextEditorInputMths : {
+  },//CZRTextEditorsInputMths
+
+
+
+  CZRTextEditorItem : {
+
+  },
 });//BASE CONTROL CLASS
 
 var CZRBaseControlMths = CZRBaseControlMths || {};
@@ -3557,7 +3702,8 @@ $.extend( CZRBaseModuleControlMths, {
                 czr_social_module    : api.CZRSocialModule,
                 czr_sektion_module    : api.CZRSektionModule,
                 czr_fp_module    : api.CZRFeaturedPageModule,
-                czr_slide_module    : api.CZRSlideModule
+                czr_slide_module    : api.CZRSlideModule,
+                czr_text_editor_module  : api.CZRTextEditorModule
           };
 
           control.czr_Module = new api.Values();
@@ -4274,6 +4420,8 @@ $.extend( CZRBackgroundMths , {
   api.CZRTextModule           = api.CZRModule.extend( CZRTextModuleMths || {} );
 
   api.CZRSlideModule          = api.CZRDynModule.extend( CZRSlideModuleMths || {} );
+
+  api.CZRTextEditorModule     = api.CZRModule.extend( CZRTextEditorModuleMths || {} );
   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMths || {} );
   api.CZRBaseModuleControl    = api.CZRBaseControl.extend( CZRBaseModuleControlMths || {} );
   api.CZRMultiModulesControl        = api.CZRBaseModuleControl.extend( CZRMultiModuleControlMths || {} );
@@ -4292,7 +4440,9 @@ $.extend( CZRBackgroundMths , {
         czr_multi_modules : api.CZRMultiModulesControl,
 
         czr_multiple_picker : api.CZRMultiplePickerControl,
-        czr_layouts    : api.CZRLayoutControl
+        czr_layouts    : api.CZRLayoutControl,
+        
+        czr_single_module : api.CZRBaseModuleControl,
   });
 
 
