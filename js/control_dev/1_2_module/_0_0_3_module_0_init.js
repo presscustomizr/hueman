@@ -25,6 +25,7 @@ $.extend( CZRModuleMths, {
           //store the state of ready.
           //=> we don't want the ready method to be fired several times
           module.isReady = $.Deferred();
+          module.savedItemCollectionReady = $.Deferred();
 
           //write the options as properties
           $.extend( module, options || {} );
@@ -81,7 +82,7 @@ $.extend( CZRModuleMths, {
                 //It's not listened to before the api is ready
                 //=> the collection update on startup is done when the module is embedded and BEFORE the api is ready
                 //=> won't trigger and change setting
-                module.populateItemCollection();
+                module.populateSavedItemCollection();
 
                 //the is_sortable property is set when instantiating a module
                 //it can be overriden by a module in its initialize method

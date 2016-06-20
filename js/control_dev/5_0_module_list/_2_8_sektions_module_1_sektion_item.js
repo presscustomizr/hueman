@@ -23,7 +23,15 @@ $.extend( CZRSektionMths, {
                   sekItem.isReady.done( function() {
                         //To set the sekItem value now won't be listened too
                         //=> the item callback is declared on 'input_collection_populated'
-                        _sektion_model = sekItem.maybeSetColumnsOnInit( _sektion_model );
+                        console.log('sekItem.isReady', sekItem.id );
+                        console.log('ITEM COLLECTION IS READY ?', sekItem.module.id , sekItem.module.savedItemCollectionReady.state() );
+
+                        //set columns now only for sektions added by user.
+                        //@todo : For sektions saved and populated on first init, the empty columns are instantiated after all non empty have been done
+                        if ( 'resolved' == module.savedItemCollectionReady.state() ) {
+                            _sektion_model = sekItem.maybeSetColumnsOnInit( _sektion_model );
+                        }
+
                         sekItem.set( _sektion_model );
 
                         if ( _.isEmpty( sekItem.get().columns ) ) {
@@ -42,10 +50,13 @@ $.extend( CZRSektionMths, {
                               var column_candidate = _.clone( _column );
                               module.instantiateColumn( $.extend( column_candidate, { sektion : sekItem } ) );
                         });
-
-
                   });
 
+                  //on init, when all saved columns have been instantiated, check if this sektion has columns that needs to be instantiated
+                  module.savedItemCollectionReady.done( function() {
+                        console.log('POPULATE EMPTY COLUMNS ON FIRST LOAD NOW. @TODO ?');
+
+                  } );
 
                   //instantiate the columns when the sektion item is embedded
                   sekItem.embedded.done(function() {

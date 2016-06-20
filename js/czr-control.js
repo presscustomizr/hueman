@@ -1313,6 +1313,7 @@ $.extend( CZRModuleMths, {
 
           var module = this;
           module.isReady = $.Deferred();
+          module.savedItemCollectionReady = $.Deferred();
           $.extend( module, options || {} );
           $.extend( module, {
               viewPreAddEl : '',
@@ -1337,7 +1338,7 @@ $.extend( CZRModuleMths, {
           module.inputConstructor = api.CZRInput;
 
           module.isReady.done( function() {
-                module.populateItemCollection();
+                module.populateSavedItemCollection();
                 if ( module.is_sortable )
                   module._makeItemsSortable();
                 module.callbacks.add( function() { return module.moduleReact.apply(module, arguments ); } );
@@ -1383,7 +1384,7 @@ $.extend( CZRModuleMths, {
 var CZRModuleMths = CZRModuleMths || {};
 
 $.extend( CZRModuleMths, {
-  populateItemCollection : function() {
+  populateSavedItemCollection : function() {
           var module = this;
           _.each( module.savedItems, function( item, key ) {
                 item = module._normalizeItem(item, _.has( item, 'id' ) ? item.id : key );
@@ -1392,6 +1393,7 @@ $.extend( CZRModuleMths, {
                 }
                 module.instantiateItem(item);
           });
+          module.savedItemCollectionReady.resolve();
 
           return this;
   },
@@ -2137,7 +2139,12 @@ $.extend( CZRSektionMths, {
                       throw new Error('In Sektion Item initialize, no layout provided for ' + sekItem.id + '.');
                   }
                   sekItem.isReady.done( function() {
-                        _sektion_model = sekItem.maybeSetColumnsOnInit( _sektion_model );
+                        console.log('sekItem.isReady', sekItem.id );
+                        console.log('ITEM COLLECTION IS READY ?', sekItem.module.id , sekItem.module.savedItemCollectionReady.state() );
+                        if ( 'resolved' == module.savedItemCollectionReady.state() ) {
+                            _sektion_model = sekItem.maybeSetColumnsOnInit( _sektion_model );
+                        }
+
                         sekItem.set( _sektion_model );
 
                         if ( _.isEmpty( sekItem.get().columns ) ) {
@@ -2148,9 +2155,11 @@ $.extend( CZRSektionMths, {
                               var column_candidate = _.clone( _column );
                               module.instantiateColumn( $.extend( column_candidate, { sektion : sekItem } ) );
                         });
-
-
                   });
+                  module.savedItemCollectionReady.done( function() {
+                        console.log('POPULATE EMPTY COLUMNS ON FIRST LOAD NOW. @TODO ?');
+
+                  } );
                   sekItem.embedded.done(function() {
                         sekItem.dragulizeSektion();
                   });

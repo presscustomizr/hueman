@@ -10,7 +10,7 @@ var CZRModuleMths = CZRModuleMths || {};
 $.extend( CZRModuleMths, {
 
   //@fired in module ready on api('ready')
-  populateItemCollection : function() {
+  populateSavedItemCollection : function() {
           var module = this;
 
           //populates the collection with the saved items
@@ -24,6 +24,9 @@ $.extend( CZRModuleMths, {
                 //adds it to the collection
                 module.instantiateItem(item);
           });
+
+          //The collection of item is ready now. Say it.
+          module.savedItemCollectionReady.resolve();
 
           return this;
   },
