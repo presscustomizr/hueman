@@ -27,11 +27,11 @@ $.extend( CZRInputMths , {
           input.toggleButton = input.container.find('button.text_editor-button');
 
           //status
-          input.editorOpen   = false;
+          input.editorExpanded   = new api.Value( false );
 
-          //initial filling of the textpreview
+          //initial filling of the textpreview and button text
           input.czrUpdateTextPreview();
-          input.toggleButton.html(serverControlParams.translatedStrings.textEditorOpen);
+          input.czrSetToggleButtonText( input.editorExpanded() );
 
           input.czrTextEditorBinding();
   },
@@ -41,6 +41,7 @@ $.extend( CZRInputMths , {
               editor = input.editor,
               textarea = input.textarea,
               toggleButton = input.toggleButton,
+              editorExpanded = input.editorExpanded,
               editorPane   = input.editorPane;
 
 
@@ -51,29 +52,40 @@ $.extend( CZRInputMths , {
           */
           _.bindAll( input, 'czrOnVisualEditorChange', 'czrOnTextEditorChange', 'czrResizeEditorOnWindowResize' );
           
+          toggleButton.on( 'click', function() { 
+              input.editorExpanded.set( ! input.editorExpanded() );
+              if ( input.editorExpanded() ) {
+                editor.focus();
+              }
+          });
 
-          input.container.on( 'click', '.text_editor-button', function() {
-            $(document.body).toggleClass('czr-customize-content_editor-pane-open');
-            input.editorOpen = input.czrIsEditorExpanded();
+          //on this module section close close the editor and unbind this input
+          api.section( input.module.getModuleSection() ).expanded.bind(
+            function( expanded ) { 
+              if ( ! expanded )
+                input.editorExpanded.set( false );
+          });
 
-            if ( input.editorOpen ) {
-              editor.setContent( wp.editor.autop( input.get() ) );
-              editor.on( 'input change keyup', input.czrOnVisualEditorChange );
-              textarea.on( 'input', input.czrOnTextEditorChange );
-              toggleButton.html(serverControlParams.translatedStrings.textEditorClose);
-              input.czrResizeEditor( window.innerHeight - editorPane.height() );
-              $( window ).on('resize', input.czrResizeEditorOnWindowResize );
-            } else {
-              editor.off( 'input change keyup', input.czrOnVisualEditorChange );
-              textarea.off( 'input', input.czrOnTextEditorChange );
-              $( window ).off('resize', input.czrResizeEditorOnWindowResize );
-              toggleButton.html(serverControlParams.translatedStrings.textEditorOpen);
+          input.editorExpanded.bind( function (expanded) {
+              $(document.body).toggleClass('czr-customize-content_editor-pane-open', expanded);
+              //set toggle button text
+              input.czrSetToggleButtonText( expanded );
 
-              //resize reset
-              input.czrResizeReset();
-            }
+              if ( expanded ) {
+                editor.setContent( wp.editor.autop( input.get() ) );
+                editor.on( 'input change keyup', input.czrOnVisualEditorChange );
+                textarea.on( 'input', input.czrOnTextEditorChange );
+                input.czrResizeEditor( window.innerHeight - editorPane.height() );
+                $( window ).on('resize', input.czrResizeEditorOnWindowResize );
+              } else {
+                editor.off( 'input change keyup', input.czrOnVisualEditorChange );
+                textarea.off( 'input', input.czrOnTextEditorChange );
+                $( window ).off('resize', input.czrResizeEditorOnWindowResize );
+
+                //resize reset
+                input.czrResizeReset();
+              }
           } );
-
   },
 
   czrOnVisualEditorChange : function() {
@@ -162,7 +174,7 @@ $.extend( CZRInputMths , {
               editorPane   = input.editorPane,
               editorFrame  = input.editorFrame;
 
-          if ( ! input.editorOpen ) {
+          if ( ! input.editorExpanded.get() ) {
             return;
           }
 
@@ -205,7 +217,7 @@ $.extend( CZRInputMths , {
               resizeDelay = 50,
               editorPane   = input.editorPane;
 
-          if ( ! input.editorOpen ) {
+          if ( ! input.editorExpanded.get() ) {
             return;
           }
 
@@ -213,6 +225,11 @@ $.extend( CZRInputMths , {
             input.czrResizeEditor( window.innerHeight - editorPane.height() );
           }, resizeDelay );
             
+  },
+  czrSetToggleButtonText : function( $_expanded ) {
+          var input = this;
+
+          input.toggleButton.text( serverControlParams.translatedStrings[ ! $_expanded ? 'textEditorOpen' : 'textEditorClose' ] );
   }
 
 /*
