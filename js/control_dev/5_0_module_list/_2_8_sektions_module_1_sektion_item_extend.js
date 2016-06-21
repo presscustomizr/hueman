@@ -25,31 +25,50 @@ $.extend( CZRSektionMths, {
                         //=> the item callback is declared on 'input_collection_populated'
                         console.log('sekItem.isReady', sekItem.id );
                         console.log('ITEM COLLECTION IS READY ?', sekItem.module.id , sekItem.module.savedItemCollectionReady.state() );
+                        console.log('sekItem.get().columns', sekItem.get().columns );
 
-                        //set columns now only for sektions added by user.
-                        //@todo : For sektions saved and populated on first init, the empty columns are instantiated after all non empty have been done
-                        if ( 'resolved' == module.savedItemCollectionReady.state() ) {
-                            _sektion_model = sekItem.maybeSetColumnsOnInit( _sektion_model );
-                        }
+                        // //set columns now only for sektions added by user.
+                        // //@todo : For sektions saved and populated on first init, the empty columns are instantiated after all non empty have been done
+                        // if ( 'resolved' == module.savedItemCollectionReady.state() ) {
+                        //     _sektion_model = sekItem.maybeSetColumnsOnInit( _sektion_model );
+                        // }
 
                         sekItem.set( _sektion_model );
 
-                        if ( _.isEmpty( sekItem.get().columns ) ) {
-                            throw new Error('In Sektion Item, the sektion ' + sekItem.id + ' has no column(s) set (and should have sat least one at this stage ! ).');
+                        // if ( _.isEmpty( sekItem.get().columns ) ) {
+                        //     throw new Error('In Sektion Item, the sektion ' + sekItem.id + ' has no column(s) set (and should have sat least one at this stage ! ).');
+                        // }
+
+                        //When fetched from DB, the column model looks like :
+                        //{
+                        //  id : '',//string
+                        //  sektion_id : '',//string
+                        //  modules : [],//collection of module id strings
+                        //}
+                        //=> we need to extend it with sektion instance
+                        if ( ! _.isEmpty( sekItem.get().columns ) ) {
+                              _.each( sekItem.get().columns , function( _column ) {
+                                    //instantiate the column and push it to the global column collection
+                                    var column_candidate = $.extend( true, {}, _column );//create a deep clone
+                                    module.instantiateColumn( $.extend( column_candidate, { sektion : sekItem } ) );
+                              });
+                        } else {
+                              //the sektion has no columns yet. This is the case typically when a sektion has just been created
+                              // => instantiate new columns based on the sektion layout property.
+                              var _col_nb = parseInt( _sektion_model['sektion-layout'] || 1, 10 );
+                              for( i = 1; i < _col_nb + 1 ; i++ ) {
+                                    var _default_column = $.extend( true, {}, module.defaultDBColumnModel ),
+                                        column_candidate = {
+                                              id : '',//a unique id will be generated when preparing the column for API.
+                                              sektion_id : sekItem.id
+                                        };
+                                        column_candidate = $.extend( _default_column, column_candidate );
+
+                                    module.instantiateColumn( $.extend( column_candidate, { sektion : sekItem } ) );
+                              }//for
                         }
 
-                        _.each( sekItem.get().columns , function( _column ) {
-                              //When fetched from DB, the column model looks like :
-                              //{
-                              //  id : '',//string
-                              //  sektion_id : '',//string
-                              //  modules : [],//collection of module id strings
-                              //}
-                              //=> we need to extend it with sektion instance
-                              //instantiate the column and push it to the global column collection
-                              var column_candidate = _.clone( _column );
-                              module.instantiateColumn( $.extend( column_candidate, { sektion : sekItem } ) );
-                        });
+                        console.log('??? sekItem.get() AFTER ???', sekItem.get() );
                   });
 
                   //on init, when all saved columns have been instantiated, check if this sektion has columns that needs to be instantiated
@@ -100,6 +119,7 @@ $.extend( CZRSektionMths, {
                       //       throw new Error( 'Sektion ' + _new_sek.id + ' already exists in the setting item collection and should have columns' );
                       // }
                       //if the sektion has no column yet, let's add them, based on the current layout
+                      console.log('module._getNextColKeyInCollection()', module._getNextColKeyInCollection() );
                       if ( _.isEmpty( _new_sek.columns ) ) {
                               var _col_nb = parseInt(_new_sek['sektion-layout'] || 1, 10 ),
                                   column_initial_key = module._getNextColKeyInCollection();

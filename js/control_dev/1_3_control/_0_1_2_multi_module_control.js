@@ -262,7 +262,12 @@ $.extend( CZRMultiModuleControlMths, {
 
 
   //recursive
-  generateModuleId : function( module_type, key ) {
+  generateModuleId : function( module_type, key, i ) {
+          //prevent a potential infinite loop
+          i = i || 1;
+          if ( i > 100 ) {
+                throw new Error('Infinite loop when generating of a module id.');
+          }
           var control = this;
           key = key || control._getNextModuleKeyInCollection();
           var id_candidate = module_type + '_' + key;
@@ -272,8 +277,10 @@ $.extend( CZRMultiModuleControlMths, {
                 throw new Error('The module collection does not exist or is not properly set in control : ' + control.id );
           }
           //make sure the module is not already instantiated
-          if ( control.czr_Module.has( id_candidate ) )
-            return control.generateModuleId( module_type, key++ );
+          if ( control.czr_Module.has( id_candidate ) ) {
+            console.log('in generate Module id', key, i );
+            return control.generateModuleId( module_type, key++, i++ );
+          }
 
           return id_candidate;
   },
@@ -339,7 +346,7 @@ $.extend( CZRMultiModuleControlMths, {
 
 
   removeModuleFromCollection : function( module ) {
-           console.log('IN REMOVE MODULE FROM COLLECTION', module );
+        console.log('IN REMOVE MODULE FROM COLLECTION', module );
         var control = this,
             _current_collection = control.czr_moduleCollection.get(),
             _new_collection = $.extend( true, [], _current_collection);
@@ -357,16 +364,19 @@ $.extend( CZRMultiModuleControlMths, {
   collectionReact : function( to, from ) {
         console.log('MODULE COLLECTION REACT', to, from );
         var control = this,
-            _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
-            _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
-            _module_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
-            is_module_update = _.isEmpty( _module_updated ),
-            is_collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && ! is_module_update;
+            is_module_removed = _.size(from) > _.size(to),
+            is_module_update = _.size(from) == _.size(to);
 
         //MODULE REMOVED
         //Remove the module instance if needed
-        if ( ! _.isEmpty( _to_remove ) ) {
+        if ( is_module_removed ) {
+            //find the module to remove
+            var _to_remove = _.filter( from, function( _mod ){
+                return _.isUndefined( _.findWhere( to, { id : _mod.id } ) );
+            });
+            _to_remove = _to_remove[0];
             control.czr_Module.remove( _to_remove.id );
+            console.log('THE MODULE ' + _to_remove.id + ' HAS BEEN REMOVED.', _to_remove );
         }
 
         //say it to the setting

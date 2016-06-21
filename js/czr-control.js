@@ -1916,11 +1916,11 @@ $.extend( CZRSektionMths, {
 
               _.each( _col.modules, function( _mod ){
                     if ( collection_control.czr_Module.has( _mod.id ) && 'resolved' == collection_control.czr_Module( _mod.id ).embedded.state() )
-                      collection_control.czr_Module( _mod.id ).container.remove();
+                        collection_control.czr_Module( _mod.id ).container.remove();
                     collection_control.removeModuleFromCollection( _mod );
               });//_.each
               if ( module.czr_Column.has(_col.id) && 'resolved' == module.czr_Column( _col.id ).embedded.state() )
-                module.czr_Column( _col.id ).container.remove();
+                  module.czr_Column( _col.id ).container.remove();
               module.removeColumnFromCollection( _col );
 
 
@@ -1947,20 +1947,29 @@ $.extend( CZRSektionMths, {
                   sekItem.isReady.done( function() {
                         console.log('sekItem.isReady', sekItem.id );
                         console.log('ITEM COLLECTION IS READY ?', sekItem.module.id , sekItem.module.savedItemCollectionReady.state() );
-                        if ( 'resolved' == module.savedItemCollectionReady.state() ) {
-                            _sektion_model = sekItem.maybeSetColumnsOnInit( _sektion_model );
-                        }
+                        console.log('sekItem.get().columns', sekItem.get().columns );
 
                         sekItem.set( _sektion_model );
+                        if ( ! _.isEmpty( sekItem.get().columns ) ) {
+                              _.each( sekItem.get().columns , function( _column ) {
+                                    var column_candidate = $.extend( true, {}, _column );//create a deep clone
+                                    module.instantiateColumn( $.extend( column_candidate, { sektion : sekItem } ) );
+                              });
+                        } else {
+                              var _col_nb = parseInt( _sektion_model['sektion-layout'] || 1, 10 );
+                              for( i = 1; i < _col_nb + 1 ; i++ ) {
+                                    var _default_column = $.extend( true, {}, module.defaultDBColumnModel ),
+                                        column_candidate = {
+                                              id : '',//a unique id will be generated when preparing the column for API.
+                                              sektion_id : sekItem.id
+                                        };
+                                        column_candidate = $.extend( _default_column, column_candidate );
 
-                        if ( _.isEmpty( sekItem.get().columns ) ) {
-                            throw new Error('In Sektion Item, the sektion ' + sekItem.id + ' has no column(s) set (and should have sat least one at this stage ! ).');
+                                    module.instantiateColumn( $.extend( column_candidate, { sektion : sekItem } ) );
+                              }//for
                         }
 
-                        _.each( sekItem.get().columns , function( _column ) {
-                              var column_candidate = _.clone( _column );
-                              module.instantiateColumn( $.extend( column_candidate, { sektion : sekItem } ) );
-                        });
+                        console.log('??? sekItem.get() AFTER ???', sekItem.get() );
                   });
                   module.savedItemCollectionReady.done( function() {
                         console.log('POPULATE EMPTY COLUMNS ON FIRST LOAD NOW. @TODO ?');
@@ -1985,6 +1994,7 @@ $.extend( CZRSektionMths, {
                       _def = _.clone( sekItem.defaultItemModel ),
                       _new_sek = $.extend( _def, _sektion_model ),
                       _new_columns = [];
+                      console.log('module._getNextColKeyInCollection()', module._getNextColKeyInCollection() );
                       if ( _.isEmpty( _new_sek.columns ) ) {
                               var _col_nb = parseInt(_new_sek['sektion-layout'] || 1, 10 ),
                                   column_initial_key = module._getNextColKeyInCollection();
@@ -2201,32 +2211,53 @@ $.extend( CZRSektionMths, {
   },
   columnCollectionReact : function( to, from ) {
         var module = this,
-            _to_add = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
-            _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
-            _column_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(to,from)[0] : {},
-            is_column_update = ! _.isEmpty( _column_updated ),
-            is_column_collection_sorted = _.isEmpty(_to_add) && _.isEmpty(_to_remove)  && ! is_column_update,
+            is_column_added   = _.size(from) < _.size(to),
+            is_column_removed = _.size(from) > _.size(to),
+            is_column_update  = _.size(from) == _.size(to),
             _current_sek_model = {},
             _new_sek_model = {};
+
         console.log('IN Global Column collection react. TO => FROM', to ,from );
-        console.log('IN Global Column collection react.  _.difference(to,from)', _.difference(to,from) );
-        _.each( to, function( _col, _key ) {
-              if ( _.isEqual( _col, from[_key] ) )
-                return;
-              _current_sek_model = _col.sektion.get();
-              _new_sek_model = $.extend(true, {}, _current_sek_model);
-
-              console.log('COLUMN ' + _col.id + ' HAS CHANGED. UPDATE ITS PARENT SEKTION MODEL.');
-              _.each( _current_sek_model.columns, function( _c, _k ){
-                    if ( _c.id != _col.id )
+        if ( is_column_update ) {
+              _.each( to, function( _col, _key ) {
+                    if ( _.isEqual( _col, from[_key] ) )
                       return;
-                    _new_sek_model.columns[_k] = _col;
-              } );
+                    _current_sek_model = _col.sektion.get();
+                    _new_sek_model = $.extend(true, {}, _current_sek_model);
 
-              _col.sektion.set( _new_sek_model );
+                    console.log('COLUMN ' + _col.id + ' HAS CHANGED. UPDATE ITS PARENT SEKTION MODEL.');
+                    console.log('_current_sek_model', _current_sek_model );
+                    _.each( _current_sek_model.columns, function( _c, _k ){
+                          if ( _c.id != _col.id )
+                            return;
+                          _new_sek_model.columns[_k] = _col;
+                    } );
 
-        } );//_.each
-        if ( ! _.isEmpty( _to_remove ) ) {
+                    _col.sektion.set( _new_sek_model );
+
+              } );//_.each
+        }//end if column update
+        if ( is_column_added ) {
+              var _new_column = _.filter( to, function( _col ){
+                  return _.isUndefined( _.findWhere( from, { id : _col.id } ) );
+              });
+              console.log('_new_column_new_column_new_column_new_column_new_column_new_column', _new_column[0] );
+              _new_column = _new_column[0];
+              _current_sek_model = _new_column.sektion.get();
+              if ( _.isUndefined( _.findWhere( _current_sek_model.columns, {id : _new_column.id } ) ) ) {
+                    console.log('COLUMN ' + _new_column.id + ' HAS BEEN ADDED. UPDATE ITS PARENT SEKTION MODEL. NEW COLUMN : ', _new_column );
+                    _new_sek_model = $.extend(true, {}, _current_sek_model);
+                    _new_sek_model.columns.push( _new_column );
+                    _new_column.sektion.set( _new_sek_model );
+              }
+
+        }//end if new column case
+        if ( is_column_removed ) {
+              var _to_remove = _.filter( from, function( _col ){
+                  return _.isUndefined( _.findWhere( to, { id : _col.id } ) );
+              });
+              _to_remove = _to_remove[0];
+
               _current_sek_model = _to_remove.sektion.get();
               _new_sek_model = $.extend(true, {}, _current_sek_model);//_.clone() is not enough there, we need a deep cloning.
               console.log('THE COLUMN ' + _to_remove.id + ' HAS BEEN REMOVED.', _to_remove );
@@ -3955,15 +3986,21 @@ $.extend( CZRMultiModuleControlMths, {
         });
         return api_ready_module;
   },
-  generateModuleId : function( module_type, key ) {
+  generateModuleId : function( module_type, key, i ) {
+          i = i || 1;
+          if ( i > 100 ) {
+                throw new Error('Infinite loop when generating of a module id.');
+          }
           var control = this;
           key = key || control._getNextModuleKeyInCollection();
           var id_candidate = module_type + '_' + key;
           if ( ! _.has(control, 'czr_moduleCollection') || ! _.isArray( control.czr_moduleCollection.get() ) ) {
                 throw new Error('The module collection does not exist or is not properly set in control : ' + control.id );
           }
-          if ( control.czr_Module.has( id_candidate ) )
-            return control.generateModuleId( module_type, key++ );
+          if ( control.czr_Module.has( id_candidate ) ) {
+            console.log('in generate Module id', key, i );
+            return control.generateModuleId( module_type, key++, i++ );
+          }
 
           return id_candidate;
   },
@@ -4009,7 +4046,7 @@ $.extend( CZRMultiModuleControlMths, {
 
 
   removeModuleFromCollection : function( module ) {
-           console.log('IN REMOVE MODULE FROM COLLECTION', module );
+        console.log('IN REMOVE MODULE FROM COLLECTION', module );
         var control = this,
             _current_collection = control.czr_moduleCollection.get(),
             _new_collection = $.extend( true, [], _current_collection);
@@ -4023,13 +4060,15 @@ $.extend( CZRMultiModuleControlMths, {
   collectionReact : function( to, from ) {
         console.log('MODULE COLLECTION REACT', to, from );
         var control = this,
-            _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
-            _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
-            _module_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
-            is_module_update = _.isEmpty( _module_updated ),
-            is_collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && ! is_module_update;
-        if ( ! _.isEmpty( _to_remove ) ) {
+            is_module_removed = _.size(from) > _.size(to),
+            is_module_update = _.size(from) == _.size(to);
+        if ( is_module_removed ) {
+            var _to_remove = _.filter( from, function( _mod ){
+                return _.isUndefined( _.findWhere( to, { id : _mod.id } ) );
+            });
+            _to_remove = _to_remove[0];
             control.czr_Module.remove( _to_remove.id );
+            console.log('THE MODULE ' + _to_remove.id + ' HAS BEEN REMOVED.', _to_remove );
         }
         api(this.id).set( control.filterModuleCollectionBeforeAjax(to) );
         if ( 'postMessage' == api(control.id).transport && ! api.CZR_Helpers.has_part_refresh( control.id ) ) {

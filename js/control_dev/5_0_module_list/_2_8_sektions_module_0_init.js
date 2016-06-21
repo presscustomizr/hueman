@@ -161,7 +161,7 @@ $.extend( CZRSektionMths, {
               _.each( _col.modules, function( _mod ){
                     //remove module from DOM if it's been embedded
                     if ( collection_control.czr_Module.has( _mod.id ) && 'resolved' == collection_control.czr_Module( _mod.id ).embedded.state() )
-                      collection_control.czr_Module( _mod.id ).container.remove();
+                        collection_control.czr_Module( _mod.id ).container.remove();
 
                     //remove module from API
                     collection_control.removeModuleFromCollection( _mod );
@@ -169,7 +169,8 @@ $.extend( CZRSektionMths, {
 
               //remove column from DOM if it's been embedded
               if ( module.czr_Column.has(_col.id) && 'resolved' == module.czr_Column( _col.id ).embedded.state() )
-                module.czr_Column( _col.id ).container.remove();
+                  module.czr_Column( _col.id ).container.remove();
+
               //remove column from API
               module.removeColumnFromCollection( _col );
 

@@ -211,58 +211,74 @@ $.extend( CZRSektionMths, {
   },
 
 
+
+
   //cb of control.czr_columnCollection.callbacks
   //The job of this function is to set the column collection in their respective sektItems
   columnCollectionReact : function( to, from ) {
         //console.log('IN Global Column collection react. DIFFERENCE ? ', to, from, _.difference(to,from)[0] );
         var module = this,
-            _to_add = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
-            _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
-            _column_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(to,from)[0] : {},
-            is_column_update = ! _.isEmpty( _column_updated ),
-            is_column_collection_sorted = _.isEmpty(_to_add) && _.isEmpty(_to_remove)  && ! is_column_update,
+            is_column_added   = _.size(from) < _.size(to),
+            is_column_removed = _.size(from) > _.size(to),
+            is_column_update  = _.size(from) == _.size(to),
+            //is_column_collection_sorted = _.isEmpty(_to_add) && _.isEmpty(_to_remove)  && ! is_column_update,
             _current_sek_model = {},
             _new_sek_model = {};
+
         console.log('IN Global Column collection react. TO => FROM', to ,from );
-        console.log('IN Global Column collection react.  _.difference(to,from)', _.difference(to,from) );
 
+        //COLUMN UPDATE CASE
         //parse the columns and find the one that has changed.
-        _.each( to, function( _col, _key ) {
-              if ( _.isEqual( _col, from[_key] ) )
-                return;
-              _current_sek_model = _col.sektion.get();
-              _new_sek_model = $.extend(true, {}, _current_sek_model);
-
-              console.log('COLUMN ' + _col.id + ' HAS CHANGED. UPDATE ITS PARENT SEKTION MODEL.');
-
-              //find the column and update it
-              _.each( _current_sek_model.columns, function( _c, _k ){
-                    if ( _c.id != _col.id )
+        if ( is_column_update ) {
+              _.each( to, function( _col, _key ) {
+                    if ( _.isEqual( _col, from[_key] ) )
                       return;
-                    _new_sek_model.columns[_k] = _col;
-              } );
+                    _current_sek_model = _col.sektion.get();
+                    _new_sek_model = $.extend(true, {}, _current_sek_model);
 
-              _col.sektion.set( _new_sek_model );
+                    console.log('COLUMN ' + _col.id + ' HAS CHANGED. UPDATE ITS PARENT SEKTION MODEL.');
+                    console.log('_current_sek_model', _current_sek_model );
 
-        } );//_.each
+                    //find the column and update it
+                    _.each( _current_sek_model.columns, function( _c, _k ){
+                          if ( _c.id != _col.id )
+                            return;
+                          _new_sek_model.columns[_k] = _col;
+                    } );
+
+                    _col.sektion.set( _new_sek_model );
+
+              } );//_.each
+        }//end if column update
 
 
-        //COLUMN UPDATE
-        // if ( is_column_update ) {
-        //       _current_sek_model = _column_updated.sektion.get();
-        //       _new_sek_model = $.extend(true, {}, _current_sek_model);//_.clone() is not enough there, we need a deep cloning.
-        //       //find the column and update it
-        //       _.each( _current_sek_model.columns, function( _col, _key ){
-        //             if ( _col.id != _column_updated.id )
-        //               return;
-        //             _new_sek_model.columns[_key] = _column_updated;
-        //       } );
+        //NEW COLUMN CASE
+        if ( is_column_added ) {
+              //find the new column
+              var _new_column = _.filter( to, function( _col ){
+                  return _.isUndefined( _.findWhere( from, { id : _col.id } ) );
+              });
+              console.log('_new_column_new_column_new_column_new_column_new_column_new_column', _new_column[0] );
+              _new_column = _new_column[0];
+              _current_sek_model = _new_column.sektion.get();
+              //only add the column if the column does not exist in the sektion columns.
+              if ( _.isUndefined( _.findWhere( _current_sek_model.columns, {id : _new_column.id } ) ) ) {
+                    console.log('COLUMN ' + _new_column.id + ' HAS BEEN ADDED. UPDATE ITS PARENT SEKTION MODEL. NEW COLUMN : ', _new_column );
+                    _new_sek_model = $.extend(true, {}, _current_sek_model);
+                    _new_sek_model.columns.push( _new_column );
+                    _new_column.sektion.set( _new_sek_model );
+              }
 
-        //       _column_updated.sektion.set( _new_sek_model );
-        // }
+        }//end if new column case
 
         //COLUMN REMOVED
-        if ( ! _.isEmpty( _to_remove ) ) {
+        if ( is_column_removed ) {
+              //find the column to remove
+              var _to_remove = _.filter( from, function( _col ){
+                  return _.isUndefined( _.findWhere( to, { id : _col.id } ) );
+              });
+              _to_remove = _to_remove[0];
+
               _current_sek_model = _to_remove.sektion.get();
               _new_sek_model = $.extend(true, {}, _current_sek_model);//_.clone() is not enough there, we need a deep cloning.
               console.log('THE COLUMN ' + _to_remove.id + ' HAS BEEN REMOVED.', _to_remove );
