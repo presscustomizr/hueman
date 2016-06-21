@@ -1157,10 +1157,11 @@ var CZRItemMths = CZRItemMths || {};
             var item = this,
                 module = this.module,
                 _new_collection = _.clone( module.get() );
+            module.trigger('pre_item_dom_remove', item.get() );
             item._destroyView();
             _new_collection = _.without( _new_collection, _.findWhere( _new_collection, {id: item.id }) );
             module.set( _new_collection );
-            module.trigger('item_removed', item.get() );
+            module.trigger('pre_item_api_remove', item.get() );
             module.czr_Item.remove(item.id);
     },
     getModel : function(id) {
@@ -1314,6 +1315,7 @@ $.extend( CZRModuleMths, {
           var module = this;
           module.isReady = $.Deferred();
           module.savedItemCollectionReady = $.Deferred();
+          module.embedded = $.Deferred();
           $.extend( module, options || {} );
           $.extend( module, {
               viewPreAddEl : '',
@@ -1714,7 +1716,7 @@ $.extend( CZRDynModuleMths, {
             throw new Error('addItem : an item should be an object and not empty. In : ' + module.id +'. Aborted.' );
           }
 
-          module.instantiateItem(item, true); //true == Added by user
+          module.instantiateItem( item, true ); //true == Added by user
 
           module.toggleSuccessMessage('on');
           setTimeout( function() {
@@ -1828,6 +1830,9 @@ $.extend( CZRSektionMths, {
                 'sektion-layout' : 1,
                 columns : []
           };
+          module.bind( 'pre_item_dom_remove', function( item ) {
+                module.removeSektion( item );
+          });
           module.defaultDBColumnModel = {
                 id : '',
                 sektion_id : '',
@@ -1853,7 +1858,6 @@ $.extend( CZRSektionMths, {
                 module.ready();
                 api.control( api.CZR_Helpers.build_setId( 'module-collection') ).syncSektionModule.set( module );
           });
-
           if ( ! _.has( module ,'dragInstance' ) )
             module.initDragula();
 
@@ -1903,6 +1907,159 @@ $.extend( CZRSektionMths, {
 
         return db_ready_sektItem;
   },
+  removeSektion : function( sekItem ) {
+        console.log('removed sekItem', sekItem);
+        var module = this,
+            collection_control = api.control( api.CZR_Helpers.build_setId( 'module-collection') );
+
+        _.each( sekItem.columns, function( _col ) {
+
+              _.each( _col.modules, function( _mod ){
+                    if ( collection_control.czr_Module.has( _mod.id ) && 'resolved' == collection_control.czr_Module( _mod.id ).embedded.state() )
+                      collection_control.czr_Module( _mod.id ).container.remove();
+                    collection_control.removeModuleFromCollection( _mod );
+              });//_.each
+              if ( module.czr_Column.has(_col.id) && 'resolved' == module.czr_Column( _col.id ).embedded.state() )
+                module.czr_Column( _col.id ).container.remove();
+              module.removeColumnFromCollection( _col );
+
+
+        });//_.each
+
+  }
+
+});//extends api.CZRDynModule
+
+var CZRSektionMths = CZRSektionMths || {};
+
+$.extend( CZRSektionMths, {
+  CZRSektionItem : {
+          initialize: function(id, options ) {
+                  var sekItem = this;
+                  api.CZRItem.prototype.initialize.call( sekItem, null, options );
+
+                  var _sektion_model = sekItem.get(),
+                      module = options.module;
+
+                  if ( ! _.has(_sektion_model, 'sektion-layout') ) {
+                      throw new Error('In Sektion Item initialize, no layout provided for ' + sekItem.id + '.');
+                  }
+                  sekItem.isReady.done( function() {
+                        console.log('sekItem.isReady', sekItem.id );
+                        console.log('ITEM COLLECTION IS READY ?', sekItem.module.id , sekItem.module.savedItemCollectionReady.state() );
+                        if ( 'resolved' == module.savedItemCollectionReady.state() ) {
+                            _sektion_model = sekItem.maybeSetColumnsOnInit( _sektion_model );
+                        }
+
+                        sekItem.set( _sektion_model );
+
+                        if ( _.isEmpty( sekItem.get().columns ) ) {
+                            throw new Error('In Sektion Item, the sektion ' + sekItem.id + ' has no column(s) set (and should have sat least one at this stage ! ).');
+                        }
+
+                        _.each( sekItem.get().columns , function( _column ) {
+                              var column_candidate = _.clone( _column );
+                              module.instantiateColumn( $.extend( column_candidate, { sektion : sekItem } ) );
+                        });
+                  });
+                  module.savedItemCollectionReady.done( function() {
+                        console.log('POPULATE EMPTY COLUMNS ON FIRST LOAD NOW. @TODO ?');
+
+                  } );
+                  sekItem.embedded.done(function() {
+                        sekItem.dragulizeSektion();
+                  });
+                  sekItem.contentRendered.done(function() {
+                          sekItem.module.dragInstance.containers.push( $( '.czr-column-wrapper', sekItem.container )[0] );
+                          sekItem.czr_View.callbacks.add( function(to) {
+                                if ( 'closed' == to )
+                                  return;
+                                sekItem.container.removeClass('czr-show-fake-container');
+                          });
+                  });//embedded.done
+
+          },
+          maybeSetColumnsOnInit : function( _sektion_model ) {
+                  var sekItem = this,
+                      module = sekItem.module,
+                      _def = _.clone( sekItem.defaultItemModel ),
+                      _new_sek = $.extend( _def, _sektion_model ),
+                      _new_columns = [];
+                      if ( _.isEmpty( _new_sek.columns ) ) {
+                              var _col_nb = parseInt(_new_sek['sektion-layout'] || 1, 10 ),
+                                  column_initial_key = module._getNextColKeyInCollection();
+
+                              for( i = 1; i < _col_nb + 1 ; i++ ) {
+                                    var _default_column = _.clone( module.defaultDBColumnModel ),
+                                        _new_col_model = {
+                                              id : module.generateColId( column_initial_key ),
+                                              sektion_id : _new_sek.id
+                                        };
+                                        _col_model = $.extend( _default_column, _new_col_model );
+
+                                    _new_columns.push( _default_column );
+                                    column_initial_key++;
+                              }//for
+
+                              _new_sek.columns = _new_columns;
+                      }//if
+
+                      return _new_sek;
+
+          },
+          updateSektionColumnCollection : function( obj ) {
+                console.log('IN UPDATE SEKTION ' + this.id + ' COLUMN COLLECTION', obj );
+                var sekItem = this,
+                    _current_sektion_model = sekItem.get(),
+                    _new_sektion_model = _.clone(_current_sektion_model);
+
+                console.log('_current_sektion_model', _current_sektion_model );
+                if ( _.has( obj, 'collection' ) ) {
+                      _new_sektion_model.columns = obj.collection;
+                      return;
+                }
+
+                if ( ! _.has(obj, 'column') ) {
+                  throw new Error('updateSektionColumnCollection, no column provided in sekItem ' + sekItem.id + '.');
+                }
+                var column = _.clone(obj.column);
+
+                if ( ! _.has(column, 'id') ) {
+                  throw new Error('updateSektionColumnCollection, no id provided for a column in sekItem ' + sekItem.id + '.');
+                }
+                if ( _.findWhere( _new_sektion_model.columns, { id : column.id } ) ) {
+                    console.log('COLUMN EXISTS? ' , _new_sektion_model.columns );
+                      _.each( _new_sektion_model.columns , function( _col, _ind ) {
+                            if ( _col.id != column.id )
+                              return;
+                            _new_sektion_model.columns[_ind] = column;
+                      });
+                }
+                else {
+                      console.log('COLUMN TO ADD ');
+                      _new_sektion_model.columns.push(column);
+                }
+                console.log('NEW SEKTION MODEL', _new_sektion_model, _.isEqual(_current_sektion_model, _new_sektion_model)  );
+                console.log('sekItem.isReady.state()', sekItem.isReady.state() );
+                sekItem.module.itemReact( _new_sektion_model );
+          },
+
+
+
+          dragulizeSektion : function() {
+                  var sekItem = this,
+                      module = this.module;
+                      _drag_container = $( '.czr-dragula-fake-container', sekItem.container )[0];
+
+                   module.dragInstance.containers.push( _drag_container );
+          }
+  }//Sektion
+
+});//extends api.CZRDynModule
+
+var CZRSektionMths = CZRSektionMths || {};
+
+$.extend( CZRSektionMths, {
   prepareColumnForDB : function( column_candidate ) {
         var module = this,
             _db_ready_col = {};
@@ -1998,7 +2155,7 @@ $.extend( CZRSektionMths, {
         console.log('IN UPDATE GLOBAL COLUMN COLLECTION', obj );
         var module = this,
             _current_collection = module.czr_columnCollection.get();
-            _new_collection = _.clone(_current_collection);
+            _new_collection = $.extend( true, [] , _current_collection );
         if ( _.has( obj, 'collection' ) ) {
               module.czr_columnCollection.set(obj.collection);
               return;
@@ -2024,44 +2181,100 @@ $.extend( CZRSektionMths, {
         }
         module.czr_columnCollection.set(_new_collection);
   },
+
+
+  removeColumnFromCollection : function( column ) {
+        console.log('IN REMOVE COLUMN FROM COLLECTION', column );
+        var module = this,
+            _current_collection = module.czr_columnCollection.get(),
+            _new_collection = $.extend( true, [], _current_collection);
+
+        console.log( 'column col before', _new_collection );
+
+        _new_collection = _.filter( _new_collection, function( _col ) {
+              return _col.id != column.id;
+        } );
+
+        console.log( 'column col after', _new_collection );
+
+        module.czr_columnCollection.set(_new_collection);
+  },
   columnCollectionReact : function( to, from ) {
-        console.log('IN Global Column collection react. DIFFERENCE ? ', to, from, _.difference(to,from)[0] );
         var module = this,
             _to_add = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
             _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
             _column_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(to,from)[0] : {},
             is_column_update = ! _.isEmpty( _column_updated ),
-            is_column_collection_sorted = _.isEmpty(_to_add) && _.isEmpty(_to_remove)  && ! is_column_update;
+            is_column_collection_sorted = _.isEmpty(_to_add) && _.isEmpty(_to_remove)  && ! is_column_update,
+            _current_sek_model = {},
+            _new_sek_model = {};
+        console.log('IN Global Column collection react. TO => FROM', to ,from );
+        console.log('IN Global Column collection react.  _.difference(to,from)', _.difference(to,from) );
+        _.each( to, function( _col, _key ) {
+              if ( _.isEqual( _col, from[_key] ) )
+                return;
+              _current_sek_model = _col.sektion.get();
+              _new_sek_model = $.extend(true, {}, _current_sek_model);
 
-        if ( is_column_update ) {
-              console.log('THE COLUMN ' + _column_updated.id + ' HAS BEEN UPDATED.', _column_updated );
-              var _current_sek_model = _column_updated.sektion.get(),
-                  _new_sek_model = $.extend(true, {}, _current_sek_model),//_.clone() is not enough there, we need a deep cloning.
-                  _new_col = {};
-              _.each( _current_sek_model.columns, function( _col, _key ){
-                    if ( _col.id != _column_updated.id )
+              console.log('COLUMN ' + _col.id + ' HAS CHANGED. UPDATE ITS PARENT SEKTION MODEL.');
+              _.each( _current_sek_model.columns, function( _c, _k ){
+                    if ( _c.id != _col.id )
                       return;
-                    _new_sek_model.columns[_key] = _column_updated;
+                    _new_sek_model.columns[_k] = _col;
               } );
+
+              _col.sektion.set( _new_sek_model );
+
+        } );//_.each
+        if ( ! _.isEmpty( _to_remove ) ) {
+              _current_sek_model = _to_remove.sektion.get();
+              _new_sek_model = $.extend(true, {}, _current_sek_model);//_.clone() is not enough there, we need a deep cloning.
+              console.log('THE COLUMN ' + _to_remove.id + ' HAS BEEN REMOVED.', _to_remove );
+              _new_sek_model.columns = _.filter( _new_sek_model.columns, function( _col ) {
+                    return _col.id != _to_remove.id;
+              } );
+
 
               console.log( '_.isEqual( _current_sek_model, _new_sek_model );', _.isEqual( _current_sek_model, _new_sek_model ), _current_sek_model , _new_sek_model );
 
-              console.log('SEKTION ' + _column_updated.sektion.id + ' HAS TO BE UPDATED.', _new_sek_model );
-              _column_updated.sektion.set( _new_sek_model );
+              console.log('SEKTION ' + _to_remove.sektion.id + ' HAS TO BE UPDATED.', _new_sek_model );
+              _to_remove.sektion.set( _new_sek_model );
+              module.czr_Column.remove( _to_remove.id );
         }
   },
-  generateColId : function( key ) {
-    console.log('in generate Col id : ', key );
+  generateColId : function( key, i ) {
+        i = i || 1;
+        if ( i > 100 ) {
+              throw new Error('Infinite loop when generating of a column id.');
+        }
+
         var module = this;
-        key = key || module.czr_columnCollection.get().length + 1;
+        key = key || module._getNextColKeyInCollection();
+
+        console.log('in generate Col id : ', key, i );
+
         var id_candidate = 'col_' + key;
         if ( ! _.has(module, 'czr_columnCollection') || ! _.isArray( module.czr_columnCollection.get() ) ) {
               throw new Error('The column collection does not exist or is not properly set in module : ' + module.id );
         }
-        if ( module.czr_Column.has( id_candidate ) )
-          return module.generateColId( key ++ );
+        if ( module.czr_Column.has( id_candidate ) ) {
+          console.log('key and i', key, key++, i, i++ );
+          return module.generateColId( key++, i++ );
+        }
 
         return id_candidate;
+  },
+  _getNextColKeyInCollection : function() {
+        var module = this,
+            _max_col_key = {},
+            _next_key = 0;
+        if ( ! _.isEmpty( module.czr_columnCollection.get() ) ) {
+            _max_col_key = _.max( module.czr_columnCollection.get(), function( _col ) {
+                return _col.id.replace(/[^\/\d]/g,'');
+            });
+            _next_key = parseInt( _max_col_key.id.replace(/[^\/\d]/g,''), 10 ) + 1;
+        }
+        return _next_key;
   },
   moduleExistsInOneColumnMax : function( module_id ) {
         return 2 > this.getModuleColumn( module_id ).length;
@@ -2074,7 +2287,13 @@ $.extend( CZRSektionMths, {
                 _mod_columns.push( _col.id );
         });
         return _mod_columns;
-  },
+  }
+
+});//extends api.CZRDynModule
+
+var CZRSektionMths = CZRSektionMths || {};
+
+$.extend( CZRSektionMths, {
   initDragula : function() {
           var module = this;
           module.dragInstance = dragula({
@@ -2120,133 +2339,7 @@ $.extend( CZRSektionMths, {
                     }
                   }
         );
-  },//initDragula
-
-});//extends api.CZRDynModule
-
-var CZRSektionMths = CZRSektionMths || {};
-
-$.extend( CZRSektionMths, {
-  CZRSektionItem : {
-          initialize: function(id, options ) {
-                  var sekItem = this;
-                  api.CZRItem.prototype.initialize.call( sekItem, null, options );
-
-                  var _sektion_model = sekItem.get(),
-                      module = options.module;
-
-                  if ( ! _.has(_sektion_model, 'sektion-layout') ) {
-                      throw new Error('In Sektion Item initialize, no layout provided for ' + sekItem.id + '.');
-                  }
-                  sekItem.isReady.done( function() {
-                        console.log('sekItem.isReady', sekItem.id );
-                        console.log('ITEM COLLECTION IS READY ?', sekItem.module.id , sekItem.module.savedItemCollectionReady.state() );
-                        if ( 'resolved' == module.savedItemCollectionReady.state() ) {
-                            _sektion_model = sekItem.maybeSetColumnsOnInit( _sektion_model );
-                        }
-
-                        sekItem.set( _sektion_model );
-
-                        if ( _.isEmpty( sekItem.get().columns ) ) {
-                            throw new Error('In Sektion Item, the sektion ' + sekItem.id + ' has no column(s) set (and should have sat least one at this stage ! ).');
-                        }
-
-                        _.each( sekItem.get().columns , function( _column ) {
-                              var column_candidate = _.clone( _column );
-                              module.instantiateColumn( $.extend( column_candidate, { sektion : sekItem } ) );
-                        });
-                  });
-                  module.savedItemCollectionReady.done( function() {
-                        console.log('POPULATE EMPTY COLUMNS ON FIRST LOAD NOW. @TODO ?');
-
-                  } );
-                  sekItem.embedded.done(function() {
-                        sekItem.dragulizeSektion();
-                  });
-                  sekItem.contentRendered.done(function() {
-                          sekItem.module.dragInstance.containers.push( $( '.czr-column-wrapper', sekItem.container )[0] );
-                          sekItem.czr_View.callbacks.add( function(to) {
-                                if ( 'closed' == to )
-                                  return;
-                                sekItem.container.removeClass('czr-show-fake-container');
-                          });
-                  });//embedded.done
-
-          },
-          maybeSetColumnsOnInit : function( _sektion_model ) {
-                  var sekItem = this,
-                      module = sekItem.module,
-                      _def = _.clone( sekItem.defaultItemModel ),
-                      _new_sek = $.extend( _def, _sektion_model ),
-                      _new_columns = [];
-                      if ( _.isEmpty( _new_sek.columns ) ) {
-                              var _col_nb = parseInt(_new_sek['sektion-layout'] || 1, 10 ),
-                                  column_initial_key = module.czr_columnCollection.get().length + 1;
-                              for( i = 1; i < _col_nb + 1 ; i++ ) {
-                                    var _default_column = _.clone( module.defaultDBColumnModel ),
-                                        _new_col_model = {
-                                              id : module.generateColId( column_initial_key ),
-                                              sektion_id : _new_sek.id
-                                        };
-                                        _col_model = $.extend( _default_column, _new_col_model );
-
-                                    _new_columns.push( _default_column );
-                                    column_initial_key++;
-                              }//for
-
-                              _new_sek.columns = _new_columns;
-                      }//if
-
-                      return _new_sek;
-
-          },
-          updateSektionColumnCollection : function( obj ) {
-                console.log('IN UPDATE SEKTION ' + this.id + ' COLUMN COLLECTION', obj );
-                var sekItem = this,
-                    _current_sektion_model = sekItem.get(),
-                    _new_sektion_model = _.clone(_current_sektion_model);
-
-                console.log('_current_sektion_model', _current_sektion_model );
-                if ( _.has( obj, 'collection' ) ) {
-                      _new_sektion_model.columns = obj.collection;
-                      return;
-                }
-
-                if ( ! _.has(obj, 'column') ) {
-                  throw new Error('updateSektionColumnCollection, no column provided in sekItem ' + sekItem.id + '.');
-                }
-                var column = _.clone(obj.column);
-
-                if ( ! _.has(column, 'id') ) {
-                  throw new Error('updateSektionColumnCollection, no id provided for a column in sekItem ' + sekItem.id + '.');
-                }
-                if ( _.findWhere( _new_sektion_model.columns, { id : column.id } ) ) {
-                    console.log('COLUMN EXISTS? ' , _new_sektion_model.columns );
-                      _.each( _new_sektion_model.columns , function( _col, _ind ) {
-                            if ( _col.id != column.id )
-                              return;
-                            _new_sektion_model.columns[_ind] = column;
-                      });
-                }
-                else {
-                      console.log('COLUMN TO ADD ');
-                      _new_sektion_model.columns.push(column);
-                }
-                console.log('NEW SEKTION MODEL', _new_sektion_model, _.isEqual(_current_sektion_model, _new_sektion_model)  );
-                console.log('sekItem.isReady.state()', sekItem.isReady.state() );
-                sekItem.module.itemReact( _new_sektion_model );
-          },
-
-
-
-          dragulizeSektion : function() {
-                  var sekItem = this,
-                      module = this.module;
-                      _drag_container = $( '.czr-dragula-fake-container', sekItem.container )[0];
-
-                   module.dragInstance.containers.push( _drag_container );
-          }
-  }//Sektion
+  }//initDragula
 
 });
 var CZRColumnMths = CZRColumnMths || {};
@@ -2288,8 +2381,6 @@ $.extend( CZRColumnMths , {
                           var _module_candidate = _.findWhere( module_collection_control.czr_moduleCollection.get() , { id : _mod.id } );
                           console.log('module candidate', _module_candidate );
                           module_collection_control.instantiateModule( _module_candidate, {} );
-
-                          column.updateColumnModuleCollection( { module : _module_candidate });
                 } );
                 column.callbacks.add( function() { return column.columnReact.apply(column, arguments ); } );
                 column.czr_columnModuleCollection.callbacks.add( function() { return column.columnModuleCollectionReact.apply( column, arguments ); } );
@@ -2632,7 +2723,7 @@ $.extend( CZRWidgetAreaModuleMths, {
                   module.addWidgetSidebar( model );
           });
 
-          module.bind( 'item_removed' , function(model) {
+          module.bind( 'pre_item_api_remove' , function(model) {
                   module.removeWidgetSidebar( model );
           });
           var fixTopMargin = new api.Values();
@@ -3398,8 +3489,15 @@ $.extend( CZRTextModuleMths, {
                 id : '',
                 text : ''
           };
-          module.savedItems = _.isEmpty( options.items ) ? [ module._initNewItem( module.defaultItemModel ) ] : options.items;
-          module.embedded = $.Deferred();
+
+          console.log(' NEW TEXT MODEL : ', options, module.get(), module._initNewItem( module.defaultItemModel ) );
+          if ( _.isEmpty( options.items ) ) {
+                var def = _.clone( module.defaultItemModel );
+                module.savedItems = [ $.extend( def, { id : module.id } ) ];
+          } else {
+                module.savedItems = options.items;
+          }
+
           module.container = module.renderModuleWrapper();
           if ( false !== module.container.length ) {
               module.embedded.resolve();
@@ -3742,7 +3840,7 @@ $.extend( CZRMultiModuleControlMths, {
               saved_modules = $.extend( true, {}, api(control.id).get() );//deep clone
 
           _.each( saved_modules, function( _mod, _key ) {
-                  console.log('POPULATE THE SAVED MODULE COLLECTION ON INIT :', _mod, _mod.sektion_id );
+                  console.log('SAVED MODULE TO INIT :', _mod, _mod.sektion_id );
                   var _sektion_control = api.control( api.CZR_Helpers.build_setId( 'sektions') );
 
                   if ( ! sektion_module_instance.czr_Item.has( _mod.sektion_id ) ) {
@@ -3859,7 +3957,7 @@ $.extend( CZRMultiModuleControlMths, {
   },
   generateModuleId : function( module_type, key ) {
           var control = this;
-          key = key || control.czr_moduleCollection.get().length + 1;
+          key = key || control._getNextModuleKeyInCollection();
           var id_candidate = module_type + '_' + key;
           if ( ! _.has(control, 'czr_moduleCollection') || ! _.isArray( control.czr_moduleCollection.get() ) ) {
                 throw new Error('The module collection does not exist or is not properly set in control : ' + control.id );
@@ -3869,11 +3967,23 @@ $.extend( CZRMultiModuleControlMths, {
 
           return id_candidate;
   },
+  _getNextModuleKeyInCollection : function() {
+          var control = this,
+            _max_mod_key = {},
+            _next_key = 0;
+          if ( ! _.isEmpty( control.czr_moduleCollection.get() ) ) {
+              _max_mod_key = _.max( control.czr_moduleCollection.get(), function( _mod ) {
+                  return _mod.id.replace(/[^\/\d]/g,'');
+              });
+              _next_key = parseInt( _max_mod_key.id.replace(/[^\/\d]/g,''), 10 ) + 1;
+          }
+          return _next_key;
+  },
   updateModulesCollection : function( obj ) {
           console.log('update Module Collection', obj );
           var control = this,
-              _current_collection = control.czr_moduleCollection.get();
-              _new_collection = _.clone(_current_collection);
+              _current_collection = control.czr_moduleCollection.get(),
+              _new_collection = $.extend( true, [], _current_collection);
           if ( _.has( obj, 'collection' ) ) {
                 control.czr_moduleCollection.set(obj.collection);
                 return;
@@ -3895,6 +4005,21 @@ $.extend( CZRMultiModuleControlMths, {
           }
           control.czr_moduleCollection.set( _new_collection );
   },
+
+
+
+  removeModuleFromCollection : function( module ) {
+           console.log('IN REMOVE MODULE FROM COLLECTION', module );
+        var control = this,
+            _current_collection = control.czr_moduleCollection.get(),
+            _new_collection = $.extend( true, [], _current_collection);
+
+        _new_collection = _.filter( _new_collection, function( _mod ) {
+              return _mod.id != module.id;
+        } );
+
+        control.czr_moduleCollection.set( _new_collection );
+  },
   collectionReact : function( to, from ) {
         console.log('MODULE COLLECTION REACT', to, from );
         var control = this,
@@ -3903,8 +4028,9 @@ $.extend( CZRMultiModuleControlMths, {
             _module_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
             is_module_update = _.isEmpty( _module_updated ),
             is_collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && ! is_module_update;
-
-        console.log('MODULE COLLECTION BEFORE SET : ', control.filterModuleCollectionBeforeAjax(to) );
+        if ( ! _.isEmpty( _to_remove ) ) {
+            control.czr_Module.remove( _to_remove.id );
+        }
         api(this.id).set( control.filterModuleCollectionBeforeAjax(to) );
         if ( 'postMessage' == api(control.id).transport && ! api.CZR_Helpers.has_part_refresh( control.id ) ) {
             if ( is_collection_sorted )

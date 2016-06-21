@@ -98,7 +98,7 @@ $.extend( CZRMultiModuleControlMths, {
               saved_modules = $.extend( true, {}, api(control.id).get() );//deep clone
 
           _.each( saved_modules, function( _mod, _key ) {
-                  console.log('POPULATE THE SAVED MODULE COLLECTION ON INIT :', _mod, _mod.sektion_id );
+                  console.log('SAVED MODULE TO INIT :', _mod, _mod.sektion_id );
                   //we need the sektion object
                   //First let's find the sektion module id
                   var _sektion_control = api.control( api.CZR_Helpers.build_setId( 'sektions') );
@@ -264,7 +264,7 @@ $.extend( CZRMultiModuleControlMths, {
   //recursive
   generateModuleId : function( module_type, key ) {
           var control = this;
-          key = key || control.czr_moduleCollection.get().length + 1;
+          key = key || control._getNextModuleKeyInCollection();
           var id_candidate = module_type + '_' + key;
 
           //do we have a module collection value ?
@@ -278,13 +278,32 @@ $.extend( CZRMultiModuleControlMths, {
           return id_candidate;
   },
 
+  //helper : return an int
+  //=> the next available id of the module collection
+  _getNextModuleKeyInCollection : function() {
+          var control = this,
+            _max_mod_key = {},
+            _next_key = 0;
+
+          //get the initial key
+          //=> if we already have a collection, extract all keys, select the max and increment it.
+          //else, key is 0
+          if ( ! _.isEmpty( control.czr_moduleCollection.get() ) ) {
+              _max_mod_key = _.max( control.czr_moduleCollection.get(), function( _mod ) {
+                  return _mod.id.replace(/[^\/\d]/g,'');
+              });
+              _next_key = parseInt( _max_mod_key.id.replace(/[^\/\d]/g,''), 10 ) + 1;
+          }
+          return _next_key;
+  },
+
 
   //@param obj can be { collection : []}, or { module : {} }
   updateModulesCollection : function( obj ) {
           console.log('update Module Collection', obj );
           var control = this,
-              _current_collection = control.czr_moduleCollection.get();
-              _new_collection = _.clone(_current_collection);
+              _current_collection = control.czr_moduleCollection.get(),
+              _new_collection = $.extend( true, [], _current_collection);
 
           //if a collection is provided in the passed obj then simply refresh the collection
           //=> typically used when reordering the collection module with sortable or when a module is removed
@@ -318,6 +337,22 @@ $.extend( CZRMultiModuleControlMths, {
   },
 
 
+
+  removeModuleFromCollection : function( module ) {
+           console.log('IN REMOVE MODULE FROM COLLECTION', module );
+        var control = this,
+            _current_collection = control.czr_moduleCollection.get(),
+            _new_collection = $.extend( true, [], _current_collection);
+
+        _new_collection = _.filter( _new_collection, function( _mod ) {
+              return _mod.id != module.id;
+        } );
+
+        control.czr_moduleCollection.set( _new_collection );
+  },
+
+
+
   //cb of control.czr_moduleCollection.callbacks
   collectionReact : function( to, from ) {
         console.log('MODULE COLLECTION REACT', to, from );
@@ -328,9 +363,15 @@ $.extend( CZRMultiModuleControlMths, {
             is_module_update = _.isEmpty( _module_updated ),
             is_collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && ! is_module_update;
 
-        console.log('MODULE COLLECTION BEFORE SET : ', control.filterModuleCollectionBeforeAjax(to) );
+        //MODULE REMOVED
+        //Remove the module instance if needed
+        if ( ! _.isEmpty( _to_remove ) ) {
+            control.czr_Module.remove( _to_remove.id );
+        }
+
         //say it to the setting
         api(this.id).set( control.filterModuleCollectionBeforeAjax(to) );
+
 
         //refreshes the preview frame  :
         //1) only needed if transport is postMessage, because is triggered by wp otherwise

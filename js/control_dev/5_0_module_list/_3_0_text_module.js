@@ -30,13 +30,17 @@ $.extend( CZRTextModuleMths, {
                 text : ''
           };
 
-          //console.log(' NEW TEXT MODEL : ', module._initNewItem( module.defaultItemModel ) );
+          console.log(' NEW TEXT MODEL : ', options, module.get(), module._initNewItem( module.defaultItemModel ) );
 
           //this is a static module. We only have one item
-          module.savedItems = _.isEmpty( options.items ) ? [ module._initNewItem( module.defaultItemModel ) ] : options.items;
+          //init module item if needed.
+          if ( _.isEmpty( options.items ) ) {
+                var def = _.clone( module.defaultItemModel );
+                module.savedItems = [ $.extend( def, { id : module.id } ) ];
+          } else {
+                module.savedItems = options.items;
+          }
 
-          //embed : define a container, store the embed state, fire the render method
-          module.embedded = $.Deferred();
           module.container = module.renderModuleWrapper();
           if ( false !== module.container.length ) {
               //say it

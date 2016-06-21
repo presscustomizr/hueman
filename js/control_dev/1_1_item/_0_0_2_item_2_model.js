@@ -35,6 +35,9 @@ var CZRItemMths = CZRItemMths || {};
                 module = this.module,
                 _new_collection = _.clone( module.get() );
 
+            //hook here
+            module.trigger('pre_item_dom_remove', item.get() );
+
             //destroy the Item DOM el
             item._destroyView();
 
@@ -43,7 +46,7 @@ var CZRItemMths = CZRItemMths || {};
             _new_collection = _.without( _new_collection, _.findWhere( _new_collection, {id: item.id }) );
             module.set( _new_collection );
             //hook here
-            module.trigger('item_removed', item.get() );
+            module.trigger('pre_item_api_remove', item.get() );
             //remove the item from the collection
             module.czr_Item.remove(item.id);
     },

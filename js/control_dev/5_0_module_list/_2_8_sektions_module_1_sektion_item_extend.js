@@ -102,7 +102,8 @@ $.extend( CZRSektionMths, {
                       //if the sektion has no column yet, let's add them, based on the current layout
                       if ( _.isEmpty( _new_sek.columns ) ) {
                               var _col_nb = parseInt(_new_sek['sektion-layout'] || 1, 10 ),
-                                  column_initial_key = module.czr_columnCollection.get().length + 1;
+                                  column_initial_key = module._getNextColKeyInCollection();
+
                               for( i = 1; i < _col_nb + 1 ; i++ ) {
                                     var _default_column = _.clone( module.defaultDBColumnModel ),
                                         _new_col_model = {

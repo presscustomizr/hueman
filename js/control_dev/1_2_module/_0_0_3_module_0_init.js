@@ -22,10 +22,13 @@ $.extend( CZRModuleMths, {
           api.Value.prototype.initialize.call( this, null, options );
 
           var module = this;
+
           //store the state of ready.
           //=> we don't want the ready method to be fired several times
           module.isReady = $.Deferred();
           module.savedItemCollectionReady = $.Deferred();
+          //embed : define a container, store the embed state, fire the render method
+          module.embedded = $.Deferred();
 
           //write the options as properties
           $.extend( module, options || {} );

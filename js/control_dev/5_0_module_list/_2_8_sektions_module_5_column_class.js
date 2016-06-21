@@ -88,7 +88,7 @@ $.extend( CZRColumnMths , {
                           // if ( ! module_collection_control.czr_Module.has( _module_candidate.id ) )
                           //   return;
 
-                          column.updateColumnModuleCollection( { module : _module_candidate });
+                          //column.updateColumnModuleCollection( { module : _module_candidate });
                 } );
 
                 //react to column value changes

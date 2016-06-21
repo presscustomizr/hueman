@@ -76,7 +76,7 @@ $.extend( CZRWidgetAreaModuleMths, {
                   module.addWidgetSidebar( model );
           });
 
-          module.bind( 'item_removed' , function(model) {
+          module.bind( 'pre_item_api_remove' , function(model) {
                   module.removeWidgetSidebar( model );
           });
 
