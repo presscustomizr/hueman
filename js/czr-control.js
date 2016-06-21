@@ -1006,8 +1006,8 @@ $.extend( CZRInputMths , {
           input.editor       = tinyMCE.get( 'czr-customize-content_editor' );
           input.textarea     = $( '#czr-customize-content_editor' );
           input.editorPane   = $( '#czr-customize-content_editor-pane' );
-          input.dragbar      = $( '#customize-posts-content-editor-dragbar' );
-          input.editorFrame  = $( '#czr-customize-content_ifr' );
+          input.dragbar      = $( '#czr-customize-content_editor-dragbar' );
+          input.editorFrame  = $( '#czr-customize-content_editor_ifr' );
           input.mceTools     = $( '#wp-czr-customize-content_editor-tools' );
           input.mceToolbar   = input.editorPane.find( '.mce-toolbar-grp' );
           input.mceStatusbar = input.editorPane.find( '.mce-statusbar' );
@@ -1022,6 +1022,8 @@ $.extend( CZRInputMths , {
           input.czrSetToggleButtonText( input.editorExpanded() );
 
           input.czrTextEditorBinding();
+
+          input.czrResizeEditorOnUserRequest();
   },
 
   czrTextEditorBinding : function() {
@@ -1034,6 +1036,8 @@ $.extend( CZRInputMths , {
 
 
           input.bind( input.id + ':changed', input.czrUpdateTextPreview );
+
+
           _.bindAll( input, 'czrOnVisualEditorChange', 'czrOnTextEditorChange', 'czrResizeEditorOnWindowResize' );
           
           toggleButton.on( 'click', function() { 
@@ -1058,6 +1062,7 @@ $.extend( CZRInputMths , {
                 textarea.on( 'input', input.czrOnTextEditorChange );
                 input.czrResizeEditor( window.innerHeight - editorPane.height() );
                 $( window ).on('resize', input.czrResizeEditorOnWindowResize );
+
               } else {
                 editor.off( 'input change keyup', input.czrOnVisualEditorChange );
                 textarea.off( 'input', input.czrOnTextEditorChange );
@@ -1124,7 +1129,6 @@ $.extend( CZRInputMths , {
   czrResizeEditor : function( position ) {
           var windowHeight = window.innerHeight,
               windowWidth = window.innerWidth,
-
               minScroll = 40,
               maxScroll = 1,
               mobileWidth = 782,
@@ -1134,7 +1138,6 @@ $.extend( CZRInputMths , {
               args = {},
               input = this,
               sectionContent = input.container.closest('ul.accordion-section-content'),
-              dragbar = input.dragbar,
               mceTools = input.mceTools,
               mceToolbar = input.mceToolbar,
               mceStatusbar = input.mceStatusbar,
@@ -1194,6 +1197,33 @@ $.extend( CZRInputMths , {
             input.czrResizeEditor( window.innerHeight - editorPane.height() );
           }, resizeDelay );
             
+  },
+  czrResizeEditorOnUserRequest : function() {
+          var input = this,
+              dragbar = input.dragbar,
+              editorFrame = input.editorFrame;
+
+          dragbar.on( 'mousedown', function() {
+            if ( ! input.editorExpanded() )
+              return;
+
+            $( document ).on( 'mousemove.czr-customize-content_editor', function( event ) {
+                event.preventDefault();
+                $( document.body ).addClass( 'czr-customize-content_editor-pane-resize' );
+                editorFrame.css( 'pointer-events', 'none' );
+                input.czrResizeEditor( event.pageY );
+              } );
+            } );
+
+          dragbar.on( 'mouseup', function() {
+            if ( ! input.editorExpanded() )
+              return;
+                          
+            $( document ).off( 'mousemove.czr-customize-content_editor' );
+            $( document.body ).removeClass( 'czr-customize-content_editor-pane-resize' );
+            editorFrame.css( 'pointer-events', '' );
+          } );
+    
   },
   czrSetToggleButtonText : function( $_expanded ) {
           var input = this;

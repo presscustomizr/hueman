@@ -14,8 +14,8 @@ $.extend( CZRInputMths , {
           input.editor       = tinyMCE.get( 'czr-customize-content_editor' );
           input.textarea     = $( '#czr-customize-content_editor' );
           input.editorPane   = $( '#czr-customize-content_editor-pane' );
-          input.dragbar      = $( '#customize-posts-content-editor-dragbar' );
-          input.editorFrame  = $( '#czr-customize-content_ifr' );
+          input.dragbar      = $( '#czr-customize-content_editor-dragbar' );
+          input.editorFrame  = $( '#czr-customize-content_editor_ifr' );
           input.mceTools     = $( '#wp-czr-customize-content_editor-tools' );
           input.mceToolbar   = input.editorPane.find( '.mce-toolbar-grp' );
           input.mceStatusbar = input.editorPane.find( '.mce-statusbar' );
@@ -34,6 +34,8 @@ $.extend( CZRInputMths , {
           input.czrSetToggleButtonText( input.editorExpanded() );
 
           input.czrTextEditorBinding();
+
+          input.czrResizeEditorOnUserRequest();
   },
 
   czrTextEditorBinding : function() {
@@ -47,9 +49,7 @@ $.extend( CZRInputMths , {
 
           input.bind( input.id + ':changed', input.czrUpdateTextPreview );
 
-          /* collapse editor on item collapsed by firing the click on .text_editor-button so 
-          * so to unbind this input
-          */
+
           _.bindAll( input, 'czrOnVisualEditorChange', 'czrOnTextEditorChange', 'czrResizeEditorOnWindowResize' );
           
           toggleButton.on( 'click', function() { 
@@ -59,6 +59,7 @@ $.extend( CZRInputMths , {
               }
           });
 
+          /* TODO, close the editor and unbind previously bound input on some event */
           //on this module section close close the editor and unbind this input
           api.section( input.module.getModuleSection() ).expanded.bind(
             function( expanded ) { 
@@ -77,6 +78,7 @@ $.extend( CZRInputMths , {
                 textarea.on( 'input', input.czrOnTextEditorChange );
                 input.czrResizeEditor( window.innerHeight - editorPane.height() );
                 $( window ).on('resize', input.czrResizeEditorOnWindowResize );
+
               } else {
                 editor.off( 'input change keyup', input.czrOnVisualEditorChange );
                 textarea.off( 'input', input.czrOnTextEditorChange );
@@ -155,7 +157,6 @@ $.extend( CZRInputMths , {
   czrResizeEditor : function( position ) {
           var windowHeight = window.innerHeight,
               windowWidth = window.innerWidth,
-
               minScroll = 40,
               maxScroll = 1,
               mobileWidth = 782,
@@ -165,7 +166,6 @@ $.extend( CZRInputMths , {
               args = {},
               input = this,
               sectionContent = input.container.closest('ul.accordion-section-content'),
-              dragbar = input.dragbar,
               mceTools = input.mceTools,
               mceToolbar = input.mceToolbar,
               mceStatusbar = input.mceStatusbar,
@@ -226,36 +226,36 @@ $.extend( CZRInputMths , {
           }, resizeDelay );
             
   },
+  czrResizeEditorOnUserRequest : function() {
+          var input = this,
+              dragbar = input.dragbar,
+              editorFrame = input.editorFrame;
+
+          dragbar.on( 'mousedown', function() {
+            if ( ! input.editorExpanded() )
+              return;
+
+            $( document ).on( 'mousemove.czr-customize-content_editor', function( event ) {
+                event.preventDefault();
+                $( document.body ).addClass( 'czr-customize-content_editor-pane-resize' );
+                editorFrame.css( 'pointer-events', 'none' );
+                input.czrResizeEditor( event.pageY );
+              } );
+            } );
+
+          dragbar.on( 'mouseup', function() {
+            if ( ! input.editorExpanded() )
+              return;
+                          
+            $( document ).off( 'mousemove.czr-customize-content_editor' );
+            $( document.body ).removeClass( 'czr-customize-content_editor-pane-resize' );
+            editorFrame.css( 'pointer-events', '' );
+          } );
+    
+  },
   czrSetToggleButtonText : function( $_expanded ) {
           var input = this;
 
           input.toggleButton.text( serverControlParams.translatedStrings[ ! $_expanded ? 'textEditorOpen' : 'textEditorClose' ] );
   }
-
-/*
-        // Resize the editor.
-        dragbar.on( 'mousedown', function() {
-          if ( ! section.expanded() ) {
-            return;
-          }
-          $( document ).on( 'mousemove.czr-customize-content_editor', function( event ) {
-            event.preventDefault();
-            $( document.body ).addClass( 'czr-customize-content_editor-pane-resize' );
-            editorFrame.css( 'pointer-events', 'none' );
-            input.resizeEditor( event.pageY );
-          } );
-        } );
-
-        // Remove editor resize.
-        dragbar.on( 'mouseup', function() {
-          if ( ! section.expanded() ) {
-            return;
-          }
-          $( document ).off( 'mousemove.czr-customize-content_editor' );
-          $( document.body ).removeClass( 'czr-customize-content_editor-pane-resize' );
-          editorFrame.css( 'pointer-events', '' );
-        } );
-
-        // Resize the editor when the viewport changes.
- */
 });//$.extend
