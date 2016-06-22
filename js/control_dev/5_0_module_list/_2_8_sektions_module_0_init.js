@@ -90,13 +90,10 @@ $.extend( CZRSektionMths, {
   //React to a single item change
   //cb of module.czr_Item(item.id).callbacks
   itemReact : function( to, from ) {
-        console.log('IN ITEM REACT (OVERRIDES PARENT)', to, from );
         var module = this,
             sektion_candidate = $.extend(true, {}, to);
-        console.log('sektion_candidate BEFORE', sektion_candidate );
         //we want to make sure that the item model is compliant with default model
         sektion_candidate = module.prepareSekItemForDB( sektion_candidate );
-        console.log('sektion_candidate AFTER', sektion_candidate );
         //update the collection
         module.updateItemsCollection( {item : sektion_candidate });
   },
@@ -137,7 +134,7 @@ $.extend( CZRSektionMths, {
                             var _db_ready_col = module.prepareColumnForDB(_col);
                             _db_ready_columns.push( _db_ready_col );
                       });
-                      console.log(' _db_ready_columns',  _db_ready_columns);
+
                       db_ready_sektItem[_key] = _db_ready_columns;
                   break;
             }
@@ -152,7 +149,6 @@ $.extend( CZRSektionMths, {
   //columns : []
   //sektion-layout : int
   removeSektion : function( sekItem ) {
-        console.log('removed sekItem', sekItem);
         var module = this,
             collection_control = api.control( api.CZR_Helpers.build_setId( 'module-collection') );
 

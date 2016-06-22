@@ -19,25 +19,7 @@ $.extend( CZRSektionMths, {
                       throw new Error('In Sektion Item initialize, no layout provided for ' + sekItem.id + '.');
                   }
 
-                  //
                   sekItem.isReady.done( function() {
-                        //To set the sekItem value now won't be listened too
-                        //=> the item callback is declared on 'input_collection_populated'
-                        console.log('sekItem.isReady', sekItem.id );
-                        console.log('ITEM COLLECTION IS READY ?', sekItem.module.id , sekItem.module.savedItemCollectionReady.state() );
-                        console.log('sekItem.get().columns', sekItem.get().columns );
-
-                        // //set columns now only for sektions added by user.
-                        // //@todo : For sektions saved and populated on first init, the empty columns are instantiated after all non empty have been done
-                        // if ( 'resolved' == module.savedItemCollectionReady.state() ) {
-                        //     _sektion_model = sekItem.maybeSetColumnsOnInit( _sektion_model );
-                        // }
-
-                        sekItem.set( _sektion_model );
-
-                        // if ( _.isEmpty( sekItem.get().columns ) ) {
-                        //     throw new Error('In Sektion Item, the sektion ' + sekItem.id + ' has no column(s) set (and should have sat least one at this stage ! ).');
-                        // }
 
                         //When fetched from DB, the column model looks like :
                         //{
@@ -45,7 +27,8 @@ $.extend( CZRSektionMths, {
                         //  sektion_id : '',//string
                         //  modules : [],//collection of module id strings
                         //}
-                        //=> we need to extend it with sektion instance
+                        //=> we need to extend it with the sektion instance
+                        //=> make sure the columns are instantiated as well
                         if ( ! _.isEmpty( sekItem.get().columns ) ) {
                               _.each( sekItem.get().columns , function( _column ) {
                                     //instantiate the column and push it to the global column collection
@@ -67,15 +50,8 @@ $.extend( CZRSektionMths, {
                                     module.instantiateColumn( $.extend( column_candidate, { sektion : sekItem } ) );
                               }//for
                         }
+                  });//sekItem.isReady
 
-                        console.log('??? sekItem.get() AFTER ???', sekItem.get() );
-                  });
-
-                  //on init, when all saved columns have been instantiated, check if this sektion has columns that needs to be instantiated
-                  module.savedItemCollectionReady.done( function() {
-                        console.log('POPULATE EMPTY COLUMNS ON FIRST LOAD NOW. @TODO ?');
-
-                  } );
 
                   //instantiate the columns when the sektion item is embedded
                   sekItem.embedded.done(function() {
@@ -100,99 +76,6 @@ $.extend( CZRSektionMths, {
                   });//embedded.done
 
           },
-
-
-          //overrides the parent
-          //=> to generate the column collection that is used in the sektion item instanciation params
-          //If a new sektion is added by a user, the columns must be generated baseed on the choosen layout
-          //When a sektion item is fetched from the DB, the column should already by there.
-          maybeSetColumnsOnInit : function( _sektion_model ) {
-                  var sekItem = this,
-                      module = sekItem.module,
-                      _def = _.clone( sekItem.defaultItemModel ),
-                      _new_sek = $.extend( _def, _sektion_model ),
-                      _new_columns = [];
-
-                      //is this sektionItem already existing in the setting value ?
-                      //=> if so, it should have columns.
-                      // if ( ! _.isUndefined( _.findWhere( api(module.control.id).get() , { id : _new_sek.id } ) ) ) {
-                      //       throw new Error( 'Sektion ' + _new_sek.id + ' already exists in the setting item collection and should have columns' );
-                      // }
-                      //if the sektion has no column yet, let's add them, based on the current layout
-                      console.log('module._getNextColKeyInCollection()', module._getNextColKeyInCollection() );
-                      if ( _.isEmpty( _new_sek.columns ) ) {
-                              var _col_nb = parseInt(_new_sek['sektion-layout'] || 1, 10 ),
-                                  column_initial_key = module._getNextColKeyInCollection();
-
-                              for( i = 1; i < _col_nb + 1 ; i++ ) {
-                                    var _default_column = _.clone( module.defaultDBColumnModel ),
-                                        _new_col_model = {
-                                              id : module.generateColId( column_initial_key ),
-                                              sektion_id : _new_sek.id
-                                        };
-                                        _col_model = $.extend( _default_column, _new_col_model );
-
-                                    _new_columns.push( _default_column );
-                                    column_initial_key++;
-                              }//for
-
-                              _new_sek.columns = _new_columns;
-                      }//if
-
-                      return _new_sek;
-
-          },
-
-
-          //update the sektion columns model property if
-          updateSektionColumnCollection : function( obj ) {
-                console.log('IN UPDATE SEKTION ' + this.id + ' COLUMN COLLECTION', obj );
-                var sekItem = this,
-                    _current_sektion_model = sekItem.get(),
-                    _new_sektion_model = _.clone(_current_sektion_model);
-
-                console.log('_current_sektion_model', _current_sektion_model );
-                //if a collection is provided in the passed obj then simply refresh the collection
-                //=> typically used when reordering the collection module with sortable or when a column is removed
-                if ( _.has( obj, 'collection' ) ) {
-                      //reset the collection
-                      _new_sektion_model.columns = obj.collection;
-                      return;
-                }
-
-                if ( ! _.has(obj, 'column') ) {
-                  throw new Error('updateSektionColumnCollection, no column provided in sekItem ' + sekItem.id + '.');
-                }
-                var column = _.clone(obj.column);
-
-                if ( ! _.has(column, 'id') ) {
-                  throw new Error('updateSektionColumnCollection, no id provided for a column in sekItem ' + sekItem.id + '.');
-                }
-
-                //the column already exist in the sektion
-                if ( _.findWhere( _new_sektion_model.columns, { id : column.id } ) ) {
-                    console.log('COLUMN EXISTS? ' , _new_sektion_model.columns );
-                      _.each( _new_sektion_model.columns , function( _col, _ind ) {
-                            if ( _col.id != column.id )
-                              return;
-
-                            //set the new col
-                            _new_sektion_model.columns[_ind] = column;
-                      });
-                }
-                //the module has to be added
-                else {
-                      console.log('COLUMN TO ADD ');
-                      _new_sektion_model.columns.push(column);
-                }
-                console.log('NEW SEKTION MODEL', _new_sektion_model, _.isEqual(_current_sektion_model, _new_sektion_model)  );
-                console.log('sekItem.isReady.state()', sekItem.isReady.state() );
-                //sekItem.set({ id});
-                //update the item
-                //sekItem.set( _new_sektion_model );
-                sekItem.module.itemReact( _new_sektion_model );
-          },
-
 
 
           dragulizeSektion : function() {

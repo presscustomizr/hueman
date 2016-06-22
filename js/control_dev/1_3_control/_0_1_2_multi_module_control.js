@@ -74,7 +74,6 @@ $.extend( CZRMultiModuleControlMths, {
 
                       control.registerModulesOnInit( to );
 
-                      console.log('SETUP MODULE COLLECTION LISTENER NOW ? ');
                       //LISTEN TO ELEMENT COLLECTION
                       control.czr_moduleCollection.callbacks.add( function() { return control.collectionReact.apply( control, arguments ); } );
                 });
@@ -93,12 +92,11 @@ $.extend( CZRMultiModuleControlMths, {
 
   //fired when the main sektion module has synchronised its if with the module-collection control
   registerModulesOnInit : function( sektion_module_instance ) {
-          console.log('IN REGISTER MODULES ON INIT', sektion_module_instance.id  );
           var control = this,
               saved_modules = $.extend( true, {}, api(control.id).get() );//deep clone
 
           _.each( saved_modules, function( _mod, _key ) {
-                  console.log('SAVED MODULE TO INIT :', _mod, _mod.sektion_id );
+
                   //we need the sektion object
                   //First let's find the sektion module id
                   var _sektion_control = api.control( api.CZR_Helpers.build_setId( 'sektions') );
@@ -109,9 +107,6 @@ $.extend( CZRMultiModuleControlMths, {
                   }
 
                   var _sektion = sektion_module_instance.czr_Item( _mod.sektion_id );
-
-                  console.log('_sektion_module_id', sektion_module_instance.id );
-                  console.log('_sektion', _sektion, _mod.sektion_id, sektion_module_instance.get() );
 
                   if ( _.isUndefined( _sektion ) ) {
                     throw new Error('sektion instance missing. Impossible to instantiate module : ' + _mod.id );
@@ -170,16 +165,12 @@ $.extend( CZRMultiModuleControlMths, {
                 throw new Error('The module id already exists in the collection in control : ' + control.id );
           }
 
-          console.log('Module Model Raw : ', module );
-
           var module_api_ready = control.prepareModuleForAPI( module );
-          console.log('Module model ready for instantiation : ', control.prepareModuleForAPI( module_api_ready ) );
 
           //instanciate the module with the default constructor
           control.czr_Module.add( module.id, new constructor( module.id, control.prepareModuleForAPI( module_api_ready ) ) );
 
           control.czr_Module( module.id ).isReady.done( function() {
-                console.log('MODULE '+ module.id + ' : ADD IT TO THE MODULE COLLECTION. Module Model : ', control.czr_Module( module.id ).get() );
                 //push it to the collection of the module-collection control
                 //=> updates the wp api setting
                 control.updateModulesCollection( {module : module_api_ready } );
@@ -278,7 +269,6 @@ $.extend( CZRMultiModuleControlMths, {
           }
           //make sure the module is not already instantiated
           if ( control.czr_Module.has( id_candidate ) ) {
-            console.log('in generate Module id', key, i );
             return control.generateModuleId( module_type, key++, i++ );
           }
 
@@ -307,7 +297,6 @@ $.extend( CZRMultiModuleControlMths, {
 
   //@param obj can be { collection : []}, or { module : {} }
   updateModulesCollection : function( obj ) {
-          console.log('update Module Collection', obj );
           var control = this,
               _current_collection = control.czr_moduleCollection.get(),
               _new_collection = $.extend( true, [], _current_collection);
@@ -346,7 +335,6 @@ $.extend( CZRMultiModuleControlMths, {
 
 
   removeModuleFromCollection : function( module ) {
-        console.log('IN REMOVE MODULE FROM COLLECTION', module );
         var control = this,
             _current_collection = control.czr_moduleCollection.get(),
             _new_collection = $.extend( true, [], _current_collection);
@@ -362,7 +350,6 @@ $.extend( CZRMultiModuleControlMths, {
 
   //cb of control.czr_moduleCollection.callbacks
   collectionReact : function( to, from ) {
-        console.log('MODULE COLLECTION REACT', to, from );
         var control = this,
             is_module_removed = _.size(from) > _.size(to),
             is_module_update = _.size(from) == _.size(to);
@@ -376,7 +363,6 @@ $.extend( CZRMultiModuleControlMths, {
             });
             _to_remove = _to_remove[0];
             control.czr_Module.remove( _to_remove.id );
-            console.log('THE MODULE ' + _to_remove.id + ' HAS BEEN REMOVED.', _to_remove );
         }
 
         //say it to the setting
@@ -396,7 +382,6 @@ $.extend( CZRMultiModuleControlMths, {
 
   //cb of : api(control.id).callbacks.
   syncColumn : function( to, from ) {
-        console.log('IN SYNC COLUM', to , from );
         var control = this,
             main_sektion_module_instance = control.syncSektionModule.get();
 
@@ -405,12 +390,8 @@ $.extend( CZRMultiModuleControlMths, {
             return ! _.findWhere( from, { id : _mod.id } );
         } );
 
-        console.log('added_mod', added_mod );
-
         if ( ! _.isEmpty(added_mod) ) {
               _.each( added_mod, function( _mod ) {
-                      console.log('MOD TO ADD',_mod );
-                      console.log('MODULE ' + _mod.id + ' MUST BE ADDED TO COLUMN ' + _mod.column_id );
                       main_sektion_module_instance.czr_Column( _mod.column_id ).updateColumnModuleCollection( { module : _mod } );
               });
         }

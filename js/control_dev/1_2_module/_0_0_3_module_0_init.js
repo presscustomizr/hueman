@@ -94,9 +94,6 @@ $.extend( CZRModuleMths, {
 
                 //listen to each single module change
                 module.callbacks.add( function() { return module.moduleReact.apply(module, arguments ); } );
-
-                //this module is ready
-                console.log('MODULE IS READY', module.id );
           });
 
   },

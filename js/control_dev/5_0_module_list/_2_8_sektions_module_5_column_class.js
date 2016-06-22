@@ -32,9 +32,6 @@ $.extend( CZRColumnMths , {
           //the modules are stored only with their id in a column
           column.defautModuleModelInColumn = { id : '' };
 
-          console.log( 'column.modules', column.modules );
-          console.log( 'column options', options );
-
           //defer the column rendering when the parent sektion content is rendered
           column.sektion.contentRendered.done(function() {
                 //render the column
@@ -65,8 +62,6 @@ $.extend( CZRColumnMths , {
           //1) populate the column module collection
           //2) setup the DOM event handler
           column.embedded.done(function() {
-                console.log('in column embedded. Current module collection for column : ' + column.id , column.czr_columnModuleCollection.get() );
-
                 //at this point, the question is : are the modules assigned to this column instantiated ?
                 //if not => let's instantiate them. => this should not change the module collection czr_moduleCollection of the module-collection control
                 //=> because they should already be registered.
@@ -76,11 +71,9 @@ $.extend( CZRColumnMths , {
                           if ( module_collection_control.czr_Module.has(_mod.id) )
                             return;
 
-                          console.log('in Column '+ column.id +' Module ' + _mod.id + ' is not instantiated yet. Do it.');
                           //first let's try to get it from the collection
                           var _module_candidate = _.findWhere( module_collection_control.czr_moduleCollection.get() , { id : _mod.id } );
                           //we have a candidate. Let's instantiate it
-                          console.log('module candidate', _module_candidate );
                           module_collection_control.instantiateModule( _module_candidate, {} );
 
                           //push it to the collection of the sektions control
@@ -116,7 +109,6 @@ $.extend( CZRColumnMths , {
           column.isReady.resolve();
 
           //push it to the module collection
-          console.log('column.get() ? ', column.get() );
           column.sektion.module.updateColumnCollection( {column : column.get() });
     },
 
@@ -136,7 +128,6 @@ $.extend( CZRColumnMths , {
     //typically, a module has been added
     columnReact : function( to ,from ) {
           var column = this;
-          console.log('THE MODEL OF THE COLUMN ' + column.id + ' HAS BEEN UPDATED. TIME TO UPDATE THE PARENT SEKTION ITEM', to, from );
           this.sektion.module.updateColumnCollection( {column : to });
     },
 
@@ -174,7 +165,6 @@ $.extend( CZRColumnMths , {
 
 
     updateColumnModuleCollection : function( obj ) {
-            console.log('IN UPDATE COLUMN MODULE COLLECTION', obj );
             var column = this,
                 _current_collection = column.czr_columnModuleCollection.get();
                 _new_collection = _.clone( _current_collection );
@@ -195,7 +185,6 @@ $.extend( CZRColumnMths , {
             //2) The module shall not exist in another column
             var module = column.prepareModuleForColumnAPI( _.clone(obj.module) );
 
-            console.log('MODULE READY FOR COLUMN API ?', module );
 
             //the module already exist in the collection
             if ( _.findWhere( _new_collection, { id : module.id } ) ) {
@@ -212,7 +201,6 @@ $.extend( CZRColumnMths , {
                   _new_collection.push(module);
             }
 
-            console.log('NEW MODULE COLLECTION IN COLUMN : ' + column.id + ' : ', _new_collection );
             //set the collection
             column.czr_columnModuleCollection.set( _new_collection );
     },
@@ -249,7 +237,6 @@ $.extend( CZRColumnMths , {
     //cb of : column.czr_columnModuleCollection.callbacks.add()
     //the job of this method is to update the column instance value with a new collection of modules
     columnModuleCollectionReact : function( to, from ) {
-            console.log('COLUM MODULE COLLECTION REACT', to, from );
             var column = this,
                 _current_column_model = column.get(),
                 _new_column_model = _.clone( _current_column_model ),
@@ -261,8 +248,6 @@ $.extend( CZRColumnMths , {
 
             //say it to the column instance
             _new_column_model.modules = _new_module_collection;
-
-            console.log('COLUMN ' + column.id + ' MODEL UPDATED (before updating the sektion) : ', _new_column_model );
             column.set( _new_column_model );
     },
 

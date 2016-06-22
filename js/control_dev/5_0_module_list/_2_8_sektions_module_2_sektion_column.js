@@ -16,7 +16,7 @@ $.extend( CZRSektionMths, {
   prepareColumnForDB : function( column_candidate ) {
         var module = this,
             _db_ready_col = {};
-            console.log('column_candidatecolumn_candidatecolumn_candidate', column_candidate );
+
         _.each( module.defaultDBColumnModel, function( _value, _key ){
               var _candidate_val = column_candidate[_key];
               switch( _key ) {
@@ -72,15 +72,12 @@ $.extend( CZRSektionMths, {
         var module = this,
             column_model = _.clone( _column );
 
-        console.log('db column model', column_model );
-
         if ( ! _.isEmpty( column_model.id ) && module.czr_Column.has( column_model.id ) ) {
               throw new Error('The column id already exists in the collection in module : ' + module.id );
         }
 
         column_model = module.prepareColumnForAPI( column_model );
 
-        console.log('extended column model before api instantiation : ', column_model );
         //instanciate the column with the default constructor
         //=> makes sure that the column is ready for instanciation
         module.czr_Column.add( column_model.id , new api.CZRColumn( column_model.id, column_model ) );
@@ -150,7 +147,6 @@ $.extend( CZRSektionMths, {
 
   //@param obj can be { collection : []}, or { module : {} }
   updateColumnCollection : function( obj ) {
-        console.log('IN UPDATE GLOBAL COLUMN COLLECTION', obj );
         var module = this,
             _current_collection = module.czr_columnCollection.get();
             _new_collection = $.extend( true, [] , _current_collection );
@@ -186,26 +182,19 @@ $.extend( CZRSektionMths, {
               _new_collection.push(column);
         }
 
-        //Inform the column sektion
-        //column.sektion.updateSektionColumnCollection( { column : column });
         //Inform the global column collection
         module.czr_columnCollection.set(_new_collection);
   },
 
 
   removeColumnFromCollection : function( column ) {
-        console.log('IN REMOVE COLUMN FROM COLLECTION', column );
         var module = this,
             _current_collection = module.czr_columnCollection.get(),
             _new_collection = $.extend( true, [], _current_collection);
 
-        console.log( 'column col before', _new_collection );
-
         _new_collection = _.filter( _new_collection, function( _col ) {
               return _col.id != column.id;
         } );
-
-        console.log( 'column col after', _new_collection );
 
         module.czr_columnCollection.set(_new_collection);
   },
@@ -216,7 +205,6 @@ $.extend( CZRSektionMths, {
   //cb of control.czr_columnCollection.callbacks
   //The job of this function is to set the column collection in their respective sektItems
   columnCollectionReact : function( to, from ) {
-        //console.log('IN Global Column collection react. DIFFERENCE ? ', to, from, _.difference(to,from)[0] );
         var module = this,
             is_column_added   = _.size(from) < _.size(to),
             is_column_removed = _.size(from) > _.size(to),
@@ -224,8 +212,6 @@ $.extend( CZRSektionMths, {
             //is_column_collection_sorted = _.isEmpty(_to_add) && _.isEmpty(_to_remove)  && ! is_column_update,
             _current_sek_model = {},
             _new_sek_model = {};
-
-        console.log('IN Global Column collection react. TO => FROM', to ,from );
 
         //COLUMN UPDATE CASE
         //parse the columns and find the one that has changed.
@@ -235,9 +221,6 @@ $.extend( CZRSektionMths, {
                       return;
                     _current_sek_model = _col.sektion.get();
                     _new_sek_model = $.extend(true, {}, _current_sek_model);
-
-                    console.log('COLUMN ' + _col.id + ' HAS CHANGED. UPDATE ITS PARENT SEKTION MODEL.');
-                    console.log('_current_sek_model', _current_sek_model );
 
                     //find the column and update it
                     _.each( _current_sek_model.columns, function( _c, _k ){
@@ -258,12 +241,11 @@ $.extend( CZRSektionMths, {
               var _new_column = _.filter( to, function( _col ){
                   return _.isUndefined( _.findWhere( from, { id : _col.id } ) );
               });
-              console.log('_new_column_new_column_new_column_new_column_new_column_new_column', _new_column[0] );
+
               _new_column = _new_column[0];
               _current_sek_model = _new_column.sektion.get();
               //only add the column if the column does not exist in the sektion columns.
               if ( _.isUndefined( _.findWhere( _current_sek_model.columns, {id : _new_column.id } ) ) ) {
-                    console.log('COLUMN ' + _new_column.id + ' HAS BEEN ADDED. UPDATE ITS PARENT SEKTION MODEL. NEW COLUMN : ', _new_column );
                     _new_sek_model = $.extend(true, {}, _current_sek_model);
                     _new_sek_model.columns.push( _new_column );
                     _new_column.sektion.set( _new_sek_model );
@@ -281,28 +263,18 @@ $.extend( CZRSektionMths, {
 
               _current_sek_model = _to_remove.sektion.get();
               _new_sek_model = $.extend(true, {}, _current_sek_model);//_.clone() is not enough there, we need a deep cloning.
-              console.log('THE COLUMN ' + _to_remove.id + ' HAS BEEN REMOVED.', _to_remove );
 
               //remove the column from the sekItem model
               _new_sek_model.columns = _.filter( _new_sek_model.columns, function( _col ) {
                     return _col.id != _to_remove.id;
               } );
 
-
-              console.log( '_.isEqual( _current_sek_model, _new_sek_model );', _.isEqual( _current_sek_model, _new_sek_model ), _current_sek_model , _new_sek_model );
-
-              console.log('SEKTION ' + _to_remove.sektion.id + ' HAS TO BE UPDATED.', _new_sek_model );
               _to_remove.sektion.set( _new_sek_model );
 
               //remove the column instance from module
               module.czr_Column.remove( _to_remove.id );
         }
 
-        //loop the new column collection
-        //=> set each sektion column collection
-        // _.each( to, function( _col, key ) {
-        //       _col.sektion.updateSektionColumnCollection( { column : _col });
-        // });
 
         //refreshes the preview frame  :
         //1) only needed if transport is postMessage, because is triggered by wp otherwise
@@ -327,8 +299,6 @@ $.extend( CZRSektionMths, {
         var module = this;
         key = key || module._getNextColKeyInCollection();
 
-        console.log('in generate Col id : ', key, i );
-
         var id_candidate = 'col_' + key;
 
         //do we have a column collection value ?
@@ -337,7 +307,6 @@ $.extend( CZRSektionMths, {
         }
         //make sure the column is not already instantiated
         if ( module.czr_Column.has( id_candidate ) ) {
-          console.log('key and i', key, key++, i, i++ );
           return module.generateColId( key++, i++ );
         }
 

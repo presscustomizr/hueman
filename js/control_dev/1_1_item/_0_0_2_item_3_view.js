@@ -26,8 +26,6 @@ $.extend( CZRItemMths , {
         if ( ! view_template  || ! module.container )
           return;
 
-        console.log('item.embedded.state()', item.embedded.state() );
-
         //has this item view already been rendered?
         if ( 'resolved' == item.embedded.state() )
           return item.container;
