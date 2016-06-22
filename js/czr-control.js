@@ -1024,6 +1024,7 @@ $.extend( CZRInputMths , {
           input.czrTextEditorBinding();
 
           input.czrResizeEditorOnUserRequest();
+          console.log( input.prototype );
   },
 
   czrTextEditorBinding : function() {
@@ -1036,7 +1037,6 @@ $.extend( CZRInputMths , {
 
 
           input.bind( input.id + ':changed', input.czrUpdateTextPreview );
-
 
           _.bindAll( input, 'czrOnVisualEditorChange', 'czrOnTextEditorChange', 'czrResizeEditorOnWindowResize' );
           
@@ -1053,7 +1053,13 @@ $.extend( CZRInputMths , {
           });
 
           input.editorExpanded.bind( function (expanded) {
-              $(document.body).toggleClass('czr-customize-content_editor-pane-open', expanded);
+              if ( editor.locker && editor.locker !== input ) {
+                editor.locker.editorExpanded.set(false);
+                editor.locker = null;
+              }if ( ! editor.locker || editor.locker === input ) {
+                $(document.body).toggleClass('czr-customize-content_editor-pane-open', expanded);
+                editor.locker = input;
+              }
               input.czrSetToggleButtonText( expanded );
 
               if ( expanded ) {

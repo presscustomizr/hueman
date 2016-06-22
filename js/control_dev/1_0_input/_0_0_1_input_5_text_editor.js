@@ -29,6 +29,7 @@ $.extend( CZRInputMths , {
           //status
           input.editorExpanded   = new api.Value( false );
 
+
           //initial filling of the textpreview and button text
           input.czrUpdateTextPreview();
           input.czrSetToggleButtonText( input.editorExpanded() );
@@ -36,6 +37,7 @@ $.extend( CZRInputMths , {
           input.czrTextEditorBinding();
 
           input.czrResizeEditorOnUserRequest();
+          console.log( input.prototype );
   },
 
   czrTextEditorBinding : function() {
@@ -49,7 +51,6 @@ $.extend( CZRInputMths , {
 
           input.bind( input.id + ':changed', input.czrUpdateTextPreview );
 
-
           _.bindAll( input, 'czrOnVisualEditorChange', 'czrOnTextEditorChange', 'czrResizeEditorOnWindowResize' );
           
           toggleButton.on( 'click', function() { 
@@ -59,7 +60,7 @@ $.extend( CZRInputMths , {
               }
           });
 
-          /* TODO, close the editor and unbind previously bound input on some event */
+          
           //on this module section close close the editor and unbind this input
           api.section( input.module.getModuleSection() ).expanded.bind(
             function( expanded ) { 
@@ -68,7 +69,17 @@ $.extend( CZRInputMths , {
           });
 
           input.editorExpanded.bind( function (expanded) {
-              $(document.body).toggleClass('czr-customize-content_editor-pane-open', expanded);
+              /*
+              * Ensure only the latest input is bound
+              */
+              if ( editor.locker && editor.locker !== input ) {
+                editor.locker.editorExpanded.set(false);
+                editor.locker = null;
+              }if ( ! editor.locker || editor.locker === input ) {
+                $(document.body).toggleClass('czr-customize-content_editor-pane-open', expanded);
+                editor.locker = input;
+              }
+
               //set toggle button text
               input.czrSetToggleButtonText( expanded );
 
