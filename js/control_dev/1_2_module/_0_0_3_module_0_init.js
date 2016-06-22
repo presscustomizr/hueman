@@ -105,7 +105,7 @@ $.extend( CZRModuleMths, {
   //////////////////////////////////
   ready : function() {
           var module = this;
-
+          console.log('MODULE ' + module.id + ' IS READY');
           module.isReady.resolve();
   },
 

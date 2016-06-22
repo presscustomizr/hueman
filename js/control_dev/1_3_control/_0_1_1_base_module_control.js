@@ -1,9 +1,9 @@
+
 //BASE CONTROL CLASS
 //extends api.CZRBaseControl
 //define a set of methods, mostly helpers, to extend the base WP control class
 //this will become our base constructor for main complex controls
 //EARLY SETUP
-
 var CZRBaseModuleControlMths = CZRBaseModuleControlMths || {};
 
 $.extend( CZRBaseModuleControlMths, {
@@ -16,7 +16,7 @@ $.extend( CZRBaseModuleControlMths, {
           //the item(s) of the module are the value saved in the setting
           control.savedModules = [
                 {
-                  id : control.id + '_' + options.params.type,
+                  id : api.CZR_Helpers.getOptionName( control.id ) + '_' + options.params.type,
                   module_type : options.params.module_type,
                   section : options.params.section,
                   items   : api(control.id).get(),
@@ -26,11 +26,11 @@ $.extend( CZRBaseModuleControlMths, {
 
           //define a default Constructor
           control.moduleConstructors = {
-                czr_widget_areas_module   : api.CZRWidgetAreaModule,
-                czr_social_module    : api.CZRSocialModule,
-                czr_sektion_module    : api.CZRSektionModule,
-                czr_fp_module    : api.CZRFeaturedPageModule,
-                czr_slide_module    : api.CZRSlideModule,
+                czr_widget_areas_module : api.CZRWidgetAreaModule,
+                czr_social_module : api.CZRSocialModule,
+                czr_sektion_module : api.CZRSektionModule,
+                czr_fp_module : api.CZRFeaturedPageModule,
+                czr_slide_module : api.CZRSlideModule,
                 czr_text_module : api.CZRTextModule
           };
 
@@ -81,21 +81,17 @@ $.extend( CZRBaseModuleControlMths, {
                 //normalizes the module
                 module = control._normalizeModule( module );
                 if ( ! _.isObject(module) || _.isEmpty(module) ) {
-                  throw new Error('Populate Module Collection : a module could not be added in : ' + control.id );
+                  throw new Error('Problem when populating Module Collection for control : ' + control.id +'. A module must be an object not empty.');
                 }
-                if ( _.isUndefined( control.moduleConstructors[ module.module_type] ) ) {
-                  throw new Error('Populate Module Collection : no constructor found for type : ' +  module.module_type );
-                }
-
                 //adds it to the collection
-                control.instantiateModule( module, control.moduleConstructors[ module.module_type] );
+                control.instantiateModule( module, {} );
           });
 
           return this;
   },
 
 
-instantiateModule : function( module, constructor ) {
+  instantiateModule : function( module, constructor ) {
           if ( ! _.has( module,'id') ) {
             throw new Error('CZRModule::instantiateModule() : a module has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
           }
@@ -105,13 +101,7 @@ instantiateModule : function( module, constructor ) {
           //is a constructor provided ?
           //if not try to look in the module object if we an find one
           if ( _.isUndefined(constructor) || _.isEmpty(constructor) ) {
-              if ( _.has( module, 'module_type' ) ) {
-                constructor = control.moduleConstructors[ module.module_type];
-              }
-          }
-
-          if ( _.isUndefined(constructor) || _.isEmpty(constructor) ) {
-            throw new Error('CZRModule::instantiateModule() : no constructor found for module type : ' + module.module_type +'. Aborted.' );
+              constructor = control.getModuleConstructor( module );
           }
 
           //on init, the module collection is populated with module already having an id
@@ -124,9 +114,10 @@ instantiateModule : function( module, constructor ) {
           var module_api_ready = control.prepareModuleForAPI( module );
 
           //instanciate the module with the default constructor
-          control.czr_Module.add( module.id, new constructor( module.id, module_api_ready ) );
+          control.czr_Module.add( module_api_ready.id, new constructor( module_api_ready.id, module_api_ready ) );
 
-          control.czr_Module( module.id ).isReady.done( function() {
+          //bind callbacks on module ready.
+          control.czr_Module( module_api_ready.id ).isReady.done( function() {
                 //push it to the collection of the module-collection control
                 //=> updates the wp api setting
                 control.updateModulesCollection( {module : module_api_ready } );
@@ -134,6 +125,14 @@ instantiateModule : function( module, constructor ) {
 
   },
 
+  //default way to get a module constructor
+  getModuleConstructor : function( module ) {
+          var control = this;
+          if ( ! _.has( module, 'module_type' ) ) {
+            throw new Error('CZRModule::getModuleConstructor : no module type found for module ' + module.id );
+          }
+          return control.moduleConstructors[ module.module_type];
+  },
 
 
    // id : '',//module.id,

@@ -56,7 +56,7 @@ $.extend( CZRSektionMths, {
                   //instantiate the columns when the sektion item is embedded
                   sekItem.embedded.done(function() {
                         //dragulize sektion when embedded
-                        sekItem.dragulizeSektion();
+                        //sekItem.dragulizeSektion();
                   });
 
 
@@ -65,10 +65,10 @@ $.extend( CZRSektionMths, {
                   //dragulization
                   sekItem.contentRendered.done(function() {
                           //dragulize columns
-                          sekItem.module.dragInstance.containers.push( $( '.czr-column-wrapper', sekItem.container )[0] );
+                          //sekItem.module.dragInstance.containers.push( $( '.czr-column-wrapper', sekItem.container )[0] );
 
                           //each item view must clean the dragula class
-                          sekItem.czr_View.callbacks.add( function(to) {
+                          sekItem.czr_ItemState.callbacks.add( function(to) {
                                 if ( 'closed' == to )
                                   return;
                                 sekItem.container.removeClass('czr-show-fake-container');

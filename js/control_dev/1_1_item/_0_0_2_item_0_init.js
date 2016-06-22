@@ -36,9 +36,9 @@ $.extend( CZRItemMths , {
         item.set( _initial_model );
 
         //VIEW
-        //czr_View stores the current expansion status of a given view => one value by created by item.id
-        //czr_View can take 3 values : expanded, expanded_noscroll (=> used on view creation), closed
-        item.czr_View = new api.Value();
+        //czr_ItemState stores the current expansion status of a given view => one value by created by item.id
+        //czr_ItemState can take 3 values : expanded, expanded_noscroll (=> used on view creation), closed
+        item.czr_ItemState = new api.Value();
 
         item.setupView( _initial_model );
 
@@ -95,7 +95,7 @@ $.extend( CZRItemMths , {
           ];
 
           //set initial state
-          item.czr_View.set('closed');
+          item.czr_ItemState.set('closed');
 
           item.container = item.renderView( item_model );
           if ( _.isUndefined(item.container) || ! item.container.length ) {
@@ -111,7 +111,7 @@ $.extend( CZRItemMths , {
                 item.writeItemViewTitle();
 
                 //add a listener on view state change
-                item.czr_View.callbacks.add( function() { return item.setupViewStateListeners.apply(item, arguments ); } );
+                item.czr_ItemState.callbacks.add( function() { return item.setupViewStateListeners.apply(item, arguments ); } );
 
                 api.CZR_Helpers.setupDOMListeners(
                       item.view_event_map,//actions to execute
@@ -121,7 +121,7 @@ $.extend( CZRItemMths , {
           });
   },
 
-  //cb of item.czr_View.callbacks.add()
+  //cb of item.czr_ItemState.callbacks.add()
   setupViewStateListeners : function( to, from ) {
           var item = this,
               item_model = item.get() || item.initial_item_model,//could not be set yet

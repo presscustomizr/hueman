@@ -45,7 +45,7 @@ $.extend( CZRSektionMths, {
                     //get the sekItem id
                     _target_sekId = $(container).closest('[data-id]').attr('data-id');
                     console.log( 'taget sek', _target_sekId );
-                    module.czr_Item(_target_sekId).czr_View.set('expanded');
+                    module.czr_Item(_target_sekId).czr_ItemState.set('expanded');
                 }
           });
 
@@ -54,7 +54,7 @@ $.extend( CZRSektionMths, {
           module.dragInstance.on('drag', function( el, source ){
                 //display the fake container to all closed sek items
                 module.czr_Item.each( function( _sektion ){
-                    _sektion.container.toggleClass('czr-show-fake-container', 'closed' == _sektion.czr_View.get() );
+                    _sektion.container.toggleClass('czr-show-fake-container', 'closed' == _sektion.czr_ItemState.get() );
                 });
           }).on('dragend', function( el, source ){
                 //display the fake container to all closed sek items

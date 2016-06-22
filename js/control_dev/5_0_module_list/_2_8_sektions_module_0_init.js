@@ -75,8 +75,8 @@ $.extend( CZRSektionMths, {
           });
 
           //DRAGULA
-          if ( ! _.has( module ,'dragInstance' ) )
-            module.initDragula();
+          // if ( ! _.has( module ,'dragInstance' ) )
+          //   module.initDragula();
 
   },//initialize
 
@@ -155,12 +155,7 @@ $.extend( CZRSektionMths, {
         _.each( sekItem.columns, function( _col ) {
 
               _.each( _col.modules, function( _mod ){
-                    //remove module from DOM if it's been embedded
-                    if ( collection_control.czr_Module.has( _mod.id ) && 'resolved' == collection_control.czr_Module( _mod.id ).embedded.state() )
-                        collection_control.czr_Module( _mod.id ).container.remove();
-
-                    //remove module from API
-                    collection_control.removeModuleFromCollection( _mod );
+                    collection_control.removeModule( _mod );
               });//_.each
 
               //remove column from DOM if it's been embedded

@@ -33,6 +33,15 @@
                 return -1 == name.indexOf( serverControlParams.themeOptions ) ? [ serverControlParams.themeOptions +'[' , name  , ']' ].join('') : name;
         },
 
+        /*
+        * @return string
+        * simple helper to extract the option name from a setting id
+        */
+        getOptionName : function(name) {
+              var self = this;
+              return name.replace(/\[|\]/g, '').replace(serverControlParams.themeOptions, '');
+        },
+
         //@return bool
         //@uses api.czr_partials
         has_part_refresh : function( setId ) {

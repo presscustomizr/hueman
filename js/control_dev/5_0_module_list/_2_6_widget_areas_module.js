@@ -305,7 +305,7 @@ $.extend( CZRWidgetAreaModuleMths, {
                   //this is fired just after the setupViewApiListeners
                   //=> add a callback to refresh the availability status of the locations in the select location picker
                   //add a state listener on expansion change
-                  item.czr_View.callbacks.add( function( to, from ) {
+                  item.czr_ItemState.callbacks.add( function( to, from ) {
                         if ( -1 == to.indexOf('expanded') )//can take the expanded_noscroll value !
                           return;
 

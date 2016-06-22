@@ -34,6 +34,7 @@ $.extend( CZRItemMths , {
 
         //append the item view to the first module view wrapper
         //!!note : => there could be additional sub view wrapper inside !!
+        console.log( '$(+ module.control.css_attr.views_wrapper , module.container).first()', module.container, $( '.' + module.control.css_attr.views_wrapper , module.container).first() );
         $( '.' + module.control.css_attr.views_wrapper , module.container).first().append( $_view_el );
 
         //then, append the item view skeleton
@@ -96,23 +97,23 @@ $.extend( CZRItemMths , {
           var item = this,
               module = this.module;
           if ( is_added_by_user ) {
-            item.czr_View.set( 'expanded_noscroll' );
+            item.czr_ItemState.set( 'expanded_noscroll' );
           } else {
             module.closeAllViews( item.id );
             if ( _.has(module, 'czr_preItem') ) {
               module.czr_preItem('view_status').set( 'closed');
             }
-            item.czr_View.set( 'expanded' == item._getViewState() ? 'closed' : 'expanded' );
+            item.czr_ItemState.set( 'expanded' == item._getViewState() ? 'closed' : 'expanded' );
           }
   },
 
 
   _getViewState : function() {
-          return -1 == this.czr_View.get().indexOf('expanded') ? 'closed' : 'expanded';
+          return -1 == this.czr_ItemState.get().indexOf('expanded') ? 'closed' : 'expanded';
   },
 
 
-  //callback of czr_View() instance on change
+  //callback of czr_ItemState() instance on change
   _toggleViewExpansion : function( status, duration ) {
           var item = this,
               module = this.module;

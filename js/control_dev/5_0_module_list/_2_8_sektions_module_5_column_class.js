@@ -167,7 +167,7 @@ $.extend( CZRColumnMths , {
     updateColumnModuleCollection : function( obj ) {
             var column = this,
                 _current_collection = column.czr_columnModuleCollection.get();
-                _new_collection = _.clone( _current_collection );
+                _new_collection = $.extend( true, [], _current_collection );
 
             //if a collection is provided in the passed obj then simply refresh the collection
             //=> typically used when reordering the collection module with sortable or when a column is removed
@@ -205,6 +205,19 @@ $.extend( CZRColumnMths , {
             column.czr_columnModuleCollection.set( _new_collection );
     },
 
+
+
+    removeModuleFromColumnCollection : function( module ) {
+            var column = this,
+                _current_collection = column.czr_columnModuleCollection.get();
+                _new_collection = $.extend( true, [], _current_collection );
+
+            _new_collection = _.filter( _new_collection, function( _mod ){
+                return _mod.id != module.id;
+            } );
+            //set the collection
+            column.czr_columnModuleCollection.set( _new_collection );
+    },
 
 
     //column.defautModuleModelInColumn = { id : '' };

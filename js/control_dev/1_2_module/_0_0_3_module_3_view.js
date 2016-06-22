@@ -43,7 +43,7 @@ $.extend( CZRModuleMths, {
 
           _.each( _filtered_collection, function(_item) {
                 if ( module.czr_Item.has(_item.id) && 'expanded' == module.czr_Item(_item.id)._getViewState(_item.id) )
-                  module.czr_Item(_item.id).czr_View.set( 'closed' ); // => will fire the cb _toggleViewExpansion
+                  module.czr_Item(_item.id).czr_ItemState.set( 'closed' ); // => will fire the cb _toggleViewExpansion
            } );
   },
 

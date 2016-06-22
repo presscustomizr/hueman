@@ -326,7 +326,7 @@ $.extend( CZRSektionMths, {
         //else, key is 0
         if ( ! _.isEmpty( module.czr_columnCollection.get() ) ) {
             _max_col_key = _.max( module.czr_columnCollection.get(), function( _col ) {
-                return _col.id.replace(/[^\/\d]/g,'');
+                return parseInt( _col.id.replace(/[^\/\d]/g,''), 10 );
             });
             _next_key = parseInt( _max_col_key.id.replace(/[^\/\d]/g,''), 10 ) + 1;
         }
