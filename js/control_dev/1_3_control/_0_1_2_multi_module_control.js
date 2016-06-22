@@ -19,6 +19,7 @@ $.extend( CZRMultiModuleControlMths, {
                 items : [],
           };
 
+          //overrides base module control
           //declare a default module model for the API
           //In the API, each module of the collection must hold additional informations
           control.defautAPIModuleModel = {
@@ -32,20 +33,8 @@ $.extend( CZRMultiModuleControlMths, {
                 is_added_by_user : false
           };
 
-          //define a default Constructor
-          $.extend( control.moduleConstructors , {
-                  czr_text_module : api.CZRTextModule,
-          });
-
           //store the module ID of the synchronized sektions
           control.syncSektionModule = new api.Value();
-
-          //declares the API collection of module instances
-          control.czr_Module = new api.Values();
-
-          //czr_collection stores the module collection
-          control.czr_moduleCollection = new api.Value();
-          control.czr_moduleCollection.set([]);
 
           //listen to the module-collection setting changes
           //=> synchronize the columns in the sektion setting
@@ -124,63 +113,7 @@ $.extend( CZRMultiModuleControlMths, {
 
 
 
-
-  instantiateModule : function( module, constructor ) {
-          if ( ! _.has( module,'id') ) {
-            throw new Error('CZRModule::instantiateModule() : a module has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
-          }
-
-          var control = this,
-              current_mod_collection = control.czr_moduleCollection.get();
-
-          //Maybe prepare the module, make sure its id is set and unique
-          //module =  ( _.has( module, 'id') && control._isModuleIdPossible( module.id) ) ? module : control._initNewModule( module || {} );
-
-          //is a constructor provided ?
-          //if not try to look in the module object if we an find one
-          if ( _.isUndefined(constructor) || _.isEmpty(constructor) ) {
-              if ( _.has( module, 'module_type' ) ) {
-                constructor = control.moduleConstructors[ module.module_type];
-              }
-          }
-
-          if ( _.isUndefined(constructor) || _.isEmpty(constructor) ) {
-            throw new Error('CZRModule::instantiateModule() : no constructor found for module type : ' + module.module_type +'. Aborted.' );
-          }
-
-          //the module to instantiate looks like this :
-          //{
-          //     id : '',//will be populated by the module collection class
-          //     module_type : 'czr_text_module',
-          //     column_id : column.id,
-          //     sektion : column.sektion, => the sektion instance
-          //     items : [],
-          //     is_added_by_user : true
-          // }
-          //on init, the module collection is populated with module already having an id
-          //For now, let's check if the id is empty and is not already part of the collection.
-
-          //@todo : improve this.
-          if ( ! _.isEmpty( module.id ) && control.czr_Module.has( module.id ) ) {
-                throw new Error('The module id already exists in the collection in control : ' + control.id );
-          }
-
-          var module_api_ready = control.prepareModuleForAPI( module );
-
-          //instanciate the module with the default constructor
-          control.czr_Module.add( module.id, new constructor( module.id, control.prepareModuleForAPI( module_api_ready ) ) );
-
-          control.czr_Module( module.id ).isReady.done( function() {
-                //push it to the collection of the module-collection control
-                //=> updates the wp api setting
-                control.updateModulesCollection( {module : module_api_ready } );
-          });
-
-  },
-
-
-
-
+  //OVERRIDES BASE MODULE CONTROL
   //id : '',
   // module_type : '',
   // column_id : '',
@@ -295,43 +228,6 @@ $.extend( CZRMultiModuleControlMths, {
   },
 
 
-  //@param obj can be { collection : []}, or { module : {} }
-  updateModulesCollection : function( obj ) {
-          var control = this,
-              _current_collection = control.czr_moduleCollection.get(),
-              _new_collection = $.extend( true, [], _current_collection);
-
-          //if a collection is provided in the passed obj then simply refresh the collection
-          //=> typically used when reordering the collection module with sortable or when a module is removed
-          if ( _.has( obj, 'collection' ) ) {
-                //reset the collection
-                control.czr_moduleCollection.set(obj.collection);
-                return;
-          }
-
-          if ( ! _.has(obj, 'module') ) {
-            throw new Error('updateModulesCollection, no module provided ' + control.id + '. Aborting');
-          }
-          var module = _.clone(obj.module);
-
-          //the module already exist in the collection
-          if ( _.findWhere( _new_collection, { id : module.id } ) ) {
-                _.each( _current_collection , function( _elt, _ind ) {
-                      if ( _elt.id != module.id )
-                        return;
-
-                      //set the new val to the changed property
-                      _new_collection[_ind] = module;
-                });
-          }
-          //the module has to be added
-          else {
-                _new_collection.push(module);
-          }
-          //Inform the control
-          control.czr_moduleCollection.set( _new_collection );
-  },
-
 
 
   removeModuleFromCollection : function( module ) {
@@ -348,6 +244,7 @@ $.extend( CZRMultiModuleControlMths, {
 
 
 
+  //OVERRIDES BASE MODULE CONTROL
   //cb of control.czr_moduleCollection.callbacks
   collectionReact : function( to, from ) {
         var control = this,
@@ -399,6 +296,7 @@ $.extend( CZRMultiModuleControlMths, {
   },
 
 
+  //OVERRIDES BASE MODULE CONTROL
   //an overridable method to act on the collection just before it is ajaxed
   //We want to filter the module collection so that each module saved in db looks like :
   //{

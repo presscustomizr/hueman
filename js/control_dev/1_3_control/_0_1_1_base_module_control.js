@@ -12,14 +12,15 @@ $.extend( CZRBaseModuleControlMths, {
           var control = this;
           api.CZRBaseControl.prototype.initialize.call( control, id, options );
 
-          //for now this is a collection with one item
+          //for now this is a collection with one module
+          //the item(s) of the module are the value saved in the setting
           control.savedModules = [
                 {
-                  id : options.params.section + '_' + options.params.type,
-                  section : options.params.section,
-                  block   : '',
+                  id : control.id + '_' + options.params.type,
                   module_type : options.params.module_type,
-                  items   : api(control.id).get()
+                  section : options.params.section,
+                  items   : api(control.id).get(),
+                  is_sortable : true
                 }
           ];
 
@@ -29,11 +30,22 @@ $.extend( CZRBaseModuleControlMths, {
                 czr_social_module    : api.CZRSocialModule,
                 czr_sektion_module    : api.CZRSektionModule,
                 czr_fp_module    : api.CZRFeaturedPageModule,
-                czr_slide_module    : api.CZRSlideModule
+                czr_slide_module    : api.CZRSlideModule,
+                czr_text_module : api.CZRTextModule
+          };
+
+          //declare a default module model for the API
+          //In the API, each module of the collection must hold additional informations
+          control.defautAPIModuleModel = {
+                id : '',//module.id,
+                module_type : '',//module.module_type,
+                section : '',//module.section,
+                items   : [],//$.extend( true, {}, module.items ),
+                control : {},//control,
+                is_sortable : true
           };
 
           control.czr_Module = new api.Values();
-
           //czr_collection stores the module collection
           control.czr_moduleCollection = new api.Value();
           control.czr_moduleCollection.set([]);
@@ -83,41 +95,100 @@ $.extend( CZRBaseModuleControlMths, {
   },
 
 
-  instantiateModule : function( module, constructor, is_added_by_user ) {
+instantiateModule : function( module, constructor ) {
           if ( ! _.has( module,'id') ) {
-            throw new Error('CZRModule::instantiateModule() : an module has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
+            throw new Error('CZRModule::instantiateModule() : a module has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
           }
 
           var control = this;
 
-          //Maybe prepare the module, make sure its id is set and unique
-          //module =  ( _.has( module, 'id') && control._isModuleIdPossible( module.id) ) ? module : control._initNewModule( module || {} );
-
           //is a constructor provided ?
           //if not try to look in the module object if we an find one
-          if ( _.isUndefined(constructor) ) {
+          if ( _.isUndefined(constructor) || _.isEmpty(constructor) ) {
               if ( _.has( module, 'module_type' ) ) {
                 constructor = control.moduleConstructors[ module.module_type];
               }
           }
 
-          if ( _.isUndefined(constructor) ) {
+          if ( _.isUndefined(constructor) || _.isEmpty(constructor) ) {
             throw new Error('CZRModule::instantiateModule() : no constructor found for module type : ' + module.module_type +'. Aborted.' );
           }
-          //instanciate the module with the default constructor
-          control.czr_Module.add( module.id, new constructor( module.id, {
-                id : module.id,
-                section : module.section,
-                module_type    : module.module_type,
-                items   : _.clone( module.items ),
-                control : control,
-                is_added_by_user : is_added_by_user || false,
-                is_sortable : true
-          } ) );
 
-          //push it to the collection
-          control.updateModulesCollection( {module : module });
+          //on init, the module collection is populated with module already having an id
+          //For now, let's check if the id is empty and is not already part of the collection.
+          //@todo : improve this.
+          if ( ! _.isEmpty( module.id ) && control.czr_Module.has( module.id ) ) {
+                throw new Error('The module id already exists in the collection in control : ' + control.id );
+          }
+
+          var module_api_ready = control.prepareModuleForAPI( module );
+
+          //instanciate the module with the default constructor
+          control.czr_Module.add( module.id, new constructor( module.id, module_api_ready ) );
+
+          control.czr_Module( module.id ).isReady.done( function() {
+                //push it to the collection of the module-collection control
+                //=> updates the wp api setting
+                control.updateModulesCollection( {module : module_api_ready } );
+          });
+
   },
+
+
+
+   // id : '',//module.id,
+   //  module_type : '',//module.module_type,
+   //  section : '',//module.section,
+   //  items   : [],//$.extend( true, {}, module.items ),
+   //  control : {},//control,
+   //  is_sortable : true
+  // to be instantiated in the API, the module model must have all the required properties defined in the defaultAPIModel properly set
+  prepareModuleForAPI : function( module_candidate ) {
+        if ( ! _.isObject( module_candidate ) ) {
+            throw new Error('Base Module Control::prepareModuleForAPI : a module must be an object to be instantiated.');
+        }
+
+        var control = this,
+            api_ready_module = {};
+
+        _.each( control.defautAPIModuleModel, function( _value, _key ) {
+              var _candidate_val = module_candidate[_key];
+              switch( _key ) {
+                    case 'id' :
+                        if ( _.isEmpty( _candidate_val ) ) {
+                           throw new Error('Base Module Control::prepareModuleForAPI : a module id has to be set in the saved module(s).');
+                        }
+                        api_ready_module[_key] = _candidate_val;
+                    break;
+                    case 'module_type' :
+                        if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
+                            throw new Error('Base Module Control::prepareModuleForAPI : a module type must a string not empty');
+                        }
+                        api_ready_module[_key] = _candidate_val;
+                    break;
+                    case  'section' :
+                        if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
+                            throw new Error('Base Module Control::prepareModuleForAPI : a module section must be a string not empty');
+                        }
+                        api_ready_module[_key] = _candidate_val;
+                    break;
+                    case 'items' :
+                        if ( ! _.isArray( _candidate_val )  ) {
+                            throw new Error('Base Module Control::prepareModuleForAPI : a module item list must be an array');
+                        }
+                        api_ready_module[_key] = _candidate_val;
+                    break;
+                    case  'control' :
+                        api_ready_module[_key] = control;//this
+                    break;
+                    case 'is_sortable' :
+                        api_ready_module[_key] = _candidate_val || false;
+                    break;
+              }//switch
+        });
+        return api_ready_module;
+  },
+
 
 
   //@todo
@@ -130,8 +201,8 @@ $.extend( CZRBaseModuleControlMths, {
   //@param obj can be { collection : []}, or { module : {} }
   updateModulesCollection : function( obj ) {
           var control = this,
-              _current_collection = control.czr_moduleCollection.get();
-              _new_collection = _.clone(_current_collection);
+              _current_collection = control.czr_moduleCollection.get(),
+              _new_collection = $.extend( true, [], _current_collection);
 
           //if a collection is provided in the passed obj then simply refresh the collection
           //=> typically used when reordering the collection module with sortable or when a module is removed
@@ -160,9 +231,8 @@ $.extend( CZRBaseModuleControlMths, {
           else {
                 _new_collection.push(module);
           }
-
           //Inform the control
-          control.czr_moduleCollection.set(_new_collection);
+          control.czr_moduleCollection.set( _new_collection );
   },
 
 

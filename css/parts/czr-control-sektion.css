@@ -16,14 +16,20 @@
 .add-new-module {
   margin-top: 1%;
 }
-.czr-static-module-wrapper {
+
+
+
+/* MODULES */
+.czr-module-collection-wrapper {
   width: 100%;
   float: left;
 }
 .czr-single-module {
-  width: 100%;
-  float: left;
-  min-height: 20px;
+    width: 98%;
+    float: left;
+    min-height: 20px;
+    margin: 1px 1%;
+    border: 1px solid #ccc;
 }
 
 .czr-single-module textarea {
@@ -35,10 +41,34 @@
 }
 
 #customize-theme-controls .czr-single-module .czr-inner-view {
-  border: 1px solid #d27e00;
   width: 96%;
 }
 
+.czr-mod-header {
+  background: #eee;
+  float: left;
+  width: 100%;
+}
+
+.czr-mod-title > h4 {
+  float: left;
+  width: 70%;
+  margin: 2% 0;
+}
+
+.czr-mod-buttons {
+  float: right;
+  width: 30%;
+  margin: 2% 0;
+}
+
+.czr-mod-content {
+  float: left;
+  width: 100%;
+  margin-top: 1%;
+  background: #d5e9cc;
+  display: none;
+}
 
 
 /* DRAGULA */

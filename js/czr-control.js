@@ -2414,7 +2414,7 @@ $.extend( CZRSocialModuleMths, {
           api.CZRDynModule.prototype.initialize.call( module, id, options );
           $.extend( module, {
                 viewPreAddEl : 'czr-module-social-pre-add-view-content',
-                viewTemplateEl : 'czr-module-item-view',
+                viewTemplateEl : 'czr-crud-module-item-view',
                 viewContentTemplateEl : 'czr-module-social-view-content',
           } );
 
@@ -2590,7 +2590,7 @@ $.extend( CZRWidgetAreaModuleMths, {
           api.CZRDynModule.prototype.initialize.call( this, id, options );
           $.extend( module, {
                 viewPreAddEl : 'czr-module-widgets-pre-add-view-content',
-                viewTemplateEl : 'czr-module-item-view',
+                viewTemplateEl : 'czr-crud-module-item-view',
                 viewContentTemplateEl : 'czr-module-widgets-view-content',
           } );
           module.inputConstructor = api.CZRInput.extend( module.CZRWZonesInputMths || {} );
@@ -3164,7 +3164,7 @@ $.extend( CZRFeaturedPageModuleMths, {
           api.CZRDynModule.prototype.initialize.call( module, id, options );
           $.extend( module, {
                 viewPreAddEl : 'czr-module-fp-pre-add-view-content',
-                viewTemplateEl : 'czr-module-item-view',
+                viewTemplateEl : 'czr-crud-module-item-view',
                 viewContentTemplateEl : 'czr-module-fp-view-content',
           } );
           module.inputConstructor = api.CZRInput.extend( module.CZRFeaturedPagesInputMths || {} );
@@ -3388,7 +3388,8 @@ $.extend( CZRTextModuleMths, {
           module.is_sortable = false;
           $.extend( module, {
                 singleModuleWrapper : 'czr-single-module-wrapper',
-                viewTemplateEl : 'czr-module-text-item-view',
+                ruModuleEl : 'czr-ru-module-sektion-content',
+                viewTemplateEl : 'czr-ru-module-item-view',
                 viewContentTemplateEl : 'czr-module-text-view-content',
           } );
           module.itemConstructor = api.CZRItem.extend( module.CZRTextItem || {} );
@@ -3418,17 +3419,20 @@ $.extend( CZRTextModuleMths, {
         if ( 'resolved' == module.embedded.state() )
           return module.container;
         if ( 0 === $( '#tmpl-' + module.singleModuleWrapper ).length ) {
-          throw new Error('No template for item ' + item.id + '. The template script id should be : #tmpl-' + module.singleModuleWrapper );
+          throw new Error('No template for module ' + module.id + '. The template script id should be : #tmpl-' + module.singleModuleWrapper );
         }
 
         var module_wrapper_tmpl = wp.template( module.singleModuleWrapper ),
             tmpl_data = {
                 id : module.id,
                 type : module.module_type
-            };
+            },
+            $_module_el = $(  module_wrapper_tmpl( tmpl_data ) );
+        $( '.czr-module-collection-wrapper' , module._getColumn().container).append( $_module_el );
+        var mod_content_wrapper_tmpl = wp.template( module.ruModuleEl ),
+            $_mod_content_wrapper = $(  mod_content_wrapper_tmpl( tmpl_data ) );
 
-        var $_module_el = $(  module_wrapper_tmpl( tmpl_data ) );
-        $( '.czr-static-module-wrapper' , module._getColumn().container).append( $_module_el );
+        $( '.czr-mod-content', $_module_el).append( $_mod_content_wrapper );
 
         return $_module_el;
   },
@@ -3481,7 +3485,7 @@ $.extend( CZRSlideModuleMths, {
           api.CZRDynModule.prototype.initialize.call( module, id, options );
           $.extend( module, {
                 viewPreAddEl : 'czr-module-slide-pre-add-view-content',
-                viewTemplateEl : 'czr-module-item-view',
+                viewTemplateEl : 'czr-crud-module-item-view',
                 viewContentTemplateEl : 'czr-module-slide-view-content',
           } );
           module.inputConstructor = api.CZRInput.extend( module.CZRSliderInputMths || {} );
@@ -3559,11 +3563,11 @@ $.extend( CZRBaseModuleControlMths, {
           api.CZRBaseControl.prototype.initialize.call( control, id, options );
           control.savedModules = [
                 {
-                  id : options.params.section + '_' + options.params.type,
-                  section : options.params.section,
-                  block   : '',
+                  id : control.id + '_' + options.params.type,
                   module_type : options.params.module_type,
-                  items   : api(control.id).get()
+                  section : options.params.section,
+                  items   : api(control.id).get(),
+                  is_sortable : true
                 }
           ];
           control.moduleConstructors = {
@@ -3571,7 +3575,16 @@ $.extend( CZRBaseModuleControlMths, {
                 czr_social_module    : api.CZRSocialModule,
                 czr_sektion_module    : api.CZRSektionModule,
                 czr_fp_module    : api.CZRFeaturedPageModule,
-                czr_slide_module    : api.CZRSlideModule
+                czr_slide_module    : api.CZRSlideModule,
+                czr_text_module : api.CZRTextModule
+          };
+          control.defautAPIModuleModel = {
+                id : '',//module.id,
+                module_type : '',//module.module_type,
+                section : '',//module.section,
+                items   : [],//$.extend( true, {}, module.items ),
+                control : {},//control,
+                is_sortable : true
           };
 
           control.czr_Module = new api.Values();
@@ -3607,39 +3620,85 @@ $.extend( CZRBaseModuleControlMths, {
   },
 
 
-  instantiateModule : function( module, constructor, is_added_by_user ) {
+instantiateModule : function( module, constructor ) {
           if ( ! _.has( module,'id') ) {
-            throw new Error('CZRModule::instantiateModule() : an module has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
+            throw new Error('CZRModule::instantiateModule() : a module has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
           }
 
           var control = this;
-          if ( _.isUndefined(constructor) ) {
+          if ( _.isUndefined(constructor) || _.isEmpty(constructor) ) {
               if ( _.has( module, 'module_type' ) ) {
                 constructor = control.moduleConstructors[ module.module_type];
               }
           }
 
-          if ( _.isUndefined(constructor) ) {
+          if ( _.isUndefined(constructor) || _.isEmpty(constructor) ) {
             throw new Error('CZRModule::instantiateModule() : no constructor found for module type : ' + module.module_type +'. Aborted.' );
           }
-          control.czr_Module.add( module.id, new constructor( module.id, {
-                id : module.id,
-                section : module.section,
-                module_type    : module.module_type,
-                items   : _.clone( module.items ),
-                control : control,
-                is_added_by_user : is_added_by_user || false,
-                is_sortable : true
-          } ) );
-          control.updateModulesCollection( {module : module });
+          if ( ! _.isEmpty( module.id ) && control.czr_Module.has( module.id ) ) {
+                throw new Error('The module id already exists in the collection in control : ' + control.id );
+          }
+
+          var module_api_ready = control.prepareModuleForAPI( module );
+          control.czr_Module.add( module.id, new constructor( module.id, module_api_ready ) );
+
+          control.czr_Module( module.id ).isReady.done( function() {
+                control.updateModulesCollection( {module : module_api_ready } );
+          });
+
+  },
+  prepareModuleForAPI : function( module_candidate ) {
+        if ( ! _.isObject( module_candidate ) ) {
+            throw new Error('Base Module Control::prepareModuleForAPI : a module must be an object to be instantiated.');
+        }
+
+        var control = this,
+            api_ready_module = {};
+
+        _.each( control.defautAPIModuleModel, function( _value, _key ) {
+              var _candidate_val = module_candidate[_key];
+              switch( _key ) {
+                    case 'id' :
+                        if ( _.isEmpty( _candidate_val ) ) {
+                           throw new Error('Base Module Control::prepareModuleForAPI : a module id has to be set in the saved module(s).');
+                        }
+                        api_ready_module[_key] = _candidate_val;
+                    break;
+                    case 'module_type' :
+                        if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
+                            throw new Error('Base Module Control::prepareModuleForAPI : a module type must a string not empty');
+                        }
+                        api_ready_module[_key] = _candidate_val;
+                    break;
+                    case  'section' :
+                        if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
+                            throw new Error('Base Module Control::prepareModuleForAPI : a module section must be a string not empty');
+                        }
+                        api_ready_module[_key] = _candidate_val;
+                    break;
+                    case 'items' :
+                        if ( ! _.isArray( _candidate_val )  ) {
+                            throw new Error('Base Module Control::prepareModuleForAPI : a module item list must be an array');
+                        }
+                        api_ready_module[_key] = _candidate_val;
+                    break;
+                    case  'control' :
+                        api_ready_module[_key] = control;//this
+                    break;
+                    case 'is_sortable' :
+                        api_ready_module[_key] = _candidate_val || false;
+                    break;
+              }//switch
+        });
+        return api_ready_module;
   },
   _normalizeModule : function( module ) {
         return module;
   },
   updateModulesCollection : function( obj ) {
           var control = this,
-              _current_collection = control.czr_moduleCollection.get();
-              _new_collection = _.clone(_current_collection);
+              _current_collection = control.czr_moduleCollection.get(),
+              _new_collection = $.extend( true, [], _current_collection);
           if ( _.has( obj, 'collection' ) ) {
                 control.czr_moduleCollection.set(obj.collection);
                 return;
@@ -3659,7 +3718,7 @@ $.extend( CZRBaseModuleControlMths, {
           else {
                 _new_collection.push(module);
           }
-          control.czr_moduleCollection.set(_new_collection);
+          control.czr_moduleCollection.set( _new_collection );
   },
   collectionReact : function( to, from ) {
         var control = this,
@@ -3714,13 +3773,7 @@ $.extend( CZRMultiModuleControlMths, {
                 items : [],
                 is_added_by_user : false
           };
-          $.extend( control.moduleConstructors , {
-                  czr_text_module : api.CZRTextModule,
-          });
           control.syncSektionModule = new api.Value();
-          control.czr_Module = new api.Values();
-          control.czr_moduleCollection = new api.Value();
-          control.czr_moduleCollection.set([]);
           api(control.id).callbacks.add( function() { return control.syncColumn.apply( control, arguments ); } );
 
   },
@@ -3759,39 +3812,6 @@ $.extend( CZRMultiModuleControlMths, {
                   $.extend( _mod, {sektion : _sektion} );
                   control.updateModulesCollection( {module : _mod } );
           });
-  },
-
-
-
-
-
-  instantiateModule : function( module, constructor ) {
-          if ( ! _.has( module,'id') ) {
-            throw new Error('CZRModule::instantiateModule() : a module has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
-          }
-
-          var control = this,
-              current_mod_collection = control.czr_moduleCollection.get();
-          if ( _.isUndefined(constructor) || _.isEmpty(constructor) ) {
-              if ( _.has( module, 'module_type' ) ) {
-                constructor = control.moduleConstructors[ module.module_type];
-              }
-          }
-
-          if ( _.isUndefined(constructor) || _.isEmpty(constructor) ) {
-            throw new Error('CZRModule::instantiateModule() : no constructor found for module type : ' + module.module_type +'. Aborted.' );
-          }
-          if ( ! _.isEmpty( module.id ) && control.czr_Module.has( module.id ) ) {
-                throw new Error('The module id already exists in the collection in control : ' + control.id );
-          }
-
-          var module_api_ready = control.prepareModuleForAPI( module );
-          control.czr_Module.add( module.id, new constructor( module.id, control.prepareModuleForAPI( module_api_ready ) ) );
-
-          control.czr_Module( module.id ).isReady.done( function() {
-                control.updateModulesCollection( {module : module_api_ready } );
-          });
-
   },
   prepareModuleForAPI : function( module_candidate ) {
         if ( ! _.isObject( module_candidate ) ) {
@@ -3880,31 +3900,7 @@ $.extend( CZRMultiModuleControlMths, {
           }
           return _next_key;
   },
-  updateModulesCollection : function( obj ) {
-          var control = this,
-              _current_collection = control.czr_moduleCollection.get(),
-              _new_collection = $.extend( true, [], _current_collection);
-          if ( _.has( obj, 'collection' ) ) {
-                control.czr_moduleCollection.set(obj.collection);
-                return;
-          }
 
-          if ( ! _.has(obj, 'module') ) {
-            throw new Error('updateModulesCollection, no module provided ' + control.id + '. Aborting');
-          }
-          var module = _.clone(obj.module);
-          if ( _.findWhere( _new_collection, { id : module.id } ) ) {
-                _.each( _current_collection , function( _elt, _ind ) {
-                      if ( _elt.id != module.id )
-                        return;
-                      _new_collection[_ind] = module;
-                });
-          }
-          else {
-                _new_collection.push(module);
-          }
-          control.czr_moduleCollection.set( _new_collection );
-  },
 
 
 

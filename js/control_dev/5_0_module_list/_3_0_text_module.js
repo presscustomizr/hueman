@@ -14,7 +14,8 @@ $.extend( CZRTextModuleMths, {
           //extend the module with new template Selectors
           $.extend( module, {
                 singleModuleWrapper : 'czr-single-module-wrapper',
-                viewTemplateEl : 'czr-module-text-item-view',
+                ruModuleEl : 'czr-ru-module-sektion-content',
+                viewTemplateEl : 'czr-ru-module-item-view',
                 viewContentTemplateEl : 'czr-module-text-view-content',
           } );
 
@@ -62,18 +63,23 @@ $.extend( CZRTextModuleMths, {
 
          //do we have view template script?
         if ( 0 === $( '#tmpl-' + module.singleModuleWrapper ).length ) {
-          throw new Error('No template for item ' + item.id + '. The template script id should be : #tmpl-' + module.singleModuleWrapper );
+          throw new Error('No template for module ' + module.id + '. The template script id should be : #tmpl-' + module.singleModuleWrapper );
         }
 
         var module_wrapper_tmpl = wp.template( module.singleModuleWrapper ),
             tmpl_data = {
                 id : module.id,
                 type : module.module_type
-            };
-
-        var $_module_el = $(  module_wrapper_tmpl( tmpl_data ) );
+            },
+            $_module_el = $(  module_wrapper_tmpl( tmpl_data ) );
         //append the module wrapper to the column
-        $( '.czr-static-module-wrapper' , module._getColumn().container).append( $_module_el );
+        $( '.czr-module-collection-wrapper' , module._getColumn().container).append( $_module_el );
+
+        //then append the ru module template
+        var mod_content_wrapper_tmpl = wp.template( module.ruModuleEl ),
+            $_mod_content_wrapper = $(  mod_content_wrapper_tmpl( tmpl_data ) );
+
+        $( '.czr-mod-content', $_module_el).append( $_mod_content_wrapper );
 
         return $_module_el;
   },
