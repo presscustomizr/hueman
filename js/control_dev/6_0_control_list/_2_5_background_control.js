@@ -110,6 +110,7 @@ $.extend( CZRBackgroundMths , {
 
   CZRBackgroundItemMths : {
           //OVERRIDES THE PARENT METHOD TO ADD THE BG DEFAULT COLOR
+          //@to fix => find a way to add the defaultBgColor before this method is called
           renderViewContent : function() {
                   //=> an array of objects
                   var item = this,

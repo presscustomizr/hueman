@@ -63,12 +63,92 @@
 }
 
 .czr-mod-content {
+  position: absolute;
+  top: 0;
+  left: 100%;
   float: left;
   width: 100%;
   margin-top: 1%;
   background: #d5e9cc;
   display: none;
 }
+
+
+
+/* EDIT MODULE */
+.czr-module-open #customize-info,
+.czr-module-open #customize-theme-controls {
+  left: -200%;
+}
+.czr-module-open #customize-theme-controls .accordion-section-content {
+    overflow: visible;
+}
+.czr-module-description-container {
+  margin-bottom: 15px
+}
+.czr-module-title {
+  margin: -12px -12px 0 -12px;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+}
+.czr-module-title h3 {
+  padding: 10px 10px 12px 14px;
+  margin: 0;
+  line-height: 21px;
+  color: #555;
+  font-size: 20px;
+  font-weight: 200;
+  line-height: 26px;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.czr-module-back {
+    display: block;
+    float: left;
+    width: 48px;
+    height: 71px;
+    padding: 0 24px 0 0;
+    margin: 0;
+    background: #fff;
+    border: none;
+    border-right: 1px solid #ddd;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    cursor: pointer;
+    -webkit-transition: left .18s ease-in-out, color .1s ease-in-out, background .1s ease-in-out;
+    transition: left .18s ease-in-out, color .1s ease-in-out, background .1s ease-in-out;
+}
+
+.czr-module-back:hover,
+.czr-module-back:focus {
+  color: #23282d;
+  background: #f5f5f5;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.czr-module-back:before {
+  font: normal 20px/72px dashicons;
+  content: "\f341";
+  position: relative;
+  left: 13px;
+}
+
+
+.czr-module-back:hover {
+    color: #23282d;
+    background: #f5f5f5;
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+
+
 
 
 /* DRAGULA */

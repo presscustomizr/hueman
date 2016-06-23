@@ -286,10 +286,10 @@ $.extend( CZRWidgetAreaModuleMths, {
 
 
           //extend parent setupview
-          setupView : function() {
+          itemWrapperViewSetup : function() {
                   var item = this,
                       module = item.module;
-                  api.CZRItem.prototype.setupView.call(item);
+                  api.CZRItem.prototype.itemWrapperViewSetup.call(item);
 
                   /// ALERT FOR NOT AVAILABLE LOCATION
                   item.czr_itemLocationAlert.set('closed');
@@ -302,7 +302,7 @@ $.extend( CZRWidgetAreaModuleMths, {
                   //update item title
                   item.writeSubtitleInfos(item.get());
 
-                  //this is fired just after the setupViewApiListeners
+                  //this is fired just after the itemWrapperViewSetupApiListeners
                   //=> add a callback to refresh the availability status of the locations in the select location picker
                   //add a state listener on expansion change
                   item.czr_ItemState.callbacks.add( function( to, from ) {
@@ -812,7 +812,7 @@ $.extend( CZRWidgetAreaModuleMths, {
   /////////////////////////////////////////
   /// OVERRIDEN METHODS
   ////////////////////////////////////////
-  //fired in _toggleViewExpansion()
+  //fired in toggleViewExpansion()
   //has to be overriden for the widget zones control because this control is embedded directly in a panel and not in a section
   //therefore the module to animate the scrollTop is not the section container but $('.wp-full-overlay-sidebar-content')
   _adjustScrollExpandedBlock : function( $_block_el, adjust ) {

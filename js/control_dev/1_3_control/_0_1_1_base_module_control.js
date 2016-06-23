@@ -20,7 +20,7 @@ $.extend( CZRBaseModuleControlMths, {
                   module_type : options.params.module_type,
                   section : options.params.section,
                   items   : api(control.id).get(),
-                  is_sortable : true
+                  is_multi_items : true
                 }
           ];
 
@@ -42,7 +42,7 @@ $.extend( CZRBaseModuleControlMths, {
                 section : '',//module.section,
                 items   : [],//$.extend( true, {}, module.items ),
                 control : {},//control,
-                is_sortable : true
+                is_multi_items : true
           };
 
           control.czr_Module = new api.Values();
@@ -140,7 +140,7 @@ $.extend( CZRBaseModuleControlMths, {
    //  section : '',//module.section,
    //  items   : [],//$.extend( true, {}, module.items ),
    //  control : {},//control,
-   //  is_sortable : true
+   //  is_multi_items : true
   // to be instantiated in the API, the module model must have all the required properties defined in the defaultAPIModel properly set
   prepareModuleForAPI : function( module_candidate ) {
         if ( ! _.isObject( module_candidate ) ) {
@@ -180,7 +180,7 @@ $.extend( CZRBaseModuleControlMths, {
                     case  'control' :
                         api_ready_module[_key] = control;//this
                     break;
-                    case 'is_sortable' :
+                    case 'is_multi_items' :
                         api_ready_module[_key] = _candidate_val || false;
                     break;
               }//switch

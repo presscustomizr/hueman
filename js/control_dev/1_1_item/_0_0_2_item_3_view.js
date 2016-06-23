@@ -34,7 +34,6 @@ $.extend( CZRItemMths , {
 
         //append the item view to the first module view wrapper
         //!!note : => there could be additional sub view wrapper inside !!
-        console.log( '$(+ module.control.css_attr.views_wrapper , module.container).first()', module.container, $( '.' + module.control.css_attr.views_wrapper , module.container).first() );
         $( '.' + module.control.css_attr.views_wrapper , module.container).first().append( $_view_el );
 
         //then, append the item view skeleton
@@ -52,6 +51,10 @@ $.extend( CZRItemMths , {
           var item = this,
               module = this.module;
 
+          //This might have been rendered before.
+          if ( 'resolved' == item.contentRendered.state() )
+            return;
+
           //do we have view content template script?
           if ( 0 === $( '#tmpl-' + module.getTemplateEl( 'view-content', item_model ) ).length )
             return this;
@@ -65,8 +68,12 @@ $.extend( CZRItemMths , {
           //the view content
           $( view_content_template( item_model )).appendTo( $('.' + module.control.css_attr.view_content, item.container ) );
 
-          //say it
-          //item.trigger( 'view_content_rendered' , {model : item_model } );
+          //say it if something has been rendered
+          if ( false !== $( $( view_content_template( item_model )), item.container ).length )
+            item.contentRendered.resolve();
+          else {
+              throw new Error()
+          }
 
           return this;
   },
@@ -113,8 +120,8 @@ $.extend( CZRItemMths , {
   },
 
 
-  //callback of czr_ItemState() instance on change
-  _toggleViewExpansion : function( status, duration ) {
+  //callback of item.czr_ItemState.callbacks
+  toggleViewExpansion : function( to, from, duration ) {
           var item = this,
               module = this.module;
 

@@ -44,11 +44,10 @@ $.extend( CZRModuleMths, {
           //this will be populated on ready()
           module.set([]);//the module is a collection items => this is the collection
 
-          //Setup individual module listener
-          //module.callbacks.add( function() { return item.setupModuleListeners.apply(module, arguments ); } );
 
           //@todo improve this check
-          if ( ! _.has( module.control.params, 'in_sektion' ) || ! module.control.params.in_sektion )
+          //if the module is part of a sektion, its container will be set later
+          if ( ! module.isModuleInSektion() )
             module.container = $( module.control.selector );
 
 
@@ -87,9 +86,9 @@ $.extend( CZRModuleMths, {
                 //=> won't trigger and change setting
                 module.populateSavedItemCollection();
 
-                //the is_sortable property is set when instantiating a module
+                //the is_multi_items property is set when instantiating a module
                 //it can be overriden by a module in its initialize method
-                if ( module.is_sortable )
+                if ( module.is_multi_items )
                   module._makeItemsSortable();
 
                 //listen to each single module change
@@ -165,6 +164,12 @@ $.extend( CZRModuleMths, {
   //@todo : create a smart helper to get either the wp api section or the czr api sektion, depending on the module context
   getModuleSection : function() {
           return this.section;
+  },
+
+  //@return bool
+  isModuleInSektion : function() {
+          var module = this;
+          return _.has( module, 'sektion_id' );
   }
 
 });//$.extend//CZRBaseControlMths

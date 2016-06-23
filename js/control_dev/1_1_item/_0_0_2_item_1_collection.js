@@ -35,7 +35,7 @@ $.extend( CZRItemMths , {
         var input_collection = {};
 
         //creates the inputs based on the rendered items
-        $( '.'+module.control.css_attr.sub_set_wrapper, item.container).each( function(_index) {
+        $( '.'+module.control.css_attr.sub_set_wrapper, item.container).each( function( _index ) {
               if ( ! $(this).find('[data-type]').length ) {
                   console.log('No data-type found in the input wrapper index : ' + _index + ' in item : '+ item.id );
                   return;

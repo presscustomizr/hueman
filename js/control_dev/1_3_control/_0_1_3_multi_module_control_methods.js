@@ -186,6 +186,7 @@ $.extend( CZRMultiModuleControlMths, {
         var control = this,
             is_module_removed = _.size(from) > _.size(to),
             is_module_update = _.size(from) == _.size(to);
+            is_collection_sorted = false;
 
         //MODULE REMOVED
         //Remove the module instance if needed

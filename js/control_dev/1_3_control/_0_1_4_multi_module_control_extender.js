@@ -71,6 +71,23 @@ $.extend( CZRMultiModuleControlMths, {
 
   //this object holds the various methods allowing a module to be rendered in a multimodule control
   CZRModuleExtended  : {
+        //////////////////////////////////
+        ///READY
+        //////////////////////////////////
+        //when a module is embedded in a sektion, we need to render it before ready is done
+        //=> this allows us to override the container element declared in the parent initialize
+        //when ready done => the module items are embedded (without their content)
+        ready : function() {
+                var module = this;
+
+                module.container = module.renderModuleWrapper();
+
+                console.log('MODULE ' + module.id + ' IS READY');
+                module.isReady.resolve();
+        },
+
+
+
         renderModuleWrapper : function() {
                 //=> an array of objects
                 var module = this;
@@ -130,14 +147,18 @@ $.extend( CZRMultiModuleControlMths, {
                           selector  : '.czr-edit-mod',
                           name      : 'edit_module',
                           actions   : ['setModuleViewVisibility']
-                        }
+                        },
+                        {
+                          trigger   : 'click keydown',
+                          selector  : '.czr-module-back',
+                          name      : 'back_to_column',
+                          actions   : ['setModuleViewVisibility']
+                        },
                 ];
 
                 //set initial state
                 module.czr_ModuleState.set('closed');
 
-
-                module.container = module.renderModuleWrapper();
                 if ( _.isUndefined(module.container) || ! module.container.length ) {
                     throw new Error( 'The Module view has not been rendered : ' + module.id );
                 } else {
@@ -163,6 +184,7 @@ $.extend( CZRMultiModuleControlMths, {
                   current_state = module.czr_ModuleState.get();
 
               module.czr_ModuleState.set( 'expanded' == current_state ? 'closed' : 'expanded' );
+
               // if ( is_added_by_user ) {
               //   item.czr_ItemState.set( 'expanded_noscroll' );
               // } else {
@@ -170,64 +192,58 @@ $.extend( CZRMultiModuleControlMths, {
               //   if ( _.has(module, 'czr_preItem') ) {
               //     module.czr_preItem('view_status').set( 'closed');
               //   }
+              //   }
               //   item.czr_ItemState.set( 'expanded' == item._getViewState() ? 'closed' : 'expanded' );
               // }
         },
 
+
         //cb of module.czr_ModuleState.callbacks
+        //On first module expansion, render the module item(s) content
         setupModuleViewStateListeners : function( to, from ) {
-          console.log('MODULE VIEW STATE HAS CHANGED', to, from );
-              // var item = this,
-              //     item_model = item.get() || item.initial_item_model,//could not be set yet
-              //     module = this.module;
+              var module = this;
 
-              // console.log('item.contentRendered.state()', item.contentRendered.state());
-              // //render and setup view content if needed
-              // if ( 'pending' == item.contentRendered.state() ) {
-              //     var $item_content = item.renderViewContent( item_model );
-              //     if ( ! _.isUndefined($item_content) && false !== $item_content ) {
-              //       //say it
-              //       item.contentRendered.resolve();
-              //     }
-              // }
+              module.czr_Item.each ( function( item ) {
+                    item.mayBeRenderItemWrapper();
+              } );
 
-              // //expand
-              // module.toggleModuleViewExpansion( to );
+              //expand
+              module.toggleModuleViewExpansion( to );
         },
 
 
         //callback of czr_ItemState() instance on change
-        // toggleModuleViewExpansion : function( status, duration ) {
-        //         var item = this,
-        //             module = this.module;
+        toggleModuleViewExpansion : function( status, duration ) {
+              var module = this;
 
-        //         //slide Toggle and toggle the 'open' class
-        //         $( '.' + module.control.css_attr.view_content , item.container ).first().slideToggle( {
-        //             duration : duration || 200,
-        //             done : function() {
-        //               var _is_expanded = 'closed' != status;
+              //slide Toggle and toggle the 'open' class
+              $( '.czr-mod-content' , module.container ).slideToggle( {
+                  duration : duration || 200,
+                  done : function() {
+                      var _is_expanded = 'closed' != status,
+                          $_overlay = module.container.closest( '.wp-full-overlay' );
 
-        //               item.container.toggleClass('open' , _is_expanded );
+                      module.container.toggleClass('open' , _is_expanded );
+                      $_overlay.toggleClass('czr-module-open', _is_expanded );
+                      //close all alerts
+                      //module.closeAllAlerts();
 
-        //               //close all alerts
-        //               module.closeAllAlerts();
+                      //toggle the icon activate class depending on the status
+                      //switch icon
+                      //var $_edit_icon = $(this).siblings().find('.' + module.control.css_attr.edit_view_btn );
 
-        //               //toggle the icon activate class depending on the status
-        //               //switch icon
-        //               var $_edit_icon = $(this).siblings().find('.' + module.control.css_attr.edit_view_btn );
+                      // $_edit_icon.toggleClass('active' , _is_expanded );
+                      // if ( _is_expanded )
+                      //   $_edit_icon.removeClass('fa-pencil').addClass('fa-minus-square').attr('title', serverControlParams.translatedStrings.close );
+                      // else
+                      //   $_edit_icon.removeClass('fa-minus-square').addClass('fa-pencil').attr('title', serverControlParams.translatedStrings.edit );
 
-        //               $_edit_icon.toggleClass('active' , _is_expanded );
-        //               if ( _is_expanded )
-        //                 $_edit_icon.removeClass('fa-pencil').addClass('fa-minus-square').attr('title', serverControlParams.translatedStrings.close );
-        //               else
-        //                 $_edit_icon.removeClass('fa-minus-square').addClass('fa-pencil').attr('title', serverControlParams.translatedStrings.edit );
-
-        //               //scroll to the currently expanded view
-        //               if ( 'expanded' == status )
-        //                 module._adjustScrollExpandedBlock( item.container );
-        //             }//done callback
-        //           } );
-        // },
+                      //scroll to the currently expanded view
+                      if ( 'expanded' == status )
+                        module._adjustScrollExpandedBlock( module.container );
+                  }//done callback
+                } );
+        },
 
 
 
