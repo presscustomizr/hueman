@@ -8,9 +8,6 @@ $.extend( CZRTextModuleMths, {
           //run the parent initialize
           api.CZRModule.prototype.initialize.call( module, id, options );
 
-          //this module is not sortable
-          module.is_multi_items = false;
-
           //extend the module with new template Selectors
           $.extend( module, {
                 viewContentTemplateEl : 'czr-module-text-view-content',

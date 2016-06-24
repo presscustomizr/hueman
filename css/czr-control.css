@@ -1364,9 +1364,9 @@ span.select2-results, body .select2-container {
   max-width: 100%;
 }
 
-.czr-single-module .czr-inner-view .czr-view-content {
+/*.czr-single-module .czr-inner-view .czr-view-content {
   display: block;
-}
+}*/
 
 #customize-theme-controls .czr-single-module .czr-inner-view {
   width: 96%;

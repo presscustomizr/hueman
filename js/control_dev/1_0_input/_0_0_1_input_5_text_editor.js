@@ -52,18 +52,18 @@ $.extend( CZRInputMths , {
           input.bind( input.id + ':changed', input.czrUpdateTextPreview );
 
           _.bindAll( input, 'czrOnVisualEditorChange', 'czrOnTextEditorChange', 'czrResizeEditorOnWindowResize' );
-          
-          toggleButton.on( 'click', function() { 
+
+          toggleButton.on( 'click', function() {
               input.editorExpanded.set( ! input.editorExpanded() );
               if ( input.editorExpanded() ) {
                 editor.focus();
               }
           });
 
-          
+
           //on this module section close close the editor and unbind this input
           api.section( input.module.getModuleSection() ).expanded.bind(
-            function( expanded ) { 
+            function( expanded ) {
               if ( ! expanded )
                 input.editorExpanded.set( false );
           });
@@ -106,7 +106,7 @@ $.extend( CZRInputMths , {
               editor = input.editor,
               value;
 
-          value = wp.editor.removep( editor.getContent() );    
+          value = wp.editor.removep( editor.getContent() );
           input.set(value);
   },
 
@@ -235,7 +235,7 @@ $.extend( CZRInputMths , {
           _.delay( function() {
             input.czrResizeEditor( window.innerHeight - editorPane.height() );
           }, resizeDelay );
-            
+
   },
   czrResizeEditorOnUserRequest : function() {
           var input = this,
@@ -257,12 +257,12 @@ $.extend( CZRInputMths , {
           dragbar.on( 'mouseup', function() {
             if ( ! input.editorExpanded() )
               return;
-                          
+
             $( document ).off( 'mousemove.czr-customize-content_editor' );
             $( document.body ).removeClass( 'czr-customize-content_editor-pane-resize' );
             editorFrame.css( 'pointer-events', '' );
           } );
-    
+
   },
   czrSetToggleButtonText : function( $_expanded ) {
           var input = this;

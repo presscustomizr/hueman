@@ -13,6 +13,7 @@ $.extend( CZRModuleMths, {
   populateSavedItemCollection : function() {
           var module = this;
 
+          console.log('module.savedItems', module.savedItems );
           //populates the collection with the saved items
           _.each( module.savedItems, function( item, key ) {
                 //normalizes the item

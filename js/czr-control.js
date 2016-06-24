@@ -996,6 +996,251 @@ $.extend( CZRInputMths , {
         return;
   }
 });//$.extend
+var CZRInputMths = CZRInputMths || {};
+$.extend( CZRInputMths , {
+    setupTextEditor : function() {
+          var input        = this,
+              _model       = input.get();
+          if ( ! input.container )
+            return this;
+
+          if ( ! input.czrRenderInputTextEditorTemplate() )
+            return;
+
+          input.editor       = tinyMCE.get( 'czr-customize-content_editor' );
+          input.textarea     = $( '#czr-customize-content_editor' );
+          input.editorPane   = $( '#czr-customize-content_editor-pane' );
+          input.dragbar      = $( '#czr-customize-content_editor-dragbar' );
+          input.editorFrame  = $( '#czr-customize-content_editor_ifr' );
+          input.mceTools     = $( '#wp-czr-customize-content_editor-tools' );
+          input.mceToolbar   = input.editorPane.find( '.mce-toolbar-grp' );
+          input.mceStatusbar = input.editorPane.find( '.mce-statusbar' );
+
+          input.preview      = $( '#customize-preview' );
+          input.collapse     = $( '.collapse-sidebar' );
+
+          input.textpreview  = input.container.find('textarea');
+          input.toggleButton = input.container.find('button.text_editor-button');
+          input.editorExpanded   = new api.Value( false );
+          input.czrUpdateTextPreview();
+          input.czrSetToggleButtonText( input.editorExpanded() );
+
+          input.czrTextEditorBinding();
+
+          input.czrResizeEditorOnUserRequest();
+          console.log( input.prototype );
+  },
+
+  czrTextEditorBinding : function() {
+          var input = this,
+              editor = input.editor,
+              textarea = input.textarea,
+              toggleButton = input.toggleButton,
+              editorExpanded = input.editorExpanded,
+              editorPane   = input.editorPane;
+
+
+          input.bind( input.id + ':changed', input.czrUpdateTextPreview );
+
+          _.bindAll( input, 'czrOnVisualEditorChange', 'czrOnTextEditorChange', 'czrResizeEditorOnWindowResize' );
+
+          toggleButton.on( 'click', function() {
+              input.editorExpanded.set( ! input.editorExpanded() );
+              if ( input.editorExpanded() ) {
+                editor.focus();
+              }
+          });
+          api.section( input.module.getModuleSection() ).expanded.bind(
+            function( expanded ) {
+              if ( ! expanded )
+                input.editorExpanded.set( false );
+          });
+
+          input.editorExpanded.bind( function (expanded) {
+              if ( editor.locker && editor.locker !== input ) {
+                editor.locker.editorExpanded.set(false);
+                editor.locker = null;
+              }if ( ! editor.locker || editor.locker === input ) {
+                $(document.body).toggleClass('czr-customize-content_editor-pane-open', expanded);
+                editor.locker = input;
+              }
+              input.czrSetToggleButtonText( expanded );
+
+              if ( expanded ) {
+                editor.setContent( wp.editor.autop( input.get() ) );
+                editor.on( 'input change keyup', input.czrOnVisualEditorChange );
+                textarea.on( 'input', input.czrOnTextEditorChange );
+                input.czrResizeEditor( window.innerHeight - editorPane.height() );
+                $( window ).on('resize', input.czrResizeEditorOnWindowResize );
+
+              } else {
+                editor.off( 'input change keyup', input.czrOnVisualEditorChange );
+                textarea.off( 'input', input.czrOnTextEditorChange );
+                $( window ).off('resize', input.czrResizeEditorOnWindowResize );
+                input.czrResizeReset();
+              }
+          } );
+  },
+
+  czrOnVisualEditorChange : function() {
+          var input = this,
+              editor = input.editor,
+              value;
+
+          value = wp.editor.removep( editor.getContent() );
+          input.set(value);
+  },
+
+  czrOnTextEditorChange : function() {
+          var input = this,
+              textarea = input.textarea,
+              value;
+
+          value = textarea.val();
+          input.set(value);
+  },
+  czrUpdateTextPreview: function() {
+          var input   = this,
+              input_model = input.get(),
+              value;
+          value = input_model.replace(/(<([^>]+)>)/ig,"");
+          if ( value.length > 30 )
+            value = value.substring(0, 34) + '...';
+
+          input.textpreview.val( value );
+  },
+  czrRenderInputTextEditorTemplate: function() {
+          var input  = this;
+          if ( 0 === $( '#tmpl-czr-input-text_editor-view-content' ).length )
+            return;
+
+          var view_template = wp.template('czr-input-text_editor-view-content'),
+                  $_view_el = input.container.find('input');
+          if ( ! view_template  || ! input.container )
+            return;
+
+          $_view_el.after( view_template( this.get() ) );
+
+          return true;
+  },
+  czrIsEditorExpanded : function() {
+          return $( document.body ).hasClass('czr-customize-content_editor-pane-open');
+  },
+  czrResizeReset  : function() {
+          var input = this,
+              preview = input.preview,
+              collapse = input.collapse,
+              sectionContent = input.container.closest('ul.accordion-section-content');
+
+          sectionContent.css( 'padding-bottom', '' );
+          preview.css( 'bottom', '' );
+          collapse.css( 'bottom', '' );
+  },
+  czrResizeEditor : function( position ) {
+          var windowHeight = window.innerHeight,
+              windowWidth = window.innerWidth,
+              minScroll = 40,
+              maxScroll = 1,
+              mobileWidth = 782,
+              collapseMinSpacing = 56,
+              collapseBottomOutsideEditor = 8,
+              collapseBottomInsideEditor = 4,
+              args = {},
+              input = this,
+              sectionContent = input.container.closest('ul.accordion-section-content'),
+              mceTools = input.mceTools,
+              mceToolbar = input.mceToolbar,
+              mceStatusbar = input.mceStatusbar,
+              preview      = input.preview,
+              collapse     = input.collapse,
+              editorPane   = input.editorPane,
+              editorFrame  = input.editorFrame;
+
+          if ( ! input.editorExpanded.get() ) {
+            return;
+          }
+
+          if ( ! _.isNaN( position ) ) {
+            resizeHeight = windowHeight - position;
+          }
+
+          args.height = resizeHeight;
+          args.components = mceTools.outerHeight() + mceToolbar.outerHeight() + mceStatusbar.outerHeight();
+
+          if ( resizeHeight < minScroll ) {
+            args.height = minScroll;
+          }
+
+          if ( resizeHeight > windowHeight - maxScroll ) {
+            args.height = windowHeight - maxScroll;
+          }
+
+          if ( windowHeight < editorPane.outerHeight() ) {
+            args.height = windowHeight;
+          }
+
+          preview.css( 'bottom', args.height );
+          editorPane.css( 'height', args.height );
+          editorFrame.css( 'height', args.height - args.components );
+          collapse.css( 'bottom', args.height + collapseBottomOutsideEditor );
+
+          if ( collapseMinSpacing > windowHeight - args.height ) {
+            collapse.css( 'bottom', mceStatusbar.outerHeight() + collapseBottomInsideEditor );
+          }
+
+          if ( windowWidth <= mobileWidth ) {
+            sectionContent.css( 'padding-bottom', args.height );
+          } else {
+            sectionContent.css( 'padding-bottom', '' );
+          }
+  },
+  czrResizeEditorOnWindowResize : function() {
+          var input = this,
+              resizeDelay = 50,
+              editorPane   = input.editorPane;
+
+          if ( ! input.editorExpanded.get() ) {
+            return;
+          }
+
+          _.delay( function() {
+            input.czrResizeEditor( window.innerHeight - editorPane.height() );
+          }, resizeDelay );
+
+  },
+  czrResizeEditorOnUserRequest : function() {
+          var input = this,
+              dragbar = input.dragbar,
+              editorFrame = input.editorFrame;
+
+          dragbar.on( 'mousedown', function() {
+            if ( ! input.editorExpanded() )
+              return;
+
+            $( document ).on( 'mousemove.czr-customize-content_editor', function( event ) {
+                event.preventDefault();
+                $( document.body ).addClass( 'czr-customize-content_editor-pane-resize' );
+                editorFrame.css( 'pointer-events', 'none' );
+                input.czrResizeEditor( event.pageY );
+              } );
+            } );
+
+          dragbar.on( 'mouseup', function() {
+            if ( ! input.editorExpanded() )
+              return;
+
+            $( document ).off( 'mousemove.czr-customize-content_editor' );
+            $( document.body ).removeClass( 'czr-customize-content_editor-pane-resize' );
+            editorFrame.css( 'pointer-events', '' );
+          } );
+
+  },
+  czrSetToggleButtonText : function( $_expanded ) {
+          var input = this;
+
+          input.toggleButton.text( serverControlParams.translatedStrings[ ! $_expanded ? 'textEditorOpen' : 'textEditorClose' ] );
+  }
+});//$.extend//extends api.Value
 var CZRItemMths = CZRItemMths || {};
 $.extend( CZRItemMths , {
   initialize: function( id, options ) {
@@ -1072,20 +1317,25 @@ $.extend( CZRItemMths , {
                   }
           ];
           item.writeItemViewTitle();
+          item.czr_ItemState.callbacks.add( function( to, from ) {
+              item.toggleViewExpansion.apply(item, arguments );
+          });
+          console.log('item.module.is_multi_items', item.id, item.module.is_multi_items );
           if ( item.module.is_multi_items ) {
-                item.czr_ItemState.callbacks.add( function() {
+                item.czr_ItemState.callbacks.add( function( to, from ) {
+                      console.log('in item.czr_ItemState callback', to, from );
                       $.when( item.renderViewContent( item_model ) ).done( function() {
                             if ( 'pending' == item.contentRendered.state() ) {
                                 throw new Error( 'Module : ' + item.module.id + ', the item content has not been rendered for ' + item.id );
                             }
                       });
-                      item.toggleViewExpansion.apply(item, arguments );
                 });
           } else {
                 $.when( item.renderViewContent( item_model ) ).done( function() {
                       if ( 'pending' == item.contentRendered.state() ) {
                           throw new Error( 'The item content has not been rendered for ' + item.id );
                       }
+                      item.czr_ItemState.set('expanded');
                 });
           }
           api.CZR_Helpers.setupDOMListeners(
@@ -1192,7 +1442,7 @@ $.extend( CZRItemMths , {
             module = item.module;
             item_model = item_model || item.get();
         if ( 0 === $( '#tmpl-' + module.getTemplateEl( 'view', item_model ) ).length ) {
-          throw new Error('No template for item ' + item.id + '. The template script id should be : #tmpl-' + module.getTemplateEl( 'view', item_model ) );
+          throw new Error('No template for item ' + item.id + '. The provided template script has no been found : #tmpl-' + module.getTemplateEl( 'view', item_model ) );
         }
 
         var view_template = wp.template( module.getTemplateEl( 'view', item_model ) );
@@ -1219,6 +1469,8 @@ $.extend( CZRItemMths , {
           if ( ! view_content_template )
             return this;
           $( view_content_template( item_model )).appendTo( $('.' + module.control.css_attr.view_content, item.container ) );
+
+          console.log('in renderViewContent', item.contentRendered.state() );
           if ( false !== $( $( view_content_template( item_model )), item.container ).length )
             item.contentRendered.resolve();
   },
@@ -1332,6 +1584,7 @@ $.extend( CZRModuleMths, {
           module.savedItemCollectionReady = $.Deferred();
           module.embedded = $.Deferred();
           $.extend( module, options || {} );
+          module.is_multi_items = module.multi_item || ( ! module.isModuleInSektion() && 'czr_crud_module' == module.control.params.type );
           $.extend( module, {
               viewPreAddEl : '',
               viewTemplateEl : '',
@@ -1355,6 +1608,7 @@ $.extend( CZRModuleMths, {
           module.inputConstructor = api.CZRInput;
 
           module.isReady.done( function() {
+                console.log('MODULE ' + module.id + ' IS READY');
                 module.populateSavedItemCollection();
                 if ( module.is_multi_items )
                   module._makeItemsSortable();
@@ -1364,7 +1618,6 @@ $.extend( CZRModuleMths, {
   },
   ready : function() {
           var module = this;
-          console.log('MODULE ' + module.id + ' IS READY');
           module.isReady.resolve();
   },
   moduleReact : function( to, from ) {
@@ -1406,6 +1659,8 @@ var CZRModuleMths = CZRModuleMths || {};
 $.extend( CZRModuleMths, {
   populateSavedItemCollection : function() {
           var module = this;
+
+          console.log('module.savedItems', module.savedItems );
           _.each( module.savedItems, function( item, key ) {
                 item = module._normalizeItem(item, _.has( item, 'id' ) ? item.id : key );
                 if ( false === item ) {
@@ -1870,6 +2125,8 @@ $.extend( CZRSektionMths, {
           module.czr_columnCollection.set([]);
           module.czr_columnCollection.callbacks.add( function() { return module.columnCollectionReact.apply(module, arguments ); } );
           module.itemConstructor = api.CZRItem.extend( module.CZRSektionItem || {} );
+
+          console.log('module.control.section()', module.control.section() );
           api.section( module.control.section() ).expanded.bind(function(to) {
                 if ( 'resolved' == module.isReady.state() )
                   return;
@@ -2306,14 +2563,28 @@ $.extend( CZRColumnMths , {
                   actions   : ['userAddedModule'],
                 },
           ];//module.module_event_map
+
+          var module_collection_control = api.control( api.CZR_Helpers.build_setId( 'module-collection') );
+          $.when( module_collection_control.modColSynchronized.promise() ).then(
+                function() {
+                  console.log('SYNCHRONIZED!');
+                  _.each( column.czr_columnModuleCollection.get() , function( _mod ) {
+                            if ( module_collection_control.czr_Module.has(_mod.id) )
+                              return;
+                            $.when( _.findWhere( module_collection_control.czr_moduleCollection.get() , { id : _mod.id } ) ).done( function( module_candidate ) {
+                                if ( _.isUndefined( module_candidate) ||_.isEmpty( module_candidate ) ) {
+                                  throw new Error( 'Module ' + _mod.id + ' was not found in the module collection.');
+                                }
+                                module_collection_control.instantiateModule( module_candidate, {} );
+                            });
+                  } );
+                },//done callback
+                function() {},//fail callback
+                function() {
+                  console.log( 'NOT SYNCHRONIZED YET');
+                }
+          );//.then()
           column.embedded.done(function() {
-                _.each( column.czr_columnModuleCollection.get() , function( _mod ) {
-                          var module_collection_control = api.control( api.CZR_Helpers.build_setId( 'module-collection') );
-                          if ( module_collection_control.czr_Module.has(_mod.id) )
-                            return;
-                          var _module_candidate = _.findWhere( module_collection_control.czr_moduleCollection.get() , { id : _mod.id } );
-                          module_collection_control.instantiateModule( _module_candidate, {} );
-                } );
                 column.callbacks.add( function() { return column.columnReact.apply(column, arguments ); } );
                 column.czr_columnModuleCollection.callbacks.add( function() { return column.columnModuleCollectionReact.apply( column, arguments ); } );
                 api.CZR_Helpers.setupDOMListeners(
@@ -3413,7 +3684,6 @@ $.extend( CZRTextModuleMths, {
   initialize: function( id, options ) {
           var module = this;
           api.CZRModule.prototype.initialize.call( module, id, options );
-          module.is_multi_items = false;
           $.extend( module, {
                 viewContentTemplateEl : 'czr-module-text-view-content',
           } );
@@ -3493,6 +3763,51 @@ $.extend( CZRSlideModuleMths, {
                 $( '.' + module.control.css_attr.view_title , item.container ).html( _title );
           }
   }
+});//extends api.CZRDynModule
+
+var CZRTextEditorModuleMths = CZRTextEditorModuleMths || {};
+
+$.extend( CZRTextEditorModuleMths, {
+  initialize: function( id, options ) {
+          var module = this;
+          api.CZRModule.prototype.initialize.call( module, id, options );
+          $.extend( module, {
+                viewTemplateEl : 'czr-ru-module-item-view',
+                viewContentTemplateEl : 'czr-module-text_editor-view-content'
+          } );
+          module.inputConstructor = api.CZRInput.extend( module.CZRTextEditorInputMths || {} );
+          module.itemConstructor = api.CZRItem.extend( module.CZRTextEditorItem || {} );
+          this.defaultItemModel   = {
+            id : '',
+            text: ''
+          };
+          if ( _.isEmpty( options.items ) ) {
+                var def = _.clone( module.defaultItemModel );
+                module.savedItems = [ $.extend( def, { id : module.id } ) ];
+          } else {
+                module.savedItems = options.items;
+          }
+
+          api.section( module.control.section() ).expanded.bind(function(to) {
+
+            if ( 'resolved' == module.isReady.state() )
+              return;
+
+            module.ready();
+          });
+  },//initialize
+
+
+
+
+  CZRTextEditorInputMths : {
+  },//CZRTextEditorsInputMths
+
+
+
+  CZRTextEditorItem : {
+
+  },
 });//BASE CONTROL CLASS
 
 var CZRBaseControlMths = CZRBaseControlMths || {};
@@ -3522,7 +3837,8 @@ $.extend( CZRBaseModuleControlMths, {
                   module_type : options.params.module_type,
                   section : options.params.section,
                   items   : api(control.id).get(),
-                  is_multi_items : true
+                  multi_item : false,
+                  in_sektion : options.params.in_sektion
                 }
           ];
           control.moduleConstructors = {
@@ -3638,7 +3954,7 @@ $.extend( CZRBaseModuleControlMths, {
                     case  'control' :
                         api_ready_module[_key] = control;//this
                     break;
-                    case 'is_multi_items' :
+                    case 'multi_item' :
                         api_ready_module[_key] = _candidate_val || false;
                     break;
               }//switch
@@ -3725,6 +4041,7 @@ $.extend( CZRMultiModuleControlMths, {
                 is_added_by_user : false
           };
           control.syncSektionModule = new api.Value();
+          control.modColSynchronized = $.Deferred();
           api(control.id).callbacks.add( function() { return control.syncColumn.apply( control, arguments ); } );
 
   },
@@ -3732,11 +4049,14 @@ $.extend( CZRMultiModuleControlMths, {
           var control = this;
           api.bind( 'ready', function() {
                 control.syncSektionModule.bind( function(to, from) {
-                      if ( ! _.isUndefined( from ) )
+                      if ( 'resolved' == control.modColSynchronized.state() )
                         return;
+
 
                       control.registerModulesOnInit( to );
                       control.czr_moduleCollection.callbacks.add( function() { return control.collectionReact.apply( control, arguments ); } );
+
+                      control.modColSynchronized.resolve();
                 });
                 control.bind( 'user-module-candidate', function( _module ) {
                       control.instantiateModule( _module, {} ); //module, constructor
@@ -4471,7 +4791,7 @@ $.extend( CZRBackgroundMths , {
   api.CZRTextEditorModule     = api.CZRModule.extend( CZRTextEditorModuleMths || {} );
   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMths || {} );
   api.CZRBaseModuleControl    = api.CZRBaseControl.extend( CZRBaseModuleControlMths || {} );
-  api.CZRMultiModulesControl        = api.CZRBaseModuleControl.extend( CZRMultiModuleControlMths || {} );
+  api.CZRMultiModuleControl        = api.CZRBaseModuleControl.extend( CZRMultiModuleControlMths || {} );
 
 
   api.CZRUploadControl         = api.Control.extend( CZRUploadMths || {} );
@@ -4483,13 +4803,12 @@ $.extend( CZRBackgroundMths , {
   $.extend( api.controlConstructor, {
         czr_upload     : api.CZRUploadControl,
 
-        czr_modules : api.CZRBaseModuleControl,
-        czr_multi_modules : api.CZRMultiModulesControl,
+        czr_crud_module : api.CZRBaseModuleControl,
+        czr_ru_module : api.CZRBaseModuleControl,
+        czr_multi_module : api.CZRMultiModuleControl,
 
         czr_multiple_picker : api.CZRMultiplePickerControl,
-        czr_layouts    : api.CZRLayoutControl,
-        
-        czr_single_module : api.CZRBaseModuleControl,
+        czr_layouts    : api.CZRLayoutControl
   });
 
 

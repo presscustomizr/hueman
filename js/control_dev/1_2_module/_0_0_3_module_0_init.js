@@ -33,6 +33,11 @@ $.extend( CZRModuleMths, {
           //write the options as properties
           $.extend( module, options || {} );
 
+
+          //is this module multi item ?
+          //=> sortable
+          module.is_multi_items = module.multi_item || ( ! module.isModuleInSektion() && 'czr_crud_module' == module.control.params.type );
+
           //extend the module with new template Selectors
           $.extend( module, {
               viewPreAddEl : '',
@@ -80,6 +85,7 @@ $.extend( CZRModuleMths, {
           //module.ready(); => fired by children
 
           module.isReady.done( function() {
+                console.log('MODULE ' + module.id + ' IS READY');
                 //Important note : this event refreshes the customizer setting value
                 //It's not listened to before the api is ready
                 //=> the collection update on startup is done when the module is embedded and BEFORE the api is ready
@@ -104,7 +110,6 @@ $.extend( CZRModuleMths, {
   //////////////////////////////////
   ready : function() {
           var module = this;
-          console.log('MODULE ' + module.id + ' IS READY');
           module.isReady.resolve();
   },
 

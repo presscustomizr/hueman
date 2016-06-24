@@ -33,6 +33,7 @@ $.extend( CZRMultiModuleControlMths, {
 
           //store the module ID of the synchronized sektions
           control.syncSektionModule = new api.Value();
+          control.modColSynchronized = $.Deferred();
 
           //listen to the module-collection setting changes
           //=> synchronize the columns in the sektion setting
@@ -52,14 +53,16 @@ $.extend( CZRMultiModuleControlMths, {
 
                 //POPULATE THE SAVED MODULE COLLECTION WHEN THE SYNCHRONIZED SEKTIONS SETTING HAS PROVIDED ITS INSTANCE
                 control.syncSektionModule.bind( function(to, from) {
-                      //the from must be virgin
-                      if ( ! _.isUndefined( from ) )
+                      if ( 'resolved' == control.modColSynchronized.state() )
                         return;
+
 
                       control.registerModulesOnInit( to );
 
                       //LISTEN TO ELEMENT COLLECTION
                       control.czr_moduleCollection.callbacks.add( function() { return control.collectionReact.apply( control, arguments ); } );
+
+                      control.modColSynchronized.resolve();
                 });
 
 
@@ -70,8 +73,6 @@ $.extend( CZRMultiModuleControlMths, {
                 });
           });
   },
-
-
 
 
   //fired when the main sektion module has synchronised its if with the module-collection control

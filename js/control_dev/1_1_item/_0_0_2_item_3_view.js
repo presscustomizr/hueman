@@ -16,7 +16,7 @@ $.extend( CZRItemMths , {
 
         //do we have view template script?
         if ( 0 === $( '#tmpl-' + module.getTemplateEl( 'view', item_model ) ).length ) {
-          throw new Error('No template for item ' + item.id + '. The template script id should be : #tmpl-' + module.getTemplateEl( 'view', item_model ) );
+          throw new Error('No template for item ' + item.id + '. The provided template script has no been found : #tmpl-' + module.getTemplateEl( 'view', item_model ) );
         }
 
         var view_template = wp.template( module.getTemplateEl( 'view', item_model ) );
@@ -67,6 +67,8 @@ $.extend( CZRItemMths , {
 
           //the view content
           $( view_content_template( item_model )).appendTo( $('.' + module.control.css_attr.view_content, item.container ) );
+
+          console.log('in renderViewContent', item.contentRendered.state() );
 
           //update the $.Deferred state
           if ( false !== $( $( view_content_template( item_model )), item.container ).length )

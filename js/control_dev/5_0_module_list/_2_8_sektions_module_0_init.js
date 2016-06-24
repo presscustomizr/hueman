@@ -63,13 +63,13 @@ $.extend( CZRSektionMths, {
           //EXTEND THE DEFAULT CONSTRUCTORS FOR SEKTION ITEMS
           module.itemConstructor = api.CZRItem.extend( module.CZRSektionItem || {} );
 
+          console.log('module.control.section()', module.control.section() );
           //FIRE
           api.section( module.control.section() ).expanded.bind(function(to) {
                 if ( 'resolved' == module.isReady.state() )
                   return;
                 //unleash hell
                 module.ready();
-
                 //provide the synchronized module-collection control with its synchronized sektions module instance
                 api.control( api.CZR_Helpers.build_setId( 'module-collection') ).syncSektionModule.set( module );
           });

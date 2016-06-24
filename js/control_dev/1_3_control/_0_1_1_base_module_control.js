@@ -20,7 +20,8 @@ $.extend( CZRBaseModuleControlMths, {
                   module_type : options.params.module_type,
                   section : options.params.section,
                   items   : api(control.id).get(),
-                  is_multi_items : true
+                  multi_item : false,
+                  in_sektion : options.params.in_sektion
                 }
           ];
 
@@ -141,7 +142,7 @@ $.extend( CZRBaseModuleControlMths, {
    //  section : '',//module.section,
    //  items   : [],//$.extend( true, {}, module.items ),
    //  control : {},//control,
-   //  is_multi_items : true
+   //  multi_item : false
   // to be instantiated in the API, the module model must have all the required properties defined in the defaultAPIModel properly set
   prepareModuleForAPI : function( module_candidate ) {
         if ( ! _.isObject( module_candidate ) ) {
@@ -181,7 +182,7 @@ $.extend( CZRBaseModuleControlMths, {
                     case  'control' :
                         api_ready_module[_key] = control;//this
                     break;
-                    case 'is_multi_items' :
+                    case 'multi_item' :
                         api_ready_module[_key] = _candidate_val || false;
                     break;
               }//switch

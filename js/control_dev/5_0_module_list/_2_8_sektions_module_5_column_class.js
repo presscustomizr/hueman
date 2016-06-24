@@ -55,35 +55,52 @@ $.extend( CZRColumnMths , {
                 },
           ];//module.module_event_map
 
+          var module_collection_control = api.control( api.CZR_Helpers.build_setId( 'module-collection') );
+
+          //when the module collection is synchronized, instantiate the module of this column.
+          $.when( module_collection_control.modColSynchronized.promise() ).then(
+                function() {
+                  console.log('SYNCHRONIZED!');
+                  //at this point, the question is : are the modules assigned to this column instantiated ?
+                  //if not => let's instantiate them. => this should not change the module collection czr_moduleCollection of the module-collection control
+                  //=> because they should already be registered.
+                  _.each( column.czr_columnModuleCollection.get() , function( _mod ) {
+
+                            //is this module already instantiated ?
+                            if ( module_collection_control.czr_Module.has(_mod.id) )
+                              return;
+
+                            //first let's try to get it from the collection
+                            //var _module_candidate = _.findWhere( module_collection_control.czr_moduleCollection.get() , { id : _mod.id } );
+                            $.when( _.findWhere( module_collection_control.czr_moduleCollection.get() , { id : _mod.id } ) ).done( function( module_candidate ) {
+                                if ( _.isUndefined( module_candidate) ||_.isEmpty( module_candidate ) ) {
+                                  throw new Error( 'Module ' + _mod.id + ' was not found in the module collection.');
+                                }
+                                //we have a candidate. Let's instantiate it
+                                module_collection_control.instantiateModule( module_candidate, {} );
+                            });
+
+
+                            //push it to the collection of the sektions control
+                            //@todo => shall we make sure that the module has actually been instatiated by the module-collection control?
+                            // if ( ! module_collection_control.czr_Module.has( _module_candidate.id ) )
+                            //   return;
+
+                            //column.updateColumnModuleCollection( { module : _module_candidate });
+                  } );
+                },//done callback
+                function() {},//fail callback
+                function() {
+                  console.log( 'NOT SYNCHRONIZED YET');
+                }
+          );//.then()
+
 
 
 
           //when column is embedded :
-          //1) populate the column module collection
-          //2) setup the DOM event handler
+          //=> setup the DOM event handler
           column.embedded.done(function() {
-                //at this point, the question is : are the modules assigned to this column instantiated ?
-                //if not => let's instantiate them. => this should not change the module collection czr_moduleCollection of the module-collection control
-                //=> because they should already be registered.
-                _.each( column.czr_columnModuleCollection.get() , function( _mod ) {
-                          var module_collection_control = api.control( api.CZR_Helpers.build_setId( 'module-collection') );
-                          //is this module already instantiated ?
-                          if ( module_collection_control.czr_Module.has(_mod.id) )
-                            return;
-
-                          //first let's try to get it from the collection
-                          var _module_candidate = _.findWhere( module_collection_control.czr_moduleCollection.get() , { id : _mod.id } );
-                          //we have a candidate. Let's instantiate it
-                          module_collection_control.instantiateModule( _module_candidate, {} );
-
-                          //push it to the collection of the sektions control
-                          //@todo => shall we make sure that the module has actually been instatiated by the module-collection control?
-                          // if ( ! module_collection_control.czr_Module.has( _module_candidate.id ) )
-                          //   return;
-
-                          //column.updateColumnModuleCollection( { module : _module_candidate });
-                } );
-
                 //react to column value changes
                 column.callbacks.add( function() { return column.columnReact.apply(column, arguments ); } );
 

@@ -148,20 +148,25 @@ $.extend( CZRItemMths , {
           //always write the title
           item.writeItemViewTitle();
 
+          //react to the item state changes
+          item.czr_ItemState.callbacks.add( function( to, from ) {
+              //toggle on view state change
+              item.toggleViewExpansion.apply(item, arguments );
+          });
+
           //When do we render the item content ?
           //If this is a multi-item module, let's render each item content when they are expanded.
           //In the case of a single item module, we can render the item content now.
+          console.log('item.module.is_multi_items', item.id, item.module.is_multi_items );
           if ( item.module.is_multi_items ) {
-                item.czr_ItemState.callbacks.add( function() {
+                item.czr_ItemState.callbacks.add( function( to, from ) {
+                      console.log('in item.czr_ItemState callback', to, from );
                       //renderview content if needed on first expansion
                       $.when( item.renderViewContent( item_model ) ).done( function() {
                             if ( 'pending' == item.contentRendered.state() ) {
                                 throw new Error( 'Module : ' + item.module.id + ', the item content has not been rendered for ' + item.id );
                             }
                       });
-
-                      //toggle on view state change
-                      item.toggleViewExpansion.apply(item, arguments );
                 });
           } else {
                 //renderview content now for a single item module
@@ -169,6 +174,7 @@ $.extend( CZRItemMths , {
                       if ( 'pending' == item.contentRendered.state() ) {
                           throw new Error( 'The item content has not been rendered for ' + item.id );
                       }
+                      item.czr_ItemState.set('expanded');
                 });
           }
 
