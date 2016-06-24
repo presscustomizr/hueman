@@ -630,6 +630,7 @@ $.extend( CZRInputMths , {
                   upload : 'setupImageUploader',
                   color : 'setupColorPicker',
                   content_picker : 'setupContentPicker',
+                  text_editor    : 'setupTextEditor',
                   password : ''
             };
 
@@ -3525,12 +3526,13 @@ $.extend( CZRBaseModuleControlMths, {
                 }
           ];
           control.moduleConstructors = {
-                czr_widget_areas_module : api.CZRWidgetAreaModule,
-                czr_social_module : api.CZRSocialModule,
-                czr_sektion_module : api.CZRSektionModule,
-                czr_fp_module : api.CZRFeaturedPageModule,
-                czr_slide_module : api.CZRSlideModule,
-                czr_text_module : api.CZRTextModule
+                czr_widget_areas_module   : api.CZRWidgetAreaModule,
+                czr_social_module    : api.CZRSocialModule,
+                czr_sektion_module    : api.CZRSektionModule,
+                czr_fp_module    : api.CZRFeaturedPageModule,
+                czr_slide_module    : api.CZRSlideModule,
+                czr_text_module : api.CZRTextModule,
+                czr_text_editor_module  : api.CZRTextEditorModule
           };
           control.defautAPIModuleModel = {
                 id : '',//module.id,
@@ -4465,6 +4467,8 @@ $.extend( CZRBackgroundMths , {
   api.CZRTextModule           = api.CZRModule.extend( CZRTextModuleMths || {} );
 
   api.CZRSlideModule          = api.CZRDynModule.extend( CZRSlideModuleMths || {} );
+
+  api.CZRTextEditorModule     = api.CZRModule.extend( CZRTextEditorModuleMths || {} );
   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMths || {} );
   api.CZRBaseModuleControl    = api.CZRBaseControl.extend( CZRBaseModuleControlMths || {} );
   api.CZRMultiModulesControl        = api.CZRBaseModuleControl.extend( CZRMultiModuleControlMths || {} );
@@ -4483,7 +4487,9 @@ $.extend( CZRBackgroundMths , {
         czr_multi_modules : api.CZRMultiModulesControl,
 
         czr_multiple_picker : api.CZRMultiplePickerControl,
-        czr_layouts    : api.CZRLayoutControl
+        czr_layouts    : api.CZRLayoutControl,
+        
+        czr_single_module : api.CZRBaseModuleControl,
   });
 
 

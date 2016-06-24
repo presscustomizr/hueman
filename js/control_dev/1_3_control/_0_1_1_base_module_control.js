@@ -26,12 +26,13 @@ $.extend( CZRBaseModuleControlMths, {
 
           //define a default Constructor
           control.moduleConstructors = {
-                czr_widget_areas_module : api.CZRWidgetAreaModule,
-                czr_social_module : api.CZRSocialModule,
-                czr_sektion_module : api.CZRSektionModule,
-                czr_fp_module : api.CZRFeaturedPageModule,
-                czr_slide_module : api.CZRSlideModule,
-                czr_text_module : api.CZRTextModule
+                czr_widget_areas_module   : api.CZRWidgetAreaModule,
+                czr_social_module    : api.CZRSocialModule,
+                czr_sektion_module    : api.CZRSektionModule,
+                czr_fp_module    : api.CZRFeaturedPageModule,
+                czr_slide_module    : api.CZRSlideModule,
+                czr_text_module : api.CZRTextModule,
+                czr_text_editor_module  : api.CZRTextEditorModule
           };
 
           //declare a default module model for the API

@@ -33,6 +33,8 @@
 
   api.CZRSlideModule          = api.CZRDynModule.extend( CZRSlideModuleMths || {} );
 
+  api.CZRTextEditorModule     = api.CZRModule.extend( CZRTextEditorModuleMths || {} );
+
   //CONTROLS
   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMths || {} );
   api.CZRBaseModuleControl    = api.CZRBaseControl.extend( CZRBaseModuleControlMths || {} );
@@ -59,7 +61,9 @@
         czr_multi_modules : api.CZRMultiModulesControl,
 
         czr_multiple_picker : api.CZRMultiplePickerControl,
-        czr_layouts    : api.CZRLayoutControl
+        czr_layouts    : api.CZRLayoutControl,
+        
+        czr_single_module : api.CZRBaseModuleControl,
 
         //czr_background : api.CZRBackgroundControl,
         //czr_sektions   : api.CZRSektionsControl
