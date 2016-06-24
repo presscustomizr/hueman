@@ -111,6 +111,8 @@ $.extend( CZRItemMths , {
           var item = this,
               module = this.module;
 
+          item_model = item.get() || item.initial_item_model;//could not be set yet
+
           //czr_ItemState stores the current expansion status of a given view => one value by created by item.id
           //czr_ItemState can take 3 values : expanded, expanded_noscroll (=> used on view creation), closed
           item.czr_ItemState = new api.Value();
@@ -143,9 +145,6 @@ $.extend( CZRItemMths , {
           ];
 
 
-          //defer actions on item view embedded
-          var  item_model = item.get() || item.initial_item_model;//could not be set yet
-
           //always write the title
           item.writeItemViewTitle();
 
@@ -155,16 +154,22 @@ $.extend( CZRItemMths , {
           if ( item.module.is_multi_items ) {
                 item.czr_ItemState.callbacks.add( function() {
                       //renderview content if needed on first expansion
-                      if ( 'pending' == item.contentRendered.state() ) {
-                          item.renderViewContent( item_model );
-                      }
+                      $.when( item.renderViewContent( item_model ) ).done( function() {
+                            if ( 'pending' == item.contentRendered.state() ) {
+                                throw new Error( 'Module : ' + item.module.id + ', the item content has not been rendered for ' + item.id );
+                            }
+                      });
+
                       //toggle on view state change
                       item.toggleViewExpansion.apply(item, arguments );
                 });
           } else {
-              //renderview content now for a single item module
-              if ( 'pending' == item.contentRendered.state() )
-                  item.renderViewContent( item_model );
+                //renderview content now for a single item module
+                $.when( item.renderViewContent( item_model ) ).done( function() {
+                      if ( 'pending' == item.contentRendered.state() ) {
+                          throw new Error( 'The item content has not been rendered for ' + item.id );
+                      }
+                });
           }
 
           //DOM listeners for the user action in item view wrapper

@@ -1044,6 +1044,8 @@ $.extend( CZRItemMths , {
   itemWrapperViewSetup : function( item_model ) {
           var item = this,
               module = this.module;
+
+          item_model = item.get() || item.initial_item_model;//could not be set yet
           item.czr_ItemState = new api.Value();
           item.czr_ItemState.set('closed');
 
@@ -1068,18 +1070,22 @@ $.extend( CZRItemMths , {
                     actions   : ['setViewVisibility']
                   }
           ];
-          var  item_model = item.get() || item.initial_item_model;//could not be set yet
           item.writeItemViewTitle();
           if ( item.module.is_multi_items ) {
                 item.czr_ItemState.callbacks.add( function() {
-                      if ( 'pending' == item.contentRendered.state() ) {
-                          item.renderViewContent( item_model );
-                      }
+                      $.when( item.renderViewContent( item_model ) ).done( function() {
+                            if ( 'pending' == item.contentRendered.state() ) {
+                                throw new Error( 'Module : ' + item.module.id + ', the item content has not been rendered for ' + item.id );
+                            }
+                      });
                       item.toggleViewExpansion.apply(item, arguments );
                 });
           } else {
-              if ( 'pending' == item.contentRendered.state() )
-                  item.renderViewContent( item_model );
+                $.when( item.renderViewContent( item_model ) ).done( function() {
+                      if ( 'pending' == item.contentRendered.state() ) {
+                          throw new Error( 'The item content has not been rendered for ' + item.id );
+                      }
+                });
           }
           api.CZR_Helpers.setupDOMListeners(
                 item.view_event_map,//actions to execute
@@ -1214,11 +1220,6 @@ $.extend( CZRItemMths , {
           $( view_content_template( item_model )).appendTo( $('.' + module.control.css_attr.view_content, item.container ) );
           if ( false !== $( $( view_content_template( item_model )), item.container ).length )
             item.contentRendered.resolve();
-          else {
-              throw new Error()
-          }
-
-          return this;
   },
   writeItemViewTitle : function( item_model ) {
         var item = this,
@@ -4115,20 +4116,32 @@ $.extend( CZRMultiModuleControlMths, {
               module.czr_Item.each ( function( item ) {
                     item.mayBeRenderItemWrapper();
               } );
-              module.toggleModuleViewExpansion( to );
+              $.when( module.toggleModuleViewExpansion( to ) ).done( function() {
+                    console.log('Module view : ' + to );
+              });
         },
         toggleModuleViewExpansion : function( status, duration ) {
               var module = this;
               $( '.czr-mod-content' , module.container ).slideToggle( {
                   duration : duration || 200,
                   done : function() {
-                      var _is_expanded = 'closed' != status,
-                          $_overlay = module.container.closest( '.wp-full-overlay' );
+                        var _is_expanded = 'closed' != status,
+                            $_overlay = module.container.closest( '.wp-full-overlay' ),
+                            $_backBtn = module.container.find( '.czr-module-back' ),
+                            $_modTitle = module.container.find('.czr-module-title');
 
-                      module.container.toggleClass('open' , _is_expanded );
-                      $_overlay.toggleClass('czr-module-open', _is_expanded );
-                      if ( 'expanded' == status )
-                        module._adjustScrollExpandedBlock( module.container );
+                        module.container.toggleClass('open' , _is_expanded );
+                        $_overlay.toggleClass('czr-module-open', _is_expanded );
+                        $_modTitle.attr( 'tabindex', _is_expanded ? '-1' : '0' );
+                        $_backBtn.attr( 'tabindex', _is_expanded ? '0' : '-1' );
+
+                        if( _is_expanded ) {
+                            $_backBtn.focus();
+                        } else {
+                            $_modTitle.focus();
+                        }
+                        if ( 'expanded' == status )
+                          module._adjustScrollExpandedBlock( module.container );
                   }//done callback
                 } );
         },

@@ -208,8 +208,11 @@ $.extend( CZRMultiModuleControlMths, {
               } );
 
               //expand
-              module.toggleModuleViewExpansion( to );
+              $.when( module.toggleModuleViewExpansion( to ) ).done( function() {
+                    console.log('Module view : ' + to );
+              });
         },
+
 
 
         //callback of czr_ItemState() instance on change
@@ -220,27 +223,38 @@ $.extend( CZRMultiModuleControlMths, {
               $( '.czr-mod-content' , module.container ).slideToggle( {
                   duration : duration || 200,
                   done : function() {
-                      var _is_expanded = 'closed' != status,
-                          $_overlay = module.container.closest( '.wp-full-overlay' );
+                        var _is_expanded = 'closed' != status,
+                            $_overlay = module.container.closest( '.wp-full-overlay' ),
+                            $_backBtn = module.container.find( '.czr-module-back' ),
+                            $_modTitle = module.container.find('.czr-module-title');
 
-                      module.container.toggleClass('open' , _is_expanded );
-                      $_overlay.toggleClass('czr-module-open', _is_expanded );
-                      //close all alerts
-                      //module.closeAllAlerts();
+                        module.container.toggleClass('open' , _is_expanded );
+                        $_overlay.toggleClass('czr-module-open', _is_expanded );
+                        $_modTitle.attr( 'tabindex', _is_expanded ? '-1' : '0' );
+                        $_backBtn.attr( 'tabindex', _is_expanded ? '0' : '-1' );
 
-                      //toggle the icon activate class depending on the status
-                      //switch icon
-                      //var $_edit_icon = $(this).siblings().find('.' + module.control.css_attr.edit_view_btn );
+                        if( _is_expanded ) {
+                            $_backBtn.focus();
+                        } else {
+                            $_modTitle.focus();
+                        }
 
-                      // $_edit_icon.toggleClass('active' , _is_expanded );
-                      // if ( _is_expanded )
-                      //   $_edit_icon.removeClass('fa-pencil').addClass('fa-minus-square').attr('title', serverControlParams.translatedStrings.close );
-                      // else
-                      //   $_edit_icon.removeClass('fa-minus-square').addClass('fa-pencil').attr('title', serverControlParams.translatedStrings.edit );
+                        //close all alerts
+                        //module.closeAllAlerts();
 
-                      //scroll to the currently expanded view
-                      if ( 'expanded' == status )
-                        module._adjustScrollExpandedBlock( module.container );
+                        //toggle the icon activate class depending on the status
+                        //switch icon
+                        //var $_edit_icon = $(this).siblings().find('.' + module.control.css_attr.edit_view_btn );
+
+                        // $_edit_icon.toggleClass('active' , _is_expanded );
+                        // if ( _is_expanded )
+                        //   $_edit_icon.removeClass('fa-pencil').addClass('fa-minus-square').attr('title', serverControlParams.translatedStrings.close );
+                        // else
+                        //   $_edit_icon.removeClass('fa-minus-square').addClass('fa-pencil').attr('title', serverControlParams.translatedStrings.edit );
+
+                        //scroll to the currently expanded view
+                        if ( 'expanded' == status )
+                          module._adjustScrollExpandedBlock( module.container );
                   }//done callback
                 } );
         },

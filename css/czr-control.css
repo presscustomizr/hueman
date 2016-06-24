@@ -1396,7 +1396,6 @@ span.select2-results, body .select2-container {
   left: 100%;
   float: left;
   width: 100%;
-  margin-top: 1%;
   background: #d5e9cc;
   display: none;
 }
@@ -1415,7 +1414,7 @@ span.select2-results, body .select2-container {
   margin-bottom: 15px
 }
 .czr-module-title {
-  margin: -12px -12px 0 -12px;
+  /*margin: -12px -12px 0 -12px;*/
   border-bottom: 1px solid #ddd;
   background: #fff;
 }
@@ -1433,11 +1432,20 @@ span.select2-results, body .select2-container {
   text-overflow: ellipsis;
 }
 
+#customize-controls .czr-module-title span.customize-action {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 13px;
+  display: block;
+  font-weight: 400;
+}
+
 .czr-module-back {
     display: block;
     float: left;
     width: 48px;
-    height: 71px;
+    height: 74px;
     padding: 0 24px 0 0;
     margin: 0;
     background: #fff;
@@ -1474,9 +1482,6 @@ span.select2-results, body .select2-container {
     -webkit-box-shadow: none;
     box-shadow: none;
 }
-
-
-
 
 
 /* DRAGULA */

@@ -68,14 +68,9 @@ $.extend( CZRItemMths , {
           //the view content
           $( view_content_template( item_model )).appendTo( $('.' + module.control.css_attr.view_content, item.container ) );
 
-          //say it if something has been rendered
+          //update the $.Deferred state
           if ( false !== $( $( view_content_template( item_model )), item.container ).length )
             item.contentRendered.resolve();
-          else {
-              throw new Error()
-          }
-
-          return this;
   },
 
 
