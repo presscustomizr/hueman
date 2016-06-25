@@ -11,7 +11,7 @@ $.extend( CZRWidgetAreaModuleMths, {
           //extend the module with new template Selectors
           $.extend( module, {
                 viewPreAddEl : 'czr-module-widgets-pre-add-view-content',
-                viewTemplateEl : 'czr-crud-module-item-view',
+                viewTemplateEl : 'czr-crud-item-part',
                 viewContentTemplateEl : 'czr-module-widgets-view-content',
           } );
 

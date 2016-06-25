@@ -25,8 +25,6 @@ $.extend( CZRTextModuleMths, {
                 text : ''
           };
 
-          console.log(' NEW TEXT MODEL : ', options, module.get() );
-
           //this is a static module. We only have one item
           //init module item if needed.
           if ( _.isEmpty( options.items ) ) {

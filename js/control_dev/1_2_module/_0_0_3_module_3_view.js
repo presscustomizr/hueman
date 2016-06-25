@@ -6,6 +6,29 @@
 //Listen to items collection changes and update the control setting
 var CZRModuleMths = CZRModuleMths || {};
 $.extend( CZRModuleMths, {
+
+  //fired on module.isReady.done()
+  //the module.container is set. Either as the control.container or the single module wrapper in a sektion
+  renderModuleParts : function() {
+          var module = this,
+              $_moduleContentEl = module.isInSektion() ? $( module.container ).find('.czr-mod-content') : $( module.container );
+
+          //Crud modules => then let's add the crud module part tmpl
+          if ( module.isCrud() ) {
+                //do we have view template script?
+                if ( 0 === $( '#tmpl-' + module.crudModulePart ).length ) {
+                  throw new Error('No crud Module Part template for module ' + module.id + '. The template script id should be : #tmpl-' + module.crudModulePart );
+                }
+
+                //append the module wrapper to the column
+                $_moduleContentEl.append( $( wp.template( module.crudModulePart )( {} ) ) );
+          }
+
+          $_moduleContentEl.append(
+                $( '<ul/>', { class : [ module.control.css_attr.views_wrapper, module.module_type ].join(' ') } )
+          );
+  },
+
   //called before rendering a view
   //can be overriden to set a specific view template depending on the model properties
   //@return string

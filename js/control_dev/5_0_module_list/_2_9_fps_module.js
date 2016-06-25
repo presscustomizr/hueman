@@ -11,7 +11,7 @@ $.extend( CZRFeaturedPageModuleMths, {
           //extend the module with new template Selectors
           $.extend( module, {
                 viewPreAddEl : 'czr-module-fp-pre-add-view-content',
-                viewTemplateEl : 'czr-crud-module-item-view',
+                viewTemplateEl : 'czr-crud-item-part',
                 viewContentTemplateEl : 'czr-module-fp-view-content',
           } );
 

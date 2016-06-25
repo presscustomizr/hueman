@@ -64,14 +64,16 @@ $.extend( CZRSektionMths, {
           module.itemConstructor = api.CZRItem.extend( module.CZRSektionItem || {} );
 
           console.log('module.control.section()', module.control.section() );
+
           //FIRE
           api.section( module.control.section() ).expanded.bind(function(to) {
                 if ( 'resolved' == module.isReady.state() )
                   return;
                 //unleash hell
                 module.ready();
+
                 //provide the synchronized module-collection control with its synchronized sektions module instance
-                api.control( api.CZR_Helpers.build_setId( 'module-collection') ).syncSektionModule.set( module );
+                module.control.getSyncCollectionControl().syncSektionModule.set( module );
           });
 
           //DRAGULA
@@ -149,13 +151,12 @@ $.extend( CZRSektionMths, {
   //columns : []
   //sektion-layout : int
   removeSektion : function( sekItem ) {
-        var module = this,
-            collection_control = api.control( api.CZR_Helpers.build_setId( 'module-collection') );
+        var module = this;
 
         _.each( sekItem.columns, function( _col ) {
 
               _.each( _col.modules, function( _mod ){
-                    collection_control.removeModule( _mod );
+                    module.control.getSyncCollectionControl().removeModule( _mod );
               });//_.each
 
               //remove column from DOM if it's been embedded

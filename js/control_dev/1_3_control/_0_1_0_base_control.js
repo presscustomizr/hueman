@@ -10,10 +10,9 @@ $.extend( CZRBaseControlMths, {
 
   initialize: function( id, options ) {
           var control = this;
-          api.Control.prototype.initialize.call( control, id, options );
-
           //add a shortcut to the css properties declared in the php controls
           control.css_attr = _.has( serverControlParams , 'css_attr') ? serverControlParams.css_attr : {};
+          api.Control.prototype.initialize.call( control, id, options );
   },
 
   //@return void()

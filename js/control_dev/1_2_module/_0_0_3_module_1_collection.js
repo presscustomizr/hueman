@@ -64,9 +64,6 @@ $.extend( CZRModuleMths, {
   prepareItemForAPI : function( item_candidate ) {
           var module = this,
               api_ready_item = {};
-              //normalize it now
-              // _default_module_model = _.clone( control.defautAPIModuleModel ),
-              // _module_model = $.extend( _default_module_model, _module_candidate_model );
           if ( ! _.isObject( item_candidate ) ) {
                 throw new Error('prepareitemForAPI : a item must be an object to be instantiated.');
             }

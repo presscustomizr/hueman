@@ -55,10 +55,10 @@ $.extend( CZRColumnMths , {
                 },
           ];//module.module_event_map
 
-          var module_collection_control = api.control( api.CZR_Helpers.build_setId( 'module-collection') );
+          var syncedCollectionControl = column.sektion.control.getSyncCollectionControl();
 
           //when the module collection is synchronized, instantiate the module of this column.
-          $.when( module_collection_control.modColSynchronized.promise() ).then(
+          $.when( syncedCollectionControl.moduleCollectionReady.promise() ).then(
                 function() {
                   console.log('SYNCHRONIZED!');
                   //at this point, the question is : are the modules assigned to this column instantiated ?
@@ -67,23 +67,23 @@ $.extend( CZRColumnMths , {
                   _.each( column.czr_columnModuleCollection.get() , function( _mod ) {
 
                             //is this module already instantiated ?
-                            if ( module_collection_control.czr_Module.has(_mod.id) )
+                            if ( syncedCollectionControl.czr_Module.has(_mod.id) )
                               return;
 
                             //first let's try to get it from the collection
-                            //var _module_candidate = _.findWhere( module_collection_control.czr_moduleCollection.get() , { id : _mod.id } );
-                            $.when( _.findWhere( module_collection_control.czr_moduleCollection.get() , { id : _mod.id } ) ).done( function( module_candidate ) {
-                                if ( _.isUndefined( module_candidate) ||_.isEmpty( module_candidate ) ) {
-                                  throw new Error( 'Module ' + _mod.id + ' was not found in the module collection.');
-                                }
-                                //we have a candidate. Let's instantiate it
-                                module_collection_control.instantiateModule( module_candidate, {} );
+                            //var _module_candidate = _.findWhere( syncedCollectionControl.czr_moduleCollection.get() , { id : _mod.id } );
+                            $.when( _.findWhere( syncedCollectionControl.czr_moduleCollection.get() , { id : _mod.id } ) ).done( function( module_candidate ) {
+                                  if ( _.isUndefined( module_candidate) ||_.isEmpty( module_candidate ) ) {
+                                    throw new Error( 'Module ' + _mod.id + ' was not found in the module collection.');
+                                  }
+                                  //we have a candidate. Let's instantiate it
+                                  syncedCollectionControl.instantiateModule( module_candidate, {} );
                             });
 
 
                             //push it to the collection of the sektions control
                             //@todo => shall we make sure that the module has actually been instatiated by the module-collection control?
-                            // if ( ! module_collection_control.czr_Module.has( _module_candidate.id ) )
+                            // if ( ! syncedCollectionControl.czr_Module.has( _module_candidate.id ) )
                             //   return;
 
                             //column.updateColumnModuleCollection( { module : _module_candidate });
@@ -154,20 +154,22 @@ $.extend( CZRColumnMths , {
     //
     //Fired on column instanciation => to populate the saved module collection of this column
     //the defautAPIModuleModel looks like :
-    //id : '',
-    // module_type : '',
+    //id : '',//module.id,
+    // module_type : '',//module.module_type,
+    // items   : [],//$.extend( true, {}, module.items ),
+    // crud : false,
+    // multi_item : false,
+    // control : {},//control,
     // column_id : '',
     // sektion : {},// => the sektion instance
     // sektion_id : '',
-    // control : {},// => the control instance
-    // items : [],
-    // is_added_by_user : false
+    // is_added_by_user : false,
     userAddedModule : function( obj, module_id   ) {
           var column = this,
-              module_collection_control = api.control( api.CZR_Helpers.build_setId( 'module-collection') ),
-              defautAPIModuleModel = _.clone( module_collection_control.defautAPIModuleModel );
+              syncedCollectionControl = column.sektion.control.getSyncCollectionControl(),
+              defautAPIModuleModel = _.clone( syncedCollectionControl.getDefaultModuleApiModel() );
 
-          module_collection_control.trigger(
+          syncedCollectionControl.trigger(
                 'user-module-candidate',
                 $.extend( defautAPIModuleModel, {
                       module_type : 'czr_text_module',

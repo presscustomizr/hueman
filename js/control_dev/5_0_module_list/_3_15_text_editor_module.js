@@ -11,7 +11,7 @@ $.extend( CZRTextEditorModuleMths, {
           //extend the module with new template Selectors
           $.extend( module, {
                 // singleModuleWrapper : 'czr-single-module-wrapper',
-                viewTemplateEl : 'czr-ru-module-item-view',
+                viewTemplateEl : 'czr-item',
                 viewContentTemplateEl : 'czr-module-text_editor-view-content'
           } );
 

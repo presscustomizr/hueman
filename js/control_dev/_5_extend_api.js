@@ -57,8 +57,7 @@
         //czr_sidebars   : api.CZRWidgetAreasControl,
         //czr_socials    : api.CZRSocialControl,
 
-        czr_crud_module : api.CZRBaseModuleControl,
-        czr_ru_module : api.CZRBaseModuleControl,
+        czr_module : api.CZRBaseModuleControl,
         czr_multi_module : api.CZRMultiModuleControl,
 
         czr_multiple_picker : api.CZRMultiplePickerControl,
@@ -68,6 +67,48 @@
         //czr_sektions   : api.CZRSektionsControl
   });
 
+
+  //provides a meta description of each module
+  //=> will determine :
+  //1) how to initialize the module model. If not crud, then the initial item(s) model shall be provided
+  //2) which js template(s) to use : if crud, the module template shall include the add new and pre-item elements.
+  //   , if crud, the item shall be removable
+  //3) how to render : if multi item, the item content is rendered when user click on edit button.
+  //    If not multi item, the single item content is rendered as soon as the item wrapper is rendered.
+  //4) some DOM behaviour. For example, a multi item shall be sortable.
+  api.czrModuleMap = api.czrModuleMap || {};
+  $.extend( api.czrModuleMap, {
+        czr_widget_areas_module : {
+            construct : api.CZRWidgetAreaModule,
+            crud : true
+        },
+        czr_social_module : {
+            construct : api.CZRSocialModule,
+            crud : true
+        },
+        czr_sektion_module : {
+            construct : api.CZRSektionModule,
+            crud : true
+        },
+        czr_fp_module : {
+            construct : api.CZRFeaturedPageModule,
+            crud : true
+        },
+        czr_slide_module : {
+            construct : api.CZRSlideModule,
+            crud : true
+        },
+        czr_text_module : {
+            construct : api.CZRTextModule,
+            crud : false,
+            multi_item : false
+        },
+        czr_text_editor_module : {
+            construct : api.CZRTextEditorModule,
+            crud : false,
+            multi_item : false
+        }
+  });
 
 
 

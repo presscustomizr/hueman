@@ -68,8 +68,6 @@ $.extend( CZRItemMths , {
           //the view content
           $( view_content_template( item_model )).appendTo( $('.' + module.control.css_attr.view_content, item.container ) );
 
-          console.log('in renderViewContent', item.contentRendered.state() );
-
           //update the $.Deferred state
           if ( false !== $( $( view_content_template( item_model )), item.container ).length )
             item.contentRendered.resolve();
@@ -124,30 +122,30 @@ $.extend( CZRItemMths , {
 
           //slide Toggle and toggle the 'open' class
           $( '.' + module.control.css_attr.view_content , item.container ).first().slideToggle( {
-              duration : duration || 200,
-              done : function() {
-                var _is_expanded = 'closed' != status;
+                duration : duration || 200,
+                done : function() {
+                      var _is_expanded = 'closed' != status;
 
-                item.container.toggleClass('open' , _is_expanded );
+                      item.container.toggleClass('open' , _is_expanded );
 
-                //close all alerts
-                module.closeAllAlerts();
+                      //close all alerts
+                      module.closeAllAlerts();
 
-                //toggle the icon activate class depending on the status
-                //switch icon
-                var $_edit_icon = $(this).siblings().find('.' + module.control.css_attr.edit_view_btn );
+                      //toggle the icon activate class depending on the status
+                      //switch icon
+                      var $_edit_icon = $(this).siblings().find('.' + module.control.css_attr.edit_view_btn );
 
-                $_edit_icon.toggleClass('active' , _is_expanded );
-                if ( _is_expanded )
-                  $_edit_icon.removeClass('fa-pencil').addClass('fa-minus-square').attr('title', serverControlParams.translatedStrings.close );
-                else
-                  $_edit_icon.removeClass('fa-minus-square').addClass('fa-pencil').attr('title', serverControlParams.translatedStrings.edit );
+                      $_edit_icon.toggleClass('active' , _is_expanded );
+                      if ( _is_expanded )
+                        $_edit_icon.removeClass('fa-pencil').addClass('fa-minus-square').attr('title', serverControlParams.translatedStrings.close );
+                      else
+                        $_edit_icon.removeClass('fa-minus-square').addClass('fa-pencil').attr('title', serverControlParams.translatedStrings.edit );
 
-                //scroll to the currently expanded view
-                if ( 'expanded' == status )
-                  module._adjustScrollExpandedBlock( item.container );
-              }//done callback
-            } );
+                      //scroll to the currently expanded view
+                      if ( 'expanded' == status )
+                        module._adjustScrollExpandedBlock( item.container );
+                }//done callback
+          } );
   },
 
 

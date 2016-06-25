@@ -14,8 +14,8 @@ $.extend( CZRDynModuleMths, {
 
           //extend the module with new template Selectors
           $.extend( module, {
-              viewAlertEl : 'czr-module-item-alert',
-              viewPreAddEl : '',
+              viewAlertEl : 'czr-crud-item-alert-part',
+              viewPreAddEl : '',//is specific for each crud module
           } );
 
           //EXTENDS THE DEFAULT MONO MODEL CONSTRUCTOR WITH NEW METHODS

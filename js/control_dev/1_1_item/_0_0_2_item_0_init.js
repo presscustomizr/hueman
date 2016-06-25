@@ -60,7 +60,7 @@ $.extend( CZRItemMths , {
         //When shall we render the item ?
         //If the module is part of a simple control, the item can be render now,
         //If the module is part of a sektion, then the item will be rendered on module edit.
-        if ( ! item.module.isModuleInSektion() ) {
+        if ( ! item.module.isInSektion() ) {
               item.mayBeRenderItemWrapper();
         }
 
@@ -157,10 +157,8 @@ $.extend( CZRItemMths , {
           //When do we render the item content ?
           //If this is a multi-item module, let's render each item content when they are expanded.
           //In the case of a single item module, we can render the item content now.
-          console.log('item.module.is_multi_items', item.id, item.module.is_multi_items );
-          if ( item.module.is_multi_items ) {
+          if ( item.module.isMultiItem() ) {
                 item.czr_ItemState.callbacks.add( function( to, from ) {
-                      console.log('in item.czr_ItemState callback', to, from );
                       //renderview content if needed on first expansion
                       $.when( item.renderViewContent( item_model ) ).done( function() {
                             if ( 'pending' == item.contentRendered.state() ) {

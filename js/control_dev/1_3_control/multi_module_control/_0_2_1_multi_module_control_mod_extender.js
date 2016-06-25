@@ -2,28 +2,6 @@
 //extends api.CZRBaseModuleControl
 var CZRMultiModuleControlMths = CZRMultiModuleControlMths || {};
 $.extend( CZRMultiModuleControlMths, {
-  //OVERRIDES BASE MODULE CONTROL
-  //default way to get a module constructor
-  getModuleConstructor : function( module ) {
-          var control = this,
-              parentConstructor = {},
-              constructor = {};
-
-          if ( ! _.has( module, 'module_type' ) ) {
-            throw new Error('CZRModule::getModuleConstructor : no module type found for module ' + module.id );
-          }
-
-          //in the case of multi_module control, we need to extend the module constructors
-          parentConstructor = control.moduleConstructors[ module.module_type ];
-          constructor = parentConstructor.extend( control.getMultiModuleExtender( parentConstructor ) );
-
-          if ( _.isUndefined(constructor) || _.isEmpty(constructor) || ! constructor ) {
-              throw new Error('CZRModule::getModuleConstructor : no constructor found for module type : ' + module.module_type +'.' );
-          }
-          return constructor;
-  },
-
-
   //adapt modules for them to be used in a multimodule control, synchronized with a sektions control.
   //@todo. => create equivalent extender when they are used in controls.
   getMultiModuleExtender : function( parentConstructor ) {
@@ -37,8 +15,9 @@ $.extend( CZRMultiModuleControlMths, {
                     //extend the module with new template Selectors
                     $.extend( module, {
                           singleModuleWrapper : 'czr-single-module-wrapper',
+                          sektionModuleTitle : 'czr-module-sektion-title-part',
                           ruModuleEl : 'czr-ru-module-sektion-content',
-                          viewTemplateEl : 'czr-ru-module-item-view',
+                          viewTemplateEl : 'czr-item',
                           viewContentTemplateEl : 'czr-module-text-view-content',
                     } );
 
@@ -46,6 +25,7 @@ $.extend( CZRMultiModuleControlMths, {
                     //fire ready when the module column is embedded
                     var main_sektion_module_instance = module.control.syncSektionModule.get(),
                         column = main_sektion_module_instance.czr_Column( options.column_id );
+
                     if ( 'resolved' == column.embedded.state() ) {
                           module.ready();
                     } else {
@@ -69,6 +49,7 @@ $.extend( CZRMultiModuleControlMths, {
         return control.CZRModuleExtended;
   },
 
+
   //this object holds the various methods allowing a module to be rendered in a multimodule control
   CZRModuleExtended  : {
         //////////////////////////////////
@@ -79,15 +60,13 @@ $.extend( CZRMultiModuleControlMths, {
         //when ready done => the module items are embedded (without their content)
         ready : function() {
                 var module = this;
-
                 module.container = module.renderModuleWrapper();
-
-                console.log('MODULE ' + module.id + ' IS READY');
                 module.isReady.resolve();
         },
 
 
-
+        //fired in ready.
+        //=> before isReady.done().
         renderModuleWrapper : function() {
                 //=> an array of objects
                 var module = this;
@@ -96,7 +75,7 @@ $.extend( CZRMultiModuleControlMths, {
                 if ( 'resolved' == module.embedded.state() )
                   return module.container;
 
-                 //do we have view template script?
+                //do we have view template script?
                 if ( 0 === $( '#tmpl-' + module.singleModuleWrapper ).length ) {
                   throw new Error('No template for module ' + module.id + '. The template script id should be : #tmpl-' + module.singleModuleWrapper );
                 }
@@ -107,14 +86,15 @@ $.extend( CZRMultiModuleControlMths, {
                         type : module.module_type
                     },
                     $_module_el = $(  module_wrapper_tmpl( tmpl_data ) );
+
                 //append the module wrapper to the column
                 $( '.czr-module-collection-wrapper' , module._getColumn().container).append( $_module_el );
 
-                //then append the ru module template
-                var mod_content_wrapper_tmpl = wp.template( module.ruModuleEl ),
-                    $_mod_content_wrapper = $(  mod_content_wrapper_tmpl( tmpl_data ) );
+                // //then append the ru module template
+                // var mod_content_wrapper_tmpl = wp.template( module.ruModuleEl ),
+                //     $_mod_content_wrapper = $(  mod_content_wrapper_tmpl( tmpl_data ) );
 
-                $( '.czr-mod-content', $_module_el).append( $_mod_content_wrapper );
+                // $( '.czr-mod-content', $_module_el).append( $_mod_content_wrapper );
 
                 return $_module_el;
         },
@@ -203,6 +183,18 @@ $.extend( CZRMultiModuleControlMths, {
         setupModuleViewStateListeners : function( to, from ) {
               var module = this;
 
+              //render the module title
+              //do we have view template script?
+              if ( 0 === $( '#tmpl-' + module.sektionModuleTitle ).length ) {
+                throw new Error('No sektion title Module Part template for module ' + module.id + '. The template script id should be : #tmpl-' + module.sektionModuleTitle );
+              }
+              //append the title when in a sektion
+              $( '.' + module.control.css_attr.views_wrapper, module.container).append(
+                  $( wp.template( module.sektionModuleTitle )( { id : module.id } ) )
+              );
+
+
+              //render the item(s)
               module.czr_Item.each ( function( item ) {
                     item.mayBeRenderItemWrapper();
               } );

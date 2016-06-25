@@ -99,9 +99,7 @@ $.extend( CZRSektionMths, {
   prepareColumnForAPI : function( column_candidate ) {
       var module = this,
           api_ready_column = {};
-          //normalize it now
-          // _default_module_model = _.clone( control.defautAPIModuleModel ),
-          // _module_model = $.extend( _default_module_model, _module_candidate_model );
+
       if ( ! _.isObject( column_candidate ) ) {
             throw new Error('Sektion Module::prepareColumnForAPI : a column must be an object to be instantiated.');
         }

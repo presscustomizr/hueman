@@ -11,7 +11,7 @@ $.extend( CZRSocialModuleMths, {
           //extend the module with new template Selectors
           $.extend( module, {
                 viewPreAddEl : 'czr-module-social-pre-add-view-content',
-                viewTemplateEl : 'czr-crud-module-item-view',
+                viewTemplateEl : 'czr-crud-item-part',
                 viewContentTemplateEl : 'czr-module-social-view-content',
           } );
 

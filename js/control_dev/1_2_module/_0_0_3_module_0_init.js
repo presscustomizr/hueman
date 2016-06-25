@@ -6,7 +6,6 @@
 //Listen to items collection changes and update the control setting
 //MODULE OPTIONS :
   // section : module.section,
-  // block   : '',
   // module_type    : module.module_type,
   // items   : module.items,
   // control : control,
@@ -15,11 +14,11 @@ var CZRModuleMths = CZRModuleMths || {};
 
 $.extend( CZRModuleMths, {
 
-  initialize: function( id, options ) {
-          if ( _.isUndefined(options.control) || _.isEmpty(options.control) ) {
+  initialize: function( id, constructorOptions ) {
+          if ( _.isUndefined(constructorOptions.control) || _.isEmpty(constructorOptions.control) ) {
             throw new Error('No control assigned to module ' + id + '. Aborting');
           }
-          api.Value.prototype.initialize.call( this, null, options );
+          api.Value.prototype.initialize.call( this, null, constructorOptions );
 
           var module = this;
 
@@ -27,38 +26,39 @@ $.extend( CZRModuleMths, {
           //=> we don't want the ready method to be fired several times
           module.isReady = $.Deferred();
           module.savedItemCollectionReady = $.Deferred();
-          //embed : define a container, store the embed state, fire the render method
-          module.embedded = $.Deferred();
 
           //write the options as properties
-          $.extend( module, options || {} );
-
-
-          //is this module multi item ?
-          //=> sortable
-          module.is_multi_items = module.multi_item || ( ! module.isModuleInSektion() && 'czr_crud_module' == module.control.params.type );
+          $.extend( module, constructorOptions || {} );
 
           //extend the module with new template Selectors
           $.extend( module, {
-              viewPreAddEl : '',
-              viewTemplateEl : '',
-              viewContentTemplateEl : '',
+                crudModulePart : 'czr-crud-module-part',
+                viewTemplateEl : 'czr-crud-item-part',
+                viewContentTemplateEl : '',//is specific for each crud module
           } );
 
           //initialize the module collection
           //this will be populated on ready()
           module.set([]);//the module is a collection items => this is the collection
 
+          //embed : define a container, store the embed state, fire the render method
+          module.embedded = $.Deferred();
+          //if a module is embedded in a control, its container == the control container.
+          //if the module is part of a sektion, its container will be set and resolve() later ( @see multi_module part )
+          if ( ! module.isInSektion() ) {
+              module.container = $( module.control.selector );
+              module.embedded.resolve();
+          }
 
-          //@todo improve this check
-          //if the module is part of a sektion, its container will be set later
-          if ( ! module.isModuleInSektion() )
-            module.container = $( module.control.selector );
-
+          //render the item(s) wrapper
+          module.embedded.done( function() {
+              console.log('MODULE IS EMBEDDED, RENDER PARS : item wrapper and crud stuffs');
+              module.renderModuleParts();
+          });
 
           //ITEMS
           //store the saved models => can be extended to add default models in children classes
-          module.savedItems = options.items;
+          module.savedItems = constructorOptions.items;
 
           //declares a default Item API model
           module.defaultAPIitemModel = {
@@ -86,15 +86,19 @@ $.extend( CZRModuleMths, {
 
           module.isReady.done( function() {
                 console.log('MODULE ' + module.id + ' IS READY');
+
+                //push it to the collection of the module-collection control
+                //=> updates the wp api setting
+                module.control.updateModulesCollection( {module : constructorOptions } );
+
                 //Important note : this event refreshes the customizer setting value
                 //It's not listened to before the api is ready
                 //=> the collection update on startup is done when the module is embedded and BEFORE the api is ready
                 //=> won't trigger and change setting
                 module.populateSavedItemCollection();
 
-                //the is_multi_items property is set when instantiating a module
                 //it can be overriden by a module in its initialize method
-                if ( module.is_multi_items )
+                if ( module.isMultiItem() )
                   module._makeItemsSortable();
 
                 //listen to each single module change
@@ -172,9 +176,29 @@ $.extend( CZRModuleMths, {
   },
 
   //@return bool
-  isModuleInSektion : function() {
+  isInSektion : function() {
           var module = this;
           return _.has( module, 'sektion_id' );
+  },
+
+  //is this module multi item ?
+  //@return bool
+  isMultiItem : function() {
+          var module = this;
+          if ( ! _.has( api.czrModuleMap, module.module_type ) )
+            return;
+
+          return api.czrModuleMap[module.module_type].crud || api.czrModuleMap[module.module_type].multi_item || false;
+  },
+
+  //is this module crud ?
+  //@return bool
+  isCrud : function() {
+          var module = this;
+          if ( ! _.has( api.czrModuleMap, module.module_type ) )
+            return;
+
+          return api.czrModuleMap[module.module_type].crud || false;
   }
 
 });//$.extend//CZRBaseControlMths
