@@ -10,9 +10,8 @@ $.extend( CZRFeaturedPageModuleMths, {
 
           //extend the module with new template Selectors
           $.extend( module, {
-                viewPreAddEl : 'czr-module-fp-pre-add-view-content',
-                viewTemplateEl : 'czr-crud-item-part',
-                viewContentTemplateEl : 'czr-module-fp-view-content',
+                itemPreAddEl : 'czr-module-fp-pre-add-view-content',
+                itemInputList : 'czr-module-fp-view-content'
           } );
 
           //EXTEND THE DEFAULT CONSTRUCTORS FOR INPUT
@@ -269,7 +268,7 @@ $.extend( CZRFeaturedPageModuleMths, {
                             _title = _model.title ? _model.title : serverControlParams.translatedStrings.featuredPageTitle;
 
                   _title = api.CZR_Helpers.truncate(_title, 25);
-                  $( '.' + module.control.css_attr.view_title , item.container ).html( _title );
+                  $( '.' + module.control.css_attr.item_title , item.container ).html( _title );
                 }
         }
 });

@@ -8,36 +8,33 @@ $.extend( CZRItemMths , {
   //the view wrapper has been rendered by WP
   //the content ( the various inputs ) is rendered by the following methods
   //an event is triggered on the control.container when content is rendered
-  renderView : function( item_model ) {
+  renderItemWrapper : function( item_model ) {
         //=> an array of objects
         var item = this,
             module = item.module;
-            item_model = item_model || item.get();
 
-        //do we have view template script?
-        if ( 0 === $( '#tmpl-' + module.getTemplateEl( 'view', item_model ) ).length ) {
-          throw new Error('No template for item ' + item.id + '. The provided template script has no been found : #tmpl-' + module.getTemplateEl( 'view', item_model ) );
-        }
+        item_model = item_model || item.get();
 
-        var view_template = wp.template( module.getTemplateEl( 'view', item_model ) );
-
-
-        //do we have an html template and a module container?
-        if ( ! view_template  || ! module.container )
-          return;
-
-        //has this item view already been rendered?
-        if ( 'resolved' == item.embedded.state() )
-          return item.container;
-
-        $_view_el = $('<li>', { class : module.control.css_attr.inner_view, 'data-id' : item_model.id,  id : item_model.id } );
+        //render the item wrapper
+        $_view_el = $('<li>', { class : module.control.css_attr.single_item, 'data-id' : item_model.id,  id : item_model.id } );
 
         //append the item view to the first module view wrapper
         //!!note : => there could be additional sub view wrapper inside !!
-        $( '.' + module.control.css_attr.views_wrapper , module.container).first().append( $_view_el );
+        $( '.' + module.control.css_attr.items_wrapper , module.container).first().append( $_view_el );
 
-        //then, append the item view skeleton
-        $( view_template( item_model ) ).appendTo( $_view_el );
+
+        //if module is multi item, then render the item crud header part
+        if ( module.isMultiItem() ) {
+              //do we have view template script?
+              if ( 0 === $( '#tmpl-' + module.getTemplateEl( 'rudItemPart', item_model ) ).length ) {
+                  throw new Error('Missing template for item ' + item.id + '. The provided template script has no been found : #tmpl-' + module.getTemplateEl( 'rudItemPart', item_model ) );
+              }
+              $_view_el.append( $( wp.template( module.rudItemPart )( item_model ) ) );
+        }
+
+
+        //then, append the item content wrapper
+        $_view_el.append( $( '<div/>', { class: module.control.css_attr.item_content } ) );
 
         return $_view_el;
   },
@@ -46,31 +43,30 @@ $.extend( CZRItemMths , {
   //renders saved items views and attach event handlers
   //the saved item look like :
   //array[ { id : 'sidebar-one', title : 'A Title One' }, {id : 'sidebar-two', title : 'A Title Two' }]
-  renderViewContent : function( item_model ) {
+  renderItemContent : function( item_model ) {
           //=> an array of objects
           var item = this,
               module = this.module;
 
-          //This might have been rendered before.
-          if ( 'resolved' == item.contentRendered.state() )
-            return;
+          item_model = item_model || item.get();
+          console.log('item.contentRendered.state()', item.contentRendered.state(), module.getTemplateEl( 'itemInputList', item_model ) );
 
           //do we have view content template script?
-          if ( 0 === $( '#tmpl-' + module.getTemplateEl( 'view-content', item_model ) ).length )
-            return this;
+          if ( 0 === $( '#tmpl-' + module.getTemplateEl( 'itemInputList', item_model ) ).length ) {
+              throw new Error('No item content template defined for module ' + module.id + '. The template script id should be : #tmpl-' + module.getTemplateEl( 'itemInputList', item_model ) );
+          }
 
-          var  view_content_template = wp.template( module.getTemplateEl( 'view-content', item_model ) );
+          var  item_content_template = wp.template( module.getTemplateEl( 'itemInputList', item_model ) );
 
           //do we have an html template ?
-          if ( ! view_content_template )
+          if ( ! item_content_template )
             return this;
 
           //the view content
-          $( view_content_template( item_model )).appendTo( $('.' + module.control.css_attr.view_content, item.container ) );
+          $( item_content_template( item_model )).appendTo( $('.' + module.control.css_attr.item_content, item.container ) );
 
-          //update the $.Deferred state
-          if ( false !== $( $( view_content_template( item_model )), item.container ).length )
-            item.contentRendered.resolve();
+          console.log( 'MERDE QUOI !', $( $( item_content_template( item_model )), item.container ) );
+          return $( $( item_content_template( item_model )), item.container );
   },
 
 
@@ -85,7 +81,7 @@ $.extend( CZRItemMths , {
             _title = _.has( _model, 'title')? api.CZR_Helpers.capitalize( _model.title ) : _model.id;
 
         _title = api.CZR_Helpers.truncate(_title, 20);
-        $( '.' + module.control.css_attr.view_title , item.container ).text(_title );
+        $( '.' + module.control.css_attr.item_title , item.container ).text(_title );
         //add a hook here
         api.CZR_Helpers.doActions('after_writeViewTitle', item.container , _model, item );
   },
@@ -99,13 +95,13 @@ $.extend( CZRItemMths , {
           var item = this,
               module = this.module;
           if ( is_added_by_user ) {
-            item.czr_ItemState.set( 'expanded_noscroll' );
+                item.czr_ItemState.set( 'expanded_noscroll' );
           } else {
-            module.closeAllViews( item.id );
-            if ( _.has(module, 'czr_preItem') ) {
-              module.czr_preItem('view_status').set( 'closed');
-            }
-            item.czr_ItemState.set( 'expanded' == item._getViewState() ? 'closed' : 'expanded' );
+                module.closeAllViews( item.id );
+                if ( _.has(module, 'czr_preItem') ) {
+                  module.czr_preItem('view_status').set( 'closed');
+                }
+                item.czr_ItemState.set( 'expanded' == item._getViewState() ? 'closed' : 'expanded' );
           }
   },
 
@@ -121,7 +117,7 @@ $.extend( CZRItemMths , {
               module = this.module;
 
           //slide Toggle and toggle the 'open' class
-          $( '.' + module.control.css_attr.view_content , item.container ).first().slideToggle( {
+          $( '.' + module.control.css_attr.item_content , item.container ).first().slideToggle( {
                 duration : duration || 200,
                 done : function() {
                       var _is_expanded = 'closed' != status;
@@ -178,7 +174,7 @@ $.extend( CZRItemMths , {
           });
 
           //print the html
-          var alert_template = wp.template( module.viewAlertEl );
+          var alert_template = wp.template( module.itemAlertEl );
           //do we have an html template and a control container?
           if ( ! alert_template  || ! item.container )
             return this;
@@ -202,12 +198,12 @@ $.extend( CZRItemMths , {
 
 
   //removes the view dom module
-  _destroyView : function () {
+  _destroyView : function ( duration ) {
           this.container.fadeOut( {
-            duration : 400,
-            done : function() {
-              $(this).remove();
-            }
+              duration : duration ||400,
+              done : function() {
+                $(this).remove();
+              }
           });
   },
 });//$.extend

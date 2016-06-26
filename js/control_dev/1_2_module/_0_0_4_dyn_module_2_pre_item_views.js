@@ -14,25 +14,25 @@ $.extend( CZRDynModuleMths, {
   renderPreItemView : function( obj ) {
           var module = this;
           //is this view already rendered ?
-          if ( ! _.isEmpty( module.czr_preItem('view_content').get() ) )
+          if ( ! _.isEmpty( module.czr_preItem('item_content').get() ) )
             return;
 
           //do we have view template script?
-          if ( ! _.has(module, 'viewPreAddEl') ||  0 === $( '#tmpl-' + module.viewPreAddEl ).length )
+          if ( ! _.has(module, 'itemPreAddEl') ||  0 === $( '#tmpl-' + module.itemPreAddEl ).length )
             return this;
 
           //print the html
-          var pre_add_template = wp.template( module.viewPreAddEl );
+          var pre_add_template = wp.template( module.itemPreAddEl );
 
           //do we have an html template and a module container?
           if ( ! pre_add_template  || ! module.container )
             return this;
 
-          var $_pre_add_el = $('.' + module.control.css_attr.pre_add_view_content, module.container );
+          var $_pre_add_el = $('.' + module.control.css_attr.pre_add_item_content, module.container );
           $_pre_add_el.prepend( pre_add_template() );
 
           //store it
-          module.czr_preItem('view_content').set( pre_add_template() );
+          module.czr_preItem('item_content').set( pre_add_template() );
 
           //say it to the module
           module.trigger( 'pre_add_view_rendered' , {item : {}, dom_el : $_pre_add_el});
@@ -41,15 +41,15 @@ $.extend( CZRDynModuleMths, {
   //@return $ el of the pre Item view
   _getPreItemView : function() {
           var module = this;
-          return $('.' +  module.control.css_attr.pre_add_view_content, module.container );
+          return $('.' +  module.control.css_attr.pre_add_item_content, module.container );
   },
 
   //@return void
   //destroy preItem content dom module + set the associated api value
   destroyPreItemView : function() {
           var module = this;
-          $('.' +  module.control.css_attr.pre_add_view_content, module.container ).find('.' +  module.control.css_attr.sub_set_wrapper).remove();
-          module.czr_preItem('view_content').set('');
+          $('.' +  module.control.css_attr.pre_add_item_content, module.container ).find('.' +  module.control.css_attr.sub_set_wrapper).remove();
+          module.czr_preItem('item_content').set('');
   },
 
 
@@ -66,7 +66,7 @@ $.extend( CZRDynModuleMths, {
   //callback of czr_preItem('view') instance on change
   _togglePreItemViewExpansion : function( status) {
           var module = this,
-            $_pre_add_el = $( '.' +  module.control.css_attr.pre_add_view_content, module.container );
+            $_pre_add_el = $( '.' +  module.control.css_attr.pre_add_item_content, module.container );
 
           //toggle it
           $_pre_add_el.slideToggle( {

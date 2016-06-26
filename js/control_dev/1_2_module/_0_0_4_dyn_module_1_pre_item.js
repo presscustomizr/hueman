@@ -31,7 +31,7 @@ $.extend( CZRDynModuleMths, {
   //       control.doActions(
   //         'pre_item:' + _changed_prop + ':changed',
   //         control.container,
-  //         { item : _new_item, dom_el : $('.' + control.css_attr.pre_add_view_content, control.container ) }
+  //         { item : _new_item, dom_el : $('.' + control.css_attr.pre_add_item_content, control.container ) }
   //       );
   // }
 

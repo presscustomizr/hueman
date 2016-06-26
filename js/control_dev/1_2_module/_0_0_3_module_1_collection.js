@@ -173,7 +173,7 @@ $.extend( CZRModuleMths, {
               _index = 0;
 
           //re-build the collection from the DOM
-          $( '.' + module.control.css_attr.inner_view, module.container ).each( function() {
+          $( '.' + module.control.css_attr.single_item, module.container ).each( function() {
               var _item = _.findWhere( _old_collection, {id: $(this).attr('data-id') });
               //do we have a match in the existing collection ?
               if ( ! _item )

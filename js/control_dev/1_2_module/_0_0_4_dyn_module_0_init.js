@@ -14,8 +14,8 @@ $.extend( CZRDynModuleMths, {
 
           //extend the module with new template Selectors
           $.extend( module, {
-              viewAlertEl : 'czr-crud-item-alert-part',
-              viewPreAddEl : '',//is specific for each crud module
+              itemAlertEl : 'czr-rud-item-alert-part',
+              itemPreAddEl : '',//is specific for each crud module
           } );
 
           //EXTENDS THE DEFAULT MONO MODEL CONSTRUCTOR WITH NEW METHODS
@@ -27,7 +27,7 @@ $.extend( CZRDynModuleMths, {
           module.czr_preItem = new api.Values();
            //create observable pre-item values
           module.czr_preItem.create('item');
-          module.czr_preItem.create('view_content');
+          module.czr_preItem.create('item_content');
           module.czr_preItem.create('view_status');
           module.czr_preItem('view_status').set('closed');
 
@@ -70,7 +70,7 @@ $.extend( CZRDynModuleMths, {
           module.czr_preItem('item').set( module.getDefaultModel() );
 
           //Add view rendered listeners
-          module.czr_preItem('view_content').callbacks.add(function( to, from ) {
+          module.czr_preItem('item_content').callbacks.add(function( to, from ) {
                 //first rendering + further renderings
                 if ( _.isUndefined(from) || _.isEmpty(from) ) {
                     //provide a constructor for the inputs

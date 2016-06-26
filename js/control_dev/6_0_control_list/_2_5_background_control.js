@@ -111,20 +111,20 @@ $.extend( CZRBackgroundMths , {
   CZRBackgroundItemMths : {
           //OVERRIDES THE PARENT METHOD TO ADD THE BG DEFAULT COLOR
           //@to fix => find a way to add the defaultBgColor before this method is called
-          renderViewContent : function() {
+          renderItemContent : function() {
                   //=> an array of objects
                   var item = this,
                       control = this.control,
                       model = _.clone( item.get() );
 
                   //do we have view content template script?
-                  if ( 0 === $( '#tmpl-' + control.getTemplateEl( 'view-content', model ) ).length )
+                  if ( 0 === $( '#tmpl-' + control.getTemplateEl( 'itemInputList', model ) ).length )
                     return this;
 
-                  var  view_content_template = wp.template( control.getTemplateEl( 'view-content', model ) );
+                  var  item_content_template = wp.template( control.getTemplateEl( 'itemInputList', model ) );
 
                   //do we have an html template and a control container?
-                  if ( ! view_content_template || ! control.container )
+                  if ( ! item_content_template || ! control.container )
                     return this;
 
                   //the view content
@@ -133,7 +133,7 @@ $.extend( CZRBackgroundMths , {
                       { defaultBgColor : control.defaultModel['background-color'] || '#eaeaea' }
                     );
 
-                  $( view_content_template( extended_model )).appendTo( $('.' + control.css_attr.view_content, obj.dom_el ) );
+                  $( item_content_template( extended_model )).appendTo( $('.' + control.css_attr.item_content, obj.dom_el ) );
 
                   return this;
           }

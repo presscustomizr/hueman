@@ -10,9 +10,7 @@ $.extend( CZRTextEditorModuleMths, {
 
           //extend the module with new template Selectors
           $.extend( module, {
-                // singleModuleWrapper : 'czr-single-module-wrapper',
-                viewTemplateEl : 'czr-item',
-                viewContentTemplateEl : 'czr-module-text_editor-view-content'
+                itemInputList : 'czr-module-text_editor-view-content'
           } );
 
           //EXTEND THE DEFAULT CONSTRUCTORS FOR INPUT

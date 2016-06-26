@@ -13,9 +13,9 @@ $.extend( CZRSektionMths, {
 
           //extend the module with new template Selectors
           $.extend( module, {
-                viewPreAddEl : 'czr-module-sektion-pre-add-view-content',
-                viewTemplateEl : 'czr-module-sektion-item-view',
-                viewContentTemplateEl : 'czr-module-sektion-view-content',
+                itemPreAddEl : 'czr-module-sektion-pre-add-view-content',
+                rudItemPart : 'czr-module-sektion-rud-item-part',
+                itemInputList : 'czr-module-sektion-view-content',
           } );
 
           //SEKTIONS

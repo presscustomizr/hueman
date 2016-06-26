@@ -95,7 +95,7 @@ $.extend( CZRItemMths , {
         var item = this;
 
         if ( 'pending' == item.embedded.state() )
-            item.container = item.renderView();
+            item.container = item.renderItemWrapper();
         if ( _.isUndefined(item.container) || ! item.container.length ) {
             throw new Error( 'In itemWrapperViewSetup the Item view has not been rendered : ' + item.id );
         } else {
@@ -138,7 +138,7 @@ $.extend( CZRItemMths , {
                   //edit view
                   {
                     trigger   : 'click keydown',
-                    selector  : [ '.' + module.control.css_attr.edit_view_btn, '.' + module.control.css_attr.view_title ].join(','),
+                    selector  : [ '.' + module.control.css_attr.edit_view_btn, '.' + module.control.css_attr.item_title ].join(','),
                     name      : 'edit_view',
                     actions   : ['setViewVisibility']
                   }
@@ -157,21 +157,29 @@ $.extend( CZRItemMths , {
           //When do we render the item content ?
           //If this is a multi-item module, let's render each item content when they are expanded.
           //In the case of a single item module, we can render the item content now.
+          console.log('IS MULTI ITEM ?', item.module.isMultiItem() );
+
+          var _updateItemContentDeferred = function( $_content) {
+                //update the $.Deferred state
+                if ( ! _.isUndefined( $_content ) && false !== $_content.length )
+                    item.contentRendered.resolve();
+                else {
+                    throw new Error( 'Module : ' + item.module.id + ', the item content has not been rendered for ' + item.id );
+                }
+          };
+
           if ( item.module.isMultiItem() ) {
                 item.czr_ItemState.callbacks.add( function( to, from ) {
+                  console.log('in czr_ItemState.callbacks', to, from );
                       //renderview content if needed on first expansion
-                      $.when( item.renderViewContent( item_model ) ).done( function() {
-                            if ( 'pending' == item.contentRendered.state() ) {
-                                throw new Error( 'Module : ' + item.module.id + ', the item content has not been rendered for ' + item.id );
-                            }
+                      $.when( item.renderItemContent( item_model ) ).done( function( $_item_content ) {
+                            _updateItemContentDeferred( $_item_content );
                       });
                 });
           } else {
                 //renderview content now for a single item module
-                $.when( item.renderViewContent( item_model ) ).done( function() {
-                      if ( 'pending' == item.contentRendered.state() ) {
-                          throw new Error( 'The item content has not been rendered for ' + item.id );
-                      }
+                $.when( item.renderItemContent( item_model ) ).done( function( $_item_content ) {
+                      _updateItemContentDeferred( $_item_content );
                       item.czr_ItemState.set('expanded');
                 });
           }

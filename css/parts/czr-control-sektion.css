@@ -36,11 +36,11 @@
   max-width: 100%;
 }
 
-/*.czr-single-module .czr-inner-view .czr-view-content {
+/*.czr-single-module .czr-single-item .czr-item-content {
   display: block;
 }*/
 
-#customize-theme-controls .czr-single-module .czr-inner-view {
+#customize-theme-controls .czr-single-module .czr-single-item {
   width: 96%;
 }
 

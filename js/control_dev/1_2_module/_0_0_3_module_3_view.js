@@ -25,7 +25,7 @@ $.extend( CZRModuleMths, {
           }
 
           $_moduleContentEl.append(
-                $( '<ul/>', { class : [ module.control.css_attr.views_wrapper, module.module_type ].join(' ') } )
+                $( '<ul/>', { class : [ module.control.css_attr.items_wrapper, module.module_type ].join(' ') } )
           );
   },
 
@@ -35,11 +35,14 @@ $.extend( CZRModuleMths, {
   getTemplateEl : function( type, model ) {
           var module = this, _el;
           switch(type) {
-                case 'view' :
-                  _el = module.viewTemplateEl;
+                case 'rudItemPart' :
+                  _el = module.rudItemPart;
                   break;
-                case 'view-content' :
-                  _el = module.viewContentTemplateEl;
+                case 'ruItemPart' :
+                  _el = module.ruItemPart;
+                  break;
+                case 'itemInputList' :
+                  _el = module.itemInputList;
                   break;
           }
           if ( _.isEmpty(_el) ) {
@@ -120,8 +123,8 @@ $.extend( CZRModuleMths, {
           if ( wp.media.isTouchDevice || ! $.fn.sortable )
             return;
           var module = this;
-          $( '.' + module.control.css_attr.views_wrapper, module.container ).sortable( {
-                handle: '.' + module.control.css_attr.sortable_handle,
+          $( '.' + module.control.css_attr.items_wrapper, module.container ).sortable( {
+                handle: '.' + module.control.css_attr.item_sort_handle,
                 update: function( event, ui ) {
                     module.set( module._getSortedDOMCollection() );
                 }

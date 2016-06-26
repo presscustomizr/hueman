@@ -57,6 +57,15 @@ $.extend( CZRItemMths , {
 
         //say it
         item.trigger('input_collection_populated', $.extend( initial_item_model, input_collection ));
+  },
+
+  removeInputCollection : function() {
+        var item = this;
+        item.czr_Input.each( function( input ) {
+            console.log('remove input', input.id, item.czr_Input(input.id) );
+            item.czr_Input.remove( input.id );
+            console.log('input removed ?', item.czr_Input(input.id) );
+        });
   }
 
 

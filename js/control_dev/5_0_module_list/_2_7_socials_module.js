@@ -10,9 +10,8 @@ $.extend( CZRSocialModuleMths, {
 
           //extend the module with new template Selectors
           $.extend( module, {
-                viewPreAddEl : 'czr-module-social-pre-add-view-content',
-                viewTemplateEl : 'czr-crud-item-part',
-                viewContentTemplateEl : 'czr-module-social-view-content',
+                itemPreAddEl : 'czr-module-social-pre-add-view-content',
+                itemInputList : 'czr-module-social-item-content'
           } );
 
 
@@ -202,7 +201,7 @@ $.extend( CZRSocialModuleMths, {
                       _model = model || item.get(),
                       _title = api.CZR_Helpers.capitalize( _model['social-icon'].replace('fa-', '') );
 
-                  $( '.' + module.control.css_attr.view_title , item.container ).html(
+                  $( '.' + module.control.css_attr.item_title , item.container ).html(
                     item._buildTitle( _title, _model['social-icon'], _model['social-color'] )
                   );
           }

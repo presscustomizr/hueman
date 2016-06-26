@@ -10,9 +10,8 @@ $.extend( CZRSlideModuleMths, {
 
           //extend the module with new template Selectors
           $.extend( module, {
-                viewPreAddEl : 'czr-module-slide-pre-add-view-content',
-                viewTemplateEl : 'czr-crud-item-part',
-                viewContentTemplateEl : 'czr-module-slide-view-content',
+                itemPreAddEl : 'czr-module-slide-pre-add-view-content',
+                itemInputList : 'czr-module-slide-view-content'
           } );
 
           //EXTEND THE DEFAULT CONSTRUCTORS FOR INPUT
@@ -74,7 +73,7 @@ $.extend( CZRSlideModuleMths, {
                           _title = _model.title ? _model.title : serverControlParams.translatedStrings.slideTitle;
 
                 _title = api.CZR_Helpers.truncate(_title, 25);
-                $( '.' + module.control.css_attr.view_title , item.container ).html( _title );
+                $( '.' + module.control.css_attr.item_title , item.container ).html( _title );
           }
   }
 });

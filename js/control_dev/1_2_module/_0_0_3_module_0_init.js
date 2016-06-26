@@ -33,8 +33,9 @@ $.extend( CZRModuleMths, {
           //extend the module with new template Selectors
           $.extend( module, {
                 crudModulePart : 'czr-crud-module-part',
-                viewTemplateEl : 'czr-crud-item-part',
-                viewContentTemplateEl : '',//is specific for each crud module
+                rudItemPart : 'czr-rud-item-part',//read, update, delete
+                ruItemPart : 'czr-ru-item-part',//read, update
+                itemInputList : '',//is specific for each crud module
           } );
 
           //initialize the module collection

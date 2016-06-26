@@ -12,13 +12,13 @@ $.extend( CZRMultiModuleControlMths, {
                     //run the parent initialize
                     parentConstructor.prototype.initialize.call( module, id, options );
 
+                    console.log( 'in CZRModuleExtended', id, options, module.itemInputList );
+
                     //extend the module with new template Selectors
                     $.extend( module, {
                           singleModuleWrapper : 'czr-single-module-wrapper',
                           sektionModuleTitle : 'czr-module-sektion-title-part',
-                          ruModuleEl : 'czr-ru-module-sektion-content',
-                          viewTemplateEl : 'czr-item',
-                          viewContentTemplateEl : 'czr-module-text-view-content',
+                          ruModuleEl : 'czr-ru-module-sektion-content'
                     } );
 
 
@@ -44,6 +44,9 @@ $.extend( CZRMultiModuleControlMths, {
                     module.isReady.done( function() {
                           module.setupModuleView();
                     });
+
+                    //ADD A MODULE TITLE ELEMENT EMBEDDED STATE
+                    module.moduleTitleEmbedded = $.Deferred();
               }
         });
         return control.CZRModuleExtended;
@@ -183,28 +186,65 @@ $.extend( CZRMultiModuleControlMths, {
         setupModuleViewStateListeners : function( to, from ) {
               var module = this;
 
+              //expand / collapse
+              $.when( module.toggleModuleViewExpansion( to ) ).done( function() {
+                      console.log('SEKTION MODULE VIEW STATE : ' + to );
+                      if ( 'expanded' == to ) {
+                            //render the module title
+                            module.renderModuleTitle();
+
+                            //render the item(s)
+                            //on first rendering, use the regular method.
+                            //for further re-rendering, when the embedded state is resolved()
+                            // => 1) re-render each item
+                            // => 2) re-instantiate each input
+                            module.czr_Item.each ( function( item ) {
+                                  if ( 'resolved' == item.embedded.state() ) {
+                                      $.when( item.renderItemWrapper() ).done( function( $_item_container ) {
+                                          item.container = $_item_container;
+
+                                          $.when( item.renderItemContent() ).done( function() {
+                                              item.setupInputCollection();
+                                          });
+
+                                          if ( ! item.module.isMultiItem() )
+                                              item.czr_ItemState.set('expanded');
+                                      });
+
+                                  }
+                                  else {
+                                      item.mayBeRenderItemWrapper();
+                                  }
+                            } );
+                      }
+                      else {
+                            module.czr_Item.each ( function( item ) {
+                                  item.czr_ItemState.set('closed');
+                                  item._destroyView( 0 );
+                                  item.removeInputCollection();
+                            } );
+                      }
+              });
+        },
+
+
+        renderModuleTitle : function() {
+              var module = this;
+              if( 'resolved' == module.moduleTitleEmbedded.state() )
+                return;
+
               //render the module title
               //do we have view template script?
               if ( 0 === $( '#tmpl-' + module.sektionModuleTitle ).length ) {
                 throw new Error('No sektion title Module Part template for module ' + module.id + '. The template script id should be : #tmpl-' + module.sektionModuleTitle );
               }
-              //append the title when in a sektion
-              $( '.' + module.control.css_attr.views_wrapper, module.container).append(
-                  $( wp.template( module.sektionModuleTitle )( { id : module.id } ) )
-              );
-
-
-              //render the item(s)
-              module.czr_Item.each ( function( item ) {
-                    item.mayBeRenderItemWrapper();
-              } );
-
-              //expand
-              $.when( module.toggleModuleViewExpansion( to ) ).done( function() {
-                    console.log('Module view : ' + to );
+              //append the title when in a sektion and resolve the embedded state
+              $.when( $( '.' + module.control.css_attr.items_wrapper, module.container ).append(
+                    $( wp.template( module.sektionModuleTitle )( { id : module.id } ) )
+              ) ).done( function() {
+                    module.moduleTitleEmbedded.resolve();
               });
         },
-
 
 
         //callback of czr_ItemState() instance on change

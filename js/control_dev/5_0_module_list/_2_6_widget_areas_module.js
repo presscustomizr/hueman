@@ -10,9 +10,10 @@ $.extend( CZRWidgetAreaModuleMths, {
 
           //extend the module with new template Selectors
           $.extend( module, {
-                viewPreAddEl : 'czr-module-widgets-pre-add-view-content',
-                viewTemplateEl : 'czr-crud-item-part',
-                viewContentTemplateEl : 'czr-module-widgets-view-content',
+                itemPreAddEl : 'czr-module-widgets-pre-add-view-content',
+                itemInputList : 'czr-module-widgets-item-input-list',
+                itemInputListReduced : 'czr-module-widgets-item-input-list-reduced',
+                ruItemPart : 'czr-module-widgets-ru-item-part'
           } );
 
           //EXTEND THE DEFAULT CONSTRUCTORS FOR INPUT
@@ -111,7 +112,7 @@ $.extend( CZRWidgetAreaModuleMths, {
 
 
 
-  //@todo : add the module.czr_preItem('view_content').callbacks.add(function( to, from ) {}
+  //@todo : add the module.czr_preItem('item_content').callbacks.add(function( to, from ) {}
   //=> to replace pre_add_view_rendered action
   ready : function() {
           var module = this;
@@ -153,7 +154,7 @@ $.extend( CZRWidgetAreaModuleMths, {
           //////////////////////////////////////////////////
           ///SETUP SELECTS
           //////////////////////////////////////////////////
-          //setup select on view_rendered|view_content_event_map
+          //setup select on view_rendered|item_content_event_map
           setupSelect : function() {
                   var input      = this;
                   if ( 'locations' == this.id )
@@ -240,7 +241,7 @@ $.extend( CZRWidgetAreaModuleMths, {
                       module     = input.module;
 
                   //check if we are in the pre Item case => if so, the locations might be empty
-                  if ( ! _.has( item.get(), 'locations') || _.isEmpty( item.get()['locations'] ) )
+                  if ( ! _.has( item.get(), 'locations') || _.isEmpty( item.get().locations ) )
                     return;
 
                   var _selected_locations = $('select[data-type="locations"]', input.container ).val(),
@@ -385,10 +386,10 @@ $.extend( CZRWidgetAreaModuleMths, {
 
                   if ( ! $('.czr-zone-infos', item.container ).length ) {
                         var $_zone_infos = $('<div/>', {
-                          class : [ 'czr-zone-infos' , module.control.css_attr.sortable_handle ].join(' '),
+                          class : [ 'czr-zone-infos' , module.control.css_attr.item_sort_handle ].join(' '),
                           html : _html
                         });
-                        $( '.' + module.control.css_attr.view_buttons, item.container ).after($_zone_infos);
+                        $( '.' + module.control.css_attr.item_btns, item.container ).after($_zone_infos);
                   } else {
                         $('.czr-zone-infos', item.container ).html(_html);
                   }
@@ -491,7 +492,7 @@ $.extend( CZRWidgetAreaModuleMths, {
   //DEPRECATED : THE CONTROLS TO SYNCHRONIZE HAVE BEEN REMOVED
 
   //fired on model_added_by_user and from the timer method
-  //1) model_added, before renderView action
+  //1) model_added, before renderItemWrapper action
   //    when a new model is manually added ( isTrigger is undefined )
   //    => refresh the select options of the other controls using this collection
   //2) model_updated, before updateCollection
@@ -769,7 +770,7 @@ $.extend( CZRWidgetAreaModuleMths, {
                     if ( _.contains( _inactives_zones, _model.id ) ) {
                       module.getViewEl( _model.id ).addClass('inactive');
                       if ( ! module.getViewEl( _model.id ).find('.czr-inactive-alert').length )
-                        module.getViewEl( _model.id ).find('.czr-view-title').append(
+                        module.getViewEl( _model.id ).find('.czr-item-title').append(
                           $('<span/>', {class : "czr-inactive-alert", html : " [ " + serverControlParams.translatedStrings.inactiveWidgetZone + " ]" })
                         );
                     }
@@ -851,26 +852,27 @@ $.extend( CZRWidgetAreaModuleMths, {
   //overrides the default method to set a specific default view template if the model is a default setting
   //@return string
   getTemplateEl : function( type, model ) {
+    console.log();
           var module = this, _el;
-          //force view-content type to view-reduced if the model is a built-in (primary, secondary, footer-1, ...)
-          if ( 'view' == type ) {
-            type = ( _.has(model, 'is_builtin') && model.is_builtin ) ? 'view-reduced' : type;
-          } else if ( 'view-content' == type ) {
-            type = ( _.has(model, 'is_builtin') && model.is_builtin ) ? 'view-content-reduced' : type;
+          //force view-content type to ru-item-part if the model is a built-in (primary, secondary, footer-1, ...)
+          if ( 'rudItemPart' == type ) {
+            type = ( _.has(model, 'is_builtin') && model.is_builtin ) ? 'ruItemPart' : type;
+          } else if ( 'itemInputList' == type ) {
+            type = ( _.has(model, 'is_builtin') && model.is_builtin ) ? 'itemInputListReduced' : type;
           }
 
           switch(type) {
-                case 'view' :
-                  _el = module.viewTemplateEl;
+                case 'rudItemPart' :
+                _el = module.rudItemPart;
                   break;
-                case 'view-content' :
-                  _el = module.viewContentTemplateEl;
+                case 'ruItemPart' :
+                  _el = module.ruItemPart;
                   break;
-                case 'view-reduced' :
-                  _el = 'czr-module-widgets-view-reduced';
+                case 'itemInputList' :
+                  _el = module.itemInputList;
                   break;
-                case 'view-content-reduced' :
-                  _el = 'czr-module-widgets-view-content-reduced';
+                case 'itemInputListReduced' :
+                  _el = module.itemInputListReduced;
                   break;
           }
 

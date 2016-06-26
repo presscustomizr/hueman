@@ -10,7 +10,7 @@ $.extend( CZRTextModuleMths, {
 
           //extend the module with new template Selectors
           $.extend( module, {
-                viewContentTemplateEl : 'czr-module-text-view-content',
+                itemInputList : 'czr-module-text-view-content',
           } );
 
           //console.log(' text module options', options );
