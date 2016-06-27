@@ -12,9 +12,7 @@ $.extend( CZRMultiModuleControlMths, {
                     //run the parent initialize
                     parentConstructor.prototype.initialize.call( module, id, constructorOptions );
 
-                    console.log( 'in CZRModuleExtended', id, constructorOptions, module.itemInputList );
-
-                    console.log('MODULE INSTANTIATED : ', module.id, module.column_id() );
+                    console.log('MODULE INSTANTIATED : ', module.id );
 
                     //extend the module with new template Selectors
                     $.extend( module, {
@@ -22,19 +20,6 @@ $.extend( CZRMultiModuleControlMths, {
                           sektionModuleTitle : 'czr-module-sektion-title-part',
                           ruModuleEl : 'czr-ru-module-sektion-content'
                     } );
-
-
-                    //fire ready when the module column is embedded
-                    // var column_instance = module.control.syncSektionModule().czr_Column( module.column_id() );
-
-                    // if ( 'resolved' == column_instance.embedded.state() ) {
-                    //       module.ready();
-                    // } else {
-                    //       column_instance.embedded.done( function() {
-                    //           module.ready();
-                    //       });
-                    // }
-
 
                     //ADD A MODULE STATE OBSERVER
                     //czr_ModuleState stores the current expansion status of a given module
@@ -48,6 +33,26 @@ $.extend( CZRMultiModuleControlMths, {
 
                     //ADD A MODULE TITLE ELEMENT EMBEDDED STATE
                     module.moduleTitleEmbedded = $.Deferred();
+
+                    //ADD A MODULE COLUMN STATE OBSERVER
+                    module.modColumn = new api.Value();
+                    module.modColumn.set( constructorOptions.column_id );
+
+                    module.modColumn.bind( function(to, from) {
+                          console.log('MODULE ' + module.id + ' HAS BEEN MOVED IN COLUMN', to );
+                          console.log('module.itemCollection()', module.itemCollection() );
+                          console.log( 'module()', module() );
+
+                          var _current_model = module(),
+                              _new_model = $.extend( true, {}, _current_model );
+
+                          _new_model.column_id = to;
+
+                          module.set( _new_model );
+                          console.log( 'module() AFTER', module() );
+                          //var updatedModuleCollection = $.extend( true, [], module.control.czr_moduleCollection() );
+                          //api(module.control.id).set( module.control.filterModuleCollectionBeforeAjax( updatedModuleCollection ) );
+                    } );
               }
         });
         return control.CZRModuleExtended;
@@ -190,42 +195,41 @@ $.extend( CZRMultiModuleControlMths, {
 
               //expand / collapse
               $.when( module.toggleModuleViewExpansion( to ) ).done( function() {
-                      console.log('SEKTION MODULE VIEW STATE : ' + to );
-                      if ( 'expanded' == to ) {
-                            //render the module title
-                            module.renderModuleTitle();
+                    if ( 'expanded' == to ) {
+                          //render the module title
+                          module.renderModuleTitle();
 
-                            //render the item(s)
-                            //on first rendering, use the regular method.
-                            //for further re-rendering, when the embedded state is resolved()
-                            // => 1) re-render each item
-                            // => 2) re-instantiate each input
-                            module.czr_Item.each ( function( item ) {
-                                  if ( 'resolved' == item.embedded.state() ) {
-                                      $.when( item.renderItemWrapper() ).done( function( $_item_container ) {
-                                          item.container = $_item_container;
+                          //render the item(s)
+                          //on first rendering, use the regular method.
+                          //for further re-rendering, when the embedded state is resolved()
+                          // => 1) re-render each item
+                          // => 2) re-instantiate each input
+                          module.czr_Item.each ( function( item ) {
+                                if ( 'resolved' == item.embedded.state() ) {
+                                    $.when( item.renderItemWrapper() ).done( function( $_item_container ) {
+                                        item.container = $_item_container;
 
-                                          $.when( item.renderItemContent() ).done( function() {
-                                              item.setupInputCollection();
-                                          });
+                                        $.when( item.renderItemContent() ).done( function() {
+                                            item.setupInputCollection();
+                                        });
 
-                                          if ( ! item.module.isMultiItem() )
-                                              item.czr_ItemState.set('expanded');
-                                      });
+                                        if ( ! item.module.isMultiItem() )
+                                            item.czr_ItemState.set('expanded');
+                                    });
 
-                                  }
-                                  else {
-                                      item.mayBeRenderItemWrapper();
-                                  }
-                            } );
-                      }
-                      else {
-                            module.czr_Item.each ( function( item ) {
-                                  item.czr_ItemState.set('closed');
-                                  item._destroyView( 0 );
-                                  item.removeInputCollection();
-                            } );
-                      }
+                                }
+                                else {
+                                    item.mayBeRenderItemWrapper();
+                                }
+                          } );
+                    }
+                    else {
+                          module.czr_Item.each ( function( item ) {
+                                item.czr_ItemState.set('closed');
+                                item._destroyView( 0 );
+                                item.removeInputCollection();
+                          } );
+                    }
               });
         },
 
@@ -318,7 +322,7 @@ $.extend( CZRMultiModuleControlMths, {
 
         _getColumn : function() {
                 var module = this;
-                return module.control.syncSektionModule().czr_Column( module.column_id() );
+                return module.control.syncSektionModule().czr_Column( module.modColumn() );
         },
 
         _getSektion : function() {

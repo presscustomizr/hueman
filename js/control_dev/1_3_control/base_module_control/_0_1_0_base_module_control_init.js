@@ -105,7 +105,7 @@ $.extend( CZRBaseModuleControlMths, {
               } );
           } else {
               return $.extend( commonAPIModel, {
-                  column_id : {},//an api.Value()
+                  column_id : '',//a string like col_7
                   sektion : {},// => the sektion instance
                   sektion_id : '',
                   is_added_by_user : false,
@@ -179,7 +179,7 @@ $.extend( CZRBaseModuleControlMths, {
   //no matter if it's not instantiated yet
   isModuleRegistered : function( id_candidate ) {
         var control = this;
-        return ! _.isUndefined( _.findWhere( control.czr_moduleCollection.get(), { id : id_candidate}) );
+        return ! _.isUndefined( _.findWhere( control.czr_moduleCollection(), { id : id_candidate}) );
   },
 
 

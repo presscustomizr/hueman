@@ -15,18 +15,7 @@ $.extend( CZRSektionMths, {
         //instantiate dragula without container => they will be pushed on module instantiation
         module.modsDragInstance = dragula({
             moves: function (el, source, handle, sibling) {
-                //console.log("handle.className", handle.className);
-                console.log('in moves cb', el, source, handle, sibling, handle.className, _.contains( handle.className.split(' '), 'czr-mod-drag-handler' ) );
                 return _.contains( handle.className.split(' '), 'czr-mod-drag-handler' );
-                //return handle.className === 'czr-column';
-                // var is_column = $(handle).parents('.czr-column').length > 0 || $(handle).hasClass('czr-column') || $(handle).hasClass('czr-column-wrapper');
-                // console.log(is_column, $(handle).parents('.czr-column').length );
-                // if (  ! is_column ) {
-                //   console.log('NOT DRAGGABLE');
-                //   return;
-                // }
-
-                // return true; // modules are always draggable by default
             },
             // invalidTarget : function(el, handle) {
             //     console.log('invalidTarget', el, handle );
@@ -46,6 +35,14 @@ $.extend( CZRSektionMths, {
               var _dropped_module_id = $(el).attr('data-module-id'),
                   _target_col = $(target).closest('.czr-column').attr('data-id'),
                   _source_col = $(source).closest('.czr-column').attr('data-id');
+
+              //reorder case
+              if ( _target_col == _source_col ) {
+
+              } else {
+                  module.control.getSyncCollectionControl().czr_Module( _dropped_module_id ).modColumn.set( _target_col );
+              }
+              //column change case
               console.log( 'ALORS : ', _dropped_module_id, _target_col, _source_col );
         });
   },
@@ -97,7 +94,7 @@ $.extend( CZRSektionMths, {
           module.dragInstance.on('drag', function( el, source ){
                 //display the fake container to all closed sek items
                 module.czr_Item.each( function( _sektion ){
-                    _sektion.container.toggleClass('czr-show-fake-container', 'closed' == _sektion.czr_ItemState.get() );
+                    _sektion.container.toggleClass('czr-show-fake-container', 'closed' == _sektion.czr_ItemState() );
                 });
           }).on('dragend', function( el, source ){
                 //display the fake container to all closed sek items

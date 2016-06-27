@@ -127,14 +127,14 @@ $.extend( CZRModuleMths, {
   //@param obj can be { collection : []}, or { item : {} }
   updateItemsCollection : function( obj ) {
           var module = this,
-              _current_collection = module.get();
+              _current_collection = module.itemCollection();
               _new_collection = _.clone(_current_collection);
 
           //if a collection is provided in the passed obj then simply refresh the collection
           //=> typically used when reordering the collection item with sortable or when a item is removed
           if ( _.has( obj, 'collection' ) ) {
                 //reset the collection
-                module.set(obj.collection);
+                module.itemCollection.set(obj.collection);
                 return;
           }
 
@@ -159,16 +159,16 @@ $.extend( CZRModuleMths, {
           }
 
           //updates the collection value
-          module.set(_new_collection);
+          module.itemCollection.set(_new_collection);
   },
 
 
 
   //fire on sortable() update callback
   //@returns a sorted collection as an array of item objects
-  _getSortedDOMCollection : function( ) {
+  _getSortedDOMItemCollection : function( ) {
           var module = this,
-              _old_collection = _.clone( module.get() ),
+              _old_collection = _.clone( module.itemCollection() ),
               _new_collection = [],
               _index = 0;
 

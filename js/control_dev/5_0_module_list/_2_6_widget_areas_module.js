@@ -751,7 +751,7 @@ $.extend( CZRWidgetAreaModuleMths, {
 
           //VISIBILITY BASED ON THE SIDEBAR INSIGHTS
           api.sidebar_insights('registered').callbacks.add( function( _registered_zones ) {
-                  var _current_collection = _.clone( module.get() );
+                  var _current_collection = _.clone( module.itemCollection() );
                   _.map(_current_collection, function( _model ) {
                     if ( ! module.getViewEl(_model.id).length )
                       return;
@@ -762,7 +762,7 @@ $.extend( CZRWidgetAreaModuleMths, {
 
           //OPACITY SIDEBAR INSIGHTS BASED
           api.sidebar_insights('inactives').callbacks.add( function( _inactives_zones ) {
-                  var _current_collection = _.clone( module.get() );
+                  var _current_collection = _.clone( module.itemCollection() );
                   _.map(_current_collection, function( _model ) {
                     if ( ! module.getViewEl(_model.id).length )
                       return;
@@ -839,7 +839,7 @@ $.extend( CZRWidgetAreaModuleMths, {
   //=> add a dynamic title
   getDefaultModel : function(id) {
           var module = this,
-              _current_collection = module.get(),
+              _current_collection = module.itemCollection(),
               _default = _.clone( module.defaultItemModel ),
               _default_contexts = _default.contexts;
           return $.extend( _default, {

@@ -23,10 +23,10 @@ $.extend( CZRModuleMths, {
                 //append the module wrapper to the column
                 $_moduleContentEl.append( $( wp.template( module.crudModulePart )( {} ) ) );
           }
+          var $_module_items_wrapper = $( '<ul/>', { class : [ module.control.css_attr.items_wrapper, module.module_type ].join(' ') } );
+          $_moduleContentEl.append($_module_items_wrapper);
 
-          $_moduleContentEl.append(
-                $( '<ul/>', { class : [ module.control.css_attr.items_wrapper, module.module_type ].join(' ') } )
-          );
+          return $( $_module_items_wrapper, $_moduleContentEl );
   },
 
   //called before rendering a view
@@ -64,7 +64,7 @@ $.extend( CZRModuleMths, {
   //fired on views_sorted
   closeAllViews : function(id) {
           var module = this,
-              _current_collection = _.clone( module.get() ),
+              _current_collection = _.clone( module.itemCollection() ),
               _filtered_collection = _.filter( _current_collection , function( mod) { return mod.id != id; } );
 
           _.each( _filtered_collection, function(_item) {
@@ -126,7 +126,7 @@ $.extend( CZRModuleMths, {
           $( '.' + module.control.css_attr.items_wrapper, module.container ).sortable( {
                 handle: '.' + module.control.css_attr.item_sort_handle,
                 update: function( event, ui ) {
-                    module.set( module._getSortedDOMCollection() );
+                    module.itemCollection.set( module._getSortedDOMItemCollection() );
                 }
               }
           );

@@ -170,8 +170,10 @@ $.extend( CZRItemMths , {
 
           if ( item.module.isMultiItem() ) {
                 item.czr_ItemState.callbacks.add( function( to, from ) {
-                  console.log('in czr_ItemState.callbacks', to, from );
                       //renderview content if needed on first expansion
+                      if ( 'resolved' == item.contentRendered.state() )
+                        return;
+
                       $.when( item.renderItemContent( item_model ) ).done( function( $_item_content ) {
                             _updateItemContentDeferred( $_item_content );
                       });

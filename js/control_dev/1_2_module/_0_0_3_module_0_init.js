@@ -38,26 +38,36 @@ $.extend( CZRModuleMths, {
                 itemInputList : '',//is specific for each crud module
           } );
 
-          //initialize the module collection
-          //this will be populated on ready()
-          module.set([]);//the module is a collection items => this is the collection
+          //initialize the module api.Value()
+          //constructorOptions has the same structure as the one described in prepareModuleforAPI
+          module.set(constructorOptions);
+
 
           //embed : define a container, store the embed state, fire the render method
           module.embedded = $.Deferred();
           //if a module is embedded in a control, its container == the control container.
           //if the module is part of a sektion, its container will be set and resolve() later ( @see multi_module part )
           if ( ! module.isInSektion() ) {
-              module.container = $( module.control.selector );
-              module.embedded.resolve();
+                module.container = $( module.control.selector );
+                module.embedded.resolve();
           }
 
           //render the item(s) wrapper
           module.embedded.done( function() {
-              console.log('MODULE IS EMBEDDED, RENDER PARTS : item wrapper and crud stuffs');
-              module.renderModuleParts();
+                $.when( module.renderModuleParts() ).done(function( $_module_items_wrapper ){
+                      if ( false === $_module_items_wrapper.length ) {
+                          throw new Error( 'The items wrapper has not been rendered for module : ' + module.id );
+                      }
+                      module.itemsWrapper = $_module_items_wrapper;
+                });
           });
 
+
+
           //ITEMS
+          module.itemCollection = new api.Value();
+          module.itemCollection.set([]);
+
           //store the saved models => can be extended to add default models in children classes
           module.savedItems = constructorOptions.items;
 
@@ -105,8 +115,14 @@ $.extend( CZRModuleMths, {
                 if ( module.isMultiItem() )
                   module._makeItemsSortable();
 
-                //listen to each single module change
-                module.callbacks.add( function() { return module.moduleReact.apply(module, arguments ); } );
+                module.savedItemCollectionReady.done( function() {
+                      //listen to item Collection changes
+                      module.itemCollection.callbacks.add( function() { return module.itemCollectionReact.apply(module, arguments ); } );
+
+                      //listen to each single module change
+                      module.callbacks.add( function() { return module.moduleReact.apply(module, arguments ); } );
+                });
+
           });
 
   },
@@ -122,19 +138,27 @@ $.extend( CZRModuleMths, {
   },
 
 
+  //cb of : module.itemCollection.callbacks
+  itemCollectionReact : function( to, from ) {
+          var module = this,
+              _current_model = module(),
+              _new_model = $.extend( true, {}, _current_model );
+          _new_model.items = to;
+          module.set( _new_model );
+  },
 
-  //cb of control.czr_Module(module.id).callbacks
+
+  //cb of module.callbacks
   moduleReact : function( to, from ) {
+          console.log('in moduleReact', to, from );
           //cb of : module.callbacks
           var module = this,
               control = module.control,
-              _to_render = ( _.size(from) < _.size(to) ) ? _.difference(to,from)[0] : {},
-              _to_remove = ( _.size(from) > _.size(to) ) ? _.difference(from, to)[0] : {},
-              _item_updated = ( ( _.size(from) == _.size(to) ) && !_.isEmpty( _.difference(from, to) ) ) ? _.difference(from, to)[0] : {},
-              _collection_sorted = _.isEmpty(_to_render) && _.isEmpty(_to_remove)  && _.isEmpty(_item_updated);
+              is_item_update = ( _.size(from.items) == _.size(to.items) ) && ! _.isEmpty( _.difference(to.items, from.items) ),
+              is_item_collection_sorted = ( _.size(from.items) == _.size(to.items) ) && ! is_item_update;
 
-           //Sorted collection case
-          if ( _collection_sorted ) {
+          //Sorted collection case
+          if ( is_item_collection_sorted ) {
                 if ( _.has(module, 'czr_preItem') ) {
                   module.czr_preItem('view_status').set('closed');
                 }
@@ -154,15 +178,9 @@ $.extend( CZRModuleMths, {
           //update the collection
           //first update the module with the updated items.
           //Then say it to the module collection
-          var _current_collection = control.czr_moduleCollection.get(),
-              _current_module = _.findWhere( _current_collection, { id : module.id } ),
-              _new_module = _.clone( _current_module );
+          console.log('IN BASE MODULE INIT REACT', $.extend( true, {}, to ) , control.czr_moduleCollection() );
 
-          _new_module = $.extend( _new_module, { items : to } );
-
-          console.log('IN BASE MODULE INIT REACT', _new_module );
-
-          control.updateModulesCollection( {module : _new_module });
+          control.updateModulesCollection( {module : $.extend( true, {}, to ) });
 
           // //Always update the view title
           // module.writeViewTitle(to);

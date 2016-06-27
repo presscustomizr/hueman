@@ -20,8 +20,8 @@ $.extend( CZRItemMths , {
 
         //append the item view to the first module view wrapper
         //!!note : => there could be additional sub view wrapper inside !!
-        $( '.' + module.control.css_attr.items_wrapper , module.container).first().append( $_view_el );
-
+        //$( '.' + module.control.css_attr.items_wrapper , module.container).first().append( $_view_el );
+        module.itemsWrapper.append( $_view_el );
 
         //if module is multi item, then render the item crud header part
         if ( module.isMultiItem() ) {
@@ -49,7 +49,6 @@ $.extend( CZRItemMths , {
               module = this.module;
 
           item_model = item_model || item.get();
-          console.log('item.contentRendered.state()', item.contentRendered.state(), module.getTemplateEl( 'itemInputList', item_model ) );
 
           //do we have view content template script?
           if ( 0 === $( '#tmpl-' + module.getTemplateEl( 'itemInputList', item_model ) ).length ) {
@@ -65,7 +64,6 @@ $.extend( CZRItemMths , {
           //the view content
           $( item_content_template( item_model )).appendTo( $('.' + module.control.css_attr.item_content, item.container ) );
 
-          console.log( 'MERDE QUOI !', $( $( item_content_template( item_model )), item.container ) );
           return $( $( item_content_template( item_model )), item.container );
   },
 
@@ -107,7 +105,7 @@ $.extend( CZRItemMths , {
 
 
   _getViewState : function() {
-          return -1 == this.czr_ItemState.get().indexOf('expanded') ? 'closed' : 'expanded';
+          return -1 == this.czr_ItemState().indexOf('expanded') ? 'closed' : 'expanded';
   },
 
 

@@ -134,27 +134,10 @@ $.extend( CZRBaseModuleControlMths, {
 
                     //PROPERTIES FOR MODULE EMBEDDED IN A SEKTION
                     case  'column_id' :
-                        //if the module has been already pre-registered (typically a saved module), then column_id is an api.Value object
-                        //if the module is added by a user and not instantiated yet, then the column_id is still a string a should be turned to an api.Value
-                        //if the module is instantiated control.czr_Module.has( module.id ) but not registered yet, then column_id is an api.Value object
-                        if ( control.isModuleRegistered( api_ready_module.id || control.generateModuleId( module_candidate.module_type ) ) ) {
-                            if ( ! _.isFunction( _candidate_val ) || _.isEmpty( _candidate_val() ) ) {
-                                throw new Error('prepareModuleForAPI : a registered module column_id must an api.Value object set to a string.');
-                            }
-                            api_ready_module[_key] = _candidate_val;
-                        } else if ( control.czr_Module.has( module_candidate.id ) ) {
-                            if ( ! _.isFunction( _candidate_val ) || _.isEmpty( _candidate_val() ) ) {
-                                throw new Error('prepareModuleForAPI : a registered module column_id must an api.Value object set to a string.');
-                            }
-                            api_ready_module[_key] = _candidate_val;
-                        } else {
-                            if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
-                                throw new Error('prepareModuleForAPI : a module column id must a string not empty');
-                            }
-                            var column_id = new api.Value();
-                            column_id.set( _candidate_val );
-                            api_ready_module[_key] = column_id;
+                        if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
+                            throw new Error('prepareModuleForAPI : a module column id must a string not empty');
                         }
+                        api_ready_module[_key] = _candidate_val;
                     break;
                     case  'sektion' :
                         if ( ! _.isObject( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
@@ -192,7 +175,7 @@ $.extend( CZRBaseModuleControlMths, {
           var id_candidate = module_type + '_' + key;
 
           //do we have a module collection value ?
-          if ( ! _.has(control, 'czr_moduleCollection') || ! _.isArray( control.czr_moduleCollection.get() ) ) {
+          if ( ! _.has(control, 'czr_moduleCollection') || ! _.isArray( control.czr_moduleCollection() ) ) {
                 throw new Error('The module collection does not exist or is not properly set in control : ' + control.id );
           }
 
@@ -216,8 +199,8 @@ $.extend( CZRBaseModuleControlMths, {
           //get the initial key
           //=> if we already have a collection, extract all keys, select the max and increment it.
           //else, key is 0
-          if ( ! _.isEmpty( control.czr_moduleCollection.get() ) ) {
-              _max_mod_key = _.max( control.czr_moduleCollection.get(), function( _mod ) {
+          if ( ! _.isEmpty( control.czr_moduleCollection() ) ) {
+              _max_mod_key = _.max( control.czr_moduleCollection(), function( _mod ) {
                   return parseInt( _mod.id.replace(/[^\/\d]/g,''), 10 );
               });
               _next_key = parseInt( _max_mod_key.id.replace(/[^\/\d]/g,''), 10 ) + 1;

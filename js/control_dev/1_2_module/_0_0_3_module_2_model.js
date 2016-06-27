@@ -39,7 +39,7 @@ $.extend( CZRModuleMths, {
   //@return bool
   _isItemIdPossible : function( _id ) {
           var module = this,
-              _collection = _.clone( module.get() );
+              _collection = _.clone( module.itemCollection() );
           return ! _.isEmpty(_id) && ! _.findWhere( _collection, { id : _id });
   },
 
@@ -52,7 +52,7 @@ $.extend( CZRModuleMths, {
               _id;
 
           //get the next available key of the collection
-          _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( module.get() );
+          _next_key = 'undefined' != typeof(_next_key) ? _next_key : _.size( module.itemCollection() );
 
           if ( _.isNumber(_next_key) ) {
             _id = module.module_type + '_' + _next_key;

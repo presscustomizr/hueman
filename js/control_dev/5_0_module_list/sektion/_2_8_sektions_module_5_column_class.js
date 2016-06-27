@@ -116,8 +116,8 @@ $.extend( CZRColumnMths , {
                               return;
 
                             //first let's try to get it from the collection
-                            //var _module_candidate = _.findWhere( syncedCollectionControl.czr_moduleCollection.get() , { id : _mod.id } );
-                            $.when( _.findWhere( syncedCollectionControl.czr_moduleCollection.get() , { id : _mod.id } ) ).done( function( module_candidate ) {
+                            //var _module_candidate = _.findWhere( syncedCollectionControl.czr_moduleCollection() , { id : _mod.id } );
+                            $.when( _.findWhere( syncedCollectionControl.czr_moduleCollection() , { id : _mod.id } ) ).done( function( module_candidate ) {
                                   if ( _.isUndefined( module_candidate) ||_.isEmpty( module_candidate ) ) {
                                     throw new Error( 'Module ' + _mod.id + ' was not found in the module collection.');
                                   }
@@ -186,7 +186,7 @@ $.extend( CZRColumnMths , {
                 'user-module-candidate',
                 $.extend( defautAPIModuleModel, {
                       module_type : 'czr_text_module',
-                      column_id : column.id,//a sting but will be turned into an api.Value() before being injected in the API
+                      column_id : column.id,//a string
                       sektion : column.sektion,//instance
                       sektion_id : column.sektion.id,
                       is_added_by_user : true

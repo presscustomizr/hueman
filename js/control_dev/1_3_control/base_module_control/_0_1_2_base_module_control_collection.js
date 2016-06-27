@@ -40,7 +40,7 @@ $.extend( CZRBaseModuleControlMths, {
   //@param obj can be { collection : []}, or { module : {} }
   updateModulesCollection : function( obj ) {
           var control = this,
-              _current_collection = control.czr_moduleCollection.get(),
+              _current_collection = control.czr_moduleCollection(),
               _new_collection = $.extend( true, [], _current_collection);
 
           //if a collection is provided in the passed obj then simply refresh the collection
@@ -56,7 +56,6 @@ $.extend( CZRBaseModuleControlMths, {
           }
 
           //normalizes the module for the API
-          console.log( 'IN UPDATE MODULE COLLECTION', obj.module );
           var module_api_ready = control.prepareModuleForAPI( _.clone(obj.module) );
 
           //the module already exist in the collection
@@ -185,11 +184,10 @@ $.extend( CZRBaseModuleControlMths, {
                       db_ready_module[ _key ] = _candidate_val;
                     break;
                     case  'column_id' :
-                      var _column_id = _candidate_val();
-                      if ( ! _.isString( _column_id ) || _.isEmpty( _column_id ) ) {
+                      if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
                           throw new Error('prepareModuleForDB : a module column id must a string not empty');
                       }
-                      db_ready_module[ _key ] = _column_id;
+                      db_ready_module[ _key ] = _candidate_val;
                     break;
                     case  'sektion_id' :
                       if ( ! _.isObject( module_db_candidate.sektion ) || ! _.has( module_db_candidate.sektion, 'id' ) ) {
