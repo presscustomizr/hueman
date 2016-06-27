@@ -54,21 +54,24 @@ $.extend( CZRBaseModuleControlMths, {
           if ( ! _.has(obj, 'module') ) {
             throw new Error('updateModulesCollection, no module provided ' + control.id + '. Aborting');
           }
-          var module = _.clone(obj.module);
+
+          //normalizes the module for the API
+          console.log( 'IN UPDATE MODULE COLLECTION', obj.module );
+          var module_api_ready = control.prepareModuleForAPI( _.clone(obj.module) );
 
           //the module already exist in the collection
-          if ( _.findWhere( _new_collection, { id : module.id } ) ) {
+          if ( _.findWhere( _new_collection, { id : module_api_ready.id } ) ) {
                 _.each( _current_collection , function( _elt, _ind ) {
-                      if ( _elt.id != module.id )
+                      if ( _elt.id != module_api_ready.id )
                         return;
 
                       //set the new val to the changed property
-                      _new_collection[_ind] = module;
+                      _new_collection[_ind] =module_api_ready;
                 });
           }
           //the module has to be added
           else {
-                _new_collection.push(module);
+                _new_collection.push(module_api_ready);
           }
           //Inform the control
           control.czr_moduleCollection.set( _new_collection );
@@ -93,7 +96,7 @@ $.extend( CZRBaseModuleControlMths, {
             _to_remove = _to_remove[0];
             control.czr_Module.remove( _to_remove.id );
         }
-
+        console.log( 'in collection react', to, from );
         //say it to the setting
         api(this.id).set( control.filterModuleCollectionBeforeAjax(to) );
 
@@ -182,10 +185,11 @@ $.extend( CZRBaseModuleControlMths, {
                       db_ready_module[ _key ] = _candidate_val;
                     break;
                     case  'column_id' :
-                      if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
+                      var _column_id = _candidate_val();
+                      if ( ! _.isString( _column_id ) || _.isEmpty( _column_id ) ) {
                           throw new Error('prepareModuleForDB : a module column id must a string not empty');
                       }
-                      db_ready_module[ _key ] = _candidate_val;
+                      db_ready_module[ _key ] = _column_id;
                     break;
                     case  'sektion_id' :
                       if ( ! _.isObject( module_db_candidate.sektion ) || ! _.has( module_db_candidate.sektion, 'id' ) ) {

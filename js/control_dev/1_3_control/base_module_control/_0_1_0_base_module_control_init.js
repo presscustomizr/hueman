@@ -67,8 +67,9 @@ $.extend( CZRBaseModuleControlMths, {
 
           //LISTEN TO MODULE CANDIDATES ADDED BY USERS
           control.bind( 'user-module-candidate', function( _module ) {
-                //instanciate and add it to the collection
-                control.instantiateModule( _module, {} ); //module, constructor
+                //instanciate + fire ready()
+                //=> the module will be added in the collection on isReady.done()
+                control.instantiateModule( _module, {} ).ready(); //module, constructor
           });
   },
 
@@ -104,7 +105,7 @@ $.extend( CZRBaseModuleControlMths, {
               } );
           } else {
               return $.extend( commonAPIModel, {
-                  column_id : '',
+                  column_id : {},//an api.Value()
                   sektion : {},// => the sektion instance
                   sektion_id : '',
                   is_added_by_user : false,

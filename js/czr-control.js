@@ -1608,7 +1608,7 @@ $.extend( CZRModuleMths, {
               module.embedded.resolve();
           }
           module.embedded.done( function() {
-              console.log('MODULE IS EMBEDDED, RENDER PARS : item wrapper and crud stuffs');
+              console.log('MODULE IS EMBEDDED, RENDER PARTS : item wrapper and crud stuffs');
               module.renderModuleParts();
           });
           module.savedItems = constructorOptions.items;
@@ -1627,7 +1627,10 @@ $.extend( CZRModuleMths, {
 
           module.isReady.done( function() {
                 console.log('MODULE ' + module.id + ' IS READY');
-                module.control.updateModulesCollection( {module : constructorOptions } );
+                if (  ! module.control.isModuleRegistered( module.id ) ) {
+                    console.log('PUSH MODULE IN THE COLLECTION', module.id, constructorOptions );
+                    module.control.updateModulesCollection( { module : constructorOptions } );
+                }
                 module.populateSavedItemCollection();
                 if ( module.isMultiItem() )
                   module._makeItemsSortable();
@@ -2183,6 +2186,8 @@ $.extend( CZRSektionMths, {
                 module.ready();
                 module.control.getSyncCollectionControl().syncSektionModule.set( module );
           });
+          if ( ! _.has( module ,'modsDragInstance' ) )
+            module.initModulesDragula();
 
   },//initialize
   itemReact : function( to, from ) {
@@ -2540,6 +2545,28 @@ $.extend( CZRSektionMths, {
 var CZRSektionMths = CZRSektionMths || {};
 
 $.extend( CZRSektionMths, {
+ initModulesDragula : function() {
+        var module = this;
+        module.modsDragInstance = dragula({
+            moves: function (el, source, handle, sibling) {
+                console.log('in moves cb', el, source, handle, sibling, handle.className, _.contains( handle.className.split(' '), 'czr-mod-drag-handler' ) );
+                return _.contains( handle.className.split(' '), 'czr-mod-drag-handler' );
+            },
+            isContainer : function( el ) {
+              return false;
+            }
+        });//dragula
+        module.modsDragInstance.on('drop', function(el, target, source, sibling ) {
+              console.log('element ',  el , ' has been droped in :', target );
+              console.log('source is ' , source , ' sibling is : ' , sibling );
+              var _dropped_module_id = $(el).attr('data-module-id'),
+                  _target_col = $(target).closest('.czr-column').attr('data-id'),
+                  _source_col = $(source).closest('.czr-column').attr('data-id');
+              console.log( 'ALORS : ', _dropped_module_id, _target_col, _source_col );
+        });
+  },
+
+
   initDragula : function() {
           var module = this;
           module.dragInstance = dragula({
@@ -2613,11 +2640,31 @@ $.extend( CZRColumnMths , {
                   actions   : ['userAddedModule'],
                 },
           ];//module.module_event_map
+          column.embedded.done(function() {
+                column.mayBeInstantiateColumnModules();
+                column.callbacks.add( function() { return column.columnReact.apply(column, arguments ); } );
+                column.czr_columnModuleCollection.callbacks.add( function() { return column.columnModuleCollectionReact.apply( column, arguments ); } );
+                api.CZR_Helpers.setupDOMListeners(
+                        column.column_event_map,//actions to execute
+                        { dom_el : column.container },//dom scope
+                        column//instance where to look for the cb methods
+                );
+                var syncCollectionControl = api.control(column.control_id).getSyncCollectionControl();
+                syncCollectionControl.syncSektionModule().modsDragInstance.containers.push( $('.czr-module-collection-wrapper', column.container )[0] );
+                console.log('syncCollectionControl.syncSektionModule().modsDragInstance', syncCollectionControl.syncSektionModule().modsDragInstance );
 
-          var syncedCollectionControl = column.sektion.control.getSyncCollectionControl();
+          });
+    },
+    ready : function() {
+          var column = this;
+          column.isReady.resolve();
+          column.sektion.module.updateColumnCollection( {column : column.get() });
+    },
+    mayBeInstantiateColumnModules : function() {
+          var column = this,
+              syncedCollectionControl = column.sektion.control.getSyncCollectionControl();
           $.when( syncedCollectionControl.moduleCollectionReady.promise() ).then(
                 function() {
-                  console.log('SYNCHRONIZED!');
                   _.each( column.czr_columnModuleCollection.get() , function( _mod ) {
                             if ( syncedCollectionControl.czr_Module.has(_mod.id) )
                               return;
@@ -2625,7 +2672,7 @@ $.extend( CZRColumnMths , {
                                   if ( _.isUndefined( module_candidate) ||_.isEmpty( module_candidate ) ) {
                                     throw new Error( 'Module ' + _mod.id + ' was not found in the module collection.');
                                   }
-                                  syncedCollectionControl.instantiateModule( module_candidate, {} );
+                                  syncedCollectionControl.instantiateModule( module_candidate, {} ).ready();
                             });
                   } );
                 },//done callback
@@ -2634,20 +2681,6 @@ $.extend( CZRColumnMths , {
                   console.log( 'NOT SYNCHRONIZED YET');
                 }
           );//.then()
-          column.embedded.done(function() {
-                column.callbacks.add( function() { return column.columnReact.apply(column, arguments ); } );
-                column.czr_columnModuleCollection.callbacks.add( function() { return column.columnModuleCollectionReact.apply( column, arguments ); } );
-                api.CZR_Helpers.setupDOMListeners(
-                        column.column_event_map,//actions to execute
-                        { dom_el : column.container },//dom scope
-                        column//instance where to look for the cb methods
-                );
-          });
-    },
-    ready : function() {
-          var column = this;
-          column.isReady.resolve();
-          column.sektion.module.updateColumnCollection( {column : column.get() });
     },
     render : function() {
           var column   = this;
@@ -2668,7 +2701,7 @@ $.extend( CZRColumnMths , {
                 'user-module-candidate',
                 $.extend( defautAPIModuleModel, {
                       module_type : 'czr_text_module',
-                      column_id : column.id,
+                      column_id : column.id,//a sting but will be turned into an api.Value() before being injected in the API
                       sektion : column.sektion,//instance
                       sektion_id : column.sektion.id,
                       is_added_by_user : true
@@ -3908,7 +3941,7 @@ $.extend( CZRBaseModuleControlMths, {
                 control.moduleCollectionReady.resolve();
           }
           control.bind( 'user-module-candidate', function( _module ) {
-                control.instantiateModule( _module, {} ); //module, constructor
+                control.instantiateModule( _module, {} ).ready(); //module, constructor
           });
   },
   getDefaultModuleApiModel : function() {
@@ -3926,7 +3959,7 @@ $.extend( CZRBaseModuleControlMths, {
               } );
           } else {
               return $.extend( commonAPIModel, {
-                  column_id : '',
+                  column_id : {},//an api.Value()
                   sektion : {},// => the sektion instance
                   sektion_id : '',
                   is_added_by_user : false,
@@ -4001,6 +4034,7 @@ $.extend( CZRBaseModuleControlMths, {
 
           var module_api_ready = control.prepareModuleForAPI( module );
           control.czr_Module.add( module_api_ready.id, new constructor( module_api_ready.id, module_api_ready ) );
+          return control.czr_Module(module_api_ready.id);
   },
   getModuleConstructor : function( module ) {
           var control = this,
@@ -4077,10 +4111,24 @@ $.extend( CZRBaseModuleControlMths, {
                         api_ready_module[_key] = _candidate_val;
                     break;
                     case  'column_id' :
-                        if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
-                            throw new Error('prepareModuleForAPI : a module column id must a string not empty');
+                        if ( control.isModuleRegistered( api_ready_module.id || control.generateModuleId( module_candidate.module_type ) ) ) {
+                            if ( ! _.isFunction( _candidate_val ) || _.isEmpty( _candidate_val() ) ) {
+                                throw new Error('prepareModuleForAPI : a registered module column_id must an api.Value object set to a string.');
+                            }
+                            api_ready_module[_key] = _candidate_val;
+                        } else if ( control.czr_Module.has( module_candidate.id ) ) {
+                            if ( ! _.isFunction( _candidate_val ) || _.isEmpty( _candidate_val() ) ) {
+                                throw new Error('prepareModuleForAPI : a registered module column_id must an api.Value object set to a string.');
+                            }
+                            api_ready_module[_key] = _candidate_val;
+                        } else {
+                            if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
+                                throw new Error('prepareModuleForAPI : a module column id must a string not empty');
+                            }
+                            var column_id = new api.Value();
+                            column_id.set( _candidate_val );
+                            api_ready_module[_key] = column_id;
                         }
-                        api_ready_module[_key] = _candidate_val;
                     break;
                     case  'sektion' :
                         if ( ! _.isObject( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
@@ -4168,16 +4216,17 @@ $.extend( CZRBaseModuleControlMths, {
           if ( ! _.has(obj, 'module') ) {
             throw new Error('updateModulesCollection, no module provided ' + control.id + '. Aborting');
           }
-          var module = _.clone(obj.module);
-          if ( _.findWhere( _new_collection, { id : module.id } ) ) {
+          console.log( 'IN UPDATE MODULE COLLECTION', obj.module );
+          var module_api_ready = control.prepareModuleForAPI( _.clone(obj.module) );
+          if ( _.findWhere( _new_collection, { id : module_api_ready.id } ) ) {
                 _.each( _current_collection , function( _elt, _ind ) {
-                      if ( _elt.id != module.id )
+                      if ( _elt.id != module_api_ready.id )
                         return;
-                      _new_collection[_ind] = module;
+                      _new_collection[_ind] =module_api_ready;
                 });
           }
           else {
-                _new_collection.push(module);
+                _new_collection.push(module_api_ready);
           }
           control.czr_moduleCollection.set( _new_collection );
   },
@@ -4193,6 +4242,7 @@ $.extend( CZRBaseModuleControlMths, {
             _to_remove = _to_remove[0];
             control.czr_Module.remove( _to_remove.id );
         }
+        console.log( 'in collection react', to, from );
         api(this.id).set( control.filterModuleCollectionBeforeAjax(to) );
         if ( 'postMessage' == api(control.id).transport && ! api.CZR_Helpers.has_part_refresh( control.id ) ) {
             if ( is_collection_sorted )
@@ -4252,10 +4302,11 @@ $.extend( CZRBaseModuleControlMths, {
                       db_ready_module[ _key ] = _candidate_val;
                     break;
                     case  'column_id' :
-                      if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
+                      var _column_id = _candidate_val();
+                      if ( ! _.isString( _column_id ) || _.isEmpty( _column_id ) ) {
                           throw new Error('prepareModuleForDB : a module column id must a string not empty');
                       }
-                      db_ready_module[ _key ] = _candidate_val;
+                      db_ready_module[ _key ] = _column_id;
                     break;
                     case  'sektion_id' :
                       if ( ! _.isObject( module_db_candidate.sektion ) || ! _.has( module_db_candidate.sektion, 'id' ) ) {
@@ -4283,24 +4334,21 @@ $.extend( CZRMultiModuleControlMths, {
 
   },
   syncColumn : function( to, from ) {
-        var control = this,
-            main_sektion_module_instance = control.syncSektionModule.get();
+        var control = this;
         var added_mod = _.filter( to, function( _mod, _key ){
             return ! _.findWhere( from, { id : _mod.id } );
         } );
-
-        if ( ! _.isEmpty(added_mod) ) {
+        if ( ! _.isEmpty( added_mod ) ) {
               _.each( added_mod, function( _mod ) {
-                      main_sektion_module_instance.czr_Column( _mod.column_id ).updateColumnModuleCollection( { module : _mod } );
+                      control.syncSektionModule().czr_Column( _mod.column_id ).updateColumnModuleCollection( { module : _mod } );
               });
         }
         var removed_mod = _.filter( from, function( _mod, _key ){
             return ! _.findWhere( to, { id : _mod.id } );
         } );
-
-        if ( ! _.isEmpty(removed_mod) ) {
+        if ( ! _.isEmpty( removed_mod ) ) {
               _.each( removed_mod, function( _mod ) {
-                      main_sektion_module_instance.czr_Column( _mod.column_id ).removeModuleFromColumnCollection( _mod );
+                      control.syncSektionModule().czr_Column( _mod.column_id ).removeModuleFromColumnCollection( _mod );
               });
         }
 
@@ -4332,26 +4380,18 @@ $.extend( CZRMultiModuleControlMths, {
   getMultiModuleExtender : function( parentConstructor ) {
         var control = this;
         $.extend( control.CZRModuleExtended, {
-              initialize: function( id, options ) {
+              initialize: function( id, constructorOptions ) {
                     var module = this;
-                    parentConstructor.prototype.initialize.call( module, id, options );
+                    parentConstructor.prototype.initialize.call( module, id, constructorOptions );
 
-                    console.log( 'in CZRModuleExtended', id, options, module.itemInputList );
+                    console.log( 'in CZRModuleExtended', id, constructorOptions, module.itemInputList );
+
+                    console.log('MODULE INSTANTIATED : ', module.id, module.column_id() );
                     $.extend( module, {
                           singleModuleWrapper : 'czr-single-module-wrapper',
                           sektionModuleTitle : 'czr-module-sektion-title-part',
                           ruModuleEl : 'czr-ru-module-sektion-content'
                     } );
-                    var main_sektion_module_instance = module.control.syncSektionModule.get(),
-                        column = main_sektion_module_instance.czr_Column( options.column_id );
-
-                    if ( 'resolved' == column.embedded.state() ) {
-                          module.ready();
-                    } else {
-                          column.embedded.done( function() {
-                              module.ready();
-                          });
-                    }
                     module.czr_ModuleState = new api.Value();
                     module.isReady.done( function() {
                           module.setupModuleView();
@@ -4364,7 +4404,13 @@ $.extend( CZRMultiModuleControlMths, {
   CZRModuleExtended  : {
         ready : function() {
                 var module = this;
-                module.container = module.renderModuleWrapper();
+                $.when( module.renderModuleWrapper() ).done( function( $_module_container ) {
+                    if ( _.isUndefined($_module_container) || false === $_module_container.length ) {
+                        throw new Error( 'Module container has not been embedded for module :' + module.id );
+                    }
+                    module.container = $_module_container;
+                    module.embedded.resolve();
+                } );
                 module.isReady.resolve();
         },
         renderModuleWrapper : function() {
@@ -4414,12 +4460,6 @@ $.extend( CZRMultiModuleControlMths, {
                         },
                 ];
                 module.czr_ModuleState.set('closed');
-
-                if ( _.isUndefined(module.container) || ! module.container.length ) {
-                    throw new Error( 'The Module view has not been rendered : ' + module.id );
-                } else {
-                    module.embedded.resolve();
-                }
                 module.embedded.done( function() {
                       module.czr_ModuleState.callbacks.add( function() { return module.setupModuleViewStateListeners.apply(module, arguments ); } );
                       api.CZR_Helpers.setupDOMListeners(
@@ -4524,10 +4564,8 @@ $.extend( CZRMultiModuleControlMths, {
 
 
         _getColumn : function() {
-                var module = this,
-                    main_sektion_module_instance = module.control.syncSektionModule.get();
-
-                return main_sektion_module_instance.czr_Column( module.column_id );
+                var module = this;
+                return module.control.syncSektionModule().czr_Column( module.column_id() );
         },
 
         _getSektion : function() {

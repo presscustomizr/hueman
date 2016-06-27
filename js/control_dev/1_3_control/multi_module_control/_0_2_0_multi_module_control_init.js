@@ -19,18 +19,16 @@ $.extend( CZRMultiModuleControlMths, {
 
   //cb of : api(control.id).callbacks.
   syncColumn : function( to, from ) {
-        var control = this,
-            main_sektion_module_instance = control.syncSektionModule.get();
+        var control = this;
 
         //MODULE ADDED
         //determine if a module has been added
         var added_mod = _.filter( to, function( _mod, _key ){
             return ! _.findWhere( from, { id : _mod.id } );
         } );
-
-        if ( ! _.isEmpty(added_mod) ) {
+        if ( ! _.isEmpty( added_mod ) ) {
               _.each( added_mod, function( _mod ) {
-                      main_sektion_module_instance.czr_Column( _mod.column_id ).updateColumnModuleCollection( { module : _mod } );
+                      control.syncSektionModule().czr_Column( _mod.column_id ).updateColumnModuleCollection( { module : _mod } );
               });
         }
 
@@ -38,10 +36,9 @@ $.extend( CZRMultiModuleControlMths, {
         var removed_mod = _.filter( from, function( _mod, _key ){
             return ! _.findWhere( to, { id : _mod.id } );
         } );
-
-        if ( ! _.isEmpty(removed_mod) ) {
+        if ( ! _.isEmpty( removed_mod ) ) {
               _.each( removed_mod, function( _mod ) {
-                      main_sektion_module_instance.czr_Column( _mod.column_id ).removeModuleFromColumnCollection( _mod );
+                      control.syncSektionModule().czr_Column( _mod.column_id ).removeModuleFromColumnCollection( _mod );
               });
         }
 

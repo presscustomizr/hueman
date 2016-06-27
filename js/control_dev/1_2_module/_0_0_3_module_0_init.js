@@ -53,7 +53,7 @@ $.extend( CZRModuleMths, {
 
           //render the item(s) wrapper
           module.embedded.done( function() {
-              console.log('MODULE IS EMBEDDED, RENDER PARS : item wrapper and crud stuffs');
+              console.log('MODULE IS EMBEDDED, RENDER PARTS : item wrapper and crud stuffs');
               module.renderModuleParts();
           });
 
@@ -87,10 +87,13 @@ $.extend( CZRModuleMths, {
 
           module.isReady.done( function() {
                 console.log('MODULE ' + module.id + ' IS READY');
-
-                //push it to the collection of the module-collection control
+                //if the module is not registered yet (for example when the module is added by user),
+                //=> push it to the collection of the module-collection control
                 //=> updates the wp api setting
-                module.control.updateModulesCollection( {module : constructorOptions } );
+                if (  ! module.control.isModuleRegistered( module.id ) ) {
+                    console.log('PUSH MODULE IN THE COLLECTION', module.id, constructorOptions );
+                    module.control.updateModulesCollection( { module : constructorOptions } );
+                }
 
                 //Important note : this event refreshes the customizer setting value
                 //It's not listened to before the api is ready

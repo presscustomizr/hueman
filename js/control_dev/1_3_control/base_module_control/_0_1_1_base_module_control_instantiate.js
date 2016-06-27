@@ -32,6 +32,9 @@ $.extend( CZRBaseModuleControlMths, {
 
           //instanciate the module with the default constructor
           control.czr_Module.add( module_api_ready.id, new constructor( module_api_ready.id, module_api_ready ) );
+
+          //return the module instance for chaining
+          return control.czr_Module(module_api_ready.id);
   },
 
 
@@ -131,10 +134,27 @@ $.extend( CZRBaseModuleControlMths, {
 
                     //PROPERTIES FOR MODULE EMBEDDED IN A SEKTION
                     case  'column_id' :
-                        if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
-                            throw new Error('prepareModuleForAPI : a module column id must a string not empty');
+                        //if the module has been already pre-registered (typically a saved module), then column_id is an api.Value object
+                        //if the module is added by a user and not instantiated yet, then the column_id is still a string a should be turned to an api.Value
+                        //if the module is instantiated control.czr_Module.has( module.id ) but not registered yet, then column_id is an api.Value object
+                        if ( control.isModuleRegistered( api_ready_module.id || control.generateModuleId( module_candidate.module_type ) ) ) {
+                            if ( ! _.isFunction( _candidate_val ) || _.isEmpty( _candidate_val() ) ) {
+                                throw new Error('prepareModuleForAPI : a registered module column_id must an api.Value object set to a string.');
+                            }
+                            api_ready_module[_key] = _candidate_val;
+                        } else if ( control.czr_Module.has( module_candidate.id ) ) {
+                            if ( ! _.isFunction( _candidate_val ) || _.isEmpty( _candidate_val() ) ) {
+                                throw new Error('prepareModuleForAPI : a registered module column_id must an api.Value object set to a string.');
+                            }
+                            api_ready_module[_key] = _candidate_val;
+                        } else {
+                            if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
+                                throw new Error('prepareModuleForAPI : a module column id must a string not empty');
+                            }
+                            var column_id = new api.Value();
+                            column_id.set( _candidate_val );
+                            api_ready_module[_key] = column_id;
                         }
-                        api_ready_module[_key] = _candidate_val;
                     break;
                     case  'sektion' :
                         if ( ! _.isObject( _candidate_val ) || _.isEmpty( _candidate_val ) ) {

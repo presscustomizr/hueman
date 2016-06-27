@@ -79,6 +79,8 @@ $.extend( CZRSektionMths, {
           //DRAGULA
           // if ( ! _.has( module ,'dragInstance' ) )
           //   module.initDragula();
+          if ( ! _.has( module ,'modsDragInstance' ) )
+            module.initModulesDragula();
 
   },//initialize
 

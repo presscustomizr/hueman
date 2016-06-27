@@ -7,12 +7,14 @@ $.extend( CZRMultiModuleControlMths, {
   getMultiModuleExtender : function( parentConstructor ) {
         var control = this;
         $.extend( control.CZRModuleExtended, {
-              initialize: function( id, options ) {
+              initialize: function( id, constructorOptions ) {
                     var module = this;
                     //run the parent initialize
-                    parentConstructor.prototype.initialize.call( module, id, options );
+                    parentConstructor.prototype.initialize.call( module, id, constructorOptions );
 
-                    console.log( 'in CZRModuleExtended', id, options, module.itemInputList );
+                    console.log( 'in CZRModuleExtended', id, constructorOptions, module.itemInputList );
+
+                    console.log('MODULE INSTANTIATED : ', module.id, module.column_id() );
 
                     //extend the module with new template Selectors
                     $.extend( module, {
@@ -23,16 +25,15 @@ $.extend( CZRMultiModuleControlMths, {
 
 
                     //fire ready when the module column is embedded
-                    var main_sektion_module_instance = module.control.syncSektionModule.get(),
-                        column = main_sektion_module_instance.czr_Column( options.column_id );
+                    // var column_instance = module.control.syncSektionModule().czr_Column( module.column_id() );
 
-                    if ( 'resolved' == column.embedded.state() ) {
-                          module.ready();
-                    } else {
-                          column.embedded.done( function() {
-                              module.ready();
-                          });
-                    }
+                    // if ( 'resolved' == column_instance.embedded.state() ) {
+                    //       module.ready();
+                    // } else {
+                    //       column_instance.embedded.done( function() {
+                    //           module.ready();
+                    //       });
+                    // }
 
 
                     //ADD A MODULE STATE OBSERVER
@@ -63,7 +64,13 @@ $.extend( CZRMultiModuleControlMths, {
         //when ready done => the module items are embedded (without their content)
         ready : function() {
                 var module = this;
-                module.container = module.renderModuleWrapper();
+                $.when( module.renderModuleWrapper() ).done( function( $_module_container ) {
+                    if ( _.isUndefined($_module_container) || false === $_module_container.length ) {
+                        throw new Error( 'Module container has not been embedded for module :' + module.id );
+                    }
+                    module.container = $_module_container;
+                    module.embedded.resolve();
+                } );
                 module.isReady.resolve();
         },
 
@@ -142,17 +149,12 @@ $.extend( CZRMultiModuleControlMths, {
                 //set initial state
                 module.czr_ModuleState.set('closed');
 
-                if ( _.isUndefined(module.container) || ! module.container.length ) {
-                    throw new Error( 'The Module view has not been rendered : ' + module.id );
-                } else {
-                    //say it
-                    module.embedded.resolve();
-                }
-
                 //defer actions on module view embedded
                 module.embedded.done( function() {
                       //add a listener on view state change
                       module.czr_ModuleState.callbacks.add( function() { return module.setupModuleViewStateListeners.apply(module, arguments ); } );
+
+                      //setup DOM listener
                       api.CZR_Helpers.setupDOMListeners(
                             module.view_event_map,//actions to execute
                             { module : { id : module.id } , dom_el:module.container },//model + dom scope
@@ -315,10 +317,8 @@ $.extend( CZRMultiModuleControlMths, {
 
 
         _getColumn : function() {
-                var module = this,
-                    main_sektion_module_instance = module.control.syncSektionModule.get();
-
-                return main_sektion_module_instance.czr_Column( module.column_id );
+                var module = this;
+                return module.control.syncSektionModule().czr_Column( module.column_id() );
         },
 
         _getSektion : function() {

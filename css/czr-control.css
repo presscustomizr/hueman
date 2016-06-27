@@ -1336,10 +1336,19 @@ span.select2-results, body .select2-container {
   padding: 2% 0%;
   border: 2px dotted #aaa;
   text-align: center;
-  cursor: move;
-  cursor: grab;
-  cursor: -moz-grab;
-  cursor: -webkit-grab;
+}
+.czr-column-header {
+  position: relative;
+}
+.czr-col-drag-handler {
+    position: absolute;
+    left: 0%;
+    padding: 1%;
+    color: #999;
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
 }
 .add-new-module {
   margin-top: 1%;
@@ -1350,6 +1359,7 @@ span.select2-results, body .select2-container {
 /* MODULES */
 .czr-module-collection-wrapper {
   width: 100%;
+  min-height: 5px;
   float: left;
 }
 .czr-single-module {
@@ -1377,13 +1387,24 @@ span.select2-results, body .select2-container {
   float: left;
   width: 100%;
 }
-
+.czr-mod-title {
+  position: relative;
+}
 .czr-mod-title > h4 {
   float: left;
   width: 70%;
   margin: 2% 0;
 }
-
+.czr-mod-drag-handler {
+    position: absolute;
+    left: 0%;
+    padding: 1%;
+    color: #999;
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
 .czr-mod-buttons {
   float: right;
   width: 30%;
