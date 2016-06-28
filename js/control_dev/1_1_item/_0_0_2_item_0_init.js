@@ -204,6 +204,7 @@ $.extend( CZRItemMths , {
 
           //send item to the preview. On update only, not on creation.
           if ( ! _.isEmpty(from) || ! _.isUndefined(from) ) {
+            console.log('DO WE REALLY NEED TO SEND THIS TO THE PREVIEW WITH _sendItem(to, from) ?');
             item._sendItem(to, from);
           }
   }

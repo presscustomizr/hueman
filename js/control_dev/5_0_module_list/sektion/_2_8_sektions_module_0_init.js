@@ -77,8 +77,6 @@ $.extend( CZRSektionMths, {
           });
 
           //DRAGULA
-          // if ( ! _.has( module ,'dragInstance' ) )
-          //   module.initDragula();
           if ( ! _.has( module ,'modsDragInstance' ) )
             module.initModulesDragula();
 
@@ -89,8 +87,7 @@ $.extend( CZRSektionMths, {
   /////////////////////////////////////////////////////////////////////////
   /// SEKTION
   ////////////////////////////////////////////////////////////////////////
-
-
+  //OVERRIDES PARENT MODULE METHOD
   //React to a single item change
   //cb of module.czr_Item(item.id).callbacks
   itemReact : function( to, from ) {
@@ -98,8 +95,8 @@ $.extend( CZRSektionMths, {
             sektion_candidate = $.extend(true, {}, to);
         //we want to make sure that the item model is compliant with default model
         sektion_candidate = module.prepareSekItemForDB( sektion_candidate );
-        //update the collection
-        module.updateItemsCollection( {item : sektion_candidate });
+        //Call the parent method => updates the collection
+        api.CZRDynModule.prototype.itemReact.call( module, sektion_candidate );
   },
 
 

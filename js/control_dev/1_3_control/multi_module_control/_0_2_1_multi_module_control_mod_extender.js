@@ -37,8 +37,8 @@ $.extend( CZRMultiModuleControlMths, {
                     //ADD A MODULE COLUMN STATE OBSERVER
                     module.modColumn = new api.Value();
                     module.modColumn.set( constructorOptions.column_id );
-
-                    module.modColumn.bind( function(to, from) {
+                    //React to a module column change. Typically fired when moving a module from one column to another.
+                    module.modColumn.bind( function( to, from ) {
                           console.log('MODULE ' + module.id + ' HAS BEEN MOVED IN COLUMN', to );
                           console.log('module.itemCollection()', module.itemCollection() );
                           console.log( 'module()', module() );
@@ -48,7 +48,21 @@ $.extend( CZRMultiModuleControlMths, {
 
                           _new_model.column_id = to;
 
-                          module.set( _new_model );
+                          //When the module value changes, here's what happens :
+                          //IN THE MODULE COLLECTION CONTROL / SETTING
+                          //1) the module reacts and inform the control.czr_moduleCollection()
+                          //2) the control.czr_moduleCollection() reacts and inform the 'module-collection' setting
+                          //3) the module-collection setting react and inform the relevant column.columnModuleCollection() instance with the syncColumn() method
+                          //
+                          //IN THE SEKTIONS CONTROL / SETTING
+                          //4) the column.columnModuleCollection() instance reacts and inform the column() instance
+                          //5) the column() instance reacts and inform the sektion module.czr_columnCollection() instance
+                          //6) the module.czr_columnCollection() instance reacts and inform the relevant sektion() instance
+                          //7) the sektion() instance reacts and inform the itemCollection() (=> a sektion() is actually an item )
+                          //8) the itemCollection() reacts and inform its module() instance
+                          //9) the module() instance reacts and inform the moduleCollection() instance
+                          //10) the control.czr_moduleCollection() instance reacts and inform the 'sektions' setting
+                          module.set( _new_model, { target_column : to, source_column : from } );
                           console.log( 'module() AFTER', module() );
                           //var updatedModuleCollection = $.extend( true, [], module.control.czr_moduleCollection() );
                           //api(module.control.id).set( module.control.filterModuleCollectionBeforeAjax( updatedModuleCollection ) );

@@ -28,84 +28,43 @@ $.extend( CZRSektionMths, {
         });//dragula
 
 
-        //react to drag start
-        module.modsDragInstance.on('drop', function(el, target, source, sibling ) {
-              console.log('element ',  el , ' has been droped in :', target );
-              console.log('source is ' , source , ' sibling is : ' , sibling );
+        //react to drag events
+       module.modsDragInstance.on('drag', function( el, source ){
+                //display the fake container to all closed sek items
+                module.czr_Item.each( function( _sektion ){
+                      _sektion.container.toggleClass('czr-show-fake-container', 'closed' == _sektion.czr_ItemState() );
+                });
+        }).on('dragend', function( el, source ){
+                //display the fake container to all closed sek items
+                module.czr_Item.each( function( _sektion ){
+                      _sektion.container.removeClass('czr-show-fake-container');
+                });
+        }).on('drop', function(el, target, source, sibling ) {
               var _dropped_module_id = $(el).attr('data-module-id'),
                   _target_col = $(target).closest('.czr-column').attr('data-id'),
-                  _source_col = $(source).closest('.czr-column').attr('data-id');
+                  _source_col = $(source).closest('.czr-column').attr('data-id'),
+                  is_reorder = _target_col == _source_col;
 
-              //reorder case
-              if ( _target_col == _source_col ) {
-
+              if ( is_reorder ) {
+                  module.reorderModulesInColumn( _target_col );
               } else {
                   module.control.getSyncCollectionControl().czr_Module( _dropped_module_id ).modColumn.set( _target_col );
               }
-              //column change case
-              console.log( 'ALORS : ', _dropped_module_id, _target_col, _source_col );
         });
-  },
 
-
-  initDragula : function() {
-          var module = this;
-
-          //instantiate dragula without container => they will be pushed on sektion items instantiation
-          module.dragInstance = dragula({
-              moves: function (el, source, handle, sibling) {
-                  console.log("handle.className === 'czr-column'", handle.className === 'czr-column');
-                   console.log('in moves cb', el, source, handle, sibling );
-                  return handle.className === 'czr-column';
-                  //return handle.className === 'czr-column';
-                  // var is_column = $(handle).parents('.czr-column').length > 0 || $(handle).hasClass('czr-column') || $(handle).hasClass('czr-column-wrapper');
-                  // console.log(is_column, $(handle).parents('.czr-column').length );
-                  // if (  ! is_column ) {
-                  //   console.log('NOT DRAGGABLE');
-                  //   return;
-                  // }
-
-                  // return true; // modules are always draggable by default
-              },
-              // invalidTarget : function(el, handle) {
-              //     console.log('invalidTarget', el, handle );
-              //     return false;
-              // },
-              isContainer : function( el ) {
-                //console.log('isContainer?', el);
-                return false;
+        //expand a closed sektion on over
+        module.modsDragInstance.on('over', function( el, container, source ) {
+              console.log('ON OVER', el, container, source );
+              if ( $(container).hasClass('czr-dragula-fake-container') ) {
+                  //get the sekItem id
+                  _target_sekId = $(container).closest('[data-id]').attr('data-id');
+                  console.log( 'taget sek', _target_sekId );
+                  module.czr_Item(_target_sekId).czr_ItemState.set('expanded_noscroll');
               }
-            }
-          );
+        });
 
-
-          //expand a closed sektion on over
-          module.dragInstance.on('over', function( el, container, source ) {
-                if ( $(container).hasClass('czr-dragula-fake-container') ) {
-                    //get the sekItem id
-                    _target_sekId = $(container).closest('[data-id]').attr('data-id');
-                    console.log( 'taget sek', _target_sekId );
-                    module.czr_Item(_target_sekId).czr_ItemState.set('expanded');
-                }
-          });
-
-
-          //react to drag start
-          module.dragInstance.on('drag', function( el, source ){
-                //display the fake container to all closed sek items
-                module.czr_Item.each( function( _sektion ){
-                    _sektion.container.toggleClass('czr-show-fake-container', 'closed' == _sektion.czr_ItemState() );
-                });
-          }).on('dragend', function( el, source ){
-                //display the fake container to all closed sek items
-                module.czr_Item.each( function( _sektion ){
-                    _sektion.container.removeClass('czr-show-fake-container');
-                });
-          }).on('drop', function(el, target, source, sibling ) {
-                console.log('element ' + el + ' has been droped in :', target );
-          });
-
-          var scroll = autoScroller([
+        //make sure the scroll down is working
+        var scroll = autoScroller([
                      module.control.container.closest('.accordion-section-content')[0]
                   ],
                   {
@@ -115,10 +74,29 @@ $.extend( CZRSektionMths, {
                     scrollWhenOutside: true,
                     autoScroll: function(){
                         //Only scroll when the pointer is down, and there is a child being dragged.
-                        return this.down && module.dragInstance.dragging;
+                        return this.down && module.modsDragInstance.dragging;
                     }
                   }
         );
-  }//initDragula
+  },
 
+  reorderModulesInColumn : function( col_id ) {
+        var module = this,
+        //get the updated collection from the DOM and update the column module collection
+            _new_dom_module_collection = module.czr_Column( col_id  ).getColumnModuleCollectionFromDom( col_id  );
+
+        module.czr_Column( col_id ).updateColumnModuleCollection( { collection : _new_dom_module_collection } );
+  },
+
+  //@param module obj
+  //@param source col string
+  //@param target column string
+  moveModuleFromTo : function( moved_module, source_column, target_column ) {
+        var module = this,
+            _new_dom_module_collection = module.czr_Column( target_column ).getColumnModuleCollectionFromDom( source_column );
+        //update the target column collection with the new collection read from the DOM
+        module.czr_Column( target_column ).updateColumnModuleCollection( { collection : _new_dom_module_collection } );
+        //remove module from old column module collection
+        module.czr_Column( source_column ).removeModuleFromColumnCollection( moved_module );
+  }
 });

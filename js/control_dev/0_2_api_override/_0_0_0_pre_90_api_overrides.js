@@ -53,6 +53,37 @@
 
 
 
+  /*****************************************************************************
+  * A "CONTEXT AWARE" SET METHD
+  *****************************************************************************/
+  /**
+  * OVERRIDES BASE api.Value method
+  * => adds the o {} param, allowing to pass additional contextual informations.
+  *
+  * Set the value and trigger all bound callbacks.
+  *
+  * @param {object} to New value.
+  */
+  api.Value.prototype.set = function( to, o ) {
+        var from = this._value;
+
+        to = this._setter.apply( this, arguments );
+        to = this.validate( to );
+
+        // Bail if the sanitized value is null or unchanged.
+        if ( null === to || _.isEqual( from, to ) ) {
+          return this;
+        }
+
+        this._value = to;
+        this._dirty = true;
+
+        this.callbacks.fireWith( this, [ to, from, o ] );
+
+        return this;
+  };
+
+
 
   /*****************************************************************************
   * A SILENT SET METHOD

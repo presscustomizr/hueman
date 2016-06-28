@@ -169,29 +169,21 @@ $.extend( CZRModuleMths, {
   _getSortedDOMItemCollection : function( ) {
           var module = this,
               _old_collection = _.clone( module.itemCollection() ),
-              _new_collection = [],
-              _index = 0;
+              _new_collection = [];
 
           //re-build the collection from the DOM
-          $( '.' + module.control.css_attr.single_item, module.container ).each( function() {
-              var _item = _.findWhere( _old_collection, {id: $(this).attr('data-id') });
-              //do we have a match in the existing collection ?
-              if ( ! _item )
-                return;
+          $( '.' + module.control.css_attr.single_item, module.container ).each( function( _index ) {
+                var _item = _.findWhere( _old_collection, {id: $(this).attr('data-id') });
+                //do we have a match in the existing collection ?
+                if ( ! _item )
+                  return;
 
-              _new_collection[_index] = _item;
-
-              _index ++;
+                _new_collection[_index] = _item;
           });
 
-          //make sure the new collection is not empty...
-          if ( 0 === _new_collection.length )
-              return _old_collection;
-
-          //make sure we have the exact same items as before in the sorted collection
-          if ( ! _.isEmpty( _.difference( _old_collection, _new_collection ) ) )
-              return _old_collection;
-
+          if ( _old_collection.length != _new_collection.length ) {
+              throw new Error('There was a problem when re-building the item collection from the DOM in module : ' + module.id );
+          }
           return _new_collection;
   }
 });//$.extend//CZRBaseControlMths

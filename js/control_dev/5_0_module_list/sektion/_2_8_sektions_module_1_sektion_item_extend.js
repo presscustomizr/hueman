@@ -56,7 +56,7 @@ $.extend( CZRSektionMths, {
                   //instantiate the columns when the sektion item is embedded
                   sekItem.embedded.done(function() {
                         //dragulize sektion when embedded
-                        //sekItem.dragulizeSektion();
+                        sekItem.dragulizeSektion();
                   });
 
 
@@ -79,11 +79,13 @@ $.extend( CZRSektionMths, {
 
 
           dragulizeSektion : function() {
+                  console.log('DRAGULIZE SEKTION');
                   var sekItem = this,
                       module = this.module;
                       _drag_container = $( '.czr-dragula-fake-container', sekItem.container )[0];
 
-                   module.dragInstance.containers.push( _drag_container );
+                   module.modsDragInstance.containers.push( _drag_container );
+                   console.log('module.modsDragInstance.containers', module.modsDragInstance.containers );
           }
   }//Sektion
 

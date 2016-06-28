@@ -18,9 +18,9 @@ $.extend( CZRMultiModuleControlMths, {
 
 
   //cb of : api(control.id).callbacks.
-  syncColumn : function( to, from ) {
+  syncColumn : function( to, from, data ) {
+        console.log('DATA ?', data );
         var control = this;
-
         //MODULE ADDED
         //determine if a module has been added
         var added_mod = _.filter( to, function( _mod, _key ){
@@ -43,19 +43,11 @@ $.extend( CZRMultiModuleControlMths, {
         }
 
         //MODULE HAS BEEN MOVED TO ANOTHER COLUMN
-        if ( _.size(from) == _.size(to) ) {
-            _.each( from, function( _mod, _key ) {
-                    _new_mod = _.findWhere( to, { id : _mod.id} );
-                    if ( _.isEqual( _mod, _new_mod ) )
-                      return;
-                    //update the new column module collection with the new module
-                    control.syncSektionModule().czr_Column( _new_mod.column_id ).updateColumnModuleCollection( { module : _new_mod } );
-
-                    //remove module from old column module collection
-                    control.syncSektionModule().czr_Column( _mod.column_id ).removeModuleFromColumnCollection( _mod );
-              } );
+        if ( _.size(from) == _.size(to) && _.has( data, 'module') && _.has( data, 'source_column') && _.has( data, 'target_column') ) {
+                $.when( control.syncSektionModule().moveModuleFromTo( data.module, data.source_column, data.target_column ) ).done( function() {
+                      control.syncSektionModule().control.trigger('module-moved', { module : data.module, source_column: data.source_column, target_column :data.target_column });
+                } );
         }
-
         control.trigger( 'columns-synchronized', to );
   },
 

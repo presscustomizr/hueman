@@ -47,7 +47,7 @@ $.extend( CZRBaseModuleControlMths, {
           //=> typically used when reordering the collection module with sortable or when a module is removed
           if ( _.has( obj, 'collection' ) ) {
                 //reset the collection
-                control.czr_moduleCollection.set(obj.collection);
+                control.czr_moduleCollection.set( obj.collection, obj.data || {} );
                 return;
           }
 
@@ -65,21 +65,26 @@ $.extend( CZRBaseModuleControlMths, {
                         return;
 
                       //set the new val to the changed property
-                      _new_collection[_ind] =module_api_ready;
+                      _new_collection[_ind] = module_api_ready;
                 });
           }
           //the module has to be added
           else {
                 _new_collection.push(module_api_ready);
           }
-          //Inform the control
-          control.czr_moduleCollection.set( _new_collection );
+
+          //amend the data property with the changed module
+          if ( _.has( obj, 'data') ) {
+              $.extend( obj.data, { module : module_api_ready } );
+          }
+          //Inform the collection
+          control.czr_moduleCollection.set( _new_collection, obj.data || {} );
   },
 
 
 
   //cb of control.czr_moduleCollection.callbacks
-  collectionReact : function( to, from ) {
+  collectionReact : function( to, from, data ) {
         var control = this,
             is_module_removed = _.size(from) > _.size(to),
             is_module_update = _.size(from) == _.size(to);
@@ -96,8 +101,15 @@ $.extend( CZRBaseModuleControlMths, {
             control.czr_Module.remove( _to_remove.id );
         }
         console.log( 'in collection react', to, from );
-        //say it to the setting
-        api(this.id).set( control.filterModuleCollectionBeforeAjax(to) );
+
+        //is there a passed module param ?
+        //if so prepare it for DB
+        if ( _.isObject( data  ) && _.has(data, 'module') ) {
+            data.module = control.prepareModuleForDB( $.extend( true, {}, data.module  ) );
+        }
+
+        //Inform the the setting
+        api(this.id).set( control.filterModuleCollectionBeforeAjax(to), data );
 
 
         //refreshes the preview frame  :

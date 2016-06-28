@@ -149,13 +149,15 @@ $.extend( CZRModuleMths, {
 
 
   //cb of module.callbacks
-  moduleReact : function( to, from ) {
-          console.log('in moduleReact', to, from );
+  moduleReact : function( to, from, o ) {
+          console.log('in moduleReact', to, from, o );
           //cb of : module.callbacks
           var module = this,
               control = module.control,
               is_item_update = ( _.size(from.items) == _.size(to.items) ) && ! _.isEmpty( _.difference(to.items, from.items) ),
-              is_item_collection_sorted = ( _.size(from.items) == _.size(to.items) ) && ! is_item_update;
+              is_column_update = to.column_id != from.column_id,
+              is_item_collection_sorted = ( _.size(from.items) == _.size(to.items) ) && ! is_item_update && ! is_column_update;
+
 
           //Sorted collection case
           if ( is_item_collection_sorted ) {
@@ -180,7 +182,10 @@ $.extend( CZRModuleMths, {
           //Then say it to the module collection
           console.log('IN BASE MODULE INIT REACT', $.extend( true, {}, to ) , control.czr_moduleCollection() );
 
-          control.updateModulesCollection( {module : $.extend( true, {}, to ) });
+          control.updateModulesCollection( {
+                module : $.extend( true, {}, to ),
+                data : o//useful to pass contextual info when a change happens
+          } );
 
           // //Always update the view title
           // module.writeViewTitle(to);
@@ -222,5 +227,4 @@ $.extend( CZRModuleMths, {
 
           return api.czrModuleMap[module.module_type].crud || false;
   }
-
 });//$.extend//CZRBaseControlMths
