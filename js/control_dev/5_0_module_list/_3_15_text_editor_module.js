@@ -24,19 +24,19 @@ $.extend( CZRTextEditorModuleMths, {
             text: ''
           };
 
-          api.section( module.control.section() ).expanded.bind(function(to) {
+          // api.section( module.control.section() ).expanded.bind(function(to) {
 
-            // if ( false !== module.container.length ) {
-            //   //say it*/
-            //   module.container.append( $_module_el );
-            //   module.embedded.resolve();
-            // }
+          //   // if ( false !== module.container.length ) {
+          //   //   //say it*/
+          //   //   module.container.append( $_module_el );
+          //   //   module.embedded.resolve();
+          //   // }
 
-            if ( 'resolved' == module.isReady.state() )
-              return;
+          //   if ( 'resolved' == module.isReady.state() )
+          //     return;
 
-            module.ready();
-          });
+          //   module.ready();
+          // });
   },//initialize
 
 

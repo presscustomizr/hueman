@@ -1044,7 +1044,6 @@ $.extend( CZRInputMths , {
           input.czrTextEditorBinding();
 
           input.czrResizeEditorOnUserRequest();
-          console.log( input.prototype );
   },
 
   czrTextEditorBinding : function() {
@@ -1066,9 +1065,9 @@ $.extend( CZRInputMths , {
                 editor.focus();
               }
           });
-          api.section( input.module.getModuleSection() ).expanded.bind(
-            function( expanded ) {
-              if ( ! expanded )
+          input.module.czr_ModuleState.bind(
+            function( state ) {
+              if ( 'expanded' != state )
                 input.editorExpanded.set( false );
           });
 
@@ -2737,7 +2736,7 @@ $.extend( CZRColumnMths , {
           syncedCollectionControl.trigger(
                 'user-module-candidate',
                 $.extend( defautAPIModuleModel, {
-                      module_type : 'czr_text_module',
+                      module_type : 'czr_text_editor_module', //'czr_text_module',
                       column_id : column.id,//a string
                       sektion : column.sektion,//instance
                       sektion_id : column.sektion.id,
@@ -3905,14 +3904,6 @@ $.extend( CZRTextEditorModuleMths, {
             id : '',
             text: ''
           };
-
-          api.section( module.control.section() ).expanded.bind(function(to) {
-
-            if ( 'resolved' == module.isReady.state() )
-              return;
-
-            module.ready();
-          });
   },//initialize
 
 
@@ -3953,8 +3944,8 @@ $.extend( CZRBaseModuleControlMths, {
           control.czr_moduleCollection = new api.Value();
           control.czr_moduleCollection.set([]);
           control.moduleCollectionReady = $.Deferred();
-          control.moduleCollectionReady.done( function() {
-                console.log('MODULE COLLECTION READY IN CONTROL : ', control.id );
+          control.moduleCollectionReady.done( function( obj ) {
+                console.log('MODULE COLLECTION READY IN CONTROL : ', control.id , obj );
                 control.czr_moduleCollection.callbacks.add( function() { return control.moduleCollectionReact.apply( control, arguments ); } );
           } );
           if ( control.isMultiModuleControl( options.params ) ) {
@@ -4216,12 +4207,14 @@ var CZRBaseModuleControlMths = CZRBaseModuleControlMths || {};
 
 $.extend( CZRBaseModuleControlMths, {
   registerModulesOnInit : function( sektion_module_instance ) {
-          var control = this;
+          var control = this,
+              _orphan_mods = [];
 
           _.each( control.getSavedModules() , function( _mod, _key ) {
                   if ( ! sektion_module_instance.czr_Item.has( _mod.sektion_id ) ) {
-                    console.log('Warning Module ' + _mod.id + ' has no sektion to be embedded to.');
-                    return;
+                      console.log('Warning Module ' + _mod.id + ' is orphan : it has no sektion to be embedded to. It Must be removed.');
+                      _orphan_mods.push(_mod);
+                      return;
                   }
 
                   var _sektion = sektion_module_instance.czr_Item( _mod.sektion_id );
@@ -4231,6 +4224,11 @@ $.extend( CZRBaseModuleControlMths, {
                   }
                   $.extend( _mod, {sektion : _sektion} );
                   control.updateModulesCollection( {module : _mod } );
+          });
+          control.moduleCollectionReady.then( function() {
+                if ( ! _.isEmpty( _orphan_mods ) ) {
+                    control.moduleCollectionReact( control.czr_moduleCollection(), [], { orphans_module_removal : _orphan_mods } );
+                }
           });
   },
   updateModulesCollection : function( obj ) {
@@ -4366,6 +4364,9 @@ $.extend( CZRMultiModuleControlMths, {
 
   },
   syncColumn : function( to, from, data ) {
+        if ( _.has( data, 'orphans_module_removal' ) )
+          return;
+
         var control = this;
         var added_mod = _.filter( to, function( _mod, _key ){
             return ! _.findWhere( from, { id : _mod.id } );
@@ -4406,7 +4407,6 @@ $.extend( CZRMultiModuleControlMths, {
         _new_collection = _.filter( _new_collection, function( _mod ) {
               return _mod.id != module.id;
         } );
-
         control.czr_moduleCollection.set( _new_collection );
   }
 

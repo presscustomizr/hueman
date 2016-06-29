@@ -20,10 +20,12 @@ $.extend( CZRBaseModuleControlMths, {
           //let's store the state of the initial module collection
           control.moduleCollectionReady = $.Deferred();
           //and listen to changes when it's ready
-          control.moduleCollectionReady.done( function() {
-                console.log('MODULE COLLECTION READY IN CONTROL : ', control.id );
+          control.moduleCollectionReady.done( function( obj ) {
+                console.log('MODULE COLLECTION READY IN CONTROL : ', control.id , obj );
                 //LISTEN TO MODULE COLLECTION
                 control.czr_moduleCollection.callbacks.add( function() { return control.moduleCollectionReact.apply( control, arguments ); } );
+
+                //control.removeModule( _mod );
           } );
 
           //FOR MULTI MODULE CONTROL : Stores the module instance of the synchronized sektion

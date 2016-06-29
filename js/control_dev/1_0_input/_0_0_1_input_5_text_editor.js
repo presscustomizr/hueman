@@ -37,7 +37,6 @@ $.extend( CZRInputMths , {
           input.czrTextEditorBinding();
 
           input.czrResizeEditorOnUserRequest();
-          console.log( input.prototype );
   },
 
   czrTextEditorBinding : function() {
@@ -60,11 +59,10 @@ $.extend( CZRInputMths , {
               }
           });
 
-
           //on this module section close close the editor and unbind this input
-          api.section( input.module.getModuleSection() ).expanded.bind(
-            function( expanded ) {
-              if ( ! expanded )
+          input.module.czr_ModuleState.bind(
+            function( state ) {
+              if ( 'expanded' != state )
                 input.editorExpanded.set( false );
           });
 

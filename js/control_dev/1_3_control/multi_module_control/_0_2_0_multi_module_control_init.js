@@ -11,6 +11,14 @@ $.extend( CZRMultiModuleControlMths, {
           //=> synchronize the columns in the sektion setting
           api(id).callbacks.add( function() { return control.syncColumn.apply( control, arguments ); } );
 
+          //when the synchronized sektion module sends its instance, check the consistency with the module-collection setting
+          //=> each modules of the module-collection setting should be present in a column of the synchronized sektion
+          // control.syncSektionModule().bind( function( sektion_module_instance ) {
+          //     sektion_module_instance.czr_columnCollection.each( function( _col ) {
+          //           console.log('_col.modules', _col.modules);
+          //     });
+          // });
+
           api.CZRBaseModuleControl.prototype.initialize.call( control, id, options );
 
   },
@@ -19,6 +27,11 @@ $.extend( CZRMultiModuleControlMths, {
 
   //cb of : api(control.id).callbacks.
   syncColumn : function( to, from, data ) {
+        //ORPHANS MODULE REMOVED ON INIT, VOID()
+        //=> there's no column to synchronize
+        if ( _.has( data, 'orphans_module_removal' ) )
+          return;
+
         var control = this;
         //MODULE ADDED
         //determine if a module has been added
@@ -74,7 +87,6 @@ $.extend( CZRMultiModuleControlMths, {
         _new_collection = _.filter( _new_collection, function( _mod ) {
               return _mod.id != module.id;
         } );
-
         control.czr_moduleCollection.set( _new_collection );
   }
 

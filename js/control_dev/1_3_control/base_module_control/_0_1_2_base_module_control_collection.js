@@ -12,13 +12,18 @@ $.extend( CZRBaseModuleControlMths, {
   //Multi Module method
   //fired when the main sektion module has synchronised its if with the module-collection control
   registerModulesOnInit : function( sektion_module_instance ) {
-          var control = this;
+          var control = this,
+              _orphan_mods = [];
 
           _.each( control.getSavedModules() , function( _mod, _key ) {
+                  //a module previously embedded in a deleted sektion must not be registered
                   if ( ! sektion_module_instance.czr_Item.has( _mod.sektion_id ) ) {
-                    console.log('Warning Module ' + _mod.id + ' has no sektion to be embedded to.');
-                    return;
+                      console.log('Warning Module ' + _mod.id + ' is orphan : it has no sektion to be embedded to. It Must be removed.');
+                      _orphan_mods.push(_mod);
+                      return;
                   }
+                  //@todo handle the case of a module embedded in a previously deleted column
+                  //=> register it in the first column of the sektion ?
 
                   var _sektion = sektion_module_instance.czr_Item( _mod.sektion_id );
 
@@ -32,6 +37,15 @@ $.extend( CZRBaseModuleControlMths, {
                   //push it to the collection of the module-collection control
                   //=> the instantiation will take place later, on column instantiation
                   control.updateModulesCollection( {module : _mod } );
+          });
+
+          //REMOVE ORPHAN MODULES ON INIT
+          //But only when the module collectionn has been resolved
+          control.moduleCollectionReady.then( function() {
+                //if there are some orphans mods, the module-collection setting must be updated now.
+                if ( ! _.isEmpty( _orphan_mods ) ) {
+                    control.moduleCollectionReact( control.czr_moduleCollection(), [], { orphans_module_removal : _orphan_mods } );
+                }
           });
   },
 
