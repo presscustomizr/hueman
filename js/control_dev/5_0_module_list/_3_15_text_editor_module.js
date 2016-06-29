@@ -10,7 +10,7 @@ $.extend( CZRTextEditorModuleMths, {
 
           //extend the module with new template Selectors
           $.extend( module, {
-                itemInputList : 'czr-module-text_editor-view-content'
+                itemInputList : 'czr-module-text_editor-item-content'
           } );
 
           //EXTEND THE DEFAULT CONSTRUCTORS FOR INPUT
@@ -23,25 +23,6 @@ $.extend( CZRTextEditorModuleMths, {
             id : '',
             text: ''
           };
-
-          //this is a static module. We only have one item
-          //init module item if needed.
-          if ( _.isEmpty( options.items ) ) {
-                var def = _.clone( module.defaultItemModel );
-                module.savedItems = [ $.extend( def, { id : module.id } ) ];
-          } else {
-                module.savedItems = options.items;
-          }
-
-          // module.embedded = $.Deferred();
-
-          // var module_wrapper_tmpl = wp.template( module.singleModuleWrapper ),
-          //   tmpl_data = {
-          //       id : module.id,
-          //       type : module.module_type
-          //   };
-
-          // var $_module_el = $(  module_wrapper_tmpl( tmpl_data ) );
 
           api.section( module.control.section() ).expanded.bind(function(to) {
 

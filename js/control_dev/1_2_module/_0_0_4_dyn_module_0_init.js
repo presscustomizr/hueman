@@ -112,20 +112,19 @@ $.extend( CZRDynModuleMths, {
           var module = this,
               item = module.czr_preItem('item').get();
 
-          console.log('in add item', module.czr_preItem('item').get() );
-
           if ( _.isEmpty(item) || ! _.isObject(item) ) {
             throw new Error('addItem : an item should be an object and not empty. In : ' + module.id +'. Aborted.' );
           }
 
-          module.instantiateItem( item, true ); //true == Added by user
+          //instantiates and fires ready
+          module.instantiateItem( item, true ).ready(); //true == Added by user
 
           module.toggleSuccessMessage('on');
           setTimeout( function() {
                 module.czr_preItem('view_status').set( 'closed');
                 module.czr_preItem('item').set( module.getDefaultModel() );
                 module.toggleSuccessMessage('off').destroyPreItemView();
-          } , 2500 );
+          } , 2000 );
 
           module.trigger('item_added', item );
           //module.doActions( 'item_added_by_user' , module.container, { item : item , dom_event : obj.dom_event } );

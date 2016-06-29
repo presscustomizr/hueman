@@ -32,46 +32,46 @@ $.extend( CZRItemMths , {
 
         //set initial values
         var _initial_model = $.extend( item.defaultItemModel, options.initial_item_model );
+
         //this won't be listened to at this stage
         item.set( _initial_model );
 
 
 
-        //ITEM WRAPPER VIEW SETUP
-        //defer actions on item view embedded
-        item.embedded.done( function() {
-              //define the item view DOM event map
-              //bind actions when the item is embedded : item title, etc.
-              item.itemWrapperViewSetup( _initial_model );
-        });
+        //ITEM IS READY
+        //1) push it to the module item collection
+        //2) observe its changes
+        item.isReady.done( function() {
+              //push it to the collection
+              item.module.updateItemsCollection( { item : item.get() } );
+              //listen to each single item change
+              item.callbacks.add( function() { return item.itemReact.apply(item, arguments ); } );
 
-
-
-
-        //INPUTS SETUP
-        //=> when the item content has been rendered. Typically on item expansion for a multi-items module.
-        item.contentRendered.done( function() {
-              //create the collection of inputs if needed
-              if ( ! _.has(item, 'czr_Input') ) {
-                  item.setupInputCollection();
+              //When shall we render the item ?
+              //If the module is part of a simple control, the item can be render now,
+              //If the module is part of a sektion, then the item will be rendered on module edit.
+              if ( ! item.module.isInSektion() ) {
+                    item.mayBeRenderItemWrapper();
               }
-        });
 
-        //When shall we render the item ?
-        //If the module is part of a simple control, the item can be render now,
-        //If the module is part of a sektion, then the item will be rendered on module edit.
-        if ( ! item.module.isInSektion() ) {
-              item.mayBeRenderItemWrapper();
-        }
+              //ITEM WRAPPER VIEW SETUP
+              //defer actions on item view embedded
+              item.embedded.done( function() {
+                    //define the item view DOM event map
+                    //bind actions when the item is embedded : item title, etc.
+                    item.itemWrapperViewSetup( _initial_model );
+              });
 
-        //initialize to the provided value
-        //the item model is a collection inputs
-        //It is populated on init ony => no input can be added dynamically afterwards
-        item.bind('input_collection_populated', function( input_collection ) {
-              //Setup individual item listener
-              item.callbacks.add( function() { return item.itemInternalReact.apply(item, arguments ); } );
-        });
 
+              //INPUTS SETUP
+              //=> when the item content has been rendered. Typically on item expansion for a multi-items module.
+              item.contentRendered.done( function() {
+                    //create the collection of inputs if needed
+                    if ( ! _.has(item, 'czr_Input') )
+                      item.setupInputCollectionFromDOM();
+              });
+
+        });//item.isReady.done()
 
         //if an item is manually added : open it
         // if ( item.is_added_by_user ) {
@@ -151,14 +151,13 @@ $.extend( CZRItemMths , {
           //react to the item state changes
           item.czr_ItemState.callbacks.add( function( to, from ) {
               //toggle on view state change
-              item.toggleViewExpansion.apply(item, arguments );
+              item.toggleItemExpansion.apply(item, arguments );
           });
+
 
           //When do we render the item content ?
           //If this is a multi-item module, let's render each item content when they are expanded.
           //In the case of a single item module, we can render the item content now.
-          console.log('IS MULTI ITEM ?', item.module.isMultiItem() );
-
           var _updateItemContentDeferred = function( $_content) {
                 //update the $.Deferred state
                 if ( ! _.isUndefined( $_content ) && false !== $_content.length )
@@ -195,18 +194,25 @@ $.extend( CZRItemMths , {
   },
 
 
-  //React to a single item change
-  itemInternalReact : function( to, from ) {
-          console.log('IN ITEM INTERNAL REACT', to ,from );
-          var item = this;
-          //Always update the view title
-          item.writeItemViewTitle(to);
 
-          //send item to the preview. On update only, not on creation.
-          if ( ! _.isEmpty(from) || ! _.isUndefined(from) ) {
-            console.log('DO WE REALLY NEED TO SEND THIS TO THE PREVIEW WITH _sendItem(to, from) ?');
-            item._sendItem(to, from);
-          }
-  }
+  //React to a single item change
+  //cb of module.czr_Item(item.id).callbacks
+  itemReact : function( to, from ) {
+        var item = this,
+            module = item.module;
+
+        //update the collection
+        module.updateItemsCollection( {item : to });
+
+        //Always update the view title
+        item.writeItemViewTitle(to);
+
+        //send item to the preview. On update only, not on creation.
+        if ( ! _.isEmpty(from) || ! _.isUndefined(from) ) {
+          console.log('DO WE REALLY NEED TO SEND THIS TO THE PREVIEW WITH _sendItem(to, from) ?');
+          item._sendItem(to, from);
+        }
+  },
+
 
 });//$.extend

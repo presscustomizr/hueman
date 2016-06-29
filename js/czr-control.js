@@ -1273,20 +1273,21 @@ $.extend( CZRItemMths , {
         item.defaultItemModel = _.clone( options.defaultItemModel ) || { id : '', title : '' };
         var _initial_model = $.extend( item.defaultItemModel, options.initial_item_model );
         item.set( _initial_model );
-        item.embedded.done( function() {
-              item.itemWrapperViewSetup( _initial_model );
-        });
-        item.contentRendered.done( function() {
-              if ( ! _.has(item, 'czr_Input') ) {
-                  item.setupInputCollection();
+        item.isReady.done( function() {
+              item.module.updateItemsCollection( { item : item.get() } );
+              item.callbacks.add( function() { return item.itemReact.apply(item, arguments ); } );
+              if ( ! item.module.isInSektion() ) {
+                    item.mayBeRenderItemWrapper();
               }
-        });
-        if ( ! item.module.isInSektion() ) {
-              item.mayBeRenderItemWrapper();
-        }
-        item.bind('input_collection_populated', function( input_collection ) {
-              item.callbacks.add( function() { return item.itemInternalReact.apply(item, arguments ); } );
-        });
+              item.embedded.done( function() {
+                    item.itemWrapperViewSetup( _initial_model );
+              });
+              item.contentRendered.done( function() {
+                    if ( ! _.has(item, 'czr_Input') )
+                      item.setupInputCollectionFromDOM();
+              });
+
+        });//item.isReady.done()
 
   },//initialize
   ready : function() {
@@ -1334,10 +1335,8 @@ $.extend( CZRItemMths , {
           ];
           item.writeItemViewTitle();
           item.czr_ItemState.callbacks.add( function( to, from ) {
-              item.toggleViewExpansion.apply(item, arguments );
+              item.toggleItemExpansion.apply(item, arguments );
           });
-          console.log('IS MULTI ITEM ?', item.module.isMultiItem() );
-
           var _updateItemContentDeferred = function( $_content) {
                 if ( ! _.isUndefined( $_content ) && false !== $_content.length )
                     item.contentRendered.resolve();
@@ -1367,20 +1366,22 @@ $.extend( CZRItemMths , {
                 item //instance where to look for the cb methods
           );
   },
-  itemInternalReact : function( to, from ) {
-          console.log('IN ITEM INTERNAL REACT', to ,from );
-          var item = this;
-          item.writeItemViewTitle(to);
-          if ( ! _.isEmpty(from) || ! _.isUndefined(from) ) {
-            console.log('DO WE REALLY NEED TO SEND THIS TO THE PREVIEW WITH _sendItem(to, from) ?');
-            item._sendItem(to, from);
-          }
-  }
+  itemReact : function( to, from ) {
+        var item = this,
+            module = item.module;
+        module.updateItemsCollection( {item : to });
+        item.writeItemViewTitle(to);
+        if ( ! _.isEmpty(from) || ! _.isUndefined(from) ) {
+          console.log('DO WE REALLY NEED TO SEND THIS TO THE PREVIEW WITH _sendItem(to, from) ?');
+          item._sendItem(to, from);
+        }
+  },
+
 
 });//$.extend//extends api.Value
 var CZRItemMths = CZRItemMths || {};
 $.extend( CZRItemMths , {
-  setupInputCollection : function() {
+  setupInputCollectionFromDOM : function() {
         var item = this,
             module = item.module;
         item.czr_Input = new api.Values();
@@ -1396,15 +1397,15 @@ $.extend( CZRItemMths , {
         else
           initial_item_model = $.extend( item.defaultItemModel, initial_item_model );
 
-        var input_collection = {};
-        $( '.'+module.control.css_attr.sub_set_wrapper, item.container).each( function( _index ) {
-              if ( ! $(this).find('[data-type]').length ) {
-                  console.log('No data-type found in the input wrapper index : ' + _index + ' in item : '+ item.id );
-                  return;
-              }
-              var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index,
+        var dom_item_model = {};
+        $( '.' + module.control.css_attr.sub_set_wrapper, item.container).each( function( _index ) {
+              var _id = $(this).find('[data-type]').attr('data-type'),
                   _value = _.has( initial_item_model, _id) ? initial_item_model[_id] : '';
-
+              if ( _.isUndefined( _id ) || _.isEmpty( _id ) )
+                return;
+              if ( ! _.has( initial_item_model, _id ) ) {
+                    throw new Error('The item property : ' + _id + ' has been found in the DOM but not in the item model : '+ item.id + '. The input can not be instantiated.');
+              }
               item.czr_Input.add( _id, new item.inputConstructor( _id, {
                     id : _id,
                     type : $(this).attr('data-input-type'),
@@ -1413,17 +1414,16 @@ $.extend( CZRItemMths , {
                     item : item,
                     module : module
               } ) );
-              input_collection[_id] = _value;
+              dom_item_model[_id] = _value;
+
         });//each
-        item.trigger('input_collection_populated', $.extend( initial_item_model, input_collection ));
   },
+
 
   removeInputCollection : function() {
         var item = this;
         item.czr_Input.each( function( input ) {
-            console.log('remove input', input.id, item.czr_Input(input.id) );
             item.czr_Input.remove( input.id );
-            console.log('input removed ?', item.czr_Input(input.id) );
         });
   }
 
@@ -1531,14 +1531,13 @@ $.extend( CZRItemMths , {
   _getViewState : function() {
           return -1 == this.czr_ItemState().indexOf('expanded') ? 'closed' : 'expanded';
   },
-  toggleViewExpansion : function( to, from, duration ) {
+  toggleItemExpansion : function( status, from, duration ) {
           var item = this,
               module = this.module;
           $( '.' + module.control.css_attr.item_content , item.container ).first().slideToggle( {
                 duration : duration || 200,
                 done : function() {
                       var _is_expanded = 'closed' != status;
-
                       item.container.toggleClass('open' , _is_expanded );
                       module.closeAllAlerts();
                       var $_edit_icon = $(this).siblings().find('.' + module.control.css_attr.edit_view_btn );
@@ -1604,13 +1603,11 @@ $.extend( CZRModuleMths, {
 
   initialize: function( id, constructorOptions ) {
           if ( _.isUndefined(constructorOptions.control) || _.isEmpty(constructorOptions.control) ) {
-            throw new Error('No control assigned to module ' + id + '. Aborting');
+              throw new Error('No control assigned to module ' + id );
           }
-          api.Value.prototype.initialize.call( this, null, constructorOptions );
-
           var module = this;
+          api.Value.prototype.initialize.call( this, null, constructorOptions );
           module.isReady = $.Deferred();
-          module.savedItemCollectionReady = $.Deferred();
           $.extend( module, constructorOptions || {} );
           $.extend( module, {
                 crudModulePart : 'czr-crud-module-part',
@@ -1618,7 +1615,6 @@ $.extend( CZRModuleMths, {
                 ruItemPart : 'czr-ru-item-part',//read, update
                 itemInputList : '',//is specific for each crud module
           } );
-          module.set(constructorOptions);
           module.embedded = $.Deferred();
           if ( ! module.isInSektion() ) {
                 module.container = $( module.control.selector );
@@ -1634,7 +1630,6 @@ $.extend( CZRModuleMths, {
           });
           module.itemCollection = new api.Value();
           module.itemCollection.set([]);
-          module.savedItems = constructorOptions.items;
           module.defaultAPIitemModel = {
                 id : '',
                 initial_item_model : {},
@@ -1647,20 +1642,18 @@ $.extend( CZRModuleMths, {
           module.itemConstructor = api.CZRItem;
           module.czr_Item = new api.Values();
           module.inputConstructor = api.CZRInput;
-
           module.isReady.done( function() {
-                console.log('MODULE ' + module.id + ' IS READY');
+                module.set( module.initializeModuleModel( constructorOptions ) );
                 if (  ! module.control.isModuleRegistered( module.id ) ) {
-                    console.log('PUSH MODULE IN THE COLLECTION', module.id, constructorOptions );
                     module.control.updateModulesCollection( { module : constructorOptions } );
                 }
-                module.populateSavedItemCollection();
-                if ( module.isMultiItem() )
-                  module._makeItemsSortable();
-
-                module.savedItemCollectionReady.done( function() {
+                $.when( module.populateSavedItemCollection() ).done( function() {
                       module.itemCollection.callbacks.add( function() { return module.itemCollectionReact.apply(module, arguments ); } );
                       module.callbacks.add( function() { return module.moduleReact.apply(module, arguments ); } );
+                      if ( module.isMultiItem() )
+                        module._makeItemsSortable();
+
+                      console.log('MODULE ' + module.id + ' IS READY');
                 });
 
           });
@@ -1670,6 +1663,16 @@ $.extend( CZRModuleMths, {
           var module = this;
           module.isReady.resolve();
   },
+  initializeModuleModel : function( constructorOptions ) {
+          var module = this;
+          if ( ! module.isMultiItem() && ! module.isCrud() ) {
+                if ( _.isEmpty( constructorOptions.items ) ) {
+                      var def = _.clone( module.defaultItemModel );
+                      constructorOptions.items = [ $.extend( def, { id : module.id } ) ];
+                }
+          }
+          return constructorOptions;
+  },
   itemCollectionReact : function( to, from ) {
           var module = this,
               _current_model = module(),
@@ -1678,7 +1681,6 @@ $.extend( CZRModuleMths, {
           module.set( _new_model );
   },
   moduleReact : function( to, from, o ) {
-          console.log('in moduleReact', to, from, o );
           var module = this,
               control = module.control,
               is_item_update = ( _.size(from.items) == _.size(to.items) ) && ! _.isEmpty( _.difference(to.items, from.items) ),
@@ -1691,8 +1693,6 @@ $.extend( CZRModuleMths, {
                 module.closeAllViews();
                 module.closeAllAlerts();
           }
-          console.log('IN BASE MODULE INIT REACT', $.extend( true, {}, to ) , control.czr_moduleCollection() );
-
           control.updateModulesCollection( {
                 module : $.extend( true, {}, to ),
                 data : o//useful to pass contextual info when a change happens
@@ -1726,32 +1726,30 @@ var CZRModuleMths = CZRModuleMths || {};
 $.extend( CZRModuleMths, {
   populateSavedItemCollection : function() {
           var module = this;
-
-          console.log('module.savedItems', module.savedItems );
-          _.each( module.savedItems, function( item, key ) {
-                item = module._normalizeItem(item, _.has( item, 'id' ) ? item.id : key );
-                if ( false === item ) {
-                  throw new Error('populateItemCollection : an item could not be added in : ' + module.id );
-                }
-                module.instantiateItem(item);
+          if ( ! _.isArray( module().items ) ) {
+              throw new Error( 'The saved items collection must be an array in module ' + module.id );
+          }
+          _.each( module().items, function( item_candidate , key ) {
+                module.instantiateItem( item_candidate ).ready();
           });
-          module.savedItemCollectionReady.resolve();
-
-          return this;
   },
 
 
   instantiateItem : function( item, is_added_by_user ) {
           if ( ! _.has( item,'id') ) {
-            throw new Error('CZRModule::instantiateItem() : an item has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
+            throw new Error('CZRModule::instantiateItem() : an item has no id and could not be added in the collection of : ' + this.id );
           }
           var module = this;
           item_candidate = module.prepareItemForAPI( item );
-          module.czr_Item.add( item.id, new module.itemConstructor( item.id, item_candidate ) );
-          module.updateItemsCollection( { item : module.getInitialItemModel( item ) } );
-          module.czr_Item(item.id).callbacks.add( function() { return module.itemReact.apply(module, arguments ); } );
-          module.czr_Item(item.id).ready();
-          module.trigger('item_instanciated', { item: item, is_added_by_user : is_added_by_user || false } );
+          if ( module.czr_Item.has( item_candidate.id ) ) {
+              throw new Error('CZRModule::instantiateItem() : the following item id ' + item_candidate.id + ' already exists in module.czr_Item() for module ' + this.id  );
+          }
+          module.czr_Item.add( item_candidate.id, new module.itemConstructor( item_candidate.id, item_candidate ) );
+
+          if ( ! module.czr_Item.has( item_candidate.id ) ) {
+              throw new Error('CZRModule::instantiateItem() : instantiation failed for item id ' + item_candidate.id + ' for module ' + this.id  );
+          }
+          return module.czr_Item( item_candidate.id );
   },
   prepareItemForAPI : function( item_candidate ) {
           var module = this,
@@ -1764,20 +1762,19 @@ $.extend( CZRModuleMths, {
                 var _candidate_val = item_candidate[_key];
                 switch( _key ) {
                       case 'id' :
-                          if ( _.isUndefined( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
-                              api_ready_item[_key] = module._initNewItem( item_candidate || {} ).id;
+                          if ( _.isEmpty( _candidate_val ) ) {
+                              api_ready_item[_key] = module.generateItemId( module.module_type );
                           } else {
-                              if ( ! module._isItemIdPossible( _candidate_val ) )
-                                api_ready_item[_key] = module._initNewItem( item_candidate || {} ).id;
-                              else
-                                api_ready_item[_key] = _candidate_val;
+                              api_ready_item[_key] = _candidate_val;
                           }
                       break;
                       case 'initial_item_model' :
-                          api_ready_item[_key] = module.getInitialItemModel( item_candidate );
-                          if ( ! _.isObject( api_ready_item[_key] ) ) {
-                              throw new Error('prepareitemForAPI : initial_item_model must be an object in :  ' + item_candidate.id);
-                          }
+                          _.each( module.getDefaultModel() , function( _value, _property ) {
+                                if ( ! _.has( item_candidate, _property) )
+                                   item_candidate[_property] = _value;
+                          });
+                          api_ready_item[_key] = item_candidate;
+
                       break;
                       case  'defaultItemModel' :
                           api_ready_item[_key] = _.clone( module.defaultItemModel );
@@ -1793,14 +1790,42 @@ $.extend( CZRModuleMths, {
                       break;
                 }//switch
           });
+          api_ready_item.initial_item_model.id = api_ready_item.id;
+
           return api_ready_item;
   },
-  getInitialItemModel : function( item ) {
-          return item;
+  generateItemId : function( module_type, key, i ) {
+          i = i || 1;
+          if ( i > 100 ) {
+                throw new Error('Infinite loop when generating of a module id.');
+          }
+          var module = this;
+          key = key || module._getNextItemKeyInCollection();
+          var id_candidate = module_type + '_' + key;
+          if ( ! _.has(module, 'itemCollection') || ! _.isArray( module.itemCollection() ) ) {
+                throw new Error('The item collection does not exist or is not properly set in module : ' + module.id );
+          }
+          if ( module.isItemRegistered( id_candidate ) ) {
+            key++; i++;
+            return control.generateItemId( module_type, key, i );
+          }
+          return id_candidate;
   },
-  itemReact : function( to, from ) {
+  _getNextItemKeyInCollection : function() {
+          var module = this,
+            _max_mod_key = {},
+            _next_key = 0;
+          if ( ! _.isEmpty( module.itemCollection() ) ) {
+              _max_mod_key = _.max( module.itemCollection(), function( _mod ) {
+                  return parseInt( _mod.id.replace(/[^\/\d]/g,''), 10 );
+              });
+              _next_key = parseInt( _max_mod_key.id.replace(/[^\/\d]/g,''), 10 ) + 1;
+          }
+          return _next_key;
+  },
+  isItemRegistered : function( id_candidate ) {
         var module = this;
-        module.updateItemsCollection( {item : to });
+        return ! _.isUndefined( _.findWhere( module.itemCollection(), { id : id_candidate}) );
   },
   updateItemsCollection : function( obj ) {
           var module = this,
@@ -1853,17 +1878,6 @@ $.extend( CZRModuleMths, {
           var module = this;
           return $.extend( _.clone( module.defaultItemModel ), { id : id || '' } );
   },
-  _normalizeItem : function( item, key ) {
-          if ( ! _.isObject(item) )
-            return;
-          item = this._initNewItem(item, key);
-          return item;
-  },
-  _isItemIdPossible : function( _id ) {
-          var module = this,
-              _collection = _.clone( module.itemCollection() );
-          return ! _.isEmpty(_id) && ! _.findWhere( _collection, { id : _id });
-  },
   _initNewItem : function( _item , _next_key ) {
           var module = this,
               _new_item = { id : '' },
@@ -1883,10 +1897,10 @@ $.extend( CZRModuleMths, {
           else
             _new_item = this.getDefaultModel( _id );
           if ( _.has(_new_item, 'id') && module._isItemIdPossible(_id) ) {
-            _.map( module.getDefaultModel() , function( value, property ){
-              if ( ! _.has(_new_item, property) )
-                _new_item[property] = value;
-            });
+                _.map( module.getDefaultModel() , function( value, property ){
+                      if ( ! _.has(_new_item, property) )
+                        _new_item[property] = value;
+                });
 
             return _new_item;
           }
@@ -1940,7 +1954,7 @@ $.extend( CZRModuleMths, {
 
           _.each( _filtered_collection, function(_item) {
                 if ( module.czr_Item.has(_item.id) && 'expanded' == module.czr_Item(_item.id)._getViewState(_item.id) )
-                  module.czr_Item(_item.id).czr_ItemState.set( 'closed' ); // => will fire the cb toggleViewExpansion
+                  module.czr_Item(_item.id).czr_ItemState.set( 'closed' ); // => will fire the cb toggleItemExpansion
            } );
   },
   _adjustScrollExpandedBlock : function( $_block_el, adjust ) {
@@ -2063,20 +2077,17 @@ $.extend( CZRDynModuleMths, {
           var module = this,
               item = module.czr_preItem('item').get();
 
-          console.log('in add item', module.czr_preItem('item').get() );
-
           if ( _.isEmpty(item) || ! _.isObject(item) ) {
             throw new Error('addItem : an item should be an object and not empty. In : ' + module.id +'. Aborted.' );
           }
-
-          module.instantiateItem( item, true ); //true == Added by user
+          module.instantiateItem( item, true ).ready(); //true == Added by user
 
           module.toggleSuccessMessage('on');
           setTimeout( function() {
                 module.czr_preItem('view_status').set( 'closed');
                 module.czr_preItem('item').set( module.getDefaultModel() );
                 module.toggleSuccessMessage('off').destroyPreItemView();
-          } , 2500 );
+          } , 2000 );
 
           module.trigger('item_added', item );
           if ( 'postMessage' == api(module.control.id).transport && _.has( obj, 'dom_event') && ! _.has( obj.dom_event, 'isTrigger' ) && ! api.CZR_Helpers.has_part_refresh( module.control.id ) ) {
@@ -2217,48 +2228,6 @@ $.extend( CZRSektionMths, {
             module.initModulesDragula();
 
   },//initialize
-  itemReact : function( to, from ) {
-        var module = this,
-            sektion_candidate = $.extend(true, {}, to);
-        sektion_candidate = module.prepareSekItemForDB( sektion_candidate );
-        api.CZRDynModule.prototype.itemReact.call( module, sektion_candidate );
-  },
-  prepareSekItemForDB : function( sektion_candidate ) {
-        var module = this,
-            db_ready_sektItem = {};
-
-        _.each( module.defaultItemModel, function( _value, _key ) {
-            var _candidate_val = sektion_candidate[_key];
-            switch( _key ) {
-                  case 'id' :
-                      if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
-                          throw new Error('The sekItem id property must be a not empty string');
-                      }
-                      db_ready_sektItem[_key] = _candidate_val;
-                  break;
-                  case 'sektion-layout' :
-                      if ( ! _.isNumber( parseInt( _candidate_val, 10 ) ) || ( parseInt( _candidate_val, 10 ) < 1 ) ) {
-                          throw new Error('The sekItem layout property must be an int number > 0');
-                      }
-                      db_ready_sektItem[_key] = _candidate_val;
-                  break;
-                  case 'columns' :
-                      if ( ! _.isArray( _candidate_val ) ) {
-                          throw new Error('The sekItem columns property must be an array');
-                      }
-                      var _db_ready_columns = [];
-                      _.each( _candidate_val, function( _col ) {
-                            var _db_ready_col = module.prepareColumnForDB(_col);
-                            _db_ready_columns.push( _db_ready_col );
-                      });
-
-                      db_ready_sektItem[_key] = _db_ready_columns;
-                  break;
-            }
-        });//each
-
-        return db_ready_sektItem;
-  },
   removeSektion : function( sekItem ) {
         var module = this;
 
@@ -2283,58 +2252,103 @@ var CZRSektionMths = CZRSektionMths || {};
 $.extend( CZRSektionMths, {
   CZRSektionItem : {
           initialize: function(id, options ) {
-                  var sekItem = this;
-                  api.CZRItem.prototype.initialize.call( sekItem, null, options );
+                var sekItem = this;
+                api.CZRItem.prototype.initialize.call( sekItem, null, options );
 
-                  var _sektion_model = sekItem.get(),
-                      module = options.module;
+                var _sektion_model = sekItem.get(),
+                    module = options.module;
 
-                  if ( ! _.has(_sektion_model, 'sektion-layout') ) {
-                      throw new Error('In Sektion Item initialize, no layout provided for ' + sekItem.id + '.');
-                  }
+                if ( ! _.has(_sektion_model, 'sektion-layout') ) {
+                    throw new Error('In Sektion Item initialize, no layout provided for ' + sekItem.id + '.');
+                }
 
-                  sekItem.isReady.done( function() {
-                        if ( ! _.isEmpty( sekItem.get().columns ) ) {
-                              _.each( sekItem.get().columns , function( _column ) {
-                                    var column_candidate = $.extend( true, {}, _column );//create a deep clone
-                                    module.instantiateColumn( $.extend( column_candidate, { sektion : sekItem } ) );
+                sekItem.isReady.done( function() {
+                      if ( ! _.isEmpty( sekItem.get().columns ) ) {
+                            _.each( sekItem.get().columns , function( _column ) {
+                                  var column_candidate = $.extend( true, {}, _column );//create a deep clone
+                                  module.instantiateColumn( $.extend( column_candidate, { sektion : sekItem } ) );
+                            });
+                      } else {
+                            var _col_nb = parseInt( _sektion_model['sektion-layout'] || 1, 10 );
+                            for( i = 1; i < _col_nb + 1 ; i++ ) {
+                                  var _default_column = $.extend( true, {}, module.defaultDBColumnModel ),
+                                      column_candidate = {
+                                            id : '',//a unique id will be generated when preparing the column for API.
+                                            sektion_id : sekItem.id
+                                      };
+                                      column_candidate = $.extend( _default_column, column_candidate );
+
+                                  module.instantiateColumn( $.extend( column_candidate, { sektion : sekItem } ) );
+                            }//for
+                      }
+                });//sekItem.isReady
+                sekItem.embedded.done(function() {
+                      sekItem.dragulizeSektion();
+                });
+                sekItem.contentRendered.done(function() {
+                        sekItem.czr_ItemState.callbacks.add( function(to) {
+                              if ( 'closed' == to )
+                                return;
+                              sekItem.container.removeClass('czr-show-fake-container');
+                        });
+                });//embedded.done
+
+          },
+          itemReact : function( to, from ) {
+                var sekItem = this,
+                    sektion_candidate = $.extend(true, {}, to);
+                sektion_candidate = sekItem.prepareSekItemForDB( sektion_candidate );
+                api.CZRItem.prototype.itemReact.call( sekItem, sektion_candidate );
+          },
+          prepareSekItemForDB : function( sektion_candidate ) {
+                var sekItem = this,
+                    db_ready_sektItem = {};
+
+                _.each( sekItem.module.defaultItemModel, function( _value, _key ) {
+                    var _candidate_val = sektion_candidate[_key];
+                    switch( _key ) {
+                          case 'id' :
+                              if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
+                                  throw new Error('The sekItem id property must be a not empty string');
+                              }
+                              db_ready_sektItem[_key] = _candidate_val;
+                          break;
+                          case 'sektion-layout' :
+                              if ( ! _.isNumber( parseInt( _candidate_val, 10 ) ) || ( parseInt( _candidate_val, 10 ) < 1 ) ) {
+                                  throw new Error('The sekItem layout property must be an int number > 0');
+                              }
+                              db_ready_sektItem[_key] = _candidate_val;
+                          break;
+                          case 'columns' :
+                              if ( ! _.isArray( _candidate_val ) ) {
+                                  throw new Error('The sekItem columns property must be an array');
+                              }
+                              var _db_ready_columns = [];
+                              _.each( _candidate_val, function( _col ) {
+                                    var _db_ready_col = sekItem.module.prepareColumnForDB(_col);
+                                    _db_ready_columns.push( _db_ready_col );
                               });
-                        } else {
-                              var _col_nb = parseInt( _sektion_model['sektion-layout'] || 1, 10 );
-                              for( i = 1; i < _col_nb + 1 ; i++ ) {
-                                    var _default_column = $.extend( true, {}, module.defaultDBColumnModel ),
-                                        column_candidate = {
-                                              id : '',//a unique id will be generated when preparing the column for API.
-                                              sektion_id : sekItem.id
-                                        };
-                                        column_candidate = $.extend( _default_column, column_candidate );
 
-                                    module.instantiateColumn( $.extend( column_candidate, { sektion : sekItem } ) );
-                              }//for
-                        }
-                  });//sekItem.isReady
-                  sekItem.embedded.done(function() {
-                        sekItem.dragulizeSektion();
-                  });
-                  sekItem.contentRendered.done(function() {
-                          sekItem.czr_ItemState.callbacks.add( function(to) {
-                                if ( 'closed' == to )
-                                  return;
-                                sekItem.container.removeClass('czr-show-fake-container');
-                          });
-                  });//embedded.done
+                              db_ready_sektItem[_key] = _db_ready_columns;
+                          break;
+                    }
+                });//each
 
+                return db_ready_sektItem;
           },
 
 
-          dragulizeSektion : function() {
-                  console.log('DRAGULIZE SEKTION');
-                  var sekItem = this,
-                      module = this.module;
-                      _drag_container = $( '.czr-dragula-fake-container', sekItem.container )[0];
 
-                   module.modsDragInstance.containers.push( _drag_container );
-                   console.log('module.modsDragInstance.containers', module.modsDragInstance.containers );
+
+
+
+
+          dragulizeSektion : function() {
+                var sekItem = this,
+                    module = this.module;
+                    _drag_container = $( '.czr-dragula-fake-container', sekItem.container )[0];
+
+                 module.modsDragInstance.containers.push( _drag_container );
           }
   }//Sektion
 
@@ -2606,10 +2620,8 @@ $.extend( CZRSektionMths, {
               }
         });
         module.modsDragInstance.on('over', function( el, container, source ) {
-              console.log('ON OVER', el, container, source );
               if ( $(container).hasClass('czr-dragula-fake-container') ) {
                   _target_sekId = $(container).closest('[data-id]').attr('data-id');
-                  console.log( 'taget sek', _target_sekId );
                   module.czr_Item(_target_sekId).czr_ItemState.set('expanded_noscroll');
               }
         });
@@ -2619,10 +2631,10 @@ $.extend( CZRSektionMths, {
                   {
                     direction: "vertical",
                     margin: 20,
-                    pixels: 10,
+                    pixels: 100,
                     scrollWhenOutside: true,
                     autoScroll: function(){
-                        return this.down && module.modsDragInstance.dragging;
+                        return module.modsDragInstance.dragging;
                     }
                   }
         );
@@ -2677,7 +2689,6 @@ $.extend( CZRColumnMths , {
                 );
                 var syncCollectionControl = api.control(column.control_id).getSyncCollectionControl();
                 syncCollectionControl.syncSektionModule().modsDragInstance.containers.push( $('.czr-module-collection-wrapper', column.container )[0] );
-                console.log('syncCollectionControl.syncSektionModule().modsDragInstance', syncCollectionControl.syncSektionModule().modsDragInstance );
 
           });
     },
@@ -3010,10 +3021,10 @@ $.extend( CZRSocialModuleMths, {
 var CZRWidgetAreaModuleMths = CZRWidgetAreaModuleMths || {};
 
 $.extend( CZRWidgetAreaModuleMths, {
-  initialize: function( id, options ) {
+  initialize: function( id, constructorOptions ) {
           var module = this;
 
-          api.CZRDynModule.prototype.initialize.call( this, id, options );
+          api.CZRDynModule.prototype.initialize.call( this, id, constructorOptions );
           $.extend( module, {
                 itemPreAddEl : 'czr-module-widgets-pre-add-view-content',
                 itemInputList : 'czr-module-widgets-item-input-list',
@@ -3033,10 +3044,7 @@ $.extend( CZRWidgetAreaModuleMths, {
                   is_search : 'search',
                   is_single : 'single'
           };
-          module.savedItems = _.union(
-                  _.has(module.serverParams, 'default_zones') ? module.serverParams.default_zones : [],
-                  module.savedItems
-          );
+
 
           module.locations = _.has( module.serverParams , 'sidebar_locations') ? module.serverParams.sidebar_locations : {};
           module.defaultItemModel = {
@@ -3084,11 +3092,10 @@ $.extend( CZRWidgetAreaModuleMths, {
                 module.czr_preItemInput('locations').mayBeDisplayModelAlert();
           });
   },
-
-
-
-
-
+  initializeModuleModel : function( constructorOptions ) {
+              constructorOptions.items = _.union( _.has( module.serverParams, 'default_zones' ) ? module.serverParams.default_zones : [], constructorOptions.items );
+              return constructorOptions;
+  },
 
 
 
@@ -3226,9 +3233,9 @@ $.extend( CZRWidgetAreaModuleMths, {
                         item.czr_Input('locations').mayBeDisplayModelAlert();
                   });
           },
-          itemInternalReact : function(to, from) {
+          itemReact : function(to, from) {
                   var item = this;
-                  api.CZRItem.prototype.itemInternalReact.call(item, to, from);
+                  api.CZRItem.prototype.itemReact.call(item, to, from);
 
                   item.writeSubtitleInfos(to);
                   item.updateSectionTitle(to).setModelUpdateTimer();
@@ -3815,17 +3822,10 @@ $.extend( CZRTextModuleMths, {
           $.extend( module, {
                 itemInputList : 'czr-module-text-view-content',
           } );
-          module.itemConstructor = api.CZRItem.extend( module.CZRTextItem );
           module.defaultItemModel = {
                 id : '',
                 text : ''
           };
-          if ( _.isEmpty( options.items ) ) {
-                var def = _.clone( module.defaultItemModel );
-                module.savedItems = [ $.extend( def, { id : module.id } ) ];
-          } else {
-                module.savedItems = options.items;
-          }
   }//initialize
 });//extends api.CZRDynModule
 
@@ -3897,7 +3897,7 @@ $.extend( CZRTextEditorModuleMths, {
           var module = this;
           api.CZRModule.prototype.initialize.call( module, id, options );
           $.extend( module, {
-                itemInputList : 'czr-module-text_editor-view-content'
+                itemInputList : 'czr-module-text_editor-item-content'
           } );
           module.inputConstructor = api.CZRInput.extend( module.CZRTextEditorInputMths || {} );
           module.itemConstructor = api.CZRItem.extend( module.CZRTextEditorItem || {} );
@@ -3905,12 +3905,6 @@ $.extend( CZRTextEditorModuleMths, {
             id : '',
             text: ''
           };
-          if ( _.isEmpty( options.items ) ) {
-                var def = _.clone( module.defaultItemModel );
-                module.savedItems = [ $.extend( def, { id : module.id } ) ];
-          } else {
-                module.savedItems = options.items;
-          }
 
           api.section( module.control.section() ).expanded.bind(function(to) {
 
@@ -3961,7 +3955,7 @@ $.extend( CZRBaseModuleControlMths, {
           control.moduleCollectionReady = $.Deferred();
           control.moduleCollectionReady.done( function() {
                 console.log('MODULE COLLECTION READY IN CONTROL : ', control.id );
-                control.czr_moduleCollection.callbacks.add( function() { return control.collectionReact.apply( control, arguments ); } );
+                control.czr_moduleCollection.callbacks.add( function() { return control.moduleCollectionReact.apply( control, arguments ); } );
           } );
           if ( control.isMultiModuleControl( options.params ) ) {
                 control.syncSektionModule = new api.Value();
@@ -4079,6 +4073,10 @@ $.extend( CZRBaseModuleControlMths, {
 
           var module_api_ready = control.prepareModuleForAPI( module );
           control.czr_Module.add( module_api_ready.id, new constructor( module_api_ready.id, module_api_ready ) );
+
+          if ( ! control.czr_Module.has( module_api_ready.id ) ) {
+              throw new Error('instantiateModule() : instantiation failed for module id ' + module_api_ready.id + ' in control ' + control.id  );
+          }
           return control.czr_Module(module_api_ready.id);
   },
   getModuleConstructor : function( module ) {
@@ -4263,7 +4261,7 @@ $.extend( CZRBaseModuleControlMths, {
           }
           control.czr_moduleCollection.set( _new_collection, obj.data || {} );
   },
-  collectionReact : function( to, from, data ) {
+  moduleCollectionReact : function( to, from, data ) {
         var control = this,
             is_module_removed = _.size(from) > _.size(to),
             is_module_update = _.size(from) == _.size(to);
@@ -4275,7 +4273,6 @@ $.extend( CZRBaseModuleControlMths, {
             _to_remove = _to_remove[0];
             control.czr_Module.remove( _to_remove.id );
         }
-        console.log( 'in collection react', to, from );
         if ( _.isObject( data  ) && _.has(data, 'module') ) {
             data.module = control.prepareModuleForDB( $.extend( true, {}, data.module  ) );
         }
@@ -4369,7 +4366,6 @@ $.extend( CZRMultiModuleControlMths, {
 
   },
   syncColumn : function( to, from, data ) {
-        console.log('DATA ?', data );
         var control = this;
         var added_mod = _.filter( to, function( _mod, _key ){
             return ! _.findWhere( from, { id : _mod.id } );
@@ -4439,15 +4435,11 @@ $.extend( CZRMultiModuleControlMths, {
                     module.modColumn.set( constructorOptions.column_id );
                     module.modColumn.bind( function( to, from ) {
                           console.log('MODULE ' + module.id + ' HAS BEEN MOVED IN COLUMN', to );
-                          console.log('module.itemCollection()', module.itemCollection() );
-                          console.log( 'module()', module() );
-
                           var _current_model = module(),
                               _new_model = $.extend( true, {}, _current_model );
 
                           _new_model.column_id = to;
                           module.set( _new_model, { target_column : to, source_column : from } );
-                          console.log( 'module() AFTER', module() );
                     } );
               }
         });
@@ -4538,7 +4530,7 @@ $.extend( CZRMultiModuleControlMths, {
                                         item.container = $_item_container;
 
                                         $.when( item.renderItemContent() ).done( function() {
-                                            item.setupInputCollection();
+                                            item.setupInputCollectionFromDOM();
                                         });
 
                                         if ( ! item.module.isMultiItem() )

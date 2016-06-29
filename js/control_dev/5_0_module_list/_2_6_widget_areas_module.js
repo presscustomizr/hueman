@@ -3,10 +3,10 @@
 var CZRWidgetAreaModuleMths = CZRWidgetAreaModuleMths || {};
 
 $.extend( CZRWidgetAreaModuleMths, {
-  initialize: function( id, options ) {
+  initialize: function( id, constructorOptions ) {
           var module = this;
 
-          api.CZRDynModule.prototype.initialize.call( this, id, options );
+          api.CZRDynModule.prototype.initialize.call( this, id, constructorOptions );
 
           //extend the module with new template Selectors
           $.extend( module, {
@@ -36,12 +36,6 @@ $.extend( CZRWidgetAreaModuleMths, {
                   is_single : 'single'
           };
 
-          //extend the saved model property
-          //adds the default widget zones
-          module.savedItems = _.union(
-                  _.has(module.serverParams, 'default_zones') ? module.serverParams.default_zones : [],
-                  module.savedItems
-          );
 
           module.locations = _.has( module.serverParams , 'sidebar_locations') ? module.serverParams.sidebar_locations : {};
 
@@ -131,8 +125,12 @@ $.extend( CZRWidgetAreaModuleMths, {
 
 
 
-
-
+  //overrides parent method
+  //adds the default widget zones in the items
+  initializeModuleModel : function( constructorOptions ) {
+              constructorOptions.items = _.union( _.has( module.serverParams, 'default_zones' ) ? module.serverParams.default_zones : [], constructorOptions.items );
+              return constructorOptions;
+  },
 
 
 
@@ -319,9 +317,9 @@ $.extend( CZRWidgetAreaModuleMths, {
 
 
           //extend parent listener
-          itemInternalReact : function(to, from) {
+          itemReact : function(to, from) {
                   var item = this;
-                  api.CZRItem.prototype.itemInternalReact.call(item, to, from);
+                  api.CZRItem.prototype.itemReact.call(item, to, from);
 
                   item.writeSubtitleInfos(to);
                   item.updateSectionTitle(to).setModelUpdateTimer();
@@ -813,7 +811,7 @@ $.extend( CZRWidgetAreaModuleMths, {
   /////////////////////////////////////////
   /// OVERRIDEN METHODS
   ////////////////////////////////////////
-  //fired in toggleViewExpansion()
+  //fired in toggleItemExpansion()
   //has to be overriden for the widget zones control because this control is embedded directly in a panel and not in a section
   //therefore the module to animate the scrollTop is not the section container but $('.wp-full-overlay-sidebar-content')
   _adjustScrollExpandedBlock : function( $_block_el, adjust ) {

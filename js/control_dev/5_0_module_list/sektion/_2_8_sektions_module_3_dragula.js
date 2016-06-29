@@ -54,11 +54,9 @@ $.extend( CZRSektionMths, {
 
         //expand a closed sektion on over
         module.modsDragInstance.on('over', function( el, container, source ) {
-              console.log('ON OVER', el, container, source );
               if ( $(container).hasClass('czr-dragula-fake-container') ) {
                   //get the sekItem id
                   _target_sekId = $(container).closest('[data-id]').attr('data-id');
-                  console.log( 'taget sek', _target_sekId );
                   module.czr_Item(_target_sekId).czr_ItemState.set('expanded_noscroll');
               }
         });
@@ -70,11 +68,11 @@ $.extend( CZRSektionMths, {
                   {
                     direction: "vertical",
                     margin: 20,
-                    pixels: 10,
+                    pixels: 100,
                     scrollWhenOutside: true,
                     autoScroll: function(){
                         //Only scroll when the pointer is down, and there is a child being dragged.
-                        return this.down && module.modsDragInstance.dragging;
+                        return module.modsDragInstance.dragging;
                     }
                   }
         );

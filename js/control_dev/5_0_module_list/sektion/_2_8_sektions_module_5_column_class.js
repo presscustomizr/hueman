@@ -79,11 +79,8 @@ $.extend( CZRColumnMths , {
                 );
 
                 //dragulize
-                //console.log('module.control.syncSektionModule.get()', module.control.syncSektionModule() );
-                //column.sektion.syncSektionModule().modsDragInstance.containers.push( module.container[0] );
                 var syncCollectionControl = api.control(column.control_id).getSyncCollectionControl();
                 syncCollectionControl.syncSektionModule().modsDragInstance.containers.push( $('.czr-module-collection-wrapper', column.container )[0] );
-                console.log('syncCollectionControl.syncSektionModule().modsDragInstance', syncCollectionControl.syncSektionModule().modsDragInstance );
 
           });
     },

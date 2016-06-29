@@ -19,7 +19,6 @@ $.extend( CZRMultiModuleControlMths, {
 
   //cb of : api(control.id).callbacks.
   syncColumn : function( to, from, data ) {
-        console.log('DATA ?', data );
         var control = this;
         //MODULE ADDED
         //determine if a module has been added

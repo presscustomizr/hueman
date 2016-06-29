@@ -23,15 +23,20 @@ $.extend( CZRBaseModuleControlMths, {
           control.moduleCollectionReady.done( function() {
                 console.log('MODULE COLLECTION READY IN CONTROL : ', control.id );
                 //LISTEN TO MODULE COLLECTION
-                control.czr_moduleCollection.callbacks.add( function() { return control.collectionReact.apply( control, arguments ); } );
+                control.czr_moduleCollection.callbacks.add( function() { return control.moduleCollectionReact.apply( control, arguments ); } );
           } );
 
-          //FOR MULTI MODULE CONTROL : Stores the module instance the synchronized sektion
+          //FOR MULTI MODULE CONTROL : Stores the module instance of the synchronized sektion
           if ( control.isMultiModuleControl( options.params ) ) {
                 control.syncSektionModule = new api.Value();
           }
 
           api.CZRBaseControl.prototype.initialize.call( control, id, options );
+
+          //FOR TEST PURPOSES
+          // api(this.id).bind( function( to, from) {
+          //     console.log( 'SETTING ', control.id, ' HAS CHANGED : ', to, from );
+          // });
 
   },
 

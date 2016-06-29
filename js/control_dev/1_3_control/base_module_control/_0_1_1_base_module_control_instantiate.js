@@ -33,6 +33,10 @@ $.extend( CZRBaseModuleControlMths, {
           //instanciate the module with the default constructor
           control.czr_Module.add( module_api_ready.id, new constructor( module_api_ready.id, module_api_ready ) );
 
+          if ( ! control.czr_Module.has( module_api_ready.id ) ) {
+              throw new Error('instantiateModule() : instantiation failed for module id ' + module_api_ready.id + ' in control ' + control.id  );
+          }
+
           //return the module instance for chaining
           return control.czr_Module(module_api_ready.id);
   },

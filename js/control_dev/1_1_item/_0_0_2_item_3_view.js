@@ -110,7 +110,7 @@ $.extend( CZRItemMths , {
 
 
   //callback of item.czr_ItemState.callbacks
-  toggleViewExpansion : function( to, from, duration ) {
+  toggleItemExpansion : function( status, from, duration ) {
           var item = this,
               module = this.module;
 
@@ -119,7 +119,6 @@ $.extend( CZRItemMths , {
                 duration : duration || 200,
                 done : function() {
                       var _is_expanded = 'closed' != status;
-
                       item.container.toggleClass('open' , _is_expanded );
 
                       //close all alerts

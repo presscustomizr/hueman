@@ -16,16 +16,15 @@ $.extend( CZRModuleMths, {
 
   initialize: function( id, constructorOptions ) {
           if ( _.isUndefined(constructorOptions.control) || _.isEmpty(constructorOptions.control) ) {
-            throw new Error('No control assigned to module ' + id + '. Aborting');
+              throw new Error('No control assigned to module ' + id );
           }
+          var module = this;
           api.Value.prototype.initialize.call( this, null, constructorOptions );
 
-          var module = this;
 
           //store the state of ready.
           //=> we don't want the ready method to be fired several times
           module.isReady = $.Deferred();
-          module.savedItemCollectionReady = $.Deferred();
 
           //write the options as properties
           $.extend( module, constructorOptions || {} );
@@ -37,11 +36,6 @@ $.extend( CZRModuleMths, {
                 ruItemPart : 'czr-ru-item-part',//read, update
                 itemInputList : '',//is specific for each crud module
           } );
-
-          //initialize the module api.Value()
-          //constructorOptions has the same structure as the one described in prepareModuleforAPI
-          module.set(constructorOptions);
-
 
           //embed : define a container, store the embed state, fire the render method
           module.embedded = $.Deferred();
@@ -63,13 +57,10 @@ $.extend( CZRModuleMths, {
           });
 
 
-
           //ITEMS
           module.itemCollection = new api.Value();
+          //initialize the collection with the constructor options
           module.itemCollection.set([]);
-
-          //store the saved models => can be extended to add default models in children classes
-          module.savedItems = constructorOptions.items;
 
           //declares a default Item API model
           module.defaultAPIitemModel = {
@@ -94,14 +85,16 @@ $.extend( CZRModuleMths, {
           module.inputConstructor = api.CZRInput;
 
           //module.ready(); => fired by children
-
           module.isReady.done( function() {
-                console.log('MODULE ' + module.id + ' IS READY');
+                //initialize the module api.Value()
+                //constructorOptions has the same structure as the one described in prepareModuleforAPI
+                module.set( module.initializeModuleModel( constructorOptions ) );
+
+
                 //if the module is not registered yet (for example when the module is added by user),
                 //=> push it to the collection of the module-collection control
                 //=> updates the wp api setting
                 if (  ! module.control.isModuleRegistered( module.id ) ) {
-                    console.log('PUSH MODULE IN THE COLLECTION', module.id, constructorOptions );
                     module.control.updateModulesCollection( { module : constructorOptions } );
                 }
 
@@ -109,18 +102,18 @@ $.extend( CZRModuleMths, {
                 //It's not listened to before the api is ready
                 //=> the collection update on startup is done when the module is embedded and BEFORE the api is ready
                 //=> won't trigger and change setting
-                module.populateSavedItemCollection();
-
-                //it can be overriden by a module in its initialize method
-                if ( module.isMultiItem() )
-                  module._makeItemsSortable();
-
-                module.savedItemCollectionReady.done( function() {
+                $.when( module.populateSavedItemCollection() ).done( function() {
                       //listen to item Collection changes
                       module.itemCollection.callbacks.add( function() { return module.itemCollectionReact.apply(module, arguments ); } );
 
                       //listen to each single module change
                       module.callbacks.add( function() { return module.moduleReact.apply(module, arguments ); } );
+
+                      //it can be overriden by a module in its initialize method
+                      if ( module.isMultiItem() )
+                        module._makeItemsSortable();
+
+                      console.log('MODULE ' + module.id + ' IS READY');
                 });
 
           });
@@ -138,6 +131,23 @@ $.extend( CZRModuleMths, {
   },
 
 
+  //fired when module is initialized, on module.isReady.done()
+  //designed to be extended or overriden to add specific items or properties
+  initializeModuleModel : function( constructorOptions ) {
+          var module = this;
+          if ( ! module.isMultiItem() && ! module.isCrud() ) {
+                //this is a static module. We only have one item
+                //init module item if needed.
+                if ( _.isEmpty( constructorOptions.items ) ) {
+                      var def = _.clone( module.defaultItemModel );
+                      constructorOptions.items = [ $.extend( def, { id : module.id } ) ];
+                }
+          }
+          return constructorOptions;
+  },
+
+
+
   //cb of : module.itemCollection.callbacks
   itemCollectionReact : function( to, from ) {
           var module = this,
@@ -150,7 +160,6 @@ $.extend( CZRModuleMths, {
 
   //cb of module.callbacks
   moduleReact : function( to, from, o ) {
-          console.log('in moduleReact', to, from, o );
           //cb of : module.callbacks
           var module = this,
               control = module.control,
@@ -177,11 +186,7 @@ $.extend( CZRModuleMths, {
           //   module.control.previewer.refresh();
           // }
 
-          //update the collection
-          //first update the module with the updated items.
-          //Then say it to the module collection
-          console.log('IN BASE MODULE INIT REACT', $.extend( true, {}, to ) , control.czr_moduleCollection() );
-
+          //update the collection + pass data
           control.updateModulesCollection( {
                 module : $.extend( true, {}, to ),
                 data : o//useful to pass contextual info when a change happens

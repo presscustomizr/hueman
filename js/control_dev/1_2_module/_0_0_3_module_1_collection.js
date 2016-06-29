@@ -10,46 +10,42 @@ var CZRModuleMths = CZRModuleMths || {};
 $.extend( CZRModuleMths, {
 
   //@fired in module ready on api('ready')
+  //the module().items has been set in initialize
   populateSavedItemCollection : function() {
           var module = this;
+          if ( ! _.isArray( module().items ) ) {
+              throw new Error( 'The saved items collection must be an array in module ' + module.id );
+          }
 
-          console.log('module.savedItems', module.savedItems );
           //populates the collection with the saved items
-          _.each( module.savedItems, function( item, key ) {
-                //normalizes the item
-                item = module._normalizeItem(item, _.has( item, 'id' ) ? item.id : key );
-                if ( false === item ) {
-                  throw new Error('populateItemCollection : an item could not be added in : ' + module.id );
-                }
-
-                //adds it to the collection
-                module.instantiateItem(item);
+          _.each( module().items, function( item_candidate , key ) {
+                //adds it to the collection and fire item.ready()
+                module.instantiateItem( item_candidate ).ready();
           });
-
-          //The collection of item is ready now. Say it.
-          module.savedItemCollectionReady.resolve();
-
-          return this;
+          //do we need to chain this method ?
+          //return this;
   },
 
 
   instantiateItem : function( item, is_added_by_user ) {
           if ( ! _.has( item,'id') ) {
-            throw new Error('CZRModule::instantiateItem() : an item has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
+            throw new Error('CZRModule::instantiateItem() : an item has no id and could not be added in the collection of : ' + this.id );
           }
           var module = this;
           //Prepare the item, make sure its id is set and unique
           item_candidate = module.prepareItemForAPI( item );
+          if ( module.czr_Item.has( item_candidate.id ) ) {
+              throw new Error('CZRModule::instantiateItem() : the following item id ' + item_candidate.id + ' already exists in module.czr_Item() for module ' + this.id  );
+          }
           //instanciate the item with the default constructor
-          module.czr_Item.add( item.id, new module.itemConstructor( item.id, item_candidate ) );
-          //push it to the collection
-          module.updateItemsCollection( { item : module.getInitialItemModel( item ) } );
-          //listen to each single item change
-          module.czr_Item(item.id).callbacks.add( function() { return module.itemReact.apply(module, arguments ); } );
+          module.czr_Item.add( item_candidate.id, new module.itemConstructor( item_candidate.id, item_candidate ) );
+
+          if ( ! module.czr_Item.has( item_candidate.id ) ) {
+              throw new Error('CZRModule::instantiateItem() : instantiation failed for item id ' + item_candidate.id + ' for module ' + this.id  );
+          }
           //the item is now ready and will listen to changes
-          module.czr_Item(item.id).ready();
-          //@todo not sure this is needed now.
-          module.trigger('item_instanciated', { item: item, is_added_by_user : is_added_by_user || false } );
+          //return the instance
+          return module.czr_Item( item_candidate.id );
   },
 
 
@@ -72,20 +68,20 @@ $.extend( CZRModuleMths, {
                 var _candidate_val = item_candidate[_key];
                 switch( _key ) {
                       case 'id' :
-                          if ( _.isUndefined( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
-                              api_ready_item[_key] = module._initNewItem( item_candidate || {} ).id;
+                          if ( _.isEmpty( _candidate_val ) ) {
+                              api_ready_item[_key] = module.generateItemId( module.module_type );
                           } else {
-                              if ( ! module._isItemIdPossible( _candidate_val ) )
-                                api_ready_item[_key] = module._initNewItem( item_candidate || {} ).id;
-                              else
-                                api_ready_item[_key] = _candidate_val;
+                              api_ready_item[_key] = _candidate_val;
                           }
                       break;
                       case 'initial_item_model' :
-                          api_ready_item[_key] = module.getInitialItemModel( item_candidate );
-                          if ( ! _.isObject( api_ready_item[_key] ) ) {
-                              throw new Error('prepareitemForAPI : initial_item_model must be an object in :  ' + item_candidate.id);
-                          }
+                          //make sure that the provided item has all the default properties set
+                          _.each( module.getDefaultModel() , function( _value, _property ) {
+                                if ( ! _.has( item_candidate, _property) )
+                                   item_candidate[_property] = _value;
+                          });
+                          api_ready_item[_key] = item_candidate;
+
                       break;
                       case  'defaultItemModel' :
                           api_ready_item[_key] = _.clone( module.defaultItemModel );
@@ -101,25 +97,65 @@ $.extend( CZRModuleMths, {
                       break;
                 }//switch
           });
+
+          //Now amend the initial_item_model with the generated id
+          api_ready_item.initial_item_model.id = api_ready_item.id;
+
           return api_ready_item;
   },
 
 
+  //recursive
+  generateItemId : function( module_type, key, i ) {
+          //prevent a potential infinite loop
+          i = i || 1;
+          if ( i > 100 ) {
+                throw new Error('Infinite loop when generating of a module id.');
+          }
+          var module = this;
+          key = key || module._getNextItemKeyInCollection();
+          var id_candidate = module_type + '_' + key;
+
+          //do we have a module collection value ?
+          if ( ! _.has(module, 'itemCollection') || ! _.isArray( module.itemCollection() ) ) {
+                throw new Error('The item collection does not exist or is not properly set in module : ' + module.id );
+          }
+
+          //make sure the module is not already instantiated
+          if ( module.isItemRegistered( id_candidate ) ) {
+            key++; i++;
+            return control.generateItemId( module_type, key, i );
+          }
+          return id_candidate;
+  },
 
 
-  //overridable
-  getInitialItemModel : function( item ) {
-          return item;
+  //helper : return an int
+  //=> the next available id of the item collection
+  _getNextItemKeyInCollection : function() {
+          var module = this,
+            _max_mod_key = {},
+            _next_key = 0;
+
+          //get the initial key
+          //=> if we already have a collection, extract all keys, select the max and increment it.
+          //else, key is 0
+          if ( ! _.isEmpty( module.itemCollection() ) ) {
+              _max_mod_key = _.max( module.itemCollection(), function( _mod ) {
+                  return parseInt( _mod.id.replace(/[^\/\d]/g,''), 10 );
+              });
+              _next_key = parseInt( _max_mod_key.id.replace(/[^\/\d]/g,''), 10 ) + 1;
+          }
+          return _next_key;
   },
 
 
 
-  //React to a single item change
-  //cb of module.czr_Item(item.id).callbacks
-  itemReact : function( to, from ) {
+  //this helper allows to check if an item has been registered in the collection
+  //no matter if it's not instantiated yet
+  isItemRegistered : function( id_candidate ) {
         var module = this;
-        //update the collection
-        module.updateItemsCollection( {item : to });
+        return ! _.isUndefined( _.findWhere( module.itemCollection(), { id : id_candidate}) );
   },
 
 

@@ -40,9 +40,6 @@ $.extend( CZRMultiModuleControlMths, {
                     //React to a module column change. Typically fired when moving a module from one column to another.
                     module.modColumn.bind( function( to, from ) {
                           console.log('MODULE ' + module.id + ' HAS BEEN MOVED IN COLUMN', to );
-                          console.log('module.itemCollection()', module.itemCollection() );
-                          console.log( 'module()', module() );
-
                           var _current_model = module(),
                               _new_model = $.extend( true, {}, _current_model );
 
@@ -63,7 +60,6 @@ $.extend( CZRMultiModuleControlMths, {
                           //9) the module() instance reacts and inform the moduleCollection() instance
                           //10) the control.czr_moduleCollection() instance reacts and inform the 'sektions' setting
                           module.set( _new_model, { target_column : to, source_column : from } );
-                          console.log( 'module() AFTER', module() );
                           //var updatedModuleCollection = $.extend( true, [], module.control.czr_moduleCollection() );
                           //api(module.control.id).set( module.control.filterModuleCollectionBeforeAjax( updatedModuleCollection ) );
                     } );
@@ -224,7 +220,7 @@ $.extend( CZRMultiModuleControlMths, {
                                         item.container = $_item_container;
 
                                         $.when( item.renderItemContent() ).done( function() {
-                                            item.setupInputCollection();
+                                            item.setupInputCollectionFromDOM();
                                         });
 
                                         if ( ! item.module.isMultiItem() )

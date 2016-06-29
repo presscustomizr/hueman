@@ -84,7 +84,7 @@ $.extend( CZRBaseModuleControlMths, {
 
 
   //cb of control.czr_moduleCollection.callbacks
-  collectionReact : function( to, from, data ) {
+  moduleCollectionReact : function( to, from, data ) {
         var control = this,
             is_module_removed = _.size(from) > _.size(to),
             is_module_update = _.size(from) == _.size(to);
@@ -100,7 +100,6 @@ $.extend( CZRBaseModuleControlMths, {
             _to_remove = _to_remove[0];
             control.czr_Module.remove( _to_remove.id );
         }
-        console.log( 'in collection react', to, from );
 
         //is there a passed module param ?
         //if so prepare it for DB

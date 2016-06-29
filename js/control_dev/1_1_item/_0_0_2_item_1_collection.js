@@ -8,7 +8,7 @@
 var CZRItemMths = CZRItemMths || {};
 $.extend( CZRItemMths , {
   //creates the inputs based on the rendered items
-  setupInputCollection : function() {
+  setupInputCollectionFromDOM : function() {
         var item = this,
             module = item.module;
 
@@ -32,17 +32,19 @@ $.extend( CZRItemMths , {
         else
           initial_item_model = $.extend( item.defaultItemModel, initial_item_model );
 
-        var input_collection = {};
+        var dom_item_model = {};
 
         //creates the inputs based on the rendered items
-        $( '.'+module.control.css_attr.sub_set_wrapper, item.container).each( function( _index ) {
-              if ( ! $(this).find('[data-type]').length ) {
-                  console.log('No data-type found in the input wrapper index : ' + _index + ' in item : '+ item.id );
-                  return;
-              }
-              var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index,
+        $( '.' + module.control.css_attr.sub_set_wrapper, item.container).each( function( _index ) {
+              var _id = $(this).find('[data-type]').attr('data-type'),
                   _value = _.has( initial_item_model, _id) ? initial_item_model[_id] : '';
-
+              //skip if no valid input data-type is found in this node
+              if ( _.isUndefined( _id ) || _.isEmpty( _id ) )
+                return;
+              //check if this property exists in the current item model
+              if ( ! _.has( initial_item_model, _id ) ) {
+                    throw new Error('The item property : ' + _id + ' has been found in the DOM but not in the item model : '+ item.id + '. The input can not be instantiated.');
+              }
               item.czr_Input.add( _id, new item.inputConstructor( _id, {
                     id : _id,
                     type : $(this).attr('data-input-type'),
@@ -51,20 +53,19 @@ $.extend( CZRItemMths , {
                     item : item,
                     module : module
               } ) );
-              //populate the collection
-              input_collection[_id] = _value;
-        });//each
 
-        //say it
-        item.trigger('input_collection_populated', $.extend( initial_item_model, input_collection ));
+              //populate the collection
+              dom_item_model[_id] = _value;
+              //shall we trigger a specific event when the input collection from DOM has been populated ?
+
+        });//each
   },
+
 
   removeInputCollection : function() {
         var item = this;
         item.czr_Input.each( function( input ) {
-            console.log('remove input', input.id, item.czr_Input(input.id) );
             item.czr_Input.remove( input.id );
-            console.log('input removed ?', item.czr_Input(input.id) );
         });
   }
 

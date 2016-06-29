@@ -77,6 +77,8 @@ $.extend( CZRSektionMths, {
           });
 
           //DRAGULA
+          // if ( ! _.has( module ,'dragInstance' ) )
+          //   module.initDragula();
           if ( ! _.has( module ,'modsDragInstance' ) )
             module.initModulesDragula();
 
@@ -87,64 +89,6 @@ $.extend( CZRSektionMths, {
   /////////////////////////////////////////////////////////////////////////
   /// SEKTION
   ////////////////////////////////////////////////////////////////////////
-  //OVERRIDES PARENT MODULE METHOD
-  //React to a single item change
-  //cb of module.czr_Item(item.id).callbacks
-  itemReact : function( to, from ) {
-        var module = this,
-            sektion_candidate = $.extend(true, {}, to);
-        //we want to make sure that the item model is compliant with default model
-        sektion_candidate = module.prepareSekItemForDB( sektion_candidate );
-        //Call the parent method => updates the collection
-        api.CZRDynModule.prototype.itemReact.call( module, sektion_candidate );
-  },
-
-
-
-  //the sektion item model must have only the property set in
-  //module.defaultItemModel = {
-  //       id : '',
-  //       'sektion-layout' : 1,
-  //       columns : []
-  // };
-  prepareSekItemForDB : function( sektion_candidate ) {
-        var module = this,
-            db_ready_sektItem = {};
-
-        _.each( module.defaultItemModel, function( _value, _key ) {
-            var _candidate_val = sektion_candidate[_key];
-            switch( _key ) {
-                  case 'id' :
-                      if ( ! _.isString( _candidate_val ) || _.isEmpty( _candidate_val ) ) {
-                          throw new Error('The sekItem id property must be a not empty string');
-                      }
-                      db_ready_sektItem[_key] = _candidate_val;
-                  break;
-                  case 'sektion-layout' :
-                      if ( ! _.isNumber( parseInt( _candidate_val, 10 ) ) || ( parseInt( _candidate_val, 10 ) < 1 ) ) {
-                          throw new Error('The sekItem layout property must be an int number > 0');
-                      }
-                      db_ready_sektItem[_key] = _candidate_val;
-                  break;
-                  case 'columns' :
-                      if ( ! _.isArray( _candidate_val ) ) {
-                          throw new Error('The sekItem columns property must be an array');
-                      }
-                      var _db_ready_columns = [];
-                      _.each( _candidate_val, function( _col ) {
-                            var _db_ready_col = module.prepareColumnForDB(_col);
-                            _db_ready_columns.push( _db_ready_col );
-                      });
-
-                      db_ready_sektItem[_key] = _db_ready_columns;
-                  break;
-            }
-        });//each
-
-        return db_ready_sektItem;
-  },
-
-
   //the sekItem object looks like :
   //id : ''
   //columns : []
