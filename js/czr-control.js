@@ -572,25 +572,26 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
                 var control = this;
                 instance = instance || control;
                 _.map( event_map , function( _event ) {
-                  if ( ! _.isString( _event.selector ) || _.isEmpty( _event.selector ) ) {
-                    throw new Error( 'setupDOMListeners : selector must be a string not empty. Aborting setup of action(s) : ' + _event.actions.join(',') );
-                  }
-                  obj.dom_el.on( _event.trigger , _event.selector, function( e, event_params ) {
-                    if ( api.utils.isKeydownButNotEnterEvent( e ) ) {
-                      return;
-                    }
-                    e.preventDefault(); // Keep this AFTER the key filter above
-                    var _obj = _.clone(obj);
-                    if ( _.has(_obj, 'model') && _.has( _obj.model, 'id') ) {
-                      if ( _.has(instance, 'get') )
-                        _obj.model = instance.get();
-                      else
-                        _obj.model = instance.getModel( _obj.model.id );
-                    }
-                    $.extend( _obj, { event : _event, dom_event : e } );
-                    $.extend( _obj, event_params );
-                    control.executeEventActionChain( _obj, instance );
-                  });//.on()
+                      if ( ! _.isString( _event.selector ) || _.isEmpty( _event.selector ) ) {
+                        throw new Error( 'setupDOMListeners : selector must be a string not empty. Aborting setup of action(s) : ' + _event.actions.join(',') );
+                      }
+                      obj.dom_el.on( _event.trigger , _event.selector, function( e, event_params ) {
+                            e.stopPropagation();
+                            if ( api.utils.isKeydownButNotEnterEvent( e ) ) {
+                              return;
+                            }
+                            e.preventDefault(); // Keep this AFTER the key filter above
+                            var _obj = _.clone(obj);
+                            if ( _.has(_obj, 'model') && _.has( _obj.model, 'id') ) {
+                              if ( _.has(instance, 'get') )
+                                _obj.model = instance.get();
+                              else
+                                _obj.model = instance.getModel( _obj.model.id );
+                            }
+                            $.extend( _obj, { event : _event, dom_event : e } );
+                            $.extend( _obj, event_params );
+                            control.executeEventActionChain( _obj, instance );
+                      });//.on()
 
                 });//_.map()
         },
@@ -1286,9 +1287,7 @@ $.extend( CZRItemMths , {
         item.isReady.done( function() {
               item.module.updateItemsCollection( { item : item.get() } );
               item.callbacks.add( function() { return item.itemReact.apply(item, arguments ); } );
-              if ( ! item.module.isInSektion() ) {
-                    item.mayBeRenderItemWrapper();
-              }
+              item.mayBeRenderItemWrapper();
               item.embedded.done( function() {
                     item.itemWrapperViewSetup( _initial_model );
               });
@@ -1660,13 +1659,16 @@ $.extend( CZRModuleMths, {
                 if (  ! module.control.isModuleRegistered( module.id ) ) {
                     module.control.updateModulesCollection( { module : constructorOptions } );
                 }
-                $.when( module.populateSavedItemCollection() ).done( function() {
+                if ( ! module.isInSektion() )
+                  module.populateSavedItemCollection();
+
+                module.bind('items-collection-populated', function( collection ) {
                       module.itemCollection.callbacks.add( function() { return module.itemCollectionReact.apply(module, arguments ); } );
                       module.callbacks.add( function() { return module.moduleReact.apply(module, arguments ); } );
                       if ( module.isMultiItem() )
                         module._makeItemsSortable();
 
-                      console.log('MODULE ' + module.id + ' IS READY');
+                      console.log('SAVED ITEM COLLECTION OF MODULE ' + module.id + ' IS READY');
                 });
 
           });
@@ -1675,6 +1677,7 @@ $.extend( CZRModuleMths, {
   ready : function() {
           var module = this;
           module.isReady.resolve();
+          console.log('MODULE READY IN BASE MODULE CLASS : ', module.id );
   },
   initializeModuleModel : function( constructorOptions ) {
           var module = this;
@@ -1740,11 +1743,18 @@ $.extend( CZRModuleMths, {
   populateSavedItemCollection : function() {
           var module = this;
           if ( ! _.isArray( module().items ) ) {
-              throw new Error( 'The saved items collection must be an array in module ' + module.id );
+              throw new Error( 'The saved items collection must be an array in module :' + module.id );
           }
           _.each( module().items, function( item_candidate , key ) {
                 module.instantiateItem( item_candidate ).ready();
           });
+          _.each( module().items, function( _item ) {
+                if ( _.isUndefined( _.findWhere( module.itemCollection(), _item.id ) ) ) {
+                  throw new Error( 'The saved items have not been properly populated in module : ' + module.id );
+                }
+          });
+
+          module.trigger('items-collection-populated');
   },
 
 
@@ -2054,6 +2064,7 @@ $.extend( CZRDynModuleMths, {
 
   ready : function() {
           var module = this;
+          console.log('MODULE READY IN DYN MODULE CLASS : ', module.id, module.container );
           module.setupDOMListeners( module.module_event_map , { dom_el : module.container } );
           module.czr_preItem('item').set( module.getDefaultModel() );
           module.czr_preItem('item').set( module.getDefaultModel() );
@@ -2120,6 +2131,7 @@ var CZRDynModuleMths = CZRDynModuleMths || {};
 
 $.extend( CZRDynModuleMths, {
   renderPreItemView : function( obj ) {
+          console.log('in renderPreItemView', obj );
           var module = this;
           if ( ! _.isEmpty( module.czr_preItem('item_content').get() ) )
             return;
@@ -2724,7 +2736,7 @@ $.extend( CZRColumnMths , {
           syncedCollectionControl.trigger(
                 'user-module-candidate',
                 $.extend( defautAPIModuleModel, {
-                      module_type : 'czr_text_editor_module', //'czr_text_module',
+                      module_type : 'czr_slide_module', //'czr_text_editor_module', //'czr_text_module',
                       column_id : column.id,//a string
                       sektion : column.sektion,//instance
                       sektion_id : column.sektion.id,
@@ -3823,8 +3835,8 @@ $.extend( CZRSlideModuleMths, {
           var module = this;
           api.CZRDynModule.prototype.initialize.call( module, id, options );
           $.extend( module, {
-                itemPreAddEl : 'czr-module-slide-pre-add-view-content',
-                itemInputList : 'czr-module-slide-view-content'
+                itemPreAddEl : 'czr-module-slide-pre-item-input-list',
+                itemInputList : 'czr-module-slide-item-input-list'
           } );
           module.inputConstructor = api.CZRInput.extend( module.CZRSliderInputMths || {} );
           module.itemConstructor = api.CZRItem.extend( module.CZRSliderItem || {} );
@@ -3836,11 +3848,6 @@ $.extend( CZRSlideModuleMths, {
               'slide-subtitle'   : '',
           };
           this.itemAddedMessage = serverControlParams.translatedStrings.slideAdded;
-          api.section( module.control.section() ).expanded.bind(function(to) {
-            if ( 'resolved' == module.isReady.state() )
-              return;
-            module.ready();
-          });
   },//initialize
 
 
@@ -4429,22 +4436,24 @@ $.extend( CZRMultiModuleControlMths, {
                           _new_model.column_id = to;
                           module.set( _new_model, { target_column : to, source_column : from } );
                     } );
+              },
+              ready : function() {
+                      var module = this;
+                       console.log('MODULE READY IN EXTENDED MODULE CLASS : ', module.id );
+                      $.when( module.renderModuleWrapper() ).done( function( $_module_container ) {
+                            if ( _.isUndefined($_module_container) || false === $_module_container.length ) {
+                                throw new Error( 'Module container has not been embedded for module :' + module.id );
+                            }
+                            module.container = $_module_container;
+                            module.embedded.resolve();
+                      } );
+                      parentConstructor.prototype.ready.call( module );
               }
+
         });
         return control.CZRModuleExtended;
   },
   CZRModuleExtended  : {
-        ready : function() {
-                var module = this;
-                $.when( module.renderModuleWrapper() ).done( function( $_module_container ) {
-                    if ( _.isUndefined($_module_container) || false === $_module_container.length ) {
-                        throw new Error( 'Module container has not been embedded for module :' + module.id );
-                    }
-                    module.container = $_module_container;
-                    module.embedded.resolve();
-                } );
-                module.isReady.resolve();
-        },
         renderModuleWrapper : function() {
                 var module = this;
                 if ( 'resolved' == module.embedded.state() )
@@ -4512,30 +4521,13 @@ $.extend( CZRMultiModuleControlMths, {
               $.when( module.toggleModuleViewExpansion( to ) ).done( function() {
                     if ( 'expanded' == to ) {
                           module.renderModuleTitle();
-                          module.czr_Item.each ( function( item ) {
-                                if ( 'resolved' == item.embedded.state() ) {
-                                    $.when( item.renderItemWrapper() ).done( function( $_item_container ) {
-                                        item.container = $_item_container;
-
-                                        $.when( item.renderItemContent() ).done( function() {
-                                            item.setupInputCollectionFromDOM();
-                                        });
-
-                                        if ( ! item.module.isMultiItem() )
-                                            item.czr_ItemState.set('expanded');
-                                    });
-
-                                }
-                                else {
-                                    item.mayBeRenderItemWrapper();
-                                }
-                          } );
+                          module.populateSavedItemCollection();
                     }
                     else {
                           module.czr_Item.each ( function( item ) {
                                 item.czr_ItemState.set('closed');
                                 item._destroyView( 0 );
-                                item.removeInputCollection();
+                                module.czr_Item.remove( item.id );
                           } );
                     }
               });
@@ -4549,7 +4541,7 @@ $.extend( CZRMultiModuleControlMths, {
               if ( 0 === $( '#tmpl-' + module.sektionModuleTitle ).length ) {
                 throw new Error('No sektion title Module Part template for module ' + module.id + '. The template script id should be : #tmpl-' + module.sektionModuleTitle );
               }
-              $.when( $( '.' + module.control.css_attr.items_wrapper, module.container ).append(
+              $.when( $( module.container ).find('.czr-mod-content').prepend(
                     $( wp.template( module.sektionModuleTitle )( { id : module.id } ) )
               ) ).done( function() {
                     module.moduleTitleEmbedded.resolve();

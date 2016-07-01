@@ -26,42 +26,44 @@
                 instance = instance || control;
                 //loop on the event map and map the relevant callbacks by event name
                 _.map( event_map , function( _event ) {
-                  if ( ! _.isString( _event.selector ) || _.isEmpty( _event.selector ) ) {
-                    throw new Error( 'setupDOMListeners : selector must be a string not empty. Aborting setup of action(s) : ' + _event.actions.join(',') );
-                  }
-                  //LISTEN TO THE DOM => USES EVENT DELEGATION
-                  obj.dom_el.on( _event.trigger , _event.selector, function( e, event_params ) {
-                    //particular treatment
-                    if ( api.utils.isKeydownButNotEnterEvent( e ) ) {
-                      return;
-                    }
-                    e.preventDefault(); // Keep this AFTER the key filter above
+                      if ( ! _.isString( _event.selector ) || _.isEmpty( _event.selector ) ) {
+                        throw new Error( 'setupDOMListeners : selector must be a string not empty. Aborting setup of action(s) : ' + _event.actions.join(',') );
+                      }
+                      //LISTEN TO THE DOM => USES EVENT DELEGATION
+                      obj.dom_el.on( _event.trigger , _event.selector, function( e, event_params ) {
+                            //stop propagation to ancestors modules, typically a sektion
+                            e.stopPropagation();
+                            //particular treatment
+                            if ( api.utils.isKeydownButNotEnterEvent( e ) ) {
+                              return;
+                            }
+                            e.preventDefault(); // Keep this AFTER the key filter above
 
-                    //! use a new cloned object
-                    var _obj = _.clone(obj);
+                            //! use a new cloned object
+                            var _obj = _.clone(obj);
 
-                    //always get the latest model from the collection
-                    if ( _.has(_obj, 'model') && _.has( _obj.model, 'id') ) {
-                      if ( _.has(instance, 'get') )
-                        _obj.model = instance.get();
-                      else
-                        _obj.model = instance.getModel( _obj.model.id );
-                    }
+                            //always get the latest model from the collection
+                            if ( _.has(_obj, 'model') && _.has( _obj.model, 'id') ) {
+                              if ( _.has(instance, 'get') )
+                                _obj.model = instance.get();
+                              else
+                                _obj.model = instance.getModel( _obj.model.id );
+                            }
 
-                    //always add the event obj to the passed obj
-                    //+ the dom event
-                    $.extend( _obj, { event : _event, dom_event : e } );
+                            //always add the event obj to the passed obj
+                            //+ the dom event
+                            $.extend( _obj, { event : _event, dom_event : e } );
 
-                    //add the event param => useful for triggered event
-                    $.extend( _obj, event_params );
+                            //add the event param => useful for triggered event
+                            $.extend( _obj, event_params );
 
 
 
-                    //SETUP THE EMITTERS
-                    //inform the container that something has happened
-                    //pass the model and the current dom_el
-                    control.executeEventActionChain( _obj, instance );
-                  });//.on()
+                            //SETUP THE EMITTERS
+                            //inform the container that something has happened
+                            //pass the model and the current dom_el
+                            control.executeEventActionChain( _obj, instance );
+                      });//.on()
 
                 });//_.map()
         },

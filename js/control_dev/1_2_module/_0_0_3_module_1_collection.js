@@ -14,7 +14,7 @@ $.extend( CZRModuleMths, {
   populateSavedItemCollection : function() {
           var module = this;
           if ( ! _.isArray( module().items ) ) {
-              throw new Error( 'The saved items collection must be an array in module ' + module.id );
+              throw new Error( 'The saved items collection must be an array in module :' + module.id );
           }
 
           //populates the collection with the saved items
@@ -22,6 +22,15 @@ $.extend( CZRModuleMths, {
                 //adds it to the collection and fire item.ready()
                 module.instantiateItem( item_candidate ).ready();
           });
+
+          //check if everything went well
+          _.each( module().items, function( _item ) {
+                if ( _.isUndefined( _.findWhere( module.itemCollection(), _item.id ) ) ) {
+                  throw new Error( 'The saved items have not been properly populated in module : ' + module.id );
+                }
+          });
+
+          module.trigger('items-collection-populated');
           //do we need to chain this method ?
           //return this;
   },

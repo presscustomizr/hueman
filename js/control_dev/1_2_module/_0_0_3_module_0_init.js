@@ -98,11 +98,12 @@ $.extend( CZRModuleMths, {
                     module.control.updateModulesCollection( { module : constructorOptions } );
                 }
 
-                //Important note : this event refreshes the customizer setting value
-                //It's not listened to before the api is ready
-                //=> the collection update on startup is done when the module is embedded and BEFORE the api is ready
-                //=> won't trigger and change setting
-                $.when( module.populateSavedItemCollection() ).done( function() {
+                //populate and instantiate the items now when a module is embedded in a regular control
+                //if in a sektion, the populateSavedItemCollection() will be fired on module edit
+                if ( ! module.isInSektion() )
+                  module.populateSavedItemCollection();
+
+                module.bind('items-collection-populated', function( collection ) {
                       //listen to item Collection changes
                       module.itemCollection.callbacks.add( function() { return module.itemCollectionReact.apply(module, arguments ); } );
 
@@ -113,7 +114,7 @@ $.extend( CZRModuleMths, {
                       if ( module.isMultiItem() )
                         module._makeItemsSortable();
 
-                      console.log('MODULE ' + module.id + ' IS READY');
+                      console.log('SAVED ITEM COLLECTION OF MODULE ' + module.id + ' IS READY');
                 });
 
           });
@@ -128,6 +129,7 @@ $.extend( CZRModuleMths, {
   ready : function() {
           var module = this;
           module.isReady.resolve();
+          console.log('MODULE READY IN BASE MODULE CLASS : ', module.id );
   },
 
 

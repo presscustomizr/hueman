@@ -52,9 +52,10 @@ $.extend( CZRItemMths , {
               //When shall we render the item ?
               //If the module is part of a simple control, the item can be render now,
               //If the module is part of a sektion, then the item will be rendered on module edit.
-              if ( ! item.module.isInSektion() ) {
-                    item.mayBeRenderItemWrapper();
-              }
+              // if ( ! item.module.isInSektion() ) {
+              //       item.mayBeRenderItemWrapper();
+              // }
+              item.mayBeRenderItemWrapper();
 
               //ITEM WRAPPER VIEW SETUP
               //defer actions on item view embedded

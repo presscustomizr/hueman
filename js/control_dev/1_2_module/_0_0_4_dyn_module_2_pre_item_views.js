@@ -12,6 +12,7 @@ $.extend( CZRDynModuleMths, {
   /// PRE ADD MODEL DIALOG AND VIEW
   //////////////////////////////////////////////////
   renderPreItemView : function( obj ) {
+          console.log('in renderPreItemView', obj );
           var module = this;
           //is this view already rendered ?
           if ( ! _.isEmpty( module.czr_preItem('item_content').get() ) )

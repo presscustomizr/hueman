@@ -62,6 +62,7 @@ $.extend( CZRDynModuleMths, {
 
   ready : function() {
           var module = this;
+          console.log('MODULE READY IN DYN MODULE CLASS : ', module.id, module.container );
           //Setup the module event listeners
           module.setupDOMListeners( module.module_event_map , { dom_el : module.container } );
 

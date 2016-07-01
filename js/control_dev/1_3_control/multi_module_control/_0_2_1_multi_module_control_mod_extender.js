@@ -63,7 +63,29 @@ $.extend( CZRMultiModuleControlMths, {
                           //var updatedModuleCollection = $.extend( true, [], module.control.czr_moduleCollection() );
                           //api(module.control.id).set( module.control.filterModuleCollectionBeforeAjax( updatedModuleCollection ) );
                     } );
+              },
+
+              //////////////////////////////////
+              ///READY
+              //////////////////////////////////
+              //when a module is embedded in a sektion, we need to render it before ready is done
+              //=> this allows us to override the container element declared in the parent initialize
+              //when ready done => the module items are embedded (without their content)
+              ready : function() {
+                      var module = this;
+                       console.log('MODULE READY IN EXTENDED MODULE CLASS : ', module.id );
+                      $.when( module.renderModuleWrapper() ).done( function( $_module_container ) {
+                            if ( _.isUndefined($_module_container) || false === $_module_container.length ) {
+                                throw new Error( 'Module container has not been embedded for module :' + module.id );
+                            }
+                            module.container = $_module_container;
+                            module.embedded.resolve();
+                      } );
+                      //run the parent initialize
+                      parentConstructor.prototype.ready.call( module );
+                      //module.isReady.resolve();
               }
+
         });
         return control.CZRModuleExtended;
   },
@@ -71,25 +93,6 @@ $.extend( CZRMultiModuleControlMths, {
 
   //this object holds the various methods allowing a module to be rendered in a multimodule control
   CZRModuleExtended  : {
-        //////////////////////////////////
-        ///READY
-        //////////////////////////////////
-        //when a module is embedded in a sektion, we need to render it before ready is done
-        //=> this allows us to override the container element declared in the parent initialize
-        //when ready done => the module items are embedded (without their content)
-        ready : function() {
-                var module = this;
-                $.when( module.renderModuleWrapper() ).done( function( $_module_container ) {
-                    if ( _.isUndefined($_module_container) || false === $_module_container.length ) {
-                        throw new Error( 'Module container has not been embedded for module :' + module.id );
-                    }
-                    module.container = $_module_container;
-                    module.embedded.resolve();
-                } );
-                module.isReady.resolve();
-        },
-
-
         //fired in ready.
         //=> before isReady.done().
         renderModuleWrapper : function() {
@@ -209,35 +212,41 @@ $.extend( CZRMultiModuleControlMths, {
                           //render the module title
                           module.renderModuleTitle();
 
+                          //populates the saved items collection
+                          module.populateSavedItemCollection();
+
                           //render the item(s)
                           //on first rendering, use the regular method.
                           //for further re-rendering, when the embedded state is resolved()
                           // => 1) re-render each item
                           // => 2) re-instantiate each input
-                          module.czr_Item.each ( function( item ) {
-                                if ( 'resolved' == item.embedded.state() ) {
-                                    $.when( item.renderItemWrapper() ).done( function( $_item_container ) {
-                                        item.container = $_item_container;
+                          // module.czr_Item.each ( function( item ) {
+                          //       if ( ! item.module.isMultiItem() )
+                          //           item.czr_ItemState.set('expanded');
+                          //       if ( 'resolved' == item.embedded.state() ) {
+                          //           $.when( item.renderItemWrapper() ).done( function( $_item_container ) {
+                          //               item.container = $_item_container;
 
-                                        $.when( item.renderItemContent() ).done( function() {
-                                            item.setupInputCollectionFromDOM();
-                                        });
+                          //               $.when( item.renderItemContent() ).done( function() {
+                          //                   item.setupInputCollectionFromDOM();
+                          //               });
 
-                                        if ( ! item.module.isMultiItem() )
-                                            item.czr_ItemState.set('expanded');
-                                    });
+                          //               if ( ! item.module.isMultiItem() )
+                          //                   item.czr_ItemState.set('expanded');
+                          //           });
 
-                                }
-                                else {
-                                    item.mayBeRenderItemWrapper();
-                                }
-                          } );
+                          //       }
+                          //       else {
+                          //           item.mayBeRenderItemWrapper();
+                          //       }
+                          // } );
                     }
                     else {
                           module.czr_Item.each ( function( item ) {
                                 item.czr_ItemState.set('closed');
                                 item._destroyView( 0 );
-                                item.removeInputCollection();
+                                //item.removeInputCollection();
+                                module.czr_Item.remove( item.id );
                           } );
                     }
               });
@@ -255,7 +264,7 @@ $.extend( CZRMultiModuleControlMths, {
                 throw new Error('No sektion title Module Part template for module ' + module.id + '. The template script id should be : #tmpl-' + module.sektionModuleTitle );
               }
               //append the title when in a sektion and resolve the embedded state
-              $.when( $( '.' + module.control.css_attr.items_wrapper, module.container ).append(
+              $.when( $( module.container ).find('.czr-mod-content').prepend(
                     $( wp.template( module.sektionModuleTitle )( { id : module.id } ) )
               ) ).done( function() {
                     module.moduleTitleEmbedded.resolve();

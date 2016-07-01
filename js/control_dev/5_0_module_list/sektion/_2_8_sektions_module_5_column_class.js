@@ -182,7 +182,7 @@ $.extend( CZRColumnMths , {
           syncedCollectionControl.trigger(
                 'user-module-candidate',
                 $.extend( defautAPIModuleModel, {
-                      module_type : 'czr_text_editor_module', //'czr_text_module',
+                      module_type : 'czr_slide_module', //'czr_text_editor_module', //'czr_text_module',
                       column_id : column.id,//a string
                       sektion : column.sektion,//instance
                       sektion_id : column.sektion.id,

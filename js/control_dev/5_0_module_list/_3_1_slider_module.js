@@ -10,8 +10,8 @@ $.extend( CZRSlideModuleMths, {
 
           //extend the module with new template Selectors
           $.extend( module, {
-                itemPreAddEl : 'czr-module-slide-pre-add-view-content',
-                itemInputList : 'czr-module-slide-view-content'
+                itemPreAddEl : 'czr-module-slide-pre-item-input-list',
+                itemInputList : 'czr-module-slide-item-input-list'
           } );
 
           //EXTEND THE DEFAULT CONSTRUCTORS FOR INPUT
@@ -30,11 +30,11 @@ $.extend( CZRSlideModuleMths, {
 
           //overrides the default success message
           this.itemAddedMessage = serverControlParams.translatedStrings.slideAdded;
-          api.section( module.control.section() ).expanded.bind(function(to) {
-            if ( 'resolved' == module.isReady.state() )
-              return;
-            module.ready();
-          });
+          // api.section( module.control.section() ).expanded.bind(function(to) {
+          //   if ( 'resolved' == module.isReady.state() )
+          //     return;
+          //   module.ready();
+          // });
   },//initialize
 
 
