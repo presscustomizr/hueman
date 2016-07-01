@@ -5,8 +5,9 @@ $.extend( CZRInputMths , {
               _model       = input.get();
 
           //do we have an html template and a input container?
-          if ( ! input.container )
-            return this;
+          if ( ! input.container ) {
+              throw new Error( 'The input container is not set for WP text editor in module.' + input.module.id );
+          }
 
           if ( ! input.czrRenderInputTextEditorTemplate() )
             return;
@@ -53,10 +54,10 @@ $.extend( CZRInputMths , {
           _.bindAll( input, 'czrOnVisualEditorChange', 'czrOnTextEditorChange', 'czrResizeEditorOnWindowResize' );
 
           toggleButton.on( 'click', function() {
-              input.editorExpanded.set( ! input.editorExpanded() );
-              if ( input.editorExpanded() ) {
-                editor.focus();
-              }
+                input.editorExpanded.set( ! input.editorExpanded() );
+                if ( input.editorExpanded() ) {
+                  editor.focus();
+                }
           });
 
           //on this module section close close the editor and unbind this input
@@ -67,35 +68,37 @@ $.extend( CZRInputMths , {
           });
 
           input.editorExpanded.bind( function (expanded) {
-              /*
-              * Ensure only the latest input is bound
-              */
-              if ( editor.locker && editor.locker !== input ) {
-                editor.locker.editorExpanded.set(false);
-                editor.locker = null;
-              }if ( ! editor.locker || editor.locker === input ) {
-                $(document.body).toggleClass('czr-customize-content_editor-pane-open', expanded);
-                editor.locker = input;
-              }
 
-              //set toggle button text
-              input.czrSetToggleButtonText( expanded );
+                console.log('in input.editorExpanded', expanded, input.get() );
+                /*
+                * Ensure only the latest input is bound
+                */
+                if ( editor.locker && editor.locker !== input ) {
+                    editor.locker.editorExpanded.set(false);
+                    editor.locker = null;
+                }if ( ! editor.locker || editor.locker === input ) {
+                    $(document.body).toggleClass('czr-customize-content_editor-pane-open', expanded);
+                    editor.locker = input;
+                }
 
-              if ( expanded ) {
-                editor.setContent( wp.editor.autop( input.get() ) );
-                editor.on( 'input change keyup', input.czrOnVisualEditorChange );
-                textarea.on( 'input', input.czrOnTextEditorChange );
-                input.czrResizeEditor( window.innerHeight - editorPane.height() );
-                $( window ).on('resize', input.czrResizeEditorOnWindowResize );
+                //set toggle button text
+                input.czrSetToggleButtonText( expanded );
 
-              } else {
-                editor.off( 'input change keyup', input.czrOnVisualEditorChange );
-                textarea.off( 'input', input.czrOnTextEditorChange );
-                $( window ).off('resize', input.czrResizeEditorOnWindowResize );
+                if ( expanded ) {
+                    editor.setContent( wp.editor.autop( input.get() ) );
+                    editor.on( 'input change keyup', input.czrOnVisualEditorChange );
+                    textarea.on( 'input', input.czrOnTextEditorChange );
+                    input.czrResizeEditor( window.innerHeight - editorPane.height() );
+                    $( window ).on('resize', input.czrResizeEditorOnWindowResize );
 
-                //resize reset
-                input.czrResizeReset();
-              }
+                } else {
+                    editor.off( 'input change keyup', input.czrOnVisualEditorChange );
+                    textarea.off( 'input', input.czrOnTextEditorChange );
+                    $( window ).off('resize', input.czrResizeEditorOnWindowResize );
+
+                    //resize reset
+                    input.czrResizeReset();
+                }
           } );
   },
 
@@ -136,8 +139,9 @@ $.extend( CZRInputMths , {
           var input  = this;
 
           //do we have view template script?
-          if ( 0 === $( '#tmpl-czr-input-text_editor-view-content' ).length )
-            return;
+          if ( 0 === $( '#tmpl-czr-input-text_editor-view-content' ).length ) {
+              throw new Error('Missing js template for text editor input in module : ' + input.module.id );
+          }
 
           var view_template = wp.template('czr-input-text_editor-view-content'),
                   $_view_el = input.container.find('input');
@@ -146,7 +150,9 @@ $.extend( CZRInputMths , {
           if ( ! view_template  || ! input.container )
             return;
 
-          $_view_el.after( view_template( this.get() ) );
+          console.log('Model injected in text editor tmpl : ', input.get() );
+
+          $_view_el.after( view_template( input.get() ) );
 
           return true;
   },

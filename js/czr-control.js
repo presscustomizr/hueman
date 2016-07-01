@@ -634,8 +634,11 @@ $.extend( CZRInputMths , {
             }
 
             api.Value.prototype.initialize.call( this, null, options );
+
             var input = this;
             $.extend( input, options || {} );
+
+            console.log('in input initialize', name, options );
             if ( ! _.isUndefined(options.input_value) )
               input.set(options.input_value);
             input.type_map = {
@@ -1017,8 +1020,9 @@ $.extend( CZRInputMths , {
     setupTextEditor : function() {
           var input        = this,
               _model       = input.get();
-          if ( ! input.container )
-            return this;
+          if ( ! input.container ) {
+              throw new Error( 'The input container is not set for WP text editor in module.' + input.module.id );
+          }
 
           if ( ! input.czrRenderInputTextEditorTemplate() )
             return;
@@ -1060,10 +1064,10 @@ $.extend( CZRInputMths , {
           _.bindAll( input, 'czrOnVisualEditorChange', 'czrOnTextEditorChange', 'czrResizeEditorOnWindowResize' );
 
           toggleButton.on( 'click', function() {
-              input.editorExpanded.set( ! input.editorExpanded() );
-              if ( input.editorExpanded() ) {
-                editor.focus();
-              }
+                input.editorExpanded.set( ! input.editorExpanded() );
+                if ( input.editorExpanded() ) {
+                  editor.focus();
+                }
           });
           input.module.czr_ModuleState.bind(
             function( state ) {
@@ -1072,28 +1076,30 @@ $.extend( CZRInputMths , {
           });
 
           input.editorExpanded.bind( function (expanded) {
-              if ( editor.locker && editor.locker !== input ) {
-                editor.locker.editorExpanded.set(false);
-                editor.locker = null;
-              }if ( ! editor.locker || editor.locker === input ) {
-                $(document.body).toggleClass('czr-customize-content_editor-pane-open', expanded);
-                editor.locker = input;
-              }
-              input.czrSetToggleButtonText( expanded );
 
-              if ( expanded ) {
-                editor.setContent( wp.editor.autop( input.get() ) );
-                editor.on( 'input change keyup', input.czrOnVisualEditorChange );
-                textarea.on( 'input', input.czrOnTextEditorChange );
-                input.czrResizeEditor( window.innerHeight - editorPane.height() );
-                $( window ).on('resize', input.czrResizeEditorOnWindowResize );
+                console.log('in input.editorExpanded', expanded, input.get() );
+                if ( editor.locker && editor.locker !== input ) {
+                    editor.locker.editorExpanded.set(false);
+                    editor.locker = null;
+                }if ( ! editor.locker || editor.locker === input ) {
+                    $(document.body).toggleClass('czr-customize-content_editor-pane-open', expanded);
+                    editor.locker = input;
+                }
+                input.czrSetToggleButtonText( expanded );
 
-              } else {
-                editor.off( 'input change keyup', input.czrOnVisualEditorChange );
-                textarea.off( 'input', input.czrOnTextEditorChange );
-                $( window ).off('resize', input.czrResizeEditorOnWindowResize );
-                input.czrResizeReset();
-              }
+                if ( expanded ) {
+                    editor.setContent( wp.editor.autop( input.get() ) );
+                    editor.on( 'input change keyup', input.czrOnVisualEditorChange );
+                    textarea.on( 'input', input.czrOnTextEditorChange );
+                    input.czrResizeEditor( window.innerHeight - editorPane.height() );
+                    $( window ).on('resize', input.czrResizeEditorOnWindowResize );
+
+                } else {
+                    editor.off( 'input change keyup', input.czrOnVisualEditorChange );
+                    textarea.off( 'input', input.czrOnTextEditorChange );
+                    $( window ).off('resize', input.czrResizeEditorOnWindowResize );
+                    input.czrResizeReset();
+                }
           } );
   },
 
@@ -1126,15 +1132,18 @@ $.extend( CZRInputMths , {
   },
   czrRenderInputTextEditorTemplate: function() {
           var input  = this;
-          if ( 0 === $( '#tmpl-czr-input-text_editor-view-content' ).length )
-            return;
+          if ( 0 === $( '#tmpl-czr-input-text_editor-view-content' ).length ) {
+              throw new Error('Missing js template for text editor input in module : ' + input.module.id );
+          }
 
           var view_template = wp.template('czr-input-text_editor-view-content'),
                   $_view_el = input.container.find('input');
           if ( ! view_template  || ! input.container )
             return;
 
-          $_view_el.after( view_template( this.get() ) );
+          console.log('Model injected in text editor tmpl : ', input.get() );
+
+          $_view_el.after( view_template( input.get() ) );
 
           return true;
   },
@@ -1271,6 +1280,8 @@ $.extend( CZRItemMths , {
         $.extend( item, options || {} );
         item.defaultItemModel = _.clone( options.defaultItemModel ) || { id : '', title : '' };
         var _initial_model = $.extend( item.defaultItemModel, options.initial_item_model );
+
+        console.log('in item initialize : initial_model', _initial_model );
         item.set( _initial_model );
         item.isReady.done( function() {
               item.module.updateItemsCollection( { item : item.get() } );
@@ -1389,20 +1400,22 @@ $.extend( CZRItemMths , {
         if ( _.isEmpty(item.defaultItemModel) || _.isUndefined(item.defaultItemModel) ) {
           throw new Error('No default model found in item ' + item.id + '. Aborting');
         }
-        var initial_item_model = item.initial_item_model;
+        var item_model = $.extend( true, {}, item.get() );
 
-        if ( ! _.isObject(initial_item_model) )
-          initial_item_model = item.defaultItemModel;
+        console.log('in setupinputcol from DOM, item.get() and item.initial_item_model', item.get() , item_model );
+
+        if ( ! _.isObject( item_model ) )
+          item_model = item.defaultItemModel;
         else
-          initial_item_model = $.extend( item.defaultItemModel, initial_item_model );
+          item_model = $.extend( item.defaultItemModel, item_model );
 
         var dom_item_model = {};
         $( '.' + module.control.css_attr.sub_set_wrapper, item.container).each( function( _index ) {
               var _id = $(this).find('[data-type]').attr('data-type'),
-                  _value = _.has( initial_item_model, _id) ? initial_item_model[_id] : '';
+                  _value = _.has( item_model, _id) ? item_model[_id] : '';
               if ( _.isUndefined( _id ) || _.isEmpty( _id ) )
                 return;
-              if ( ! _.has( initial_item_model, _id ) ) {
+              if ( ! _.has( item_model, _id ) ) {
                     throw new Error('The item property : ' + _id + ' has been found in the DOM but not in the item model : '+ item.id + '. The input can not be instantiated.');
               }
               item.czr_Input.add( _id, new item.inputConstructor( _id, {
@@ -1414,6 +1427,7 @@ $.extend( CZRItemMths , {
                     module : module
               } ) );
               dom_item_model[_id] = _value;
+              console.log('DOM_ITEM_MODEL ?', dom_item_model );
 
         });//each
   },
@@ -2281,16 +2295,6 @@ $.extend( CZRSektionMths, {
                             }//for
                       }
                 });//sekItem.isReady
-                sekItem.embedded.done(function() {
-                      sekItem.dragulizeSektion();
-                });
-                sekItem.contentRendered.done(function() {
-                        sekItem.czr_ItemState.callbacks.add( function(to) {
-                              if ( 'closed' == to )
-                                return;
-                              sekItem.container.removeClass('czr-show-fake-container');
-                        });
-                });//embedded.done
 
           },
           itemReact : function( to, from ) {
@@ -2335,20 +2339,6 @@ $.extend( CZRSektionMths, {
 
                 return db_ready_sektItem;
           },
-
-
-
-
-
-
-
-          dragulizeSektion : function() {
-                var sekItem = this,
-                    module = this.module;
-                    _drag_container = $( '.czr-dragula-fake-container', sekItem.container )[0];
-
-                 module.modsDragInstance.containers.push( _drag_container );
-          }
   }//Sektion
 
 });//extends api.CZRDynModule
@@ -2594,18 +2584,22 @@ $.extend( CZRSektionMths, {
             moves: function (el, source, handle, sibling) {
                 return _.contains( handle.className.split(' '), 'czr-mod-drag-handler' );
             },
+            invalidTarget : function(el, handle) {
+                console.log('invalidTarget', el, handle );
+                return false;
+            },
+            accepts: function ( el, target, source, sibling ) {
+                return true;
+            },
             isContainer : function( el ) {
               return false;
             }
         });//dragula
        module.modsDragInstance.on('drag', function( el, source ){
                 module.czr_Item.each( function( _sektion ){
-                      _sektion.container.toggleClass('czr-show-fake-container', 'closed' == _sektion.czr_ItemState() );
+                      _sektion.czr_ItemState.set( 'expanded' != _sektion.czr_ItemState() ? 'expanded_noscroll' : 'expanded' );
                 });
         }).on('dragend', function( el, source ){
-                module.czr_Item.each( function( _sektion ){
-                      _sektion.container.removeClass('czr-show-fake-container');
-                });
         }).on('drop', function(el, target, source, sibling ) {
               var _dropped_module_id = $(el).attr('data-module-id'),
                   _target_col = $(target).closest('.czr-column').attr('data-id'),
@@ -2616,12 +2610,6 @@ $.extend( CZRSektionMths, {
                   module.reorderModulesInColumn( _target_col );
               } else {
                   module.control.getSyncCollectionControl().czr_Module( _dropped_module_id ).modColumn.set( _target_col );
-              }
-        });
-        module.modsDragInstance.on('over', function( el, container, source ) {
-              if ( $(container).hasClass('czr-dragula-fake-container') ) {
-                  _target_sekId = $(container).closest('[data-id]').attr('data-id');
-                  module.czr_Item(_target_sekId).czr_ItemState.set('expanded_noscroll');
               }
         });
         var scroll = autoScroller([

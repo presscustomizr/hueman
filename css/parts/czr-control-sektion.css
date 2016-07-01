@@ -197,6 +197,9 @@
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
   filter: alpha(opacity=80);
 }
+li.czr-single-module.gu-mirror {
+    list-style: none;
+}
 .gu-hide {
   display: none !important;
 }
@@ -213,7 +216,7 @@
 }
 
 /* CUSTOM FOR DRAGULA */
-.czr-dragula-fake-container {
+/*.czr-dragula-fake-container {
   display: none;
   float: left;
   height: 60px;
@@ -225,4 +228,4 @@
 }
 .czr-show-fake-container .czr-dragula-fake-container {
   display: block;
-}
+}*/

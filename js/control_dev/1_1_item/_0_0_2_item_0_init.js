@@ -33,6 +33,8 @@ $.extend( CZRItemMths , {
         //set initial values
         var _initial_model = $.extend( item.defaultItemModel, options.initial_item_model );
 
+        console.log('in item initialize : initial_model', _initial_model );
+
         //this won't be listened to at this stage
         item.set( _initial_model );
 

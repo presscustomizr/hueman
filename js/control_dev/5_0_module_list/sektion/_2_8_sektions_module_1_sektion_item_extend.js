@@ -54,26 +54,26 @@ $.extend( CZRSektionMths, {
 
 
                 //instantiate the columns when the sektion item is embedded
-                sekItem.embedded.done(function() {
-                      //dragulize sektion when embedded
-                      sekItem.dragulizeSektion();
-                });
+                // sekItem.embedded.done(function() {
+                //       //dragulize sektion when embedded
+                //       sekItem.dragulizeSektion();
+                // });
 
 
                 //defer actions when the sek content is rendered :
                 //collection listener
                 //dragulization
-                sekItem.contentRendered.done(function() {
-                        //dragulize columns
-                        //sekItem.module.dragInstance.containers.push( $( '.czr-column-wrapper', sekItem.container )[0] );
+                // sekItem.contentRendered.done(function() {
+                //         //dragulize columns
+                //         //sekItem.module.dragInstance.containers.push( $( '.czr-column-wrapper', sekItem.container )[0] );
 
-                        //each item view must clean the dragula class
-                        sekItem.czr_ItemState.callbacks.add( function(to) {
-                              if ( 'closed' == to )
-                                return;
-                              sekItem.container.removeClass('czr-show-fake-container');
-                        });
-                });//embedded.done
+                //         //each item view must clean the dragula class
+                //         sekItem.czr_ItemState.callbacks.add( function(to) {
+                //               if ( 'closed' == to )
+                //                 return;
+                //               sekItem.container.removeClass('czr-show-fake-container');
+                //         });
+                // });//embedded.done
 
           },
 
@@ -153,13 +153,13 @@ $.extend( CZRSektionMths, {
 
 
 
-          dragulizeSektion : function() {
-                var sekItem = this,
-                    module = this.module;
-                    _drag_container = $( '.czr-dragula-fake-container', sekItem.container )[0];
+          // dragulizeSektion : function() {
+          //       var sekItem = this,
+          //           module = this.module;
+          //           _drag_container = $( '.czr-dragula-fake-container', sekItem.container )[0];
 
-                 module.modsDragInstance.containers.push( _drag_container );
-          }
+          //        module.modsDragInstance.containers.push( _drag_container );
+          // }
   }//Sektion
 
 });

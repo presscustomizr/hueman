@@ -19,10 +19,14 @@ $.extend( CZRInputMths , {
             }
 
             api.Value.prototype.initialize.call( this, null, options );
+
             var input = this;
             //input.options = options;
             //write the options as properties, name is included
             $.extend( input, options || {} );
+
+            console.log('in input initialize', name, options );
+
 
             //initialize to the provided value if any
             if ( ! _.isUndefined(options.input_value) )

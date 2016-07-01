@@ -25,24 +25,26 @@ $.extend( CZRItemMths , {
 
         //prepare and sets the item value on api ready
         //=> triggers the module rendering + DOM LISTENERS
-        var initial_item_model = item.initial_item_model;
+        var item_model = $.extend( true, {}, item.get() );
 
-        if ( ! _.isObject(initial_item_model) )
-          initial_item_model = item.defaultItemModel;
+        console.log('in setupinputcol from DOM, item.get() and item.initial_item_model', item.get() , item_model );
+
+        if ( ! _.isObject( item_model ) )
+          item_model = item.defaultItemModel;
         else
-          initial_item_model = $.extend( item.defaultItemModel, initial_item_model );
+          item_model = $.extend( item.defaultItemModel, item_model );
 
         var dom_item_model = {};
 
         //creates the inputs based on the rendered items
         $( '.' + module.control.css_attr.sub_set_wrapper, item.container).each( function( _index ) {
               var _id = $(this).find('[data-type]').attr('data-type'),
-                  _value = _.has( initial_item_model, _id) ? initial_item_model[_id] : '';
+                  _value = _.has( item_model, _id) ? item_model[_id] : '';
               //skip if no valid input data-type is found in this node
               if ( _.isUndefined( _id ) || _.isEmpty( _id ) )
                 return;
               //check if this property exists in the current item model
-              if ( ! _.has( initial_item_model, _id ) ) {
+              if ( ! _.has( item_model, _id ) ) {
                     throw new Error('The item property : ' + _id + ' has been found in the DOM but not in the item model : '+ item.id + '. The input can not be instantiated.');
               }
               item.czr_Input.add( _id, new item.inputConstructor( _id, {
@@ -56,6 +58,7 @@ $.extend( CZRItemMths , {
 
               //populate the collection
               dom_item_model[_id] = _value;
+              console.log('DOM_ITEM_MODEL ?', dom_item_model );
               //shall we trigger a specific event when the input collection from DOM has been populated ?
 
         });//each

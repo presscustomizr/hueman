@@ -17,10 +17,15 @@ $.extend( CZRSektionMths, {
             moves: function (el, source, handle, sibling) {
                 return _.contains( handle.className.split(' '), 'czr-mod-drag-handler' );
             },
-            // invalidTarget : function(el, handle) {
-            //     console.log('invalidTarget', el, handle );
-            //     return false;
-            // },
+            invalidTarget : function(el, handle) {
+                console.log('invalidTarget', el, handle );
+                return false;
+            },
+            accepts: function ( el, target, source, sibling ) {
+                // if ( $(target).closest('.czr-single-item').hasClass('open') )
+                //   return ! _.contains( target.className.split(' '), 'czr-dragula-fake-container' );
+                return true;
+            },
             isContainer : function( el ) {
               //console.log('isContainer?', el);
               return false;
@@ -32,13 +37,13 @@ $.extend( CZRSektionMths, {
        module.modsDragInstance.on('drag', function( el, source ){
                 //display the fake container to all closed sek items
                 module.czr_Item.each( function( _sektion ){
-                      _sektion.container.toggleClass('czr-show-fake-container', 'closed' == _sektion.czr_ItemState() );
+                      _sektion.czr_ItemState.set( 'expanded' != _sektion.czr_ItemState() ? 'expanded_noscroll' : 'expanded' );
+                      //_sektion.container.toggleClass('czr-show-fake-container', 'closed' == _sektion.czr_ItemState() );
                 });
         }).on('dragend', function( el, source ){
-                //display the fake container to all closed sek items
-                module.czr_Item.each( function( _sektion ){
-                      _sektion.container.removeClass('czr-show-fake-container');
-                });
+                // module.czr_Item.each( function( _sektion ){
+                //       _sektion.container.removeClass('czr-show-fake-container');
+                // });
         }).on('drop', function(el, target, source, sibling ) {
               var _dropped_module_id = $(el).attr('data-module-id'),
                   _target_col = $(target).closest('.czr-column').attr('data-id'),
@@ -53,13 +58,14 @@ $.extend( CZRSektionMths, {
         });
 
         //expand a closed sektion on over
-        module.modsDragInstance.on('over', function( el, container, source ) {
-              if ( $(container).hasClass('czr-dragula-fake-container') ) {
-                  //get the sekItem id
-                  _target_sekId = $(container).closest('[data-id]').attr('data-id');
-                  module.czr_Item(_target_sekId).czr_ItemState.set('expanded_noscroll');
-              }
-        });
+        // module.modsDragInstance.on('over', function( el, container, source ) {
+        //   console.log('OVERING', container );
+        //       if ( $(container).hasClass('czr-dragula-fake-container') ) {
+        //           //get the sekItem id
+        //           _target_sekId = $(container).closest('[data-id]').attr('data-id');
+        //           module.czr_Item(_target_sekId).czr_ItemState.set('expanded_noscroll');
+        //       }
+        // });
 
         //make sure the scroll down is working
         var scroll = autoScroller([

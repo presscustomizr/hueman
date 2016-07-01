@@ -1641,6 +1641,9 @@ body.czr-customize-content_editor-pane-resize #customize-preview:before {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
   filter: alpha(opacity=80);
 }
+li.czr-single-module.gu-mirror {
+    list-style: none;
+}
 .gu-hide {
   display: none !important;
 }
@@ -1657,7 +1660,7 @@ body.czr-customize-content_editor-pane-resize #customize-preview:before {
 }
 
 /* CUSTOM FOR DRAGULA */
-.czr-dragula-fake-container {
+/*.czr-dragula-fake-container {
   display: none;
   float: left;
   height: 60px;
@@ -1669,7 +1672,7 @@ body.czr-customize-content_editor-pane-resize #customize-preview:before {
 }
 .czr-show-fake-container .czr-dragula-fake-container {
   display: block;
-}/* HEADER AND SCOPE SWITCHER */
+}*//* HEADER AND SCOPE SWITCHER */
 .wp-customizer .wp-full-overlay-sidebar .wp-full-overlay-header {
   height: 85px;
 }
