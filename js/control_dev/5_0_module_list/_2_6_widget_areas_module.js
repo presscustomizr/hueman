@@ -128,6 +128,7 @@ $.extend( CZRWidgetAreaModuleMths, {
   //overrides parent method
   //adds the default widget zones in the items
   initializeModuleModel : function( constructorOptions ) {
+              var module = this;
               constructorOptions.items = _.union( _.has( module.serverParams, 'default_zones' ) ? module.serverParams.default_zones : [], constructorOptions.items );
               return constructorOptions;
   },
@@ -706,7 +707,7 @@ $.extend( CZRWidgetAreaModuleMths, {
           }, 150 ) );
 
           //Close all views on widget panel expansion/clos
-          module.closeAllViews();
+          module.closeAllItems();
           module.czr_preItem('view_status').set('closed');
   },//widgetPanelReact()
 
@@ -732,7 +733,7 @@ $.extend( CZRWidgetAreaModuleMths, {
             container.scrollTop( 0 );
           }
 
-          module.closeAllViews();
+          module.closeAllItems();
 
           content.slideToggle();
   },

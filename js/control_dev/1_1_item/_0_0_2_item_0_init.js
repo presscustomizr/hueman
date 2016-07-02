@@ -33,10 +33,36 @@ $.extend( CZRItemMths , {
         //set initial values
         var _initial_model = $.extend( item.defaultItemModel, options.initial_item_model );
 
-        console.log('in item initialize : initial_model', _initial_model );
-
         //this won't be listened to at this stage
         item.set( _initial_model );
+
+
+
+        //USER EVENT MAP
+        item.userEventMap = new api.Value( [
+              //toggles remove view alert
+              {
+                trigger   : 'click keydown',
+                selector  : [ '.' + item.module.control.css_attr.display_alert_btn, '.' + item.module.control.css_attr.cancel_alert_btn ].join(','),
+                name      : 'toggle_remove_alert',
+                actions   : ['toggleRemoveAlertVisibility']
+              },
+              //removes item and destroys its view
+              {
+                trigger   : 'click keydown',
+                selector  : '.' + item.module.control.css_attr.remove_view_btn,
+                name      : 'remove_item',
+                actions   : ['removeItem']
+              },
+              //edit view
+              {
+                trigger   : 'click keydown',
+                selector  : [ '.' + item.module.control.css_attr.edit_view_btn, '.' + item.module.control.css_attr.item_title ].join(','),
+                name      : 'edit_view',
+                actions   : ['setViewVisibility']
+              }
+        ]);
+
 
 
 
@@ -89,111 +115,6 @@ $.extend( CZRItemMths , {
   //The item.callbacks are declared.
   ready : function() {
         this.isReady.resolve();
-  },
-
-
-  //fired on initialize for items in module embedded in a regular control
-  //fired when user edit module for items in modules embedded in a sektion
-  mayBeRenderItemWrapper : function() {
-        var item = this;
-
-        if ( 'pending' == item.embedded.state() )
-            item.container = item.renderItemWrapper();
-        if ( _.isUndefined(item.container) || ! item.container.length ) {
-            throw new Error( 'In itemWrapperViewSetup the Item view has not been rendered : ' + item.id );
-        } else {
-            //say it
-            item.embedded.resolve();
-        }
-  },
-
-
-  //define the item view DOM event map
-  //bind actions when the item is embedded
-  itemWrapperViewSetup : function( item_model ) {
-          var item = this,
-              module = this.module;
-
-          item_model = item.get() || item.initial_item_model;//could not be set yet
-
-          //czr_ItemState stores the current expansion status of a given view => one value by created by item.id
-          //czr_ItemState can take 3 values : expanded, expanded_noscroll (=> used on view creation), closed
-          item.czr_ItemState = new api.Value();
-          //set initial state
-          item.czr_ItemState.set('closed');
-
-
-          item.view_event_map = [
-                  //toggles remove view alert
-                  {
-                    trigger   : 'click keydown',
-                    selector  : [ '.' + module.control.css_attr.display_alert_btn, '.' + module.control.css_attr.cancel_alert_btn ].join(','),
-                    name      : 'toggle_remove_alert',
-                    actions   : ['toggleRemoveAlertVisibility']
-                  },
-                  //removes item and destroys its view
-                  {
-                    trigger   : 'click keydown',
-                    selector  : '.' + module.control.css_attr.remove_view_btn,
-                    name      : 'remove_item',
-                    actions   : ['removeItem']
-                  },
-                  //edit view
-                  {
-                    trigger   : 'click keydown',
-                    selector  : [ '.' + module.control.css_attr.edit_view_btn, '.' + module.control.css_attr.item_title ].join(','),
-                    name      : 'edit_view',
-                    actions   : ['setViewVisibility']
-                  }
-          ];
-
-
-          //always write the title
-          item.writeItemViewTitle();
-
-          //react to the item state changes
-          item.czr_ItemState.callbacks.add( function( to, from ) {
-              //toggle on view state change
-              item.toggleItemExpansion.apply(item, arguments );
-          });
-
-
-          //When do we render the item content ?
-          //If this is a multi-item module, let's render each item content when they are expanded.
-          //In the case of a single item module, we can render the item content now.
-          var _updateItemContentDeferred = function( $_content) {
-                //update the $.Deferred state
-                if ( ! _.isUndefined( $_content ) && false !== $_content.length )
-                    item.contentRendered.resolve();
-                else {
-                    throw new Error( 'Module : ' + item.module.id + ', the item content has not been rendered for ' + item.id );
-                }
-          };
-
-          if ( item.module.isMultiItem() ) {
-                item.czr_ItemState.callbacks.add( function( to, from ) {
-                      //renderview content if needed on first expansion
-                      if ( 'resolved' == item.contentRendered.state() )
-                        return;
-
-                      $.when( item.renderItemContent( item_model ) ).done( function( $_item_content ) {
-                            _updateItemContentDeferred( $_item_content );
-                      });
-                });
-          } else {
-                //renderview content now for a single item module
-                $.when( item.renderItemContent( item_model ) ).done( function( $_item_content ) {
-                      _updateItemContentDeferred( $_item_content );
-                      item.czr_ItemState.set('expanded');
-                });
-          }
-
-          //DOM listeners for the user action in item view wrapper
-          api.CZR_Helpers.setupDOMListeners(
-                item.view_event_map,//actions to execute
-                { model:item_model, dom_el:item.container },//model + dom scope
-                item //instance where to look for the cb methods
-          );
   },
 
 

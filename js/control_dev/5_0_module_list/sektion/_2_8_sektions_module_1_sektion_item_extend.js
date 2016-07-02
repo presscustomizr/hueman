@@ -12,6 +12,22 @@ $.extend( CZRSektionMths, {
                 var sekItem = this;
                 api.CZRItem.prototype.initialize.call( sekItem, null, options );
 
+                //EXTEND THE USER EVENT MAP
+                //=> adds the module list panel events
+                sekItem.userEventMap.set( _.union(
+                      sekItem.userEventMap(),
+                      [
+                        {
+                          trigger   : 'click keydown',
+                          selector  : [ '.' + sekItem.module.control.css_attr.edit_view_btn, '.' + sekItem.module.control.css_attr.display_alert_btn,'.' + sekItem.module.control.css_attr.item_title ].join(','),
+                          name      : 'close_module_panel',
+                          actions   : function() {
+                              api.czrModulePanelState.set(false);
+                          },
+                        },
+                      ]
+                ));
+
                 var _sektion_model = sekItem.get(),
                     module = options.module;
 
@@ -145,11 +161,7 @@ $.extend( CZRSektionMths, {
                 });//each
 
                 return db_ready_sektItem;
-          },
-
-
-
-
+          }
 
 
 

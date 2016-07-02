@@ -12,7 +12,6 @@ $.extend( CZRDynModuleMths, {
   /// PRE ADD MODEL DIALOG AND VIEW
   //////////////////////////////////////////////////
   renderPreItemView : function( obj ) {
-          console.log('in renderPreItemView', obj );
           var module = this;
           //is this view already rendered ?
           if ( ! _.isEmpty( module.czr_preItem('item_content').get() ) )
@@ -59,7 +58,7 @@ $.extend( CZRDynModuleMths, {
   setPreItemViewVisibility : function(obj) {
           var module = this;
 
-          module.closeAllViews();
+          module.closeAllItems();
           module.czr_preItem('view_status').set( 'expanded' == module.czr_preItem('view_status').get() ? 'closed' : 'expanded' );
   },
 

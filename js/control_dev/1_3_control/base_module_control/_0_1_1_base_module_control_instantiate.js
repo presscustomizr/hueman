@@ -7,7 +7,8 @@
 var CZRBaseModuleControlMths = CZRBaseModuleControlMths || {};
 
 $.extend( CZRBaseModuleControlMths, {
-
+  //@param : module {}
+  //@param : constructor string
   instantiateModule : function( module, constructor ) {
           if ( ! _.has( module,'id') ) {
             throw new Error('CZRModule::instantiateModule() : a module has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
@@ -56,13 +57,18 @@ $.extend( CZRBaseModuleControlMths, {
               throw new Error('Module type ' + module.module_type + ' is not listed in the module map api.czrModuleMap.' );
           }
 
+          var _mthds = api.czrModuleMap[ module.module_type ].mthds,
+              _is_crud = api.czrModuleMap[ module.module_type ].crud,
+              _base_constructor = _is_crud ? api.CZRDynModule : api.CZRModule;
+
           //in the general case of multi_module / sektion control, we need to extend the module constructors
           if ( ! _.isEmpty( module.sektion_id ) ) {
-              parentConstructor = api.czrModuleMap[ module.module_type ].construct ;
+
+              parentConstructor = _base_constructor.extend( _mthds );
               constructor = parentConstructor.extend( control.getMultiModuleExtender( parentConstructor ) );
           } else {
             //in the particular case of a module embedded in a control the constructor is ready to be fired.
-              constructor = api.czrModuleMap[ module.module_type ].construct;
+              constructor = _base_constructor.extend( _mthds );
           }
 
           if ( _.isUndefined(constructor) || _.isEmpty(constructor) || ! constructor ) {

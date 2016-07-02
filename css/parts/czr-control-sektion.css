@@ -22,9 +22,7 @@
     cursor: -moz-grab;
     cursor: -webkit-grab;
 }
-.add-new-module {
-  margin-top: 1%;
-}
+
 
 
 
@@ -71,6 +69,7 @@
     position: absolute;
     left: 0%;
     padding: 1%;
+    margin: 2% 0;
     color: #999;
     cursor: move;
     cursor: grab;
@@ -197,9 +196,7 @@
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
   filter: alpha(opacity=80);
 }
-li.czr-single-module.gu-mirror {
-    list-style: none;
-}
+
 .gu-hide {
   display: none !important;
 }
@@ -216,6 +213,15 @@ li.czr-single-module.gu-mirror {
 }
 
 /* CUSTOM FOR DRAGULA */
+.gu-unselectable .czr-module-collection-wrapper {
+    width: 98%;
+    border: 1px dotted green;
+    background: #d1ffe0;
+    min-height: 31px;
+}
+li.czr-single-module.gu-mirror, li.czr-module-candidate.gu-mirror {
+    list-style: none;
+}
 /*.czr-dragula-fake-container {
   display: none;
   float: left;
@@ -229,3 +235,140 @@ li.czr-single-module.gu-mirror {
 .czr-show-fake-container .czr-dragula-fake-container {
   display: block;
 }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* MODULES LIST PANEL */
+
+#czr-module-list-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -301px;
+  /*visibility: hidden;*/
+  opacity: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin: 0;
+  z-index: 4;
+  background: rgba(0, 0, 0, 0.47);
+  -webkit-transition: all .18s;
+  transition: all .18s;
+  border-right: 1px solid #ddd;
+}
+#czr-module-list-panel, #czr-available-modules-filter {
+  width: 45%;
+  min-width: 300px;
+}
+body.czr-adding-module #czr-module-list-panel {
+  left: 0;
+  visibility: visible;
+  opacity: 1;
+}
+
+/*body.czr-adding-module .wp-full-overlay-main {
+  left: 300px;
+}*/
+
+body.czr-adding-module #customize-preview {
+  opacity: 0.7;
+}
+
+
+.add-new-module:before {
+  content: "\f132";
+  display: inline-block;
+  position: relative;
+  left: -2px;
+  top: -1px;
+  font: normal 20px/1 dashicons;
+  vertical-align: middle;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.czr-column .add-new-module {
+  margin: 1%;
+  float: right;
+}
+
+body.czr-adding-module .add-new-module,
+body.czr-adding-module .add-new-module:hover {
+  background: #eee;
+  border-color: #929793;
+  color: #32373c;
+  -webkit-box-shadow: inset 0 2px 5px -3px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 2px 5px -3px rgba(0, 0, 0, 0.5);
+}
+
+body.czr-adding-module .add-new-module:before {
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+
+#czr-available-modules-list {
+  top: 60px;
+  position: absolute;
+  overflow: auto;
+  bottom: 0;
+  width: 100%;
+}
+
+#czr-available-modules-filter {
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.47);
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* search field container */
+#czr-available-modules-filter {
+  padding: 12px 15px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+#czr-available-modules-filter input {
+  padding: 6px 10px;
+  width: 100%;
+}
+
+#czr-available-modules-list .czr-module-candidate {
+    position: relative;
+    /*padding: 1%;*/
+    border-bottom: 1px solid #e5e5e5;
+}
+
+#czr-available-modules-list .czr-module-candidate h3 {
+  color: #fff;
+  padding: 0px;
+    margin: 0;
+}
+#czr-available-modules-list .czr-mod-drag-handler {
+    position: relative;
+    left: 0%;
+    padding: 1%;
+    margin: 2% 4%;
+    color: inherit;
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}

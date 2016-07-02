@@ -27,8 +27,6 @@ $.extend( CZRItemMths , {
         //=> triggers the module rendering + DOM LISTENERS
         var item_model = $.extend( true, {}, item.get() );
 
-        console.log('in setupinputcol from DOM, item.get() and item.initial_item_model', item.get() , item_model );
-
         if ( ! _.isObject( item_model ) )
           item_model = item.defaultItemModel;
         else
@@ -58,7 +56,6 @@ $.extend( CZRItemMths , {
 
               //populate the collection
               dom_item_model[_id] = _value;
-              console.log('DOM_ITEM_MODEL ?', dom_item_model );
               //shall we trigger a specific event when the input collection from DOM has been populated ?
 
         });//each

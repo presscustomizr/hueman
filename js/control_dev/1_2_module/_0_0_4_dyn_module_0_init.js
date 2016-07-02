@@ -14,8 +14,7 @@ $.extend( CZRDynModuleMths, {
 
           //extend the module with new template Selectors
           $.extend( module, {
-              itemAlertEl : 'czr-rud-item-alert-part',
-              itemPreAddEl : '',//is specific for each crud module
+              itemPreAddEl : ''//is specific for each crud module
           } );
 
           //EXTENDS THE DEFAULT MONO MODEL CONSTRUCTOR WITH NEW METHODS
@@ -41,7 +40,7 @@ $.extend( CZRDynModuleMths, {
           ////////////////////////////////////////////////////
           /// MODULE DOM EVENT MAP
           ////////////////////////////////////////////////////
-          module.module_event_map = [
+          module.userEventMap = new api.Value( [
                 //pre add new item : open the dialog box
                 {
                   trigger   : 'click keydown',
@@ -54,17 +53,17 @@ $.extend( CZRDynModuleMths, {
                   trigger   : 'click keydown',
                   selector  : '.' + module.control.css_attr.add_new_btn, //'.czr-add-new',
                   name      : 'add_item',
-                  actions   : ['closeAllViews', 'addItem'],
+                  actions   : ['closeAllItems', 'addItem'],
                 }
-          ];//module.module_event_map
+          ]);//module.userEventMap
   },
 
 
   ready : function() {
           var module = this;
-          console.log('MODULE READY IN DYN MODULE CLASS : ', module.id, module.container );
+          console.log('MODULE READY IN DYN MODULE CLASS : ', module.id );
           //Setup the module event listeners
-          module.setupDOMListeners( module.module_event_map , { dom_el : module.container } );
+          module.setupDOMListeners( module.userEventMap() , { dom_el : module.container } );
 
           //PRE ADD MODEL SETUP
           module.czr_preItem('item').set( module.getDefaultModel() );

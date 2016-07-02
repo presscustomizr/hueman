@@ -65,6 +65,7 @@ $.extend( CZRBaseModuleControlMths, {
                 //populates the collection with the saved module
                 _.each( control.getSavedModules() , function( _mod, _key ) {
                       //adds it to the collection
+                      //=> it will be fired ready usually when the control section is expanded
                       control.instantiateModule( _mod, {} );
                 });
                 //the module collection is ready
@@ -76,7 +77,7 @@ $.extend( CZRBaseModuleControlMths, {
           control.bind( 'user-module-candidate', function( _module ) {
                 //instanciate + fire ready()
                 //=> the module will be added in the collection on isReady.done()
-                control.instantiateModule( _module, {} ).ready(); //module, constructor
+                control.instantiateModule( _module, {} ).ready( _module.is_added_by_user ); //module, constructor
           });
   },
 

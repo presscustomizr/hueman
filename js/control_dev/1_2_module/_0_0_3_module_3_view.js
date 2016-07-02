@@ -62,7 +62,7 @@ $.extend( CZRModuleMths, {
 
   //fired on add_item
   //fired on views_sorted
-  closeAllViews : function(id) {
+  closeAllItems : function(id) {
           var module = this,
               _current_collection = _.clone( module.itemCollection() ),
               _filtered_collection = _.filter( _current_collection , function( mod) { return mod.id != id; } );

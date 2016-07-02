@@ -25,9 +25,6 @@ $.extend( CZRInputMths , {
             //write the options as properties, name is included
             $.extend( input, options || {} );
 
-            console.log('in input initialize', name, options );
-
-
             //initialize to the provided value if any
             if ( ! _.isUndefined(options.input_value) )
               input.set(options.input_value);

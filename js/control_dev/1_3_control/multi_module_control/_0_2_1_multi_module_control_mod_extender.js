@@ -12,7 +12,7 @@ $.extend( CZRMultiModuleControlMths, {
                     //run the parent initialize
                     parentConstructor.prototype.initialize.call( module, id, constructorOptions );
 
-                    console.log('MODULE INSTANTIATED : ', module.id );
+                    console.log('MODULE INSTANTIATED : ', module.id, constructorOptions);
 
                     //extend the module with new template Selectors
                     $.extend( module, {
@@ -37,9 +37,10 @@ $.extend( CZRMultiModuleControlMths, {
                     //ADD A MODULE COLUMN STATE OBSERVER
                     module.modColumn = new api.Value();
                     module.modColumn.set( constructorOptions.column_id );
+
                     //React to a module column change. Typically fired when moving a module from one column to another.
                     module.modColumn.bind( function( to, from ) {
-                          console.log('MODULE ' + module.id + ' HAS BEEN MOVED IN COLUMN', to );
+                          console.log('MODULE ' + module.id + ' HAS BEEN MOVED TO COLUMN', to, module() );
                           var _current_model = module(),
                               _new_model = $.extend( true, {}, _current_model );
 
@@ -71,10 +72,10 @@ $.extend( CZRMultiModuleControlMths, {
               //when a module is embedded in a sektion, we need to render it before ready is done
               //=> this allows us to override the container element declared in the parent initialize
               //when ready done => the module items are embedded (without their content)
-              ready : function() {
+              ready : function( is_added_by_user ) {
                       var module = this;
                        console.log('MODULE READY IN EXTENDED MODULE CLASS : ', module.id );
-                      $.when( module.renderModuleWrapper() ).done( function( $_module_container ) {
+                      $.when( module.renderModuleWrapper( is_added_by_user ) ).done( function( $_module_container ) {
                             if ( _.isUndefined($_module_container) || false === $_module_container.length ) {
                                 throw new Error( 'Module container has not been embedded for module :' + module.id );
                             }
@@ -95,7 +96,7 @@ $.extend( CZRMultiModuleControlMths, {
   CZRModuleExtended  : {
         //fired in ready.
         //=> before isReady.done().
-        renderModuleWrapper : function() {
+        renderModuleWrapper : function( is_added_by_user ) {
                 //=> an array of objects
                 var module = this;
 
@@ -116,7 +117,17 @@ $.extend( CZRMultiModuleControlMths, {
                     $_module_el = $(  module_wrapper_tmpl( tmpl_data ) );
 
                 //append the module wrapper to the column
-                $( '.czr-module-collection-wrapper' , module._getColumn().container).append( $_module_el );
+                //if added by user, search for the module candidate element, render after and delete the element
+                console.log('is_added_by_user', module(), module.is_added_by_user  );
+                if ( is_added_by_user ) {
+                    $.when( $( '.czr-module-collection-wrapper' , module._getColumn().container ).find( '.czr-module-candidate').after( $_module_el ) ).
+                      done( function() {
+                        $( '.czr-module-collection-wrapper' , module._getColumn().container ).find( '.czr-module-candidate').remove();
+                      });
+                } else {
+                    $( '.czr-module-collection-wrapper' , module._getColumn().container).append( $_module_el );
+                }
+
 
                 // //then append the ru module template
                 // var mod_content_wrapper_tmpl = wp.template( module.ruModuleEl ),
@@ -136,16 +147,16 @@ $.extend( CZRMultiModuleControlMths, {
 
                 module.view_event_map = [
                         //toggles remove view alert
-                        // {
-                        //   trigger   : 'click keydown',
-                        //   selector  : [ '.' + module.control.css_attr.display_alert_btn, '.' + module.control.css_attr.cancel_alert_btn ].join(','),
-                        //   name      : 'toggle_remove_alert',
-                        //   actions   : ['toggleRemoveAlertVisibility']
-                        // },
+                        {
+                          trigger   : 'click keydown',
+                          selector  : [ '.czr-remove-mod', '.' + module.control.css_attr.cancel_alert_btn ].join(','),
+                          name      : 'toggle_remove_alert',
+                          actions   : ['toggleModuleRemoveAlert']
+                        },
                         //removes module and destroys its view
                         {
                           trigger   : 'click keydown',
-                          selector  : '.czr-remove-mod',
+                          selector  : '.' + module.control.css_attr.remove_view_btn,
                           name      : 'remove_module',
                           actions   : ['removeModule']
                         },
@@ -188,10 +199,16 @@ $.extend( CZRMultiModuleControlMths, {
 
               module.czr_ModuleState.set( 'expanded' == current_state ? 'closed' : 'expanded' );
 
+              //always close the module panel
+              api.czrModulePanelState.set(false);
+
+              //close all sektions but the one from which the button has been clicked
+              module.control.syncSektionModule().closeAllOtherSektions( $(obj.dom_event.currentTarget, obj.dom_el ) );
+
               // if ( is_added_by_user ) {
               //   item.czr_ItemState.set( 'expanded_noscroll' );
               // } else {
-              //   module.closeAllViews( item.id );
+              //   module.closeAllItems( item.id );
               //   if ( _.has(module, 'czr_preItem') ) {
               //     module.czr_preItem('view_status').set( 'closed');
               //   }
@@ -323,11 +340,70 @@ $.extend( CZRMultiModuleControlMths, {
 
 
 
+
+        toggleModuleRemoveAlert : function( obj ) {
+                var module = this,
+                    control = this.control,
+                    $_alert_el = $( '.' + module.control.css_attr.remove_alert_wrapper, module.container ).first(),
+                    $_clicked = obj.dom_event,
+                    $_column_container = control.syncSektionModule().czr_Column( module.column_id ).container;
+
+                //first close all open  views
+                //module.closeAllItems();
+
+                //close the main sektion pre_item view
+                if ( _.has(module, 'czr_preItem') ) {
+                    control.syncSektionModule().czr_preItem('view_status').set( 'closed');
+                }
+
+                //then close any other open remove alert in the column containuer
+                $('.' + module.control.css_attr.remove_alert_wrapper, $_column_container ).not($_alert_el).each( function() {
+                      if ( $(this).hasClass('open') ) {
+                            $(this).slideToggle( {
+                                  duration : 200,
+                                  done : function() {
+                                        $(this).toggleClass('open' , false );
+                                        //deactivate the icons
+                                        $(this).siblings().find('.' + module.control.css_attr.display_alert_btn).toggleClass('active' , false );
+                                  }
+                            } );
+                      }
+                });
+
+                //print the html
+                //do we have an html template and a control container?
+                if ( ! wp.template( module.AlertPart )  || ! module.container ) {
+                    throw new Error( 'No removal alert template available for module :' + module.id );
+                }
+
+                $_alert_el.html( wp.template( module.AlertPart )( { title : ( module().title || module.id ) } ) );
+
+                //toggle it
+                $_alert_el.slideToggle( {
+                      duration : 200,
+                      done : function() {
+                            var _is_open = ! $(this).hasClass('open') && $(this).is(':visible');
+                            $(this).toggleClass('open' , _is_open );
+                            //set the active class of the clicked icon
+                            $( obj.dom_el ).find('.' + module.control.css_attr.display_alert_btn).toggleClass( 'active', _is_open );
+                            //adjust scrolling to display the entire dialog block
+                            if ( _is_open )
+                              module._adjustScrollExpandedBlock( module.container );
+                      }
+                } );
+        },
+
+
+
+
         //@param module = obj => the module model
         //Fired on click
         removeModule : function( obj ) {
               this.control.removeModule( obj.module );
         },
+
+
+
 
 
 

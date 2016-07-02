@@ -35,6 +35,8 @@ $.extend( CZRModuleMths, {
                 rudItemPart : 'czr-rud-item-part',//read, update, delete
                 ruItemPart : 'czr-ru-item-part',//read, update
                 itemInputList : '',//is specific for each crud module
+                AlertPart : 'czr-rud-item-alert-part',//used both for items and modules removal
+
           } );
 
           //embed : define a container, store the embed state, fire the render method
@@ -90,6 +92,8 @@ $.extend( CZRModuleMths, {
                 //constructorOptions has the same structure as the one described in prepareModuleforAPI
                 module.set( module.initializeModuleModel( constructorOptions ) );
 
+                //listen to each single module change
+                module.callbacks.add( function() { return module.moduleReact.apply(module, arguments ); } );
 
                 //if the module is not registered yet (for example when the module is added by user),
                 //=> push it to the collection of the module-collection control
@@ -98,17 +102,9 @@ $.extend( CZRModuleMths, {
                     module.control.updateModulesCollection( { module : constructorOptions } );
                 }
 
-                //populate and instantiate the items now when a module is embedded in a regular control
-                //if in a sektion, the populateSavedItemCollection() will be fired on module edit
-                if ( ! module.isInSektion() )
-                  module.populateSavedItemCollection();
-
                 module.bind('items-collection-populated', function( collection ) {
                       //listen to item Collection changes
                       module.itemCollection.callbacks.add( function() { return module.itemCollectionReact.apply(module, arguments ); } );
-
-                      //listen to each single module change
-                      module.callbacks.add( function() { return module.moduleReact.apply(module, arguments ); } );
 
                       //it can be overriden by a module in its initialize method
                       if ( module.isMultiItem() )
@@ -116,6 +112,11 @@ $.extend( CZRModuleMths, {
 
                       console.log('SAVED ITEM COLLECTION OF MODULE ' + module.id + ' IS READY');
                 });
+
+                //populate and instantiate the items now when a module is embedded in a regular control
+                //if in a sektion, the populateSavedItemCollection() will be fired on module edit
+                if ( ! module.isInSektion() )
+                  module.populateSavedItemCollection();
 
           });
 
@@ -169,13 +170,12 @@ $.extend( CZRModuleMths, {
               is_column_update = to.column_id != from.column_id,
               is_item_collection_sorted = ( _.size(from.items) == _.size(to.items) ) && ! is_item_update && ! is_column_update;
 
-
           //Sorted collection case
           if ( is_item_collection_sorted ) {
                 if ( _.has(module, 'czr_preItem') ) {
                   module.czr_preItem('view_status').set('closed');
                 }
-                module.closeAllViews();
+                module.closeAllItems();
                 module.closeAllAlerts();
           }
 

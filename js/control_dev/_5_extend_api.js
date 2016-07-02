@@ -24,16 +24,6 @@
   //COLUMNS => used as constructor
   api.CZRColumn                = api.Value.extend( CZRColumnMths || {} );
 
-  //MODULE COLLECTION
-  api.CZRSocialModule         = api.CZRDynModule.extend( CZRSocialModuleMths || {} );
-  api.CZRWidgetAreaModule     = api.CZRDynModule.extend( CZRWidgetAreaModuleMths || {} );
-  api.CZRSektionModule        = api.CZRDynModule.extend( CZRSektionMths || {} );
-  api.CZRFeaturedPageModule   = api.CZRDynModule.extend( CZRFeaturedPageModuleMths || {} );
-  api.CZRTextModule           = api.CZRModule.extend( CZRTextModuleMths || {} );
-
-  api.CZRSlideModule          = api.CZRDynModule.extend( CZRSlideModuleMths || {} );
-
-  api.CZRTextEditorModule     = api.CZRModule.extend( CZRTextEditorModuleMths || {} );
 
   //CONTROLS
   api.CZRBaseControl           = api.Control.extend( CZRBaseControlMths || {} );
@@ -79,38 +69,44 @@
   api.czrModuleMap = api.czrModuleMap || {};
   $.extend( api.czrModuleMap, {
         czr_widget_areas_module : {
-            construct : api.CZRWidgetAreaModule,
-            crud : true
+            mthds : CZRWidgetAreaModuleMths,
+            crud : true,
+            sektion_allowed : false,
+            name : 'Widget Areas'
         },
         czr_social_module : {
-            construct : api.CZRSocialModule,
-            crud : true
+            mthds : CZRSocialModuleMths,
+            crud : true,
+            name : 'Social Icons'
         },
         czr_sektion_module : {
-            construct : api.CZRSektionModule,
-            crud : true
+            mthds : CZRSektionMths,
+            crud : true,
+            name : 'Sektions'
         },
         czr_fp_module : {
-            construct : api.CZRFeaturedPageModule,
-            crud : true
+            mthds : CZRFeaturedPageModuleMths,
+            crud : true,
+            name : 'Featured Pages'
         },
         czr_slide_module : {
-            construct : api.CZRSlideModule,
-            crud : true
+            mthds : CZRSlideModuleMths,
+            crud : true,
+            name : 'Slider'
         },
         czr_text_module : {
-            construct : api.CZRTextModule,
+            mthds : CZRTextModuleMths,
             crud : false,
-            multi_item : false
+            multi_item : false,
+            name : 'Simple Text'
         },
         czr_text_editor_module : {
-            construct : api.CZRTextEditorModule,
+            mthds : CZRTextEditorModuleMths,
             crud : false,
-            multi_item : false
+            multi_item : false,
+            name : 'WP Text Editor'
         }
   });
-
-
 
 
   if ( 'function' == typeof api.CroppedImageControl ) {
