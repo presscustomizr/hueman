@@ -167,6 +167,9 @@ $.extend( CZRBaseModuleControlMths, {
                         }
                         api_ready_module[_key] = _candidate_val || false;
                     break;
+                    case 'dirty' :
+                        api_ready_module[_key] = _candidate_val || false;
+                    break;
               }//switch
         });
         return api_ready_module;

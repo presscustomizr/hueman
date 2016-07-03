@@ -104,7 +104,7 @@ $.extend( CZRSektionMths, {
                     actions   : function() {
                         api.czrModulePanelState.set(false);
                     },
-                  },
+                  }
                 ]
           ));
           api.czrModulePanelEmbedded.done( function() {
@@ -145,7 +145,6 @@ $.extend( CZRSektionMths, {
   },
 
   closeAllOtherSektions : function( $_clicked_el ) {
-          console.log('in close sektions', $_clicked_el );
           var module = this;
               _clicked_sektion_id = $_clicked_el.closest('.czr-single-item').attr('data-id');
 

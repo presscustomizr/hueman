@@ -125,6 +125,10 @@ $.extend( CZRModuleMths, {
           var module = this;
           $( '.' + module.control.css_attr.items_wrapper, module.container ).sortable( {
                 handle: '.' + module.control.css_attr.item_sort_handle,
+                start: function() {
+                    //close the module panel id needed
+                    api.czrModulePanelState.set(false);
+                },
                 update: function( event, ui ) {
                     module.itemCollection.set( module._getSortedDOMItemCollection() );
                 }

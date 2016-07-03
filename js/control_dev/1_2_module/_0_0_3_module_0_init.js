@@ -21,7 +21,6 @@ $.extend( CZRModuleMths, {
           var module = this;
           api.Value.prototype.initialize.call( this, null, constructorOptions );
 
-
           //store the state of ready.
           //=> we don't want the ready method to be fired several times
           module.isReady = $.Deferred();
@@ -88,6 +87,9 @@ $.extend( CZRModuleMths, {
 
           //module.ready(); => fired by children
           module.isReady.done( function() {
+                //store the module dirtyness, => no items set
+                module.isDirty = new api.Value( constructorOptions.dirty || false );
+
                 //initialize the module api.Value()
                 //constructorOptions has the same structure as the one described in prepareModuleforAPI
                 module.set( module.initializeModuleModel( constructorOptions ) );
@@ -157,6 +159,9 @@ $.extend( CZRModuleMths, {
               _current_model = module(),
               _new_model = $.extend( true, {}, _current_model );
           _new_model.items = to;
+          //update the dirtyness state
+          module.isDirty.set(true);
+          //set the the new items model
           module.set( _new_model );
   },
 

@@ -222,6 +222,9 @@ $.extend( CZRBaseModuleControlMths, {
                       //let's use only the id for the DB
                       db_ready_module[ _key ] = module_db_candidate.sektion.id;
                     break;
+                    case 'dirty' :
+                      db_ready_module[ _key ] = control.czr_Module( module_db_candidate.id ).isDirty();
+                    break;
 
 
               }//switch

@@ -12,7 +12,7 @@ $.extend( CZRMultiModuleControlMths, {
                     //run the parent initialize
                     parentConstructor.prototype.initialize.call( module, id, constructorOptions );
 
-                    console.log('MODULE INSTANTIATED : ', module.id, constructorOptions);
+                    console.log('MODULE INSTANTIATED : ', module.id );
 
                     //extend the module with new template Selectors
                     $.extend( module, {
@@ -118,7 +118,6 @@ $.extend( CZRMultiModuleControlMths, {
 
                 //append the module wrapper to the column
                 //if added by user, search for the module candidate element, render after and delete the element
-                console.log('is_added_by_user', module(), module.is_added_by_user  );
                 if ( is_added_by_user ) {
                     $.when( $( '.czr-module-collection-wrapper' , module._getColumn().container ).find( '.czr-module-candidate').after( $_module_el ) ).
                       done( function() {
@@ -165,7 +164,7 @@ $.extend( CZRMultiModuleControlMths, {
                           trigger   : 'click keydown',
                           selector  : '.czr-edit-mod',
                           name      : 'edit_module',
-                          actions   : ['setModuleViewVisibility']
+                          actions   : ['setModuleViewVisibility', 'sendEditModule']
                         },
                         {
                           trigger   : 'click keydown',
@@ -173,6 +172,26 @@ $.extend( CZRMultiModuleControlMths, {
                           name      : 'back_to_column',
                           actions   : ['setModuleViewVisibility']
                         },
+                        {
+                          trigger   : 'mouseenter',
+                          selector  : '.czr-mod-header',
+                          name      : 'hovering_module',
+                          actions   : function( obj ) {
+                              module.control.previewer.send( 'start_hovering_module', {
+                                    id : module.id
+                              });
+                          }
+                        },
+                        {
+                          trigger   : 'mouseleave',
+                          selector  : '.czr-mod-header',
+                          name      : 'hovering_module',
+                          actions   : function( obj ) {
+                              module.control.previewer.send( 'stop_hovering_module', {
+                                    id : module.id
+                              });
+                          }
+                        }
                 ];
 
                 //set initial state
@@ -217,6 +236,13 @@ $.extend( CZRMultiModuleControlMths, {
               // }
         },
 
+        //fired on click
+        sendEditModule : function( obj ) {
+              var module = this;
+              module.control.previewer.send( 'edit_module', {
+                    id : module.id
+              });
+        },
 
         //cb of module.czr_ModuleState.callbacks
         //On first module expansion, render the module item(s) content

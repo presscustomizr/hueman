@@ -117,6 +117,7 @@ $.extend( CZRBaseModuleControlMths, {
                   sektion : {},// => the sektion instance
                   sektion_id : '',
                   is_added_by_user : false,
+                  dirty : false
               } );
           }
   },
@@ -134,7 +135,8 @@ $.extend( CZRBaseModuleControlMths, {
                   id : '',
                   module_type : '',
                   column_id : '',
-                  sektion_id : ''
+                  sektion_id : '',
+                  dirty : false
               } );
           } else {
               return commonDBModel;
