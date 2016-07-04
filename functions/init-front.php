@@ -496,6 +496,17 @@ if ( ! function_exists( 'hu_styles' ) ) {
   function hu_styles() {
     $_main_style = hu_is_checked('responsive') ? 'main' : 'main-not-responsive';
 
+    wp_register_style(
+      'bootstrap-hueman',
+      sprintf('%1$s/assets/front/css/bootstrap/dist/css/bootstrap-hueman%2$s.css',
+          get_template_directory_uri(),
+          hu_is_checked('minified-css') ? '.min' : ''
+      ),
+      array(),
+      ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
+      'all'
+    );
+
     //registered only, will be loaded as a dependency of the wp style.css
     wp_register_style(
       'hueman-main',
@@ -504,7 +515,7 @@ if ( ! function_exists( 'hu_styles' ) ) {
           $_main_style,
           hu_is_checked('minified-css') ? '.min' : ''
       ),
-      array(),
+      array( 'bootstrap-hueman'),
       ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
       'all'
     );
