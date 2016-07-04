@@ -1,0 +1,11 @@
+/*  single : author bio
+/* ------------------------------------ */
+.author-bio { border: 2px solid #eee; position: relative; padding: 15px 15px 10px 95px; color: #888; margin-bottom: 40px; }
+.author-bio:before { content:''; display: inline-block; border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 8px solid #eee; position: absolute; top: -8px; left: 13px; }
+.author-bio:after { content:''; display: inline-block; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 6px solid #fff; position: absolute; top: -5px; left: 15px; }
+.author-bio .bio-avatar { float: left; margin: 0 0 8px -80px; width: 64px; height: auto; position: relative; }
+.author-bio .bio-avatar:after { background: #3b8dbd; position: absolute; right: 0; bottom: 0; padding: 4px 4px; content: "\f040"; color: #fff; font-size: 12px; line-height: 12px; width: 12px; font-style: normal; font-family: FontAwesome; text-align: center; -webkit-border-radius: 3px; border-radius: 3px; }
+.author-bio .bio-avatar img { display: block; width: 100%; height: auto; -webkit-border-radius: 3px; border-radius: 3px; }
+.author-bio p { margin-bottom: 8px; }
+.author-bio .bio-name { color: #444; font-weight: 600; margin-bottom: 4px; }
+.author-bio .bio-desc { color: #888; font-size: 15px; line-height: 1.5em; }

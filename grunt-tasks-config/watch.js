@@ -9,8 +9,8 @@ module.exports = {
 		livereload : true,
 	},
   front_css : {
-    files : ['<%= paths.front_css %>dev-common.css', '<%= paths.front_css %>dev-responsive.css', '<%= paths.front_css %>dev-font-awesome.css'],
-    tasks : [ 'concat:front_css', 'concat:front_not_responsive_css', 'cssmin:front_css', 'cssmin:font_awesome_css'],
+    files : [ '<%= paths.front_css %>dev-common-parts/*.css', '<%= paths.front_css %>dev-common.css', '<%= paths.front_css %>dev-responsive.css', '<%= paths.front_css %>dev-font-awesome.css'],
+    tasks : [ 'concat:front_parts', 'concat:front_css', 'concat:front_not_responsive_css', 'cssmin:front_css', 'cssmin:font_awesome_css'],
   },
 	front_js : {
 		files : ['<%= paths.front_js %>*.js', '!*.min.js'],

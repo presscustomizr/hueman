@@ -1,0 +1,4 @@
+/*  post : search
+/* ------------------------------------ */
+.search .page.type-page .post-thumbnail,
+.search .page.type-page .post-meta { display: none; }

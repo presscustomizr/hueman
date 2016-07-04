@@ -29,7 +29,7 @@ module.exports = function(grunt) {
 				'hueman_dev': [ 'watch'],
 
 				//PROD
-        'pre_front_css' : ['concat:front_css', 'concat:front_not_responsive_css', 'cssmin:front_css', 'cssmin:font_awesome_css'],
+        'pre_front_css' : ['concat:front_parts', 'concat:front_css', 'concat:front_not_responsive_css', 'cssmin:front_css', 'cssmin:font_awesome_css'],
         'pre_front_js' : ['jshint:front_js', 'uglify:front_js'],
         'pre_czr' : ['concat:czr_control_js', 'comments:czr_control_js', 'uglify:czr_control_js', 'uglify:czr_preview_js', 'cssmin:czr_css'],
 				'prod_build':  ['pre_front_css', 'pre_front_js', 'pre_czr', 'cssmin:admin_css', 'replace', 'clean', 'copy', 'compress'],

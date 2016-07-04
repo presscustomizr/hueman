@@ -1,0 +1,13 @@
+/* ------------------------------------------------------------------------- *
+ *  Single
+/* ------------------------------------------------------------------------- */
+.single .post-title { font-size: 38px; letter-spacing: -1px; line-height: 1.3em; }
+.single .post-inner .post-thumbnail { margin-bottom: 2em; }
+.post-byline { font-size: 14px; font-weight: 400; color: #aaa; text-transform: uppercase; margin-bottom: 1em; }
+
+.entry.share { padding-right: 100px; min-height: 354px; /* share buttons height */ position: relative; }
+.entry.share .entry-inner { float: left; width: 100%; }
+
+/*  single : post pages
+/* ------------------------------------ */
+.post-pages { font-weight: 600; margin-bottom: 20px; }

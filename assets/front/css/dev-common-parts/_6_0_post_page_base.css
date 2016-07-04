@@ -1,0 +1,31 @@
+/* ------------------------------------------------------------------------- *
+ *  Section: Page
+/* ------------------------------------------------------------------------- */
+#page { padding-bottom: 60px; margin-top: -60px; }
+#page .container-inner { background: #fff;
+-webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+box-shadow: 0 1px 1px rgba(0,0,0,0.1); }
+
+
+/* ------------------------------------------------------------------------- *
+ *  Post Entry
+/* ------------------------------------------------------------------------- */
+.content .post,
+.content .page { position: relative; overflow: hidden; }
+
+.blog .post,
+.single .post,
+.archive .post,
+.search .post,
+.search .page { margin-bottom: 40px; }
+
+.sticky {}
+
+/* content-specific */
+.content .post-nav { border-top: 2px solid #eee; border-bottom: 2px solid #eee; margin-bottom: 40px;  }
+.content .post-nav li { width: 50%; }
+.content .post-nav li.next { float: right; -webkit-box-shadow: -1px 0 0 #eee, inset 1px 0 0 #eee; box-shadow: -1px 0 0 #eee, inset 1px 0 0 #eee; }
+.content .post-nav li.next a { padding-left: 24px; }
+.content .post-nav li.previous { float: left; -webkit-box-shadow: 1px 0 0 #eee, inset -1px 0 0 #eee; box-shadow: 1px 0 0 #eee, inset -1px 0 0 #eee; }
+.content .post-nav li.previous a { padding-right: 24px; }
+.content .post-nav li a:hover i { color: #3b8dbd; }

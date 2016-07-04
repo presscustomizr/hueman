@@ -1,0 +1,16 @@
+/*  single : post-nav
+/* ------------------------------------ */
+.post-nav li { width: 100%; display: inline; float: left; text-align: center; }
+.post-nav li a { position: relative; min-height: 73px; display: block; padding: 16px 40px 24px; }
+.post-nav li i { color: #ccc; font-size: 18px; position: absolute; top: 50%; margin-top: -10px; }
+.post-nav li a strong { display: block; font-size: 12px; color: #aaa; letter-spacing: 0.5px; font-weight: normal; text-transform: uppercase; }
+.post-nav li a span { font-size: 15px; color: #666; }
+.post-nav li a:hover span { color: #444; }
+.post-nav li.previous i { left: 10px; }
+.post-nav li.next i { right: 10px; }
+.post-nav li a span,
+.post-nav li a i {
+-webkit-transition: all 0.2s ease-out;
+-moz-transition: all 0.2s ease-out;
+-o-transition: all 0.2s ease-out;
+transition: all 0.2s ease-out; }
