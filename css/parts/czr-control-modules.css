@@ -201,6 +201,7 @@
   float: left;
   width: 100%;
   padding: 1% 0;
+  position: relative;
 }
 
 .czr-sub-set .czr-input {

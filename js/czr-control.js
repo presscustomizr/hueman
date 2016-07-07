@@ -2018,6 +2018,7 @@ $.extend( CZRModuleMths, {
                 handle: '.' + module.control.css_attr.item_sort_handle,
                 start: function() {
                     api.czrModulePanelState.set(false);
+                    api.czrSekSettingsPanelState.set(false);
                 },
                 update: function( event, ui ) {
                     module.itemCollection.set( module._getSortedDOMItemCollection() );
@@ -2270,8 +2271,30 @@ $.extend( CZRSektionMths, {
           api.czrModulePanelEmbedded.done( function() {
                 api.czrModulePanelState.callbacks.add( function() { return module.reactToModulePanelState.apply(module, arguments ); } );
           });
-
-
+          api.czrSekSettingsPanelState = api.SekSettingsPanelState || new api.Value( false );
+          api.czrSekSettingsPanelEmbedded = api.SekSettingsPanelEmbedded || $.Deferred();
+          module.userEventMap.set( _.union(
+                module.userEventMap(),
+                [
+                  {
+                    trigger   : 'click keydown',
+                    selector  : '.czr-edit-sek-settings',
+                    name      : 'edit_sek_settings',
+                    actions   : 'toggleSekSettingsPanel'
+                  },
+                  {
+                    trigger   : 'click keydown',
+                    selector  : '.' + module.control.css_attr.open_pre_add_btn,
+                    name      : 'close_sektion_panel',
+                    actions   : function() {
+                        api.czrSekSettingsPanelState.set(false);
+                    },
+                  }
+                ]
+          ));
+          api.czrSekSettingsPanelEmbedded.done( function() {
+                api.czrSekSettingsPanelState.callbacks.add( function() { return module.reactToSekSettingPanelState.apply(module, arguments ); } );
+          });
   },//initialize
   removeSektion : function( sekItem ) {
         var module = this;
@@ -2767,6 +2790,7 @@ $.extend( CZRSektionMths, {
                   api.czrModulePanelEmbedded.resolve();
               });
           }
+          api.czrSekSettingsPanelState.set(false);
 
           api.czrModulePanelState.set( ! api.czrModulePanelState() );
           if ( ! api.czrModulePanelState() ) {
@@ -2785,6 +2809,7 @@ $.extend( CZRSektionMths, {
           if ( 0 === $( '#tmpl-czr-available-modules' ).length ) {
             throw new Error('No template found to render the module panel list' );
           }
+
           $('#widgets-left').after( $( wp.template( 'czr-available-modules' )() ) );
 
           _.each( api.czrModuleMap, function( _data, _mod_type ) {
@@ -2961,6 +2986,40 @@ $.extend( CZRColumnMths , {
                 throw new Error('There was a problem when re-building the column module collection from the DOM in column : ' + column.id );
             }
             return _new_collection;
+    }
+});//$.extend//extends api.Value
+var CZRSektionMths = CZRSektionMths || {};
+
+$.extend( CZRSektionMths, {
+
+    toggleSekSettingsPanel : function( obj ) {
+          var module = this;
+          if ( 'pending' == api.czrSekSettingsPanelEmbedded.state() ) {
+              $.when( module.renderSekSettingsPanel() ).done( function(){
+                  api.czrSekSettingsPanelEmbedded.resolve();
+              });
+          }
+          api.czrModulePanelState.set( false );
+
+          api.czrSekSettingsPanelState.set( ! api.czrSekSettingsPanelState() );
+          module.closeAllOtherSektions( $(obj.dom_event.currentTarget, obj.dom_el ) );
+    },
+    reactToSekSettingPanelState : function( expanded ) {
+         $('body').toggleClass('czr-editing-sektion', expanded );
+    },
+    renderSekSettingsPanel : function() {
+          var module = this,
+              _tmpl = '';
+          if ( 0 === $( '#tmpl-czr-sektion-settings-panel' ).length ) {
+            throw new Error('No template found to render the sektion setting panel' );
+          }
+          try {
+            _tmpl = wp.template( 'czr-sektion-settings-panel' )();
+          }
+          catch(e) {
+            throw new Error('Error when parsing the template of the sektion setting panel' + e );
+          }
+          $('#widgets-left').after( $( _tmpl ) );
     }
 });//$.extend//extends api.CZRDynModule
 
@@ -4683,6 +4742,7 @@ $.extend( CZRMultiModuleControlMths, {
 
               module.czr_ModuleState.set( 'expanded' == current_state ? 'closed' : 'expanded' );
               api.czrModulePanelState.set(false);
+              api.czrSekSettingsPanelState.set(false);
               module.control.syncSektionModule().closeAllOtherSektions( $(obj.dom_event.currentTarget, obj.dom_el ) );
         },
         sendEditModule : function( obj ) {

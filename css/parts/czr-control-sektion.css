@@ -1,6 +1,10 @@
 /* OVERRIDE WP CUSTOMIZER */
 
-/* SEKTIONS AND BLOCKS */
+/* SEKTIONS AND COLUMNS */
+.czr-sektion-buttons {
+    position: absolute;
+    right: 0;
+}
 .czr-column {
   width: 99%;
   margin-bottom: 1%;
@@ -250,7 +254,6 @@ li.czr-single-module.gu-mirror, li.czr-module-candidate.gu-mirror {
 
 
 /* MODULES LIST PANEL */
-
 #czr-module-list-panel {
   position: absolute;
   top: 0;
@@ -371,4 +374,46 @@ body.czr-adding-module .add-new-module:before {
     cursor: grab;
     cursor: -moz-grab;
     cursor: -webkit-grab;
+}
+
+
+
+
+
+
+/* SEKTION SETTINGS PANEL */
+#czr-sektion-settings-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 45%;
+  min-width: 300px;
+  left: -301px;
+  /*visibility: hidden;*/
+  opacity: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin: 0;
+  z-index: 4;
+  background: rgba(0, 0, 0, 0.47);
+  -webkit-transition: all .18s;
+  transition: all .18s;
+  border-right: 1px solid #ddd;
+  color: #fff;
+}
+#czr-sektion-settings-panel h3 {
+  color: #fff;
+}
+body.czr-editing-sektion #czr-sektion-settings-panel {
+  left: 0;
+  visibility: visible;
+  opacity: 1;
+}
+
+/*body.czr-editing-sektion .wp-full-overlay-main {
+  left: 300px;
+}*/
+
+body.czr-editing-sektion #customize-preview {
+  opacity: 0.7;
 }

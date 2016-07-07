@@ -220,6 +220,8 @@ $.extend( CZRMultiModuleControlMths, {
 
               //always close the module panel
               api.czrModulePanelState.set(false);
+              //always close the sektion settings panel
+              api.czrSekSettingsPanelState.set(false);
 
               //close all sektions but the one from which the button has been clicked
               module.control.syncSektionModule().closeAllOtherSektions( $(obj.dom_event.currentTarget, obj.dom_el ) );

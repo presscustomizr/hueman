@@ -86,11 +86,14 @@ $.extend( CZRSektionMths, {
           //MODULE PANEL
           api.czrModulePanelState = api.czrModulePanelState || new api.Value( false );
           api.czrModulePanelEmbedded = api.czrModulePanelEmbedded || $.Deferred();
+
           //EXTEND THE USER EVENT MAP
           //=> adds the module list panel events
+          //=> adds the sektion setting panel events
           module.userEventMap.set( _.union(
                 module.userEventMap(),
                 [
+                  //module panel
                   {
                     trigger   : 'click keydown',
                     selector  : '.add-new-module',
@@ -102,6 +105,7 @@ $.extend( CZRSektionMths, {
                     selector  : '.' + module.control.css_attr.open_pre_add_btn,
                     name      : 'close_module_panel',
                     actions   : function() {
+                        //close the module panel id needed
                         api.czrModulePanelState.set(false);
                     },
                   }
@@ -112,6 +116,39 @@ $.extend( CZRSektionMths, {
           });
 
 
+
+
+          //SEKTION SETTING PANEL
+          api.czrSekSettingsPanelState = api.SekSettingsPanelState || new api.Value( false );
+          api.czrSekSettingsPanelEmbedded = api.SekSettingsPanelEmbedded || $.Deferred();
+
+          //EXTEND THE USER EVENT MAP
+          //=> adds the module list panel events
+          //=> adds the sektion setting panel events
+          module.userEventMap.set( _.union(
+                module.userEventMap(),
+                [
+                  //Sektion Settings
+                  {
+                    trigger   : 'click keydown',
+                    selector  : '.czr-edit-sek-settings',
+                    name      : 'edit_sek_settings',
+                    actions   : 'toggleSekSettingsPanel'
+                  },
+                  {
+                    trigger   : 'click keydown',
+                    selector  : '.' + module.control.css_attr.open_pre_add_btn,
+                    name      : 'close_sektion_panel',
+                    actions   : function() {
+                        //close the sektion settings panel if needed
+                        api.czrSekSettingsPanelState.set(false);
+                    },
+                  }
+                ]
+          ));
+          api.czrSekSettingsPanelEmbedded.done( function() {
+                api.czrSekSettingsPanelState.callbacks.add( function() { return module.reactToSekSettingPanelState.apply(module, arguments ); } );
+          });
   },//initialize
 
 

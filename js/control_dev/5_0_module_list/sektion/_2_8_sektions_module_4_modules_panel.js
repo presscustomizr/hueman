@@ -11,6 +11,8 @@ $.extend( CZRSektionMths, {
                   api.czrModulePanelEmbedded.resolve();
               });
           }
+          //close the sek setting panel if needed
+          api.czrSekSettingsPanelState.set(false);
 
           api.czrModulePanelState.set( ! api.czrModulePanelState() );
 
@@ -37,7 +39,6 @@ $.extend( CZRSektionMths, {
             throw new Error('No template found to render the module panel list' );
           }
 
-          //append the module wrapper to the column
           $('#widgets-left').after( $( wp.template( 'czr-available-modules' )() ) );
 
           _.each( api.czrModuleMap, function( _data, _mod_type ) {

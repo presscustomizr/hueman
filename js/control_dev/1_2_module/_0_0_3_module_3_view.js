@@ -128,6 +128,8 @@ $.extend( CZRModuleMths, {
                 start: function() {
                     //close the module panel id needed
                     api.czrModulePanelState.set(false);
+                    //close the sektion settings panel if needed
+                    api.czrSekSettingsPanelState.set(false);
                 },
                 update: function( event, ui ) {
                     module.itemCollection.set( module._getSortedDOMItemCollection() );
