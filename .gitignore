@@ -51,3 +51,6 @@ travis-examples/
 # !wordpress/*/wp-content/themes/*/*/*
 # !wordpress/*/wp-content/themes/*/*/*/*
 # !wordpress/*/wp-content/themes/*/*/*/*/*
+
+# BOOTSTRAP
+assets/front/css/bootstrap
