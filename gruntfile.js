@@ -26,7 +26,7 @@ module.exports = function(grunt) {
 			//credentials : 'travis' == grunt.option('context') ? {} : grunt.file.readJSON('.ftpauth'),
 			hueman_tasks : {
 				//DEV : clean the build and watch changes (see watch task)
-				'hueman_dev': [ 'watch'],
+				'hueman_dev': [ 'clean' ,'watch'],
 
 				//PROD
         'pre_front_css' : ['concat:front_css', 'concat:front_not_responsive_css', 'cssmin:front_css', 'cssmin:font_awesome_css'],
