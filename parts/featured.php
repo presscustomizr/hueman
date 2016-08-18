@@ -12,7 +12,8 @@ $featured = new WP_Query(
 );
 ?>
 
-<?php if ( is_home() && !is_paged() && ( '1' == hu_get_option('featured-posts-count') ) && $featured->have_posts() ): // No slider if 1 post is featured ?>
+<?php do_action( '__before_featured' ); ?>
+<?php if ( is_home() && !is_paged() && ( hu_get_option('featured-posts-count') =='1') && $featured->have_posts() ): // No slider if 1 post is featured ?>
 
 	<div class="featured">
 		<?php while ( $featured->have_posts() ): $featured->the_post(); ?>
@@ -61,3 +62,4 @@ $featured = new WP_Query(
 
 <?php endif; ?>
 <?php wp_reset_postdata(); ?>
+<?php do_action( '__after_featured' ); ?>

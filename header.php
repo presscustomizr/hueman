@@ -13,7 +13,7 @@
 <body <?php body_class(); ?>>
 
 <div id="wrapper">
-  <?php do_action('__before_header'); ?>
+  <?php do_action('__before_header') ; ?>
   <header id="header">
     <?php if ( has_nav_menu('topbar') ): ?>
       <nav class="nav-container group" id="nav-topbar">

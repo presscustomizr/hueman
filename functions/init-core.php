@@ -289,6 +289,10 @@ if( ! defined( 'HU_OPT_AJAX_ACTION' ) ) define( 'HU_OPT_AJAX_ACTION' , 'hu_get_o
 
 if( ! defined( 'HU_SKOP_ON' ) ) define( 'HU_SKOP_ON' , true );
 if( ! defined( 'HU_SEK_ON' ) ) define( 'HU_SEK_ON' , true );
+
+//HU_IS_PRO
+if( ! defined( 'HU_IS_PRO' ) ) define( 'HU_IS_PRO' , file_exists( HU_BASE . 'functions/init-pro.php' ) && "hueman-pro" == sanitize_file_name( strtolower($hu_theme -> name) ) );
+
 //HU_WEBSITE is the home website of Hueman
 if( ! defined( 'HU_WEBSITE' ) )         define( 'HU_WEBSITE' , $hu_base_data['authoruri'] );
 
@@ -297,11 +301,16 @@ if( ! defined( 'HU_WEBSITE' ) )         define( 'HU_WEBSITE' , $hu_base_data['au
 /* ------------------------------------------------------------------------- *
  *  Loads and instanciates Utils
 /* ------------------------------------------------------------------------- */
-load_template( get_template_directory() . '/functions/class-utils-settings-map.php' );
+load_template( HU_BASE . 'functions/class-utils-settings-map.php' );
 new HU_utils_settings_map;
-load_template( get_template_directory() . '/functions/class-utils.php' );
+load_template( HU_BASE . 'functions/class-utils.php' );
 new HU_utils;
 
+// Load pro template file only if needed
+if ( HU_IS_PRO ) {
+  load_template( HU_BASE . 'functions/init-pro.php' );
+  new HU_init_pro;
+}
 
 /* ------------------------------------------------------------------------- *
  *  Loads BETAS
@@ -317,9 +326,6 @@ if ( HU_SEK_ON ) {
 function hu_get_option( $option_id, $default = '' ) {
   return HU_utils::$inst -> hu_opt( $option_id );
 }
-
-
-
 
 
 
@@ -629,11 +635,6 @@ function hu_clean_old_sidebar_options( $_new_sb_opts, $__options ) {
 }
 
 
-
-
-
-
-
 function hu_maybe_update_options() {
   $_options = get_option( HU_THEME_OPTIONS );
 
@@ -693,6 +694,9 @@ if ( ! function_exists( 'hu_load' ) ) {
 
     // Load dynamic styles
     load_template( get_template_directory() . '/functions/dynamic-styles.php' );
+
+    //Load compatibility plugins functions
+    load_template( get_template_directory() . '/functions/plugins-compatibility.php' );
   }
 
 }
@@ -756,7 +760,7 @@ function hu_get_default_widget_zones() {
       'description' => __( "Full width widget zone. Located in the left sidebar in a 3 columns layout. Can be on the right of a 2 columns sidebar when content is on the left.", 'hueman'),
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
-      'before_title' => '<h3>',
+      'before_title' => '<h3 class="widget-title">',
       'after_title' => '</h3>',
     ),
     'secondary' => array(
@@ -765,7 +769,7 @@ function hu_get_default_widget_zones() {
       'description' => __( "Full width widget zone. Located in the right sidebar in a 3 columns layout.", 'hueman'),
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
-      'before_title' => '<h3>',
+      'before_title' => '<h3 class="widget-title">',
       'after_title' => '</h3>'
     ),
     'footer-1' => array(
@@ -774,7 +778,7 @@ function hu_get_default_widget_zones() {
       'description' => __( "Widgetized footer 1", 'hueman'),
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
-      'before_title' => '<h3>',
+      'before_title' => '<h3 class="widget-title">',
       'after_title' => '</h3>'
     ),
     'footer-2' => array(
@@ -783,7 +787,7 @@ function hu_get_default_widget_zones() {
       'description' => __("Widgetized footer 2", 'hueman' ),
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
-      'before_title' => '<h3>',
+      'before_title' => '<h3 class="widget-title">',
       'after_title' => '</h3>'
     ),
     'footer-3' => array(
@@ -792,7 +796,7 @@ function hu_get_default_widget_zones() {
       'description' => __("Widgetized footer 3", 'hueman' ),
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
-      'before_title' => '<h3>',
+      'before_title' => '<h3 class="widget-title">',
       'after_title' => '</h3>'
     ),
     'footer-4' => array(
@@ -801,7 +805,7 @@ function hu_get_default_widget_zones() {
       'description' => __("Widgetized footer 4", 'hueman' ),
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
-      'before_title' => '<h3>','after_title' => '</h3>'
+      'before_title' => '<h3 class="widget-title">','after_title' => '</h3>'
     ),
     'header-ads' => array(
       'name' => __( 'Header (next to logo / title)', 'hueman' ),
@@ -809,7 +813,7 @@ function hu_get_default_widget_zones() {
       'description' => __( "The Header Widget Zone is located next to your logo or site title.", 'hueman'),
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
-      'before_title' => '<h3>',
+      'before_title' => '<h3 class="widget-title">',
       'after_title' => '</h3>'
     ),
     'footer-ads' => array(
@@ -818,7 +822,7 @@ function hu_get_default_widget_zones() {
       'description' => __( "The Footer Widget Zone is located before the other footer widgets and takes 100% of the width. Very appropriate to display a Google Map or an advertisement banner.", 'hueman'),
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
-      'before_title' => '<h3>',
+      'before_title' => '<h3 class="widget-title">',
       'after_title' => '</h3>'
     )
   );
@@ -991,7 +995,7 @@ if ( ! function_exists( 'hu_maybe_register_custom_widget_zones' ) ) :
     $default_args = array(
       'name' => '',
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
-      'after_widget' => '</div>','before_title' => '<h3>','after_title' => '</h3>'
+      'after_widget' => '</div>','before_title' => '<h3 class="widget-title">','after_title' => '</h3>'
     );
 
     $default_zones = hu_get_default_widget_zones();
@@ -1144,7 +1148,6 @@ add_filter( 'image_resize_dimensions', 'hu_thumbnail_upscale', 10, 6 );
 /*  Add shortcode support to text widget
 /* ------------------------------------ */
 add_filter( 'widget_text', 'do_shortcode' );
-
 
 
 /* ------------------------------------------------------------------------- *

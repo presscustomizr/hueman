@@ -2,7 +2,7 @@
       </div><!--/.main-->
     </div><!--/.container-inner-->
   </div><!--/.container-->
-
+  <?php do_action('__before_footer') ; ?>
   <footer id="footer">
 
     <?php if ( hu_is_checked('footer-ads') ) : ?>
