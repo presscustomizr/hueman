@@ -287,8 +287,8 @@ if( ! defined( 'HU_THEME_OPTIONS' ) ) define( 'HU_THEME_OPTIONS' , apply_filters
 
 if( ! defined( 'HU_OPT_AJAX_ACTION' ) ) define( 'HU_OPT_AJAX_ACTION' , 'hu_get_option' );
 
-if( ! defined( 'HU_CTX_ON' ) ) define( 'HU_CTX_ON' , false );
-
+if( ! defined( 'HU_SKOP_ON' ) ) define( 'HU_SKOP_ON' , true );
+if( ! defined( 'HU_SEK_ON' ) ) define( 'HU_SEK_ON' , true );
 //HU_WEBSITE is the home website of Hueman
 if( ! defined( 'HU_WEBSITE' ) )         define( 'HU_WEBSITE' , $hu_base_data['authoruri'] );
 
@@ -304,10 +304,13 @@ new HU_utils;
 
 
 /* ------------------------------------------------------------------------- *
- *  Loads Ctx helpers
+ *  Loads BETAS
 /* ------------------------------------------------------------------------- */
-if ( HU_CTX_ON ) {
+if ( HU_SKOP_ON ) {
   load_template( get_template_directory() . '/functions/skop/init-skop.php' );
+}
+if ( HU_SEK_ON ) {
+  load_template( get_template_directory() . '/functions/sektions/init-sektions.php' );
 }
 
 //note:  $default is never used => to remove

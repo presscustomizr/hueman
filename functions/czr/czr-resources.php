@@ -78,21 +78,16 @@ function hu_customize_controls_js_css() {
     'serverControlParams',
     apply_filters('hu_js_customizer_control_params' ,
       array(
-        'AjaxUrl'       => admin_url( 'admin-ajax.php' ),
-        'docURL'        => esc_url('docs.presscustomizr.com/'),
-        'HUNonce'       => wp_create_nonce( 'hu-customizer-nonce' ),
-        'wpBuiltinSettings' => HU_customize::$instance -> hu_get_wp_builtin_settings(),
-        'themeName'     => THEMENAME,
-        'isCtxEnabled'  => HU_CTX_ON,
-        'themeOptions'  => HU_THEME_OPTIONS,
-        'optionAjaxAction' => HU_OPT_AJAX_ACTION,
-        'faviconOptionName' => 'favicon',
-        'defaultSocialColor' => 'rgba(255,255,255,0.7)',
-        'dynWidgetSection' => CZR_DYN_WIDGETS_SECTION,
-        'defaultWidgetSidebar' => 'primary',//the one that will be cloned. Specific to each themes
-        'defaultWidgetLocation' => 's1',//Specific to each themes
-        'css_attr' => HU_customize::$instance -> hu_get_controls_css_attr(),
-        'translatedStrings' => HU_customize::$instance -> hu_get_translated_strings()
+          'AjaxUrl'       => admin_url( 'admin-ajax.php' ),
+          'docURL'        => esc_url('docs.presscustomizr.com/'),
+          'HUNonce'       => wp_create_nonce( 'hu-customizer-nonce' ),
+          'wpBuiltinSettings' => HU_customize::$instance -> hu_get_wp_builtin_settings(),
+          'themeName'     => THEMENAME,
+          'themeOptions'  => HU_THEME_OPTIONS,
+          'optionAjaxAction' => HU_OPT_AJAX_ACTION,
+          'faviconOptionName' => 'favicon',
+          'css_attr' => HU_customize::$instance -> hu_get_controls_css_attr(),
+          'translatedStrings' => hu_get_translated_strings()
       )
     )
   );
@@ -340,4 +335,40 @@ function hu_extend_visibilities() {
     }) ( wp.customize, jQuery, _);
   </script>
   <?php
+}
+
+
+function hu_get_translated_strings() {
+  return apply_filters('controls_translated_strings',
+      array(
+            'edit' => __('Edit', 'hueman'),
+            'close' => __('Close', 'hueman'),
+            'faviconNote' => __( "Your favicon is currently handled with an old method and will not be properly displayed on all devices. You might consider to re-upload your favicon with the new control below." , 'hueman'),
+            'locations' => __('Location(s)', 'hueman'),
+            'contexts' => __('Context(s)', 'hueman'),
+            'notset' => __('Not set', 'hueman'),
+            'rss' => __('Rss', 'hueman'),
+            'selectSocialIcon' => __('Select a social icon', 'hueman'),
+            'followUs' => __('Follow us on', 'hueman'),
+            'successMessage' => __('Done !', 'hueman'),
+            'socialLinkAdded' => __('New Social Link created ! Scroll down to edit it.', 'hueman'),
+            'selectBgRepeat'  => __('Select repeat property', 'hueman'),
+            'selectBgAttachment'  => __('Select attachment property', 'hueman'),
+            'selectBgPosition'  => __('Select position property', 'hueman'),
+            'widgetZone' => __('Widget Zone', 'hueman'),
+            'widgetZoneAdded' => __('New Widget Zone created ! Scroll down to edit it.', 'hueman'),
+            'inactiveWidgetZone' => __('Inactive in current context/location', 'hueman'),
+            'unavailableLocation' => __('Unavailable location. Some settings must be changed.', 'hueman'),
+            'locationWarning' => __('A selected location is not available with the current settings.', 'hueman'),
+            'readDocumentation' => __('Learn more about this in the documentation', 'hueman'),
+
+            //WP TEXT EDITOR MODULE
+            'textEditorOpen' => __('Edit', 'hueman'),
+            'textEditorClose' => __('Close Editor', 'hueman'),
+
+            //SLIDER MODULE
+            'slideAdded'   => __('New Slide created ! Scroll down to edit it.', 'hueman'),
+            'slideTitle'   => __( 'Slide', 'hueman')
+      )
+  );
 }

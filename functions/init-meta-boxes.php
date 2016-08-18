@@ -1,4 +1,5 @@
 <?php
+
 /*  Initialize the meta boxes.
 /* ------------------------------------ */
 add_action( 'admin_init', 'hu_custom_meta_boxes' );

@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 			is_rtl: 'true',
 			//https://www.npmjs.org/package/grunt-ssh
 			//Check if the context var is set and == travis => avoid travis error with ftpauth no found
-			credentials : 'travis' == grunt.option('context') ? {} : grunt.file.readJSON('.ftpauth'),
+			//credentials : 'travis' == grunt.option('context') ? {} : grunt.file.readJSON('.ftpauth'),
 			hueman_tasks : {
 				//DEV : clean the build and watch changes (see watch task)
 				'hueman_dev': [ 'watch'],
@@ -31,7 +31,7 @@ module.exports = function(grunt) {
 				//PROD
         'pre_front_css' : ['concat:front_css', 'concat:front_not_responsive_css', 'cssmin:front_css', 'cssmin:font_awesome_css'],
         'pre_front_js' : ['jshint:front_js', 'uglify:front_js'],
-        'pre_czr' : ['concat:czr_control_js', 'comments:czr_control_js', 'uglify:czr_control_js', 'uglify:czr_preview_js', 'cssmin:czr_css'],
+        'pre_czr' : ['concat:czr_control_css', 'concat:czr_control_js', 'comments:czr_control_js', 'uglify:czr_control_js', 'uglify:czr_preview_js', 'cssmin:czr_css'],
 				'prod_build':  ['pre_front_css', 'pre_front_js', 'pre_czr', 'cssmin:admin_css', 'replace', 'clean', 'copy', 'compress'],
 
 				//TRAVIS ci virtual machine build check on js @todo check other resources?
@@ -69,7 +69,7 @@ module.exports = function(grunt) {
 		];
 		grunt.log.writeln( 'WATCH EVENT INFOS : ', grunt.task.current.name , action, filepath, target);
 
-		if ( 'admin_customizer_control_js' == target || 'admin_js' == target ) {
+		if ( 'admin_customizer_control_js' == target || 'admin_js' == target  || 'czr_control_js' == target ) {
 			//if some js admin scripts have been changed in dev mode, jshint them dynamically
 			grunt.config('jshint.those', [filepath]);
 		}

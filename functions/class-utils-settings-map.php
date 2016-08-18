@@ -311,10 +311,11 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           // )
           'social-links' => array(
                 'default'   => array(),//empty array by default
-                'control'   => 'HU_Customize_Socials',
+                'control'   => 'HU_Customize_Modules',
                 'label'     => __('Create and organize your social links', 'hueman'),
                 'section'   => 'social_links_sec',
-                'type'      => 'czr_socials',//@todo create dynamic type
+                'type'      => 'czr_module',
+                'module_type' => 'czr_social_module',
                 'transport' => 'postMessage',
                 'priority'  => 10
           )
