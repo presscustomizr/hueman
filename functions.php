@@ -16,6 +16,11 @@ load_template( get_template_directory() . '/functions/init-core.php' );
 //add_action('__before_content', 'print_options');
 //add_action('__before_content', 'print_labels');
 
+//delete_option( HU_THEME_OPTIONS );
+// $options = get_option(HU_THEME_OPTIONS );
+// $options['sidebar-areas'] = array();
+// update_option( HU_THEME_OPTIONS,$options);
+
 function print_labels() {
    ?>
     <pre>

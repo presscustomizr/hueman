@@ -83,6 +83,7 @@ $.extend( CZRSkopeBaseMths, {
     embedSkopeWrapper : function() {
           var self = this;
           $('#customize-header-actions').append( $('<div/>', {class:'czr-scope-switcher'}) );
+          $('body').addClass('czr-skop-on');
     },
     listenAPISettings : function() {
           var self = this;

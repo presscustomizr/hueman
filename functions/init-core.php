@@ -287,8 +287,8 @@ if( ! defined( 'HU_THEME_OPTIONS' ) ) define( 'HU_THEME_OPTIONS' , apply_filters
 
 if( ! defined( 'HU_OPT_AJAX_ACTION' ) ) define( 'HU_OPT_AJAX_ACTION' , 'hu_get_option' );
 
-if( ! defined( 'HU_SKOP_ON' ) ) define( 'HU_SKOP_ON' , true );
-if( ! defined( 'HU_SEK_ON' ) ) define( 'HU_SEK_ON' , true );
+if( ! defined( 'HU_SKOP_ON' ) ) define( 'HU_SKOP_ON' , false );
+if( ! defined( 'HU_SEK_ON' ) ) define( 'HU_SEK_ON' , false );
 
 //HU_IS_PRO
 if( ! defined( 'HU_IS_PRO' ) ) define( 'HU_IS_PRO' , file_exists( HU_BASE . 'functions/init-pro.php' ) && "hueman-pro" == sanitize_file_name( strtolower($hu_theme -> name) ) );
@@ -338,77 +338,112 @@ function hu_get_option( $option_id, $default = '' ) {
 add_action( 'after_switch_theme',  'hu_backup_sidebars', 0 );
 
 function hu_backup_sidebars() {
-  $sidebars_widgets = get_theme_mod( 'sidebars_widgets' );
-  $data = isset($sidebars_widgets['data']) ? $sidebars_widgets['data'] : array();
-  if ( ! get_transient( '_hu_sidebar_backup' ) )
-    set_transient( '_hu_sidebar_backup', $data, 24 * 3600 * 365 * 20 );
+    $sidebars_widgets = get_theme_mod( 'sidebars_widgets' );
+    $data = isset($sidebars_widgets['data']) ? $sidebars_widgets['data'] : array();
+    if ( ! get_transient( '_hu_sidebar_backup' ) )
+      set_transient( '_hu_sidebar_backup', $data, 24 * 3600 * 365 * 20 );
 }
 
 
 //get the previous locations and contexts and turn them into new options
-add_filter('hu_implement_options_compat', 'hu_generate_new_sidebar_options');
+add_filter('hu_implement_options_compat', 'hu_filter_add_new_sidebar_options');
 
 
 //hook : hu_implement_options_compat
-function hu_generate_new_sidebar_options($__options) {
-  //generates the default widget zone options
-  $_default_locations = hu_get_builtin_widget_zones_location();
-  $builtin_zones = array();
+function hu_filter_add_new_sidebar_options( $__options ) {
+    //generates the default widget zone options
+    $_default_locations = hu_get_builtin_widget_zones_location();
+    $builtin_zones = array();
 
-  foreach ( hu_get_default_widget_zones() as $_zone_id => $_data ) {
+    foreach ( hu_get_default_widget_zones() as $_zone_id => $_data ) {
 
-    $_locs = hu_get_old_locations($_zone_id, $__options);
-    if ( empty($_locs) && isset($_default_locations[$_zone_id]) ) {
-      $_locs[] = key($_default_locations[$_zone_id]);
-    }
+      $_locs = hu_get_old_locations($_zone_id, $__options);
+      if ( empty($_locs) && isset($_default_locations[$_zone_id]) ) {
+        $_locs[] = key($_default_locations[$_zone_id]);
+      }
 
-    $_contexts = hu_get_old_contexts($_zone_id, $__options);
-    if ( empty($_contexts) && isset($_default_locations[$_zone_id]) ) {
-      $_contexts[] = ('_all_');
-    }
+      $_contexts = hu_get_old_contexts($_zone_id, $__options);
+      if ( empty($_contexts) && isset($_default_locations[$_zone_id]) ) {
+        $_contexts[] = ('_all_');
+      }
 
-    $builtin_zones[] = array(
-      'id'          => $_data['id'],
-      'title'       => $_data['name'],
-      'contexts'    => $_contexts,
-      'locations'   => $_locs,
-      'is_builtin'  => true,
-      'description' => $_data['description']
-    );
-  }
-
-
-  //generates the custom widget zone options
-  $_old_custom_zone_opt = isset( $__options['sidebar-areas'] ) ? $__options['sidebar-areas'] : array();
-  $custom_zones = array();
-
-  if ( ! empty($_old_custom_zone_opt) ) {
-    //array( 'title' => string, 'id' => string )
-    foreach ( $_old_custom_zone_opt as $_zone ) {
-      if ( !isset($_zone['id']) )
-        continue;
-
-      $_zone_id   = $_zone['id'];
-      //get the default location
-      $_locs      = hu_get_old_locations($_zone_id, $__options);
-
-      $_contexts  = hu_get_old_contexts($_zone_id, $__options);
-
-      $custom_zones[] = array(
-        'id'          => $_zone['id'],
-        'title'       => $_zone['title'],
+      $builtin_zones[] = array(
+        'id'          => $_data['id'],
+        'title'       => $_data['name'],
         'contexts'    => $_contexts,
         'locations'   => $_locs,
+        'is_builtin'  => true,
+        'description' => $_data['description']
       );
-    }//foreach
-  }//if
+    }
 
-  //make sure the previous "rules" for sidebars and respected
-  $_new_sb_areas_opts = hu_clean_old_sidebar_options( array_merge( $builtin_zones, $custom_zones ), $__options );
 
-  $__options['sidebar-areas'] = $_new_sb_areas_opts;
-  return $__options;
+    //generates the custom widget zone options
+    $_old_custom_zone_opt = isset( $__options['sidebar-areas'] ) ? $__options['sidebar-areas'] : array();
+    $custom_zones = array();
+
+    if ( ! empty($_old_custom_zone_opt) ) {
+      //array( 'title' => string, 'id' => string )
+      foreach ( $_old_custom_zone_opt as $_zone ) {
+        if ( !isset($_zone['id']) )
+          continue;
+
+        $_zone_id   = $_zone['id'];
+        //get the default location
+        $_locs      = hu_get_old_locations($_zone_id, $__options);
+
+        $_contexts  = hu_get_old_contexts($_zone_id, $__options);
+
+        $custom_zones[] = array(
+          'id'          => $_zone['id'],
+          'title'       => $_zone['title'],
+          'contexts'    => $_contexts,
+          'locations'   => $_locs,
+        );
+      }//foreach
+    }//if
+
+    //make sure the previous "rules" for sidebars and respected
+    $_new_sb_areas_opts = hu_clean_old_sidebar_options( array_merge( $builtin_zones, $custom_zones ), $__options );
+
+    $__options['sidebar-areas'] = $_new_sb_areas_opts;
+    return $__options;
 }
+
+
+
+//helper used to re-build the sidebar-areas option from defaults if the option is empty or has been deleted for some reasons
+function hu_generate_new_sidebar_options() {
+    //generates the default widget zone options
+    $_default_locations = hu_get_builtin_widget_zones_location();
+    $builtin_zones = array();
+
+    foreach ( hu_get_default_widget_zones() as $_zone_id => $_data ) {
+
+        $_locs = array();
+        if ( isset($_default_locations[$_zone_id]) ) {
+          $_locs[] = key($_default_locations[$_zone_id]);
+        }
+
+        $_contexts = array();
+        if ( isset($_default_locations[$_zone_id]) ) {
+          $_contexts[] = ('_all_');
+        }
+
+        $builtin_zones[] = array(
+          'id'          => $_data['id'],
+          'title'       => $_data['name'],
+          'contexts'    => $_contexts,
+          'locations'   => $_locs,
+          'is_builtin'  => true,
+          'description' => $_data['description']
+        );
+    }
+
+    return $builtin_zones;
+}
+
+
 
 
 function hu_get_old_locations( $_zone_id, $__options) {

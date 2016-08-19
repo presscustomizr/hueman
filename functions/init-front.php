@@ -68,18 +68,28 @@ if ( ! function_exists( 'hu_layout_class' ) ) {
 // 'footer-4'    => 'footer-4'
 if ( ! function_exists('hu_print_widgets_in_location') ) {
   function hu_print_widgets_in_location( $location ) {
+    $_sb_opt_val = hu_get_option('sidebar-areas');
+    //Make sure the sidebar-areas option is properly set
+    //if the option is empty, then re-generate it from the defaults
+    if ( ! is_array($_sb_opt_val) || empty( $_sb_opt_val ) ) {
+        $__options = get_option( HU_THEME_OPTIONS );
+        $__options['sidebar-areas'] = hu_generate_new_sidebar_options();
+        update_option( HU_THEME_OPTIONS, $__options );
+    }
+
     $_eligible_zones = array();
 
     if ( false != hu_get_singular_meta_widget_zone( $location ) ) {
       $_eligible_zones[] = hu_get_singular_meta_widget_zone( $location );
     } else {
       $_eligible_zones    = apply_filters(
-        'hu_eligible_widget_zones',
-        array(),
-        $location,
-        hu_get_option('sidebar-areas')
+          'hu_eligible_widget_zones',
+          array(),
+          $location,
+          hu_get_option('sidebar-areas')
       );
     }
+
     //print a message if this location is visible but has not eligible widget zones to display
     //=> print only when customizing
     if ( empty( $_eligible_zones ) && in_array( $location, array('s1', 's2') ) && hu_is_customize_preview_frame() ) {
@@ -95,6 +105,8 @@ if ( ! function_exists('hu_print_widgets_in_location') ) {
     }
   }
 }//endif
+
+
 
 
 //the job of this function is to print a dynamic widget zone if exists

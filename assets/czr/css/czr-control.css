@@ -956,7 +956,25 @@ li#customize-control-tc_theme_options-tc_custom_css textarea {
  }
 
 
+@media screen and (min-width: 980px) {
+  .wp-customizer .expanded #customize-footer-actions {
+      width: 380px;
+  }
+}
 
+@media screen and (min-width: 1025px) {
+  .wp-customizer .expanded #customize-footer-actions {
+      height: 85px;
+      background: inherit;
+  }
+}
+
+
+@media screen and (min-width: 1401px) {
+  .wp-customizer .expanded #customize-footer-actions {
+      width: 440px;
+  }
+}
 /* Rate link */
 #customize-footer-actions .collapse-sidebar-label {
   display: none;
@@ -1881,10 +1899,10 @@ body.czr-editing-sektion #customize-preview {
 
 
 /* HEADER AND SCOPE SWITCHER */
-.wp-customizer .wp-full-overlay-sidebar .wp-full-overlay-header {
+.czr-skop-on .wp-full-overlay-sidebar .wp-full-overlay-header {
   height: 185px;
 }
-.wp-customizer .wp-full-overlay-sidebar .wp-full-overlay-sidebar-content {
+.czr-skop-on .wp-full-overlay-sidebar .wp-full-overlay-sidebar-content {
   top: 185px;
 }
 .wp-customizer .in-sub-panel .wp-full-overlay-sidebar .wp-full-overlay-header {
