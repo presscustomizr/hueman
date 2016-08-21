@@ -63,8 +63,7 @@ module.exports = {
       '<%= paths.czr_assets %>fmk/js/control_dev/1_2_module/_0_0_3_module_3_view.js',
 
       '<%= paths.czr_assets %>fmk/js/control_dev/1_2_module/_0_0_4_dyn_module_0_init.js',
-      '<%= paths.czr_assets %>fmk/js/control_dev/1_2_module/_0_0_4_dyn_module_1_pre_item.js',
-      '<%= paths.czr_assets %>fmk/js/control_dev/1_2_module/_0_0_4_dyn_module_2_pre_item_views.js',
+      '<%= paths.czr_assets %>fmk/js/control_dev/1_2_module/_0_0_4_dyn_module_1_pre_item_views.js',
 
       '<%= paths.czr_assets %>fmk/js/control_dev/5_0_module_list/sektion/_2_8_sektions_module_0_init.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/5_0_module_list/sektion/_2_8_sektions_module_1_sektion_item_extend.js',
