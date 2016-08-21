@@ -316,10 +316,10 @@ if ( HU_IS_PRO ) {
  *  Loads BETAS
 /* ------------------------------------------------------------------------- */
 if ( HU_SKOP_ON ) {
-  load_template( get_template_directory() . '/functions/skop/init-skop.php' );
+  load_template( get_template_directory() . '/functions/skop-sek/skop/init-skop.php' );
 }
 if ( HU_SEK_ON ) {
-  load_template( get_template_directory() . '/functions/sektions/init-sektions.php' );
+  load_template( get_template_directory() . '/functions/skop-sek/sektions/init-sektions.php' );
 }
 
 //note:  $default is never used => to remove

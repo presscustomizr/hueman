@@ -1695,7 +1695,7 @@ $.extend( CZRSkopeMths, {
         has_part_refresh : function( setId ) {
                 if ( ! _.has( api, 'czr_partials')  )
                   return;
-                return  _.contains( _.map( api.czr_partials.get(), function( partial, key ) {
+                return  _.contains( _.map( api.czr_partials(), function( partial, key ) {
                   return _.contains( partial.settings, setId );
                 }), true );
         },
@@ -1746,7 +1746,7 @@ $.extend( CZRSkopeMths, {
                             var _obj = _.clone(obj);
                             if ( _.has(_obj, 'model') && _.has( _obj.model, 'id') ) {
                               if ( _.has(instance, 'get') )
-                                _obj.model = instance.get();
+                                _obj.model = instance();
                               else
                                 _obj.model = instance.getModel( _obj.model.id );
                             }
@@ -1834,7 +1834,7 @@ $.extend( CZRInputMths , {
                       name      : 'set_input_value',
                       actions   : function( obj ) {
                           if ( ! _.has( input.item, 'syncElements') || ! _.has( input.item.syncElements, input.id ) ) {
-                              throw new Error('WARNING : THE INPUT ' + input.id + ' HAS NOT SYNCED ELEMENT.');
+                              throw new Error('WARNING : THE INPUT ' + input.id + ' HAS NO SYNCED ELEMENT.');
                           }
                       }//was 'updateInput'
                     }
@@ -1850,41 +1850,32 @@ $.extend( CZRInputMths , {
           var input       = this,
               item        = input.item,
               $_input_el  = input.container.find('[data-type]'),
-              is_input    = input.container.find('[data-type]').is('input'),
-              input_type  = is_input ? input.container.find('[data-type]').attr('type') : false,
-              is_select   = input.container.find('[data-type]').is('select'),
               is_textarea = input.container.find('[data-type]').is('textarea');
-          if ( is_textarea )
-            return;
+          if ( is_textarea ) {
+            throw new Error('TO DO : THE TEXTAREA INPUT ARE NOT READY IN THE SYNCHRONIZER!');
+          }
+
           var syncElement = new api.Element( $_input_el );
           item.syncElements = item.syncElements || {};
-          item.syncElements[input.id] = syncElement;
-          syncElement.sync( input );
+          item.syncElements[input.id] = syncElement;//adds the input syncElement to the collection
+          syncElement.sync( input );//sync with the input instance
           syncElement.set( input() );
-
     },
     inputReact : function( to, from) {
             var input = this,
-                _current_item = input.item.get(),
+                _current_item = input.item(),
                 _new_model        = _.clone( _current_item );//initialize it to the current value
             _new_model =  ( ! _.isObject(_new_model) || _.isEmpty(_new_model) ) ? {} : _new_model;
             _new_model[input.id] = to;
             input.item.set(_new_model);
             input.item.trigger( input.id + ':changed', to );
-    },
-    updateInput : function( obj ) {
-            var input             = this,
-                $_changed_input   = $(obj.dom_event.currentTarget, obj.dom_el ),
-                _new_val          = $( $_changed_input, obj.dom_el ).val();
-            if ( _new_val == input() )
-              return;
     }
 });//$.extend
 var CZRInputMths = CZRInputMths || {};
 $.extend( CZRInputMths , {
     setupImageUploader : function() {
           var input        = this,
-              _model       = input.get();
+              _model       = input();
           input.attachment   = {};
           if ( ! input.container )
             return this;
@@ -2134,7 +2125,7 @@ $.extend( CZRInputMths , {
 
   setupSelectedContents : function() {
         var input = this,
-           _model = input.get();
+           _model = input();
 
         return _model;
   },
@@ -2162,7 +2153,7 @@ var CZRInputMths = CZRInputMths || {};
 $.extend( CZRInputMths , {
     setupTextEditor : function() {
           var input        = this,
-              _model       = input.get();
+              _model       = input();
           if ( ! input.container ) {
               throw new Error( 'The input container is not set for WP text editor in module.' + input.module.id );
           }
@@ -2170,7 +2161,7 @@ $.extend( CZRInputMths , {
           if ( ! input.czrRenderInputTextEditorTemplate() )
             return;
 
-          input.editor       = tinyMCE.get( 'czr-customize-content_editor' );
+          input.editor       = tinyMCE( 'czr-customize-content_editor' );
           input.textarea     = $( '#czr-customize-content_editor' );
           input.editorPane   = $( '#czr-customize-content_editor-pane' );
           input.dragbar      = $( '#czr-customize-content_editor-dragbar' );
@@ -2220,7 +2211,7 @@ $.extend( CZRInputMths , {
 
           input.editorExpanded.bind( function (expanded) {
 
-                console.log('in input.editorExpanded', expanded, input.get() );
+                console.log('in input.editorExpanded', expanded, input() );
                 if ( editor.locker && editor.locker !== input ) {
                     editor.locker.editorExpanded.set(false);
                     editor.locker = null;
@@ -2231,7 +2222,7 @@ $.extend( CZRInputMths , {
                 input.czrSetToggleButtonText( expanded );
 
                 if ( expanded ) {
-                    editor.setContent( wp.editor.autop( input.get() ) );
+                    editor.setContent( wp.editor.autop( input() ) );
                     editor.on( 'input change keyup', input.czrOnVisualEditorChange );
                     textarea.on( 'input', input.czrOnTextEditorChange );
                     input.czrResizeEditor( window.innerHeight - editorPane.height() );
@@ -2265,7 +2256,7 @@ $.extend( CZRInputMths , {
   },
   czrUpdateTextPreview: function() {
           var input   = this,
-              input_model = input.get(),
+              input_model = input(),
               value;
           value = input_model.replace(/(<([^>]+)>)/ig,"");
           if ( value.length > 30 )
@@ -2284,9 +2275,9 @@ $.extend( CZRInputMths , {
           if ( ! view_template  || ! input.container )
             return;
 
-          console.log('Model injected in text editor tmpl : ', input.get() );
+          console.log('Model injected in text editor tmpl : ', input() );
 
-          $_view_el.after( view_template( input.get() ) );
+          $_view_el.after( view_template( input() ) );
 
           return true;
   },
@@ -2323,7 +2314,7 @@ $.extend( CZRInputMths , {
               editorPane   = input.editorPane,
               editorFrame  = input.editorFrame;
 
-          if ( ! input.editorExpanded.get() ) {
+          if ( ! input.editorExpanded() ) {
             return;
           }
 
@@ -2366,7 +2357,7 @@ $.extend( CZRInputMths , {
               resizeDelay = 50,
               editorPane   = input.editorPane;
 
-          if ( ! input.editorExpanded.get() ) {
+          if ( ! input.editorExpanded() ) {
             return;
           }
 
@@ -2445,7 +2436,7 @@ $.extend( CZRItemMths , {
               }
         ]);
         item.isReady.done( function() {
-              item.module.updateItemsCollection( { item : item.get() } );
+              item.module.updateItemsCollection( { item : item() } );
               item.callbacks.add( function() { return item.itemReact.apply(item, arguments ); } );
               item.mayBeRenderItemWrapper();
               item.embedded.done( function() {
@@ -2486,7 +2477,7 @@ $.extend( CZRItemMths , {
         if ( _.isEmpty(item.defaultItemModel) || _.isUndefined(item.defaultItemModel) ) {
           throw new Error('No default model found in item ' + item.id + '. Aborting');
         }
-        var item_model = $.extend( true, {}, item.get() );
+        var item_model = $.extend( true, {}, item() );
 
         if ( ! _.isObject( item_model ) )
           item_model = item.defaultItemModel;
@@ -2552,15 +2543,15 @@ var CZRItemMths = CZRItemMths || {};
             var item = this,
                 module = this.module,
                 _new_collection = _.clone( module.itemCollection() );
-            module.trigger('pre_item_dom_remove', item.get() );
+            module.trigger('pre_item_dom_remove', item() );
             item._destroyView();
             _new_collection = _.without( _new_collection, _.findWhere( _new_collection, {id: item.id }) );
             module.itemCollection.set( _new_collection );
-            module.trigger('pre_item_api_remove', item.get() );
+            module.trigger('pre_item_api_remove', item() );
             module.czr_Item.remove(item.id);
     },
     getModel : function(id) {
-            return this.get();
+            return this();
     }
 
   });//$.extend
@@ -2586,7 +2577,7 @@ $.extend( CZRItemMths , {
           var item = this,
               module = this.module;
 
-          item_model = item.get() || item.initial_item_model;//could not be set yet
+          item_model = item() || item.initial_item_model;//could not be set yet
           item.czr_ItemState = new api.Value();
           item.czr_ItemState.set('closed');
           item.writeItemViewTitle();
@@ -2630,7 +2621,7 @@ $.extend( CZRItemMths , {
         var item = this,
             module = item.module;
 
-        item_model = item_model || item.get();
+        item_model = item_model || item();
         $_view_el = $('<li>', { class : module.control.css_attr.single_item, 'data-id' : item_model.id,  id : item_model.id } );
         module.itemsWrapper.append( $_view_el );
         if ( module.isMultiItem() ) {
@@ -2648,7 +2639,7 @@ $.extend( CZRItemMths , {
           var item = this,
               module = this.module;
 
-          item_model = item_model || item.get();
+          item_model = item_model || item();
           if ( 0 === $( '#tmpl-' + module.getTemplateEl( 'itemInputList', item_model ) ).length ) {
               throw new Error('No item content template defined for module ' + module.id + '. The template script id should be : #tmpl-' + module.getTemplateEl( 'itemInputList', item_model ) );
           }
@@ -2663,7 +2654,7 @@ $.extend( CZRItemMths , {
   writeItemViewTitle : function( item_model ) {
         var item = this,
             module = item.module,
-            _model = item_model || item.get(),
+            _model = item_model || item(),
             _title = _.has( _model, 'title')? api.CZR_Helpers.capitalize( _model.title ) : _model.id;
 
         _title = api.CZR_Helpers.truncate(_title, 20);
@@ -3258,7 +3249,7 @@ $.extend( CZRDynModuleMths, {
   },
   addItem : function(obj) {
           var module = this,
-              item = module.czr_preItem('item').get();
+              item = module.czr_preItem('item')();
 
           if ( _.isEmpty(item) || ! _.isObject(item) ) {
             throw new Error('addItem : an item should be an object and not empty. In : ' + module.id +'. Aborted.' );
@@ -3291,7 +3282,7 @@ var CZRDynModuleMths = CZRDynModuleMths || {};
 $.extend( CZRDynModuleMths, {
   renderPreItemView : function( obj ) {
           var module = this;
-          if ( ! _.isEmpty( module.czr_preItem('item_content').get() ) )
+          if ( ! _.isEmpty( module.czr_preItem('item_content')() ) )
             return;
           if ( ! _.has(module, 'itemPreAddEl') ||  0 === $( '#tmpl-' + module.itemPreAddEl ).length )
             return this;
@@ -3317,7 +3308,7 @@ $.extend( CZRDynModuleMths, {
           var module = this;
 
           module.closeAllItems();
-          module.czr_preItem('view_status').set( 'expanded' == module.czr_preItem('view_status').get() ? 'closed' : 'expanded' );
+          module.czr_preItem('view_status').set( 'expanded' == module.czr_preItem('view_status')() ? 'closed' : 'expanded' );
   },
   _togglePreItemViewExpansion : function( status) {
           var module = this,
@@ -3581,7 +3572,7 @@ $.extend( CZRSektionMths, {
                       ]
                 ));
 
-                var _sektion_model = sekItem.get(),
+                var _sektion_model = sekItem(),
                     module = options.module;
 
                 if ( ! _.has(_sektion_model, 'sektion-layout') ) {
@@ -3589,8 +3580,8 @@ $.extend( CZRSektionMths, {
                 }
 
                 sekItem.isReady.done( function() {
-                      if ( ! _.isEmpty( sekItem.get().columns ) ) {
-                            _.each( sekItem.get().columns , function( _column ) {
+                      if ( ! _.isEmpty( sekItem().columns ) ) {
+                            _.each( sekItem().columns , function( _column ) {
                                   var column_candidate = $.extend( true, {}, _column );//create a deep clone
                                   module.instantiateColumn( $.extend( column_candidate, { sektion : sekItem } ) );
                             });
@@ -3782,7 +3773,7 @@ $.extend( CZRSektionMths, {
 
   removeColumnFromCollection : function( column ) {
         var module = this,
-            _current_collection = module.czr_columnCollection.get(),
+            _current_collection = module.czr_columnCollection(),
             _new_collection = $.extend( true, [], _current_collection);
 
         _new_collection = _.filter( _new_collection, function( _col ) {
@@ -3802,7 +3793,7 @@ $.extend( CZRSektionMths, {
               _.each( to, function( _col, _key ) {
                     if ( _.isEqual( _col, from[_key] ) )
                       return;
-                    _current_sek_model = _col.sektion.get();
+                    _current_sek_model = _col.sektion();
                     _new_sek_model = $.extend(true, {}, _current_sek_model);
                     _.each( _current_sek_model.columns, function( _c, _k ){
                           if ( _c.id != _col.id )
@@ -3820,7 +3811,7 @@ $.extend( CZRSektionMths, {
               });
 
               _new_column = _new_column[0];
-              _current_sek_model = _new_column.sektion.get();
+              _current_sek_model = _new_column.sektion();
               if ( _.isUndefined( _.findWhere( _current_sek_model.columns, {id : _new_column.id } ) ) ) {
                     _new_sek_model = $.extend(true, {}, _current_sek_model);
                     _new_sek_model.columns.push( _new_column );
@@ -3834,7 +3825,7 @@ $.extend( CZRSektionMths, {
               });
               _to_remove = _to_remove[0];
 
-              _current_sek_model = _to_remove.sektion.get();
+              _current_sek_model = _to_remove.sektion();
               _new_sek_model = $.extend(true, {}, _current_sek_model);//_.clone() is not enough there, we need a deep cloning.
               _new_sek_model.columns = _.filter( _new_sek_model.columns, function( _col ) {
                     return _col.id != _to_remove.id;
@@ -3854,7 +3845,7 @@ $.extend( CZRSektionMths, {
         key = key || module._getNextColKeyInCollection();
 
         var id_candidate = 'col_' + key;
-        if ( ! _.has(module, 'czr_columnCollection') || ! _.isArray( module.czr_columnCollection.get() ) ) {
+        if ( ! _.has(module, 'czr_columnCollection') || ! _.isArray( module.czr_columnCollection() ) ) {
               throw new Error('The column collection does not exist or is not properly set in module : ' + module.id );
         }
         if ( module.czr_Column.has( id_candidate ) ) {
@@ -3867,8 +3858,8 @@ $.extend( CZRSektionMths, {
         var module = this,
             _max_col_key = {},
             _next_key = 0;
-        if ( ! _.isEmpty( module.czr_columnCollection.get() ) ) {
-            _max_col_key = _.max( module.czr_columnCollection.get(), function( _col ) {
+        if ( ! _.isEmpty( module.czr_columnCollection() ) ) {
+            _max_col_key = _.max( module.czr_columnCollection(), function( _col ) {
                 return parseInt( _col.id.replace(/[^\/\d]/g,''), 10 );
             });
             _next_key = parseInt( _max_col_key.id.replace(/[^\/\d]/g,''), 10 ) + 1;
@@ -3881,7 +3872,7 @@ $.extend( CZRSektionMths, {
   getModuleColumn : function( module_id ) {
         var module = this,
             _mod_columns = [];
-        _.each( module.czr_columnCollection.get(), function( _col, _key ) {
+        _.each( module.czr_columnCollection(), function( _col, _key ) {
               if ( _.findWhere( _col.modules, { id : module_id } ) )
                 _mod_columns.push( _col.id );
         });
@@ -4061,7 +4052,7 @@ $.extend( CZRColumnMths , {
     ready : function() {
           var column = this;
           column.isReady.resolve();
-          column.sektion.module.updateColumnCollection( {column : column.get() });
+          column.sektion.module.updateColumnCollection( {column : column() });
     },
     mayBeInstantiateColumnModules : function() {
           var column = this,
@@ -4127,7 +4118,7 @@ $.extend( CZRColumnMths , {
     },
     columnModuleCollectionReact : function( to, from ) {
             var column = this,
-                _current_column_model = column.get(),
+                _current_column_model = column(),
                 _new_column_model = _.clone( _current_column_model ),
                 _new_module_collection = [];
 
@@ -4530,7 +4521,7 @@ $.extend( CZRWidgetAreaModuleMths, {
           },
           _setupContextSelect : function() {
                   var input      = this,
-                      input_contexts = input.get(),
+                      input_contexts = input(),
                       item = input.item,
                       module     = input.module;
                   _.each( module.contexts, function( title, key ) {
@@ -4547,10 +4538,10 @@ $.extend( CZRWidgetAreaModuleMths, {
           },
           _setupLocationSelect : function(refresh ) {
                   var input      = this,
-                      input_locations = input.get(),
+                      input_locations = input(),
                       item = input.item,
                       module     = input.module,
-                      available_locs = api.sidebar_insights('available_locations').get();
+                      available_locs = api.sidebar_insights('available_locations')();
                   if ( ! $( 'select[data-type="locations"]', input.container ).children().length ) {
                         _.each( module.locations, function( title, key ) {
                               var _attributes = {
@@ -4586,15 +4577,15 @@ $.extend( CZRWidgetAreaModuleMths, {
                   var input      = this,
                       item = input.item,
                       module     = input.module;
-                  if ( ! _.has( item.get(), 'locations') || _.isEmpty( item.get().locations ) )
+                  if ( ! _.has( item(), 'locations') || _.isEmpty( item().locations ) )
                     return;
 
                   var _selected_locations = $('select[data-type="locations"]', input.container ).val(),
-                      available_locs = api.sidebar_insights('available_locations').get(),
+                      available_locs = api.sidebar_insights('available_locations')(),
                       _unavailable = _.filter( _selected_locations, function( loc ) {
                         return ! _.contains(available_locs, loc);
                       });
-                  if ( ! _.has( item.get(), 'id' ) || _.isEmpty( item.get().id ) ) {
+                  if ( ! _.has( item(), 'id' ) || _.isEmpty( item().id ) ) {
                         module.czr_preItem('location_alert_view_state').set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
                   } else {
                         item.czr_itemLocationAlert.set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
@@ -4633,7 +4624,7 @@ $.extend( CZRWidgetAreaModuleMths, {
                   item.czr_itemLocationAlert.callbacks.add( function( to, from ) {
                         module._toggleLocationAlertExpansion( item.container , to );
                   });
-                  item.writeSubtitleInfos(item.get());
+                  item.writeSubtitleInfos(item());
                   item.czr_ItemState.callbacks.add( function( to, from ) {
                         if ( -1 == to.indexOf('expanded') )//can take the expanded_noscroll value !
                           return;
@@ -4654,7 +4645,7 @@ $.extend( CZRWidgetAreaModuleMths, {
           writeSubtitleInfos : function(model) {
                   var item = this,
                       module = item.module,
-                      _model = _.clone( model || item.get() ),
+                      _model = _.clone( model || item() ),
                       _locations = [],
                       _contexts = [],
                       _html = '';
@@ -4731,7 +4722,7 @@ $.extend( CZRWidgetAreaModuleMths, {
                       module = item.module,
                       moduleContexts = _.keys(module.contexts);
 
-                  model = model || this.get();
+                  model = model || this();
 
                   if ( ! _.has(model, 'contexts') )
                     return;
@@ -4742,7 +4733,7 @@ $.extend( CZRWidgetAreaModuleMths, {
           },
           _getMatchingContexts : function( defaults ) {
                   var module = this,
-                      _current = api.czr_wp_conditionals.get() || {},
+                      _current = api.czr_wp_conditionals() || {},
                       _matched = _.filter(module.context_match_map, function( hu, wp ) { return true === _current[wp]; });
 
                   return _.isEmpty( _matched ) ? defaults : _matched;
@@ -4842,7 +4833,7 @@ $.extend( CZRWidgetAreaModuleMths, {
             _panel_content = api.panel('widgets').container.find( '.control-panel-content' ),
             _set_margins = function() {
                   _section_content.css( 'margin-top', '' );
-                  _panel_content.css('margin-top', api.section(module.serverParams.dynWidgetSection).fixTopMargin('value').get() );
+                  _panel_content.css('margin-top', api.section(module.serverParams.dynWidgetSection).fixTopMargin('value')() );
             };
           api.bind( 'pane-contents-reflowed', _.debounce( function() {
                   _set_margins();
@@ -4913,7 +4904,7 @@ $.extend( CZRWidgetAreaModuleMths, {
                     if ( api.section.has("sidebar-widgets-" +_sidebar.id ) )
                       return;
                     module.addWidgetSidebar( {}, _sidebar );
-                    if ( _.has( api.sidebar_insights('actives').get(), _sidebar.id ) && api.section.has("sidebar-widgets-" +_sidebar.id ) )
+                    if ( _.has( api.sidebar_insights('actives')(), _sidebar.id ) && api.section.has("sidebar-widgets-" +_sidebar.id ) )
                       api.section( "sidebar-widgets-" +_sidebar.id ).activate();
                   });
           });
@@ -5033,7 +5024,7 @@ $.extend( CZRFeaturedPageModuleMths, {
 
           var module     = this,
               item       = module.czr_preItem('item'),
-              item_model = item.get();
+              item_model = item();
 
           if ( _.isEmpty(item_model) || ! _.isObject(item_model) ) {
               throw new Error('addItem : an item should be an object and not empty. In : ' + module.id +'. Aborted.' );
@@ -5087,10 +5078,10 @@ $.extend( CZRFeaturedPageModuleMths, {
                   var input = this,
                       item = this.item,
                       is_preItemInput = _.has( input, 'is_preItemInput' ) && input.is_preItemInput;
-                  if ( ! _.has( item.get(), 'fp-post') || _.isEmpty( item.get()['fp-post'] ) )
+                  if ( ! _.has( item(), 'fp-post') || _.isEmpty( item()['fp-post'] ) )
                     return;
 
-                  var _new_model      = _.clone( item.get() ),
+                  var _new_model      = _.clone( item() ),
                       _fp_post        = _new_model['fp-post'][0],
                       _new_title      = _fp_post.title,
                       inputCollection = is_preItemInput ? input.module.czr_preItemInput : item.czr_Input;
@@ -5117,7 +5108,7 @@ $.extend( CZRFeaturedPageModuleMths, {
 
                   if ( is_preItemInput )
                     return;
-                  var _new_model  = _.clone( item.get() ),
+                  var _new_model  = _.clone( item() ),
                       _new_title  = "undefined" !== typeof _new_model['fp-title'] ? _new_model['fp-title'] : '';
 
                   $.extend( _new_model, { title : _new_title} );
@@ -5127,7 +5118,7 @@ $.extend( CZRFeaturedPageModuleMths, {
 
           setThumbnailAjax : function() {
                   var item     = this.item,
-                      _fp_post = item.czr_Input('fp-post').get(),
+                      _fp_post = item.czr_Input('fp-post')(),
                       _post_id;
 
                   if ( typeof _fp_post  == "undefined" )
@@ -5215,7 +5206,7 @@ $.extend( CZRFeaturedPageModuleMths, {
           writeItemViewTitle : function( model ) {
                   var item = this,
                             module  = item.module,
-                            _model = model || item.get(),
+                            _model = model || item(),
                             _title = _model.title ? _model.title : serverControlParams.translatedStrings.featuredPageTitle;
 
                   _title = api.CZR_Helpers.truncate(_title, 25);
@@ -5275,7 +5266,7 @@ $.extend( CZRSlideModuleMths, {
                     item = this.item,
                     is_preItemInput = _.has( input, 'is_preItemInput' ) && input.is_preItemInput;
 
-                var _new_model  = _.clone( item.get() ),
+                var _new_model  = _.clone( item() ),
                     _new_title  = _new_model['slide-title'];
 
                 $.extend( _new_model, { title : _new_title} );
@@ -5286,7 +5277,7 @@ $.extend( CZRSlideModuleMths, {
           writeItemViewTitle : function( model ) {
                 var item = this,
                           module  = item.module,
-                          _model = model || item.get(),
+                          _model = model || item(),
                           _title = _model.title ? _model.title : serverControlParams.translatedStrings.slideTitle;
 
                 _title = api.CZR_Helpers.truncate(_title, 25);
@@ -5434,14 +5425,14 @@ $.extend( CZRBaseModuleControlMths, {
           var control = this,
               savedModules = [];
           if ( control.isMultiModuleControl() ) {
-              savedModules = $.extend( true, [], api(control.id).get() );//deep clone
+              savedModules = $.extend( true, [], api(control.id)() );//deep clone
           } else {
               savedModules.push(
                     {
                       id : api.CZR_Helpers.getOptionName( control.id ) + '_' + control.params.type,
                       module_type : control.params.module_type,
                       section : control.section(),
-                      items   : $.extend( true, [] , api(control.id).get() )//deep clone//must be a collection [] of items
+                      items   : $.extend( true, [] , api(control.id)() )//deep clone//must be a collection [] of items
                     }
               );
           }
@@ -6255,7 +6246,7 @@ $.extend( CZRUploadMths, {
 
     this.removerVisibility = $.proxy( this.removerVisibility, this );
     this.setting.bind( this.removerVisibility );
-    this.removerVisibility( this.setting.get() );
+    this.removerVisibility( this.setting() );
   },
 
 
@@ -6318,7 +6309,7 @@ $.extend( CZRBackgroundMths , {
           api.CZRItemControl.prototype.ready.call( control );
 
           api.bind('ready', function() {
-                var _img_on_init = control.czr_Item('background-image').get();
+                var _img_on_init = control.czr_Item('background-image')();
 
                 control.setBgDependantsVisibilities( ! _.isUndefined(_img_on_init) && ! _.isEmpty(_img_on_init) );
 
@@ -6374,7 +6365,7 @@ $.extend( CZRBackgroundMths , {
                     value : _value,
                     html  : _label
                   };
-                if ( _value == input.get() )
+                if ( _value == input() )
                   $.extend( _attributes, { selected : "selected" } );
 
                 $( 'select[data-type="'+ input.id +'"]', input.container ).append( $('<option>', _attributes) );
@@ -6387,7 +6378,7 @@ $.extend( CZRBackgroundMths , {
           renderItemContent : function() {
                   var item = this,
                       control = this.control,
-                      model = _.clone( item.get() );
+                      model = _.clone( item() );
                   if ( 0 === $( '#tmpl-' + control.getTemplateEl( 'itemInputList', model ) ).length )
                     return this;
 
@@ -6574,7 +6565,7 @@ $.extend( CZRBackgroundMths , {
                     _cb     = _cross.callback;
 
                 _id = api.CZR_Helpers.build_setId(_id);
-                return _cb( api.instance(_id).get() );
+                return _cb( api.instance(_id)() );
               },
           _prepare_visibilities : function( setId, o ) {
                 var self = this;
@@ -6612,13 +6603,14 @@ $.extend( CZRBackgroundMths , {
 
 
 
-                  _visibility( _params.setting.get() );
+                  _visibility( _params.setting() );
                   _params.setting.bind( _visibility );
                 });
           },
           _handleFaviconNote : function() {
-                var self = this;
-                if ( ! api.has('site_icon') || ! api.control('site_icon') || ( api.has(api.CZR_Helpers.build_setId(serverControlParams.faviconOptionName)) && 0 === + api( api.CZR_Helpers.build_setId(serverControlParams.faviconOptionName) ).get() ) || + api('site_icon').get() > 0 )
+                var self = this,
+                    _fav_setId = api.CZR_Helpers.build_setId( serverControlParams.faviconOptionName );
+                if ( ! api.has('site_icon') || ! api.control('site_icon') || ( api.has( _fav_setId ) && 0 === + api( _fav_setId )() ) || + api('site_icon')() > 0 )
                   return;
 
                 var _oldDes     = api.control('site_icon').params.description;
@@ -6627,8 +6619,8 @@ $.extend( CZRBackgroundMths , {
                 api('site_icon').callbacks.add( function(to) {
                   if ( +to > 0 ) {
                     api.control('site_icon').container.find('.description').text(_oldDes);
-                    if ( api.has( api.CZR_Helpers.build_setId(serverControlParams.faviconOptionName) ) )
-                      api( api.CZR_Helpers.build_setId(serverControlParams.faviconOptionName) ).set("");
+                    if ( api.has( _fav_setId ) )
+                      api( _fav_setId ).set("");
                   }
                   else {
                     self._printFaviconNote(_newDes );
