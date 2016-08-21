@@ -3190,62 +3190,63 @@ $.extend( CZRDynModuleMths, {
           } );
           module.czr_preItem = new api.Values();
           module.czr_preItem.create('item');
-          module.czr_preItem.create('item_content');
+
           module.czr_preItem.create('view_status');
           module.czr_preItem('view_status').set('closed');
+
+          module.preItemEmbedded = $.Deferred();//module.czr_preItem.create('item_content');
           module.czr_preItemInput = new api.Values();
           module.itemAddedMessage = serverControlParams.translatedStrings.successMessage;
           module.userEventMap = new api.Value( [
                 {
-                  trigger   : 'click keydown',
-                  selector  : [ '.' + module.control.css_attr.open_pre_add_btn, '.' + module.control.css_attr.cancel_pre_add_btn ].join(','),
-                  name      : 'pre_add_item',
-                  actions   : ['renderPreItemView','setPreItemViewVisibility'],
+                    trigger   : 'click keydown',
+                    selector  : [ '.' + module.control.css_attr.open_pre_add_btn, '.' + module.control.css_attr.cancel_pre_add_btn ].join(','),
+                    name      : 'pre_add_item',
+                    actions   : ['renderPreItemView','setPreItemViewVisibility'],
                 },
                 {
-                  trigger   : 'click keydown',
-                  selector  : '.' + module.control.css_attr.add_new_btn, //'.czr-add-new',
-                  name      : 'add_item',
-                  actions   : ['closeAllItems', 'addItem'],
+                    trigger   : 'click keydown',
+                    selector  : '.' + module.control.css_attr.add_new_btn, //'.czr-add-new',
+                    name      : 'add_item',
+                    actions   : ['closeAllItems', 'addItem'],
                 }
           ]);//module.userEventMap
   },
-
-
   ready : function() {
           var module = this;
           console.log('MODULE READY IN DYN MODULE CLASS : ', module.id );
           module.setupDOMListeners( module.userEventMap() , { dom_el : module.container } );
           module.czr_preItem('item').set( module.getDefaultModel() );
           module.czr_preItem('item').set( module.getDefaultModel() );
-          module.czr_preItem('item_content').callbacks.add(function( to, from ) {
-                if ( _.isUndefined(from) || _.isEmpty(from) ) {
-                    module.preItemInputConstructor = module.inputConstructor;//api.CZRInput;
-                    module.setupPreItemInputCollection();
-                }
+          module.preItemEmbedded.done( function() {
+                module.preItemInputConstructor = module.inputConstructor;//api.CZRInput;
+                module.setupPreItemInputCollection();
           });
           module.czr_preItem('view_status').callbacks.add( function( to, from ) {
                 module._togglePreItemViewExpansion( to );
           });
 
-          api.CZRModule.prototype.ready.call( module );
+          api.CZRModule.prototype.ready.call( module );//fires the parent
   },//ready()
 
 
+
   setupPreItemInputCollection : function() {
+    console.log('in setup pre_item');
           var module = this;
-          $('.' + module.control.css_attr.pre_add_wrapper, module.container).find( '.' + module.control.css_attr.sub_set_wrapper)
-          .each( function(_index) {
-                var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index;
-                module.czr_preItemInput.add( _id, new module.preItemInputConstructor( _id, {
-                    id : _id,
-                    type : $(this).attr('data-input-type'),
-                    container : $(this),
-                    item : module.czr_preItem('item'),
-                    module : module,
-                    is_preItemInput : true
-                } ) );
-          });//each
+          $('.' + module.control.css_attr.pre_add_wrapper, module.container)
+                .find( '.' + module.control.css_attr.sub_set_wrapper)
+                .each( function( _index ) {
+                      var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index;
+                      module.czr_preItemInput.add( _id, new module.preItemInputConstructor( _id, {
+                            id : _id,
+                            type : $(this).attr('data-input-type'),
+                            container : $(this),
+                            item : module.czr_preItem('item'),
+                            module : module,
+                            is_preItemInput : true
+                      } ) );
+                });//each
   },
   addItem : function(obj) {
           var module = this,
@@ -3274,15 +3275,9 @@ $.extend( CZRDynModuleMths, {
 var CZRDynModuleMths = CZRDynModuleMths || {};
 
 $.extend( CZRDynModuleMths, {
-
-});//$.extend//CZRBaseControlMths//MULTI CONTROL CLASS
-
-var CZRDynModuleMths = CZRDynModuleMths || {};
-
-$.extend( CZRDynModuleMths, {
   renderPreItemView : function( obj ) {
           var module = this;
-          if ( ! _.isEmpty( module.czr_preItem('item_content')() ) )
+          if ( 'pending' != module.preItemEmbedded.state() ) //! _.isEmpty( module.czr_preItem('item_content')() ) )
             return;
           if ( ! _.has(module, 'itemPreAddEl') ||  0 === $( '#tmpl-' + module.itemPreAddEl ).length )
             return this;
@@ -3292,8 +3287,7 @@ $.extend( CZRDynModuleMths, {
 
           var $_pre_add_el = $('.' + module.control.css_attr.pre_add_item_content, module.container );
           $_pre_add_el.prepend( pre_add_template() );
-          module.czr_preItem('item_content').set( pre_add_template() );
-          module.trigger( 'pre_add_view_rendered' , {item : {}, dom_el : $_pre_add_el});
+          module.preItemEmbedded.resolve();
   },
   _getPreItemView : function() {
           var module = this;
@@ -3302,7 +3296,6 @@ $.extend( CZRDynModuleMths, {
   destroyPreItemView : function() {
           var module = this;
           $('.' +  module.control.css_attr.pre_add_item_content, module.container ).find('.' +  module.control.css_attr.sub_set_wrapper).remove();
-          module.czr_preItem('item_content').set('');
   },
   setPreItemViewVisibility : function(obj) {
           var module = this;
