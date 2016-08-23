@@ -370,21 +370,6 @@ if ( ! function_exists( 'hu_body_class' ) ) {
 add_filter( 'body_class', 'hu_body_class' );
 
 
-/*  Custom rss feed
-/* ------------------------------------ */
-if ( ! function_exists( 'hu_feed_link' ) ) {
-
-  function hu_feed_link( $output, $feed ) {
-    // Do not redirect comments feed
-    if ( strpos( $output, 'comments' ) )
-      return $output;
-    // Return feed url
-    return esc_url( hu_get_option('rss-feed',$output) );
-  }
-
-}
-add_filter( 'feed_link', 'hu_feed_link', 10, 2 );
-
 
 /*  Custom favicon
 /* ------------------------------------ */

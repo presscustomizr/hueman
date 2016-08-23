@@ -755,6 +755,7 @@ if ( ! function_exists( 'hu_setup' ) ) {
     add_theme_support( 'title-tag' );
 
     // Enable automatic feed links
+    // => Adds RSS feed links to <head> for posts and comments.
     add_theme_support( 'automatic-feed-links' );
 
     // Enable featured image
