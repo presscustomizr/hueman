@@ -36,6 +36,11 @@ if ( ! class_exists( 'HU_customize' ) ) :
        //Partial refreshs
       add_action( 'customize_register'                        , array( $this,  'hu_register_partials' ) );
 
+      //Print modules and inputs templates
+      $this -> hu_load_tmpl();
+      //Add the module data server side generated + additional resources (like the WP text editor)
+      $this -> hu_load_module_data_resources();
+
       //populate the css_attr property, used both server side and on the customize panel (passed via serverControlParams )
       $this -> css_attr = $this -> hu_get_controls_css_attr();
 
@@ -51,15 +56,14 @@ if ( ! class_exists( 'HU_customize' ) ) :
     function hu_augment_customizer( $manager ) {
       $_classes = array(
         'controls/class-base-control.php',
-        'controls/class-base-advanced-control.php',
         'controls/class-background-control.php',
         'controls/class-cropped-image-control.php',
-        'controls/class-dynamic-control.php',
+
         'controls/class-layout-control.php',
         'controls/class-multipicker-control.php',
-        'controls/class-socials-control.php',
+        'controls/class-modules-control.php',
+
         'controls/class-upload-control.php',
-        'controls/class-widget-areas-control.php',
 
         'sections/class-widgets-section.php',
 
@@ -91,6 +95,29 @@ if ( ! class_exists( 'HU_customize' ) ) :
         ) );
     }
 
+
+    function hu_load_tmpl() {
+      $_tmpl = array(
+        'tmpl/modules/all-modules-tmpl.php',
+        'tmpl/modules/background-module-tmpl.php',
+        'tmpl/modules/social-module-tmpl.php',
+        'tmpl/modules/widgets-areas-module-tmpl.php',
+        'tmpl/modules/text_editor-module-tmpl.php',
+        'tmpl/modules/slide-module-tmpl.php',
+
+        'tmpl/inputs/img-uploader-tmpl.php',
+        'tmpl/inputs/text_editor-input-tmpl.php'
+      );
+      foreach ($_tmpl as $_path) {
+        locate_template( 'functions/czr/' . $_path , $load = true, $require_once = true );
+      }
+    }
+
+
+    function hu_load_module_data_resources() {
+      locate_template( 'functions/czr/modules/modules-data.php' , $load = true, $require_once = true );
+      locate_template( 'functions/czr/modules/modules-resources.php' , $load = true, $require_once = true );
+    }
 
     //updates the names of the built-in widget zones for users who installed the theme before v3.1.2
     function hu_update_widget_database_option() {
@@ -241,11 +268,13 @@ if ( ! class_exists( 'HU_customize' ) ) :
           'add_setting' => array(
               'sidebar-areas' => array(
                     'default'   => array(),//empty array by default
-                    'control'   => 'HU_Customize_Widget_Areas_Control',
+                    'control'   => 'HU_Customize_Modules',
                     'label'     => __('Create And Order Widget Areas', 'hueman'),
                     'section'   => CZR_DYN_WIDGETS_SECTION,
-                    'type'      => 'czr_sidebars',
-                    'transport' => 'postMessage'
+                    'type'      => 'czr_module',
+                    'module_type' => 'czr_widget_areas_module',
+                    'notice'    => __('You must save changes for the new areas to appear below. <br /><i>Warning: Make sure each area has a unique ID.</i>' , 'hueman'),
+                    'transport' => 'postMessage',
               )
 
           )
@@ -268,10 +297,12 @@ if ( ! class_exists( 'HU_customize' ) ) :
         'add_control' => array(
             'sidebar-areas' => array(
                   'default'   => array(),//empty array by default
-                  'control'   => 'HU_Customize_Widget_Areas_Control',
+                  'control'   => 'HU_Customize_Modules',
                   'label'     => __('Create And Manage Widget Areas', 'hueman'),
                   'section'   => $_widget_section_name,
-                  'type'      => 'czr_sidebars',
+                  'type'      => 'czr_module',
+                  'module_type' => 'czr_widget_areas_module',
+                  'notice'    => __('You must save changes for the new areas to appear below. <br /><i>Warning: Make sure each area has a unique ID.</i>' , 'hueman'),
                   'transport' => 'postMessage'
             )
 
@@ -356,6 +387,10 @@ if ( ! class_exists( 'HU_customize' ) ) :
                 'section' ,
                 'settings',
                 'type' ,
+
+                'module_type',
+                'syncCollection',
+
                 'choices' ,
                 'priority' ,
                 'sanitize_callback',
@@ -555,13 +590,13 @@ if ( ! class_exists( 'HU_customize' ) ) :
             'sub_set_input'       => 'czr-input',
             'img_upload_container' => 'czr-imgup-container',
 
-            'views_wrapper'     => 'czr-views-wrapper',
-            'inner_view'        => 'czr-inner-view',
-            'view_content'      => 'czr-view-content',
-            'view_header'       => 'czr-view-header',
-            'view_title'        => 'czr-view-title',
-            'view_buttons'      => 'czr-view-buttons',
-            'sortable_handle'   => 'czr-sortable-handle',
+            'items_wrapper'     => 'czr-items-wrapper',
+            'single_item'        => 'czr-single-item',
+            'item_content'      => 'czr-item-content',
+            'item_header'       => 'czr-item-header',
+            'item_title'        => 'czr-item-title',
+            'item_btns'         => 'czr-item-btns',
+            'item_sort_handle'   => 'czr-item-sort-handle',
 
             //remove dialog
             'display_alert_btn' => 'czr-display-alert',
@@ -574,7 +609,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
             'open_pre_add_btn'      => 'czr-open-pre-add-new',
             'adding_new'        => 'czr-adding-new',
             'pre_add_wrapper'   => 'czr-pre-add-wrapper',
-            'pre_add_view_content'   => 'czr-pre-add-view-content',
+            'pre_add_item_content'   => 'czr-pre-add-view-content',
             'cancel_pre_add_btn'  => 'czr-cancel-add-new',
             'add_new_btn'       => 'czr-add-new',
             'pre_add_success'   => 'czr-add-success'
@@ -582,32 +617,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
       );
     }
 
-    function hu_get_translated_strings() {
-      return apply_filters('controls_translated_strings',
-          array(
-                'edit' => __('Edit', 'hueman'),
-                'close' => __('Close', 'hueman'),
-                'faviconNote' => __( "Your favicon is currently handled with an old method and will not be properly displayed on all devices. You might consider to re-upload your favicon with the new control below." , 'hueman'),
-                'locations' => __('Location(s)', 'hueman'),
-                'contexts' => __('Context(s)', 'hueman'),
-                'notset' => __('Not set', 'hueman'),
-                'rss' => __('Rss', 'hueman'),
-                'selectSocialIcon' => __('Select a social icon', 'hueman'),
-                'followUs' => __('Follow us on', 'hueman'),
-                'successMessage' => __('Done !', 'hueman'),
-                'socialLinkAdded' => __('New Social Link created ! Scroll down to edit it.', 'hueman'),
-                'selectBgRepeat'  => __('Select repeat property', 'hueman'),
-                'selectBgAttachment'  => __('Select attachment property', 'hueman'),
-                'selectBgPosition'  => __('Select position property', 'hueman'),
-                'widgetZone' => __('Widget Zone', 'hueman'),
-                'widgetZoneAdded' => __('New Widget Zone created ! Scroll down to edit it.', 'hueman'),
-                'inactiveWidgetZone' => __('Inactive in current context/location', 'hueman'),
-                'unavailableLocation' => __('Unavailable location. Some settings must be changed.', 'hueman'),
-                'locationWarning' => __('A selected location is not available with the current settings.', 'hueman'),
-                'readDocumentation' => __('Learn more about this in the documentation', 'hueman')
-          )
-      );
-    }
+
 
     //@return array of WP builtin settings
     function hu_get_wp_builtin_settings() {

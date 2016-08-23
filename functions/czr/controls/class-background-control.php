@@ -3,7 +3,7 @@
 * @since 4.0
 */
 if ( ! class_exists( 'HU_Body_Background_Control' ) ) :
-  class HU_Body_Background_Control extends HU_Advanced_Control {
+  class HU_Body_Background_Control extends HU_controls {
 
     public $button_labels = array();
     public $mime_type = 'image';
@@ -78,12 +78,12 @@ if ( ! class_exists( 'HU_Body_Background_Control' ) ) :
       add_action( 'customize_controls_print_footer_scripts', array( $this, 'hu_print_control_templates' ), 1 );
       //print the view content
       //callback declared in the child classes
-      add_action( 'customize_controls_print_footer_scripts', array( $this, 'hu_print_view_content_template' ), 1 );
+      add_action( 'customize_controls_print_footer_scripts', array( $this, 'hu_print_item_content_template' ), 1 );
 
       //print the image uploader template
       //used in multi input controls for example
       //defined in the parent class
-      add_action( 'customize_controls_print_footer_scripts', array( $this, 'hu_print_view_image_uploader_template' ), 1 );
+      //add_action( 'customize_controls_print_footer_scripts', array( $this, 'hu_print_view_image_uploader_template' ), 1 );
     }
 
 
@@ -174,7 +174,7 @@ if ( ! class_exists( 'HU_Body_Background_Control' ) ) :
 
     //this template is used to render the content inside the multi_input_wrapper
     //it uses the data (model) fetch by WP from the db
-    function hu_print_view_content_template() {
+    function hu_print_item_content_template() {
       $css_attr = HU_customize::$instance -> css_attr;
       ?>
       <script type="text/html" id="tmpl-customize-control-<?php echo $this->type; ?>-view-content">

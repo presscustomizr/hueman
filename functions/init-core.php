@@ -287,7 +287,11 @@ if( ! defined( 'HU_THEME_OPTIONS' ) ) define( 'HU_THEME_OPTIONS' , apply_filters
 
 if( ! defined( 'HU_OPT_AJAX_ACTION' ) ) define( 'HU_OPT_AJAX_ACTION' , 'hu_get_option' );
 
-if( ! defined( 'HU_CTX_ON' ) ) define( 'HU_CTX_ON' , false );
+if( ! defined( 'HU_SKOP_ON' ) ) define( 'HU_SKOP_ON' , false );
+if( ! defined( 'HU_SEK_ON' ) ) define( 'HU_SEK_ON' , false );
+
+//HU_IS_PRO
+if( ! defined( 'HU_IS_PRO' ) ) define( 'HU_IS_PRO' , file_exists( HU_BASE . 'functions/init-pro.php' ) && "hueman-pro" == sanitize_file_name( strtolower($hu_theme -> name) ) );
 
 //HU_WEBSITE is the home website of Hueman
 if( ! defined( 'HU_WEBSITE' ) )         define( 'HU_WEBSITE' , $hu_base_data['authoruri'] );
@@ -297,26 +301,31 @@ if( ! defined( 'HU_WEBSITE' ) )         define( 'HU_WEBSITE' , $hu_base_data['au
 /* ------------------------------------------------------------------------- *
  *  Loads and instanciates Utils
 /* ------------------------------------------------------------------------- */
-load_template( get_template_directory() . '/functions/class-utils-settings-map.php' );
+load_template( HU_BASE . 'functions/class-utils-settings-map.php' );
 new HU_utils_settings_map;
-load_template( get_template_directory() . '/functions/class-utils.php' );
+load_template( HU_BASE . 'functions/class-utils.php' );
 new HU_utils;
 
+// Load pro template file only if needed
+if ( HU_IS_PRO ) {
+  load_template( HU_BASE . 'functions/init-pro.php' );
+  new HU_init_pro;
+}
 
 /* ------------------------------------------------------------------------- *
- *  Loads Ctx helpers
+ *  Loads BETAS
 /* ------------------------------------------------------------------------- */
-if ( HU_CTX_ON ) {
-  load_template( get_template_directory() . '/functions/skop/init-skop.php' );
+if ( HU_SKOP_ON ) {
+  load_template( get_template_directory() . '/functions/skop-sek/skop/init-skop.php' );
+}
+if ( HU_SEK_ON ) {
+  load_template( get_template_directory() . '/functions/skop-sek/sektions/init-sektions.php' );
 }
 
 //note:  $default is never used => to remove
 function hu_get_option( $option_id, $default = '' ) {
   return HU_utils::$inst -> hu_opt( $option_id );
 }
-
-
-
 
 
 
@@ -329,77 +338,112 @@ function hu_get_option( $option_id, $default = '' ) {
 add_action( 'after_switch_theme',  'hu_backup_sidebars', 0 );
 
 function hu_backup_sidebars() {
-  $sidebars_widgets = get_theme_mod( 'sidebars_widgets' );
-  $data = isset($sidebars_widgets['data']) ? $sidebars_widgets['data'] : array();
-  if ( ! get_transient( '_hu_sidebar_backup' ) )
-    set_transient( '_hu_sidebar_backup', $data, 24 * 3600 * 365 * 20 );
+    $sidebars_widgets = get_theme_mod( 'sidebars_widgets' );
+    $data = isset($sidebars_widgets['data']) ? $sidebars_widgets['data'] : array();
+    if ( ! get_transient( '_hu_sidebar_backup' ) )
+      set_transient( '_hu_sidebar_backup', $data, 24 * 3600 * 365 * 20 );
 }
 
 
 //get the previous locations and contexts and turn them into new options
-add_filter('hu_implement_options_compat', 'hu_generate_new_sidebar_options');
+add_filter('hu_implement_options_compat', 'hu_filter_add_new_sidebar_options');
 
 
 //hook : hu_implement_options_compat
-function hu_generate_new_sidebar_options($__options) {
-  //generates the default widget zone options
-  $_default_locations = hu_get_builtin_widget_zones_location();
-  $builtin_zones = array();
+function hu_filter_add_new_sidebar_options( $__options ) {
+    //generates the default widget zone options
+    $_default_locations = hu_get_builtin_widget_zones_location();
+    $builtin_zones = array();
 
-  foreach ( hu_get_default_widget_zones() as $_zone_id => $_data ) {
+    foreach ( hu_get_default_widget_zones() as $_zone_id => $_data ) {
 
-    $_locs = hu_get_old_locations($_zone_id, $__options);
-    if ( empty($_locs) && isset($_default_locations[$_zone_id]) ) {
-      $_locs[] = key($_default_locations[$_zone_id]);
-    }
+      $_locs = hu_get_old_locations($_zone_id, $__options);
+      if ( empty($_locs) && isset($_default_locations[$_zone_id]) ) {
+        $_locs[] = key($_default_locations[$_zone_id]);
+      }
 
-    $_contexts = hu_get_old_contexts($_zone_id, $__options);
-    if ( empty($_contexts) && isset($_default_locations[$_zone_id]) ) {
-      $_contexts[] = ('_all_');
-    }
+      $_contexts = hu_get_old_contexts($_zone_id, $__options);
+      if ( empty($_contexts) && isset($_default_locations[$_zone_id]) ) {
+        $_contexts[] = ('_all_');
+      }
 
-    $builtin_zones[] = array(
-      'id'          => $_data['id'],
-      'title'       => $_data['name'],
-      'contexts'    => $_contexts,
-      'locations'   => $_locs,
-      'is_builtin'  => true,
-      'description' => $_data['description']
-    );
-  }
-
-
-  //generates the custom widget zone options
-  $_old_custom_zone_opt = isset( $__options['sidebar-areas'] ) ? $__options['sidebar-areas'] : array();
-  $custom_zones = array();
-
-  if ( ! empty($_old_custom_zone_opt) ) {
-    //array( 'title' => string, 'id' => string )
-    foreach ( $_old_custom_zone_opt as $_zone ) {
-      if ( !isset($_zone['id']) )
-        continue;
-
-      $_zone_id   = $_zone['id'];
-      //get the default location
-      $_locs      = hu_get_old_locations($_zone_id, $__options);
-
-      $_contexts  = hu_get_old_contexts($_zone_id, $__options);
-
-      $custom_zones[] = array(
-        'id'          => $_zone['id'],
-        'title'       => $_zone['title'],
+      $builtin_zones[] = array(
+        'id'          => $_data['id'],
+        'title'       => $_data['name'],
         'contexts'    => $_contexts,
         'locations'   => $_locs,
+        'is_builtin'  => true,
+        'description' => $_data['description']
       );
-    }//foreach
-  }//if
+    }
 
-  //make sure the previous "rules" for sidebars and respected
-  $_new_sb_areas_opts = hu_clean_old_sidebar_options( array_merge( $builtin_zones, $custom_zones ), $__options );
 
-  $__options['sidebar-areas'] = $_new_sb_areas_opts;
-  return $__options;
+    //generates the custom widget zone options
+    $_old_custom_zone_opt = isset( $__options['sidebar-areas'] ) ? $__options['sidebar-areas'] : array();
+    $custom_zones = array();
+
+    if ( ! empty($_old_custom_zone_opt) ) {
+      //array( 'title' => string, 'id' => string )
+      foreach ( $_old_custom_zone_opt as $_zone ) {
+        if ( !isset($_zone['id']) )
+          continue;
+
+        $_zone_id   = $_zone['id'];
+        //get the default location
+        $_locs      = hu_get_old_locations($_zone_id, $__options);
+
+        $_contexts  = hu_get_old_contexts($_zone_id, $__options);
+
+        $custom_zones[] = array(
+          'id'          => $_zone['id'],
+          'title'       => $_zone['title'],
+          'contexts'    => $_contexts,
+          'locations'   => $_locs,
+        );
+      }//foreach
+    }//if
+
+    //make sure the previous "rules" for sidebars and respected
+    $_new_sb_areas_opts = hu_clean_old_sidebar_options( array_merge( $builtin_zones, $custom_zones ), $__options );
+
+    $__options['sidebar-areas'] = $_new_sb_areas_opts;
+    return $__options;
 }
+
+
+
+//helper used to re-build the sidebar-areas option from defaults if the option is empty or has been deleted for some reasons
+function hu_generate_new_sidebar_options() {
+    //generates the default widget zone options
+    $_default_locations = hu_get_builtin_widget_zones_location();
+    $builtin_zones = array();
+
+    foreach ( hu_get_default_widget_zones() as $_zone_id => $_data ) {
+
+        $_locs = array();
+        if ( isset($_default_locations[$_zone_id]) ) {
+          $_locs[] = key($_default_locations[$_zone_id]);
+        }
+
+        $_contexts = array();
+        if ( isset($_default_locations[$_zone_id]) ) {
+          $_contexts[] = ('_all_');
+        }
+
+        $builtin_zones[] = array(
+          'id'          => $_data['id'],
+          'title'       => $_data['name'],
+          'contexts'    => $_contexts,
+          'locations'   => $_locs,
+          'is_builtin'  => true,
+          'description' => $_data['description']
+        );
+    }
+
+    return $builtin_zones;
+}
+
+
 
 
 function hu_get_old_locations( $_zone_id, $__options) {
@@ -626,11 +670,6 @@ function hu_clean_old_sidebar_options( $_new_sb_opts, $__options ) {
 }
 
 
-
-
-
-
-
 function hu_maybe_update_options() {
   $_options = get_option( HU_THEME_OPTIONS );
 
@@ -690,6 +729,9 @@ if ( ! function_exists( 'hu_load' ) ) {
 
     // Load dynamic styles
     load_template( get_template_directory() . '/functions/dynamic-styles.php' );
+
+    //Load compatibility plugins functions
+    load_template( get_template_directory() . '/functions/plugins-compatibility.php' );
   }
 
 }
@@ -754,7 +796,7 @@ function hu_get_default_widget_zones() {
       'description' => __( "Full width widget zone. Located in the left sidebar in a 3 columns layout. Can be on the right of a 2 columns sidebar when content is on the left.", 'hueman'),
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
-      'before_title' => '<h3>',
+      'before_title' => '<h3 class="widget-title">',
       'after_title' => '</h3>',
     ),
     'secondary' => array(
@@ -763,7 +805,7 @@ function hu_get_default_widget_zones() {
       'description' => __( "Full width widget zone. Located in the right sidebar in a 3 columns layout.", 'hueman'),
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
-      'before_title' => '<h3>',
+      'before_title' => '<h3 class="widget-title">',
       'after_title' => '</h3>'
     ),
     'footer-1' => array(
@@ -772,7 +814,7 @@ function hu_get_default_widget_zones() {
       'description' => __( "Widgetized footer 1", 'hueman'),
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
-      'before_title' => '<h3>',
+      'before_title' => '<h3 class="widget-title">',
       'after_title' => '</h3>'
     ),
     'footer-2' => array(
@@ -781,7 +823,7 @@ function hu_get_default_widget_zones() {
       'description' => __("Widgetized footer 2", 'hueman' ),
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
-      'before_title' => '<h3>',
+      'before_title' => '<h3 class="widget-title">',
       'after_title' => '</h3>'
     ),
     'footer-3' => array(
@@ -790,7 +832,7 @@ function hu_get_default_widget_zones() {
       'description' => __("Widgetized footer 3", 'hueman' ),
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
-      'before_title' => '<h3>',
+      'before_title' => '<h3 class="widget-title">',
       'after_title' => '</h3>'
     ),
     'footer-4' => array(
@@ -799,7 +841,7 @@ function hu_get_default_widget_zones() {
       'description' => __("Widgetized footer 4", 'hueman' ),
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
-      'before_title' => '<h3>','after_title' => '</h3>'
+      'before_title' => '<h3 class="widget-title">','after_title' => '</h3>'
     ),
     'header-ads' => array(
       'name' => __( 'Header (next to logo / title)', 'hueman' ),
@@ -807,7 +849,7 @@ function hu_get_default_widget_zones() {
       'description' => __( "The Header Widget Zone is located next to your logo or site title.", 'hueman'),
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
-      'before_title' => '<h3>',
+      'before_title' => '<h3 class="widget-title">',
       'after_title' => '</h3>'
     ),
     'footer-ads' => array(
@@ -816,7 +858,7 @@ function hu_get_default_widget_zones() {
       'description' => __( "The Footer Widget Zone is located before the other footer widgets and takes 100% of the width. Very appropriate to display a Google Map or an advertisement banner.", 'hueman'),
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
-      'before_title' => '<h3>',
+      'before_title' => '<h3 class="widget-title">',
       'after_title' => '</h3>'
     )
   );
@@ -989,7 +1031,7 @@ if ( ! function_exists( 'hu_maybe_register_custom_widget_zones' ) ) :
     $default_args = array(
       'name' => '',
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
-      'after_widget' => '</div>','before_title' => '<h3>','after_title' => '</h3>'
+      'after_widget' => '</div>','before_title' => '<h3 class="widget-title">','after_title' => '</h3>'
     );
 
     $default_zones = hu_get_default_widget_zones();
@@ -1142,7 +1184,6 @@ add_filter( 'image_resize_dimensions', 'hu_thumbnail_upscale', 10, 6 );
 /*  Add shortcode support to text widget
 /* ------------------------------------ */
 add_filter( 'widget_text', 'do_shortcode' );
-
 
 
 /* ------------------------------------------------------------------------- *

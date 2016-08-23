@@ -144,36 +144,36 @@ if ( ! class_exists( 'HU_utils' ) ) :
     * @package Hueman
     */
     function hu_opt( $option_name , $option_group = null, $use_default = true ) {
-      //do we have to look for a specific group of option (plugin?)
-      $option_group = is_null($option_group) ? HU_THEME_OPTIONS : $option_group;
-      //when customizing, the db_options property is refreshed each time the preview is refreshed in 'customize_preview_init'
-      $_db_options  = empty($this -> db_options) ? $this -> hu_cache_db_options() : $this -> db_options;
+        //do we have to look for a specific group of option (plugin?)
+        $option_group = is_null( $option_group ) ? HU_THEME_OPTIONS : $option_group;
+        //when customizing, the db_options property is refreshed each time the preview is refreshed in 'customize_preview_init'
+        $_db_options  = empty($this -> db_options) ? $this -> hu_cache_db_options() : $this -> db_options;
 
-      //do we have to use the default ?
-      $__options    = $_db_options;
-      $_default_val = false;
-      if ( $use_default ) {
-        $_defaults      = $this -> default_options;
-        if ( is_array($_defaults) && isset($_defaults[$option_name]) )
-          $_default_val = $_defaults[$option_name];
-        $__options      = wp_parse_args( $_db_options, $_defaults );
-      }
+        //do we have to use the default ?
+        $__options    = $_db_options;
+        $_default_val = false;
+        if ( $use_default ) {
+          $_defaults      = $this -> default_options;
+          if ( is_array($_defaults) && isset($_defaults[$option_name]) )
+            $_default_val = $_defaults[$option_name];
+          $__options      = wp_parse_args( $_db_options, $_defaults );
+        }
 
-      //assign false value if does not exist, just like WP does
-      $_single_opt    = isset($__options[$option_name]) ? $__options[$option_name] : false;
+        //assign false value if does not exist, just like WP does
+        $_single_opt    = isset($__options[$option_name]) ? $__options[$option_name] : false;
 
-      //ctx retro compat => falls back to default val if ctx like option detected
-      //important note : some options like hu_slider are not concerned by ctx
-      if ( ! $this -> hu_is_option_excluded_from_ctx( $option_name ) ) {
-        if ( is_array($_single_opt) && ! class_exists( 'HU_ctx' ) )
-          $_single_opt = $_default_val;
-      }
+        //ctx retro compat => falls back to default val if ctx like option detected
+        //important note : some options like hu_slider are not concerned by ctx
+        if ( ! $this -> hu_is_option_excluded_from_ctx( $option_name ) ) {
+          if ( is_array($_single_opt) && ! class_exists( 'HU_ctx' ) )
+            $_single_opt = $_default_val;
+        }
 
-      //allow ctx filtering globally
-      $_single_opt = apply_filters( "hu_opt" , $_single_opt , $option_name , $option_group, $_default_val );
+        //allow ctx filtering globally
+        $_single_opt = apply_filters( "hu_opt" , $_single_opt , $option_name , $option_group, $_default_val );
 
-      //allow single option filtering
-      return apply_filters( "hu_opt_{$option_name}" , $_single_opt , $option_name , $option_group, $_default_val );
+        //allow single option filtering
+        return apply_filters( "hu_opt_{$option_name}" , $_single_opt , $option_name , $option_group, $_default_val );
     }
 
 
@@ -247,7 +247,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
     * @return bool
     */
     function hu_is_option_excluded_from_ctx( $opt_name ) {
-      return in_array( $opt_name, $this -> hu_get_ctx_excluded_options() );
+      return in_array( $opt_name, $this -> hu_get_skope_excluded_options() );
     }
 
 
@@ -255,9 +255,9 @@ if ( ! class_exists( 'HU_utils' ) ) :
     * Helper : define a set of options not impacted by ctx like last_update_notice.
     * @return  array of excluded option names
     */
-    function hu_get_ctx_excluded_options() {
+    function hu_get_skope_excluded_options() {
       return apply_filters(
-        'hu_get_ctx_excluded_options',
+        'hu_get_skope_excluded_options',
         array(
           'defaults',
           'last_update_notice',

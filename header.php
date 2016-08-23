@@ -13,7 +13,7 @@
 <body <?php body_class(); ?>>
 
 <div id="wrapper">
-
+  <?php do_action('__before_header') ; ?>
   <header id="header">
     <?php if ( has_nav_menu('topbar') ): ?>
       <nav class="nav-container group" id="nav-topbar">
@@ -73,5 +73,7 @@
   <?php do_action('__after_header') ; ?>
   <div class="container" id="page">
     <div class="container-inner">
+      <?php do_action('__before_main') ; ?>
       <div class="main">
         <div class="main-inner group">
+          <?php do_action('__before_content') ; ?>

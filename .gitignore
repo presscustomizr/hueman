@@ -7,6 +7,8 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+.gitignore
+.gitattributes
 
 # PATCHES
 patches/
@@ -14,7 +16,7 @@ patches/
 # GRUNT
 node_modules/
 .ftpauth
-assets/czr/fmk
+#assets/czr/fmk
 npm-debug.log
 
 # TRAVIS
@@ -53,6 +55,3 @@ travis-examples/
 # !wordpress/*/wp-content/themes/*/*/*
 # !wordpress/*/wp-content/themes/*/*/*/*
 # !wordpress/*/wp-content/themes/*/*/*/*/*
-
-# BOOTSTRAP
-assets/front/css/bootstrap

@@ -21,8 +21,16 @@ module.exports = {
     files : ['<%= paths.global_js %>*.js', '!*.min.js'],
     tasks : [ 'jshint:global_js', 'uglify:global_js'],
   },
+  czr_concat_control_css : {
+    files : ['<%= paths.czr_assets %>fmk/css/parts/*.css'],
+    tasks : ['concat:czr_control_css', 'cssmin:czr_css', 'copy:czr_css' ],
+  },
+  // czr_min_copy_control_css : {
+  //   files : ['<%= paths.czr_assets %>fmk/css/czr-control.css'],
+  //   tasks : ['cssmin:czr_css', 'copy:czr_css'],
+  // },
 	czr_control_js : {
-		files : ['<%= paths.czr_assets %>fmk/js/control_dev/*.js'],
+		files : ['<%= paths.czr_assets %>fmk/js/control_dev/**/*.js'],
 		tasks : ['jshint:those' , 'concat:czr_control_js', 'comments:czr_control_js', 'uglify:czr_control_js', 'copy:czr_js' ],
 	},
 	//Other admin js assets are jshinted on change
@@ -30,10 +38,6 @@ module.exports = {
 		files : ['<%= paths.czr_assets %>fmk/js/czr-preview.js'],
 		tasks : ['jshint:those', 'uglify:czr_preview_js', 'copy:czr_js'],
 	},
-  czr_css : {
-    files : ['<%= paths.czr_assets %>fmk/css/czr-control.css'],
-    tasks : ['cssmin:czr_css', 'copy:czr_css'],
-  },
 	admin_css : {
 		files : ['<%= paths.admin_css %>*.css'],
 		tasks : ['cssmin:admin_css'],
