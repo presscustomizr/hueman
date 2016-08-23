@@ -1,0 +1,419 @@
+/* OVERRIDE WP CUSTOMIZER */
+
+/* SEKTIONS AND COLUMNS */
+.czr-sektion-buttons {
+    position: absolute;
+    right: 0;
+}
+.czr-column {
+  width: 99%;
+  margin-bottom: 1%;
+  float: left;
+  padding: 2% 0%;
+  border: 2px dotted #aaa;
+  text-align: center;
+}
+.czr-column-header {
+  position: relative;
+}
+.czr-col-drag-handler {
+    position: absolute;
+    left: 0%;
+    padding: 1%;
+    color: #999;
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+
+
+
+/* MODULES */
+.czr-module-collection-wrapper {
+  width: 100%;
+  min-height: 5px;
+  float: left;
+}
+.czr-single-module {
+    width: 98%;
+    float: left;
+    min-height: 20px;
+    margin: 1px 1%;
+    border: 1px solid #ccc;
+}
+
+.czr-single-module textarea {
+  max-width: 100%;
+}
+
+/*.czr-single-module .czr-single-item .czr-item-content {
+  display: block;
+}*/
+
+#customize-theme-controls .czr-single-module .czr-single-item {
+  width: 96%;
+}
+
+.czr-mod-header {
+  background: #eee;
+  float: left;
+  width: 100%;
+}
+.czr-mod-title {
+  position: relative;
+}
+.czr-mod-title > h4 {
+  float: left;
+  width: 70%;
+  margin: 2% 0;
+}
+.czr-mod-drag-handler {
+    position: absolute;
+    left: 0%;
+    padding: 1%;
+    margin: 2% 0;
+    color: #999;
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+.czr-mod-buttons {
+  float: right;
+  width: 30%;
+  margin: 2% 0;
+}
+
+.czr-mod-content {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  float: left;
+  width: 100%;
+  background: #d5e9cc;
+  display: none;
+}
+
+
+
+
+
+
+
+
+
+/* EDIT MODULE */
+.czr-module-open #customize-info,
+.czr-module-open #customize-theme-controls {
+  left: -200%;
+}
+.czr-module-open #customize-theme-controls .accordion-section-content {
+    overflow: visible;
+}
+.czr-module-description-container {
+  margin-bottom: 15px
+}
+.czr-module-title {
+  /*margin: -12px -12px 0 -12px;*/
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+}
+.czr-module-title h3 {
+  padding: 10px 10px 12px 14px;
+  margin: 0;
+  line-height: 21px;
+  color: #555;
+  font-size: 20px;
+  font-weight: 200;
+  line-height: 26px;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#customize-controls .czr-module-title span.customize-action {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 13px;
+  display: block;
+  font-weight: 400;
+}
+
+.czr-module-back {
+    display: block;
+    float: left;
+    width: 48px;
+    height: 74px;
+    padding: 0 24px 0 0;
+    margin: 0;
+    background: #fff;
+    border: none;
+    border-right: 1px solid #ddd;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    cursor: pointer;
+    -webkit-transition: left .18s ease-in-out, color .1s ease-in-out, background .1s ease-in-out;
+    transition: left .18s ease-in-out, color .1s ease-in-out, background .1s ease-in-out;
+}
+
+.czr-module-back:hover,
+.czr-module-back:focus {
+  color: #23282d;
+  background: #f5f5f5;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.czr-module-back:before {
+  font: normal 20px/72px dashicons;
+  content: "\f341";
+  position: relative;
+  left: 13px;
+}
+
+
+.czr-module-back:hover {
+    color: #23282d;
+    background: #f5f5f5;
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+
+
+
+
+
+
+/* DRAGULA */
+.gu-mirror {
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 999999 !important;
+  opacity: 0.8;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
+}
+
+.gu-hide {
+  display: none !important;
+}
+.gu-unselectable {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+.gu-transit {
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
+}
+
+/* CUSTOM FOR DRAGULA */
+.gu-unselectable .czr-module-collection-wrapper {
+    width: 98%;
+    border: 1px dotted green;
+    background: #d1ffe0;
+    min-height: 31px;
+}
+li.czr-single-module.gu-mirror, li.czr-module-candidate.gu-mirror {
+    list-style: none;
+}
+/*.czr-dragula-fake-container {
+  display: none;
+  float: left;
+  height: 60px;
+  width: 96%;
+  margin: 2%;
+  border: 2px dotted #aaa;
+  text-align: center;
+  line-height: 30px;
+}
+.czr-show-fake-container .czr-dragula-fake-container {
+  display: block;
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* MODULES LIST PANEL */
+#czr-module-list-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -301px;
+  /*visibility: hidden;*/
+  opacity: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin: 0;
+  z-index: 4;
+  background: rgba(0, 0, 0, 0.47);
+  -webkit-transition: all .18s;
+  transition: all .18s;
+  border-right: 1px solid #ddd;
+}
+#czr-module-list-panel, #czr-available-modules-filter {
+  width: 45%;
+  min-width: 300px;
+}
+body.czr-adding-module #czr-module-list-panel {
+  left: 0;
+  visibility: visible;
+  opacity: 1;
+}
+
+/*body.czr-adding-module .wp-full-overlay-main {
+  left: 300px;
+}*/
+
+body.czr-adding-module #customize-preview {
+  opacity: 0.7;
+}
+
+
+.add-new-module:before {
+  content: "\f132";
+  display: inline-block;
+  position: relative;
+  left: -2px;
+  top: -1px;
+  font: normal 20px/1 dashicons;
+  vertical-align: middle;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.czr-column .add-new-module {
+  margin: 1%;
+  float: right;
+}
+
+body.czr-adding-module .add-new-module,
+body.czr-adding-module .add-new-module:hover {
+  background: #eee;
+  border-color: #929793;
+  color: #32373c;
+  -webkit-box-shadow: inset 0 2px 5px -3px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 2px 5px -3px rgba(0, 0, 0, 0.5);
+}
+
+body.czr-adding-module .add-new-module:before {
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+
+#czr-available-modules-list {
+  top: 60px;
+  position: absolute;
+  overflow: auto;
+  bottom: 0;
+  width: 100%;
+}
+
+#czr-available-modules-filter {
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.47);
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* search field container */
+#czr-available-modules-filter {
+  padding: 12px 15px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+#czr-available-modules-filter input {
+  padding: 6px 10px;
+  width: 100%;
+}
+
+#czr-available-modules-list .czr-module-candidate {
+    position: relative;
+    /*padding: 1%;*/
+    border-bottom: 1px solid #e5e5e5;
+}
+
+#czr-available-modules-list .czr-module-candidate h3 {
+  color: #fff;
+  padding: 0px;
+    margin: 0;
+}
+#czr-available-modules-list .czr-mod-drag-handler {
+    position: relative;
+    left: 0%;
+    padding: 1%;
+    margin: 2% 4%;
+    color: inherit;
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+
+
+
+
+
+/* SEKTION SETTINGS PANEL */
+#czr-sektion-settings-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 45%;
+  min-width: 300px;
+  left: -301px;
+  /*visibility: hidden;*/
+  opacity: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin: 0;
+  z-index: 4;
+  background: rgba(0, 0, 0, 0.47);
+  -webkit-transition: all .18s;
+  transition: all .18s;
+  border-right: 1px solid #ddd;
+  color: #fff;
+}
+#czr-sektion-settings-panel h3 {
+  color: #fff;
+}
+body.czr-editing-sektion #czr-sektion-settings-panel {
+  left: 0;
+  visibility: visible;
+  opacity: 1;
+}
+
+/*body.czr-editing-sektion .wp-full-overlay-main {
+  left: 300px;
+}*/
+
+body.czr-editing-sektion #customize-preview {
+  opacity: 0.7;
+}
