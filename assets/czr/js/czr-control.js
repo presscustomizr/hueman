@@ -1868,7 +1868,10 @@ $.extend( CZRInputMths , {
             _new_model =  ( ! _.isObject(_new_model) || _.isEmpty(_new_model) ) ? {} : _new_model;
             _new_model[input.id] = to;
             input.item.set(_new_model);
-            input.item.trigger( input.id + ':changed', to );
+
+            if ( ! _.has( input, 'is_preItemInput' ) ) {
+              input.item.trigger( input.id + ':changed', to );
+            }
     }
 });//$.extend
 var CZRInputMths = CZRInputMths || {};
@@ -2668,8 +2671,8 @@ $.extend( CZRItemMths , {
                 item.czr_ItemState.set( 'expanded_noscroll' );
           } else {
                 module.closeAllItems( item.id );
-                if ( _.has(module, 'czr_preItem') ) {
-                  module.czr_preItem('view_status').set( 'closed');
+                if ( _.has(module, 'preItem') ) {
+                  module.preItemExpanded.set(false);
                 }
                 item.czr_ItemState.set( 'expanded' == item._getViewState() ? 'closed' : 'expanded' );
           }
@@ -2707,8 +2710,8 @@ $.extend( CZRItemMths , {
               $_clicked = obj.dom_event;
           module.closeAllItems();
 
-          if ( _.has(module, 'czr_preItem') ) {
-              module.czr_preItem('view_status').set( 'closed');
+          if ( _.has(module, 'preItem') ) {
+              module.preItemExpanded.set(false);
           }
           $('.' + module.control.css_attr.remove_alert_wrapper, item.container ).not($_alert_el).each( function() {
                 if ( $(this).hasClass('open') ) {
@@ -2844,8 +2847,8 @@ $.extend( CZRModuleMths, {
               is_column_update = to.column_id != from.column_id,
               is_item_collection_sorted = ( _.size(from.items) == _.size(to.items) ) && ! is_item_update && ! is_column_update;
           if ( is_item_collection_sorted ) {
-                if ( _.has(module, 'czr_preItem') ) {
-                  module.czr_preItem('view_status').set('closed');
+                if ( _.has(module, 'preItem') ) {
+                  module.preItemExpanded.set(false);
                 }
                 module.closeAllItems();
                 module.closeAllAlerts();
@@ -3188,14 +3191,6 @@ $.extend( CZRDynModuleMths, {
           $.extend( module, {
               itemPreAddEl : ''//is specific for each crud module
           } );
-          module.czr_preItem = new api.Values();
-          module.czr_preItem.create('item');
-
-          module.czr_preItem.create('view_status');
-          module.czr_preItem('view_status').set('closed');
-
-          module.preItemEmbedded = $.Deferred();//module.czr_preItem.create('item_content');
-          module.czr_preItemInput = new api.Values();
           module.itemAddedMessage = serverControlParams.translatedStrings.successMessage;
           module.userEventMap = new api.Value( [
                 {
@@ -3216,58 +3211,68 @@ $.extend( CZRDynModuleMths, {
           var module = this;
           console.log('MODULE READY IN DYN MODULE CLASS : ', module.id );
           module.setupDOMListeners( module.userEventMap() , { dom_el : module.container } );
-          module.czr_preItem('item').set( module.getDefaultModel() );
-          module.czr_preItem('item').set( module.getDefaultModel() );
+          module.preItem = new api.Value( module.getDefaultModel() );
+          module.preItemEmbedded = $.Deferred();//was module.czr_preItem.create('item_content');
           module.preItemEmbedded.done( function() {
-                module.preItemInputConstructor = module.inputConstructor;//api.CZRInput;
                 module.setupPreItemInputCollection();
           });
-          module.czr_preItem('view_status').callbacks.add( function( to, from ) {
+          module.preItemExpanded = new api.Value(false);
+          module.preItemExpanded.callbacks.add( function( to, from ) {
                 module._togglePreItemViewExpansion( to );
           });
 
           api.CZRModule.prototype.ready.call( module );//fires the parent
   },//ready()
-
-
-
   setupPreItemInputCollection : function() {
-    console.log('in setup pre_item');
           var module = this;
+          module.preItem.czr_Input = new api.Values();
           $('.' + module.control.css_attr.pre_add_wrapper, module.container)
                 .find( '.' + module.control.css_attr.sub_set_wrapper)
                 .each( function( _index ) {
                       var _id = $(this).find('[data-type]').attr('data-type') || 'sub_set_' + _index;
-                      module.czr_preItemInput.add( _id, new module.preItemInputConstructor( _id, {
+                      module.preItem.czr_Input.add( _id, new module.inputConstructor( _id, {//api.CZRInput;
                             id : _id,
                             type : $(this).attr('data-input-type'),
                             container : $(this),
-                            item : module.czr_preItem('item'),
+                            item : module.preItem,
                             module : module,
                             is_preItemInput : true
                       } ) );
+                      module.preItem.czr_Input(_id).ready();
                 });//each
   },
   addItem : function(obj) {
           var module = this,
-              item = module.czr_preItem('item')();
+              item = module.preItem(),
+              collapsePreItem = function() {
+                    module.preItemExpanded.set(false);
+                    module._resetPreItemInputs();
+                    module.toggleSuccessMessage('off');
+              };
 
           if ( _.isEmpty(item) || ! _.isObject(item) ) {
             throw new Error('addItem : an item should be an object and not empty. In : ' + module.id +'. Aborted.' );
           }
           module.instantiateItem( item, true ).ready(); //true == Added by user
 
-          module.toggleSuccessMessage('on');
-          setTimeout( function() {
-                module.czr_preItem('view_status').set( 'closed');
-                module.czr_preItem('item').set( module.getDefaultModel() );
-                module.toggleSuccessMessage('off').destroyPreItemView();
-          } , 2000 );
+          collapsePreItem = _.debounce( collapsePreItem, 2000 );
+          collapsePreItem();
 
           module.trigger('item_added', item );
           if ( 'postMessage' == api(module.control.id).transport && _.has( obj, 'dom_event') && ! _.has( obj.dom_event, 'isTrigger' ) && ! api.CZR_Helpers.has_part_refresh( module.control.id ) ) {
             module.control.previewer.refresh();
           }
+  },
+
+  _resetPreItemInputs : function() {
+          var module = this;
+          module.preItem.set( module.getDefaultModel() );
+          module.preItem.czr_Input.each( function( input_instance ) {
+                var _input_id = input_instance.id;
+                if ( ! _.has( module.getDefaultModel(), _input_id ) )
+                  return;
+                input_instance.set( module.getDefaultModel()._input_id );
+          });
   }
 
 });//$.extend//MULTI CONTROL CLASS
@@ -3277,7 +3282,7 @@ var CZRDynModuleMths = CZRDynModuleMths || {};
 $.extend( CZRDynModuleMths, {
   renderPreItemView : function( obj ) {
           var module = this;
-          if ( 'pending' != module.preItemEmbedded.state() ) //! _.isEmpty( module.czr_preItem('item_content')() ) )
+          if ( 'pending' != module.preItemEmbedded.state() ) //was ! _.isEmpty( module.czr_preItem('item_content')() ) )
             return;
           if ( ! _.has(module, 'itemPreAddEl') ||  0 === $( '#tmpl-' + module.itemPreAddEl ).length )
             return this;
@@ -3301,26 +3306,25 @@ $.extend( CZRDynModuleMths, {
           var module = this;
 
           module.closeAllItems();
-          module.czr_preItem('view_status').set( 'expanded' == module.czr_preItem('view_status')() ? 'closed' : 'expanded' );
+          module.preItemExpanded.set( ! module.preItemExpanded() );
   },
-  _togglePreItemViewExpansion : function( status) {
+  _togglePreItemViewExpansion : function( _is_expanded ) {
           var module = this,
             $_pre_add_el = $( '.' +  module.control.css_attr.pre_add_item_content, module.container );
           $_pre_add_el.slideToggle( {
-            duration : 200,
-            done : function() {
-                  var _is_expanded = 'closed' != status,
-                      $_btn = $( '.' +  module.control.css_attr.open_pre_add_btn, module.container );
+                duration : 200,
+                done : function() {
+                      var $_btn = $( '.' +  module.control.css_attr.open_pre_add_btn, module.container );
 
-                  $(this).toggleClass('open' , _is_expanded );
-                  if ( _is_expanded )
-                    $_btn.find('.fa').removeClass('fa-plus-square').addClass('fa-minus-square');
-                  else
-                    $_btn.find('.fa').removeClass('fa-minus-square').addClass('fa-plus-square');
-                  $_btn.toggleClass( 'active', _is_expanded );
-                  $( module.container ).toggleClass(  module.control.css_attr.adding_new, _is_expanded );
-                  module._adjustScrollExpandedBlock( $(this), 120 );
-            }//done
+                      $(this).toggleClass('open' , _is_expanded );
+                      if ( _is_expanded )
+                        $_btn.find('.fa').removeClass('fa-plus-square').addClass('fa-minus-square');
+                      else
+                        $_btn.find('.fa').removeClass('fa-minus-square').addClass('fa-plus-square');
+                      $_btn.toggleClass( 'active', _is_expanded );
+                      $( module.container ).toggleClass(  module.control.css_attr.adding_new, _is_expanded );
+                      module._adjustScrollExpandedBlock( $(this), 120 );
+              }//done
           } );
   },
 
@@ -4250,9 +4254,37 @@ $.extend( CZRSocialModuleMths, {
                   return;
                 module.ready();
           });
+
+          module.isReady.then( function() {
+                module.preItem.bind( function( to, from ) {
+                      if ( ! _.has(to, 'social-icon') )
+                        return;
+                      if ( _.isEqual( to['social-icon'], from['social-icon'] ) )
+                        return;
+                      module.updateItemModel( module.preItem, true );
+                });
+          });
   },//initialize
+  updateItemModel : function( item_instance, is_preItem ) {
+          var item = item_instance;
+          is_preItem = is_preItem || false;
+          if ( ! _.has( item(), 'social-icon') || _.isEmpty( item()['social-icon'] ) )
+            return;
 
+          var _new_model  = $.extend( true, {}, item() ),//always safer to deep clone ( alternative to _.clone() ) => we don't know how nested this object might be in the future.
+              _new_title  = api.CZR_Helpers.capitalize( _new_model['social-icon'].replace('fa-', '') ),
+              _new_color  = serverControlParams.social_el_params.defaultSocialColor;
+          _new_title = [ serverControlParams.translatedStrings.followUs, _new_title].join(' ');
 
+          if ( is_preItem ) {
+              _new_model = $.extend( _new_model, { title : _new_title, 'social-color' : _new_color } );
+              item.set( _new_model );
+          } else {
+              item.czr_Input('title').set( _new_title );
+              item.czr_Input('social-link').set( '' );
+              item.czr_Input('social-color').set( _new_color );
+          }
+  },
 
 
 
@@ -4263,8 +4295,6 @@ $.extend( CZRSocialModuleMths, {
 
 
   CZRSocialsInputMths : {
-
-
           setupSelect : function() {
                 var input      = this,
                     item = input.item,
@@ -4354,7 +4384,7 @@ $.extend( CZRSocialModuleMths, {
                 var item = this;
                 api.CZRItem.prototype.ready.call( item );
                 item.bind('social-icon:changed', function(){
-                      item.updateItemModel();
+                      item.module.updateItemModel( item );
                 });
           },
 
@@ -4379,22 +4409,7 @@ $.extend( CZRSocialModuleMths, {
                   $( '.' + module.control.css_attr.item_title , item.container ).html(
                     item._buildTitle( _title, _model['social-icon'], _model['social-color'] )
                   );
-          },
-          updateItemModel : function() {
-                  var item = this;
-                  if ( ! _.has( item(), 'social-icon') || _.isEmpty( item()['social-icon'] ) )
-                    return;
-
-                  var _new_model  = _.clone( item() ),
-                      _new_title  = api.CZR_Helpers.capitalize( _new_model['social-icon'].replace('fa-', '') ),
-                      _new_color  = serverControlParams.social_el_params.defaultSocialColor;
-                  _new_title = [ serverControlParams.translatedStrings.followUs, _new_title].join(' ');
-
-                  item.czr_Input('title').set( _new_title );
-                  item.czr_Input('social-link').set( '' );
-                  item.czr_Input('social-color').set( _new_color );
-          },
-
+          }
   },//CZRSocialsItem
 
 });
@@ -4437,9 +4452,8 @@ $.extend( CZRWidgetAreaModuleMths, {
           };
           this.itemAddedMessage = serverControlParams.translatedStrings.widgetZoneAdded;
           this.listenToSidebarInsights();
-          module.czr_preItem.create('location_alert_view_state');
-          module.czr_preItem('location_alert_view_state').set('closed');
-          module.czr_preItem('location_alert_view_state').callbacks.add( function( to, from ) {
+          module.preItem_location_alert_view_state = new api.Value( 'closed');
+          module.preItem_location_alert_view_state.callbacks.add( function( to, from ) {
                     module._toggleLocationAlertExpansion( module.container, to );
           });
           module.bind( 'item_added', function( model ) {
@@ -4466,11 +4480,11 @@ $.extend( CZRWidgetAreaModuleMths, {
   ready : function() {
           var module = this;
           api.CZRDynModule.prototype.ready.call( module );
-          module.czr_preItem('view_status').callbacks.add( function( to, from ) {
-                if ( 'expanded' != to )
+          module.preItemExpanded.callbacks.add( function( to, from ) {
+                if ( ! to )
                   return;
-                module.czr_preItemInput('locations')._setupLocationSelect( true );//true for refresh
-                module.czr_preItemInput('locations').mayBeDisplayModelAlert();
+                module.preItem.czr_Input('locations')._setupLocationSelect( true );//true for refresh
+                module.preItem.czr_Input('locations').mayBeDisplayModelAlert();
           });
   },
   initializeModuleModel : function( constructorOptions ) {
@@ -4579,7 +4593,7 @@ $.extend( CZRWidgetAreaModuleMths, {
                         return ! _.contains(available_locs, loc);
                       });
                   if ( ! _.has( item(), 'id' ) || _.isEmpty( item().id ) ) {
-                        module.czr_preItem('location_alert_view_state').set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
+                        module.preItem_location_alert_view_state.set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
                   } else {
                         item.czr_itemLocationAlert.set( ! _.isEmpty( _unavailable ) ? 'expanded' : 'closed' );
                   }
@@ -4832,7 +4846,8 @@ $.extend( CZRWidgetAreaModuleMths, {
                   _set_margins();
           }, 150 ) );
           module.closeAllItems();
-          module.czr_preItem('view_status').set('closed');
+          if ( _.has( module, 'preItemExpanded' ) )
+            module.preItemExpanded.set(false);
   },//widgetPanelReact()
   widgetSectionReact : function( to, from ) {
           var module = this,
@@ -5016,7 +5031,7 @@ $.extend( CZRFeaturedPageModuleMths, {
   addItem : function(obj) {
 
           var module     = this,
-              item       = module.czr_preItem('item'),
+              item       = module.preItem,
               item_model = item();
 
           if ( _.isEmpty(item_model) || ! _.isObject(item_model) ) {
@@ -5077,7 +5092,7 @@ $.extend( CZRFeaturedPageModuleMths, {
                   var _new_model      = _.clone( item() ),
                       _fp_post        = _new_model['fp-post'][0],
                       _new_title      = _fp_post.title,
-                      inputCollection = is_preItemInput ? input.module.czr_preItemInput : item.czr_Input;
+                      inputCollection = is_preItemInput ? input.module.preItemInput : item.czr_Input;
 
                   if ( is_preItemInput ) {
                         $.extend( _new_model, { title : _new_title, 'fp-title' : _new_title } );
@@ -6057,8 +6072,8 @@ $.extend( CZRMultiModuleControlMths, {
                     $_alert_el = $( '.' + module.control.css_attr.remove_alert_wrapper, module.container ).first(),
                     $_clicked = obj.dom_event,
                     $_column_container = control.syncSektionModule().czr_Column( module.column_id ).container;
-                if ( _.has(module, 'czr_preItem') ) {
-                    control.syncSektionModule().czr_preItem('view_status').set( 'closed');
+                if ( _.has(module, 'preItem') ) {
+                    control.syncSektionModule().preItemExpanded.set( false );
                 }
                 $('.' + module.control.css_attr.remove_alert_wrapper, $_column_container ).not($_alert_el).each( function() {
                       if ( $(this).hasClass('open') ) {
