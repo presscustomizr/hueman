@@ -29,7 +29,7 @@ module.exports = {
       '<%= paths.czr_assets %>fmk/js/lib/stepper.min.js',
       '<%= paths.czr_assets %>fmk/js/lib/select2.min.js',
 
-      '<%= paths.czr_assets %>fmk/js/control_dev/_0_pre_base_values.js',
+      '<%= paths.czr_assets %>fmk/js/control_dev/_0_pre_base.js',
 
       '<%= paths.czr_assets %>fmk/js/control_dev/0_1_skope/_0_0_0_pre_1_skope_base_init.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/0_1_skope/_0_0_0_pre_2_skope_base_current_skopes_collection.js',
