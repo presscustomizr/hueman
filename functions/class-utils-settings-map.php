@@ -138,16 +138,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'title_tagline',//<= this is a default WP section, not created for the Hueman theme
                 'type'      => 'czr_upload',
                 'sanitize_callback' => array( $this , 'hu_sanitize_number' )
-          ),
-          'rss-feed'  => array(
-                'default'   => '',
-                'control'   =>  'HU_Controls',
-                'label'     =>  __( 'FeedBurner URL' , 'hueman' ),
-                'section'   => 'title_tagline',//<= this is a default WP section, not created for the Hueman theme
-                'type'      => 'text',
-                'sanitize_callback' => array( $this , 'hu_sanitize_url' ),
-                'priority'  => 60,
-                'notice'    => __('Enter your full FeedBurner URL (or any other preferred feed URL) if you wish to use FeedBurner over the standard WordPress feed e.g. http://feeds.feedburner.com/yoururlhere ', 'hueman' )
           )
       );
     }
