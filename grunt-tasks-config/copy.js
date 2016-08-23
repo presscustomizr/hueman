@@ -4,6 +4,7 @@ module.exports = {
 			'**',
 			'!bin/**',
 			'!build/**',
+      '!functions/skop-sek/**',
 			'!grunt-tasks-config/**',
 			'!node_modules/**',
 			'!tests/**',

@@ -26,6 +26,8 @@ PHP_CodeSniffer/
 # BUILD
 build/
 
+# SKOP SEK
+functions/skop-sek/
 
 # WPCS
 wpcs/
