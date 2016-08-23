@@ -212,9 +212,9 @@
 .wp-customizer #customize-theme-controls .accordion-section-content {
   background: #fff;
 }
-.wp-customizer .customize-panel-back {
+/*.wp-customizer .customize-panel-back {
   height: 60px;
-}
+}*/
 .wp-customizer #customize-controls .customize-info .customize-help-toggle:hover, .wp-customizer #customize-controls .customize-info.open .customize-help-toggle, .wp-customizer #customize-controls .customize-info .customize-help-toggle:focus {
   color:#00a0d2;
 }
@@ -246,8 +246,8 @@ li[id*="customize-control-"] {
 	margin: 8px 0;
 }
 
-.control-section .accordion-section-title {
-	padding: 6px 20px!important;
+.wp-customizer .control-section .accordion-section-title {
+	padding: 10px 25px 11px 14px;
 }
 .control-section .accordion-section-title:after {
 	top: 7px;
@@ -288,7 +288,7 @@ li[id*="customize-control-"] {
 }
 
 #customize-theme-controls h3.accordion-section-title {
-	font-family: "Open Sans", sans-serif;
+	/*font-family: "Open Sans", sans-serif;*/
 	-webkit-transition: background .1s ease-in-out;
 	-moz-transition: background .1s ease-in-out;
 	-ms-transition: background .1s ease-in-out;
@@ -2063,7 +2063,7 @@ span.czr-skope-title {
 
 
 /* SINGLE CONTROL RESET */
-.customize-control span.customize-control-title {
+.czr-skop-on .customize-control span.customize-control-title {
   padding-left: 16px;
   position: relative;
 }
