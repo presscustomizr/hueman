@@ -13,9 +13,9 @@ module.exports = {
     tasks : [ 'concat:front_css', 'concat:front_not_responsive_css', 'cssmin:front_css', 'cssmin:font_awesome_css'],
   },
 	front_js : {
-		files : ['<%= paths.front_js %>*.js', '!*.min.js'],
-		tasks : [ 'jshint:front_js', 'uglify:front_js'],
-		//tasks: ['concat:front_js', 'jshint:front', 'ftp_push:those'],
+		files : ['<%= paths.front_js %>_parts/*.js', '<%= paths.front_js %>lib/*.js', '<%= paths.front_js %>jquery-plugins/*.js', '!*.min.js'],
+		//tasks : [ 'jshint:front_js', 'uglify:front_js'],
+		tasks: ['jshint:part_front_js', 'concat:front_main_parts_js', 'concat:front_js', 'jshint:front_js', 'uglify:front_js'],
 	},
   global_js : {
     files : ['<%= paths.global_js %>*.js', '!*.min.js'],

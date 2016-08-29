@@ -463,26 +463,81 @@ add_filter( 'body_class', 'hu_browser_body_class' );
 /* ------------------------------------------------------------------------- */
 /*  Enqueue javascript
 /* ------------------------------------ */
+//hook : wp_enqueue_scripts
 if ( ! function_exists( 'hu_scripts' ) ) {
   function hu_scripts() {
     if ( has_post_format( 'gallery' ) || ( is_home() && ! is_paged() && ( hu_get_option('featured-posts-count') != '0' ) ) ) {
-      wp_enqueue_script( 'flexslider', get_template_directory_uri() . '/assets/front/js/jquery.flexslider.min.js', array( 'jquery' ),'', false );
+      wp_enqueue_script(
+        'flexslider',
+        get_template_directory_uri() . '/assets/front/js/lib/jquery.flexslider.min.js',
+        array( 'jquery' ),
+        '',
+        false
+      );
     }
 
     if ( has_post_format( 'audio' ) ) {
-      wp_enqueue_script( 'jplayer', get_template_directory_uri() . '/assets/front/js/jquery.jplayer.min.js', array( 'jquery' ),'', true );
+      wp_enqueue_script(
+        'jplayer',
+        get_template_directory_uri() . '/assets/front/js/lib/jquery.jplayer.min.js',
+        array( 'jquery' ),
+        '',
+        true
+      );
     }
 
     wp_enqueue_script(
-      'scripts',
-      sprintf('%1$s/assets/front/js/scripts%2$s.js' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
-      array( 'jquery' ),
-      ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
-      true
+        'hu-front-scripts',
+        sprintf('%1$s/assets/front/js/scripts%2$s.js' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
+        array( 'jquery', 'underscore' ),
+        ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
+        true
     );
 
-    if ( is_singular() && get_option( 'thread_comments' ) ) { wp_enqueue_script( 'comment-reply' ); }
-  }
+    if ( is_singular() && get_option( 'thread_comments' ) ) {
+      wp_enqueue_script( 'comment-reply' );
+    }
+
+    wp_localize_script(
+          'hu-front-scripts',
+          'HUParams',
+          apply_filters( 'hu_customizr_script_params' , array(
+              '_disabled'          => apply_filters( 'hu_disabled_front_js_parts', array() ),
+              'SmoothScroll'      => array(
+                'Enabled' => apply_filters('hu_enable_smoothscroll', ! wp_is_mobile() && hu_is_checked('smoothscroll') ),
+                'Options' => apply_filters('hu_smoothscroll_options', array( 'touchpadSupport' => false ) )
+              ),
+              'centerAllImg'      => apply_filters( 'hu_center_img', true ),
+              'timerOnScrollAllBrowsers' => apply_filters( 'hu_timer_on_scroll_for_all_browser' , true), //<= if false, for ie only
+              'extLinksStyle'       => hu_is_checked('ext_link_style'),
+              'extLinksTargetExt'   => hu_is_checked('ext_link_target'),
+              'extLinksSkipSelectors'   => apply_filters(
+                'hu_ext_links_skip_selectors',
+                array(
+                  'classes' => array('btn', 'button'),
+                  'ids' => array()
+                )
+              ),
+              'imgSmartLoadEnabled' => apply_filters( 'hu_img_smart_load_enabled', hu_is_checked('smart_load_img') ),
+              'imgSmartLoadOpts'    => apply_filters( 'hu_img_smart_load_options' , array(
+                    'parentSelectors' => array(
+                        '.container .content',
+                        '.container .sidebar',
+                        '#footer',
+                        '#header-widgets'
+                    ),
+                    'opts'     => array(
+                        'excludeImg' => array( '.tc-holder-img' )
+                    )
+              )),
+              'goldenRatio'         => apply_filters( 'hu_grid_golden_ratio' , 1.618 ),
+              'gridGoldenRatioLimit' => apply_filters( 'hu_grid_golden_ratio_limit' , 350)
+            )
+        )//end of filter
+       );
+
+
+  }//function
 }
 add_action( 'wp_enqueue_scripts', 'hu_scripts' );
 

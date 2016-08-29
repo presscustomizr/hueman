@@ -989,6 +989,28 @@ transition: all 0.2s ease-out; }
 .content .post-nav li.previous a { padding-right: 24px; }
 .content .post-nav li a:hover i { color: #3b8dbd; }
 
+/* External Links style */
+a + span.hu-external:after {
+  content: "\f08e";
+  color: #3b8dbd;
+  font-size: 0.8em;
+  line-height: 0;
+  padding-left: 0;
+  text-decoration: none!important;
+  top: .1em;
+  left: .3em;
+  margin-right:.2em;
+  position: relative;
+  font-family: 'FontAwesome';
+  speak: none;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  font-style: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 /* ------------------------------------------------------------------------- *
  *  Post Formats

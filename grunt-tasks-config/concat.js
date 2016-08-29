@@ -21,6 +21,36 @@ module.exports = {
     ],
     dest : '<%= paths.czr_assets %>fmk/css/czr-control.css',
   },
+  //
+  //------------------------- FRONT JS
+  //
+  front_main_parts_js : {
+    src: [
+      '<%= paths.front_js %>_parts/_main_base.part.js',
+      '<%= paths.front_js %>_parts/_main_browser_detect.part.js',
+      '<%= paths.front_js %>_parts/_main_jquery_plugins.part.js',
+      '<%= paths.front_js %>_parts/_main_userxp.part.js',
+      '<%= paths.front_js %>_parts/_main_xfire.part.js'
+    ],
+    dest: '<%= paths.front_js %>_parts/main.js',
+  },
+  front_js: {
+    src: [
+      '<%= paths.global_js %>oldBrowserCompat.js',
+      //'<%= paths.front_js %>parts/underscore-min.js',
+      '<%= paths.front_js %>jquery-plugins/jqueryimgOriginalSizes.js',
+      '<%= paths.front_js %>jquery-plugins/jqueryimgSmartLoad.js',
+      '<%= paths.front_js %>jquery-plugins/jqueryextLinks.js',
+      '<%= paths.front_js %>jquery-plugins/jqueryCenterImages.js',
+      '<%= paths.front_js %>lib/smoothScroll.js',
+      '<%= paths.front_js %>lib/outline.js',
+      '<%= paths.front_js %>_parts/main.js'
+    ],
+    dest: '<%= paths.front_js %>scripts.js',
+  },
+  //
+  //------------------------- CUSTOMIZER PANE JS
+  //
   czr_control_js:{
     src: [
       '<%= paths.global_js %>oldBrowserCompat.min.js',

@@ -31,6 +31,12 @@ if ( ! class_exists( 'HU_utils' ) ) :
 
       }
 
+      //Various WP filters for
+      //content
+      //thumbnails => parses image if smartload enabled
+      //title
+      add_action( 'wp_head'                 , array( $this , 'hu_wp_filters') );
+
       //refresh the theme options right after the _preview_filter when previewing
       add_action( 'customize_preview_init'  , array( $this , 'hu_customize_refresh_db_opt' ) );
     }//construct
@@ -69,6 +75,91 @@ if ( ! class_exists( 'HU_utils' ) ) :
     }
 
 
+
+    /***************************
+    * ON WP_HEAD
+    ****************************/
+    /**
+    * hook : wp_head
+    */
+    function hu_wp_filters() {
+      if ( apply_filters( 'hu_img_smart_load_enabled', hu_is_checked('smart_load_img') ) ) {
+          add_filter( 'the_content'                       , array( $this , 'hu_parse_imgs' ), PHP_INT_MAX );
+          add_filter( 'post_thumbnail_html'               , array( $this , 'hu_parse_imgs' ), PHP_INT_MAX );
+      }
+      add_filter( 'wp_title'                            , array( $this , 'hu_wp_title' ), 10, 2 );
+    }
+
+
+    /**
+    * hook : the_content
+    * Inspired from Unveil Lazy Load plugin : https://wordpress.org/plugins/unveil-lazy-load/ by @marubon
+    *
+    * @return string
+    */
+    function hu_parse_imgs( $_html ) {
+      if( is_feed() || is_preview() || ( wp_is_mobile() && apply_filters('hu_disable_img_smart_load_mobiles', false ) ) )
+        return $_html;
+
+      return preg_replace_callback('#<img([^>]+?)src=[\'"]?([^\'"\s>]+)[\'"]?([^>]*)>#', array( $this , 'hu_regex_callback' ) , $_html);
+    }
+
+
+    /**
+    * callback of preg_replace_callback in hu_parse_imgs
+    * Inspired from Unveil Lazy Load plugin : https://wordpress.org/plugins/unveil-lazy-load/ by @marubon
+    *
+    * @return string
+    */
+    private function hu_regex_callback( $matches ) {
+      $_placeholder = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
+      if ( false !== strpos( $matches[0], 'data-src' ) ||
+          preg_match('/ data-smartload *= *"false" */', $matches[0]) )
+        return $matches[0];
+      else
+        return apply_filters( 'hu_img_smartloaded',
+          str_replace( 'srcset=', 'data-srcset=',
+              sprintf('<img %1$s src="%2$s" data-src="%3$s" %4$s>',
+                  $matches[1],
+                  $_placeholder,
+                  $matches[2],
+                  $matches[3]
+              )
+          )
+        );
+    }
+
+
+
+    /**
+    * Title element formating
+    * Hook : wp_title
+    *
+    */
+    function hu_wp_title( $title, $sep ) {
+      if ( function_exists( '_wp_render_title_tag' ) )
+        return $title;
+
+      global $paged, $page;
+
+      if ( is_feed() )
+        return $title;
+
+      // Add the site name.
+      $title .= get_bloginfo( 'name' );
+
+      // Add the site description for the home/front page.
+      $site_description = get_bloginfo( 'description' , 'display' );
+      if ( $site_description && hu_is_home() )
+        $title = "$title $sep $site_description";
+
+      // Add a page number if necessary.
+      if ( $paged >= 2 || $page >= 2 )
+        $title = "$title $sep " . sprintf( __( 'Page %s' , 'hueman' ), max( $paged, $page ) );
+
+      return $title;
+    }
 
 
 

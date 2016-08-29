@@ -21,16 +21,25 @@ module.exports = {
       ext: '.min.js'
     }]
   },
+  // part_front_js: {
+  //   files: [{
+  //     expand: true,
+  //     cwd: '<%= paths.front_js %>/_parts',
+  //     src: ['**/*.js', '!*.min.js', '!*.part.js'],
+  //     dest: '<%= paths.front_js %>/_parts',
+  //     ext: '.min.js'
+  //   }]
+  // },
 	front_js: {
-		files: [{
-			expand: true,
-			cwd: '<%= paths.front_js %>',
-			src: ['scripts.js'],
-			//src: ['**/*.js', '!*.min.js'],
-			dest: '<%= paths.front_js %>',
-			ext: '.min.js'
-		}]
-	},
+    files: [{
+      expand: true,
+      cwd: '<%= paths.front_js %>',
+      src: ['scripts.js'],
+      //src: ['**/*.js', '!*.min.js'],
+      dest: '<%= paths.front_js %>',
+      ext: '.min.js'
+    }]
+  },
   czr_control_js : {
     files: [{
       expand: true,
