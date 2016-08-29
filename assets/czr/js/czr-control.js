@@ -4849,7 +4849,21 @@ $.extend( CZRWidgetAreaModuleMths, {
                   api.control.remove( 'sidebars_widgets['+model.id+']' );
                   delete api.settings.controls['sidebars_widgets['+model.id+']'];
           }
-          module.trigger('widget_zone_removed', { model : model, section_id : "sidebar-widgets-" + model.id , setting_id : 'sidebars_widgets['+model.id+']' });
+          var _refresh = function() {
+            api.previewer.refresh();
+          };
+          _refresh = _.debounce( _refresh, 500 );
+          $.when( _refresh() ).done( function() {
+                module.trigger( 'widget_zone_removed',
+                      {
+                            model : model,
+                            section_id : "sidebar-widgets-" + model.id ,
+                            setting_id : 'sidebars_widgets['+model.id+']'
+                      }
+                );
+          });
+
+
   },
   widgetPanelReact : function() {
           var module = this;
