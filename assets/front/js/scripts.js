@@ -1937,8 +1937,8 @@ var czrapp = czrapp || {};
 
         //outline firefox fix, see https://github.com/presscustomizr/customizr/issues/538
         outline: function() {
-          if ( czrapp.$_body.hasClass( 'mozilla' ) )
-            tcOutline();
+          if ( czrapp.$_body.hasClass( 'mozilla' ) && 'function' == typeof( tcOutline ) )
+          tcOutline();
         },
 
         //SMOOTH SCROLL

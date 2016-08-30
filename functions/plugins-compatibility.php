@@ -1,4 +1,159 @@
 <?php
+//add various plugins compatibilty (Jetpack, Bbpress, Qtranslate, Woocommerce, The Event Calendar ...)
+add_action ('after_setup_theme'  , 'hu_set_plugins_supported', 20 );
+add_action ('after_setup_theme'  , 'hu_plugins_compatibility', 30 );
+
+/**
+* Set plugins supported ( before the plugin compat function is fired )
+* => allows to easily remove support by firing remove_theme_support() (with a priority < hu_plugins_compatibility) on hook 'after_setup_theme'
+* hook : after_setup_theme:20
+*
+*/
+function hu_set_plugins_supported() {
+  //add support for plugins (added in v3.1+)
+  add_theme_support( 'jetpack' );
+  add_theme_support( 'buddy-press' );
+  add_theme_support( 'uris' );///Ultimate Responsive Image Slider
+}
+
+
+/**
+* This function handles the following plugins compatibility : Jetpack (for the carousel addon and photon), Bbpress...
+* hook : after_setup_theme:30
+*/
+function hu_plugins_compatibility() {
+  /* JETPACK */
+  //adds compatibilty with the jetpack image carousel and photon
+  if ( current_theme_supports( 'jetpack' ) && hu_is_plugin_active('jetpack/jetpack.php') )
+    hu_set_jetpack_compat();
+
+  /* BUDDYPRESS */
+  //if buddypress is installed and activated, we can check the existence of the contextual boolean function is_buddypress() to execute some code
+  // we have to use buddy-press instead of buddypress as string for theme support as buddypress makes some checks on current_theme_supports('buddypress') which result in not using its templates
+  if ( current_theme_supports( 'buddy-press' ) && hu_is_plugin_active('buddypress/bp-loader.php') )
+    hu_set_buddypress_compat();
+
+  /* Ultimate Responsive Image Slider  */
+  if ( current_theme_supports( 'uris' ) && hu_is_plugin_active('ultimate-responsive-image-slider/ultimate-responsive-image-slider.php') )
+    hu_set_uris_compat();
+
+}
+
+
+/**
+* Jetpack compat hooks
+*
+*/
+function hu_set_jetpack_compat() {
+
+  //Photon jetpack's module conflicts with our smartload feature:
+  //Photon removes the width,height attribute in php, then in js it compute them (when they have the special attribute 'data-recalc-dims')
+  //based on the img src. When smartload is enabled the images parsed by its js which are not already smartloaded are dummy
+  //and their width=height is 1. The image is correctly loaded but the space
+  //assigned to it will be 1x1px. Photon js, is compatible with Auttomatic plugin lazy load and it sets the width/height
+  //attribute only when the img is smartloaded. This is pretty useless to me, as it doesn't solve the main issue:
+  //document's height change when the img are smartloaded.
+  //Anyway to avoid the 1x1 issue we alter the img attribute (data-recalc-dims) which photon adds to the img tag(php) so
+  //the width/height will not be erronously recalculated
+  if ( class_exists( 'Jetpack' ) && Jetpack::is_module_active( 'photon' ) )
+    add_filter( 'hu_img_smartloaded', 'hu_jp_smartload_img');
+  function hu_jp_smartload_img( $img ) {
+    return str_replace( 'data-recalc-dims', 'data-tcjp-recalc-dims', $img );
+  }
+}//end jetpack compat
+
+
+
+/**
+* BuddyPress compat hooks
+*
+*/
+function hu_set_buddypress_compat() {
+  //disable smartload in change-avatar buddypress profile page
+  //to avoid the img tag (in a template loaded with backbone) being parsed on server side but
+  //not correctly processed by the front js.
+  //the action hook "xprofile_screen_change_avatar" is a buddypress specific hook
+  //fired before wp_head where we hook hu_parse_imgs
+  //side-effect: all the images in this pages will not be smartloaded, this isn't a big deal
+  //as there should be at maximum 2 images there:
+  //1) the avatar, if already set
+  //2) a cover image, if already set
+  //anyways this page is not a regular "front" page as it pertains more to a "backend" side
+  //if we can call it that way.
+  add_action( 'xprofile_screen_change_avatar', 'hu_buddypress_maybe_disable_img_smartload' );
+  function hu_buddypress_maybe_disable_img_smartload() {
+    add_filter( 'hu_opt_smart_load_img', '__return_false' );//hu_opt_smart_load_image filters the option 'smart_load_img'
+  }
+}
+
+
+
+/**
+* Ultimate Responsive Image Slider compat hooks (uris)
+*
+*/
+function hu_set_uris_compat() {
+  add_filter ( 'hu_img_smart_load_options', 'hu_uris_disable_img_smartload' ) ;
+  function hu_uris_disable_img_smartload( $options ){
+    if ( ! is_array( $options ) )
+      $options = array();
+
+    if ( ! is_array( $options['opts'] ) )
+      $options['opts'] = array();
+
+    if ( ! is_array( $options['opts']['excludeImg'] ) )
+      $options['opts']['excludeImg'] = array();
+
+    $options['opts']['excludeImg'][] = '.sp-image';
+
+    return $options;
+  }
+}//end uris compat
+
+
+
+
+
+/**
+* HELPER
+* Check whether the plugin is active by checking the active_plugins list.
+* copy of is_plugin_active declared in wp-admin/includes/plugin.php
+*
+*
+* @param string $plugin Base plugin path from plugins directory.
+* @return bool True, if in the active plugins list. False, not in the list.
+*/
+function hu_is_plugin_active( $plugin ) {
+  return in_array( $plugin, (array) get_option( 'active_plugins', array() ) ) || hu_is_plugin_active_for_network( $plugin );
+}
+
+/**
+* HELPER
+* Check whether the plugin is active for the entire network.
+* copy of is_plugin_active_for_network declared in wp-admin/includes/plugin.php
+*
+*
+* @param string $plugin Base plugin path from plugins directory.
+* @return bool True, if active for the network, otherwise false.
+*/
+function hu_is_plugin_active_for_network( $plugin ) {
+  if ( ! is_multisite() )
+    return false;
+
+  $plugins = get_site_option( 'active_sitewide_plugins');
+  if ( isset($plugins[$plugin]) )
+    return true;
+
+  return false;
+}
+
+
+
+
+
+
+
+
 /* WFC Compatibility code */
 
 /*
@@ -35,7 +190,7 @@ function hu_wfc_zone_map( $zone_map ) {
   $_hu_zone_map = array(
     'marketing'     => array('full-layout'  , __( 'Featured pages' , 'hueman' ))
   );
-  return array_merge( $zone_map, $_hu_zone_map ); 
+  return array_merge( $zone_map, $_hu_zone_map );
 }
 
 /*
@@ -83,7 +238,7 @@ function hu_selector_properties( $selector_properties ){
 
 /* FPU Compatibility code */
 /*
-* Custom CSS 
+* Custom CSS
 */
 add_action( 'fpu_enqueue_plug_resource_after', 'hu_fpu_enqueue_custom_css' );
 function hu_fpu_enqueue_custom_css() {
