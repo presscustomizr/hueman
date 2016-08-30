@@ -550,27 +550,38 @@ if ( ! function_exists( 'hu_styles' ) ) {
 
     //registered only, will be loaded as a dependency of the wp style.css
     wp_register_style(
-      'hueman-main',
-      sprintf('%1$s/assets/front/css/%2$s%3$s.css',
-          get_template_directory_uri(),
-          $_main_style,
-          hu_is_checked('minified-css') ? '.min' : ''
-      ),
-      array(),
-      ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
-      'all'
+        'hueman-main-style',
+        sprintf('%1$s/assets/front/css/%2$s%3$s.css',
+            get_template_directory_uri(),
+            $_main_style,
+            hu_is_checked('minified-css') ? '.min' : ''
+        ),
+        array(),
+        ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
+        'all'
     );
 
     //This function loads the main theme stylesheet or the child theme one
     //1) Not mandatory if only the main theme is activated. But mandatory if a child theme is used (otherwise the child theme style won't be loaded)
     //2) must be loaded as a dependency of 'hueman-main', to make it easier to override the main stylesheet rules without having to increase the specificicty of each child theme css rules
     wp_enqueue_style(
-      'theme-stylesheet',
-      get_stylesheet_uri(),
-      array('hueman-main'),
-      ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
-      'all'
+        'theme-stylesheet',
+        get_stylesheet_uri(),
+        array('hueman-main-style'),
+        ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
+        'all'
     );
+    wp_register_style(
+        'hueman-font-awesome',
+        sprintf('%1$s/assets/front/css/%2$s',
+            get_template_directory_uri(),
+            hu_is_checked('minified-css') ? 'font-awesome.min.css' : 'dev-font-awesome.css'
+        ),
+        array( 'theme-stylesheet' ),
+        ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
+        'all'
+    );
+    wp_enqueue_style( 'hueman-font-awesome' );
   }
 }
 add_action( 'wp_enqueue_scripts', 'hu_styles' );

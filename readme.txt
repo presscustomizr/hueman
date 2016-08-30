@@ -73,6 +73,15 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 # Changelog
+= 3.2.0 August 31st 2016 =
+* added : new option to enable a smoother scrolling. In Global Settings > Smooth Scroll
+* added : new option to automatically add an icon next to external links inside the post content. In Global Settings > General Design Options
+* added : new option to improve the page load performances : smart image load. In Global Settings > Performances and SEO
+* improved : (php) better format for the 'title' tag with wp_title filter
+* added : (php) plugin compatibility for image smartload for buddypress, jetpack and ultimate resp. image slider
+* improved : (js) better front end framework
+* fixed : Enqueue Font Awesome instead of using hard coded @font-face rule in the stylesheet (issue #273)
+
 = 3.1.7 August 23rd 2016 =
 * fixed : rss-feed option breaking plugins compatibility. https://wordpress.org/support/topic/bug-reportrequest-please-dont-break-rss-feeds?replies=1#post-8743789 ( fixes github issue #256 )
 

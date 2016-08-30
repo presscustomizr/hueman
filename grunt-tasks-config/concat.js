@@ -3,11 +3,13 @@ module.exports = {
     separator: '',
   },
   front_css: {
-    src: ['<%= paths.front_css %>dev-common.css', '<%= paths.front_css %>dev-responsive.css', '<%= paths.front_css %>dev-font-awesome.css'],
+    //src: ['<%= paths.front_css %>dev-common.css', '<%= paths.front_css %>dev-responsive.css', '<%= paths.front_css %>dev-font-awesome.css'],
+    src: ['<%= paths.front_css %>dev-common.css', '<%= paths.front_css %>dev-responsive.css' ],
     dest: '<%= paths.front_css %>main.css',
   },
   front_not_responsive_css: {
-    src: ['<%= paths.front_css %>dev-common.css', '<%= paths.front_css %>dev-font-awesome.css'],
+    //src: ['<%= paths.front_css %>dev-common.css', '<%= paths.front_css %>dev-font-awesome.css'],
+    src: ['<%= paths.front_css %>dev-common.css'],
     dest: '<%= paths.front_css %>main-not-responsive.css',
   },
   czr_control_css:{
