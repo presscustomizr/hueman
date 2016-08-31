@@ -571,7 +571,10 @@ if ( ! function_exists( 'hu_styles' ) ) {
         ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
         'all'
     );
-    wp_register_style(
+
+    //can be dequeued() if already loaded by a plugin.
+    //=> wp_dequeue_style( 'hueman-font-awesome' )
+    wp_enqueue_style(
         'hueman-font-awesome',
         sprintf('%1$s/assets/front/css/%2$s',
             get_template_directory_uri(),
@@ -581,7 +584,6 @@ if ( ! function_exists( 'hu_styles' ) ) {
         ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
         'all'
     );
-    wp_enqueue_style( 'hueman-font-awesome' );
   }
 }
 add_action( 'wp_enqueue_scripts', 'hu_styles' );
