@@ -117,6 +117,7 @@ module.exports = {
       '<%= paths.czr_assets %>fmk/js/control_dev/5_0_module_list/_3_1_slider_module.js',
 
       '<%= paths.czr_assets %>fmk/js/control_dev/5_0_module_list/_3_15_text_editor_module.js',
+      '<%= paths.czr_assets %>fmk/js/control_dev/5_0_module_list/_3_2_body_background_module.js',
 
 
       '<%= paths.czr_assets %>fmk/js/control_dev/1_3_control/_0_1_0_base_control.js',
@@ -133,7 +134,7 @@ module.exports = {
       '<%= paths.czr_assets %>fmk/js/control_dev/6_0_control_list/_2_2_cropped_image_control.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/6_0_control_list/_2_3_upload_control.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/6_0_control_list/_2_4_layout_control.js',
-      '<%= paths.czr_assets %>fmk/js/control_dev/6_0_control_list/_2_5_background_control.js',
+      //'<%= paths.czr_assets %>fmk/js/control_dev/6_0_control_list/_2_5_background_control.js',
 
       '<%= paths.czr_assets %>fmk/js/control_dev/_5_extend_api.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/_6_visibilities.js',

@@ -219,11 +219,12 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           'body-background' => array(
                 //'default'     => array(),
                 'default'       => array( 'background-color' => '#eaeaea' ),
-                'control'     => 'HU_Body_Background_Control',
+                'control'     => 'HU_Customize_Modules',
                 'label'       => __( 'Body Background' , 'hueman' ),
                 'description' => __('Set the website background color', 'hueman'),
                 'section'     => 'general_design_sec',
-                'type'        => 'czr_background' ,
+                'type'        => 'czr_module',
+                'module_type' => 'czr_background'
                 //'type'        => 'color',
                 // 'sanitize_callback'    => array( $this, 'hu_sanitize_body_bg' ),@todo
                 // 'sanitize_js_callback' => array( $this, 'hu_sanitize_js_body_bg' ),@todo

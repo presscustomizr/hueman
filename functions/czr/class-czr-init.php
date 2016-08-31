@@ -99,7 +99,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
     function hu_load_tmpl() {
       $_tmpl = array(
         'tmpl/modules/all-modules-tmpl.php',
-        'tmpl/modules/background-module-tmpl.php',
+        'tmpl/modules/body_bg-module-tmpl.php',
         'tmpl/modules/social-module-tmpl.php',
         'tmpl/modules/widgets-areas-module-tmpl.php',
         'tmpl/modules/text_editor-module-tmpl.php',
