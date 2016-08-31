@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Hueman v3.2.0\n"
-"POT-Creation-Date: 2016-08-30 15:31+0200\n"
-"PO-Revision-Date: 2016-08-30 15:31+0200\n"
+"POT-Creation-Date: 2016-08-31 16:10+0200\n"
+"PO-Revision-Date: 2016-08-31 16:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: Press Customizr\n"
 "Language: en_US\n"
@@ -812,7 +812,7 @@ msgid "Display comment count on thumbnails"
 msgstr "Tampilkan jumlah komentar di thumbnail"
 
 #: functions/class-utils-settings-map.php:827
-#: functions/plugins-compatibility.php:26
+#: functions/plugins-compatibility.php:181
 msgid "Sidebar Top Boxes"
 msgstr "Kotak Atas Sidebar"
 
@@ -1422,7 +1422,7 @@ msgid "No results found."
 msgstr ""
 
 #: functions/czr/fp-prototype/functions.php:11
-#: functions/plugins-compatibility.php:12
+#: functions/plugins-compatibility.php:167
 msgid "Featured Pages"
 msgstr ""
 
@@ -1853,67 +1853,67 @@ msgstr "Pilih zona widget untuk sidebar kiri."
 msgid "Select a widget zone for the right sidebar."
 msgstr "Pilih zona widget untuk sidebar kanan."
 
-#: functions/plugins-compatibility.php:11
+#: functions/plugins-compatibility.php:166
 msgid "Top-Menu items"
 msgstr ""
 
-#: functions/plugins-compatibility.php:13
+#: functions/plugins-compatibility.php:168
 msgid "Single Post titles"
 msgstr ""
 
-#: functions/plugins-compatibility.php:14
+#: functions/plugins-compatibility.php:169
 msgid "Single Page titles"
 msgstr ""
 
-#: functions/plugins-compatibility.php:15
+#: functions/plugins-compatibility.php:170
 msgid "Post content"
 msgstr ""
 
-#: functions/plugins-compatibility.php:16
+#: functions/plugins-compatibility.php:171
 msgid "Post excerpt"
 msgstr ""
 
-#: functions/plugins-compatibility.php:17
+#: functions/plugins-compatibility.php:172
 msgid "Lists in post/pages"
 msgstr ""
 
-#: functions/plugins-compatibility.php:18
+#: functions/plugins-compatibility.php:173
 msgid "Single Post Categories meta"
 msgstr ""
 
-#: functions/plugins-compatibility.php:19
+#: functions/plugins-compatibility.php:174
 msgid "Single Post tags"
 msgstr ""
 
-#: functions/plugins-compatibility.php:20
+#: functions/plugins-compatibility.php:175
 msgid "Archive Type Title"
 msgstr ""
 
-#: functions/plugins-compatibility.php:21
+#: functions/plugins-compatibility.php:176
 msgid "Post list post metas"
 msgstr ""
 
-#: functions/plugins-compatibility.php:22
+#: functions/plugins-compatibility.php:177
 msgid "Post list category meta"
 msgstr ""
 
-#: functions/plugins-compatibility.php:23
+#: functions/plugins-compatibility.php:178
 msgid "Single post tags"
 msgstr ""
 
-#: functions/plugins-compatibility.php:24
+#: functions/plugins-compatibility.php:179
 msgid "Comments metas"
 msgstr ""
 
-#: functions/plugins-compatibility.php:25
+#: functions/plugins-compatibility.php:180
 msgid "Sidebar Social Links"
 msgstr ""
 
-#: functions/plugins-compatibility.php:27
+#: functions/plugins-compatibility.php:182
 msgid "Footer Social Links"
 msgstr ""
 
-#: functions/plugins-compatibility.php:36
+#: functions/plugins-compatibility.php:191
 msgid "Featured pages"
 msgstr ""
 
