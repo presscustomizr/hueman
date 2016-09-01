@@ -10,23 +10,3 @@ load_template( get_template_directory() . '/functions/init-core.php' );
 * https://codex.wordpress.org/Child_Themes
 *
 */
-
-
-/* Testing purpose only */
-/* if ( is_array(hu_get_option('body-background') ) )
-  array_walk_recursive(hu_get_option('body-background', ) function(&$v) { $v = htmlspecialchars($v); }); */
-
-add_action('__before_content', function() {
-  ?>
-    <pre>
-      <?php print_r( hu_get_option('body-background') ); ?>
-    </pre>
-  <?php
-  /* if ( is_array('social-links') )
-    array_walk_recursive('social-links', function(&$v) { $v = htmlspecialchars($v); }); */
-  ?>
-    <pre>
-      <?php print_r( hu_get_option('social-links') ); ?>
-    </pre>
-  <?php
-});

@@ -46,3 +46,18 @@ function hu_print_image_uploader_template() {
   </script>
 <?php
 }
+
+
+//Add image uploader button_labels to translated strings
+add_filter( 'controls_translated_strings', 'hu_add_translated_strings');
+function hu_add_translated_strings( $strings) {
+      return array_merge( $strings, array(
+              'select_image'        => __( 'Select Image', 'hueman' ),
+              'change_image'        => __( 'Change Image', 'hueman' ),
+              'remove_image'        => __( 'Remove', 'hueman' ),
+              'default_image'       => __( 'Default', 'hueman'  ),
+              'placeholder_image'   => __( 'No image selected', 'hueman' ),
+              'frame_title_image'   => __( 'Select Image', 'hueman' ),
+              'frame_button_image'  => __( 'Choose Image', 'hueman' )
+      ));
+}

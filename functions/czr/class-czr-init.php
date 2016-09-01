@@ -56,7 +56,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
     function hu_augment_customizer( $manager ) {
       $_classes = array(
         'controls/class-base-control.php',
-        'controls/class-background-control.php',
+        //'controls/class-background-control.php',
         'controls/class-cropped-image-control.php',
 
         'controls/class-layout-control.php',

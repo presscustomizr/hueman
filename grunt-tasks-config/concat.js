@@ -134,7 +134,6 @@ module.exports = {
       '<%= paths.czr_assets %>fmk/js/control_dev/6_0_control_list/_2_2_cropped_image_control.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/6_0_control_list/_2_3_upload_control.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/6_0_control_list/_2_4_layout_control.js',
-      //'<%= paths.czr_assets %>fmk/js/control_dev/6_0_control_list/_2_5_background_control.js',
 
       '<%= paths.czr_assets %>fmk/js/control_dev/_5_extend_api.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/_6_visibilities.js',

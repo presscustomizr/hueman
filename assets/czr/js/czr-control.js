@@ -1809,6 +1809,7 @@ $.extend( CZRInputMths , {
 
             var input = this;
             $.extend( input, options || {} );
+            input.isReady = $.Deferred();
             if ( ! _.isUndefined(options.input_value) )
               input.set(options.input_value);
             input.type_map = {
@@ -1853,7 +1854,10 @@ $.extend( CZRInputMths , {
             var input = this;
             input.setupDOMListeners( input.input_event_map , { dom_el : input.container }, input );
             input.callbacks.add( function() { return input.inputReact.apply(input, arguments ); } );
-            input.setupSynchronizer();
+            $.when( input.setupSynchronizer() ).done( function() {
+                  input.isReady.resolve( input );
+            } );
+
     },
     setupSynchronizer: function() {
           var input       = this,
@@ -2009,9 +2013,8 @@ $.extend( CZRInputMths , {
   },
 
   getUploaderLabels : function() {
-        var _ts = serverControlParams.translatedStrings;
-
-        return {
+        var _ts = serverControlParams.translatedStrings,
+            _map = {
             'select'      : _ts.select_image,
             'change'      : _ts.change_image,
             'remove'      : _ts.remove_image,
@@ -2020,6 +2023,14 @@ $.extend( CZRInputMths , {
             'frame_title' : _ts.frame_title_image,
             'frame_button': _ts.frame_button_image
         };
+        _.each( _map, function( ts_string, key ) {
+          if ( _.isUndefined( ts_string ) ) {
+            var input = this;
+            throw new Error( 'A translated string is missing ( ' + key + ' ) for the image uploader input in module : ' + input.module.id );
+          }
+        } );
+
+        return _map;
   }
 });//$.extendvar CZRInputMths = CZRInputMths || {};
 $.extend( CZRInputMths , {
@@ -3100,7 +3111,18 @@ $.extend( CZRModuleMths, {
                 }
                 $_moduleContentEl.append( $( wp.template( module.crudModulePart )( {} ) ) );
           }
-          var $_module_items_wrapper = $( '<ul/>', { class : [ module.control.css_attr.items_wrapper, module.module_type ].join(' ') } );
+          var $_module_items_wrapper = $(
+            '<ul/>',
+            {
+              class : [
+                module.control.css_attr.items_wrapper,
+                module.module_type,
+                module.isMultiItem() ? 'multi-item-mod' : 'mono-item-mod',
+                module.isCrud() ? 'crud-mod' : 'not-crud-mod'
+              ].join(' ')
+            }
+          );
+
           $_moduleContentEl.append($_module_items_wrapper);
 
           return $( $_module_items_wrapper, $_moduleContentEl );
@@ -5367,6 +5389,7 @@ $.extend( CZRBodyBgModuleMths, {
                 itemInputList : 'czr-module-bodybg-item-content'
           } );
           module.inputConstructor = api.CZRInput.extend( module.CZRBodyBgInputMths || {} );
+          module.itemConstructor = api.CZRItem.extend( module.CZBodyBgItemMths || {} );
           module.defaultItemModel = {
                 'background-color' : '#eaeaea',
                 'background-image' : '',
@@ -5375,7 +5398,7 @@ $.extend( CZRBodyBgModuleMths, {
                 'background-position' : 'center center',
                 'background-size' : 'cover'
           };
-          console.log('serverControlParams', serverControlParams.body_bg_module_params );
+          api.consoleLog('module ID', module.id );
           if ( _.has( api, 'czr_activeSectionId' ) && module.control.section() == api.czr_activeSectionId() && 'resolved' != module.isReady.state() ) {
              module.ready();
           }
@@ -5422,6 +5445,28 @@ $.extend( CZRBodyBgModuleMths, {
                   $( 'select[data-type]', input.container ).select2();
 
           }
+  },
+
+
+  CZBodyBgItemMths : {
+          ready : function() {
+                var item = this;
+                api.CZRItem.prototype.ready.call( item );
+
+                item.czr_Input('background-image').isReady.done( function( input_instance ) {
+                    var set_visibilities = function( bg_val  ) {
+                          var is_bg_img_set = ! _.isEmpty( bg_val ) ||_.isNumber( bg_val);
+                          _.each( ['background-repeat', 'background-attachment', 'background-position', 'background-size'], function( dep ) {
+                                item.czr_Input(dep).container.toggle( is_bg_img_set || false );
+                          });
+                    };
+                    set_visibilities( input_instance() );
+                    item.bind('background-image:changed', function(){
+                          set_visibilities( item.czr_Input('background-image')() );
+                    });
+                });
+          },
+
   }
 });//BASE CONTROL CLASS
 
@@ -5814,7 +5859,7 @@ $.extend( CZRBaseModuleControlMths, {
                    throw new Error('The single module control (' + control.id + ') has no module registered with the id ' + module_id  );
                 }
                 var module_instance = control.czr_Module( module_id );
-                console.log('module_instance.isMultiItem()', module_instance.isMultiItem() );
+
                 if ( _.isEmpty( module_instance().items ) ) {
                   throw new Error('The module ' + module_id + ' has not items. Control : ' + control.id );
                 }

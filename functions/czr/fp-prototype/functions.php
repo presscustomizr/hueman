@@ -96,13 +96,6 @@ function hu_add_translated_strings( $strings) {
       return array_merge( $strings, array(
               'featuredPageAdded'   => __('New Featured Page created ! Scroll down to edit it.', 'hueman'),
               'featuredPageTitle'   => __( 'Featured Page', 'hueman'),
-              'select_image'        => __( 'Select Image', 'hueman' ),
-              'change_image'        => __( 'Change Image', 'hueman' ),
-              'remove_image'        => __( 'Remove', 'hueman' ),
-              'default_image'       => __( 'Default', 'hueman'  ),
-              'placeholder_image'   => __( 'No image selected', 'hueman' ),
-              'frame_title_image'   => __( 'Select Image', 'hueman' ),
-              'frame_button_image'  => __( 'Choose Image', 'hueman' ),
               'featuredPageImgReset' => __( 'Set to the post featured image'),
               'featuredPageResetErr' => __( 'Sorry this post has no featured image' ),
               'featuredPageResetSucc'=> __( 'Featured image found, updating ..' )
