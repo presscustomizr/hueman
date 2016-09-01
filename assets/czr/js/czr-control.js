@@ -2878,6 +2878,7 @@ $.extend( CZRModuleMths, {
               refreshPreview = _.debounce( refreshPreview, 500 );//500ms are enough
               refreshPreview();
         }
+        console.log('IN MODULE REACT');
         control.updateModulesCollection( {
               module : $.extend( true, {}, to ),
               data : o//useful to pass contextual info when a change happens
@@ -5496,7 +5497,9 @@ $.extend( CZRBaseModuleControlMths, {
           control.czr_moduleCollection.set([]);
           control.moduleCollectionReady = $.Deferred();
           control.moduleCollectionReady.done( function( obj ) {
-                api.consoleLog('MODULE COLLECTION READY IN CONTROL : ', control.id , obj );
+                if ( ! control.isMultiModuleControl( options.params ) ) {
+                  api.consoleLog('MODULE COLLECTION READY IN CONTROL : ', control.id , obj.id, control.isModuleRegistered( obj.id ) );
+                }
                 control.czr_moduleCollection.callbacks.add( function() { return control.moduleCollectionReact.apply( control, arguments ); } );
           } );
           if ( control.isMultiModuleControl( options.params ) ) {
@@ -5516,11 +5519,14 @@ $.extend( CZRBaseModuleControlMths, {
                       control.moduleCollectionReady.resolve();
                 });
           } else {
+                var single_module = {};
                 _.each( control.getSavedModules() , function( _mod, _key ) {
+                      single_module = _mod;
+                      console.log('BEFORE INSTANTIATION', _mod );
                       control.instantiateModule( _mod, {} );
                       control.container.attr('data-module', _mod.id );
                 });
-                control.moduleCollectionReady.resolve();
+                control.moduleCollectionReady.resolve( single_module );
           }
           control.bind( 'user-module-candidate', function( _module ) {
                 control.instantiateModule( _module, {} ).ready( _module.is_added_by_user ); //module, constructor
@@ -5581,12 +5587,13 @@ $.extend( CZRBaseModuleControlMths, {
           if ( control.isMultiModuleControl() ) {
               savedModules = $.extend( true, [], api(control.id)() );//deep clone
           } else {
+              var _saved_items = _.isArray( api(control.id)() ) ? _saved_items : [];
               savedModules.push(
                     {
                       id : api.CZR_Helpers.getOptionName( control.id ) + '_' + control.params.type,
                       module_type : control.params.module_type,
                       section : control.section(),
-                      items   : $.extend( true, [] , api(control.id)() )//deep clone//must be a collection [] of items
+                      items   : $.extend( true, [] , _saved_items )//deep clone//must be a collection [] of items
                     }
               );
           }
@@ -5681,13 +5688,17 @@ $.extend( CZRBaseModuleControlMths, {
                         api_ready_module[_key] = _candidate_val;
                     break;
                     case 'crud' :
-                        if ( ! _.isUndefined( _candidate_val) && ! _.isBoolean( _candidate_val )  ) {
+                        if ( _.has( api.czrModuleMap, module_candidate.module_type ) ) {
+                          _candidate_val = api.czrModuleMap[ module_candidate.module_type ].crud;
+                        } else if ( ! _.isUndefined( _candidate_val) && ! _.isBoolean( _candidate_val )  ) {
                             throw new Error('prepareModuleForAPI : the module param "crud" must be a boolean');
                         }
                         api_ready_module[_key] = _candidate_val || false;
                     break;
                     case 'multi_item' :
-                        if ( ! _.isUndefined( _candidate_val) && ! _.isBoolean( _candidate_val )  ) {
+                        if ( _.has( api.czrModuleMap, module_candidate.module_type ) ) {
+                          _candidate_val = api.czrModuleMap[ module_candidate.module_type ].crud || api.czrModuleMap[ module_candidate.module_type ].multi_item;
+                        } else if ( ! _.isUndefined( _candidate_val) && ! _.isBoolean( _candidate_val )  ) {
                             throw new Error('prepareModuleForAPI : the module param "multi_item" must be a boolean');
                         }
                         api_ready_module[_key] = _candidate_val || false;
@@ -5795,6 +5806,7 @@ $.extend( CZRBaseModuleControlMths, {
           var control = this,
               _current_collection = control.czr_moduleCollection(),
               _new_collection = $.extend( true, [], _current_collection);
+          console.log('IN UPDATE MODULE COLLECTION', obj );
           if ( _.has( obj, 'collection' ) ) {
                 control.czr_moduleCollection.set( obj.collection, obj.data || {} );
                 return;
@@ -5834,6 +5846,7 @@ $.extend( CZRBaseModuleControlMths, {
         if ( _.isObject( data  ) && _.has(data, 'module') ) {
             data.module = control.prepareModuleForDB( $.extend( true, {}, data.module  ) );
         }
+        console.log('in module collection react', to, from, data );
         api(this.id).set( control.filterModuleCollectionBeforeAjax(to), data );
   },
   filterModuleCollectionBeforeAjax : function( collection ) {
@@ -5859,14 +5872,13 @@ $.extend( CZRBaseModuleControlMths, {
                    throw new Error('The single module control (' + control.id + ') has no module registered with the id ' + module_id  );
                 }
                 var module_instance = control.czr_Module( module_id );
-
-                if ( _.isEmpty( module_instance().items ) ) {
-                  throw new Error('The module ' + module_id + ' has not items. Control : ' + control.id );
+                if ( ! _.isArray( module_instance().items ) ) {
+                  throw new Error('The module ' + module_id + ' should be an array in control : ' + control.id );
                 }
                 if ( module_instance.isMultiItem() )
                   return module_instance().items;
                 else {
-                  return module_instance().items[0];
+                  return module_instance().items[0] || [];
                 }
           }
   },

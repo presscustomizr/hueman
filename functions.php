@@ -10,3 +10,7 @@ load_template( get_template_directory() . '/functions/init-core.php' );
 * https://codex.wordpress.org/Child_Themes
 *
 */
+
+// $options = get_option('hu_theme_options');
+// $options['body-background'] = '#eeeee';
+// update_option( 'hu_theme_options', $options );

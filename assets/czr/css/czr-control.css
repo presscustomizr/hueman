@@ -582,6 +582,10 @@ li#customize-control-tc_theme_options-tc_custom_css textarea {
 #customize-theme-controls .czr-single-item.open {
   border: 1px solid #00a0d2;
 }
+/* Keep the normal border for single module, mono items controls */
+#customize-theme-controls .mono-item-mod .czr-single-item {
+  border: 1px solid #ccc;
+}
 
 .czr-single-item .czr-item-header, .czr-single-item .czr-item-content {
   padding: 1%;
