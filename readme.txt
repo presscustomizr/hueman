@@ -81,6 +81,7 @@ See headers of files for further details.
 * added : (php) plugin compatibility for image smartload for buddypress, jetpack and ultimate resp. image slider
 * improved : (js) better front end framework
 * fixed : Enqueue Font Awesome instead of using hard coded @font-face rule in the stylesheet (issue #273)
+* updated : Font Awesome icons to version 4.6.3. SnapChat added to the socials.
 
 = 3.1.7 August 23rd 2016 =
 * fixed : rss-feed option breaking plugins compatibility. https://wordpress.org/support/topic/bug-reportrequest-please-dont-break-rss-feeds?replies=1#post-8743789 ( fixes github issue #256 )

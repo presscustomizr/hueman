@@ -54,7 +54,7 @@ function hu_print_body_bg_item_content_template() {
         defaultBgColor = ' data-default-color=' + '#eaeaea'; // Quotes added automatically.
       } #>
 
-      <div class="<?php echo $css_attr['sub_set_wrapper']; ?>" data-input-type="color">
+      <div class="<?php echo $css_attr['sub_set_wrapper']; ?> width-100" data-input-type="color">
         <div class="customize-control-title"><?php _e('Color', 'hueman'); ?></div>
         <div class="<?php echo $css_attr['sub_set_input']; ?>">
           <input data-type="background-color" type="text" maxlength="7" placeholder="<?php esc_attr_e( 'Hex Value', 'hueman' ); ?>" value="{{ data['background-color'] }}" {{ defaultBgColor }} />

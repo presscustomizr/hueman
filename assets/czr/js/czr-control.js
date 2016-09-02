@@ -18,7 +18,7 @@ var b=this;if(this.$element.prop("multiple"))return a.selected=!1,c(a.element).i
       api.consoleLog = function() {
             if ( _.isUndefined( console ) || ! serverControlParams.isDevMode )
               return;
-            console.log.apply( null, arguments );
+            console.log.apply( console, arguments );
       };
       api.czr_wp_conditionals = new api.Value();
       api.czr_widgetZoneSettings = new api.Value();//will store all widget zones data sent by preview as an observable object
@@ -968,6 +968,7 @@ $.extend( CZRSkopeBaseMths, {
           });
           return isDirty;
     }
+
 
 
 });//$.extend
@@ -2821,7 +2822,7 @@ $.extend( CZRModuleMths, {
               module.set( module.initializeModuleModel( constructorOptions ) );
               module.callbacks.add( function() { return module.moduleReact.apply(module, arguments ); } );
               if (  ! module.control.isModuleRegistered( module.id ) ) {
-                  module.control.updateModulesCollection( { module : constructorOptions } );
+                  module.control.updateModulesCollection( { module : constructorOptions, is_registered : false } );
               }
 
               module.bind('items-collection-populated', function( collection ) {
@@ -2878,7 +2879,6 @@ $.extend( CZRModuleMths, {
               refreshPreview = _.debounce( refreshPreview, 500 );//500ms are enough
               refreshPreview();
         }
-        console.log('IN MODULE REACT');
         control.updateModulesCollection( {
               module : $.extend( true, {}, to ),
               data : o//useful to pass contextual info when a change happens
@@ -4268,7 +4268,7 @@ $.extend( CZRSocialModuleMths, {
 
 
           this.social_icons = [
-            '500px','adn','amazon','android','angellist','apple','behance','behance-square','bitbucket','bitbucket-square','black-tie','btc','buysellads','chrome','codepen','codiepie','connectdevelop','contao','dashcube','delicious','delicious','deviantart','digg','dribbble','dropbox','drupal','edge','empire','expeditedssl','facebook','facebook','facebook-f (alias)','facebook-official','facebook-square','firefox','flickr','fonticons','fort-awesome','forumbee','foursquare','get-pocket','gg','gg-circle','git','github','github','github-alt','github-square','git-square','google','google','google-plus','google-plus-square','google-wallet','gratipay','hacker-news','houzz','instagram','internet-explorer','ioxhost','joomla','jsfiddle','lastfm','lastfm-square','leanpub','linkedin','linkedin','linkedin-square','linux','maxcdn','meanpath','medium','mixcloud','modx','odnoklassniki','odnoklassniki-square','opencart','openid','opera','optin-monster','pagelines','paypal','pied-piper','pied-piper-alt','pinterest','pinterest-p','pinterest-square','product-hunt','qq','rebel','reddit','reddit-alien','reddit-square','renren','rss','rss-square','safari','scribd','sellsy','share-alt','share-alt-square','shirtsinbulk','simplybuilt','skyatlas','skype','slack','slideshare','soundcloud','spotify','stack-exchange','stack-overflow','steam','steam-square','stumbleupon','stumbleupon','stumbleupon-circle','tencent-weibo','trello','tripadvisor','tumblr','tumblr-square','twitch','twitter','twitter','twitter-square','usb','viacoin','vimeo','vimeo-square','vine','vk','weibo','weixin','whatsapp','wikipedia-w','windows','wordpress','xing','xing-square','yahoo','yahoo','y-combinator','yelp','youtube','youtube-play','youtube-square'
+            '500px','adn','amazon','android','angellist','apple','behance','behance-square','bitbucket','bitbucket-square','black-tie','btc','buysellads','chrome','codepen','codiepie','connectdevelop','contao','dashcube','delicious','delicious','deviantart','digg','dribbble','dropbox','drupal','edge','empire','expeditedssl','facebook','facebook','facebook-f (alias)','facebook-official','facebook-square','firefox','flickr','fonticons','fort-awesome','forumbee','foursquare','get-pocket','gg','gg-circle','git','github','github','github-alt','github-square','git-square','google','google','google-plus','google-plus-circle','google-plus-official','google-plus-square', 'google-wallet','gratipay','hacker-news','houzz','instagram','internet-explorer','ioxhost','joomla','jsfiddle','lastfm','lastfm-square','leanpub','linkedin','linkedin','linkedin-square','linux','maxcdn','meanpath','medium','mixcloud','modx','odnoklassniki','odnoklassniki-square','opencart','openid','opera','optin-monster','pagelines','paypal','pied-piper','pied-piper-alt','pinterest','pinterest-p','pinterest-square','product-hunt','qq','rebel','reddit','reddit-alien','reddit-square','renren','rss','rss-square','safari','scribd','sellsy','share-alt','share-alt-square','shirtsinbulk','simplybuilt','skyatlas','skype','slack','slideshare','snapchat', 'soundcloud','spotify','stack-exchange','stack-overflow','steam','steam-square','stumbleupon','stumbleupon','stumbleupon-circle','tencent-weibo','trello','tripadvisor','tumblr','tumblr-square','twitch','twitter','twitter','twitter-square','usb','viacoin','vimeo','vimeo-square','vine','vk','weibo','weixin','whatsapp','wikipedia-w','windows','wordpress','xing','xing-square','yahoo','yahoo','y-combinator','yelp','youtube','youtube-play','youtube-square'
           ];
           module.inputConstructor = api.CZRInput.extend( module.CZRSocialsInputMths || {} );
           module.itemConstructor = api.CZRItem.extend( module.CZRSocialsItem || {} );
@@ -5522,7 +5522,6 @@ $.extend( CZRBaseModuleControlMths, {
                 var single_module = {};
                 _.each( control.getSavedModules() , function( _mod, _key ) {
                       single_module = _mod;
-                      console.log('BEFORE INSTANTIATION', _mod );
                       control.instantiateModule( _mod, {} );
                       control.container.attr('data-module', _mod.id );
                 });
@@ -5587,7 +5586,7 @@ $.extend( CZRBaseModuleControlMths, {
           if ( control.isMultiModuleControl() ) {
               savedModules = $.extend( true, [], api(control.id)() );//deep clone
           } else {
-              var _saved_items = _.isArray( api(control.id)() ) ? _saved_items : [];
+             var _saved_items = _.isArray( api(control.id)() ) ? api(control.id)() : [];
               savedModules.push(
                     {
                       id : api.CZR_Helpers.getOptionName( control.id ) + '_' + control.params.type,
@@ -5806,7 +5805,6 @@ $.extend( CZRBaseModuleControlMths, {
           var control = this,
               _current_collection = control.czr_moduleCollection(),
               _new_collection = $.extend( true, [], _current_collection);
-          console.log('IN UPDATE MODULE COLLECTION', obj );
           if ( _.has( obj, 'collection' ) ) {
                 control.czr_moduleCollection.set( obj.collection, obj.data || {} );
                 return;
@@ -5826,13 +5824,16 @@ $.extend( CZRBaseModuleControlMths, {
           else {
                 _new_collection.push(module_api_ready);
           }
+          var _params = {};
           if ( _.has( obj, 'data') ) {
-              $.extend( obj.data, { module : module_api_ready } );
+              _params = $.extend( true, {}, obj.data );
+              $.extend( _params, { module : module_api_ready } );
           }
-          control.czr_moduleCollection.set( _new_collection, obj.data || {} );
+          control.czr_moduleCollection.set( _new_collection, _params );
   },
   moduleCollectionReact : function( to, from, data ) {
         var control = this,
+            is_module_added = _.size(to) > _.size(from),
             is_module_removed = _.size(from) > _.size(to),
             is_module_update = _.size(from) == _.size(to);
             is_collection_sorted = false;
@@ -5846,8 +5847,10 @@ $.extend( CZRBaseModuleControlMths, {
         if ( _.isObject( data  ) && _.has(data, 'module') ) {
             data.module = control.prepareModuleForDB( $.extend( true, {}, data.module  ) );
         }
-        console.log('in module collection react', to, from, data );
-        api(this.id).set( control.filterModuleCollectionBeforeAjax(to), data );
+        if ( ! control.isMultiModuleControl() && is_module_added )
+          return;
+        else
+          api(this.id).set( control.filterModuleCollectionBeforeAjax(to), data );
   },
   filterModuleCollectionBeforeAjax : function( collection ) {
           var control = this,

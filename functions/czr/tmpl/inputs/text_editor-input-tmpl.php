@@ -26,7 +26,7 @@ function hu_print_text_content_editor_template() {
 ?>
   <div id="czr-customize-content_editor-pane">
     <div id="czr-customize-content_editor-dragbar">
-      <span class="screen-reader-text"><?php _e( 'Resize Editor', 'customize-posts' ); ?></span>
+      <span class="screen-reader-text"><?php _e( 'Resize Editor', 'hueman' ); ?></span>
     </div>
 
     <?php
