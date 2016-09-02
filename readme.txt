@@ -73,7 +73,7 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 # Changelog
-= 3.2.0 August 31st 2016 =
+= 3.2.0 September 2nd 2016 =
 * added : new option to enable a smoother scrolling. In Global Settings > Smooth Scroll
 * added : new option to automatically add an icon next to external links inside the post content. In Global Settings > General Design Options
 * added : new option to improve the page load performances : smart image load. In Global Settings > Performances and SEO
