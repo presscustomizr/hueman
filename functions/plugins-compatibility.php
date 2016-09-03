@@ -14,6 +14,7 @@ function hu_set_plugins_supported() {
   add_theme_support( 'jetpack' );
   add_theme_support( 'buddy-press' );
   add_theme_support( 'uris' );///Ultimate Responsive Image Slider
+  add_theme_support( 'the-events-calendar' );///Ultimate Responsive Image Slider
 }
 
 
@@ -37,6 +38,9 @@ function hu_plugins_compatibility() {
   if ( current_theme_supports( 'uris' ) && hu_is_plugin_active('ultimate-responsive-image-slider/ultimate-responsive-image-slider.php') )
     hu_set_uris_compat();
 
+  /* The Events Calendar */
+  if ( current_theme_supports( 'the-events-calendar' ) && hu_is_plugin_active('the-events-calendar/the-events-calendar.php') )
+    hu_set_the_events_calendar_compat();
 }
 
 
@@ -111,7 +115,39 @@ function hu_set_uris_compat() {
 }//end uris compat
 
 
+/**
+* The Events Calendar compat hooks
+*/
+function hu_set_the_events_calendar_compat() {
+  /*
+  * Are we in the Events list context?
+  */
+  if ( ! ( function_exists( 'hu_is_tec_events_list' ) ) ) {
+    function hu_is_tec_events_list() {
+      return function_exists( 'tribe_is_event_query' ) && tribe_is_event_query() && is_post_type_archive();
+    }
+  }
+  /*
+  * Are we in single Event context?
+  */
+  if ( ! ( function_exists( 'hu_is_tec_single_event' ) ) ) {
+    function hu_is_tec_single_event() {
+      return function_exists( 'tribe_is_event_query' ) && tribe_is_event_query() && is_single();
+    }
+  }
 
+  /*
+  * Avoid php smartload image php parsing in events list content
+  * See: https://github.com/presscustomizr/hueman/issues/285
+  */
+  add_filter( 'hu_disable_img_smart_load', 'hu_tec_disable_img_smart_load_events_list', 999, 2);
+  function hu_tec_disable_img_smart_load_events_list( $_bool, $parent_filter ) {
+    if ( 'the_content' == $parent_filter && hu_is_tec_events_list() )
+      return true;//disable
+    return $_bool;
+  }
+
+}
 
 
 /**
