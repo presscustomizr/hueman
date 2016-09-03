@@ -44,8 +44,10 @@ module.exports = {
       '<%= paths.front_js %>jquery-plugins/jqueryimgSmartLoad.js',
       '<%= paths.front_js %>jquery-plugins/jqueryextLinks.js',
       '<%= paths.front_js %>jquery-plugins/jqueryCenterImages.js',
+      '<%= paths.front_js %>jquery-plugins/jqueryParallax.js',
       '<%= paths.front_js %>lib/smoothScroll.js',
       '<%= paths.front_js %>lib/outline.js',
+      '<%= paths.front_js %>lib/jquery.waypoints.js',
       '<%= paths.front_js %>_parts/main.js'
     ],
     dest: '<%= paths.front_js %>scripts.js',

@@ -370,6 +370,9 @@ var czrapp = czrapp || {};
       });
     },
 
+    parallax : function() {
+      $( '.parallax-item' ).czrParallax();
+    },
   };//_methods{}
 
   $.extend( czrapp.methods.Czr_Plugins = {} , _methods );
