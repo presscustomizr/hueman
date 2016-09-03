@@ -16,7 +16,7 @@
   <?php do_action('__before_header') ; ?>
 
   <?php hu_get_template_part('parts/header-main'); ?>
-
+  <?php do_action('__after_header') ; ?>
   <div class="container" id="page">
     <div class="container-inner">
       <?php do_action('__before_main') ; ?>

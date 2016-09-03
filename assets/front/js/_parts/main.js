@@ -599,7 +599,8 @@ jQuery(function ($) {
     BrowserDetect : [],
     Czr_Plugins : [
         'imgSmartLoad',
-        'extLinks'
+        'extLinks',
+        'parallax'
     ],
     Czr_UserExperience : [
         'outline',
