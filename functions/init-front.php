@@ -870,3 +870,15 @@ function hu_is_widget_zone_allowed_in_context( $_contexts, $_map_conditionals ) 
 
   return false;
 }
+
+
+//@return void
+//A utility to override the default tmpl from a plugin
+function hu_get_template_part( $path ) {
+    $_filter = basename($path);
+    $_custom_path = apply_filters( "hu_tmpl_{$_filter}", false );
+    if ( ! $_custom_path )
+      get_template_part( $path );
+    else if ( '' != $_custom_path )
+      load_template( $_custom_path, true );//true for require_once
+}
