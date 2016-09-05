@@ -74,6 +74,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         //GENERAL
          'hu_site_identity_sec',
          'hu_general_design_sec',
+         'hu_comments_sec',
          'hu_smoothscroll_sec',
          'hu_mobiles_sec',
          'hu_social_links_sec',
