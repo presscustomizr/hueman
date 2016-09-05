@@ -219,8 +219,20 @@ function hu_get_img_src_from_option( $option_name ) {
 }
 
 
-
-
+/**
+* wrapper of the_post_thumbnail
+* => the goal is to "scope" the filter the thumbnail html only to the Hueman theme.
+* => avoid potential conflict with plugins
+* @echo html
+*/
+function hu_the_post_thumbnail( $size = 'post-thumbnail', $attr = '' ) {
+  $post = get_post();
+  if ( ! $post ) {
+    return '';
+  }
+  $html = get_the_post_thumbnail( null, $size, $attr );
+  echo apply_filters( 'hu_post_thumbnail_html', $html, $size, $attr );
+}
 
 
 /* ------------------------------------------------------------------------- *

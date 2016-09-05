@@ -171,7 +171,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
         'plugin_activated'                => __( 'Plugin activated successfully.', 'tgmpa' ),
         'activated_successfully'          => __( 'The following plugin was activated successfully:', 'tgmpa' ),
         'complete'                        => __( 'All plugins installed and activated successfully. %1$s', 'tgmpa' ),
-        'dismiss'                         => __( 'Dismiss this notice', 'tgmpa' ),
+        'dismiss'                         => __( 'Remind me later', 'tgmpa' ),//__( 'Dismiss this notice', 'tgmpa' ),
       );
 
       /** Announce that the class is ready, and pass the object (for advanced use) */
@@ -297,8 +297,11 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
      * @since 2.1.0
      */
     public function thickbox() {
-
-      if ( ! get_user_meta( get_current_user_id(), 'tgmpa_dismissed_notice', true ) )
+      //* HU MODS
+      // if ( ! get_user_meta( get_current_user_id(), 'tgmpa_dismissed_notice', true ) )
+      //   add_thickbox();
+      $user_id = get_current_user_id();
+      if ( ! get_transient( "hu_{$user_id}_'tgmpa_dismissed_notice" ) )
         add_thickbox();
 
     }
@@ -635,8 +638,13 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
         }
       }
 
+      //HU MODS
+      $user_id = get_current_user_id();
+      $_is_notice_dismissed = true == get_transient( "hu_{$user_id}_'tgmpa_dismissed_notice" );
+      if ( ! $_is_notice_dismissed ) {
       /** Only process the nag messages if the user has not dismissed them already */
-      if ( ! get_user_meta( get_current_user_id(), 'tgmpa_dismissed_notice', true ) ) {
+      //if ( ! get_user_meta( get_current_user_id(), 'tgmpa_dismissed_notice', true ) ) {
+
         /** If we have notices to display, we move forward */
         if ( ! empty( $message ) ) {
           krsort( $message ); // Sort messages
@@ -725,10 +733,14 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
      * @since 2.1.0
      */
     public function dismiss() {
+      //HU MODS
+      // if ( isset( $_GET[sanitize_key( 'tgmpa-dismiss' )] ) )
+      //   update_user_meta( get_current_user_id(), 'tgmpa_dismissed_notice', 1 );
+      if ( ! isset( $_GET[sanitize_key( 'tgmpa-dismiss' )] ) )
+        return;
 
-      if ( isset( $_GET[sanitize_key( 'tgmpa-dismiss' )] ) )
-        update_user_meta( get_current_user_id(), 'tgmpa_dismissed_notice', 1 );
-
+      $user_id = get_current_user_id();
+      set_transient( "hu_{$user_id}_'tgmpa_dismissed_notice", true, 10 );
     }
 
     /**
@@ -884,9 +896,10 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
      * @since 2.1.1
      */
     public function update_dismiss() {
-
-      delete_user_meta( get_current_user_id(), 'tgmpa_dismissed_notice' );
-
+      //* HU MODS
+      //delete_user_meta( get_current_user_id(), 'tgmpa_dismissed_notice' );
+      $user_id = get_current_user_id();
+      delete_transient( "hu_{$user_id}_'tgmpa_dismissed_notice" );
     }
 
     /**

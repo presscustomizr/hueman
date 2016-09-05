@@ -4,7 +4,7 @@
 		<div class="post-thumbnail">
 			<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 				<?php if ( has_post_thumbnail() ): ?>
-					<?php the_post_thumbnail('thumb-standard'); ?>
+					<?php hu_the_post_thumbnail('thumb-standard'); ?>
 				<?php elseif ( hu_is_checked('placeholder') ): ?>
 					<img src="<?php echo get_template_directory_uri(); ?>/assets/front/img/thumb-standard.png" alt="<?php the_title(); ?>" />
 				<?php endif; ?>
