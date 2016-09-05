@@ -98,7 +98,9 @@ if ( ! class_exists( 'HU_utils' ) ) :
     * @return string
     */
     function hu_parse_imgs( $_html ) {
-      if( is_feed() || is_preview() || ( wp_is_mobile() && apply_filters('hu_disable_img_smart_load_mobiles', false ) ) )
+      $_bool = is_feed() || is_preview() || ( wp_is_mobile() && apply_filters('hu_disable_img_smart_load_mobiles', false ) );
+
+      if ( apply_filters( 'hu_disable_img_smart_load', $_bool, current_filter() ) )
         return $_html;
 
       return preg_replace_callback('#<img([^>]+?)src=[\'"]?([^\'"\s>]+)[\'"]?([^>]*)>#', array( $this , 'hu_regex_callback' ) , $_html);
