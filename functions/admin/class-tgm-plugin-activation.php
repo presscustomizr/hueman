@@ -180,6 +180,11 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
       /** When the rest of WP has loaded, kick-start the rest of the class */
       add_action( 'init', array( &$this, 'init' ) );
 
+      //HU MODS
+      //always add the ajax action
+      add_action( 'wp_ajax_dismiss_tgmpa_notice'    , array( $this , 'hu_ajax_dismiss_tgmpa_notice' ) );
+      add_action( 'admin_footer'                  , array( $this , 'hu_write_ajax_dismiss_script' ) );
+
     }
 
     /**
@@ -208,7 +213,8 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
         array_multisort( $sorted, SORT_ASC, $this->plugins ); // Sort plugins alphabetically by name
 
         add_action( 'admin_menu', array( &$this, 'admin_menu' ) );
-        add_action( 'admin_head', array( &$this, 'dismiss' ) );
+        //HU MODS => now handled with ajax
+        //add_action( 'admin_head', array( &$this, 'dismiss' ) );
         add_filter( 'install_plugin_complete_actions', array( &$this, 'actions' ) );
 
         /** Load admin bar in the header to remove flash when installing plugins */
@@ -298,13 +304,44 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
      */
     public function thickbox() {
       //* HU MODS
+      // The notice is displayed :
+      // 1) on each theme update
+      // 2) if dismissed transient false
+      // 3) 3 dismiss times maximum for a given theme version
+
       // if ( ! get_user_meta( get_current_user_id(), 'tgmpa_dismissed_notice', true ) )
       //   add_thickbox();
-      $user_id = get_current_user_id();
-      if ( ! get_transient( "hu_{$user_id}_'tgmpa_dismissed_notice" ) )
-        add_thickbox();
 
+      if ( ! $this -> hu_is_notice_dismissed() )
+        add_thickbox();
     }
+
+
+
+    //HU MODS
+    //helper
+    //@return bool
+    function hu_is_notice_dismissed() {
+      $user_id = get_current_user_id();
+
+      if ( get_transient( "hu_{$user_id}_tgmpa_dismissed_notice" ) )
+        return true;
+
+      //already user of the theme ?
+      // if ( hu_user_started_before_version( HUEMAN_VER ) )
+      //   $show_new_notice = true;
+
+      $last_tgmpa_notice_values = $this -> hu_get_meta_tgmpa_notice_values();
+
+      $_dismissed_count     = $last_tgmpa_notice_values["dismiss_count"];
+
+      if ( $_dismissed_count <= 3 ) {
+          return false;
+      }
+
+      return true;
+    }
+
 
     /**
      * Adds submenu page under 'Appearance' tab.
@@ -555,6 +592,10 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 
     }
 
+
+
+
+
     /**
      * Echoes required plugin notice.
      *
@@ -645,9 +686,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
       }
 
       //HU MODS
-      $user_id = get_current_user_id();
-      $_is_notice_dismissed = true == get_transient( "hu_{$user_id}_'tgmpa_dismissed_notice" );
-      if ( ! $_is_notice_dismissed ) {
+      if ( ! $this -> hu_is_notice_dismissed() ) {
       /** Only process the nag messages if the user has not dismissed them already */
       //if ( ! get_user_meta( get_current_user_id(), 'tgmpa_dismissed_notice', true ) ) {
 
@@ -731,6 +770,50 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 
     }
 
+    //HU MODS
+    //helper
+    //get the meta
+    //update it when needed
+    //@return array( "version" => HUEMAN_VER, "dismiss_count" => INT );
+    function hu_get_meta_tgmpa_notice_values() {
+        $meta_name = 'hu_last_tgmpa_notice';
+        $user_id = get_current_user_id();
+        $last_tgmpa_notice_values  = get_user_meta( $user_id, $meta_name, true );
+
+        $update_meta = false;
+        //first time user of the theme, the option does not exist
+        //or if option is not well formed
+        if ( ! $last_tgmpa_notice_values || ! is_array($last_tgmpa_notice_values) || empty($last_tgmpa_notice_values) ) {
+            $update_meta = true;
+        } else if ( is_array( $last_tgmpa_notice_values ) && ( ! isset($last_tgmpa_notice_values["version"]) || ! isset($last_tgmpa_notice_values["dismiss_count"]) ) ) {
+            $update_meta = true;
+        }
+
+
+        //THEME UPDATE CASE
+        //Reset the meta
+        if ( is_array( $last_tgmpa_notice_values ) && isset($last_tgmpa_notice_values["version"]) && version_compare( HUEMAN_VER, $last_tgmpa_notice_values["version"] , '!=' ) ) {
+            $update_meta = true;
+        }
+
+        if ( $update_meta ) {
+            // 1) initialize it => set it to the current Hueman version, displayed 0 times.
+            // 2) update in db
+            $last_tgmpa_notice_values = array( "version" => HUEMAN_VER, "dismiss_count" => 0 );
+            update_user_meta( $user_id, $meta_name , $last_tgmpa_notice_values );
+        }
+
+        return $last_tgmpa_notice_values;
+    }
+
+
+
+    //hook :wp_ajax_dismiss_tgmpa_notice
+    function hu_ajax_dismiss_tgmpa_notice() {
+        $this -> dismiss();
+    }
+
+
     /**
      * Add dismissable admin notices.
      *
@@ -742,12 +825,34 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
       //HU MODS
       // if ( isset( $_GET[sanitize_key( 'tgmpa-dismiss' )] ) )
       //   update_user_meta( get_current_user_id(), 'tgmpa_dismissed_notice', 1 );
-      if ( ! isset( $_GET[sanitize_key( 'tgmpa-dismiss' )] ) )
+      // if ( ! isset( $_GET[sanitize_key( 'tgmpa-dismiss' )] ) )
+      //   return;
+      check_ajax_referer( 'dismiss-tgpma-notice-nonce', 'dismissTgpmaNoticeNonce' );
+
+      $last_tgmpa_notice_values = $this -> hu_get_meta_tgmpa_notice_values();
+      if ( ! isset( $last_tgmpa_notice_values["dismiss_count"])  )
         return;
 
-      $user_id = get_current_user_id();
-      set_transient( "hu_{$user_id}_'tgmpa_dismissed_notice", true, 10 );
+      $_dismissed_count  = $last_tgmpa_notice_values["dismiss_count"];
+      $_day_duration     = 0 == $_dismissed_count ? 1 : ( 3 * $_dismissed_count );//maximum 9 days
+      $user_id           = get_current_user_id();
+      $meta_name         = 'hu_last_tgmpa_notice';
+
+      //increments the counter
+      (int) $_dismissed_count++;
+      $last_tgmpa_notice_values["dismiss_count"] = $_dismissed_count;
+      //updates the option val with the new count
+      update_user_meta( $user_id, $meta_name , $last_tgmpa_notice_values );
+
+      //set a transient duration based on the $_dismissed_count
+      set_transient( "hu_{$user_id}_tgmpa_dismissed_notice", true, $_day_duration * 5 );
+
+      wp_send_json_success( json_encode( array_merge( array( 'duration' => $_day_duration * 5 ) , $last_tgmpa_notice_values ) ) );
     }
+
+
+
+
 
     /**
      * Add individual plugin to our collection of plugins.
@@ -766,6 +871,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
       $this->plugins[] = $plugin;
 
     }
+
 
     /**
      * Amend default configuration settings.
@@ -905,7 +1011,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
       //* HU MODS
       //delete_user_meta( get_current_user_id(), 'tgmpa_dismissed_notice' );
       $user_id = get_current_user_id();
-      delete_transient( "hu_{$user_id}_'tgmpa_dismissed_notice" );
+      delete_transient( "hu_{$user_id}_tgmpa_dismissed_notice" );
     }
 
     /**
@@ -965,8 +1071,58 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 
     }
 
-  }
-}
+
+     /**
+    * HU MODS
+    * hook : admin_footer
+    */
+    function hu_write_ajax_dismiss_script() {
+      ?>
+      <script type="text/javascript" id="hu-dismiss-tgpma-notice">
+        ( function($){
+          var _ajax_action = function( $_el ) {
+              var AjaxUrl = "<?php echo admin_url( 'admin-ajax.php' ); ?>",
+                  _query  = {
+                      action  : 'dismiss_tgmpa_notice',
+                      dismissTgpmaNoticeNonce :  "<?php echo wp_create_nonce( 'dismiss-tgpma-notice-nonce' ); ?>"
+                  },
+                  $ = jQuery,
+                  request = $.post( AjaxUrl, _query );
+
+              request.fail( function ( response ) {
+                console.log('response when failed : ', response);
+              });
+              request.done( function( response ) {
+                console.log('RESPONSE DONE', $_el, response);
+                // Check if the user is logged out.
+                if ( '0' === response )
+                  return;
+                // Check for cheaters.
+                if ( '-1' === response )
+                  return;
+
+                $_el.closest('.updated').slideToggle('fast');
+              });
+          };//end of fn
+
+          //on load
+          $( function($) {
+            $('#setting-error-tgmpa .dismiss-notice').click( function( e ) {
+              e.preventDefault();
+              console.log('CLICK');
+              _ajax_action( $(this) );
+            } );
+          } );
+
+        } )( jQuery );
+
+
+      </script>
+      <?php
+    }
+
+  }//class
+}//endif class_exists
 
 /** Create a new instance of the class */
 new TGM_Plugin_Activation;
@@ -991,6 +1147,29 @@ if ( ! function_exists( 'tgmpa' ) ) {
 
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * WP_List_Table isn't always available. If it isn't available,
