@@ -24,7 +24,7 @@ module.exports = {
       '!assets/czr/fmk/**',
       '!assets/front/css/dev-common.css',
       '!assets/front/css/dev-responsive.css',
-      '!assets/front/css/dev-font-awesome.css',
+      //'!assets/front/css/dev-font-awesome.css',
       '!npm-debug.log',
 		],
 		dest: 'build/<%= pkg.name %>/'
@@ -55,7 +55,7 @@ module.exports = {
       '!assets/czr/fmk/**',
       '!assets/front/css/dev-common.css',
       '!assets/front/css/dev-responsive.css',
-      '!assets/front/css/dev-font-awesome.css',
+      //'!assets/front/css/dev-font-awesome.css',
       '!npm-debug.log',
     ],
     dest: '../hueman-pro/'
