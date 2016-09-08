@@ -1,4 +1,4 @@
-# Hueman v3.2.1.1
+# Hueman v3.2.1
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > Hueman is a mobile friendly WordPress theme for blogs, magazines and business websites. It's been designed to beautifully display pictures and text content, and engineered to be easy to use and fast. The Hueman theme helps you attract and retain more visitors, that's why it's already used by 70K+ active websites in the world and has received hundreds of five stars ratings.
@@ -82,9 +82,16 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 ## Changelog
-= 3.2.0 September 2nd 2016 =
+= 3.2.1 September 7th 2016 =
+* fixed : social networks javascript error in the customizer when upgrading from old versions (below 3+) to v3.2.0 (issue #296 )
 * fixed : add back the comment section in the customizer, accidentally removed in the latest version (issue #292 )
-* Imp:improve the events calendar compat with the img smartload feature
+* fixed : include dev-font-awesome.css in the build (fix issue #295 )
+* added : TGMPA plugin recommendation class for Hueman Addons
+* added : waypoint js lib (+9ko in script)
+* imp : improve the events calendar compat with the img smartload feature
+* imp : wrapper the_post_thumbnail into hu_the_post_thumbnail => fixes smart load img conflicts with plugins, we now only filter our own filter and not WP one.
+* imp : header.php is now calling a sub-template, parts/header-main.php
+* imp : top nav is rendered with a sub-template, parts/header-nav-topbar.php
 
 = 3.2.0 September 2nd 2016 =
 * added : new option to enable a smoother scrolling. In Global Settings > Smooth Scroll
