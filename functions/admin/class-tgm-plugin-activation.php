@@ -152,26 +152,27 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
       self::$instance =& $this;
 
       $this->strings = array(
-        'page_title'                      => __( 'Install Required Plugins', 'hueman' ),
-        'menu_title'                      => __( 'Install Plugins', 'hueman' ),
-        'installing'                      => __( 'Installing Plugin: %s', 'hueman' ),
-        'oops'                            => __( 'Something went wrong.', 'hueman' ),
-        'notice_can_install_required'     => _n_noop( 'This theme requires the following plugin: %1$s.', 'This theme requires the following plugins: %1$s.', 'hueman' ),
-        'notice_can_install_recommended'  => _n_noop( 'This theme recommends the following plugin: %1$s.', 'This theme recommends the following plugins: %1$s.', 'hueman' ),
-        'notice_cannot_install'           => _n_noop( 'Sorry, but you do not have the correct permissions to install the %s plugin. Contact the administrator of this site for help on getting the plugin installed.', 'Sorry, but you do not have the correct permissions to install the %s plugins. Contact the administrator of this site for help on getting the plugins installed.', 'hueman'  ),
-        'notice_can_activate_required'    => _n_noop( 'The following required plugin is currently inactive: %1$s.', 'The following required plugins are currently inactive: %1$s.', 'hueman'  ),
-        'notice_can_activate_recommended' => _n_noop( 'The following recommended plugin is currently inactive: %1$s.', 'The following recommended plugins are currently inactive: %1$s.', 'hueman'  ),
-        'notice_cannot_activate'          => _n_noop( 'Sorry, but you do not have the correct permissions to activate the %s plugin. Contact the administrator of this site for help on getting the plugin activated.', 'Sorry, but you do not have the correct permissions to activate the %s plugins. Contact the administrator of this site for help on getting the plugins activated.', 'hueman'  ),
-        'notice_ask_to_update'            => _n_noop( 'The following plugin needs to be updated to its latest version to ensure maximum compatibility with this theme: %1$s.', 'The following plugins need to be updated to their latest version to ensure maximum compatibility with this theme: %1$s.', 'hueman'  ),
-        'notice_cannot_update'            => _n_noop( 'Sorry, but you do not have the correct permissions to update the %s plugin. Contact the administrator of this site for help on getting the plugin updated.', 'Sorry, but you do not have the correct permissions to update the %s plugins. Contact the administrator of this site for help on getting the plugins updated.', 'hueman'  ),
-        'install_link'            => _n_noop( 'Begin installing plugin', 'Begin installing plugins', 'hueman'  ),
-        'activate_link'           => _n_noop( 'Activate installed plugin', 'Activate installed plugins', 'hueman'  ),
-        'return'                          => __( 'Return to Required Plugins Installer', 'hueman' ),
-        'dashboard'                       => __( 'Return to the dashboard', 'hueman' ),
-        'plugin_activated'                => __( 'Plugin activated successfully.', 'hueman' ),
-        'activated_successfully'          => __( 'The following plugin was activated successfully:', 'hueman' ),
-        'complete'                        => __( 'All plugins installed and activated successfully. %1$s', 'hueman' ),
-        'dismiss'                         => __( 'Remind me later', 'hueman' ),//__( 'Dismiss this notice', 'hueman' ),
+          'page_title'                      => __( 'Install Required Plugins', 'hueman' ),
+          'menu_title'                      => __( 'Install Plugins', 'hueman' ),
+          'installing'                      => __( 'Installing Plugin: %s', 'hueman' ),
+          'oops'                            => __( 'Something went wrong.', 'hueman' ),
+          'notice_can_install_required'     => _n_noop( 'This theme requires the following plugin: %1$s.', 'This theme requires the following plugins: %1$s.', 'hueman' ),
+          'notice_can_install_recommended'  => _n_noop( 'This theme recommends the following plugin: %1$s.', 'This theme recommends the following plugins: %1$s.', 'hueman' ),
+          'notice_cannot_install'           => _n_noop( 'Sorry, but you do not have the correct permissions to install the %s plugin. Contact the administrator of this site for help on getting the plugin installed.', 'Sorry, but you do not have the correct permissions to install the %s plugins. Contact the administrator of this site for help on getting the plugins installed.', 'hueman'  ),
+          'notice_can_activate_required'    => _n_noop( 'The following required plugin is currently inactive: %1$s.', 'The following required plugins are currently inactive: %1$s.', 'hueman'  ),
+          'notice_can_activate_recommended' => _n_noop( 'The following recommended plugin is currently inactive: %1$s.', 'The following recommended plugins are currently inactive: %1$s.', 'hueman'  ),
+          'notice_cannot_activate'          => _n_noop( 'Sorry, but you do not have the correct permissions to activate the %s plugin. Contact the administrator of this site for help on getting the plugin activated.', 'Sorry, but you do not have the correct permissions to activate the %s plugins. Contact the administrator of this site for help on getting the plugins activated.', 'hueman'  ),
+          'notice_ask_to_update'            => _n_noop( 'The following plugin needs to be updated to its latest version to ensure maximum compatibility with this theme: %1$s.', 'The following plugins need to be updated to their latest version to ensure maximum compatibility with this theme: %1$s.', 'hueman'  ),
+          'notice_cannot_update'            => _n_noop( 'Sorry, but you do not have the correct permissions to update the %s plugin. Contact the administrator of this site for help on getting the plugin updated.', 'Sorry, but you do not have the correct permissions to update the %s plugins. Contact the administrator of this site for help on getting the plugins updated.', 'hueman'  ),
+          'install_link'            => _n_noop( 'Begin installing plugin', 'Begin installing plugins', 'hueman'  ),
+          'activate_link'           => _n_noop( 'Activate installed plugin', 'Activate installed plugins', 'hueman'  ),
+          'return'                          => __( 'Return to Required Plugins Installer', 'hueman' ),
+          'dashboard'                       => __( 'Return to the dashboard', 'hueman' ),
+          'plugin_activated'                => __( 'Plugin activated successfully.', 'hueman' ),
+          'activated_successfully'          => __( 'The following plugin was activated successfully:', 'hueman' ),
+          'complete'                        => __( 'All plugins installed and activated successfully. %1$s', 'hueman' ),
+          'reminder'                        => __( 'Remind me later', 'hueman' ),//HU MODS
+          'dismiss'                         => __( 'Dismiss this notice', 'hueman' )
       );
 
       /** Announce that the class is ready, and pass the object (for advanced use) */
@@ -311,7 +312,6 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 
       // if ( ! get_user_meta( get_current_user_id(), 'tgmpa_dismissed_notice', true ) )
       //   add_thickbox();
-
       if ( ! $this -> hu_is_notice_dismissed() )
         add_thickbox();
     }
@@ -743,12 +743,19 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
           $show_activate_link = $activate_link ? '<a href="' . admin_url( 'plugins.php' ) . '">' . translate_nooped_plural( $this->strings['activate_link'], $activate_link_count, 'hueman' ) . '</a>'  : '';
 
           /** Define all of the action links */
+          //HU MODS
+          $last_tgmpa_notice_values = $this -> hu_get_meta_tgmpa_notice_values();
+          $_dismissed_count     = isset( $last_tgmpa_notice_values["dismiss_count"] ) ? $last_tgmpa_notice_values["dismiss_count"] : 0;
+
           $action_links = apply_filters(
             'tgmpa_notice_action_links',
             array(
               'install'  => ( current_user_can( 'install_plugins' ) ) ? $show_install_link : '',
               'activate' => ( current_user_can( 'activate_plugins' ) ) ? $show_activate_link : '',
-              'dismiss'  => '<a class="dismiss-notice" href="' . add_query_arg( 'tgmpa-dismiss', 'dismiss_admin_notices' ) . '" target="_parent">' . $this->strings['dismiss'] . '</a>',
+              'dismiss'  => sprintf('<a class="dismiss-notice" href="%1$s" target="_parent">%2$s</a>',
+                    add_query_arg( 'tgmpa-dismiss', 'dismiss_admin_notices' ),
+                     $_dismissed_count < 3 ? $this->strings['reminder'] : $this->strings['dismiss']
+                ),
             )
           );
 
@@ -845,9 +852,8 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
       update_user_meta( $user_id, $meta_name , $last_tgmpa_notice_values );
 
       //set a transient duration based on the $_dismissed_count
-      set_transient( "hu_{$user_id}_tgmpa_dismissed_notice", true, $_day_duration * 5 );
-
-      wp_send_json_success( json_encode( array_merge( array( 'duration' => $_day_duration * 5 ) , $last_tgmpa_notice_values ) ) );
+      set_transient( "hu_{$user_id}_tgmpa_dismissed_notice", true, $_day_duration * 24*60*60 );
+      wp_send_json_success( json_encode( array_merge( array( 'duration_in_s' => $_day_duration * 24*60*60 ) , $last_tgmpa_notice_values ) ) );
     }
 
 
@@ -1086,30 +1092,28 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
                       action  : 'dismiss_tgmpa_notice',
                       dismissTgpmaNoticeNonce :  "<?php echo wp_create_nonce( 'dismiss-tgpma-notice-nonce' ); ?>"
                   },
-                  $ = jQuery,
-                  request = $.post( AjaxUrl, _query );
+                  $ = jQuery;
 
-              request.fail( function ( response ) {
-                console.log('response when failed : ', response);
-              });
-              request.done( function( response ) {
-                console.log('RESPONSE DONE', $_el, response);
-                // Check if the user is logged out.
-                if ( '0' === response )
-                  return;
-                // Check for cheaters.
-                if ( '-1' === response )
-                  return;
 
-                $_el.closest('.updated').slideToggle('fast');
-              });
+              $.post( AjaxUrl, _query )
+                .fail( function ( response ) {
+                })
+                .done( function( response ) {
+                  // Check if the user is logged out.
+                  if ( '0' === response )
+                    return;
+                  // Check for cheaters.
+                  if ( '-1' === response )
+                    return;
+
+                  $_el.closest('.updated').slideToggle('fast');
+                });
           };//end of fn
 
           //on load
           $( function($) {
             $('#setting-error-tgmpa .dismiss-notice').click( function( e ) {
               e.preventDefault();
-              console.log('CLICK');
               _ajax_action( $(this) );
             } );
           } );
