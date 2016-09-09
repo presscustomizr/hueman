@@ -750,18 +750,37 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
           $action_links = apply_filters(
             'tgmpa_notice_action_links',
             array(
-              'install'  => ( current_user_can( 'install_plugins' ) ) ? $show_install_link : '',
-              'activate' => ( current_user_can( 'activate_plugins' ) ) ? $show_activate_link : '',
-              'dismiss'  => sprintf('<a class="dismiss-notice" href="%1$s" target="_parent">%2$s</a>',
-                    add_query_arg( 'tgmpa-dismiss', 'dismiss_admin_notices' ),
-                     $_dismissed_count < 3 ? $this->strings['reminder'] : $this->strings['dismiss']
-                ),
+                'install'  => ( current_user_can( 'install_plugins' ) ) ? $show_install_link : '',
+                'activate' => ( current_user_can( 'activate_plugins' ) ) ? $show_activate_link : '',
+                'dismiss'  => sprintf('<a class="dismiss-notice" href="%1$s" target="_parent">%2$s</a>',
+                      add_query_arg( 'tgmpa-dismiss', 'dismiss_admin_notices' ),
+                       $_dismissed_count < 3 ? $this->strings['reminder'] : $this->strings['dismiss']
+                  ),
             )
           );
 
+          //HU MODS
+          $rendered = sprintf( '%1$s <span style="font-weight:normal; font-style:italic">%2$s<br/>%3$s</span>',
+            $rendered,
+            sprintf(
+                __( 'The Hueman Addons is a free plugin including some cool additional features like a %1$s and %2$s.', 'hueman' ),
+                sprintf('<a href="%1$s" target="_blank" title="%2$s">%2$s</a>', esc_url('docs.presscustomizr.com/article/242-hueman-addons-how-to-set-the-share-bar-options'), __('social share bar') ),
+                sprintf('<a href="%1$s" target="_blank" title="%2$s">%2$s</a>', esc_url('docs.presscustomizr.com/article/246-hueman-addons-how-to-use-the-shortcodes'), __('useful shortcodes') )
+            ),
+            __( "The plugin has been designed specifically for the Hueman WordPress theme. Lightweight and safe.", "hueman")
+
+          );
           $action_links = array_filter( $action_links ); // Remove any empty array items
+
           if ( $action_links )
             $rendered .= '<p>' . implode( ' | ', $action_links ) . '</p>';
+
+          //HU MODS
+          $rendered = sprintf('<img src="%1$s" width="100px" height="100px" alt="%2$s" title="%2$s" style="float:right"/>%3$s',
+                          sprintf('%1$sassets/admin/img/hueman-addons-100x100.png', HU_BASE_URL ),
+                          __('Hueman Addons', 'hueman'),
+                          $rendered
+                      );
 
           /** Register the nag messages and prepare them to be processed */
           if ( isset( $this->strings['nag_type'] ) )
