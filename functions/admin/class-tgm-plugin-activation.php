@@ -764,8 +764,8 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
             $rendered,
             sprintf(
                 __( 'The Hueman Addons is a free plugin including some cool additional features like a %1$s and %2$s.', 'hueman' ),
-                sprintf('<a href="%1$s" target="_blank" title="%2$s">%2$s</a>', esc_url('docs.presscustomizr.com/article/242-hueman-addons-how-to-set-the-share-bar-options'), __('social share bar') ),
-                sprintf('<a href="%1$s" target="_blank" title="%2$s">%2$s</a>', esc_url('docs.presscustomizr.com/article/246-hueman-addons-how-to-use-the-shortcodes'), __('useful shortcodes') )
+                sprintf('<a href="%1$s" target="_blank" title="%2$s">%2$s</a>', esc_url('docs.presscustomizr.com/article/242-hueman-addons-how-to-set-the-share-bar-options'), __('social share bar', 'hueman') ),
+                sprintf('<a href="%1$s" target="_blank" title="%2$s">%2$s</a>', esc_url('docs.presscustomizr.com/article/246-hueman-addons-how-to-use-the-shortcodes'), __('useful shortcodes', 'hueman') )
             ),
             __( "The plugin has been designed specifically for the Hueman WordPress theme. Lightweight and safe.", "hueman")
 
