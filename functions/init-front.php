@@ -202,14 +202,14 @@ if ( ! function_exists( 'hu_site_title' ) ) {
 
 /*  Page title
 /* ------------------------------------ */
-if ( ! function_exists( 'hu_page_title' ) ) {
+if ( ! function_exists( 'hu_get_page_title' ) ) {
 
-  function hu_page_title() {
+  function hu_get_page_title() {
     global $post;
 
     $heading = esc_attr( get_post_meta($post->ID,'_heading',true) );
     $subheading = esc_attr( get_post_meta($post->ID,'_subheading',true) );
-    $title = $heading?$heading:the_title();
+    $title = $heading ? $heading: get_the_title();
     if($subheading) {
       $title = $title.' <span>'.$subheading.'</span>';
     }
@@ -217,6 +217,96 @@ if ( ! function_exists( 'hu_page_title' ) ) {
     return $title;
   }
 
+}
+
+
+/*  Search Page title
+/* ------------------------------------ */
+if ( ! function_exists( 'hu_get_search_title' ) ) {
+  function hu_get_search_title() {
+    global $wp_query;
+    ?>
+      <?php if ( have_posts() ): ?><i class="fa fa-search"></i><?php endif; ?>
+      <?php if ( ! have_posts() ): ?><i class="fa fa-exclamation-circle"></i><?php endif; ?>
+    <?php
+      $search_results = $wp_query -> found_posts;
+      if ( 1 == $search_results ) {
+          return sprintf( '%1$s %2$s', $search_results, __('Search result','hueman') );
+      } else {
+          return sprintf( '%1$s %2$s', $search_results, __('Search results','hueman') );
+      }
+  }
+}
+
+
+/*  404 Page title
+/* ------------------------------------ */
+if ( ! function_exists( 'hu_get_404_title' ) ) {
+  function hu_get_404_title() {
+    return sprintf('<i class="fa fa-exclamation-circle"></i>%1$s <span>%2$s </span>',
+        __('Error 404.','hueman'),
+        __('Page not found!','hueman')
+    );
+  }
+}
+
+
+/*  Author Page title
+/* ------------------------------------ */
+if ( ! function_exists( 'hu_get_author_title' ) ) {
+  function hu_get_author_title() {
+    $author = get_userdata( get_query_var('author') );
+    return sprintf('<i class="fa fa-user"></i>%1$s <span>%2$s </span>',
+        __('Author:','hueman'),
+        $author->display_name
+    );
+  }
+}
+
+
+/*  Term Page title
+/* @todo => generalize to all taxinomies, including custom ones
+/* ------------------------------------ */
+if ( ! function_exists( 'hu_get_term_page_title' ) ) {
+  function hu_get_term_page_title() {
+    if ( is_category() ) {
+      $title = sprintf('<i class="fa fa-folder-open"></i>%1$s <span>%2$s </span>',
+          __('Category:','hueman'),
+          single_cat_title('', false)
+      );
+    } else if ( is_tag() ) {
+      $title = sprintf('<i class="fa fa-tags"></i>%1$s <span>%2$s </span>',
+          __('Tagged:','hueman'),
+          single_tag_title('', false)
+      );
+    }
+    return $title;
+  }
+}
+
+
+/*  Date archive page title
+/* ------------------------------------ */
+if ( ! function_exists( 'hu_get_date_archive_title' ) ) {
+  function hu_get_date_archive_title() {
+    if ( is_day() ) {
+      $title = sprintf('<i class="fa fa-calendar"></i>%1$s <span>%2$s </span>',
+          __('Daily Archive:','hueman'),
+          get_the_time('F j, Y')
+      );
+    } else if ( is_month() ) {
+      $title = sprintf('<i class="fa fa-calendar"></i>%1$s <span>%2$s </span>',
+          __('Monthly Archive:','hueman'),
+          get_the_time('F Y')
+      );
+    } else if ( is_year() ) {
+      $title = sprintf('<i class="fa fa-calendar"></i>%1$s <span>%2$s </span>',
+          __('Yearly Archive:','hueman'),
+          get_the_time('Y')
+      );
+    }
+    return $title;
+  }
 }
 
 
@@ -346,6 +436,23 @@ if ( ! function_exists( 'hu_print_placeholder_thumb' ) ) {
   }
 
 }
+
+
+
+
+
+/*  Metas
+/* ------------------------------------ */
+
+
+
+
+
+
+
+
+
+
 
 
 /* ------------------------------------------------------------------------- *
@@ -874,8 +981,12 @@ function hu_is_widget_zone_allowed_in_context( $_contexts, $_map_conditionals ) 
 
 //@return void
 //A utility to override the default tmpl from a plugin
+//falls back on get_template_part( $path )
 function hu_get_template_part( $path ) {
     $_filter = basename($path);
+    //allows developers to deactivate a particular template
+    if ( ! apply_filters( 'hu_is_template_part_on', true, $_filter ) )
+      return;
     $_custom_path = apply_filters( "hu_tmpl_{$_filter}", false );
     if ( ! $_custom_path )
       get_template_part( $path );

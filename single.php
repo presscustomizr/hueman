@@ -2,7 +2,7 @@
 
 <section class="content">
 
-	<?php get_template_part('parts/page-title'); ?>
+	<?php hu_get_template_part('parts/page-title'); ?>
 
 	<div class="pad group">
 
@@ -10,8 +10,7 @@
 			<article <?php post_class(); ?>>
 				<div class="post-inner group">
 
-					<h1 class="post-title entry-title"><?php the_title(); ?></h1>
-          <?php get_template_part('parts/single-author-date'); ?>
+          <?php hu_get_template_part('parts/single-heading'); ?>
 
 					<?php if( get_post_format() ) { get_template_part('parts/post-formats'); } ?>
 

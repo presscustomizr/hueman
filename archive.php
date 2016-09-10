@@ -2,7 +2,7 @@
 
 <section class="content">
 
-	<?php get_template_part('parts/page-title'); ?>
+	<?php hu_get_template_part('parts/page-title'); ?>
 
 	<div class="pad group">
 

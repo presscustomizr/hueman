@@ -1395,7 +1395,7 @@ if ( ! function_exists('alx_blog_title') ) {
 
 if ( ! function_exists('alx_page_title') ) {
   function alx_page_title() {
-    return hu_page_title();
+    return hu_get_page_title();
   }
 }
 

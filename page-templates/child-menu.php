@@ -7,7 +7,7 @@ Template Name: Child Menu
 
 <section class="content">
 
-	<?php get_template_part('parts/page-title'); ?>
+	<?php hu_get_template_part('parts/page-title'); ?>
 
 	<div class="pad group">
 
@@ -15,7 +15,7 @@ Template Name: Child Menu
 
 			<article <?php post_class('group'); ?>>
 
-				<?php get_template_part('parts/page-image'); ?>
+				<?php hu_get_template_part('parts/page-image'); ?>
 
 				<div class="entry themeform">
 					<?php the_content(); ?>
