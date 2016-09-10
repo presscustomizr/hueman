@@ -489,7 +489,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 /* ------------------------------------ */
 .nav-container { background: #888; z-index: 99; position: relative; }
 .nav-toggle { display: none; background: #777; cursor: pointer; float: right; height: 50px; width: 60px; color: #fff; text-align: center; }
-.nav-toggle i { font-size: 29px; padding: 10px 0; }
+.nav-toggle i { font-size: 28px; padding: 11px 0; }
 .nav-text { display: none; float: right; font-size: 16px; line-height: 24px; padding: 13px 20px; }
 .nav li > a:after,
 .nav > li > a:after { font-family: FontAwesome; display: inline-block; }
