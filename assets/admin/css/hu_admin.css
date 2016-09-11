@@ -130,3 +130,9 @@ h1.need-help-title:before {
 	-webkit-box-shadow: none;
 	box-shadow: none;
 }
+
+
+/* HUEMAN ADDONS NOTICE */
+#setting-error-tgmpa .notice-dismiss {
+  display: none;
+}
