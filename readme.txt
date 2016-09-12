@@ -1,4 +1,4 @@
-# Hueman v3.2.1
+# Hueman v3.2.2
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > Hueman is a mobile friendly WordPress theme for blogs, magazines and business websites. It's been designed to beautifully display pictures and text content, and engineered to be easy to use and fast. The Hueman theme helps you attract and retain more visitors, that's why it's already used by 70K+ active websites in the world and has received hundreds of five stars ratings.
@@ -73,6 +73,14 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 # Changelog
+= 3.2.2 September 11th 2016 =
+* fixed : dismiss link not showing up in the Hueman Addons plugin recommendation admin notice
+* added : title utility functions like hu_get_search_title()
+* added : new template parts/single-heading.php, called in the template single.php
+* improved : hu_get_template_part : added a boolean wp filter using the template name as param
+* improved : In templates : 404, archive, page, search, child menu, index. Replace get_template_part() by hu_get_template_part()
+* improved : template parts/page-title.php
+
 = 3.2.1 September 7th 2016 =
 * fixed : social networks javascript error in the customizer when upgrading from old versions (below 3+) to v3.2.0 (issue #296 )
 * fixed : add back the comment section in the customizer, accidentally removed in the latest version (issue #292 )

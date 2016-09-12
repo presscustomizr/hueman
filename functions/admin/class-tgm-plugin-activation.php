@@ -215,7 +215,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 
         add_action( 'admin_menu', array( &$this, 'admin_menu' ) );
         //HU MODS => now handled with ajax
-        //add_action( 'admin_head', array( &$this, 'dismiss' ) );
+        add_action( 'admin_head', array( &$this, 'dismiss' ) );
         add_filter( 'install_plugin_complete_actions', array( &$this, 'actions' ) );
 
         /** Load admin bar in the header to remove flash when installing plugins */
@@ -323,6 +323,9 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
     //@return bool
     function hu_is_notice_dismissed() {
       $user_id = get_current_user_id();
+
+      if ( get_user_meta( $user_id, 'tgmpa_dismissed_notice', true ) )
+        return true;
 
       if ( get_transient( "hu_{$user_id}_tgmpa_dismissed_notice" ) )
         return true;
@@ -752,10 +755,14 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
             array(
                 'install'  => ( current_user_can( 'install_plugins' ) ) ? $show_install_link : '',
                 'activate' => ( current_user_can( 'activate_plugins' ) ) ? $show_activate_link : '',
+                'reminder' =>  $_dismissed_count < 3 ? sprintf('<a class="reminder-notice" href="%1$s" target="_parent">%2$s</a>',
+                      'javascript:void(0)',
+                      $this->strings['reminder']
+                ) : '',
                 'dismiss'  => sprintf('<a class="dismiss-notice" href="%1$s" target="_parent">%2$s</a>',
                       add_query_arg( 'tgmpa-dismiss', 'dismiss_admin_notices' ),
-                       $_dismissed_count < 3 ? $this->strings['reminder'] : $this->strings['dismiss']
-                  ),
+                      $this->strings['dismiss']
+                ),
             )
           );
 
@@ -836,7 +843,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 
     //hook :wp_ajax_dismiss_tgmpa_notice
     function hu_ajax_dismiss_tgmpa_notice() {
-        $this -> dismiss();
+        $this -> hu_dismiss();
     }
 
 
@@ -847,7 +854,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
      *
      * @since 2.1.0
      */
-    public function dismiss() {
+    public function hu_dismiss() {
       //HU MODS
       // if ( isset( $_GET[sanitize_key( 'tgmpa-dismiss' )] ) )
       //   update_user_meta( get_current_user_id(), 'tgmpa_dismissed_notice', 1 );
@@ -875,6 +882,14 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
       wp_send_json_success( json_encode( array_merge( array( 'duration_in_s' => $_day_duration * 24*60*60 ) , $last_tgmpa_notice_values ) ) );
     }
 
+
+
+    //hook : wp_head
+    public function dismiss() {
+      $user_id = get_current_user_id();
+      if ( isset( $_GET[sanitize_key( 'tgmpa-dismiss' )] ) )
+        update_user_meta( $user_id, 'tgmpa_dismissed_notice', 1 );
+    }
 
 
 
@@ -1034,7 +1049,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
      */
     public function update_dismiss() {
       //* HU MODS
-      //delete_user_meta( get_current_user_id(), 'tgmpa_dismissed_notice' );
+      delete_user_meta( get_current_user_id(), 'tgmpa_dismissed_notice' );
       $user_id = get_current_user_id();
       delete_transient( "hu_{$user_id}_tgmpa_dismissed_notice" );
     }
@@ -1097,7 +1112,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
     }
 
 
-     /**
+    /**
     * HU MODS
     * hook : admin_footer
     */
@@ -1111,7 +1126,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
                       action  : 'dismiss_tgmpa_notice',
                       dismissTgpmaNoticeNonce :  "<?php echo wp_create_nonce( 'dismiss-tgpma-notice-nonce' ); ?>"
                   },
-                  $ = jQuery;
+                  $ = $ || jQuery;
 
 
               $.post( AjaxUrl, _query )
@@ -1131,7 +1146,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 
           //on load
           $( function($) {
-            $('#setting-error-tgmpa .dismiss-notice').click( function( e ) {
+            $('#setting-error-tgmpa .reminder-notice').click( function( e ) {
               e.preventDefault();
               _ajax_action( $(this) );
             } );
