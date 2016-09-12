@@ -9,58 +9,58 @@
 }
 
 .about-wrap h3 {
-	line-height: 26px;
+  line-height: 26px;
 }
 #hueman-admin-panel.about-wrap .feature-section {
-		margin-top: 0px;
+    margin-top: 0px;
     padding: 0;
 }
 .about-wrap .feature-section div {
-	text-align: center;
+  text-align: center;
 }
 
 .about-text.tc-welcome {
-	margin: 1em 0;
+  margin: 1em 0;
 }
 
 .about-wrap .feature-section.three-col img.tc-donate {
-	background: none;
-	border: none;
-	-webkit-box-shadow: none;
-	box-shadow: none;
-	max-width: none;
-	float: none;
+  background: none;
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  max-width: none;
+  float: none;
 }
 
 
 .images-stagger-right img {
-	float: right;
-	padding-left: 20px;
+  float: right;
+  padding-left: 20px;
 }
 
 .images-stagger-left img {
-	float: left;
-	padding-right: 20px;
+  float: left;
+  padding-right: 20px;
 }
 
 .tc-follow {
-	margin-bottom: 11px;
+  margin-bottom: 11px;
 }
 
 .button-primary.review-hueman {
-	margin-top: 9px;
+  margin-top: 9px;
 }
 
 .tc-upgrade-notice {
-	background-color: #FFFFE0;
-	border: 1px solid #E6DB55;
-	padding: 0px;
-	margin: 5px 0px;
-	text-align: center;
+  background-color: #FFFFE0;
+  border: 1px solid #E6DB55;
+  padding: 0px;
+  margin: 5px 0px;
+  text-align: center;
 }
 
 .tc-upgrade-notice p {
-	line-height: 1em;
+  line-height: 1em;
 }
 
 /* ADMIN BAR
@@ -87,9 +87,9 @@ h1.need-help-title:before,
 }
 
 li#wp-admin-bar-tc-hueman-help a {
-	color: #FFF!important;
-	text-decoration: none;
-	background-color: #82b965;
+  color: #FFF!important;
+  text-decoration: none;
+  background-color: #82b965;
   -webkit-transition: background .1s linear;
   -moz-transition: background .1s linear;
   -ms-transition: background .1s linear;
@@ -103,36 +103,44 @@ li#wp-admin-bar-tc-hueman-help a {
 }
 
 h1.need-help-title:before {
-	padding-right: 17px;
-	top: 1px;
-	font-size: 1.2em;
-	color:#82b965;
+  padding-right: 17px;
+  top: 1px;
+  font-size: 1.2em;
+  color:#82b965;
 }
 
 #hueman-admin-panel .button-secondary.hueman-help {
-	line-height: 25px;
-	padding-top: 11px;
-	height: 51px;
-	font-size: 20px;
-	font-family: 'georgia';
-	width: 95%;
-	white-space: normal;
+  line-height: 25px;
+  padding-top: 11px;
+  height: 51px;
+  font-size: 20px;
+  font-family: 'georgia';
+  width: 95%;
+  white-space: normal;
 }
 
 .about-wrap .feature-section .tc-follow img {
-	background: none;
-	max-width: none;
-	float: none;
+  background: none;
+  max-width: none;
+  float: none;
 }
 
 .about-wrap #showcase .feature-section img {
-	border: none;
-	-webkit-box-shadow: none;
-	box-shadow: none;
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 
 
 /* HUEMAN ADDONS NOTICE */
+#setting-error-tgmpa {
+  position: relative;
+}
 #setting-error-tgmpa .notice-dismiss {
   display: none;
+}
+#setting-error-tgmpa .hu-addons-img {
+  right: 4px;
+  position: absolute;
+  top: 4px;
 }
