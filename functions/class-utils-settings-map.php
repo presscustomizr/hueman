@@ -72,28 +72,29 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
       $_new_map = array();
       $_settings_sections = array(
         //GENERAL
-         'hu_site_identity_sec',
-         'hu_general_design_sec',
-         'hu_comments_sec',
-         'hu_smoothscroll_sec',
-         'hu_mobiles_sec',
-         'hu_social_links_sec',
-         'hu_performance_sec',
-         'hu_admin_sec',
+        'hu_site_identity_sec',
+        'hu_general_design_sec',
+        'hu_comments_sec',
+        'hu_smoothscroll_sec',
+        'hu_mobiles_sec',
+        'hu_social_links_sec',
+        'hu_performance_sec',
+        'hu_admin_sec',
 
         //HEADER
-         'hu_header_design_sec',
-         'hu_header_widget_sec',
+        'hu_header_design_sec',
+        'hu_header_widget_sec',
+        'hu_header_img_sec',
 
         //CONTENT
-         'hu_content_blog_sec',
-         'hu_content_single_sec',
-         'hu_content_thumbnail_sec',
-         'hu_content_layout_sec',
-         'hu_sidebars_design_sec',
+        'hu_content_blog_sec',
+        'hu_content_single_sec',
+        'hu_content_thumbnail_sec',
+        'hu_content_layout_sec',
+        'hu_sidebars_design_sec',
 
         //FOOTER
-         'hu_footer_design_sec',
+        'hu_footer_design_sec',
 
       );
 
@@ -504,7 +505,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'header_design_sec' ,
                 'sanitize_callback' => array( $this , 'hu_sanitize_number' ),
                 'width'     => 1200,
-                'height'    => 180,
+                'height'    => 280,
                 'flex_width' => true,
                 'flex_height' => true,
                 //to keep the selected cropped size
@@ -528,6 +529,23 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'header_widget_sec',
                 'type'      => 'checkbox',
                 'notice'    => __( 'Header widget area, perfect to insert advertisements. Note : this feature is not available when a header image is being displayed.' , 'hueman')
+          )
+      );
+    }
+
+    /*-----------------------------------------------------------------------------------------------------
+                                   GLOBAL HEADER IMAGE SECTION
+    ------------------------------------------------------------------------------------------------------*/
+    function hu_header_img_sec() {
+      return array(
+          'use-header-image' => array(
+                'default'   => 0,
+                'priority'  => 0,
+                'control'   => 'HU_controls',
+                'label'     => __( 'Use a header image' , 'hueman' ),
+                'section'   => 'header_image',
+                'type'      => 'checkbox',
+                'notice'    => __('Upload a header image (supported formats : .jpg, .png, .gif, svg, svgz). This will disable header title/logo, site description, header ads widget' , 'hueman')
           )
       );
     }

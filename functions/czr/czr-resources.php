@@ -229,6 +229,13 @@ function hu_extend_visibilities() {
       api.CZR_visibilities.prototype.controlDeps = _.extend(
         api.CZR_visibilities.prototype.controlDeps,
         {
+          'use-header-image' : {
+            controls : ['header_image'],
+            callback : function(to) {
+              console.log('ALORS?', to );
+              return '0' !== to && false !== to && 'off' !== to;
+            }
+          },
           'dynamic-styles' : {
             controls: [
               'boxed',

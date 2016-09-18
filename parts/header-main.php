@@ -4,7 +4,7 @@
   <?php endif; ?>
   <div class="container group">
     <div class="container-inner">
-      <?php $_header_img_src = hu_get_img_src_from_option('header-image'); ?>
+      <?php $_header_img_src = get_header_image();// hu_get_img_src_from_option('header-image'); ?>
       <?php if ( ! $_header_img_src || empty( $_header_img_src ) ): ?>
 
         <div class="group pad">
@@ -21,7 +21,7 @@
 
       <?php else :  ?>
           <a href="<?php echo home_url('/'); ?>" rel="home">
-            <img class="site-image" src="<?php echo hu_get_img_src_from_option('header-image'); ?>" alt="<?php echo get_bloginfo('name'); ?>">
+            <img class="site-image" src="<?php echo $_header_img_src; ?>" alt="<?php echo get_bloginfo('name'); ?>">
           </a>
       <?php endif; ?>
 

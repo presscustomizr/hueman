@@ -235,6 +235,11 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
         $_priority = $_priority + 10;
       }//foreach
+
+
+      //MOVE THE HEADER IMAGE SECTION IN THE HEADER PANEL
+      //note : the setting is kept because used in the customizer js api to handle the transition between Hueman favicon to WP site icon.
+      $wp_customize -> get_section( 'header_image' ) -> panel = 'hu-header-panel';
     }
 
 
@@ -258,7 +263,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
      * Therefore to add a section and a control to the Widgets panel, we have to follow the same logic
      * if not, the added section will always be deactivated.
      *
-     * However, the related setting added in this section must always be registered early in customize_register
+     * Note that the related setting added in this section must always be registered early in customize_register
      */
     function hu_schedule_register_sidebar_section( $wp_customize ) {
       $this -> hu_customize_factory (
@@ -629,7 +634,8 @@ if ( ! class_exists( 'HU_customize' ) ) :
         'background_color',
         'show_on_front',
         'page_on_front',
-        'page_for_posts'
+        'page_for_posts',
+        'header_image'
       );
     }
   }//end of class

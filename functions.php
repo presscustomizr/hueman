@@ -10,3 +10,27 @@ load_template( get_template_directory() . '/functions/init-core.php' );
 * https://codex.wordpress.org/Child_Themes
 *
 */
+
+add_action('__before_content', function() {
+    /* if ( is_array(hu_get_option('header-image') )
+      array_walk_recursive(hu_get_option('header-image', function(&$v) { $v = htmlspecialchars($v); }); */
+    ?>
+      <pre>
+        <?php print_r(hu_get_option('header-image') ); ?>
+      </pre>
+    <?php
+    $current_header_id = hu_get_option('header-image');
+    $src = wp_get_attachment_image_src( $current_header_id, 'large', false );
+    /* if ( is_array() )
+      array_walk_recursive(, function(&$v) { $v = htmlspecialchars($v); }); */
+    ?>
+      <pre>
+        <?php print_r($src); ?>
+      </pre>
+    <?php
+    ?>
+      <pre>
+        <?php print_r(get_theme_mod( 'header_image') ); ?>
+      </pre>
+    <?php
+});

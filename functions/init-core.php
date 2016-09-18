@@ -213,9 +213,9 @@ function hu_get_img_src_from_option( $option_name ) {
   if ( ! $_img_option )
     return;
 
-  $_logo_src      = hu_get_img_src( $_img_option );
+  $_src      = hu_get_img_src( $_img_option );
   //hook
-  return apply_filters( "hu_logo_src" , $_logo_src ) ;
+  return apply_filters( "hu_img_src_from_option" , $_src, $option_name ) ;
 }
 
 
@@ -765,19 +765,26 @@ if ( !isset( $content_width ) ) { $content_width = 720; }
 if ( ! function_exists( 'hu_setup' ) ) {
 
   function hu_setup() {
+    // Enable header image
+    // the header image is stored as a theme mod option
+    // get_theme_mod( 'header_image', get_theme_support( 'custom-header', 'default-image' ) );
+    // Backward compat : if a header-image was previously set by the user, then it becomes the default image, otherwise we fall back on the asset's default.
+    add_theme_support( 'custom-header', array(
+        'default-image' => ( false != hu_get_option('header-image') ) ? hu_get_img_src_from_option('header-image') : sprintf( '%1$s/assets/front/img/header/default-header-280.jpg' , get_template_directory_uri() ),
+        'width'     => 1200,
+        'height'    => 280,
+        'flex-width' => true,
+        'flex-height' => true
+    ) );
     // Enable title tag
     add_theme_support( 'title-tag' );
-
     // Enable automatic feed links
     // => Adds RSS feed links to <head> for posts and comments.
     add_theme_support( 'automatic-feed-links' );
-
     // Enable featured image
     add_theme_support( 'post-thumbnails' );
-
     // Enable post format support
     add_theme_support( 'post-formats', array( 'audio', 'aside', 'chat', 'gallery', 'image', 'link', 'quote', 'status', 'video' ) );
-
     // Declare WooCommerce support
     add_theme_support( 'woocommerce' );
 
