@@ -237,9 +237,9 @@ if ( ! class_exists( 'HU_customize' ) ) :
       }//foreach
 
 
-      //MOVE THE HEADER IMAGE SECTION IN THE HEADER PANEL
-      //note : the setting is kept because used in the customizer js api to handle the transition between Hueman favicon to WP site icon.
-      $wp_customize -> get_section( 'header_image' ) -> panel = 'hu-header-panel';
+      //MOVE THE HEADER IMAGE CONTROL INTO THE HEADER DESIGN SECTION
+      $wp_customize -> get_control( 'header_image' ) -> section = 'header_design_sec';
+      $wp_customize -> get_control( 'header_image' ) -> priority = 100;
     }
 
 

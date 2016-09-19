@@ -4,8 +4,11 @@
   <?php endif; ?>
   <div class="container group">
     <div class="container-inner">
-      <?php $_header_img_src = get_header_image();// hu_get_img_src_from_option('header-image'); ?>
-      <?php if ( ! $_header_img_src || empty( $_header_img_src ) ): ?>
+      <?php
+        $_header_img_src = get_header_image();// hu_get_img_src_from_option('header-image');
+        $_has_header_img = false != $_header_img_src && ! empty( $_header_img_src );
+      ?>
+      <?php if ( ! $_has_header_img || ! hu_is_checked( 'use-header-image' ) ) : ?>
 
         <div class="group pad">
           <?php echo hu_site_title(); ?>

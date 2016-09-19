@@ -769,13 +769,47 @@ if ( ! function_exists( 'hu_setup' ) ) {
     // the header image is stored as a theme mod option
     // get_theme_mod( 'header_image', get_theme_support( 'custom-header', 'default-image' ) );
     // Backward compat : if a header-image was previously set by the user, then it becomes the default image, otherwise we fall back on the asset's default.
+    $_old_header_image_val = hu_get_option('header-image');
+    $did_user_set_an_image = false != $_old_header_image_val && ! empty($_old_header_image_val);
+    $headers = apply_filters( 'hu_default_header_img' , array(
+            'default-header' => array(
+              'url'           => '%s/assets/front/img/header/default-header-280.jpg',
+              'thumbnail_url' => '%s/assets/front/img/header/default-header-280.jpg',
+              'description'   => 'Coffee'
+            ),
+            'yosemite' => array(
+              'url'           => '%s/assets/front/img/header/yosemite-280.jpg',
+              'thumbnail_url' => '%s/assets/front/img/header/yosemite-280.jpg',
+              'description'   => 'Yosemite'
+            ),
+            'bridge' => array(
+              'url'           => '%s/assets/front/img/header/bridge-280.jpg',
+              'thumbnail_url' => '%s/assets/front/img/header/bridge-280.jpg',
+              'description'   => 'Golden Gate Bridge'
+            ),
+            'nyc' => array(
+              'url'           => '%s/assets/front/img/header/nyc-280.jpg',
+              'thumbnail_url' => '%s/assets/front/img/header/nyc-280.jpg',
+              'description'   => 'New York City'
+            ),
+            'california' => array(
+              'url'           => '%s/assets/front/img/header/california-280.jpg',
+              'thumbnail_url' => '%s/assets/front/img/header/california-280.jpg',
+              'description'   => 'California'
+            )
+        )
+    );
+    register_default_headers( $headers );
+
     add_theme_support( 'custom-header', array(
-        'default-image' => ( false != hu_get_option('header-image') ) ? hu_get_img_src_from_option('header-image') : sprintf( '%1$s/assets/front/img/header/default-header-280.jpg' , get_template_directory_uri() ),
-        'width'     => 1200,
+        'default-image' => $did_user_set_an_image ? hu_get_img_src_from_option('header-image') : sprintf( '%1$s/assets/front/img/header/default-header-280.jpg' , get_template_directory_uri() ),
+        'width'     => 1380,
         'height'    => 280,
         'flex-width' => true,
-        'flex-height' => true
+        'flex-height' => true,
+        'header-text'  => false
     ) );
+
     // Enable title tag
     add_theme_support( 'title-tag' );
     // Enable automatic feed links
