@@ -226,14 +226,16 @@ function hu_extend_visibilities() {
   ?>
   <script id="control-visibilities" type="text/javascript">
     (function (api, $, _) {
+      var _is_checked = function( to ) {
+          return 0 !== to && '0' !== to && false !== to && 'off' !== to;
+      };
       api.CZR_visibilities.prototype.controlDeps = _.extend(
         api.CZR_visibilities.prototype.controlDeps,
         {
           'use-header-image' : {
             controls : ['header_image'],
             callback : function(to) {
-              console.log('ALORS?', to );
-              return '0' !== to && false !== to && 'off' !== to;
+              return _is_checked(to);
             }
           },
           'dynamic-styles' : {
@@ -251,7 +253,7 @@ function hu_extend_visibilities() {
               'body-background'
             ],
             callback : function (to) {
-              return '0' !== to && false !== to && 'off' !== to;
+              return _is_checked(to);
             },
           },
           'blog-heading-enabled' : {
@@ -260,7 +262,7 @@ function hu_extend_visibilities() {
               'blog-subheading'
             ],
             callback : function (to) {
-              return '0' !== to && false !== to && 'off' !== to;
+              return _is_checked(to);
             },
           },
           'featured-posts-enabled' : {
@@ -273,7 +275,7 @@ function hu_extend_visibilities() {
               'featured-posts-include'
             ],
             callback : function (to) {
-              return '0' !== to && false !== to && 'off' !== to;
+              return _is_checked(to);
             },
           },
           'featured-slideshow' : {
@@ -281,7 +283,7 @@ function hu_extend_visibilities() {
               'featured-slideshow-speed'
             ],
             callback : function (to) {
-              return '0' !== to && false !== to && 'off' !== to;
+              return _is_checked(to);
             },
           },
           'about-page' : {
@@ -289,7 +291,7 @@ function hu_extend_visibilities() {
               'help-button'
             ],
             callback : function (to) {
-              return '0' !== to && false !== to && 'off' !== to;
+              return _is_checked(to);
             },
           }
         }//end of visibility {}
