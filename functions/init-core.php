@@ -204,6 +204,7 @@ function hu_get_img_src( $img ) {
   return is_ssl() ? str_replace('http://', 'https://', $_img_src) : $_img_src;
 }
 
+
 /**
 * wrapper of hu_get_img_src specific for theme options
 * @return logo src string
@@ -211,7 +212,7 @@ function hu_get_img_src( $img ) {
 function hu_get_img_src_from_option( $option_name ) {
   $_img_option    = esc_attr( hu_get_option($option_name) );
   if ( ! $_img_option )
-    return;
+    $_src = false;
 
   $_src      = hu_get_img_src( $_img_option );
   //hook
@@ -683,10 +684,11 @@ function hu_clean_old_sidebar_options( $_new_sb_opts, $__options ) {
   return $_new_sb_opts;
 }
 
-
-function hu_maybe_update_options() {
-  $_options = get_option( HU_THEME_OPTIONS );
-
+//fired early
+//@param $_options = get_option( HU_THEME_OPTIONS )
+//handles the transfer from option tree to customizer
+//=> as of v3.0.10, options have been moved from option tree to customizer to be compliant with the wp.org theme guidelines
+function hu_maybe_transfer_option_tree_to_customizer( $_options ) {
   $copy_option_tree = isset( $_GET['copy_option_tree'] );
 
   //have the option already been copied ?
@@ -708,11 +710,46 @@ function hu_maybe_update_options() {
 
 }
 
+//fired early
+//@return void()
+//@param $_options = get_option( HU_THEME_OPTIONS )
+//handles the transition to the WP custom_logo support introduced in wp 4.5.
+//Several cases :
+//1) user had defined a custom logo with the previous Hueman option
+//=> the option has to be copied to WP custom_logo theme mod
+//=> display-header-logo set to true
+//2) user had not defined a custom logo in Hueman
+//=> display-header-logo set to false
+function hu_maybe_copy_logo_to_theme_mod( $_options ) {
+  //keep using the old logo if WP version < 4.5
+  if ( ! function_exists( 'the_custom_logo' ) )
+    return;
+
+  $_old_custom_logo_exists = isset($_options['custom-logo']) && false != $_options['custom-logo'] && ! empty($_options['custom-logo']) && is_int($_options['custom-logo']);
+  $_wp_custom_logo = get_theme_mod( 'custom_logo' );
+  $_wp_custom_logo_exists = false != $_wp_custom_logo && ! empty($_wp_custom_logo) && is_int($_wp_custom_logo);
+
+  if ( $_old_custom_logo_exists ) {
+    set_theme_mod( 'custom_logo', $_options['custom-logo'] );
+    $_options['display-header-logo'] = 1;
+    unset($_options['custom-logo']);
+  } else if ( $_wp_custom_logo_exists ) {
+    //don't display a possible previous wp logo automatically
+    $_options['display-header-logo'] = 0;
+  }
+
+  update_option( HU_THEME_OPTIONS, $_options );
+}
+
 
 //copy old options from option tree framework into new option raw 'hu_theme_options'
 //only if user is logged in
-if ( is_user_logged_in() )
-  hu_maybe_update_options();
+if ( is_user_logged_in() && current_user_can( 'edit_theme_options' ) ) {
+  $_options = get_option( HU_THEME_OPTIONS );
+  hu_maybe_transfer_option_tree_to_customizer( $_options );
+  hu_maybe_copy_logo_to_theme_mod( $_options );
+}
+
 
 
 /* ------------------------------------------------------------------------- *
@@ -808,6 +845,14 @@ if ( ! function_exists( 'hu_setup' ) ) {
         'flex-width' => true,
         'flex-height' => true,
         'header-text'  => false
+    ) );
+
+    // Enable Custom Logo
+    add_theme_support( 'custom-logo', array(
+        'width'     => 250,
+        'height'    => 100,
+        'flex-width' => true,
+        'flex-height' => true,
     ) );
 
     // Enable title tag

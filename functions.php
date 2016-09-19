@@ -10,3 +10,14 @@ load_template( get_template_directory() . '/functions/init-core.php' );
 * https://codex.wordpress.org/Child_Themes
 *
 */
+
+add_action('__before_content', function() {
+    /* if ( is_array(hu_get_option('header-image') )
+      array_walk_recursive(hu_get_option('header-image', function(&$v) { $v = htmlspecialchars($v); }); */
+    /*?>
+      <pre>
+        <?php print_r(hu_get_option('header-image') ); ?>
+      </pre>
+    <?php
+*/
+});

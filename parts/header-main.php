@@ -11,7 +11,7 @@
       <?php if ( ! $_has_header_img || ! hu_is_checked( 'use-header-image' ) ) : ?>
 
         <div class="group pad">
-          <?php echo hu_site_title(); ?>
+          <?php echo hu_site_title();//gets the logo or the site title ?>
           <?php if ( hu_is_checked('site-description') ): ?><p class="site-description"><?php bloginfo( 'description' ); ?></p><?php endif; ?>
 
           <?php if ( hu_is_checked('header-ads') ): ?>

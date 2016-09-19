@@ -232,6 +232,12 @@ function hu_extend_visibilities() {
       api.CZR_visibilities.prototype.controlDeps = _.extend(
         api.CZR_visibilities.prototype.controlDeps,
         {
+          'display-header-logo' : {
+            controls : ['logo-max-height', 'custom_logo', 'custom-logo'],
+            callback : function(to) {
+              return _is_checked(to);
+            }
+          },
           'use-header-image' : {
             controls : ['header_image'],
             callback : function(to) {
