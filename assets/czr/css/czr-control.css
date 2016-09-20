@@ -253,7 +253,7 @@ li[id*="customize-control-"] {
 	top: 7px;
 }
 .control-section.control-panel .accordion-section-title:after {
-	top: 7px;
+	top: 11px;
 	-webkit-transition: right .3s ease-in-out, opacity .3s ease-in-out;
 	-moz-transition: right .3s ease-in-out, opacity .3s ease-in-out;
 	-ms-transition: right .3s ease-in-out, opacity .3s ease-in-out;
