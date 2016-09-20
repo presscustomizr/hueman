@@ -35,6 +35,8 @@ if ( ! class_exists( 'HU_customize' ) ) :
       add_action( 'customize_register'                       , array( $this , 'hu_alter_wp_customizer_settings' ), 30, 1 );
        //Partial refreshs
       add_action( 'customize_register'                        , array( $this,  'hu_register_partials' ) );
+      //Clean some deprecated options (header-image for example, now handled with wp header_image theme mod)
+      add_action( 'customize_save_after'                      , array( $this,  'hu_clean_deprecated_options' ) );
 
       //Print modules and inputs templates
       $this -> hu_load_tmpl();
@@ -45,6 +47,30 @@ if ( ! class_exists( 'HU_customize' ) ) :
       $this -> css_attr = $this -> hu_get_controls_css_attr();
 
       locate_template( 'functions/czr/czr-resources.php', true, true );
+    }
+
+
+    //hook : customize_save_after
+    //When the users modifies the header_image, check if the old option exists and remove it if needed
+    function hu_clean_deprecated_options( $manager_inst ) {
+      //can we do things ?
+      if ( ! $manager_inst->is_preview() ) {
+        return;
+      }
+      $action = 'save-customize_' . $manager_inst->get_stylesheet();
+      if ( ! check_ajax_referer( $action, 'nonce', false ) ) {
+        return;
+      }
+      //only attempt to update option when header_image is modified
+      $setting_validities = $manager_inst->validate_setting_values( $manager_inst->unsanitized_post_values() );
+      if ( ! is_array( $setting_validities ) || ! isset($setting_validities['header_image'] ) )
+        return;
+      //clean old option if exists
+      $_options = get_option( HU_THEME_OPTIONS );
+      if ( isset($_options['header-image']) ) {
+        unset( $_options['header-image']);
+        update_option( HU_THEME_OPTIONS, $_options );
+      }
     }
 
 

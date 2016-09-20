@@ -958,6 +958,18 @@ li#customize-control-tc_theme_options-tc_custom_css textarea {
      left: auto;
    }
  }
+
+ @media screen and (min-width: 980px) {
+  .wp-customizer .expanded #customize-footer-actions {
+      width: 380px;
+  }
+}
+
+@media screen and (min-width: 1401px) {
+  .wp-customizer .expanded #customize-footer-actions {
+      width: 440px;
+  }
+}
 /*
  * Selecter v3.1.9 - 2014-09-02
  * A jQuery plugin for replacing default select elements. Part of the Formstone Library.
