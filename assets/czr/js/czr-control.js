@@ -6663,7 +6663,7 @@ $.extend( CZRLayoutSelectMths , {
                             setId : setId,
                             controls  : self._get_dependants(setId),
                           };
-                          _.map( _params.controls , function( depSetId ) {
+                          _.each( _params.controls , function( depSetId ) {
                             self._set_single_dependant_control_visibility( depSetId , _params);
                           } );
                     });
