@@ -141,7 +141,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'sanitize_callback' => array( $this , 'hu_sanitize_number' )
           ),
           'display-header-logo' => array(
-                'default'   => 1,
+                'default'   => 0,
                 'priority'  => 5,
                 'control'   => 'HU_controls',
                 'label'     => __( 'Display a logo in your header' , 'hueman' ),
@@ -154,6 +154,19 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 //     __("Global Settings > Site Identity", "hueman")
                 //   )
                 // )
+          ),
+          'logo-max-height'  =>  array(
+                'default'       => 60,
+                'priority'      => 9,
+                'control'       => 'HU_controls' ,
+                'sanitize_callback' => array( $this , 'hu_sanitize_number' ),
+                'label'         => __( "Header Logo Image Max-height" , 'hueman' ),
+                'section'       => 'title_tagline',
+                'type'          => 'number' ,
+                'step'          => 1,
+                'min'           => 20,
+                'transport'     => 'postMessage'
+                //'notice'        => __('Your logo image should have the double height of this to be high resolution', 'hueman')
           )
       );
     }
@@ -482,23 +495,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
       $_old_header_img_id = hu_get_option('header-image');
       $did_user_set_a_header_image = false != $_old_header_img_id && ! empty($_old_header_img_id);
 
-      //the custom logo was previously handled with a specific Hueman option.
-      //=> for users who had set this option, the display-header-logo checkbox should be checked
-      $_old_logo_img_id = hu_get_option('custom-logo');
-      $did_user_set_a_custom_logo = false != $_old_logo_img_id && ! empty($_old_logo_img_id);
       return array(
-          'logo-max-height'  =>  array(
-                'default'       => 60,
-                'control'       => 'HU_controls' ,
-                'sanitize_callback' => array( $this , 'hu_sanitize_number' ),
-                'label'         => __( "Header Logo Image Max-height" , 'hueman' ),
-                'section'       => 'header_design_sec' ,
-                'type'          => 'number' ,
-                'step'          => 1,
-                'min'           => 20,
-                'transport'     => 'postMessage'
-                //'notice'        => __('Your logo image should have the double height of this to be high resolution', 'hueman')
-          ),
           'site-description' => array(
                 'default'   => 1,
                 'control'   => 'HU_controls',
@@ -1126,7 +1123,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         -> PANEL : HEADER
         ----------------------------------------------------------------------------------------------*/
         'header_design_sec'         => array(
-              'title'    => __( "Header Design : logo's height, banner image, ...", 'hueman' ),
+              'title'    => __( "Header Design : banner image, ...", 'hueman' ),
               'priority' => 10,
               'panel'   => 'hu-header-panel'
         ),

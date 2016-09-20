@@ -497,6 +497,8 @@ if ( ! function_exists( 'hu_set_custom_logo' ) ) {
     if ( 'custom-logo' != $option_name )
       return $_src;
     //do we have a custom logo available in the theme_mods ?
+    if ( ! function_exists( 'the_custom_logo' ) )
+      return $_src;
     $custom_logo_id = get_theme_mod( 'custom_logo' );
     if ( false == $custom_logo_id || empty($custom_logo_id) )
       return $_src;

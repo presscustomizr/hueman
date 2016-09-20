@@ -233,15 +233,32 @@ function hu_extend_visibilities() {
         api.CZR_visibilities.prototype.controlDeps,
         {
           'display-header-logo' : {
-            controls : ['logo-max-height', 'custom_logo', 'custom-logo'],
+            controls : ['logo-max-height', 'custom_logo', 'custom-logo' ],//depending on the WP version, the custom logo option is different.
             callback : function(to) {
               return _is_checked(to);
             }
           },
           'use-header-image' : {
-            controls : ['header_image'],
-            callback : function(to) {
-              return _is_checked(to);
+            controls : ['header_image', 'custom_logo', 'title', 'blogdescription'],
+            callback : function(to, dependant_setting_id ) {
+              console.log('dependant_setting_id', dependant_setting_id );
+                var _return = true;
+                switch( dependant_setting_id ) {
+                    case 'custom_logo' :
+                    case 'title' :
+                    case 'blogdescription' :
+                        if ( _is_checked(to) ) {
+                          console.log( api.control(dependant_setting_id).container.find('.customize-control-title') );
+                          var _html = '<span class="description customize-control-description">The Site Icon is used as a browser and app icon for your site. Icons must be square, and at least <strong>512</strong> pixels wide and tall.</span>';
+                          api.control(dependant_setting_id).container.find('.customize-control-title').after( _html );
+                        }
+                    break;
+
+                    case 'header_image' :
+                      _return = _is_checked(to);
+                    break;
+                }
+                return _return;
             }
           },
           'dynamic-styles' : {

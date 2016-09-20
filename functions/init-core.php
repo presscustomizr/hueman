@@ -726,23 +726,18 @@ function hu_maybe_copy_logo_to_theme_mod( $_options ) {
     return;
 
   $_old_custom_logo_exists = isset($_options['custom-logo']) && false != $_options['custom-logo'] && ! empty($_options['custom-logo']) && is_int($_options['custom-logo']);
-  $_wp_custom_logo = get_theme_mod( 'custom_logo' );
-  $_wp_custom_logo_exists = false != $_wp_custom_logo && ! empty($_wp_custom_logo) && is_int($_wp_custom_logo);
-
   if ( $_old_custom_logo_exists ) {
     set_theme_mod( 'custom_logo', $_options['custom-logo'] );
+    add_filter( 'hu_default_display_header_logo_bool', '__return_true' );
     $_options['display-header-logo'] = 1;
     unset($_options['custom-logo']);
-  } else if ( $_wp_custom_logo_exists ) {
-    //don't display a possible previous wp logo automatically
-    $_options['display-header-logo'] = 0;
+    update_option( HU_THEME_OPTIONS, $_options );
   }
-
-  update_option( HU_THEME_OPTIONS, $_options );
 }
 
 
 //copy old options from option tree framework into new option raw 'hu_theme_options'
+//copy logo from previous to custom_logo introduced in wp 4.5
 //only if user is logged in
 if ( is_user_logged_in() && current_user_can( 'edit_theme_options' ) ) {
   $_options = get_option( HU_THEME_OPTIONS );

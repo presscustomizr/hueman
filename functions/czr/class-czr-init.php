@@ -36,10 +36,10 @@ if ( ! class_exists( 'HU_customize' ) ) :
       //Partial refreshs
       add_action( 'customize_register'                       , array( $this,  'hu_register_partials' ) );
 
-      //custom logo fall back for WP version < WP 4.5
+      //custom logo compatibility option for WP version < WP 4.5
       //the Hueman theme has switched to the WP custom_logo theme mod since v3.2.4
       //for older version, the previous control is used
-      if ( function_exists( 'the_custom_logo' ) ) {
+      if ( ! function_exists( 'the_custom_logo' ) ) {
         add_filter( 'hu_site_identity_sec', array( $this, 'hu_register_old_custom_logo') );
       }
 
@@ -77,7 +77,8 @@ if ( ! class_exists( 'HU_customize' ) ) :
                 //to keep the selected cropped size
                 'dst_width'  => false,
                 'dst_height'  => false,
-                'notice'    => __('Upload your custom logo image. Supported formats : .jpg, .png, .gif, svg, svgz' , 'hueman')
+                'notice'    => __('Upload your custom logo image. Supported formats : .jpg, .png, .gif, svg, svgz' , 'hueman'),
+                'priority' => 7
               )
           )
         );
@@ -277,6 +278,9 @@ if ( ! class_exists( 'HU_customize' ) ) :
       //MOVE THE HEADER IMAGE CONTROL INTO THE HEADER DESIGN SECTION
       $wp_customize -> get_control( 'header_image' ) -> section = 'header_design_sec';
       $wp_customize -> get_control( 'header_image' ) -> priority = 100;
+
+      //CHANGE THE CUSTOM LOGO PRIORITY
+      $wp_customize -> get_control( 'custom_logo' ) -> priority = 7;
     }//end of hu_alter_wp_customizer_settings()
 
 
@@ -666,8 +670,8 @@ if ( ! class_exists( 'HU_customize' ) ) :
       return array(
         'blogname',
         'blogdescription',
-        'site-icon',
-        'custom-logo',
+        'site_icon',
+        'custom_logo',
         'background_color',
         'show_on_front',
         'page_on_front',
