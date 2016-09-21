@@ -180,7 +180,8 @@ if ( ! function_exists( 'hu_site_title' ) ) {
 
   function hu_site_title() {
     // Text or image?
-    if ( false != hu_get_img_src_from_option( 'custom-logo' ) ) {
+    // Since v3.2.4, uses the WP 'custom_logo' theme mod option. Set with a filter.
+    if ( hu_is_checked('display-header-logo') && false != hu_get_img_src_from_option( 'custom-logo' ) ) {
       $logo = '<img src="'. hu_get_img_src_from_option( 'custom-logo' ) . '" alt="'.get_bloginfo('name').'">';
     } else {
       $logo = get_bloginfo('name');
@@ -441,10 +442,6 @@ if ( ! function_exists( 'hu_print_placeholder_thumb' ) ) {
 
 
 
-/*  Metas
-/* ------------------------------------ */
-
-
 
 
 
@@ -490,6 +487,28 @@ if ( ! function_exists( 'hu_favicon' ) ) {
 
 }
 add_filter( 'wp_head', 'hu_favicon' );
+
+
+/*  Custom logo
+/* ------------------------------------ */
+//the purpose of this filter is to handle the retro-compatibility for the WP custom logo introduced in wp 4.5 and implemented in Hueman v3.2.4+
+if ( ! function_exists( 'hu_set_custom_logo' ) ) {
+  function hu_set_custom_logo( $_src, $option_name ) {
+    if ( 'custom-logo' != $option_name )
+      return $_src;
+    //do we have a custom logo available in the theme_mods ?
+    if ( ! function_exists( 'the_custom_logo' ) )
+      return $_src;
+    $custom_logo_id = get_theme_mod( 'custom_logo' );
+    if ( false == $custom_logo_id || empty($custom_logo_id) )
+      return $_src;
+
+    return hu_get_img_src( $custom_logo_id );
+  }
+}
+add_filter( 'hu_img_src_from_option', 'hu_set_custom_logo', 10, 2 );
+
+
 
 
 /*  Excerpt ending
@@ -560,6 +579,9 @@ if ( ! function_exists( 'hu_browser_body_class' ) ) {
 
 }
 add_filter( 'body_class', 'hu_browser_body_class' );
+
+
+
 
 
 

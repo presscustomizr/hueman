@@ -6664,17 +6664,21 @@ $.extend( CZRLayoutSelectMths , {
                             controls  : self._get_dependants(setId),
                           };
                           _.each( _params.controls , function( depSetId ) {
-                            self._set_single_dependant_control_visibility( depSetId , _params);
+                              wpDepSetId = api.CZR_Helpers.build_setId(depSetId );
+                              if ( ! api.control.has(wpDepSetId) )
+                                return;
+                              if ( 'function' == typeof( api.control( wpDepSetId ).section ) ) {
+                                  api.section( api.control( wpDepSetId ).section() ).expanded.bind( function(to) {
+                                        self._set_single_dependant_control_visibility( depSetId , _params);
+                                  });
+                              } else {
+                                  self._set_single_dependant_control_visibility( depSetId , _params);
+                              }
+
                           } );
                     });
                 };
-                if ( 'function' == typeof( api.control( wpSetId ).section ) ) {
-                    api.section( api.control( wpSetId ).section() ).expanded.bind( function(to) {
-                          _set_visibility();
-                    });
-                } else {
-                    _set_visibility();
-                }
+                _set_visibility();
           },
 
 

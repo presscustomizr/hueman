@@ -139,6 +139,34 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'title_tagline',//<= this is a default WP section, not created for the Hueman theme
                 'type'      => 'czr_upload',
                 'sanitize_callback' => array( $this , 'hu_sanitize_number' )
+          ),
+          'display-header-logo' => array(
+                'default'   => 0,
+                'priority'  => 5,
+                'control'   => 'HU_controls',
+                'label'     => __( 'Display a logo in your header' , 'hueman' ),
+                'section'   => 'title_tagline',
+                'type'      => 'checkbox'
+                // 'notice'    => sprintf( __("Your header logo has to be uploaded in %s." , "hueman"),
+                //   sprintf( '<strong><a href="%1$s" title="%3$s">%2$s</a><strong>',
+                //     "javascript:wp.customize.section('title_tagline').focus();",
+                //     __("Global Settings > Site Identity" , "hueman"),
+                //     __("Global Settings > Site Identity", "hueman")
+                //   )
+                // )
+          ),
+          'logo-max-height'  =>  array(
+                'default'       => 60,
+                'priority'      => 9,
+                'control'       => 'HU_controls' ,
+                'sanitize_callback' => array( $this , 'hu_sanitize_number' ),
+                'label'         => __( "Header Logo Image Max-height" , 'hueman' ),
+                'section'       => 'title_tagline',
+                'type'          => 'number' ,
+                'step'          => 1,
+                'min'           => 20,
+                'transport'     => 'postMessage'
+                //'notice'        => __('Your logo image should have the double height of this to be high resolution', 'hueman')
           )
       );
     }
@@ -463,38 +491,11 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     function hu_header_design_sec() {
       global $wp_version;
       //the header_image was previously handled with a specific Hueman option.
-      //=> for users who had set this option, this checkbox should be checked
-      $_old_header_image_val = hu_get_option('header-image');
-      $did_user_set_an_image = false != $_old_header_image_val && ! empty($_old_header_image_val);
+      //=> for users who had set this option, the use-header-image checkbox should be checked
+      $_old_header_img_id = hu_get_option('header-image');
+      $did_user_set_a_header_image = false != $_old_header_img_id && ! empty($_old_header_img_id);
 
       return array(
-          'custom-logo'  => array(
-                'control'   =>  version_compare( $wp_version, '4.3', '>=' ) ? 'HU_Customize_Cropped_Image_Control' : 'HU_Customize_Upload_Control',
-                'label'     =>  __( 'Custom Header Logo' , 'hueman' ),
-                'section'   => 'header_design_sec' ,
-                'sanitize_callback' => array( $this , 'hu_sanitize_number' ),
-                //we can define suggested cropping area and allow it to be flexible (def 150x150 and not flexible)
-                'width'     => 250,
-                'height'    => 100,
-                'flex_width' => true,
-                'flex_height' => true,
-                //to keep the selected cropped size
-                'dst_width'  => false,
-                'dst_height'  => false,
-                'notice'    => __('Upload your custom logo image. Supported formats : .jpg, .png, .gif, svg, svgz' , 'hueman')
-          ),
-          'logo-max-height'  =>  array(
-                'default'       => 60,
-                'control'       => 'HU_controls' ,
-                'sanitize_callback' => array( $this , 'hu_sanitize_number' ),
-                'label'         => __( "Header Logo Image Max-height" , 'hueman' ),
-                'section'       => 'header_design_sec' ,
-                'type'          => 'number' ,
-                'step'          => 1,
-                'min'           => 20,
-                'transport'     => 'postMessage',
-                'notice'        => __('Your logo image should have the double height of this to be high resolution', 'hueman')
-          ),
           'site-description' => array(
                 'default'   => 1,
                 'control'   => 'HU_controls',
@@ -504,9 +505,9 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'notice'    => __( 'The description that appears next to your logo' , 'hueman' )
           ),
           'use-header-image' => array(
-                'default'   => $did_user_set_an_image,
+                'default'   => $did_user_set_a_header_image,
                 'control'   => 'HU_controls',
-                'label'     => __( 'Use a header image' , 'hueman' ),
+                'label'     => __( 'Use a header banner image' , 'hueman' ),
                 'section'   => 'header_design_sec',
                 'type'      => 'checkbox',
                 'notice'    => __('Upload a header image (supported formats : .jpg, .png, .gif, svg, svgz). This will disable header title/logo, site description, header ads widget' , 'hueman')
@@ -1076,7 +1077,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         //the title_tagline section holds the default WP setting for the Site Title and the Tagline
         //This section has been previously removed from its initial location and is added back here
         'title_tagline'         => array(
-              'title'    => __( 'Site Identity : Title, Tagline and Site Icon', 'hueman' ),
+              'title'    => __( 'Site Identity : Logo, Title, Tagline and Site Icon', 'hueman' ),
               'priority' => 10,
               'panel'   => 'hu-general-panel'
         ),
@@ -1122,7 +1123,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         -> PANEL : HEADER
         ----------------------------------------------------------------------------------------------*/
         'header_design_sec'         => array(
-              'title'    => __( 'Header Design : logo, background, ...', 'hueman' ),
+              'title'    => __( "Header Design : banner image, ...", 'hueman' ),
               'priority' => 10,
               'panel'   => 'hu-header-panel'
         ),
