@@ -223,6 +223,12 @@ function hu_add_customize_preview_data() {
 
 //hook : 'customize_controls_enqueue_scripts':10
 function hu_extend_visibilities() {
+  $_notice = sprintf( __( "When the %s, this element will not be displayed in your header.", 'hueman'),
+      sprintf('<a href="%1$s" title="%2$s">%2$s</a>',
+        "javascript:wp.customize.section(\'header_design_sec\').focus();",
+        __('header image is enabled', 'hueman')
+      )
+  );
   ?>
   <script id="control-visibilities" type="text/javascript">
     (function (api, $, _) {
@@ -239,18 +245,27 @@ function hu_extend_visibilities() {
             }
           },
           'use-header-image' : {
-            controls : ['header_image', 'custom_logo', 'title', 'blogdescription'],
+            controls : ['header_image', 'display-header-logo', 'custom_logo', 'custom-logo', 'logo-max-height', 'blogname', 'blogdescription', 'header-ads'],
             callback : function(to, dependant_setting_id ) {
-              console.log('dependant_setting_id', dependant_setting_id );
-                var _return = true;
+                var _return = true,
+                    wpDepSetId = api.CZR_Helpers.build_setId( dependant_setting_id );
+                //print a notice
                 switch( dependant_setting_id ) {
+                    case 'display-header-logo' :
                     case 'custom_logo' :
-                    case 'title' :
+                    case 'blogname' :
                     case 'blogdescription' :
-                        if ( _is_checked(to) ) {
-                          console.log( api.control(dependant_setting_id).container.find('.customize-control-title') );
-                          var _html = '<span class="description customize-control-description">The Site Icon is used as a browser and app icon for your site. Icons must be square, and at least <strong>512</strong> pixels wide and tall.</span>';
-                          api.control(dependant_setting_id).container.find('.customize-control-title').after( _html );
+                    case 'custom-logo' :
+                    case 'header-ads' :
+                        if ( ! api.control.has(wpDepSetId) )
+                          return;
+                        if ( ! _is_checked(to) && $( '.hu-header-image-notice', api.control(wpDepSetId).container ).length ) {
+                          $('.hu-header-image-notice', api.control(wpDepSetId).container ).remove();
+                        } else {
+                          if ( $( '.hu-header-image-notice', api.control(wpDepSetId).container ).length )
+                            return;
+                          var _html = '<span class="description customize-control-description hu-header-image-notice"><?php echo $_notice; ?></span>';
+                          api.control(wpDepSetId).container.find('.customize-control-title').after( _html );
                         }
                     break;
 
@@ -258,6 +273,24 @@ function hu_extend_visibilities() {
                       _return = _is_checked(to);
                     break;
                 }
+
+                //change opacity
+                switch( dependant_setting_id ) {
+                    case 'display-header-logo' :
+                    case 'logo-max-height' :
+                    case 'custom_logo' :
+                    case 'custom-logo' :
+                    case 'header-ads' :
+                        if ( ! api.control.has(wpDepSetId) )
+                          return;
+                        if ( ! _is_checked(to) ) {
+                          $(api.control(wpDepSetId).container ).css('opacity', 1);
+                        } else {
+                          $(api.control(wpDepSetId).container ).css('opacity', 0.6);
+                        }
+                    break;
+                }
+
                 return _return;
             }
           },
