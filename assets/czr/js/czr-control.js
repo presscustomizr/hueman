@@ -6785,7 +6785,7 @@ $.extend( CZRLayoutSelectMths , {
     api.control.each(function(control){
       if ( ! _.has(control,'id') )
         return;
-      if ('widget' != control.id.substring(0, 6) ) {
+      if ('widget' != control.id.substring(0, 6) && 'nav_menu' != control.id.substring(0, 8) ) {
         api.czrSetupCheckbox(control.id);
       }
       api.czrSetupSelect(control.id);
