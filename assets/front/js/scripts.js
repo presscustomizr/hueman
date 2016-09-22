@@ -276,15 +276,15 @@ if (!Array.prototype.map) {
   */
   Plugin.prototype._better_scroll_event_handler = function( $_imgs , _evt ) {
     var self = this;
-    //use a timer
-    if ( 0 !== this.timer ) {
-        this.increment++;
-        window.clearTimeout( this.timer );
-    }
 
-    this.timer = window.setTimeout(function() {
-      self._maybe_trigger_load( $_imgs , _evt );
-    }, self.increment > 5 ? 50 : 0 );
+    if ( ! this.doingAnimation ) {
+      this.doingAnimation = true;
+      window.requestAnimationFrame(function() {
+        //self.parallaxMe();
+        self._maybe_trigger_load( $_imgs , _evt );        
+        self.doingAnimation = false;
+      });
+    }    
   };
 
 
@@ -811,21 +811,6 @@ if (!Array.prototype.map) {
  *
  * =================================================== */
 ;(function ( $, window, document, undefined ) {
-  /*
-  * In order to handle a smooth scroll
-  * ( inspired by jquery.waypoints and smoothScroll.js )
-  * Maybe use this -> https://gist.github.com/paulirish/1579671
-  */
-  var czrParallaxRequestAnimationFrame = function(callback) {
-    var requestFn = ( czrapp && czrapp.requestAnimationFrame) ||
-      window.requestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
-      function( callback ) { window.setTimeout(callback, 1000 / 60); };
-
-    requestFn.call(window, callback);
-  };
-
   //defaults
   var pluginName = 'czrParallax',
       defaults = {
@@ -854,7 +839,7 @@ if (!Array.prototype.map) {
     //cache some element
     this.$_document   = $(document);
     this.$_window     = czrapp ? czrapp.$_window : $(window);
-    this.windowIsBusy = false;
+    this.doingAnimation = false;
 
     this.initWaypoints();
     this.stageParallaxElements();
@@ -894,7 +879,7 @@ if (!Array.prototype.map) {
           }else{
             self.element.removeClass('parallaxing');
             self.$_window.off('scroll', self.maybeParallaxMe );
-            self.windowIsBusy = false;
+            self.doingAnimation = false;
             self.element.css('top', 0 );
           }
         }
@@ -910,7 +895,7 @@ if (!Array.prototype.map) {
           }else {
             self.element.removeClass('parallaxing');
             self.$_window.off('scroll', self.maybeParallaxMe );
-            self.windowIsBusy = false;
+            self.doingAnimation = false;
           }
         },
         offset: function(){
@@ -927,11 +912,11 @@ if (!Array.prototype.map) {
   Plugin.prototype.maybeParallaxMe = function() {
       var self = this;
 
-      if ( !this.windowIsBusy ) {
-        this.windowIsBusy = true;
-        czrParallaxRequestAnimationFrame(function() {
+      if ( !this.doingAnimation ) {
+        this.doingAnimation = true;
+        window.requestAnimationFrame(function() {
           self.parallaxMe();
-          self.windowIsBusy = false;
+          self.doingAnimation = false;
         });
       }
   };
@@ -962,7 +947,35 @@ if (!Array.prototype.map) {
       });
   };
 
-})( jQuery, window, document );// Press Customizr version of Galambosi's SmoothScroll
+})( jQuery, window, document );// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+// http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+
+// requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
+
+// MIT license
+(function() {
+    var lastTime = 0;
+    var vendors = ['ms', 'moz', 'webkit', 'o'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] 
+                                   || window[vendors[x]+'CancelRequestAnimationFrame'];
+    }
+ 
+    if (!window.requestAnimationFrame)
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            lastTime = currTime + timeToCall;
+            return window.setTimeout(function() { callback(currTime + timeToCall); }, 
+              timeToCall);
+        };
+ 
+    if (!window.cancelAnimationFrame)
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
+}());// Press Customizr version of Galambosi's SmoothScroll
 
 // SmoothScroll for websites v1.3.8 (Balazs Galambosi)
 // Licensed under the terms of the MIT license.
