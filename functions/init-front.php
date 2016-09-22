@@ -656,7 +656,8 @@ if ( ! function_exists( 'hu_scripts' ) ) {
                         '#header-widgets'
                     ),
                     'opts'     => array(
-                        'excludeImg' => array( '.tc-holder-img' )
+                        'excludeImg' => array( '.tc-holder-img' ),
+                        'fadeIn_options' => 100
                     )
               )),
               'goldenRatio'         => apply_filters( 'hu_grid_golden_ratio' , 1.618 ),

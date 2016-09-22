@@ -147,13 +147,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'     => __( 'Display a logo in your header' , 'hueman' ),
                 'section'   => 'title_tagline',
                 'type'      => 'checkbox'
-                // 'notice'    => sprintf( __("Your header logo has to be uploaded in %s." , "hueman"),
-                //   sprintf( '<strong><a href="%1$s" title="%3$s">%2$s</a><strong>',
-                //     "javascript:wp.customize.section('title_tagline').focus();",
-                //     __("Global Settings > Site Identity" , "hueman"),
-                //     __("Global Settings > Site Identity", "hueman")
-                //   )
-                // )
           ),
           'logo-max-height'  =>  array(
                 'default'       => 60,
@@ -166,7 +159,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'step'          => 1,
                 'min'           => 20,
                 'transport'     => 'postMessage'
-                //'notice'        => __('Your logo image should have the double height of this to be high resolution', 'hueman')
           )
       );
     }

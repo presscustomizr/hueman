@@ -728,7 +728,6 @@ function hu_maybe_copy_logo_to_theme_mod( $_options ) {
   $_old_custom_logo_exists = isset($_options['custom-logo']) && false != $_options['custom-logo'] && ! empty($_options['custom-logo']) && is_int($_options['custom-logo']);
   if ( $_old_custom_logo_exists ) {
     set_theme_mod( 'custom_logo', $_options['custom-logo'] );
-    add_filter( 'hu_default_display_header_logo_bool', '__return_true' );
     $_options['display-header-logo'] = 1;
     unset($_options['custom-logo']);
     update_option( HU_THEME_OPTIONS, $_options );
