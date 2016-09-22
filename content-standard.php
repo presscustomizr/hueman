@@ -1,4 +1,4 @@
-<article id="post-<?php the_ID(); ?>" <?php post_class('group post-standard'); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class( array( 'group', 'post-standard' , 'grid-item') ); ?>>
 	<div class="post-inner post-hover">
 
 		<div class="post-thumbnail">
