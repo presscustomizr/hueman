@@ -703,7 +703,8 @@ if ( ! class_exists( 'HU_customize' ) ) :
         'show_on_front',
         'page_on_front',
         'page_for_posts',
-        'header_image'
+        'header_image',
+        'header_image_data'
       );
     }
   }//end of class
