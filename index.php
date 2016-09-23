@@ -10,7 +10,7 @@
 
 		<?php if ( have_posts() ) : ?>
 
-			<?php if ( hu_get_option('blog-standard') == 'on' ): ?>
+			<?php if ( hu_is_checked('blog-standard') ): ?>
 				<?php while ( have_posts() ): the_post(); ?>
 					<?php get_template_part('content-standard'); ?>
 				<?php endwhile; ?>
