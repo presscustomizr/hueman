@@ -116,8 +116,14 @@ function hu_extend_postmessage_cb() {
               setting_cbs : $.extend( setting_cbs, {
                     blogname : function(to) {
                       var self = this,
+                          _proto_ = api.CZR_preview.prototype,
                           _hasLogo,
-                          _logoSet = api.has( self._build_setId('custom-logo') ) ? api( self._build_setId('custom-logo') ).get() : '';
+                          _logoSet;
+                      //the logo was previously set with a custom hueman theme option => custom-logo
+                      if ( api.has( _proto_._build_setId('custom-logo') ) )
+                        _logoSet ? api( _proto_._build_setId('custom-logo') ).get() : '';
+                      else if ( api.has( _proto_._build_setId('custom_logo') ) )
+                         _logoSet ? api( _proto_._build_setId('custom_logo') ).get() : '';
 
                       _hasLogo = ( _.isNumber(_logoSet) && _logoSet > 0 ) || ( ! _.isEmpty(_logoSet) && ( false !== _logoSet ) );
 
