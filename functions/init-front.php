@@ -187,15 +187,15 @@ if ( ! function_exists( 'hu_site_title' ) ) {
       $logo = get_bloginfo('name');
     }
 
-    $link = '<a href="'.home_url('/').'" rel="home">'.$logo.'</a>';
+    $link = '<a class="custom-logo-link" href="'.home_url('/').'" rel="home">'.$logo.'</a>';
 
-    if ( is_front_page() || is_home() ) {
+    if ( hu_is_home() ) {
       $sitename = '<h1 class="site-title">'.$link.'</h1>'."\n";
     } else {
       $sitename = '<p class="site-title">'.$link.'</p>'."\n";
     }
 
-    return $sitename;
+    return apply_filters('hu_logo_title', $sitename, $logo );
   }
 
 }
