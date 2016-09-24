@@ -223,6 +223,20 @@ if ( ! class_exists( 'HU_customize' ) ) :
       $wp_customize -> get_setting( 'blogname' )->transport = 'postMessage';
       $wp_customize -> get_setting( 'blogdescription' )->transport = 'postMessage';
 
+      //MOVE WP FRONT PAGE SECTION TO CONTENT PANEL
+      $wp_customize -> get_section( 'static_front_page' ) -> panel = 'hu-content-panel';
+      $wp_customize -> get_section( 'static_front_page' ) -> title = __( 'Front Page Content', 'hueman' );
+      $wp_customize -> get_section( 'static_front_page' ) -> priority = 5;
+      $wp_customize -> get_section( 'static_front_page' ) -> active_callback = 'hu_is_home';
+
+      //CHANGE THE STATIC FRONT PAGE WP CONTROLS
+      $wp_customize -> get_control( 'show_on_front' ) -> type = 'select';
+      $wp_customize -> get_control( 'show_on_front' ) -> choices = array(
+          '__nothing__'   => __( 'Don\'t show any posts or page' , 'hueman'),
+          'posts'   => __( 'Your latest posts' , 'hueman'),
+          'page'    => __( 'A static page' , 'hueman'  )
+      );
+
 
       //IF WP VERSION >= 4.3 AND SITE_ICON SETTING EXISTS
       //=> REMOVE OLD FAV ICON CONTROL
@@ -443,7 +457,8 @@ if ( ! class_exists( 'HU_customize' ) ) :
                 'description',
                 'panel',
                 'theme_supports',
-                'type'
+                'type',
+                'active_callback'
           ),
           'settings' => array(
                 'default'     =>  null,

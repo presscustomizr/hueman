@@ -152,8 +152,18 @@ function hu_user_started_before_version( $_ver ) {
 */
 function hu_is_home() {
   //get info whether the front page is a list of last posts or a page
-  return ( is_home() && ( 'posts' == get_option( 'show_on_front' ) || 'nothing' == get_option( 'show_on_front' ) ) ) || is_front_page();
+  return ( is_home() && ( 'posts' == get_option( 'show_on_front' ) || '__nothing__' == get_option( 'show_on_front' ) ) ) || is_front_page();
 }
+
+/**
+* Check if we show posts or page content on home page
+* @return  bool
+*/
+function hu_is_home_empty() {
+  //check if the users has choosen the "no posts or page" option for home page
+  return ( is_home() || is_front_page() ) && '__nothing__' == get_option( 'show_on_front' );
+}
+
 
 /**
 * helper
@@ -162,6 +172,22 @@ function hu_is_home() {
 */
 function hu_is_blogpage() {
   return is_home() && ! is_front_page();
+}
+
+/**
+* helper
+* //must be archive or search result. Returns false if home is empty in options.
+* @return  bool
+*/
+function hu_is_post_list() {
+  global $wp_query;
+
+  return apply_filters( 'hu_is_post_list',
+    ! is_singular()
+    && ! is_404()
+    && 0 != $wp_query -> post_count
+    && ! hu_is_home_empty()
+  );
 }
 
 /**
@@ -302,7 +328,7 @@ if( ! defined( 'HU_THEME_OPTIONS' ) ) define( 'HU_THEME_OPTIONS' , apply_filters
 
 if( ! defined( 'HU_OPT_AJAX_ACTION' ) ) define( 'HU_OPT_AJAX_ACTION' , 'hu_get_option' );
 
-if( ! defined( 'HU_SKOP_ON' ) ) define( 'HU_SKOP_ON' , false );
+if( ! defined( 'HU_SKOP_ON' ) ) define( 'HU_SKOP_ON' , true );
 if( ! defined( 'HU_SEK_ON' ) ) define( 'HU_SEK_ON' , false );
 
 //HU_IS_PRO
