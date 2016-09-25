@@ -229,10 +229,16 @@ function hu_add_customize_preview_data() {
 
 //hook : 'customize_controls_enqueue_scripts':10
 function hu_extend_visibilities() {
-  $_notice = sprintf( __( "When the %s, this element will not be displayed in your header.", 'hueman'),
+  $_header_img_notice = sprintf( __( "When the %s, this element will not be displayed in your header.", 'hueman'),
       sprintf('<a href="%1$s" title="%2$s">%2$s</a>',
         "javascript:wp.customize.section(\'header_design_sec\').focus();",
         __('header image is enabled', 'hueman')
+      )
+  );
+  $_front_page_content_notice = sprintf( __( "Jump to the %s.", 'hueman'),
+      sprintf('<a href="%1$s" title="%2$s">%2$s</a>',
+        "javascript:wp.customize.section(\'content_blog_sec\').focus();",
+        __('blog design panel', 'hueman')
       )
   );
   ?>
@@ -244,11 +250,42 @@ function hu_extend_visibilities() {
       api.CZR_visibilities.prototype.controlDeps = _.extend(
         api.CZR_visibilities.prototype.controlDeps,
         {
-          'display-header-logo' : {
-            controls : ['logo-max-height', 'custom_logo', 'custom-logo' ],//depending on the WP version, the custom logo option is different.
-            callback : function(to) {
-              return _is_checked(to);
+          'show_on_front' : {
+              controls : ['show_on_front', 'page_for_posts' ],
+              callback : function(to, dependant_setting_id ) {
+                var wpDepSetId = api.CZR_Helpers.build_setId( dependant_setting_id ),
+                    _class = 'hu-front-posts-notice',
+                    _maybe_print_html = function() {
+                        if ( $( '.' + _class , api.control(wpDepSetId).container ).length )
+                          return;
+                        var _html = '<span class="description customize-control-description ' + _class +'"><?php echo $_front_page_content_notice; ?></span>';
+                        api.control(wpDepSetId).container.find('.customize-control-title').after( _html );
+                    };
+
+                if ( 'show_on_front' == dependant_setting_id ) {
+                    if ( 'posts' != to && $( '.' + _class , api.control(wpDepSetId).container ).length ) {
+                      $('.' + _class, api.control(wpDepSetId).container ).remove();
+                    } else if ( 'posts' == to ) {
+                      _maybe_print_html();
+                    }
+                } else if ( 'page_for_posts' == dependant_setting_id ) {
+                    if ( 'page' != to && $( '.' + _class , api.control(wpDepSetId).container ).length ) {
+                      $('.' + _class, api.control(wpDepSetId).container ).remove();
+                    } else if ( 'page' == to ) {
+                      _maybe_print_html();
+                    }
+                }
+                if ( 'show_on_front' == dependant_setting_id )
+                  return api.control(wpDepSetId).active();
+                else
+                  return 'page' == to;
             }
+          },
+          'display-header-logo' : {
+              controls : ['logo-max-height', 'custom_logo', 'custom-logo' ],//depending on the WP version, the custom logo option is different.
+              callback : function(to) {
+                return _is_checked(to);
+              }
           },
           'use-header-image' : {
             controls : ['header_image', 'display-header-logo', 'custom_logo', 'custom-logo', 'logo-max-height', 'blogname', 'blogdescription', 'header-ads'],
@@ -270,7 +307,7 @@ function hu_extend_visibilities() {
                         } else {
                           if ( $( '.hu-header-image-notice', api.control(wpDepSetId).container ).length )
                             return;
-                          var _html = '<span class="description customize-control-description hu-header-image-notice"><?php echo $_notice; ?></span>';
+                          var _html = '<span class="description customize-control-description hu-header-image-notice"><?php echo $_header_img_notice; ?></span>';
                           api.control(wpDepSetId).container.find('.customize-control-title').after( _html );
                         }
                     break;
