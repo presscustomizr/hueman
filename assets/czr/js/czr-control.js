@@ -103,7 +103,7 @@ $.extend( CZRSkopeBaseMths, {
           api.each( function ( value, setId ) {
                 if ( self.isExcludedWPBuiltinSetting( setId ) )
                   return;
-                if ( ! self.isSettingEligible(setId) )
+                if ( ! self.isSettingSkopeEligible(setId) && ! self.isSettingResetEligible(setId) )
                   return;
                 api( setId ).callbacks.add( function( new_val, old_val, o ) {
                       api.consoleLog('ELIGIBLE SETTING HAS CHANGED', setId, new_val, old_val, o );
@@ -120,10 +120,19 @@ $.extend( CZRSkopeBaseMths, {
                 });
           });
     },
+
     updateSkopeDirties : function( setId, new_val, skope_id ) {
           skope_id = skope_id || api.czr_activeSkope();
 
-          var skope_instance = api.czr_skope( skope_id );//the active skope instance
+          var self = this,
+              skope_instance,
+              shortSetId = api.CZR_Helpers.getOptionName( setId );
+          if ( _.contains( serverControlParams.skopeExcludedSettings, shortSetId ) ) {
+            skope_instance = api.czr_skope( self.getGlobalSkopeId() );//the global skope instance
+          }
+          else
+            skope_instance = api.czr_skope( skope_id );
+
           if ( _.isUndefined( skope_instance ) ) {
             throw new Error('Skope base class : the required skope id is not registered.');
           }
@@ -451,7 +460,7 @@ $.extend( CZRSkopeBaseMths, {
           }
           var section_settings = self._getSectionSettingIds( section_id );
           section_settings = _.filter( section_settings, function(setId) {
-              return self.isSettingEligible( setId );
+              return self.isSettingSkopeEligible( setId );
           });
           _.each( section_settings, function( setId ) {
                 silent_update_candidates.push( setId );
@@ -633,7 +642,7 @@ $.extend( CZRSkopeBaseMths, {
           controls = _.isUndefined( controls ) ? self._getSectionControlIds( section_id  ) : controls;
           controls = _.isString( controls ) ? [controls] : controls;
           controls = _.filter( controls, function( setId ) {
-              return self.isSettingEligible( setId );
+              return self.isSettingResetEligible( setId );
           });
 
           if ( _.isEmpty(controls) )
@@ -649,7 +658,7 @@ $.extend( CZRSkopeBaseMths, {
           if ( _.isUndefined( controls ) || _.isEmpty( controls ) ) {
                 controls = self._getSectionControlIds( api.czr_activeSectionId() );
                 controls = _.filter( controls, function( setId ) {
-                    return self.isSettingEligible( setId );
+                    return self.isSettingSkopeEligible( setId );
                 });
           }
 
@@ -871,7 +880,28 @@ $.extend( CZRSkopeBaseMths, {
           api.consoleLog('new_skope_model ?', new_skope_model );
 
           api.czr_skope( skope_model.id )( new_skope_model );
-    }
+    },
+    setupControlsInheritance : function( controls ) {
+          var self = this,
+              section_id = api.czr_activeSectionId();
+
+          api.consoleLog('SETUP CONTROLS RESET ?', controls );
+          controls = _.isUndefined( controls ) ? self._getSectionControlIds( section_id  ) : controls;
+          controls = _.isString( controls ) ? [controls] : controls;
+          controls = _.filter( controls, function( setId ) {
+              return self.isSettingSkopeEligible( setId );
+          });
+
+          if ( _.isEmpty(controls) )
+            return;
+
+          $.when( self.renderControlsSingleReset( controls ) ).done( function() {
+                self.setupControlsValues( controls );
+          });
+
+    },
+
+
 });//$.extend()
 var CZRSkopeBaseMths = CZRSkopeBaseMths || {};
 $.extend( CZRSkopeBaseMths, {
@@ -886,7 +916,8 @@ $.extend( CZRSkopeBaseMths, {
           return ! _.isUndefined( _.findWhere( collection, { id : skope_id } ) );
     },
     isGlobalSkopeRegistered : function() {
-          return _.findWhere( api.czr_currentSkopesCollection(), { skope : 'global'} );
+          var _model = _.findWhere( api.czr_currentSkopesCollection(), { skope : 'global'} );
+          return _.isObject( _model ) && _.has( _model, 'id' );
     },
     getGlobalSkopeId : function() {
           if ( ! _.has(api, 'czr_skope') )
@@ -928,7 +959,7 @@ $.extend( CZRSkopeBaseMths, {
             return active_candidates.special_group;
           return _def;
     },
-    isSettingEligible : function( setId ) {
+    isSettingSkopeEligible : function( setId ) {
           var self = this,
               shortSetId = api.CZR_Helpers.getOptionName( setId );
 
@@ -942,7 +973,22 @@ $.extend( CZRSkopeBaseMths, {
             api.consoleLog( 'THE SETTING ' + setId + ' IS NOT ELIGIBLE TO SKOPE BECAUSE PART OF THE EXCLUDED LIST.' );
             return;
           } else if ( -1 == setId.indexOf( serverControlParams.themeOptions ) && ! _.contains( serverControlParams.wpBuiltinSettings, setId ) ) {
-            api.consoleLog( 'THE SETTING ' + setId + ' IS NOT ELIGIBLE TO SKOPE BECAUSE NOT PART OF THE THEME OPTIONS OR WP AUTHORIZED BUILT IN OPTIONS' );
+            api.consoleLog( 'THE SETTING ' + setId + ' IS NOT ELIGIBLE TO SKOPE BECAUSE NOT PART OF THE THEME OPTIONS AND NOT WP AUTHORIZED BUILT IN OPTIONS' );
+          } else
+           return true;
+    },
+    isSettingResetEligible : function( setId ) {
+          var self = this,
+              shortSetId = api.CZR_Helpers.getOptionName( setId );
+
+          if( _.isUndefined( setId ) || ! api.has( setId ) ) {
+            api.consoleLog( 'THE SETTING ' + setId + ' IS NOT ELIGIBLE TO RESET BECAUSE UNDEFINED OR NOT REGISTERED IN THE API.' );
+            return;
+          }
+          if ( self.isExcludedWPBuiltinSetting( setId ) )
+            return;
+          if ( -1 == setId.indexOf( serverControlParams.themeOptions ) && ! _.contains( serverControlParams.wpBuiltinSettings, setId ) ) {
+            api.consoleLog( 'THE SETTING ' + setId + ' IS NOT ELIGIBLE TO RESET BECAUSE NOT PART OF THE THEME OPTIONS AND NOT WP AUTHORIZED BUILT IN OPTIONS' );
           } else
            return true;
     },
@@ -1489,7 +1535,6 @@ $.extend( CZRSkopeMths, {
         api.previewer.query =  function( skope_id, action ) {
             var dirtyCustomized = {};
             skope_id = skope_id || api.czr_activeSkope() || api.czr_skopeBase.getGlobalSkopeId();
-
             if ( ! _.has( api, 'czr_skope') || ! api.czr_skope.has( skope_id ) )
               return _old_previewer_query.apply( this );
             if ( api.czr_activeSkope() == skope_id ) {
@@ -1595,13 +1640,29 @@ $.extend( CZRSkopeMths, {
             var self = this,
                 processing = api.state( 'processing' ),
                 submitWhenDoneProcessing,
-                submit;
+                submit,
+                invalidSettings = [],
+                invalidControls;
 
             $( document.body ).addClass( 'saving' );
             submit = function( skope_id ) {
                 var request, query;
-
                 skope_id = skope_id || api.czr_activeSkope();
+                if ( _.has( api, 'Notification') ) {
+                    api.each( function( setting ) {
+                      setting.notifications.each( function( notification ) {
+                        if ( 'error' === notification.type && ( ! notification.data || ! notification.data.from_server ) ) {
+                          invalidSettings.push( setting.id );
+                        }
+                      } );
+                    } );
+                    invalidControls = api.findControlsForSettings( invalidSettings );
+                    if ( ! _.isEmpty( invalidControls ) ) {
+                      _.values( invalidControls )[0][0].focus();
+                      body.removeClass( 'saving' );
+                      return;
+                    }
+                }
                 query = $.extend( self.query( skope_id, 'save' ), {
                     nonce:  self.nonce.save
                 } );
@@ -1645,8 +1706,18 @@ $.extend( CZRSkopeMths, {
                       return api.czr_skope( _skop.id ).dirtyness();
                   }),
                   _saved_dirties = {};//will be used as param to update the skope model db val after all ajx requests are done
-
               var submitDirtySkopes = function() {
+                    var _wpDirtyCustomized = {};
+                    api.each( function ( value, setId ) {
+                          if ( value._dirty ) {
+                            _wpDirtyCustomized[ setId ] = value();
+                          }
+                    } );
+                    if ( ! _.isEmpty(_wpDirtyCustomized) && _.isEmpty(dirtySkopesToSubmit) ) {
+                      throw new Error(
+                        'There are currently not dirties to save in skope while there should be ' + _.size(_wpDirtyCustomized) + ' : ' + _.keys(_wpDirtyCustomized).join(' | ')
+                      );
+                    }
                     var promises = [];
                     _.each( dirtySkopesToSubmit, function( _skop ) {
                           api.consoleLog('submit request for skope : ', _skop.id );
@@ -1656,7 +1727,7 @@ $.extend( CZRSkopeMths, {
               };
 
               var reactWhenPromisesDone = function( promises ) {
-                    $.when.apply( null, promises).done( function( responses ) {
+                    $.when.apply( null, promises).done( function( response ) {
                           _.each( dirtySkopesToSubmit, function( _skp ) {
                                 _saved_dirties[ _skp.id ] = api.czr_skope( _skp.id ).dirtyValues();
                                 api.czr_skope( _skp.id ).dirtyValues({});
@@ -1665,8 +1736,18 @@ $.extend( CZRSkopeMths, {
                                 value._dirty = false;
                           } );
                           $( document.body ).removeClass( 'saving' );
-                          api.previewer.send( 'saved', responses );
-                          api.trigger( 'saved', responses );
+                          $( '#save' ).prop( 'disabled', false );
+
+                          api.previewer.send( 'saved', response );
+                          if ( response.setting_validities ) {
+                              api._handleSettingValidities( {
+                                  settingValidities: response.setting_validities,
+                                  focusInvalidControl: true
+                              } );
+                          }
+
+
+                          api.trigger( 'saved', response );
                     }).then( function() {
                           api.czr_savedDirties( { channel : api.previewer.channel() , saved : _saved_dirties });
                           api.czr_skopeBase.trigger('skopes-saved', _saved_dirties );
