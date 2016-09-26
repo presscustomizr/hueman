@@ -82,6 +82,22 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 ## Changelog
+= 3.2.5 September 26th 2016 =
+* fixed : don't use iCheck() js library for nav_menu* controls
+* Imp: add requestAnimationFrame js polyfill. This improves the scroll event performance for all browsers.
+* fixed : blinking images when the smart load is enabled
+* fixed : 'blog-standard' boolean option was not handled with hu_is_checked() in the index template
+* improved : hu_get_customizer_map(). Now can return a partial map. For example only the settings.
+* added : support for WP custom logo. Backward compatibility : uses the existing logo image if already set. Still support the logo features for WP versions < 4.5
+* added : a grid-item class to the post list article
+* added : a grid-wrapper id to the post-list wrapper div element
+* added : customizer : active_callback param for some sections and controls => better contextualisation of the customization
+* added : customizer : Front Page Content section in the Content panel. Includes the reading WP default settings : static front page, blog page, ...
+* added : option, the front page can be empty
+* added : hu_is_home_empty() utility
+* added : hu_is_post_list() utility. Typically used to contextualize the customization.
+* added : in customizer > Content > Front Page, a link to blog design when relevant in the front page content section
+
 = 3.2.4 September 20th 2016 =
 * improved : implement add_theme_support( 'custom-header') with the header_image theme_mod, in place of the previous header-image hueman option. Ensure retrocompatibility with the previous option.
 
