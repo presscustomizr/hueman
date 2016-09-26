@@ -21,8 +21,9 @@
   12. Child Menu
   13. Plugins
   14. Flexslider
-  15. Shortcodes
-  16. IE Fixes
+  15. SVG thumbnails
+  16. Shortcodes
+  17. IE Fixes
 
 /* ------------------------------------------------------------------------- */
 
@@ -1616,6 +1617,25 @@ html[xmlns] .flexslider .slides { display: block; }
   .flex-direction-nav .flex-prev { opacity: .7; right: 0; }
   .flex-direction-nav .flex-next { opacity: .7; right: 0; }
 }
+
+/* ------------------------------------------------------------------------- *
+ *  SVG thumbnail placeholders
+/* ------------------------------------------------------------------------- */
+svg.hu-svg-placeholder {
+  fill: none;
+  stroke: #fff;
+  stroke-width:50px;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  top: 25%;
+  -webkit-transition: opacity 1.2s ease;
+  -moz-transition: opacity 1.2s ease;
+  -o-transition: opacity 1.2s ease;
+  transition: opacity 1.2s ease;
+}
+
 
 /* ------------------------------------------------------------------------- *
  *  Shortcodes

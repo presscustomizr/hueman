@@ -107,18 +107,61 @@ if ( ! function_exists('hu_print_widgets_in_location') ) {
 }//endif
 
 
+function hu_maybe_print_default_widgets( $sidebars_widgets, $_zone_id ) {
+    // if ( hu_is_checked( 'display_default_widgets') )
+    //   return;
+
+
+    if ( ! array_key_exists($_zone_id, $sidebars_widgets) || ( is_array( $sidebars_widgets[$_zone_id] ) && ! empty($sidebars_widgets[$_zone_id] ) ) )
+      return;
+
+    global $wp_registered_sidebars, $wp_registered_widgets;
+    /* if ( is_array() )
+      array_walk_recursive(, function(&$v) { $v = htmlspecialchars($v); }); */
+    /*?>
+      <pre>
+        <?php print_r($wp_registered_widgets); ?>
+      </pre>
+    <?php*/
+    //Which widget shall we display
+    //$defaut_wgt =  ? : '';
+
+    //find the widget
+    $found_match = false;
+    foreach ( $wp_registered_widgets as $_id => $_data ) {
+       if ( 'alxtabs' != substr( $_id, 0, 7 ) || $found_match )
+        continue;
+      $found_match = true;
+      $_widget_id = $_id;
+    }
+
+
+    //////////////
+    $sidebar = $wp_registered_sidebars[$_zone_id];
+    $callback = $wp_registered_widgets[$_widget_id]['callback'];
+
+    $params = array_merge(
+      array( array_merge( $sidebar, array('widget_id' => $id, 'widget_name' => $wp_registered_widgets[$_widget_id]['name']) ) ),
+      (array) $wp_registered_widgets[$_widget_id]['params']
+    );
+
+    if ( is_callable($callback) ) {
+      $callback[0] -> widget( $params[0], $callback[0]);
+    }
+    //////////////
+}
 
 
 //the job of this function is to print a dynamic widget zone if exists
 //if exists but empty, and if the user is in a customization context, let's print a placeholder
 function hu_print_dynamic_sidebars( $_id, $location ) {
-  global $wp_registered_sidebars;
-  $sidebars_widgets = wp_get_sidebars_widgets();
-
+  global $wp_registered_sidebars, $wp_registered_widgets;
   if ( ! isset($wp_registered_sidebars[$_id]) ) {
     return;
   }
 
+  $sidebars_widgets = wp_get_sidebars_widgets();
+  //hu_maybe_print_default_widgets( $sidebars_widgets, $_id );
 
   if ( hu_is_customize_preview_frame() ) {
     //is there a meta setting overriding the customizer ?
@@ -424,15 +467,42 @@ if ( ! function_exists( 'hu_get_featured_post_ids' ) ) {
 }
 
 
-/*  Echoes the <img> tag of the placeholder thumbnail
-*   the src property can be filtered
+/* Echoes the <img> tag of the placeholder thumbnail
+*  or an animated svg icon
+*  the src property can be filtered
 /* ------------------------------------ */
 if ( ! function_exists( 'hu_print_placeholder_thumb' ) ) {
 
-  function hu_print_placeholder_thumb() {
-    printf( '<img src="%1$s" alt="%2$s" />',
-      apply_filters( 'hu_placeholder_thumb_src' , get_template_directory_uri() . '/assets/front/img/thumb-medium.png' ),
-      get_the_title()
+  function hu_print_placeholder_thumb( $_size = 'thumb-medium' ) {
+    $_unique_id = uniqid();
+    $_sizes = array( 'thumb-medium', 'thumb-small', 'thumb-standard' );
+    if ( ! in_array($_size, $_sizes) )
+      $_size = 'thumb-medium';
+
+    if ( ! apply_filters( 'hu-use-svg-thumb-placeholder', true ) ) {
+      $_img_src = get_template_directory_uri() . "/assets/front/img/{$_size}.png";
+    } else {
+      $_size = $_size . '-empty';
+      $_img_src = get_template_directory_uri() . "/assets/front/img/{$_size}.png";
+      $_svg_height = in_array($_size, array( 'thumb-medium', 'thumb-standard' ) ) ? 100 : 60;
+      ?>
+      <svg class="hu-svg-placeholder <?php echo $_size; ?>" id="<?php echo $_unique_id; ?>" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M928 832q0-14-9-23t-23-9q-66 0-113 47t-47 113q0 14 9 23t23 9 23-9 9-23q0-40 28-68t68-28q14 0 23-9t9-23zm224 130q0 106-75 181t-181 75-181-75-75-181 75-181 181-75 181 75 75 181zm-1024 574h1536v-128h-1536v128zm1152-574q0-159-112.5-271.5t-271.5-112.5-271.5 112.5-112.5 271.5 112.5 271.5 271.5 112.5 271.5-112.5 112.5-271.5zm-1024-642h384v-128h-384v128zm-128 192h1536v-256h-828l-64 128h-644v128zm1664-256v1280q0 53-37.5 90.5t-90.5 37.5h-1536q-53 0-90.5-37.5t-37.5-90.5v-1280q0-53 37.5-90.5t90.5-37.5h1536q53 0 90.5 37.5t37.5 90.5z"/></svg>
+
+      <script type="text/javascript">
+        jQuery( function($){
+          var  _unique_id = '<?php echo $_unique_id; ?>';
+          $.when( $('#' + _unique_id ).css('opacity', 1 ) ).done( function() {
+              new Vivus( _unique_id, {type: 'delayed', duration: HUParams.vivusSvgSpeed || 400 } );
+          });
+        });
+      </script>
+      <?php
+    }
+
+    printf( '<img class="hu-img-placeholder" src="%1$s" alt="%2$s" data-hu-post-id="%3$s" />',
+      apply_filters( 'hu_placeholder_thumb_src' , $_img_src ),
+      get_the_title(),
+      $_unique_id
     );
   }
 
@@ -627,6 +697,15 @@ if ( ! function_exists( 'hu_scripts' ) ) {
       wp_enqueue_script( 'comment-reply' );
     }
 
+    if ( apply_filters( 'hu-use-svg-thumb-placeholder', true ) ) {
+      wp_enqueue_script(
+        'vivusjs',
+        get_template_directory_uri() . '/assets/front/js/lib/vivus.min.js',
+        array(),
+        ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER
+      );
+    }
+
     wp_localize_script(
           'hu-front-scripts',
           'HUParams',
@@ -661,7 +740,8 @@ if ( ! function_exists( 'hu_scripts' ) ) {
                     )
               )),
               'goldenRatio'         => apply_filters( 'hu_grid_golden_ratio' , 1.618 ),
-              'gridGoldenRatioLimit' => apply_filters( 'hu_grid_golden_ratio_limit' , 350)
+              'gridGoldenRatioLimit' => apply_filters( 'hu_grid_golden_ratio_limit' , 350),
+              'vivusSvgSpeed' => apply_filters( 'hu_vivus_svg_duration' , 300),
             )
         )//end of filter
        );
