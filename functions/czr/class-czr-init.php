@@ -322,6 +322,12 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
       //CHANGE THE CUSTOM LOGO PRIORITY
       $wp_customize -> get_control( 'custom_logo' ) -> priority = 7;
+
+      //The selective refresh support will be added later to the custom logo
+      if ( isset( $wp_customize->selective_refresh ) && is_object($wp_customize->get_setting( 'custom_logo' ) ) ) {
+        $wp_customize -> selective_refresh -> remove_partial( 'custom_logo' );
+        $wp_customize -> get_setting( 'custom_logo' ) -> transport = 'refresh';
+      }
     }//end of hu_alter_wp_customizer_settings()
 
 
