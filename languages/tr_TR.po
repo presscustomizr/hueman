@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Hueman v3.2.3\n"
 "POT-Creation-Date: 2016-09-27 21:33+0300\n"
-"PO-Revision-Date: 2016-09-27 23:29+0300\n"
+"PO-Revision-Date: 2016-09-27 23:58+0300\n"
 "Last-Translator: Mertcan <admin@mertcangokgoz.com>\n"
 "Language-Team: Press Customizr\n"
 "Language: tr_TR\n"
@@ -99,7 +99,8 @@ msgstr "Hoşgeldiniz"
 #: functions/admin/class-admin-page.php:103
 msgid "Thank you for using the Hueman WordPress theme for your website."
 msgstr ""
-"Web siteniz için Hueman WordPress tema kullandığınız için teşekkür ederiz."
+"Web siteniz için Hueman WordPress temasını kullandığınız için teşekkür "
+"ederiz."
 
 #: functions/admin/class-admin-page.php:104
 #, php-format
@@ -107,8 +108,9 @@ msgid ""
 "Hueman %s has more features, is safer and more stable than ever to help you "
 "designing an awesome webdesign."
 msgstr ""
-"Hueman %s daha fazla özelliklere sahip, harika bir web tasarım tasarlamanıza "
-"yardımcı olacak, her zamankinden daha güvenli ve daha istikrarlı."
+"Hueman %s daha fazla özelliklere sahip, harika bir web sitesi tasarlamanıza "
+"yardımcı olacak ve her zamankinden daha güvenli ve daha istikrarlı bir yapı "
+"sunacaktır."
 
 #: functions/admin/class-admin-page.php:105
 #, php-format
@@ -118,10 +120,10 @@ msgid ""
 "changes. If you just upgraded from a lower version, you'll be able to find "
 "all your previous settings in the customizer."
 msgstr ""
-"Sürüm 3.0+ beri, tüm seçenekler %s taşındı, güvenli ve canlı önizleme "
-"değişiklikleri yayınlamadan önce web sitesi tasarımı için izin verilmiştir. "
-"Eğer daha düşük bir sürümden yükseltme yaptıysanız, özelleştirme tüm önceki "
-"ayarları bulmada başarılı olamayacaktır."
+"Sürüm 3.0+ dan beri, tüm seçenekler %s'ne taşındı, güvenli ve canlı önizleme "
+"özelliği değişiklikleri yayınlamadan önce web sitesi tasarımınızı "
+"kolaylaştırmak için izin verilmiştir. Eğer daha düşük bir sürümden yükseltme "
+"yaptıysanız, özelleştirme tüm önceki ayarları bulmada başarılı olamayacaktır."
 
 #: functions/admin/class-admin-page.php:106
 msgid "customizer panel"
@@ -143,7 +145,8 @@ msgstr "en son sürüm notlarını okuyun"
 #: functions/admin/class-admin-page.php:114
 #, php-format
 msgid "The best way to start with %s is to read the %s and visit the %s."
-msgstr "%s ile başlamak için en iyi yol %s okumak ve %s ziyaret etmek."
+msgstr ""
+"%s ile başlamak için en iyi yol %s'nu okumak ve %s'ni ziyaret etmektir."
 
 #: functions/admin/class-admin-page.php:116
 msgid "getting started guide"
@@ -205,7 +208,7 @@ msgstr "Forumdan yardım alın"
 #: functions/admin/class-admin-page.php:239
 #, php-format
 msgid "Changelog in version %1$s"
-msgstr "Değişiklik Günlüğü Sürümü %1$s"
+msgstr "Değişiklik Günlüğü Sürüm %1$s"
 
 #: functions/admin/class-admin-page.php:261
 msgid "System Informations"
@@ -281,7 +284,7 @@ msgstr "Bir eklenti API ile çalışmıyor."
 #: functions/admin/class-tgm-plugin-activation.php:567
 #: functions/init-core.php:1347
 msgid "Return to Required Plugins Installer"
-msgstr "Gerekli Eklenti yükleyicisine"
+msgstr "Gerekli Eklenti yükleyicisine geri dönün"
 
 #: functions/admin/class-tgm-plugin-activation.php:568
 msgid "Return to the Dashboard"
@@ -345,8 +348,8 @@ msgid ""
 "The Hueman Addons is a free plugin including some cool additional features "
 "like a %1$s and %2$s."
 msgstr ""
-"Hueman Eklentileri %1$s ve %2$s gibi bazı güzel ek özellikler de dahil olmak "
-"üzere ücretsiz bir eklenti."
+"Hueman %1$s ve %2$s gibi bazı güzel ek özellikler de dahil olmak üzere "
+"ücretsiz eklentileride içinde barındırır."
 
 #: functions/admin/class-tgm-plugin-activation.php:1329
 msgid "social share bar"
@@ -788,7 +791,7 @@ msgid ""
 "about your current install that can be useful if you need to report an issue."
 msgstr ""
 "Bu sayfa Hueman teması hakkında bilgi sağlamak için hazırlanmıştır : "
-"değişiklik günlüğü, sürüm notları, doküman bağlantıları. Eğer bir sorunu "
+"değişiklik günlüğü, sürüm notları, belge bağlantıları. Eğer bir sorunu "
 "bildirmeniz gerekiyorsa yararlı olabilir güncel yüklü sürüm hakkında "
 "bilgileri görüntüler."
 
@@ -1037,7 +1040,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:715
 msgid "Animate your featured posts with a slideshow"
-msgstr "Bir slayt gösterisi ile öne çıkan mesajlar animasyon"
+msgstr "Bir slayt gösterisi ile öne çıkan mesajlar animasyonubu göster"
 
 #: functions/class-utils-settings-map.php:718
 msgid "Enables the automatic animation of the featured posts carousel."
@@ -1428,7 +1431,7 @@ msgstr "Şimdi yeni bir menü oluştur"
 
 #: functions/czr/class-czr-init.php:230
 msgid "WordPress documentation"
-msgstr "WordPress dokümantasyonu"
+msgstr "WordPress belgeleri"
 
 #: functions/czr/class-czr-init.php:246
 msgid "SITE ICON"
