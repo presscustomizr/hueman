@@ -1857,6 +1857,9 @@ $.extend( CZRSkopeMths, {
         build_setId : function ( setId ) {
                 if ( _.contains( serverControlParams.wpBuiltinSettings, setId ) )
                   return setId;
+                if ( 'widget_' == setId.substring(0, 7) || 'nav_menu' == setId.substring(0, 8) || 'sidebars_' == setId.substring(0, 9) )
+                  return setId;
+
                 return -1 == setId.indexOf( serverControlParams.themeOptions ) ? [ serverControlParams.themeOptions +'[' , setId  , ']' ].join('') : setId;
         },
         getOptionName : function(name) {
@@ -6819,12 +6822,13 @@ $.extend( CZRLayoutSelectMths , {
                             setting   : setting,
                             setId : setId,
                             controls  : self._get_dependants(setId),
+                            onSectionExpand : ! _.isUndefined( o.onSectionExpand ) ? o.onSectionExpand : true
                           };
                           _.each( _params.controls , function( depSetId ) {
                               wpDepSetId = api.CZR_Helpers.build_setId(depSetId );
                               if ( ! api.control.has(wpDepSetId) )
                                 return;
-                              if ( 'function' == typeof( api.control( wpDepSetId ).section ) ) {
+                              if ( 'function' == typeof( api.control( wpDepSetId ).section ) && _params.onSectionExpand ) {
                                   api.section( api.control( wpDepSetId ).section() ).expanded.bind( function(to) {
                                         self._set_single_dependant_control_visibility( depSetId , _params);
                                   });
@@ -6844,29 +6848,30 @@ $.extend( CZRLayoutSelectMths , {
                 var self = this;
 
                 depSetId = api.CZR_Helpers.build_setId(depSetId);
-                api.control( depSetId , function (control) {
-                    var _visibility = function (to) {
-                        var _action   = self._get_visibility_action( _params.setId , depSetId ),
-                            _callback = self._get_visibility_cb( _params.setId , _action ),
-                            _bool     = false;
+                var control = api.control( depSetId );
 
-                        if ( 'show' == _action && _callback(to, depSetId, _params.setId ) )
-                          _bool = true;
-                        if ( 'hide' == _action && _callback(to, depSetId, _params.setId ) )
-                          _bool = false;
-                        if ( 'both' == _action )
-                          _bool = _callback(to, depSetId, _params.setId );
-                        _bool = self._check_cross_dependant( _params.setId, depSetId ) && _bool;
-                        if ( _.has(control, 'active') )
-                          control.container.toggle( _bool && control.active() );
-                        else
-                          control.container.toggle( _bool );
-                    };//_visibility()
-                    api.control( depSetId ).deferred.embedded.then( function(){
-                        _visibility( _params.setting() );
-                    });
-                    _params.setting.bind( _visibility );
-                });
+                var _visibility = function (to) {
+                  var _action   = self._get_visibility_action( _params.setId , depSetId ),
+                      _callback = self._get_visibility_cb( _params.setId , _action ),
+                      _bool     = false;
+
+                  if ( 'show' == _action && _callback(to, depSetId, _params.setId ) )
+                    _bool = true;
+                  if ( 'hide' == _action && _callback(to, depSetId, _params.setId ) )
+                    _bool = false;
+                  if ( 'both' == _action )
+                    _bool = _callback(to, depSetId, _params.setId );
+                  _bool = self._check_cross_dependant( _params.setId, depSetId ) && _bool;
+
+                  if ( _.has(control, 'active') )
+                    control.container.toggle( _bool && control.active() );
+                  else
+                    control.container.toggle( _bool );
+              };//_visibility()
+              api.control( depSetId ).deferred.embedded.then( function(){
+                  _visibility( _params.setting() );
+              });
+              _params.setting.bind( _visibility );
           },
           _handleFaviconNote : function() {
                 var self = this,
@@ -6957,6 +6962,23 @@ $.extend( CZRLayoutSelectMths , {
         $('<span/>', {class:'fa fa-magic'} )
       );
     }
+    api.bind('pane-contents-reflowed', function() {
+        var _sb = ['primary', 'secondary'],
+            _is_checked = function( to ) {
+                return 0 !== to && '0' !== to && false !== to && 'off' !== to;
+            };
+        _.each( _sb, function( _id ){
+            var huSetId = api.CZR_Helpers.build_setId( _id + '-example-wgt' ),
+                huIsCheckedSetId = api.CZR_Helpers.build_setId( 'show-sb-example-wgt' ),
+                wpSbId = 'sidebars_widgets[' + _id + ']';
+            if ( ! api.has( wpSbId ) || ! api.control.has( huSetId ) )
+              return;
+            var _bool =  _.isEmpty( api( wpSbId )() ) && _is_checked( api(huIsCheckedSetId)() );
+            api.control(huSetId).active( _bool);
+            api.control(huSetId).container.toggle( _bool );
+        });
+
+    });
   });//end of $( function($) ) dom ready
 
 })( wp, jQuery);

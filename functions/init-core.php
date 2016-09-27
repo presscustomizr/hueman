@@ -328,7 +328,7 @@ if( ! defined( 'HU_THEME_OPTIONS' ) ) define( 'HU_THEME_OPTIONS' , apply_filters
 
 if( ! defined( 'HU_OPT_AJAX_ACTION' ) ) define( 'HU_OPT_AJAX_ACTION' , 'hu_get_option' );
 
-if( ! defined( 'HU_SKOP_ON' ) ) define( 'HU_SKOP_ON' , true );
+if( ! defined( 'HU_SKOP_ON' ) ) define( 'HU_SKOP_ON' , false );
 if( ! defined( 'HU_SEK_ON' ) ) define( 'HU_SEK_ON' , false );
 
 //HU_IS_PRO

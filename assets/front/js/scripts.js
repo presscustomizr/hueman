@@ -2572,6 +2572,15 @@ var czrapp = czrapp || {};
       return 0 === _filtered.length;
     },
 
+
+    //Dev mode aware and IE compatible consoleLog()
+    consoleLog : function() {
+      //fix for IE, because console is only defined when in F12 debugging mode in IE
+      if ( ( _.isUndefined( console ) && typeof window.console.log != 'function' ) || ! HUParams.isDevMode )
+        return;
+      console.log.apply( console, arguments );
+    },
+
     /***************************************************************************
     * Event methods, offering the ability to bind to and trigger events.
     * Inspired from the customize-base.js event manager object

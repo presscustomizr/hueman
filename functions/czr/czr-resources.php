@@ -245,11 +245,69 @@ function hu_extend_visibilities() {
   <script id="control-visibilities" type="text/javascript">
     (function (api, $, _) {
       var _is_checked = function( to ) {
-          return 0 !== to && '0' !== to && false !== to && 'off' !== to;
-      };
+              return 0 !== to && '0' !== to && false !== to && 'off' !== to;
+          },
+          _example_widget_callback = function(to, dependant_setting_id ) {
+              var huIsCheckedSetId = api.CZR_Helpers.build_setId( 'show-sb-example-wgt' ),
+                  _set_active = function( to ) {
+                    var _bool = _.isEmpty(to) && _is_checked( api(huIsCheckedSetId)() );
+                    api.control(dependant_setting_id).active( _bool );
+                    api.control(dependant_setting_id).container.toggle( _bool );
+                  };
+              _set_active = _.debounce( _set_active, 0 );
+              _set_active( to );
+              return true;
+          };
       api.CZR_visibilities.prototype.controlDeps = _.extend(
         api.CZR_visibilities.prototype.controlDeps,
         {
+          //default widgets
+          //synchronizes the global sidebar option with the 2 local sidebar options
+          'show-sb-example-wgt' : {
+              controls : ['primary-example-wgt', 'secondary-example-wgt' ],
+              callback : function(to, dependant_setting_id ) {
+                var wpDepSetId = api.CZR_Helpers.build_setId( dependant_setting_id );
+                api(wpDepSetId)( _is_checked(to) );
+                return _is_checked(to);
+              },
+              onSectionExpand : false
+          },
+          'primary-example-wgt' : {
+              controls : [ 'primary-example-wgt' ],
+              callback : function(to, dependant_setting_id ) {
+                var wpDepSetId = api.CZR_Helpers.build_setId( 'secondary-example-wgt' ),
+                    huIsCheckedSetId = api.CZR_Helpers.build_setId( 'show-sb-example-wgt' );
+                //if the two sidebars widget examples are set to false, then uncheck the global setting
+                if ( ! _is_checked(to) && ! _is_checked( api(wpDepSetId)() ) )
+                  api( huIsCheckedSetId )(false);
+                return true;
+              },
+              onSectionExpand : false
+          },
+          'secondary-example-wgt' : {
+               controls : [ 'secondary-example-wgt' ],
+              callback : function(to, dependant_setting_id ) {
+                var wpDepSetId = api.CZR_Helpers.build_setId( 'primary-example-wgt' ),
+                    huIsCheckedSetId = api.CZR_Helpers.build_setId( 'show-sb-example-wgt' );
+                //if the two sidebars widget examples are set to false, then uncheck the global setting
+                if ( ! _is_checked(to) && ! _is_checked( api(wpDepSetId)() ) )
+                  api( huIsCheckedSetId )(false);
+                return true;
+              },
+              onSectionExpand : false
+          },
+          'sidebars_widgets[secondary]' : {
+              controls : ['secondary-example-wgt' ],//depending on the WP version, the custom logo option is different.
+              callback : function(to, dependant_setting_id) { _example_widget_callback(to, dependant_setting_id ); }
+          },
+          'sidebars_widgets[primary]' : {
+              controls : ['primary-example-wgt' ],//depending on the WP version, the custom logo option is different.
+              callback : function(to, dependant_setting_id) { _example_widget_callback(to, dependant_setting_id ); }
+          },
+
+
+
+
           'show_on_front' : {
               controls : ['show_on_front', 'page_for_posts' ],
               callback : function(to, dependant_setting_id ) {
@@ -291,9 +349,10 @@ function hu_extend_visibilities() {
             controls : ['header_image', 'display-header-logo', 'custom_logo', 'custom-logo', 'logo-max-height', 'blogname', 'blogdescription', 'header-ads'],
             callback : function(to, dependant_setting_id ) {
                 var _return = true,
-                    wpDepSetId = api.CZR_Helpers.build_setId( dependant_setting_id );
+                    wpDepSetId = api.CZR_Helpers.build_setId( dependant_setting_id ),
+                    shortSetId = api.CZR_Helpers.getOptionName( dependant_setting_id );
                 //print a notice
-                switch( dependant_setting_id ) {
+                switch( shortSetId ) {
                     case 'display-header-logo' :
                     case 'custom_logo' :
                     case 'blogname' :
@@ -302,9 +361,10 @@ function hu_extend_visibilities() {
                     case 'header-ads' :
                         if ( ! api.control.has(wpDepSetId) )
                           return;
+
                         if ( ! _is_checked(to) && $( '.hu-header-image-notice', api.control(wpDepSetId).container ).length ) {
                           $('.hu-header-image-notice', api.control(wpDepSetId).container ).remove();
-                        } else {
+                        } else if ( _is_checked(to) ) {
                           if ( $( '.hu-header-image-notice', api.control(wpDepSetId).container ).length )
                             return;
                           var _html = '<span class="description customize-control-description hu-header-image-notice"><?php echo $_header_img_notice; ?></span>';
@@ -318,7 +378,7 @@ function hu_extend_visibilities() {
                 }
 
                 //change opacity
-                switch( dependant_setting_id ) {
+                switch( shortSetId ) {
                     case 'display-header-logo' :
                     case 'logo-max-height' :
                     case 'custom_logo' :
