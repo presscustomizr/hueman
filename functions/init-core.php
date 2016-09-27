@@ -140,6 +140,16 @@ function hu_user_started_before_version( $_ver ) {
 }
 
 
+/**
+* Is there a menu assigned to a given location ?
+* @return bool
+*/
+function hu_has_nav_menu( $_location ) {
+  if ( has_nav_menu( $_location ) || ! in_array( $_location, array( 'header', 'footer') ) )
+    return has_nav_menu( $_location );
+  return hu_is_checked( "default-menu-{$_location}" );
+}
+
 
 
 /* ------------------------------------------------------------------------- *

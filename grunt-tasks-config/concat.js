@@ -50,6 +50,7 @@ module.exports = {
       '<%= paths.front_js %>lib/smoothScroll.js',
       '<%= paths.front_js %>lib/outline.js',
       '<%= paths.front_js %>lib/jquery.waypoints.js',
+      '<%= paths.front_js %>lib/vivus.min.js',
       '<%= paths.front_js %>_parts/main.js'
     ],
     dest: '<%= paths.front_js %>scripts.js',

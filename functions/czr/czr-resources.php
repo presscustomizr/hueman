@@ -267,7 +267,8 @@ function hu_extend_visibilities() {
               controls : ['primary-example-wgt', 'secondary-example-wgt' ],
               callback : function(to, dependant_setting_id ) {
                 var wpDepSetId = api.CZR_Helpers.build_setId( dependant_setting_id );
-                api(wpDepSetId)( _is_checked(to) );
+                if ( _is_checked(to) != _is_checked(api(wpDepSetId)() ) )
+                  api(wpDepSetId)( _is_checked(to) );
                 return _is_checked(to);
               },
               onSectionExpand : false
@@ -346,11 +347,12 @@ function hu_extend_visibilities() {
               }
           },
           'use-header-image' : {
+            onSectionExpand : false,
             controls : ['header_image', 'display-header-logo', 'custom_logo', 'custom-logo', 'logo-max-height', 'blogname', 'blogdescription', 'header-ads'],
             callback : function(to, dependant_setting_id ) {
-                var _return = true,
-                    wpDepSetId = api.CZR_Helpers.build_setId( dependant_setting_id ),
-                    shortSetId = api.CZR_Helpers.getOptionName( dependant_setting_id );
+                var wpDepSetId = api.CZR_Helpers.build_setId( dependant_setting_id ),
+                    shortSetId = api.CZR_Helpers.getOptionName( dependant_setting_id ),
+                    _return = api.control(wpDepSetId).active();
                 //print a notice
                 switch( shortSetId ) {
                     case 'display-header-logo' :

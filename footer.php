@@ -75,11 +75,11 @@
 
     <?php endif; //$_bool ?>
 
-    <?php if ( has_nav_menu( 'footer' ) ): ?>
+    <?php if ( hu_has_nav_menu( 'footer' ) ): ?>
       <nav class="nav-container group" id="nav-footer">
         <div class="nav-toggle"><i class="fa fa-bars"></i></div>
         <div class="nav-text"><!-- put your mobile menu text here --></div>
-        <div class="nav-wrap"><?php wp_nav_menu( array('theme_location'=>'footer','menu_class'=>'nav container group','container'=>'','menu_id'=>'','fallback_cb'=>false) ); ?></div>
+        <div class="nav-wrap"><?php wp_nav_menu( array('theme_location'=>'footer','menu_class'=>'nav container group','container'=>'','menu_id'=>'','fallback_cb'=> 'hu_page_menu' ) ); ?></div>
       </nav><!--/#nav-footer-->
     <?php endif; ?>
 

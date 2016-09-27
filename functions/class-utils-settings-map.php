@@ -106,6 +106,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         //HEADER
         'hu_header_design_sec',
         'hu_header_widget_sec',
+        'hu_header_menu_sec',
 
         //CONTENT
         //'hu_content_home_sec',
@@ -118,6 +119,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
 
         //FOOTER
         'hu_footer_design_sec',
+        'hu_footer_menu_sec'
 
       );
 
@@ -549,6 +551,20 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     }
 
 
+    /*-----------------------------------------------------------------------------------------------------
+                                   Header Menu SECTION
+    ------------------------------------------------------------------------------------------------------*/
+    function hu_header_menu_sec() {
+      return array(
+          'default-menu-header' => array(
+                'default'   => hu_user_started_before_version( '3.2.4' ) ? 0 : 1,
+                'control'   => 'HU_controls',
+                'label'     => __("Use a default page menu if no menu has been assigned.", 'hueman'),
+                'section'   => 'header_menu_sec',
+                'type'      => 'checkbox'
+          )
+      );
+    }
 
     /******************************************************************************************************
     *******************************************************************************************************
@@ -997,6 +1013,21 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     }
 
 
+    /*-----------------------------------------------------------------------------------------------------
+                                   Footer Menu SECTION
+    ------------------------------------------------------------------------------------------------------*/
+    function hu_footer_menu_sec() {
+      return array(
+          'default-menu-footer' => array(
+                'default'   => hu_user_started_before_version( '3.2.4' ) ? 0 : 1,
+                'control'   => 'HU_controls',
+                'label'     => __("Use a default page menu if no menu has been assigned.", 'hueman'),
+                'section'   => 'footer_menu_sec',
+                'type'      => 'checkbox'
+          )
+      );
+    }
+
 
 
     /******************************************************************************************************
@@ -1131,24 +1162,22 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
       $nav_section_desc =  sprintf( _n('Your theme supports %s menu. Select which menu you would like to use.', 'Your theme supports %s menus. Select which menu appears in each location.', $num_locations, 'hueman' ), number_format_i18n( $num_locations ) );
       //adapt the nav section description for v4.3 (menu in the customizer from now on)
       if ( version_compare( $wp_version, '4.3', '<' ) ) {
-        $nav_section_desc .= "<br/>" . sprintf( __("You can create new menu and edit your menu's content %s." , "hueman"),
-          sprintf( '<strong><a href="%1$s" target="_blank" title="%3$s">%2$s &raquo;</a></strong>',
+        $nav_section_desc .= "<br/>" . sprintf( __("You can create menus and set their locations %s." , "hueman"),
+          sprintf( '<strong><a href="%1$s" target="_blank" title="%3$s">%2$s</a></strong>',
             admin_url('nav-menus.php'),
             __("on the Menus screen in the Appearance section" , "hueman"),
             __("create/edit menus", "hueman")
           )
         );
       } else {
-        $nav_section_desc .= "<br/>" . sprintf( __("You can create new menu and edit your menu's content %s." , "hueman"),
-          sprintf( '<strong><a href="%1$s" title="%3$s">%2$s &raquo;</a><strong>',
-            "javascript:wp.customize.section('nav').container.find('.customize-section-back').trigger('click'); wp.customize.panel('nav_menus').focus();",
+        $nav_section_desc .= "<br/>" . sprintf( __("You can create menus and set their locations %s." , "hueman"),
+          sprintf( '<strong><a href="%1$s" title="%3$s">%2$s</a><strong>',
+            "javascript:wp.customize.panel('nav_menus').focus();",
             __("in the menu panel" , "hueman"),
             __("create/edit menus", "hueman")
           )
         );
       }
-
-      $nav_section_desc .= "<br/><br/>". __( 'If a menu location has no menu assigned to it, a default page menu will be used.', 'hueman');
 
       $_new_sections = array(
         /*---------------------------------------------------------------------------------------------
@@ -1212,7 +1241,12 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
               'priority' => 20,
               'panel'   => 'hu-header-panel'
         ),
-
+        'header_menu_sec'         => array(
+              'title'    => __( 'Header Menu', 'hueman' ),
+              'priority' => 30,
+              'panel'   => 'hu-header-panel',
+              'description'    => $nav_section_desc
+        ),
 
         /*---------------------------------------------------------------------------------------------
         -> PANEL : CONTENT
@@ -1251,6 +1285,12 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
               'title'    => __( 'Footer Design : Logo, layout, ...', 'hueman' ),
               'priority' => 10,
               'panel'   => 'hu-footer-panel'
+        ),
+        'footer_menu_sec'         => array(
+              'title'    => __( 'Footer Menu', 'hueman' ),
+              'priority' => 20,
+              'panel'   => 'hu-footer-panel',
+              'description'    => $nav_section_desc
         )
 
       );
