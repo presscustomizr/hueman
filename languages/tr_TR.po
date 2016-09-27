@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Hueman v3.2.3\n"
-"POT-Creation-Date: 2016-09-27 14:30+0300\n"
-"PO-Revision-Date: 2016-09-27 14:30+0300\n"
+"POT-Creation-Date: 2016-09-27 21:33+0300\n"
+"PO-Revision-Date: 2016-09-27 21:33+0300\n"
 "Last-Translator: Mertcan <admin@mertcangokgoz.com>\n"
 "Language-Team: Press Customizr\n"
 "Language: tr_TR\n"
@@ -558,6 +558,8 @@ msgid ""
 "The installation process is starting. This process may take a while on some "
 "hosts, so please be patient."
 msgstr ""
+"Yükleme işlemi başlıyor. Bu işlem biraz zaman alabilir, bu yüzden lütfen "
+"sabırlı olun."
 
 #: functions/admin/class-tgm-plugin-activation.php:3736
 msgid "All installations have been completed."
@@ -586,11 +588,11 @@ msgstr "Aşağıda stil seçenekleri kullanmak için tıklayın"
 
 #: functions/class-utils-settings-map.php:162
 msgid "Boxed Layout"
-msgstr ""
+msgstr "Kutu Düzeni"
 
 #: functions/class-utils-settings-map.php:165
 msgid "Use a boxed layout"
-msgstr ""
+msgstr "Kutu düzeni kullan"
 
 #: functions/class-utils-settings-map.php:170
 msgid "Font"
@@ -670,21 +672,21 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:290
 msgid "Display an icon next to external links"
-msgstr ""
+msgstr "Dış bağlantılar yanında bir simge görüntüler"
 
 #: functions/class-utils-settings-map.php:293
 #: functions/class-utils-settings-map.php:303
 msgid ""
 "This will be applied to the links included in post or page content only."
-msgstr ""
+msgstr "Bu yazı veya sayfa içeriğinde yer alan bağlantılar için uygulanır."
 
 #: functions/class-utils-settings-map.php:300
 msgid "Open external links in a new tab"
-msgstr ""
+msgstr "Dış bağlantıları yeni bir sekmede aç"
 
 #: functions/class-utils-settings-map.php:326
 msgid "Create and organize your social links"
-msgstr ""
+msgstr "Sosyal bağlantılar oluştur ve düzenle"
 
 #: functions/class-utils-settings-map.php:344
 msgid "Posts Comments"
@@ -692,7 +694,7 @@ msgstr "Mesaj Yorumları"
 
 #: functions/class-utils-settings-map.php:347
 msgid "Comments on posts"
-msgstr "Yazılarda yorumlar"
+msgstr "Yazılardaki yorumları gösterir"
 
 #: functions/class-utils-settings-map.php:352
 msgid "Pages Comments"
@@ -700,7 +702,7 @@ msgstr "Sayfa Yorumları"
 
 #: functions/class-utils-settings-map.php:355
 msgid "Comments on pages"
-msgstr ""
+msgstr "Sayfalardaki yorumları gösterir"
 
 #: functions/class-utils-settings-map.php:368
 msgid "Enable Smooth Scrolling"
@@ -708,11 +710,11 @@ msgstr "Yumuşak Kaydırmayı Etkinleştir"
 
 #: functions/class-utils-settings-map.php:371
 msgid "This option enables a smoother page scroll."
-msgstr ""
+msgstr "Bu seçenek, daha düzgün bir sayfa kaydırma hissi sağlar."
 
 #: functions/class-utils-settings-map.php:386
 msgid "Enable the Mobile Friendly (or Responsive) layout"
-msgstr ""
+msgstr "Cep Dostu (ya da Duyarlı) düzeni etkinleştir"
 
 #: functions/class-utils-settings-map.php:389
 msgid ""
@@ -722,20 +724,27 @@ msgid ""
 "behaviour will not be working anymore. In most of the cases, you won't need "
 "to disable this option, and it is not recommended."
 msgstr ""
+"Hueman mobil dostu bir WordPress temasıdır.Herhangi bir cihaz, masaüstü "
+"bilgisayarlar, dizüstü bilgisayarlar, tabletler, akıllı telefonlar için "
+"uyumlu ve güzel olacağı anlamına gelir. <br/>bu kutunun işaretini "
+"kaldırırsanız, bu duyarlı davranışlar artık çalışmayacaktır. Çoğu durumda, "
+"bu seçeneği devre dışı bırakmak gerekmez ve önerilmez."
 
 #: functions/class-utils-settings-map.php:403
 msgid "Use a minified stylesheet"
-msgstr ""
+msgstr "Küçültülmüş Stil dosyaları kullanın"
 
 #: functions/class-utils-settings-map.php:406
 msgid ""
 "Unchecking this option is not recommended. Minifying css stylesheets "
 "improves performance for your website overall by decreasing the load time."
 msgstr ""
+"Bu seçeneğin işaretini kaldırmak önerilmez. Küçültülen css stil dosyaları "
+"genelde yükü azaltarak web sitenizin performansını artırır."
 
 #: functions/class-utils-settings-map.php:411
 msgid "Use Structured Data Markup for your posts"
-msgstr ""
+msgstr "Yazılarınız için Yapılandırılmış Veri Biçimlendirme kullanın"
 
 #: functions/class-utils-settings-map.php:414
 msgid ""
@@ -743,10 +752,13 @@ msgid ""
 "machines can understand it. Implementing it will help your website rank "
 "higher in search engines."
 msgstr ""
+"\"Yapılandırılmış veri biçimlendirme\" içeriği açıklamak için bir çok "
+"sistemin anlayabileceği standart bir yoldur. Bu uygulama web sitesi "
+"sıralaması yüksek arama motorlarında yardımcı olacaktır."
 
 #: functions/class-utils-settings-map.php:419
 msgid "Load images on scroll"
-msgstr ""
+msgstr "Kaydırma esnasında görselleri yükle"
 
 #: functions/class-utils-settings-map.php:422
 msgid ""
@@ -755,6 +767,10 @@ msgid ""
 "speed performances by reducing the weight of long pages that include many "
 "images."
 msgstr ""
+"Görünür olmayan görüntülerin yüklenmesini geciktirmek için bu seçeneği "
+"işaretleyin. Görünüm penceresi aşağıdaki resimlere dinamik olarak kaydırma "
+"aktif olacak. Bu gerçekten çok sayıda resim içeren sayfalar için yükü "
+"azaltarak hız ve performansları artırabilir."
 
 #: functions/class-utils-settings-map.php:437
 msgid "Display the \"About Hueman\" page in the \"Appearance\" admin menu"
@@ -766,181 +782,203 @@ msgid ""
 "changelog, release note, documentation link. It also display informations "
 "about your current install that can be useful if you need to report an issue."
 msgstr ""
+"Bu sayfa Hueman teması hakkında bilgi sağlamak için hazırlanmıştır : "
+"değişiklik günlüğü, sürüm notları, doküman bağlantıları. Eğer bir sorunu "
+"bildirmeniz gerekiyorsa yararlı olabilir güncel yüklü sürüm hakkında "
+"bilgileri görüntüler."
 
 #: functions/class-utils-settings-map.php:445
 msgid "Display a Help button in the admin bar"
-msgstr ""
+msgstr "Admin çubuğunda Yardım düğmesini görüntüler"
 
 #: functions/class-utils-settings-map.php:448
 msgid "This button links to the \"About Hueman\" page."
-msgstr ""
+msgstr "Bu düğme \"Hueman\" sayfasına bağlanır."
 
 #: functions/class-utils-settings-map.php:468
 msgid "Custom Header Logo"
-msgstr ""
+msgstr "Özel Üstbilgi Logosu"
 
 #: functions/class-utils-settings-map.php:479
 #: functions/class-utils-settings-map.php:896
 msgid ""
 "Upload your custom logo image. Supported formats : .jpg, .png, .gif, svg, "
 "svgz"
-msgstr ""
+msgstr "Özel logo yükle. Desteklenen formatlar : .jpg, .png, .gif, svg, svgz"
 
 #: functions/class-utils-settings-map.php:485
 msgid "Header Logo Image Max-height"
-msgstr ""
+msgstr "Başlık Logo Görüntü Max-yükseklik"
 
 #: functions/class-utils-settings-map.php:491
 msgid ""
 "Your logo image should have the double height of this to be high resolution"
 msgstr ""
+"Logo görseliniz yüksek çözünürlük için bunun iki katı genişlikte olmali"
 
 #: functions/class-utils-settings-map.php:496
 msgid "Display your site's description (tagline)"
-msgstr ""
+msgstr "(slogan)sitenin açıklaması görüntüle"
 
 #: functions/class-utils-settings-map.php:499
 msgid "The description that appears next to your logo"
-msgstr ""
+msgstr "Logonun yanında görüntülenen açıklama"
 
 #: functions/class-utils-settings-map.php:503
 msgid "Header Image"
-msgstr ""
+msgstr "Başlık Resmi"
 
 #: functions/class-utils-settings-map.php:513
 msgid ""
 "Upload a header image (supported formats : .jpg, .png, .gif, svg, svgz). "
 "This will disable header title/logo, site description, header ads widget"
 msgstr ""
+"Upload başlık görüntü (desteklenen formatlar : .jpg, .png, .gif, svg, svgz). "
+"Bu başlık şunları devre dışı bırakır. başlık/logo, site açıklaması, reklam "
+"alanları"
 
 #: functions/class-utils-settings-map.php:527
 msgid "Display a widget in your header"
-msgstr ""
+msgstr "Başlığıkta bir widget ekranı"
 
 #: functions/class-utils-settings-map.php:530
 msgid ""
 "Header widget area, perfect to insert advertisements. Note : this feature is "
 "not available when a header image is being displayed."
 msgstr ""
+"Başlık widget alanı, reklam eklemek için ideal. Not : Başlığa bir görüntü "
+"görüntülendiğinde bu özellik kullanılamaz."
 
 #: functions/class-utils-settings-map.php:551
 msgid "Global Layout"
-msgstr ""
+msgstr "Genel Düzen"
 
 #: functions/class-utils-settings-map.php:555
 msgid "Other layouts will override this option if they are set"
-msgstr ""
+msgstr "Eğer ayarlanırsa diğer düzenleri bu seçenek geçersiz kılar"
 
 #: functions/class-utils-settings-map.php:560 functions/init-core.php:902
 msgid "Home"
-msgstr ""
+msgstr "Ana Sayfa"
 
 #: functions/class-utils-settings-map.php:564
 msgid "[ <strong>is_home</strong> ] Posts homepage layout"
-msgstr ""
+msgstr "[ <strong>is_home</strong> ] Anasayfa içerik düzeni"
 
 #: functions/class-utils-settings-map.php:569
 msgid "Single"
-msgstr ""
+msgstr "Tek"
 
 #: functions/class-utils-settings-map.php:573
 msgid ""
 "[ <strong>is_single</strong> ] Single post layout - If a post has a set "
 "layout, it will override this."
 msgstr ""
+"[ <strong>is_single</strong> ] Tek düzen içerik - içerikğe ayarlanmış bir "
+"düzen Varsa, bu geçersiz kılınır."
 
 #: functions/class-utils-settings-map.php:578
 msgid "Archive"
-msgstr ""
+msgstr "Arşiv"
 
 #: functions/class-utils-settings-map.php:582
 msgid ""
 "[ <strong>is_archive</strong> ] Category, date, tag and author archive layout"
 msgstr ""
+"[ <strong>is_archive</strong> ] Kategori, tarih, etiket ve yazar arşiv düzeni"
 
 #: functions/class-utils-settings-map.php:587
 msgid "Archive - Category"
-msgstr ""
+msgstr "Arşiv - Kategori"
 
 #: functions/class-utils-settings-map.php:591
 msgid "[ <strong>is_category</strong> ] Category archive layout"
-msgstr ""
+msgstr "[ <strong>is_category</strong> ] Kategori arşiv düzeni"
 
 #: functions/class-utils-settings-map.php:596
 msgid "Search"
-msgstr ""
+msgstr "Arama"
 
 #: functions/class-utils-settings-map.php:600
 msgid "[ <strong>is_search</strong> ] Search page layout"
-msgstr ""
+msgstr "[ <strong>is_search</strong> ] Arama sayfa düzeni"
 
 #: functions/class-utils-settings-map.php:605
 msgid "Error 404"
-msgstr ""
+msgstr "HATA 404"
 
 #: functions/class-utils-settings-map.php:609
 msgid "[ <strong>is_404</strong> ] Error 404 page layout"
-msgstr ""
+msgstr "[ <strong>is_404</strong> ] Hata 404 sayfa düzeni"
 
 #: functions/class-utils-settings-map.php:614
 msgid "Default Page"
-msgstr ""
+msgstr "Varsayılan Sayfa"
 
 #: functions/class-utils-settings-map.php:618
 msgid ""
 "[ <strong>is_page</strong> ] Default page layout - If a page has a set "
 "layout, it will override this."
 msgstr ""
+"[ <strong>is_page</strong> ]  Varsayılan sayfa düzeni - bir sayfada "
+"ayarlanmış bir düzen Varsa, bu geçersiz kılınır."
 
 #: functions/class-utils-settings-map.php:632
 msgid "Display a custom heading for your blog."
-msgstr ""
+msgstr "Blogunuz için özel bir başlık görüntüler."
 
 #: functions/class-utils-settings-map.php:639
 msgid "Blog Heading"
-msgstr ""
+msgstr "Blog Başlığı"
 
 #: functions/class-utils-settings-map.php:642
 msgid ""
 "Your blog heading. Html is allowed. Note : write a blank space to hide the "
 "default content."
 msgstr ""
+"Blog Başlığı. Html izin verilir. Not : Varsayılan içeriği gizlemek için bir "
+"boşluk yazın."
 
 #: functions/class-utils-settings-map.php:646 functions/init-front.php:321
 msgid "Blog"
-msgstr ""
+msgstr "Blog"
 
 #: functions/class-utils-settings-map.php:648
 msgid "Blog Sub-Heading"
-msgstr ""
+msgstr "Blog Alt Başlık"
 
 #: functions/class-utils-settings-map.php:651
 msgid ""
 "Your blog sub-heading. Html is allowed. Note : write a blank space to hide "
 "the default content."
 msgstr ""
+"Blog alt başlık. Html izin verilir. Not : Varsayılan içeriği gizlemek için "
+"bir boşluk yazın."
 
 #: functions/class-utils-settings-map.php:658
 msgid "Excerpt Length"
-msgstr ""
+msgstr "Alıntı Uzunluğu"
 
 #: functions/class-utils-settings-map.php:664
 msgid "Set the excerpt length (in number of words)"
-msgstr ""
+msgstr "alıntı uzunluğunu ayarla (Kelime sayısı)"
 
 #: functions/class-utils-settings-map.php:669
 msgid "Display your blog post as a standard list."
-msgstr ""
+msgstr "Standart bir liste olarak blog yazılarını görüntüleyin."
 
 #: functions/class-utils-settings-map.php:672
 msgid ""
 "While the default blog design is a grid of posts, you can check this option "
 "and display one post per row, whith the thumbnail beside the text."
 msgstr ""
+"Varsayılan blog tasarımı mesajlarının bir kılavuz olsa da, satır başına bu "
+"seçenekler ve görüntülemeleri kontrol edebilirsiniz, metnin yanında küçük "
+"resim ile."
 
 #: functions/class-utils-settings-map.php:676
 msgid "Featured posts"
-msgstr ""
+msgstr "Öne çıkan gönderiler"
 
 #: functions/class-utils-settings-map.php:678
 msgid "Feature posts on top of your blog"
@@ -951,40 +989,50 @@ msgid ""
 "Check this box to display a selection of posts with a slideshow, on top of "
 "your blog."
 msgstr ""
+"Mesajlarınızı, blogunuzun üstünde bir slayt halinde görüntülemek için kutuyu "
+"işaretleyin."
 
 #: functions/class-utils-settings-map.php:686
 msgid "Select a category to feature"
-msgstr ""
+msgstr "Özellik için bir kategori seçin"
 
 #: functions/class-utils-settings-map.php:690
 msgid ""
 "If no specific category is selected, the featured posts block will display "
 "your latest post(s) from all categories."
 msgstr ""
+"Eğer belirli bir kategori seçili ise, öne çıkan mesajlar bloğu tüm "
+"kategori(ler) için son mesajı görüntüler."
 
 #: functions/class-utils-settings-map.php:696
 msgid "Featured Post Count"
-msgstr ""
+msgstr "Öne Çıkan Post Sayısı"
 
 #: functions/class-utils-settings-map.php:702
 msgid ""
 "Max number of featured posts to display. <br /><i>Set to 1 and it will show "
 "it without any slider script</i><br /><i>Set it to 0 to disable</i>"
 msgstr ""
+"Öne çıkan Mesaj Sayısı görüntülemek için. <br /><i>1 tanımlarsanız herhangi "
+"bir slayt komut dosyası olmadan gösterecektir</i><br /><i>Devre dışı "
+"bırakmak için 0 olarak ayarlayın</i>"
 
 #: functions/class-utils-settings-map.php:707
 msgid "Display the full post content"
-msgstr ""
+msgstr "Tam yazı içeriği görüntüle"
 
 #: functions/class-utils-settings-map.php:710
 msgid ""
 "By default, your featured posts display the first words of their content "
 "( the \"excerpt\"). Check this box to display the full content."
 msgstr ""
+"Varsayılan olarak, öne çıkan gönderi mesajların (\"alıntı\") içeriklerini "
+"ilk kelimelerini görüntüle. Tam içeriği görüntülemek için bu kutuyu "
+"işaretleyin."
 
 #: functions/class-utils-settings-map.php:715
 msgid "Animate your featured posts with a slideshow"
-msgstr ""
+msgstr "Bir slayt gösterisi ile öne çıkan mesajlar animasyon"
 
 #: functions/class-utils-settings-map.php:718
 msgid "Enables the automatic animation of the featured posts carousel."
@@ -992,11 +1040,11 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:724
 msgid "Featured Slideshow Speed"
-msgstr ""
+msgstr "Öne çıkan slayt Gösterisi Hızı"
 
 #: functions/class-utils-settings-map.php:730
 msgid "Speed of the automatic slideshow animation"
-msgstr ""
+msgstr "Otomatik slayt animasyon hızı"
 
 #: functions/class-utils-settings-map.php:735
 msgid "Display the featured posts also in the list of posts"
@@ -1011,7 +1059,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:753
 msgid "Single - Author Bio"
-msgstr ""
+msgstr "Tek Yazar Biografisi"
 
 #: functions/class-utils-settings-map.php:756
 msgid "Display post author description, if it exists"
@@ -1019,21 +1067,21 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:761
 msgid "Single - Related Posts"
-msgstr ""
+msgstr "Tek - İlgili Yayınlar"
 
 #: functions/class-utils-settings-map.php:765
 #: functions/class-utils-settings-map.php:778
 #: functions/class-utils-settings-map.php:1288
 msgid "Disable"
-msgstr ""
+msgstr "Devre dışı bırak"
 
 #: functions/class-utils-settings-map.php:766
 msgid "Related by categories"
-msgstr ""
+msgstr "Kategori ile ilgili"
 
 #: functions/class-utils-settings-map.php:767
 msgid "Related by tags"
-msgstr ""
+msgstr "Etiketler ile ilgili"
 
 #: functions/class-utils-settings-map.php:769
 msgid "Display randomized related articles below the post"
@@ -1045,23 +1093,23 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:779
 msgid "Left Sidebar"
-msgstr ""
+msgstr "Sol Kenar Çubuğu"
 
 #: functions/class-utils-settings-map.php:780
 msgid "Right Sidebar"
-msgstr ""
+msgstr "Sağ Kenar Çubuğu"
 
 #: functions/class-utils-settings-map.php:781
 msgid "Below content"
-msgstr ""
+msgstr "İçerik Aşağıda"
 
 #: functions/class-utils-settings-map.php:783
 msgid "Display links to the next and previous article"
-msgstr ""
+msgstr "Önceki ve sonraki yazılar için bağlantıları göster"
 
 #: functions/class-utils-settings-map.php:797
 msgid "Thumbnail Placeholder"
-msgstr ""
+msgstr "Küçük Resim Yer Tutucu"
 
 #: functions/class-utils-settings-map.php:800
 msgid "Display featured image placeholders if no featured image is set"
@@ -1069,16 +1117,16 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:805
 msgid "Thumbnail Comment Count"
-msgstr ""
+msgstr "Küçük Resim Yorum Sayısı"
 
 #: functions/class-utils-settings-map.php:808
 msgid "Display comment count on thumbnails"
-msgstr ""
+msgstr "thumbnails'de yorumları göster"
 
 #: functions/class-utils-settings-map.php:829
 #: functions/plugins-compatibility.php:217
 msgid "Sidebar Top Boxes"
-msgstr ""
+msgstr "Kenar Çubuğu, Üst Kutuları"
 
 #: functions/class-utils-settings-map.php:832
 msgid "Display boxes at the top of the sidebars"
@@ -1086,33 +1134,36 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:837
 msgid "Mobile Sidebar Content"
-msgstr ""
+msgstr "Mobil Kenar Çubuğu İçeriği"
 
 #: functions/class-utils-settings-map.php:841
 msgid "Display both sidebars"
-msgstr ""
+msgstr "Her iki kenar çubuğunu görüntüle"
 
 #: functions/class-utils-settings-map.php:842
 msgid "Hide primary sidebar"
-msgstr ""
+msgstr "Birincil Kenar Çubuğu gizle"
 
 #: functions/class-utils-settings-map.php:843
 msgid "Hide secondary sidebar"
-msgstr ""
+msgstr "İkincil Kenar Çubuğu gizle"
 
 #: functions/class-utils-settings-map.php:844
 msgid "Hide both sidebars"
-msgstr ""
+msgstr "Her iki kenar çubuğunu gizle"
 
 #: functions/class-utils-settings-map.php:846
 msgid ""
 "Control how the sidebar content is displayed on smartphone mobile devices "
 "(320px). Note : on smartphones the sidebars are displayed below the content."
 msgstr ""
+"Kenar Çubuğu içeriği (320px) akıllı telefon ve mobil cihazlar üzerinde nasıl "
+"görüntüleneceğini kontrol eder. Not : akıllı telefonlarda kenar çubukları "
+"içeriğin altında  bulunur"
 
 #: functions/class-utils-settings-map.php:869
 msgid "Display a full width widget area in your footer"
-msgstr ""
+msgstr "Altbilgi'de Widget alanını tam genişlikte göster"
 
 #: functions/class-utils-settings-map.php:872
 #, php-format
@@ -1123,116 +1174,118 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:877
 msgid "Select columns to enable footer widgets"
-msgstr ""
+msgstr "altbilgi Widget etkinleştirmek için Seçin"
 
 #: functions/class-utils-settings-map.php:881
 msgid "Recommended number of columns : 3"
-msgstr ""
+msgstr "Sütun için önerilen numara : 3"
 
 #: functions/class-utils-settings-map.php:885
 msgid "Upload your custom logo image"
-msgstr ""
+msgstr "Özel logo yükle"
 
 #: functions/class-utils-settings-map.php:901
 msgid "Replace the footer copyright text"
-msgstr ""
+msgstr "Altbilgi telif hakkı metni"
 
 #: functions/class-utils-settings-map.php:905
 msgid "Note : Html is allowed."
-msgstr ""
+msgstr "Not : Html'ye izin verilir."
 
 #: functions/class-utils-settings-map.php:910
 msgid "Footer credit text"
-msgstr ""
+msgstr "Altbilgi Jenerik metni"
 
 #: functions/class-utils-settings-map.php:945
 msgid "Global settings"
-msgstr ""
+msgstr "Genel Ayarlar"
 
 #: functions/class-utils-settings-map.php:946
 msgid "General settings for the Hueman theme : design, comments, mobile, ..."
-msgstr ""
+msgstr "Hueman teması için genel ayarları : tasarım, yorum, mobil, ..."
 
 #: functions/class-utils-settings-map.php:951
 msgid "Header"
-msgstr ""
+msgstr "Başlık"
 
 #: functions/class-utils-settings-map.php:952
 msgid "Header settings for the Hueman theme."
-msgstr ""
+msgstr "Hueman teması için başlık ayarları."
 
 #: functions/class-utils-settings-map.php:957
 msgid "Content"
-msgstr ""
+msgstr "İçerik"
 
 #: functions/class-utils-settings-map.php:958
 msgid "Content settings for the Hueman theme."
-msgstr ""
+msgstr "Hueman tema için içerik ayarları."
 
 #: functions/class-utils-settings-map.php:963
 msgid "Sidebars"
-msgstr ""
+msgstr "Kenar çubuğunu"
 
 #: functions/class-utils-settings-map.php:964
 msgid "Sidebars settings for the Hueman theme."
-msgstr ""
+msgstr "Hueman tema için kenar çubuğu ayarları."
 
 #: functions/class-utils-settings-map.php:969
 msgid "Footer"
-msgstr ""
+msgstr "Altbilgi"
 
 #: functions/class-utils-settings-map.php:970
 msgid "Footer settings for the Hueman theme."
-msgstr ""
+msgstr "Hueman teması için altbilgi ayarları."
 
 #: functions/class-utils-settings-map.php:975
 msgid "Advanced options"
-msgstr ""
+msgstr "Gelişmiş Seçenekler"
 
 #: functions/class-utils-settings-map.php:976
 msgid "Advanced settings for the Hueman theme."
-msgstr ""
+msgstr "Hueman teması için Gelişmiş Ayarlar."
 
 #: functions/class-utils-settings-map.php:1051
 #, php-format
 msgid "Your theme supports %s menu. Select which menu you would like to use."
 msgid_plural ""
 "Your theme supports %s menus. Select which menu appears in each location."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tema %s menü destekliyor. Kullanmak istediğiniz menüyü seçin"
+msgstr[1] "Tema %s menülerini destekler. Her yerde gözükecek menüyü seçin"
 
 #: functions/class-utils-settings-map.php:1054
 #: functions/class-utils-settings-map.php:1062
 #, php-format
 msgid "You can create new menu and edit your menu's content %s."
-msgstr ""
+msgstr "Yeni bir menü oluşturmak ve menü içeriğini %s düzenleyebilirsiniz."
 
 #: functions/class-utils-settings-map.php:1057
 msgid "on the Menus screen in the Appearance section"
-msgstr ""
+msgstr "Görünüm bölümündeki ekranda olan Menüler"
 
 #: functions/class-utils-settings-map.php:1058
 #: functions/class-utils-settings-map.php:1066
 msgid "create/edit menus"
-msgstr ""
+msgstr "Menüleri Oluştur/düzenle"
 
 #: functions/class-utils-settings-map.php:1065
 msgid "in the menu panel"
-msgstr ""
+msgstr "Menü paneli"
 
 #: functions/class-utils-settings-map.php:1071
 msgid ""
 "If a menu location has no menu assigned to it, a default page menu will be "
 "used."
 msgstr ""
+"Eğer bir menü konumu için atanmış bir menü varsa, varsayılan sayfa menü "
+"kullanılacaktır."
 
 #: functions/class-utils-settings-map.php:1080
 msgid "Site Identity : Title, Tagline and Site Icon"
-msgstr ""
+msgstr "Site Kimliği : Başlık, Slogan ve Site Simgesi"
 
 #: functions/class-utils-settings-map.php:1085
 msgid "General Design Options : Font, Colors, ..."
-msgstr ""
+msgstr "Genel Tasarım Seçenekleri : Yazı Tipi, Renk, ..."
 
 #: functions/class-utils-settings-map.php:1090
 msgid "Social links"
@@ -1240,7 +1293,7 @@ msgstr "Sosyal bağlantılar"
 
 #: functions/class-utils-settings-map.php:1100
 msgid "Smooth Scroll"
-msgstr "Pürüzsüz Kaydırma"
+msgstr "Yumuşak Kaydırma"
 
 #: functions/class-utils-settings-map.php:1105
 msgid "Mobile devices"
@@ -1256,19 +1309,19 @@ msgstr "Hueman Yönetici Ayarları"
 
 #: functions/class-utils-settings-map.php:1126
 msgid "Header Design : logo, background, ..."
-msgstr ""
+msgstr "Başlık Tasarım : logo, arka plan, ..."
 
 #: functions/class-utils-settings-map.php:1131
 msgid "Header Advertisement Widget"
-msgstr ""
+msgstr "Başlık Reklam Widgeti"
 
 #: functions/class-utils-settings-map.php:1141
 msgid "Layout options for the main content"
-msgstr ""
+msgstr "Ana içerik için Düzenleme seçenekleri"
 
 #: functions/class-utils-settings-map.php:1146
 msgid "Sidebars : Design and Mobile Settings"
-msgstr ""
+msgstr "Kenar çubuğunu : Tasarım ve Mobil Ayarları"
 
 #: functions/class-utils-settings-map.php:1151
 msgid "Blog Design and Content"
@@ -1284,7 +1337,7 @@ msgstr "Küçük Resim Ayarları"
 
 #: functions/class-utils-settings-map.php:1170
 msgid "Footer Design : Logo, layout, ..."
-msgstr ""
+msgstr "Footer Tarasımı: Logo, Layout, ..."
 
 #: functions/class-utils-settings-map.php:1223
 msgid "Choose one "
@@ -1317,7 +1370,7 @@ msgstr "3 Sütun - İçerik Sağ"
 
 #: functions/class-utils-settings-map.php:1270
 msgid "Inherit Global Layout"
-msgstr ""
+msgstr "Kalıtımsal Genel Düzen"
 
 #: functions/class-utils-settings-map.php:1296
 msgid "2 Columns"
@@ -1469,15 +1522,15 @@ msgstr "Yeni sosyal bağlantı eklendi ! Düzenlemek için aşağı kaydırın."
 
 #: functions/czr/czr-resources.php:310
 msgid "Select repeat property"
-msgstr ""
+msgstr "Tekrar edilecek özelliği seçin"
 
 #: functions/czr/czr-resources.php:311
 msgid "Select attachment property"
-msgstr ""
+msgstr "Ek özellik seçin"
 
 #: functions/czr/czr-resources.php:312
 msgid "Select position property"
-msgstr ""
+msgstr "Pozisyon özelliği seçin"
 
 #: functions/czr/czr-resources.php:313
 msgid "Widget Zone"
@@ -1588,7 +1641,7 @@ msgstr "Dikey Tekrar"
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:14
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:21
 msgid "Inherit"
-msgstr ""
+msgstr "Devral"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:19
 msgid "Fixed"
@@ -1814,7 +1867,7 @@ msgstr "tema Seçenekleri [ESKİ]"
 
 #: functions/init-core.php:808
 msgid "Primary"
-msgstr "birincil"
+msgstr "Birincil"
 
 #: functions/init-core.php:810
 msgid ""
@@ -1826,7 +1879,7 @@ msgstr ""
 
 #: functions/init-core.php:817
 msgid "Secondary"
-msgstr "ikincil"
+msgstr "İkincil"
 
 #: functions/init-core.php:819
 msgid ""
@@ -1836,35 +1889,35 @@ msgstr ""
 
 #: functions/init-core.php:826 functions/init-core.php:920
 msgid "Footer 1"
-msgstr ""
+msgstr "Altbilgi 1"
 
 #: functions/init-core.php:828
 msgid "Widgetized footer 1"
-msgstr ""
+msgstr "Altbilgi widget 1"
 
 #: functions/init-core.php:835 functions/init-core.php:921
 msgid "Footer 2"
-msgstr ""
+msgstr "Altbilgi 2"
 
 #: functions/init-core.php:837
 msgid "Widgetized footer 2"
-msgstr ""
+msgstr "Altbilgi widget 2"
 
 #: functions/init-core.php:844 functions/init-core.php:922
 msgid "Footer 3"
-msgstr ""
+msgstr "Altbilgi 3"
 
 #: functions/init-core.php:846
 msgid "Widgetized footer 3"
-msgstr ""
+msgstr "Altbilgi widget 3"
 
 #: functions/init-core.php:853 functions/init-core.php:923
 msgid "Footer 4"
-msgstr ""
+msgstr "Altbilgi 4"
 
 #: functions/init-core.php:855
 msgid "Widgetized footer 4"
-msgstr ""
+msgstr "Altbilgi widget 4"
 
 #: functions/init-core.php:861 functions/init-core.php:924
 msgid "Header (next to logo / title)"
@@ -2171,7 +2224,7 @@ msgstr "YouTube ya da Vimeo linki ile cevap veren bir video görüntüleyicisi."
 
 #: parts/post-list-author-date.php:11 parts/single-author-date.php:7
 msgid "by"
-msgstr "tarafından"
+msgstr ""
 
 #: parts/post-nav.php:3
 msgid "Next story"
@@ -2211,7 +2264,7 @@ msgstr "Kenar Çubuğu'nu genişlet"
 
 #: sidebar-2.php:9
 msgid "More"
-msgstr "daha fazlası"
+msgstr "Daha fazlası"
 
 #: sidebar.php:12
 msgid "Follow:"
@@ -2223,4 +2276,4 @@ msgstr "Sayfalar:"
 
 #: single.php:44
 msgid "Tags:"
-msgstr "Etikerler:"
+msgstr "Etiketler:"
