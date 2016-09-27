@@ -112,57 +112,45 @@ function hu_maybe_print_default_widgets( $sidebars_widgets, $_zone_id ) {
     //has user enable default widgets?
     if ( ! hu_is_checked('show-sb-example-wgt') || ! hu_is_checked( "{$_zone_id}-example-wgt") )
       return;
-
     if ( ! array_key_exists($_zone_id, $sidebars_widgets) || ( is_array( $sidebars_widgets[$_zone_id] ) && ! empty($sidebars_widgets[$_zone_id] ) ) )
       return;
-
     //we only want to print default widgets in primary and secondary sidebars
     if ( ! in_array( $_zone_id, array( 'primary', 'secondary') ) )
       return;
 
-    global $wp_registered_sidebars, $wp_registered_widgets;
+    global $wp_registered_sidebars;
 
-    $_widgets_to_print = array();;
+    $_widgets_to_print = array();
     switch ($_zone_id) {
       case 'secondary':
-        $_widgets_to_print[] = 'search';
-        $_widgets_to_print[] = 'alxtabs';
+        $_widgets_to_print[] = 'WP_Widget_Search';
+        $_widgets_to_print[] = 'AlxTabs';
         break;
 
       case 'primary':
-        $_widgets_to_print[] = 'alxposts';
+        $_widgets_to_print[] = 'AlxPosts';
         break;
     }
     if ( empty($_widgets_to_print) )
       return;
 
-
     //find the widget instance ids
-    $_wgt_instance_ids = array();
-    foreach ( $wp_registered_widgets as $_id => $_data ) {
-      $found_match = false;
-      foreach ( $_widgets_to_print as $_wgt_id) {
-        if ( $_wgt_id != substr( $_id, 0, strlen($_wgt_id) ) || $found_match )
-          continue;
-        $found_match = true;
-        $_wgt_instance_ids[] = $_id;
-      }
+    $_wgt_instances = array();
+
+    foreach ( $_widgets_to_print as $_class) {
+      $_wgt_instances[] = new $_class();
     }
 
-    if ( empty($_wgt_instance_ids) )
+    if ( empty($_wgt_instances) )
       return;
 
     $sidebar = $wp_registered_sidebars[$_zone_id];
-    foreach ( $_wgt_instance_ids as $_widget_id ) {
-      $callback = $wp_registered_widgets[$_widget_id]['callback'];
-
-      $params = array_merge(
-        array( array_merge( $sidebar, array('widget_id' => $_widget_id, 'widget_name' => $wp_registered_widgets[$_widget_id]['name']) ) ),
-        (array) $wp_registered_widgets[$_widget_id]['params']
-      );
-
+    foreach ( $_wgt_instances as $_inst ) {
+      $_array_inst = (array)$_inst;
+      $params = array_merge( $sidebar, array('widget_id' => $_array_inst['id_base'], 'widget_name' => $_array_inst['name']) );
+      $callback = $_inst -> _get_display_callback();
       if ( is_callable($callback) ) {
-        $callback[0] -> widget( $params[0], $callback );
+        $callback[0] -> widget( $params, $callback );
       }
     }
 }
