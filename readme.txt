@@ -88,6 +88,13 @@ See headers of files for further details.
 * added : hu_is_home_empty() utility
 * added : hu_is_post_list() utility. Typically used to contextualize the customization.
 * added : in customizer > Content > Front Page, a link to blog design when relevant in the front page content section
+* added : a consoleLog utility for the front js code
+* added : svg animation plugins, dependencies : _, Vivus and HUParams
+* added : 3 options in customizer to control default widgets. Enabled by default.
+* added : default widgets are printed in the primary and secondary sidebars if no widgets have been added and if the options to display default widgets are enabled.
+
+
+
 
 = 3.2.4 September 20th 2016 =
 * improved : implement add_theme_support( 'custom-header') with the header_image theme_mod, in place of the previous header-image hueman option. Ensure retrocompatibility with the previous option.
