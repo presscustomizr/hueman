@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Hueman v3.2.3\n"
-"POT-Creation-Date: 2016-05-30 08:47+0200\n"
-"PO-Revision-Date: 2016-05-30 08:47+0200\n"
+"POT-Creation-Date: 2016-09-27 14:30+0300\n"
+"PO-Revision-Date: 2016-09-27 14:30+0300\n"
 "Last-Translator: Mertcan <admin@mertcangokgoz.com>\n"
 "Language-Team: Press Customizr\n"
 "Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.5\n"
+"X-Generator: Poedit 1.8.9\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -41,7 +41,7 @@ msgstr "1 Yanıt"
 msgid "% Responses"
 msgstr "% Yanıt"
 
-#: comments.php:10 functions/class-utils-settings-map.php:1057
+#: comments.php:10 functions/class-utils-settings-map.php:1095
 msgid "Comments"
 msgstr "Yorumlar"
 
@@ -49,7 +49,7 @@ msgstr "Yorumlar"
 msgid "Pingbacks"
 msgstr "Geri bildirimler"
 
-#: footer.php:103 functions/czr/czr-resources.php:42
+#: footer.php:103 functions/czr/czr-resources.php:40
 msgid "All Rights Reserved."
 msgstr "Her hakkı saklıdır."
 
@@ -67,36 +67,39 @@ msgid ""
 "<h2>As per the WordPress themes guidelines (%1$s), all the Hueman theme "
 "options have been moved to the %2$s.</h2>"
 msgstr ""
+"<h2>(%1$s) WordPress tema kurallarına göre, tüm Hueman teması seçeneklerine "
+"%2$s taşındı.</h2>"
 
 #: functions/admin/class-admin-page.php:36
 msgid "more informations here"
-msgstr ""
+msgstr "daha fazla bilgi burada"
 
 #: functions/admin/class-admin-page.php:37
 msgid "customizer"
-msgstr ""
+msgstr "özelleştirme"
 
 #: functions/admin/class-admin-page.php:40
 msgid ""
 "All your previous options have been kept and are available in the customizer "
 "options panel."
-msgstr ""
+msgstr "Önceki tüm seçenekler tutuldu ve özelleştirme seçenekleri mevcut"
 
 #: functions/admin/class-admin-page.php:53
 msgid "About Hueman"
-msgstr ""
+msgstr "Hueman hakkında"
 
 #: functions/admin/class-admin-page.php:81
 msgid "Need help with"
-msgstr ""
+msgstr "yardım lazım"
 
 #: functions/admin/class-admin-page.php:86
 msgid "Welcome to"
-msgstr ""
+msgstr "Hoşgeldiniz"
 
 #: functions/admin/class-admin-page.php:103
 msgid "Thank you for using the Hueman WordPress theme for your website."
 msgstr ""
+"Web siteniz için Hueman WordPress tema kullandığınız için teşekkür ederiz."
 
 #: functions/admin/class-admin-page.php:104
 #, php-format
@@ -104,6 +107,8 @@ msgid ""
 "Hueman %s has more features, is safer and more stable than ever to help you "
 "designing an awesome webdesign."
 msgstr ""
+"Hueman %s daha fazla özelliklere sahip, harika bir web tasarım tasarlamanıza "
+"yardımcı olacak, her zamankinden daha güvenli ve daha istikrarlı."
 
 #: functions/admin/class-admin-page.php:105
 #, php-format
@@ -113,10 +118,14 @@ msgid ""
 "changes. If you just upgraded from a lower version, you'll be able to find "
 "all your previous settings in the customizer."
 msgstr ""
+"Sürüm 3.0+ beri, tüm seçenekler %s taşındı, güvenli ve canlı önizleme "
+"değişiklikleri yayınlamadan önce web sitesi tasarımı için izin verilmiştir. "
+"Eğer daha düşük bir sürümden yükseltme yaptıysanız, özelleştirme tüm önceki "
+"ayarları bulmada başarılı olamayacaktır."
 
 #: functions/admin/class-admin-page.php:106
 msgid "customizer panel"
-msgstr ""
+msgstr "özelleştirme paneli"
 
 #: functions/admin/class-admin-page.php:108
 #, php-format
@@ -124,23 +133,25 @@ msgid ""
 "For more informations about this new version of the theme, %s or check the "
 "changelog below"
 msgstr ""
+"Temanın bu yeni sürümü hakkında daha fazla bilgi için %s yi veya aşağıdaki "
+"değişiklik günlüğünü kontrol edin"
 
 #: functions/admin/class-admin-page.php:109
 msgid "read the latest release notes"
-msgstr ""
+msgstr "en son sürüm notlarını okuyun"
 
 #: functions/admin/class-admin-page.php:114
 #, php-format
 msgid "The best way to start with %s is to read the %s and visit the %s."
-msgstr ""
+msgstr "%s ile başlamak için en iyi yol %s okumak ve %s ziyaret etmek."
 
 #: functions/admin/class-admin-page.php:116
 msgid "getting started guide"
-msgstr ""
+msgstr "Kullanım Kılavuzu"
 
 #: functions/admin/class-admin-page.php:117
 msgid "demo website"
-msgstr ""
+msgstr "demo web sitesi"
 
 #: functions/admin/class-admin-page.php:131
 #, php-format
@@ -151,20 +162,20 @@ msgstr ""
 
 #: functions/admin/class-admin-page.php:147
 msgid "Go to Dashboard &rarr; Home"
-msgstr ""
+msgstr "Panel &rarr; anasayfasına gidin"
 
 #: functions/admin/class-admin-page.php:147
 msgid "Go to Dashboard"
-msgstr ""
+msgstr "Panele git"
 
 #: functions/admin/class-admin-page.php:162
 #, php-format
 msgid "The best way to start is to read the %s."
-msgstr ""
+msgstr "Başlamak için en iyi yol %s okumaktır"
 
 #: functions/admin/class-admin-page.php:163
 msgid "documentation"
-msgstr ""
+msgstr "belgeler"
 
 #: functions/admin/class-admin-page.php:167
 msgid ""
@@ -173,114 +184,427 @@ msgid ""
 "constantly reporting bugs and potential issues. If you encounter a problem "
 "with the theme, chances are that it's already been reported and fixed in the"
 msgstr ""
+"Eğer belgelerinde sorunuza bir cevap bulamazsanız, panik yapmayın :) ! "
+"Hueman teması çok sayıda webmaster tarafından kullanıldığı için sürekli "
+"hataları ve olası sorunları rapor edilir. Zaten bildirilen ve tamir edilmesi "
+"bekleniyor olabilir. Konu ile ilgili bir sorunla karşılaşırsanız zaten "
+"raporlanmış ve onarılmış olabilir..."
 
 #: functions/admin/class-admin-page.php:169
 msgid "support forum"
-msgstr ""
+msgstr "destek forumu"
 
 #: functions/admin/class-admin-page.php:175
 msgid "Read the documentation"
-msgstr ""
+msgstr "Belgeleri okuyun"
 
 #: functions/admin/class-admin-page.php:179
 msgid "Get help in the support forum"
-msgstr ""
+msgstr "Forumdan yardım alın"
 
 #: functions/admin/class-admin-page.php:239
 #, php-format
 msgid "Changelog in version %1$s"
-msgstr ""
+msgstr "Değişiklik Günlüğü Sürümü %1$s"
 
 #: functions/admin/class-admin-page.php:261
 msgid "System Informations"
-msgstr ""
+msgstr "Sistem Bilgileri"
 
 #: functions/admin/class-admin-page.php:262
 msgid "Please include the following informations when posting support requests"
 msgstr ""
+"Destek istekleri gönderirken lütfen aşağıdaki bilgileri göz önünde bulundurun"
 
 #: functions/admin/class-admin-page.php:263
 msgid ""
 "To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C "
 "(Mac)."
 msgstr ""
+"Sistem bilgileri kopyalamak için (Mac) (PC) Ctrl + C veya Cmd + C sonra "
+"aşağıya tıklayın."
 
 #: functions/admin/class-admin-update-notification.php:85
 msgid "Good, you've just upgraded to"
-msgstr ""
+msgstr "Güzeeel, güncellediniz..."
 
 #: functions/admin/class-admin-update-notification.php:87
 msgid "version"
-msgstr ""
+msgstr "versiyon"
 
 #: functions/admin/class-admin-update-notification.php:96
 msgid "We'd like to introduce the new features we've been working on."
-msgstr ""
+msgstr "Üzerinde çalıştığımız yeni özellikleri tanıtmak istiyoruz."
 
 #: functions/admin/class-admin-update-notification.php:98
 msgid "Read the latest release notes"
-msgstr ""
+msgstr "En son sürüm notlarını okuyun"
 
 #: functions/admin/class-admin-update-notification.php:100
 msgid "Visit the demo"
-msgstr ""
+msgstr "demoyu ziyaret et"
 
 #: functions/admin/class-admin-update-notification.php:106
 msgid "I already know what's new thanks !"
-msgstr ""
+msgstr "Nelerin yeni olduğunu biliyorum, teşekkürler..."
 
 #: functions/admin/class-admin-update-notification.php:107
 msgid "close"
+msgstr "kapat"
+
+#: functions/admin/class-tgm-plugin-activation.php:509
+#: functions/init-core.php:1333
+msgid "Install Required Plugins"
+msgstr "Gerekli Eklentileri Yükleyin"
+
+#: functions/admin/class-tgm-plugin-activation.php:510
+#: functions/init-core.php:1334
+msgid "Install Plugins"
+msgstr "Eklentileri Yükleyin"
+
+#: functions/admin/class-tgm-plugin-activation.php:512
+#: functions/init-core.php:1335
+#, php-format
+msgid "Installing Plugin: %s"
+msgstr "Yüklenen eklenti: %s"
+
+#: functions/admin/class-tgm-plugin-activation.php:514
+#, php-format
+msgid "Updating Plugin: %s"
+msgstr "Eklenti güncelleme: %s"
+
+#: functions/admin/class-tgm-plugin-activation.php:515
+#: functions/init-core.php:1336
+msgid "Something went wrong with the plugin API."
+msgstr "Bir eklenti API ile çalışmıyor."
+
+#: functions/admin/class-tgm-plugin-activation.php:567
+#: functions/init-core.php:1347
+msgid "Return to Required Plugins Installer"
+msgstr "Gerekli Eklenti yükleyicisine"
+
+#: functions/admin/class-tgm-plugin-activation.php:568
+msgid "Return to the Dashboard"
+msgstr "Panele geri dön"
+
+#: functions/admin/class-tgm-plugin-activation.php:569
+#: functions/admin/class-tgm-plugin-activation.php:3377
+#: functions/init-core.php:1348
+msgid "Plugin activated successfully."
+msgstr "Eklenti başarıyla etkinleştirildi."
+
+#: functions/admin/class-tgm-plugin-activation.php:570
+#: functions/admin/class-tgm-plugin-activation.php:3170
+msgid "The following plugin was activated successfully:"
+msgid_plural "The following plugins were activated successfully:"
+msgstr[0] "Aşağıdaki eklenti başarıyla aktif edildi:"
+msgstr[1] "Aşağıdaki eklentiler başarıyla aktif edildi:"
+
+#: functions/admin/class-tgm-plugin-activation.php:572
+#, php-format
+msgid "No action taken. Plugin %1$s was already active."
+msgstr "Herhangi bir eylem. Eklenti %1$s zaten etkin."
+
+#: functions/admin/class-tgm-plugin-activation.php:574
+#, php-format
+msgid ""
+"Plugin not activated. A higher version of %s is needed for this theme. "
+"Please update the plugin."
+msgstr ""
+"Eklenti aktif değil. %s daha yüksek bir sürüm bu tema için gerekli değildir. "
+"Lütfen eklentiyi güncellemeyiniz."
+
+#: functions/admin/class-tgm-plugin-activation.php:576
+#, php-format
+msgid "All plugins installed and activated successfully. %1$s"
+msgstr "Tüm eklentileri yüklü ve başarılı bir şekilde aktifleştirildi. %1$s"
+
+#: functions/admin/class-tgm-plugin-activation.php:577
+msgid "Dismiss this notice"
+msgstr "Uyarıyı görmezden gel"
+
+#: functions/admin/class-tgm-plugin-activation.php:578
+msgid "Remind me later"
+msgstr "Daha sonra bana hatırlat"
+
+#: functions/admin/class-tgm-plugin-activation.php:579
+msgid ""
+"There are one or more required or recommended plugins to install, update or "
+"activate."
+msgstr ""
+"Bir ya da daha fazla kurulmayı, güncelleştirmek veya etkinleştirmek için "
+"bekleyen eklentiler var."
+
+#: functions/admin/class-tgm-plugin-activation.php:580
+msgid "Please contact the administrator of this site for help."
+msgstr "Lütfen yardım için bu sitenin yöneticisine başvurun."
+
+#: functions/admin/class-tgm-plugin-activation.php:1328
+#, php-format
+msgid ""
+"The Hueman Addons is a free plugin including some cool additional features "
+"like a %1$s and %2$s."
+msgstr ""
+"Hueman Eklentileri %1$s ve %2$s gibi bazı güzel ek özellikler de dahil olmak "
+"üzere ücretsiz bir eklenti."
+
+#: functions/admin/class-tgm-plugin-activation.php:1329
+msgid "social share bar"
+msgstr "sosyal paylaşım çubuğu"
+
+#: functions/admin/class-tgm-plugin-activation.php:1330
+msgid "useful shortcodes"
+msgstr "yararlı kısa kodlar"
+
+#: functions/admin/class-tgm-plugin-activation.php:1332
+msgid ""
+"The plugin has been designed specifically for the Hueman WordPress theme. "
+"Lightweight and safe."
+msgstr ""
+"Bu eklenti Hueman Wordpress Teması için tasarlanmıştır. Hafif ve güvenlidir."
+
+#: functions/admin/class-tgm-plugin-activation.php:1342
+msgid "Hueman Addons"
+msgstr "Hueman Eklentileri"
+
+#: functions/admin/class-tgm-plugin-activation.php:2200
+#, php-format
+msgid "TGMPA v%s"
+msgstr "TGMPA v%s"
+
+#: functions/admin/class-tgm-plugin-activation.php:2491
+msgid "Required"
+msgstr "Gerekli"
+
+#: functions/admin/class-tgm-plugin-activation.php:2494
+msgid "Recommended"
+msgstr "Önerilen"
+
+#: functions/admin/class-tgm-plugin-activation.php:2510
+msgid "WordPress Repository"
+msgstr "WordPress Depo"
+
+#: functions/admin/class-tgm-plugin-activation.php:2513
+msgid "External Source"
+msgstr "Dış Kaynak"
+
+#: functions/admin/class-tgm-plugin-activation.php:2516
+msgid "Pre-Packaged"
+msgstr "Önceden Paketlenmiş"
+
+#: functions/admin/class-tgm-plugin-activation.php:2533
+msgid "Not Installed"
+msgstr "Yüklü Değil"
+
+#: functions/admin/class-tgm-plugin-activation.php:2537
+msgid "Installed But Not Activated"
+msgstr "Yüklü Ama Aktif Değil"
+
+#: functions/admin/class-tgm-plugin-activation.php:2539
+msgid "Active"
+msgstr "Aktif"
+
+#: functions/admin/class-tgm-plugin-activation.php:2545
+msgid "Required Update not Available"
+msgstr "Gerekli Güncellemeler Mevcut değil"
+
+#: functions/admin/class-tgm-plugin-activation.php:2548
+msgid "Requires Update"
+msgstr "Güncelleme gerekli"
+
+#: functions/admin/class-tgm-plugin-activation.php:2551
+msgid "Update recommended"
+msgstr "Güncelleştirme önerilir."
+
+#: functions/admin/class-tgm-plugin-activation.php:2610
+#, php-format
+msgid "To Install <span class=\"count\">(%s)</span>"
+msgid_plural "To Install <span class=\"count\">(%s)</span>"
+msgstr[0] "Yüklemek İçin <span class=\"count\">(%s)</span>"
+msgstr[1] "Yüklemek İçin <span class=\"count\">(%s)</span>"
+
+#: functions/admin/class-tgm-plugin-activation.php:2614
+#, php-format
+msgid "Update Available <span class=\"count\">(%s)</span>"
+msgid_plural "Update Available <span class=\"count\">(%s)</span>"
+msgstr[0] "Güncelleme <span class=\"count\">(%s)</span>"
+msgstr[1] "Güncelleme <span class=\"count\">(%s)</span>"
+
+#: functions/admin/class-tgm-plugin-activation.php:2618
+#, php-format
+msgid "To Activate <span class=\"count\">(%s)</span>"
+msgid_plural "To Activate <span class=\"count\">(%s)</span>"
+msgstr[0] "Etkinleştirmek İçin <span class=\"count\">(%s)</span>"
+msgstr[1] "Etkinleştirmek İçin <span class=\"count\">(%s)</span>"
+
+#: functions/admin/class-tgm-plugin-activation.php:2708
+msgid "Installed version:"
+msgstr "Yüklü sürüm:"
+
+#: functions/admin/class-tgm-plugin-activation.php:2716
+msgid "Minimum required version:"
+msgstr "Gerekli Minimum sürüm:"
+
+#: functions/admin/class-tgm-plugin-activation.php:2728
+msgid "Available version:"
+msgstr "Kullanılabilir sürüm:"
+
+#: functions/admin/class-tgm-plugin-activation.php:2765
+msgid "Plugin"
+msgstr "Eklenti"
+
+#: functions/admin/class-tgm-plugin-activation.php:2766
+msgid "Source"
+msgstr "Kaynak"
+
+#: functions/admin/class-tgm-plugin-activation.php:2767
+msgid "Type"
+msgstr "Tip"
+
+#: functions/admin/class-tgm-plugin-activation.php:2771
+msgid "Version"
+msgstr "Versiyon"
+
+#: functions/admin/class-tgm-plugin-activation.php:2772
+msgid "Status"
+msgstr "Durum"
+
+#: functions/admin/class-tgm-plugin-activation.php:2821
+#, php-format
+msgid "Install %2$s"
+msgstr "Yükle %2$s"
+
+#: functions/admin/class-tgm-plugin-activation.php:2826
+#, php-format
+msgid "Update %2$s"
+msgstr "Güncelle %2$s"
+
+#: functions/admin/class-tgm-plugin-activation.php:2832
+#, php-format
+msgid "Activate %2$s"
+msgstr "Etkinleştir %2$s"
+
+#: functions/admin/class-tgm-plugin-activation.php:2935
+msgid "Install"
+msgstr "Yükleme"
+
+#: functions/admin/class-tgm-plugin-activation.php:2941
+msgid "Update"
+msgstr "Güncelleme"
+
+#: functions/admin/class-tgm-plugin-activation.php:2944
+msgid "Activate"
+msgstr "Etkinleştir"
+
+#: functions/admin/class-tgm-plugin-activation.php:2975
+msgid "No plugins were selected to be installed. No action taken."
+msgstr "Kurulması için herhangi bir eklenti seçilmedi"
+
+#: functions/admin/class-tgm-plugin-activation.php:2977
+msgid "No plugins were selected to be updated. No action taken."
+msgstr "Güncellenmesi için herhangi bir eklenti seçilmedi"
+
+#: functions/admin/class-tgm-plugin-activation.php:3018
+msgid "No plugins are available to be installed at this time."
+msgstr "Hayır eklentiler şu anda yüklenebilmesi için kullanılamaz."
+
+#: functions/admin/class-tgm-plugin-activation.php:3020
+msgid "No plugins are available to be updated at this time."
+msgstr "Hayır eklentiler şu anda güncelleştirilmesi için kullanılamaz."
+
+#: functions/admin/class-tgm-plugin-activation.php:3376
+msgid "Plugin activation failed."
+msgstr "Eklenti etkinleştirme başarısız oldu."
+
+#: functions/admin/class-tgm-plugin-activation.php:3716
+#, php-format
+msgid "Updating Plugin %1$s (%2$d/%3$d)"
+msgstr "Eklenti Güncelleniyor %1$s (%2$d/%3$d)"
+
+#: functions/admin/class-tgm-plugin-activation.php:3719
+#, php-format
+msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
+msgstr "Yükleme sırasında bir hata meydana geldi %1$s: <strong>%2$s</strong>."
+
+#: functions/admin/class-tgm-plugin-activation.php:3721
+#, php-format
+msgid "The installation of %1$s failed."
+msgstr "%1$s Yüklemesı başarısız oldu"
+
+#: functions/admin/class-tgm-plugin-activation.php:3725
+msgid ""
+"The installation and activation process is starting. This process may take a "
+"while on some hosts, so please be patient."
+msgstr ""
+"Yükleme ve etkinleştirme işlemi başlıyor. Bu işlem biraz zaman alabilir, bu "
+"yüzden lütfen sabırlı olun."
+
+#: functions/admin/class-tgm-plugin-activation.php:3727
+#, php-format
+msgid "%1$s installed and activated successfully."
+msgstr "%1$s yüklendi ve başarılı bir şekilde aktifleştirildi."
+
+#: functions/admin/class-tgm-plugin-activation.php:3728
+msgid "All installations and activations have been completed."
+msgstr "Bütün kurulum ve aktivasyon işlemleri tamamlandı."
+
+#: functions/admin/class-tgm-plugin-activation.php:3730
+#, php-format
+msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
+msgstr "Eklenti yükleme ve Etkinleştirme %1$s (%2$d/%3$d)"
+
+#: functions/admin/class-tgm-plugin-activation.php:3733
+msgid ""
+"The installation process is starting. This process may take a while on some "
+"hosts, so please be patient."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:136
-msgid "Favicon Upload (supported formats : .ico, .png, .gif)"
-msgstr ""
+#: functions/admin/class-tgm-plugin-activation.php:3736
+msgid "All installations have been completed."
+msgstr "Tüm kurulumlar tamamlandı"
+
+#: functions/admin/class-tgm-plugin-activation.php:3738
+#, php-format
+msgid "Installing Plugin %1$s (%2$d/%3$d)"
+msgstr "Eklenti Yükleniyor %1$s (%2$d/%3$d)"
 
 #: functions/class-utils-settings-map.php:137
+msgid "Favicon Upload (supported formats : .ico, .png, .gif)"
+msgstr "Favicon yükleyin (desteklenen formatlar : .ico, .png, .gif)"
+
+#: functions/class-utils-settings-map.php:138
 msgid "FAVICON"
-msgstr ""
+msgstr "FAVICON"
 
-#: functions/class-utils-settings-map.php:145
-msgid "FeedBurner URL"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:150
-msgid ""
-"Enter your full FeedBurner URL (or any other preferred feed URL) if you wish "
-"to use FeedBurner over the standard WordPress feed e.g. http://feeds."
-"feedburner.com/yoururlhere "
-msgstr ""
-
-#: functions/class-utils-settings-map.php:163
+#: functions/class-utils-settings-map.php:154
 msgid "Dynamic Styles"
-msgstr ""
+msgstr "Dinamik Stiller"
 
-#: functions/class-utils-settings-map.php:166
+#: functions/class-utils-settings-map.php:157
 msgid "Turn on to use the styling options below"
-msgstr ""
+msgstr "Aşağıda stil seçenekleri kullanmak için tıklayın"
 
-#: functions/class-utils-settings-map.php:171
+#: functions/class-utils-settings-map.php:162
 msgid "Boxed Layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:174
+#: functions/class-utils-settings-map.php:165
 msgid "Use a boxed layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:179
+#: functions/class-utils-settings-map.php:170
 msgid "Font"
-msgstr ""
+msgstr "Font"
 
-#: functions/class-utils-settings-map.php:183
+#: functions/class-utils-settings-map.php:174
 msgid "Select a font for your website"
-msgstr ""
+msgstr "Web siteniz için bir yazı tipi seçin"
 
-#: functions/class-utils-settings-map.php:189
+#: functions/class-utils-settings-map.php:180
 msgid "Website Max-width"
-msgstr ""
+msgstr "Web sitesi max-genişliği"
 
-#: functions/class-utils-settings-map.php:195
+#: functions/class-utils-settings-map.php:186
 msgid ""
 "Max-width of the container. If you use 2 sidebars, your container should be "
 "at least 1200px.<br /><i>Note: For 720px content (default) use "
@@ -288,87 +612,109 @@ msgid ""
 "sidebar. If you use a combination of both, try something inbetween.</i>"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:200
+#: functions/class-utils-settings-map.php:191
 msgid "Sidebar Width"
-msgstr ""
+msgstr "Sidebar Genişliği"
 
-#: functions/class-utils-settings-map.php:204
+#: functions/class-utils-settings-map.php:195
 msgid "30px padding for widgets"
-msgstr ""
+msgstr "widget için 30px padding"
 
-#: functions/class-utils-settings-map.php:205
+#: functions/class-utils-settings-map.php:196
 msgid "20px padding for widgets"
-msgstr ""
+msgstr "widget için 20px padding"
 
-#: functions/class-utils-settings-map.php:207
+#: functions/class-utils-settings-map.php:198
 msgid "Change left and right sidebars padding"
-msgstr ""
+msgstr "Sol ve sağ sidebar padding değiştir."
 
-#: functions/class-utils-settings-map.php:212
+#: functions/class-utils-settings-map.php:203
 msgid "Primary Color"
-msgstr ""
+msgstr "Birincil Renk"
 
-#: functions/class-utils-settings-map.php:222
+#: functions/class-utils-settings-map.php:213
 msgid "Secondary Color"
-msgstr ""
+msgstr "İkincil Renk"
 
-#: functions/class-utils-settings-map.php:233
+#: functions/class-utils-settings-map.php:224
 msgid "Body Background"
-msgstr ""
+msgstr "Gövde arka planı"
 
-#: functions/class-utils-settings-map.php:234
+#: functions/class-utils-settings-map.php:225
 msgid "Set the website background color"
-msgstr ""
+msgstr "Web sitesi arka plan rengini ayarlayın"
 
-#: functions/class-utils-settings-map.php:246
+#: functions/class-utils-settings-map.php:238
 msgid "Topbar Background"
-msgstr ""
+msgstr "Topbar Arka Plan"
 
-#: functions/class-utils-settings-map.php:256
+#: functions/class-utils-settings-map.php:248
 msgid "Header Background"
-msgstr ""
+msgstr "Başlık Arka Planı"
 
-#: functions/class-utils-settings-map.php:266
+#: functions/class-utils-settings-map.php:258
 msgid "Header Menu Background"
-msgstr ""
+msgstr "Üst Menü Arka Planı"
 
-#: functions/class-utils-settings-map.php:276
+#: functions/class-utils-settings-map.php:268
 msgid "Footer Background"
-msgstr ""
+msgstr "Altbilgi Arka Plan"
 
-#: functions/class-utils-settings-map.php:287
+#: functions/class-utils-settings-map.php:279
 msgid "Image Border Radius"
-msgstr ""
+msgstr "Görüntü Yarıçap Sınırı"
 
-#: functions/class-utils-settings-map.php:293
+#: functions/class-utils-settings-map.php:285
 msgid "Give your thumbnails and layout images rounded corners"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:315
+#: functions/class-utils-settings-map.php:290
+msgid "Display an icon next to external links"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:293
+#: functions/class-utils-settings-map.php:303
+msgid ""
+"This will be applied to the links included in post or page content only."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:300
+msgid "Open external links in a new tab"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:326
 msgid "Create and organize your social links"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:332
+#: functions/class-utils-settings-map.php:344
 msgid "Posts Comments"
-msgstr ""
+msgstr "Mesaj Yorumları"
 
-#: functions/class-utils-settings-map.php:335
+#: functions/class-utils-settings-map.php:347
 msgid "Comments on posts"
-msgstr ""
+msgstr "Yazılarda yorumlar"
 
-#: functions/class-utils-settings-map.php:340
+#: functions/class-utils-settings-map.php:352
 msgid "Pages Comments"
-msgstr ""
+msgstr "Sayfa Yorumları"
 
-#: functions/class-utils-settings-map.php:343
+#: functions/class-utils-settings-map.php:355
 msgid "Comments on pages"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:357
+#: functions/class-utils-settings-map.php:368
+msgid "Enable Smooth Scrolling"
+msgstr "Yumuşak Kaydırmayı Etkinleştir"
+
+#: functions/class-utils-settings-map.php:371
+msgid "This option enables a smoother page scroll."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:386
 msgid "Enable the Mobile Friendly (or Responsive) layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:360
+#: functions/class-utils-settings-map.php:389
 msgid ""
 "Hueman is a mobile friendly WordPress theme out of the box. This means that "
 "it will adapt and render nicely on any devices : desktops, laptops, tablets, "
@@ -377,464 +723,477 @@ msgid ""
 "to disable this option, and it is not recommended."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:374
+#: functions/class-utils-settings-map.php:403
 msgid "Use a minified stylesheet"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:377
+#: functions/class-utils-settings-map.php:406
 msgid ""
 "Unchecking this option is not recommended. Minifying css stylesheets "
 "improves performance for your website overall by decreasing the load time."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:382
+#: functions/class-utils-settings-map.php:411
 msgid "Use Structured Data Markup for your posts"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:385
+#: functions/class-utils-settings-map.php:414
 msgid ""
 "\"Structured data markup\" is a standard way to annotate your content so "
 "machines can understand it. Implementing it will help your website rank "
 "higher in search engines."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:399
+#: functions/class-utils-settings-map.php:419
+msgid "Load images on scroll"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:422
+msgid ""
+"Check this option to delay the loading of non visible images. Images below "
+"the viewport will be loaded dynamically on scroll. This can really boost "
+"speed performances by reducing the weight of long pages that include many "
+"images."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:437
 msgid "Display the \"About Hueman\" page in the \"Appearance\" admin menu"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:402
+#: functions/class-utils-settings-map.php:440
 msgid ""
 "This page is intended to provide informations about the Hueman theme : "
 "changelog, release note, documentation link. It also display informations "
 "about your current install that can be useful if you need to report an issue."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:407
+#: functions/class-utils-settings-map.php:445
 msgid "Display a Help button in the admin bar"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:410
+#: functions/class-utils-settings-map.php:448
 msgid "This button links to the \"About Hueman\" page."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:430
+#: functions/class-utils-settings-map.php:468
 msgid "Custom Header Logo"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:441
-#: functions/class-utils-settings-map.php:858
+#: functions/class-utils-settings-map.php:479
+#: functions/class-utils-settings-map.php:896
 msgid ""
 "Upload your custom logo image. Supported formats : .jpg, .png, .gif, svg, "
 "svgz"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:447
+#: functions/class-utils-settings-map.php:485
 msgid "Header Logo Image Max-height"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:453
+#: functions/class-utils-settings-map.php:491
 msgid ""
 "Your logo image should have the double height of this to be high resolution"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:458
+#: functions/class-utils-settings-map.php:496
 msgid "Display your site's description (tagline)"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:461
+#: functions/class-utils-settings-map.php:499
 msgid "The description that appears next to your logo"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:465
+#: functions/class-utils-settings-map.php:503
 msgid "Header Image"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:475
+#: functions/class-utils-settings-map.php:513
 msgid ""
 "Upload a header image (supported formats : .jpg, .png, .gif, svg, svgz). "
 "This will disable header title/logo, site description, header ads widget"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:489
+#: functions/class-utils-settings-map.php:527
 msgid "Display a widget in your header"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:492
+#: functions/class-utils-settings-map.php:530
 msgid ""
 "Header widget area, perfect to insert advertisements. Note : this feature is "
 "not available when a header image is being displayed."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:513
+#: functions/class-utils-settings-map.php:551
 msgid "Global Layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:517
+#: functions/class-utils-settings-map.php:555
 msgid "Other layouts will override this option if they are set"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:522 functions/init-core.php:845
+#: functions/class-utils-settings-map.php:560 functions/init-core.php:902
 msgid "Home"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:526
+#: functions/class-utils-settings-map.php:564
 msgid "[ <strong>is_home</strong> ] Posts homepage layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:531
+#: functions/class-utils-settings-map.php:569
 msgid "Single"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:535
+#: functions/class-utils-settings-map.php:573
 msgid ""
 "[ <strong>is_single</strong> ] Single post layout - If a post has a set "
 "layout, it will override this."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:540
+#: functions/class-utils-settings-map.php:578
 msgid "Archive"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:544
+#: functions/class-utils-settings-map.php:582
 msgid ""
 "[ <strong>is_archive</strong> ] Category, date, tag and author archive layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:549
+#: functions/class-utils-settings-map.php:587
 msgid "Archive - Category"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:553
+#: functions/class-utils-settings-map.php:591
 msgid "[ <strong>is_category</strong> ] Category archive layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:558
+#: functions/class-utils-settings-map.php:596
 msgid "Search"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:562
+#: functions/class-utils-settings-map.php:600
 msgid "[ <strong>is_search</strong> ] Search page layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:567
+#: functions/class-utils-settings-map.php:605
 msgid "Error 404"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:571
+#: functions/class-utils-settings-map.php:609
 msgid "[ <strong>is_404</strong> ] Error 404 page layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:576
+#: functions/class-utils-settings-map.php:614
 msgid "Default Page"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:580
+#: functions/class-utils-settings-map.php:618
 msgid ""
 "[ <strong>is_page</strong> ] Default page layout - If a page has a set "
 "layout, it will override this."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:594
+#: functions/class-utils-settings-map.php:632
 msgid "Display a custom heading for your blog."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:601
+#: functions/class-utils-settings-map.php:639
 msgid "Blog Heading"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:604
+#: functions/class-utils-settings-map.php:642
 msgid ""
 "Your blog heading. Html is allowed. Note : write a blank space to hide the "
 "default content."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:608 functions/init-front.php:219
+#: functions/class-utils-settings-map.php:646 functions/init-front.php:321
 msgid "Blog"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:610
+#: functions/class-utils-settings-map.php:648
 msgid "Blog Sub-Heading"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:613
+#: functions/class-utils-settings-map.php:651
 msgid ""
 "Your blog sub-heading. Html is allowed. Note : write a blank space to hide "
 "the default content."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:620
+#: functions/class-utils-settings-map.php:658
 msgid "Excerpt Length"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:626
+#: functions/class-utils-settings-map.php:664
 msgid "Set the excerpt length (in number of words)"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:631
+#: functions/class-utils-settings-map.php:669
 msgid "Display your blog post as a standard list."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:634
+#: functions/class-utils-settings-map.php:672
 msgid ""
 "While the default blog design is a grid of posts, you can check this option "
 "and display one post per row, whith the thumbnail beside the text."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:638
+#: functions/class-utils-settings-map.php:676
 msgid "Featured posts"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:640
+#: functions/class-utils-settings-map.php:678
 msgid "Feature posts on top of your blog"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:643
+#: functions/class-utils-settings-map.php:681
 msgid ""
 "Check this box to display a selection of posts with a slideshow, on top of "
 "your blog."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:648
+#: functions/class-utils-settings-map.php:686
 msgid "Select a category to feature"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:652
+#: functions/class-utils-settings-map.php:690
 msgid ""
 "If no specific category is selected, the featured posts block will display "
 "your latest post(s) from all categories."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:658
+#: functions/class-utils-settings-map.php:696
 msgid "Featured Post Count"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:664
+#: functions/class-utils-settings-map.php:702
 msgid ""
 "Max number of featured posts to display. <br /><i>Set to 1 and it will show "
 "it without any slider script</i><br /><i>Set it to 0 to disable</i>"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:669
+#: functions/class-utils-settings-map.php:707
 msgid "Display the full post content"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:672
+#: functions/class-utils-settings-map.php:710
 msgid ""
 "By default, your featured posts display the first words of their content "
 "( the \"excerpt\"). Check this box to display the full content."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:677
+#: functions/class-utils-settings-map.php:715
 msgid "Animate your featured posts with a slideshow"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:680
+#: functions/class-utils-settings-map.php:718
 msgid "Enables the automatic animation of the featured posts carousel."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:686
+#: functions/class-utils-settings-map.php:724
 msgid "Featured Slideshow Speed"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:692
+#: functions/class-utils-settings-map.php:730
 msgid "Speed of the automatic slideshow animation"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:697
+#: functions/class-utils-settings-map.php:735
 msgid "Display the featured posts also in the list of posts"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:700
+#: functions/class-utils-settings-map.php:738
 msgid ""
 "If this box is checked, your featured posts will be displayed both in the "
 "featured slider and in the post list below. Usually not recommended because "
 "a given post might appear two times on the same page."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:715
+#: functions/class-utils-settings-map.php:753
 msgid "Single - Author Bio"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:718
+#: functions/class-utils-settings-map.php:756
 msgid "Display post author description, if it exists"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:723
+#: functions/class-utils-settings-map.php:761
 msgid "Single - Related Posts"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:727
-#: functions/class-utils-settings-map.php:740
-#: functions/class-utils-settings-map.php:1245
+#: functions/class-utils-settings-map.php:765
+#: functions/class-utils-settings-map.php:778
+#: functions/class-utils-settings-map.php:1288
 msgid "Disable"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:728
+#: functions/class-utils-settings-map.php:766
 msgid "Related by categories"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:729
+#: functions/class-utils-settings-map.php:767
 msgid "Related by tags"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:731
+#: functions/class-utils-settings-map.php:769
 msgid "Display randomized related articles below the post"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:736
+#: functions/class-utils-settings-map.php:774
 msgid "Single - Post Navigation"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:741
+#: functions/class-utils-settings-map.php:779
 msgid "Left Sidebar"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:742
+#: functions/class-utils-settings-map.php:780
 msgid "Right Sidebar"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:743
+#: functions/class-utils-settings-map.php:781
 msgid "Below content"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:745
+#: functions/class-utils-settings-map.php:783
 msgid "Display links to the next and previous article"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:759
+#: functions/class-utils-settings-map.php:797
 msgid "Thumbnail Placeholder"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:762
+#: functions/class-utils-settings-map.php:800
 msgid "Display featured image placeholders if no featured image is set"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:767
+#: functions/class-utils-settings-map.php:805
 msgid "Thumbnail Comment Count"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:770
+#: functions/class-utils-settings-map.php:808
 msgid "Display comment count on thumbnails"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:791
+#: functions/class-utils-settings-map.php:829
+#: functions/plugins-compatibility.php:217
 msgid "Sidebar Top Boxes"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:794
+#: functions/class-utils-settings-map.php:832
 msgid "Display boxes at the top of the sidebars"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:799
+#: functions/class-utils-settings-map.php:837
 msgid "Mobile Sidebar Content"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:803
+#: functions/class-utils-settings-map.php:841
 msgid "Display both sidebars"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:804
+#: functions/class-utils-settings-map.php:842
 msgid "Hide primary sidebar"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:805
+#: functions/class-utils-settings-map.php:843
 msgid "Hide secondary sidebar"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:806
+#: functions/class-utils-settings-map.php:844
 msgid "Hide both sidebars"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:808
+#: functions/class-utils-settings-map.php:846
 msgid ""
 "Control how the sidebar content is displayed on smartphone mobile devices "
 "(320px). Note : on smartphones the sidebars are displayed below the content."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:831
+#: functions/class-utils-settings-map.php:869
 msgid "Display a full width widget area in your footer"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:834
+#: functions/class-utils-settings-map.php:872
 #, php-format
 msgid ""
 "This zone is located before the other footer widgets and takes 100% of the "
 "width. Very appropriate to display a Google Map or an advertisement banner."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:839
+#: functions/class-utils-settings-map.php:877
 msgid "Select columns to enable footer widgets"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:843
+#: functions/class-utils-settings-map.php:881
 msgid "Recommended number of columns : 3"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:847
+#: functions/class-utils-settings-map.php:885
 msgid "Upload your custom logo image"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:863
+#: functions/class-utils-settings-map.php:901
 msgid "Replace the footer copyright text"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:867
+#: functions/class-utils-settings-map.php:905
 msgid "Note : Html is allowed."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:872
+#: functions/class-utils-settings-map.php:910
 msgid "Footer credit text"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:907
+#: functions/class-utils-settings-map.php:945
 msgid "Global settings"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:908
+#: functions/class-utils-settings-map.php:946
 msgid "General settings for the Hueman theme : design, comments, mobile, ..."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:913
+#: functions/class-utils-settings-map.php:951
 msgid "Header"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:914
+#: functions/class-utils-settings-map.php:952
 msgid "Header settings for the Hueman theme."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:919
+#: functions/class-utils-settings-map.php:957
 msgid "Content"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:920
+#: functions/class-utils-settings-map.php:958
 msgid "Content settings for the Hueman theme."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:925
+#: functions/class-utils-settings-map.php:963
 msgid "Sidebars"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:926
+#: functions/class-utils-settings-map.php:964
 msgid "Sidebars settings for the Hueman theme."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:931
+#: functions/class-utils-settings-map.php:969
 msgid "Footer"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:932
+#: functions/class-utils-settings-map.php:970
 msgid "Footer settings for the Hueman theme."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:937
+#: functions/class-utils-settings-map.php:975
 msgid "Advanced options"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:938
+#: functions/class-utils-settings-map.php:976
 msgid "Advanced settings for the Hueman theme."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1013
+#: functions/class-utils-settings-map.php:1051
 #, php-format
 msgid "Your theme supports %s menu. Select which menu you would like to use."
 msgid_plural ""
@@ -842,629 +1201,684 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: functions/class-utils-settings-map.php:1016
-#: functions/class-utils-settings-map.php:1024
+#: functions/class-utils-settings-map.php:1054
+#: functions/class-utils-settings-map.php:1062
 #, php-format
 msgid "You can create new menu and edit your menu's content %s."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1019
+#: functions/class-utils-settings-map.php:1057
 msgid "on the Menus screen in the Appearance section"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1020
-#: functions/class-utils-settings-map.php:1028
+#: functions/class-utils-settings-map.php:1058
+#: functions/class-utils-settings-map.php:1066
 msgid "create/edit menus"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1027
+#: functions/class-utils-settings-map.php:1065
 msgid "in the menu panel"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1033
+#: functions/class-utils-settings-map.php:1071
 msgid ""
 "If a menu location has no menu assigned to it, a default page menu will be "
 "used."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1042
+#: functions/class-utils-settings-map.php:1080
 msgid "Site Identity : Title, Tagline and Site Icon"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1047
+#: functions/class-utils-settings-map.php:1085
 msgid "General Design Options : Font, Colors, ..."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1052
+#: functions/class-utils-settings-map.php:1090
 msgid "Social links"
-msgstr ""
+msgstr "Sosyal bağlantılar"
 
-#: functions/class-utils-settings-map.php:1062
+#: functions/class-utils-settings-map.php:1100
+msgid "Smooth Scroll"
+msgstr "Pürüzsüz Kaydırma"
+
+#: functions/class-utils-settings-map.php:1105
 msgid "Mobile devices"
-msgstr ""
+msgstr "Mobil aygıtlar"
 
-#: functions/class-utils-settings-map.php:1067
+#: functions/class-utils-settings-map.php:1110
 msgid "Performances and SEO"
-msgstr ""
+msgstr "Performans ve SEO"
 
-#: functions/class-utils-settings-map.php:1072
+#: functions/class-utils-settings-map.php:1115
 msgid "Hueman Admin Settings"
-msgstr ""
+msgstr "Hueman Yönetici Ayarları"
 
-#: functions/class-utils-settings-map.php:1083
+#: functions/class-utils-settings-map.php:1126
 msgid "Header Design : logo, background, ..."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1088
+#: functions/class-utils-settings-map.php:1131
 msgid "Header Advertisement Widget"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1098
+#: functions/class-utils-settings-map.php:1141
 msgid "Layout options for the main content"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1103
+#: functions/class-utils-settings-map.php:1146
 msgid "Sidebars : Design and Mobile Settings"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1108
+#: functions/class-utils-settings-map.php:1151
 msgid "Blog Design and Content"
-msgstr ""
+msgstr "Blog Tasarımı ve İçerik"
 
-#: functions/class-utils-settings-map.php:1113
+#: functions/class-utils-settings-map.php:1156
 msgid "Single Posts Settings"
-msgstr ""
+msgstr "Tek Mesaj Ayarları"
 
-#: functions/class-utils-settings-map.php:1118
+#: functions/class-utils-settings-map.php:1161
 msgid "Thumbnails Settings"
-msgstr ""
+msgstr "Küçük Resim Ayarları"
 
-#: functions/class-utils-settings-map.php:1127
+#: functions/class-utils-settings-map.php:1170
 msgid "Footer Design : Logo, layout, ..."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1180
+#: functions/class-utils-settings-map.php:1223
 msgid "Choose one "
-msgstr ""
+msgstr "Birini seçin "
 
-#: functions/class-utils-settings-map.php:1199
-#: functions/class-utils-settings-map.php:1249
+#: functions/class-utils-settings-map.php:1242
+#: functions/class-utils-settings-map.php:1292
 msgid "1 Column"
-msgstr ""
+msgstr "1 Sütunlar"
 
-#: functions/class-utils-settings-map.php:1203
+#: functions/class-utils-settings-map.php:1246
 msgid "2 Columns - Content Left"
-msgstr ""
+msgstr "2 Sütun - İçerik Sol"
 
-#: functions/class-utils-settings-map.php:1207
+#: functions/class-utils-settings-map.php:1250
 msgid "2 Columns - Content Right"
-msgstr ""
+msgstr "2 Sütun - İçerik Sağ"
 
-#: functions/class-utils-settings-map.php:1211
+#: functions/class-utils-settings-map.php:1254
 msgid "3 Columns - Content Middle"
-msgstr ""
+msgstr "3 Sütun - İçerik Orta"
 
-#: functions/class-utils-settings-map.php:1215
+#: functions/class-utils-settings-map.php:1258
 msgid "3 Columns - Content Left"
-msgstr ""
+msgstr "3 Sütun - İçerik Sol"
 
-#: functions/class-utils-settings-map.php:1219
+#: functions/class-utils-settings-map.php:1262
 msgid "3 Columns - Content Right"
-msgstr ""
+msgstr "3 Sütun - İçerik Sağ"
 
-#: functions/class-utils-settings-map.php:1227
+#: functions/class-utils-settings-map.php:1270
 msgid "Inherit Global Layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1253
+#: functions/class-utils-settings-map.php:1296
 msgid "2 Columns"
-msgstr ""
+msgstr "2 Sütunlar"
 
-#: functions/class-utils-settings-map.php:1257
+#: functions/class-utils-settings-map.php:1300
 msgid "3 Columns"
-msgstr ""
+msgstr "3 Sütunlar"
 
-#: functions/class-utils-settings-map.php:1261
+#: functions/class-utils-settings-map.php:1304
 msgid "4 Columns"
-msgstr ""
+msgstr "4 Sütunlar"
 
-#: functions/class-utils-settings-map.php:1286
+#: functions/class-utils-settings-map.php:1329
 msgid "No Sidebars"
-msgstr ""
+msgstr "Kenar çubuğu yok"
 
-#: functions/class-utils-settings-map.php:1291
+#: functions/class-utils-settings-map.php:1334
 msgid "Choose Sidebar"
-msgstr ""
+msgstr "Kenar Çubuğu Seçin"
 
-#: functions/czr/class-czr-init.php:154
+#: functions/class-utils.php:161
+#, php-format
+msgid "Page %s"
+msgstr "Sayfa %s"
+
+#: functions/czr/class-czr-init.php:181
 msgid "&mdash; Select &mdash;"
-msgstr ""
+msgstr "&mdash; Seçin &mdash;"
 
-#: functions/czr/class-czr-init.php:191
+#: functions/czr/class-czr-init.php:218
 msgid "Assign menus to locations"
-msgstr ""
+msgstr "Ata menülerin yerleri"
 
-#: functions/czr/class-czr-init.php:201
+#: functions/czr/class-czr-init.php:228
 #, php-format
 msgid ""
 "You haven't created any menu yet. %s or check the %s to learn more about "
 "menus."
 msgstr ""
+"Henüz herhangi bir menü oluşturulmuş değil. %s kontrol edin veya %s hakkında "
+"daha fazla bilgi edinin"
 
-#: functions/czr/class-czr-init.php:202
+#: functions/czr/class-czr-init.php:229
 msgid "Create a new menu now"
-msgstr ""
+msgstr "Şimdi yeni bir menü oluştur"
 
-#: functions/czr/class-czr-init.php:203
+#: functions/czr/class-czr-init.php:230
 msgid "WordPress documentation"
-msgstr ""
+msgstr "WordPress dokümantasyonu"
 
-#: functions/czr/class-czr-init.php:219
+#: functions/czr/class-czr-init.php:246
 msgid "SITE ICON"
-msgstr ""
-
-#: functions/czr/class-czr-init.php:245
-msgid "Create And Order Widget Areas"
-msgstr ""
+msgstr "Site İkon"
 
 #: functions/czr/class-czr-init.php:272
+msgid "Create And Order Widget Areas"
+msgstr "Widget alanı oluştur ve sırala"
+
+#: functions/czr/class-czr-init.php:276 functions/czr/class-czr-init.php:305
+msgid ""
+"You must save changes for the new areas to appear below. <br /><i>Warning: "
+"Make sure each area has a unique ID.</i>"
+msgstr ""
+"Aşağıda görünür yeni alanlar için değişiklikleri kaydetmek gerekir. <br /"
+"><i>Uyarı: her alanda benzersiz bir kimlik oluşturduğundan emin Ol.</i>"
+
+#: functions/czr/class-czr-init.php:301
 msgid "Create And Manage Widget Areas"
-msgstr ""
+msgstr "Widget alanı oluştur ve yönet"
 
-#: functions/czr/class-czr-init.php:281
+#: functions/czr/class-czr-init.php:312
 msgid "Create and manage widget zones"
-msgstr ""
+msgstr "Widget bölgesi oluştur ve yönet"
 
-#: functions/czr/class-czr-init.php:302
+#: functions/czr/class-czr-init.php:333
 msgid "Dynamic Sidebars and Widgets"
-msgstr ""
+msgstr "Dinamik sidebar ve widget"
 
-#: functions/czr/class-czr-init.php:588
-#: functions/czr/controls/class-dynamic-control.php:90
-#: functions/czr/controls/class-widget-areas-control.php:100
+#: functions/czr/controls/class-upload-control.php:67
+msgid "Upload"
+msgstr "Yükleme"
+
+#: functions/czr/controls/class-upload-control.php:68
+#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:57
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:32
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:103
+msgid "Remove"
+msgstr "Kaldır"
+
+#: functions/czr/czr-resources.php:299 functions/czr/czr-resources.php:321
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:32
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:45
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:103
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:44
 msgid "Edit"
-msgstr ""
+msgstr "Düzenle"
 
-#: functions/czr/class-czr-init.php:589
+#: functions/czr/czr-resources.php:300
 msgid "Close"
-msgstr ""
+msgstr "Kapat"
 
-#: functions/czr/class-czr-init.php:590
+#: functions/czr/czr-resources.php:301
 msgid ""
 "Your favicon is currently handled with an old method and will not be "
 "properly displayed on all devices. You might consider to re-upload your "
 "favicon with the new control below."
 msgstr ""
+"Favicon şu anda eski bir yöntem ile ele alınırsa düzgün bir şekilde tüm "
+"cihazlarda görüntülenemez. Yeniden aşağıdaki araç ile favicon yüklemeyi "
+"düşünebilirsiniz."
 
-#: functions/czr/class-czr-init.php:591
-#: functions/czr/controls/class-widget-areas-control.php:77
-#: functions/czr/controls/class-widget-areas-control.php:126
-#: functions/czr/controls/class-widget-areas-control.php:170
+#: functions/czr/czr-resources.php:302
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:22
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:68
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:112
 msgid "Location(s)"
-msgstr ""
+msgstr "Yer(ler)"
 
-#: functions/czr/class-czr-init.php:592
-#: functions/czr/controls/class-widget-areas-control.php:133
-#: functions/czr/controls/class-widget-areas-control.php:177
+#: functions/czr/czr-resources.php:303
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:75
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:119
 msgid "Context(s)"
-msgstr ""
+msgstr "İçerik(ler)"
 
-#: functions/czr/class-czr-init.php:593
+#: functions/czr/czr-resources.php:304
 msgid "Not set"
-msgstr ""
+msgstr "Ayarlanmamış"
 
-#: functions/czr/class-czr-init.php:594
+#: functions/czr/czr-resources.php:305
 msgid "Rss"
-msgstr ""
+msgstr "Rss"
 
-#: functions/czr/class-czr-init.php:595
+#: functions/czr/czr-resources.php:306
 msgid "Select a social icon"
-msgstr ""
+msgstr "Sosyal bir simge seçin"
 
-#: functions/czr/class-czr-init.php:596
+#: functions/czr/czr-resources.php:307
 msgid "Follow us on"
-msgstr ""
+msgstr "Bizi izleyin"
 
-#: functions/czr/class-czr-init.php:597
+#: functions/czr/czr-resources.php:308
 msgid "Done !"
-msgstr ""
+msgstr "Bitti !"
 
-#: functions/czr/class-czr-init.php:598
+#: functions/czr/czr-resources.php:309
 msgid "New Social Link created ! Scroll down to edit it."
-msgstr ""
+msgstr "Yeni sosyal bağlantı eklendi ! Düzenlemek için aşağı kaydırın."
 
-#: functions/czr/class-czr-init.php:599
+#: functions/czr/czr-resources.php:310
 msgid "Select repeat property"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:600
+#: functions/czr/czr-resources.php:311
 msgid "Select attachment property"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:601
+#: functions/czr/czr-resources.php:312
 msgid "Select position property"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:602
+#: functions/czr/czr-resources.php:313
 msgid "Widget Zone"
-msgstr ""
+msgstr "Widget alanı"
 
-#: functions/czr/class-czr-init.php:603
+#: functions/czr/czr-resources.php:314
 msgid "New Widget Zone created ! Scroll down to edit it."
-msgstr ""
+msgstr "Yeni Widget Bölgesi oluşturuldu . Düzenlemek için aşağı kaydırın."
 
-#: functions/czr/class-czr-init.php:604
+#: functions/czr/czr-resources.php:315
 msgid "Inactive in current context/location"
-msgstr ""
+msgstr "Geçerli içerik veya konum etkin değil"
 
-#: functions/czr/class-czr-init.php:605
+#: functions/czr/czr-resources.php:316
 msgid "Unavailable location. Some settings must be changed."
-msgstr ""
+msgstr "Geçersiz konum. Bazı ayarların değiştirilmesi gerekir."
 
-#: functions/czr/class-czr-init.php:606
+#: functions/czr/czr-resources.php:317
 msgid "A selected location is not available with the current settings."
-msgstr ""
+msgstr "Seçilen bir konum geçerli ayarlarla kullanılamaz."
 
-#: functions/czr/class-czr-init.php:607
+#: functions/czr/czr-resources.php:318
 msgid "Learn more about this in the documentation"
-msgstr ""
+msgstr "Belgelerde bu konu hakkında daha fazla bilgi edinin"
 
-#: functions/czr/controls/class-background-control.php:27
-#: functions/czr/controls/class-background-control.php:32
+#: functions/czr/czr-resources.php:322
+msgid "Close Editor"
+msgstr "Düzenleyiciyi Kapat"
+
+#: functions/czr/czr-resources.php:325
+msgid "New Slide created ! Scroll down to edit it."
+msgstr "Yeni Slayt yarattı ! Düzenlemek için aşağı kaydırın."
+
+#: functions/czr/czr-resources.php:326
+msgid "Slide"
+msgstr "Slayt"
+
+#: functions/czr/sections/class-widgets-section.php:36
+msgid "Press return or enter to open this section"
+msgstr "Bu bölümü açmak için return yada enter basın"
+
+#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:55
+#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:60
 msgid "Select Image"
-msgstr ""
+msgstr "Görüntü Seçin"
 
-#: functions/czr/controls/class-background-control.php:28
+#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:56
 msgid "Change Image"
-msgstr ""
+msgstr "Görüntüyü Değiştir"
 
-#: functions/czr/controls/class-background-control.php:29
-#: functions/czr/controls/class-dynamic-control.php:90
-#: functions/czr/controls/class-upload-control.php:68
-msgid "Remove"
-msgstr ""
-
-#: functions/czr/controls/class-background-control.php:30
+#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:58
 msgid "Default"
-msgstr ""
+msgstr "Varsayılan"
 
-#: functions/czr/controls/class-background-control.php:31
+#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:59
 msgid "No image selected"
-msgstr ""
+msgstr "Seçilen resim yok"
 
-#: functions/czr/controls/class-background-control.php:33
+#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:61
 msgid "Choose Image"
-msgstr ""
+msgstr "Resim Seçin"
 
-#: functions/czr/controls/class-background-control.php:38
+#: functions/czr/tmpl/inputs/text_editor-input-tmpl.php:29
+msgid "Resize Editor"
+msgstr "Düzenleyici Yeniden Boyutlandır"
+
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:11
+msgid "Add New"
+msgstr "Yeni Ekle"
+
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:16
+msgid "Cancel"
+msgstr "İptal"
+
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:16
+msgid "Add it"
+msgstr "Ekleyin"
+
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:23
+msgid "Are you sure you want to remove : <strong>{{ data.title }} ?</strong>"
+msgstr ""
+"Kaldırmak istediğinizden emin misiniz : <strong>{{ data.title }} ?</strong>"
+
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:24
+msgid "Yes"
+msgstr "Evet"
+
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:24
+msgid "No"
+msgstr "Hayır"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:10
 msgid "No Repeat"
-msgstr ""
+msgstr "Tekrar Yok"
 
-#: functions/czr/controls/class-background-control.php:39
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:11
 msgid "Repeat All"
-msgstr ""
+msgstr "Tüm Tekrar"
 
-#: functions/czr/controls/class-background-control.php:40
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:12
 msgid "Repeat Horizontally"
-msgstr ""
+msgstr "Yatay Tekrar"
 
-#: functions/czr/controls/class-background-control.php:41
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:13
 msgid "Repeat Vertically"
-msgstr ""
+msgstr "Dikey Tekrar"
 
-#: functions/czr/controls/class-background-control.php:42
-#: functions/czr/controls/class-background-control.php:49
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:14
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:21
 msgid "Inherit"
 msgstr ""
 
-#: functions/czr/controls/class-background-control.php:47
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:19
 msgid "Fixed"
-msgstr ""
+msgstr "Sabit"
 
-#: functions/czr/controls/class-background-control.php:48
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:20
 msgid "Scroll"
-msgstr ""
+msgstr "Kaydırma"
 
-#: functions/czr/controls/class-background-control.php:54
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:26
 msgid "Left Top"
-msgstr ""
+msgstr "Sol Üst"
 
-#: functions/czr/controls/class-background-control.php:55
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:27
 msgid "Left Center"
-msgstr ""
+msgstr "Sol Merkez"
 
-#: functions/czr/controls/class-background-control.php:56
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:28
 msgid "Left Bottom"
-msgstr ""
+msgstr "Sol Alt"
 
-#: functions/czr/controls/class-background-control.php:57
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:29
 msgid "Center Top"
-msgstr ""
+msgstr "Merkez Üst"
 
-#: functions/czr/controls/class-background-control.php:58
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:30
 msgid "Center Center"
-msgstr ""
+msgstr "Merkez Merkezi"
 
-#: functions/czr/controls/class-background-control.php:59
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:31
 msgid "Center Bottom"
-msgstr ""
+msgstr "Orta Alt"
 
-#: functions/czr/controls/class-background-control.php:60
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:32
 msgid "Right Top"
-msgstr ""
+msgstr "Sağ Üst"
 
-#: functions/czr/controls/class-background-control.php:61
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:33
 msgid "Right Center"
-msgstr ""
+msgstr "Sağ Merkez"
 
-#: functions/czr/controls/class-background-control.php:62
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:34
 msgid "Right Bottom"
-msgstr ""
+msgstr "Sağ Alt"
 
-#: functions/czr/controls/class-background-control.php:188
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:58
 msgid "Color"
-msgstr ""
+msgstr "Renk"
 
-#: functions/czr/controls/class-background-control.php:195
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:65
 msgid "Background Image"
-msgstr ""
+msgstr "Arka Plan Görüntüsü"
 
-#: functions/czr/controls/class-background-control.php:203
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:73
 msgid "Repeat"
-msgstr ""
+msgstr "Tekrar"
 
-#: functions/czr/controls/class-background-control.php:210
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:80
 msgid "Background attachment"
-msgstr ""
+msgstr "Arka plan Eki"
 
-#: functions/czr/controls/class-background-control.php:217
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:87
 msgid "Background position"
-msgstr ""
+msgstr "Arka plan konumu"
 
-#: functions/czr/controls/class-background-control.php:224
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:94
 msgid "Background size"
-msgstr ""
+msgstr "Arka plan boyutu"
 
-#: functions/czr/controls/class-background-control.php:229
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:99
 msgid ""
 "The background-size CSS property specifies the size of the background "
 "images. The size of the image can be fully constrained or only partially in "
 "order to preserve its intrinsic ratio."
 msgstr ""
+"Arka plan resimlerinin boyutunu CSS özellikleri belirler. Resmin boyutunun "
+"içsel oranını korumak için kısmen ya da tamamen kısıtlanmış olabilir."
 
-#: functions/czr/controls/class-background-control.php:231
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:101
 msgid "Learn more"
-msgstr ""
+msgstr "Daha fazla bilgi edinin"
 
-#: functions/czr/controls/class-background-control.php:232
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:102
 msgid "here"
-msgstr ""
+msgstr "burada"
 
-#: functions/czr/controls/class-dynamic-control.php:60
-msgid "Add New"
-msgstr ""
+#: functions/czr/tmpl/modules/slide-module-tmpl.php:10
+#: functions/czr/tmpl/modules/slide-module-tmpl.php:47
+msgid "Slide Background"
+msgstr "Slayt Arka Plan"
 
-#: functions/czr/controls/class-dynamic-control.php:65
-msgid "Cancel"
-msgstr ""
+#: functions/czr/tmpl/modules/slide-module-tmpl.php:17
+#: functions/czr/tmpl/modules/slide-module-tmpl.php:54
+msgid "Slide Title"
+msgstr "Slayt Başlığı"
 
-#: functions/czr/controls/class-dynamic-control.php:65
-msgid "Add it"
-msgstr ""
+#: functions/czr/tmpl/modules/slide-module-tmpl.php:19
+#: functions/czr/tmpl/modules/slide-module-tmpl.php:56
+#: functions/czr/tmpl/modules/social-module-tmpl.php:64
+msgid "Enter a title"
+msgstr "Bir başlık girin"
 
-#: functions/czr/controls/class-dynamic-control.php:103
-msgid "Are you sure you want to remove : <strong>{{ data.title }} ?</strong>"
-msgstr ""
+#: functions/czr/tmpl/modules/slide-module-tmpl.php:23
+#: functions/czr/tmpl/modules/slide-module-tmpl.php:60
+msgid "Slide subtitle"
+msgstr "Slayt altyazı"
 
-#: functions/czr/controls/class-dynamic-control.php:104
-msgid "Yes"
-msgstr ""
+#: functions/czr/tmpl/modules/slide-module-tmpl.php:25
+#: functions/czr/tmpl/modules/slide-module-tmpl.php:62
+msgid "Enter a subtitle"
+msgstr "Bir alt başlık girin"
 
-#: functions/czr/controls/class-dynamic-control.php:104
-msgid "No"
-msgstr ""
-
-#: functions/czr/controls/class-socials-control.php:28
+#: functions/czr/tmpl/modules/social-module-tmpl.php:11
 msgid "Select an icon"
-msgstr ""
+msgstr "Bir simge seçin"
 
-#: functions/czr/controls/class-socials-control.php:34
+#: functions/czr/tmpl/modules/social-module-tmpl.php:17
 msgid "Social link url"
-msgstr ""
+msgstr "Sosyal link url"
 
-#: functions/czr/controls/class-socials-control.php:36
-#: functions/czr/controls/class-socials-control.php:74
+#: functions/czr/tmpl/modules/social-module-tmpl.php:19
+#: functions/czr/tmpl/modules/social-module-tmpl.php:57
 msgid "http://..."
-msgstr ""
+msgstr "http://..."
 
-#: functions/czr/controls/class-socials-control.php:38
+#: functions/czr/tmpl/modules/social-module-tmpl.php:21
 msgid "Enter the full url of your social profile (must be valid url)."
 msgstr ""
+"(Geçerli bir url olmalıdır) sosyal profilinizin tam url adresini girin."
 
-#: functions/czr/controls/class-socials-control.php:59
+#: functions/czr/tmpl/modules/social-module-tmpl.php:42
 msgid "Id"
-msgstr ""
+msgstr "Id"
 
-#: functions/czr/controls/class-socials-control.php:65
+#: functions/czr/tmpl/modules/social-module-tmpl.php:48
 msgid "Social icon"
-msgstr ""
+msgstr "Sosyal ikonlar"
 
-#: functions/czr/controls/class-socials-control.php:72
+#: functions/czr/tmpl/modules/social-module-tmpl.php:55
 msgid "Social link"
-msgstr ""
+msgstr "Sosyal link"
 
-#: functions/czr/controls/class-socials-control.php:76
+#: functions/czr/tmpl/modules/social-module-tmpl.php:59
 msgid "Enter the full url of your social profile (must be a valid url)."
 msgstr ""
+"(Geçerli bir url olmalıdır) sosyal profilinizin tam url adresini girin."
 
-#: functions/czr/controls/class-socials-control.php:79
+#: functions/czr/tmpl/modules/social-module-tmpl.php:62
 msgid "Title"
-msgstr ""
+msgstr "Başlık"
 
-#: functions/czr/controls/class-socials-control.php:81
-msgid "Enter a title"
-msgstr ""
-
-#: functions/czr/controls/class-socials-control.php:83
+#: functions/czr/tmpl/modules/social-module-tmpl.php:66
 msgid "This is the text displayed on mouse over."
-msgstr ""
+msgstr "Bu farenin üzerinde görüntülenen metin."
 
-#: functions/czr/controls/class-socials-control.php:87
+#: functions/czr/tmpl/modules/social-module-tmpl.php:70
 msgid "Icon color"
-msgstr ""
+msgstr "Simge rengi"
 
-#: functions/czr/controls/class-socials-control.php:91
+#: functions/czr/tmpl/modules/social-module-tmpl.php:74
 msgid "Set a unique color for your icon."
-msgstr ""
+msgstr "Simge için benzersiz bir renk ayarlayın."
 
-#: functions/czr/controls/class-socials-control.php:98
+#: functions/czr/tmpl/modules/social-module-tmpl.php:81
 msgid "Link target"
-msgstr ""
+msgstr "Bağlantı hedefi"
 
-#: functions/czr/controls/class-socials-control.php:102
+#: functions/czr/tmpl/modules/social-module-tmpl.php:85
 msgid "Check this option to open the link in a another tab of the browser."
-msgstr ""
+msgstr "Tarayıcıyı başka bir sekmede açmak için bu seçeneği işaretleyin."
 
-#: functions/czr/controls/class-upload-control.php:67
-msgid "Upload"
-msgstr ""
+#: functions/czr/tmpl/modules/text_editor-module-tmpl.php:14
+msgid "Text"
+msgstr "Metin"
 
-#: functions/czr/controls/class-widget-areas-control.php:70
-#: functions/czr/controls/class-widget-areas-control.php:120
-#: functions/czr/controls/class-widget-areas-control.php:163
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:15
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:62
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:105
 msgid "Name"
-msgstr ""
+msgstr "İsim"
 
-#: functions/czr/controls/class-widget-areas-control.php:72
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:17
 msgid "Give it a name"
-msgstr ""
+msgstr "Ona bir isim ver"
 
-#: functions/czr/controls/class-widget-areas-control.php:74
-#: functions/czr/controls/class-widget-areas-control.php:167
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:19
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:109
 msgid "Personalizing the name of the widget zone will help you identify it."
-msgstr ""
+msgstr "Widget alanını isimlendirmek onu tanımanıza yardımcı olur"
 
-#: functions/czr/controls/class-widget-areas-control.php:78
-#: functions/czr/controls/class-widget-areas-control.php:127
-#: functions/czr/controls/class-widget-areas-control.php:171
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:23
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:69
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:113
 msgid ""
 "Select the pre-defined location(s) in which you will embed this widget zone."
-msgstr ""
+msgstr "Bu widget bölge için embed bir ön tanımlı konum seçin."
 
-#: functions/czr/controls/class-widget-areas-control.php:114
-#: functions/czr/controls/class-widget-areas-control.php:157
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:56
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:99
 msgid "id"
-msgstr ""
+msgstr "id"
 
-#: functions/czr/controls/class-widget-areas-control.php:116
-#: functions/czr/controls/class-widget-areas-control.php:159
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:58
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:101
 msgid "unique id"
-msgstr ""
+msgstr "benzersiz id"
 
-#: functions/czr/controls/class-widget-areas-control.php:134
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:76
 msgid "Pick the contexts where this widget area will be displayed."
-msgstr ""
+msgstr "Bu widget alanında görüntülenecek bir içerik seç."
 
-#: functions/czr/controls/class-widget-areas-control.php:165
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:107
 msgid "Enter a name"
-msgstr ""
+msgstr "Bir isim girin"
 
-#: functions/czr/controls/class-widget-areas-control.php:178
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:120
 msgid "Pick the context(s) where this widget area will be displayed."
-msgstr ""
+msgstr "Bu widget alanı görüntülenir(ler) olarak seç."
 
-#: functions/czr/czr-resources.php:239
-msgid "If you like"
-msgstr ""
-
-#: functions/czr/czr-resources.php:240
-msgid "the Hueman theme"
-msgstr ""
-
-#: functions/czr/czr-resources.php:241
-msgid "we would love to receive a"
-msgstr ""
-
-#: functions/czr/czr-resources.php:243
-msgid "Review the Hueman theme"
-msgstr ""
-
-#: functions/czr/czr-resources.php:245
-msgid "rating. Thanks :) !"
-msgstr ""
-
-#: functions/czr/sections/class-widgets-section.php:36
-msgid "Press return or enter to open this section"
-msgstr ""
-
-#: functions/init-core.php:251
+#: functions/init-core.php:263
 msgid "Theme Options [OLD]"
-msgstr ""
+msgstr "tema Seçenekleri [ESKİ]"
 
-#: functions/init-core.php:751
+#: functions/init-core.php:808
 msgid "Primary"
-msgstr ""
+msgstr "birincil"
 
-#: functions/init-core.php:753
+#: functions/init-core.php:810
 msgid ""
 "Full width widget zone. Located in the left sidebar in a 3 columns layout. "
 "Can be on the right of a 2 columns sidebar when content is on the left."
 msgstr ""
+"Tam genişliği widget bölge. Düzeni 3 sütun, sol sidebarda yer almaktadır. "
+"İçerik solda 2 sütun, sağ sidebar tarafında olabilir."
 
-#: functions/init-core.php:760
+#: functions/init-core.php:817
 msgid "Secondary"
-msgstr ""
+msgstr "ikincil"
 
-#: functions/init-core.php:762
+#: functions/init-core.php:819
 msgid ""
 "Full width widget zone. Located in the right sidebar in a 3 columns layout."
 msgstr ""
+"Tam genişliği widget bölge. Düzeni 3 sütun, sağ kenar çubuğunda yer alır."
 
-#: functions/init-core.php:769 functions/init-core.php:863
+#: functions/init-core.php:826 functions/init-core.php:920
 msgid "Footer 1"
 msgstr ""
 
-#: functions/init-core.php:771
+#: functions/init-core.php:828
 msgid "Widgetized footer 1"
 msgstr ""
 
-#: functions/init-core.php:778 functions/init-core.php:864
+#: functions/init-core.php:835 functions/init-core.php:921
 msgid "Footer 2"
 msgstr ""
 
-#: functions/init-core.php:780
+#: functions/init-core.php:837
 msgid "Widgetized footer 2"
 msgstr ""
 
-#: functions/init-core.php:787 functions/init-core.php:865
+#: functions/init-core.php:844 functions/init-core.php:922
 msgid "Footer 3"
 msgstr ""
 
-#: functions/init-core.php:789
+#: functions/init-core.php:846
 msgid "Widgetized footer 3"
 msgstr ""
 
-#: functions/init-core.php:796 functions/init-core.php:866
+#: functions/init-core.php:853 functions/init-core.php:923
 msgid "Footer 4"
 msgstr ""
 
-#: functions/init-core.php:798
+#: functions/init-core.php:855
 msgid "Widgetized footer 4"
 msgstr ""
 
-#: functions/init-core.php:804 functions/init-core.php:867
+#: functions/init-core.php:861 functions/init-core.php:924
 msgid "Header (next to logo / title)"
-msgstr ""
+msgstr "Üstbilgi (logo yanında / başlık)"
 
-#: functions/init-core.php:806
+#: functions/init-core.php:863
 msgid "The Header Widget Zone is located next to your logo or site title."
-msgstr ""
+msgstr "Başlık Widget bölgeyi logo veya site Başlığı yer almaktadır."
 
-#: functions/init-core.php:813 functions/init-core.php:868
+#: functions/init-core.php:870 functions/init-core.php:925
 msgid "Footer Full Width"
-msgstr ""
+msgstr "Altbilgi Tam Genişliği"
 
-#: functions/init-core.php:815
+#: functions/init-core.php:872
 #, php-format
 msgid ""
 "The Footer Widget Zone is located before the other footer widgets and takes "
@@ -1472,59 +1886,64 @@ msgid ""
 "advertisement banner."
 msgstr ""
 
-#: functions/init-core.php:844
+#: functions/init-core.php:901
 msgid "All contexts"
-msgstr ""
+msgstr "Bütün içerikler"
 
-#: functions/init-core.php:846
+#: functions/init-core.php:903
 msgid "Blog Page"
-msgstr ""
+msgstr "Blog Sayfası"
 
-#: functions/init-core.php:847
+#: functions/init-core.php:904
 msgid "Pages"
-msgstr ""
+msgstr "Sayfalar"
 
-#: functions/init-core.php:848
+#: functions/init-core.php:905
 msgid "Single Posts"
-msgstr ""
+msgstr "Tek yazılar"
 
-#: functions/init-core.php:849
+#: functions/init-core.php:906
 msgid "Archives"
-msgstr ""
+msgstr "Arşiv"
 
-#: functions/init-core.php:850
+#: functions/init-core.php:907
 msgid "Categories"
-msgstr ""
+msgstr "Kategori"
 
-#: functions/init-core.php:851
+#: functions/init-core.php:908
 msgid "Search Results"
-msgstr ""
+msgstr "Arama Sonuçları"
 
-#: functions/init-core.php:852
+#: functions/init-core.php:909
 msgid "404 Error Pages"
-msgstr ""
+msgstr "404 Hata Sayfaları"
 
-#: functions/init-core.php:861
+#: functions/init-core.php:918
 msgid "Primary Sidebar (on the left in a 3 columns layout)"
-msgstr ""
+msgstr "3 sütun (solda)birincil Kenar Çubuğu düzeni"
 
-#: functions/init-core.php:862
+#: functions/init-core.php:919
 msgid "Secondary Sidebar (on the right in a 3 columns layout)"
-msgstr ""
+msgstr "(3 sütun sağda)ikincil Kenar Çubuğu düzeni"
 
-#: functions/init-core.php:1191
+#: functions/init-core.php:1247
 msgid "Help"
-msgstr ""
+msgstr "yardım"
 
-#: functions/init-core.php:1194
+#: functions/init-core.php:1250
 msgid "Need help with the Hueman theme ? Click here!"
-msgstr ""
+msgstr "Hueman tema ile yardıma mı ihtiyacınız var ? Buraya tıklayın!"
 
-#: functions/init-front.php:87
+#: functions/init-core.php:1349
+#, php-format
+msgid "All plugins installed and activated successfully. %s"
+msgstr "Tüm eklentiler yüklendi ve başarılı bir şekilde aktifleştirildi. %s"
+
+#: functions/init-front.php:97
 msgid "No widget zones available in this sidebar."
-msgstr ""
+msgstr "Bu Kenar Çubuğunda hiçbir widget bulunmuyor"
 
-#: functions/init-front.php:88
+#: functions/init-front.php:98
 msgid ""
 "You can add Widget Areas here from the customizer, in the <strong>Dynamic "
 "Sidebars and Widgets</strong> panel, or you can change the layout to remove "
@@ -1532,79 +1951,195 @@ msgid ""
 "strong>."
 msgstr ""
 
-#: functions/init-front.php:115
+#: functions/init-front.php:127
 msgid "You have already assigned the following widget zone here : "
-msgstr ""
+msgstr "Zaten burada aşağıdaki widget bölgesine atanan var : "
 
-#: functions/init-front.php:117
+#: functions/init-front.php:129
 msgid "in this post or page options."
-msgstr ""
+msgstr "bu yazı veya sayfa seçenekleri."
 
-#: functions/init-front.php:118
+#: functions/init-front.php:130
 msgid ""
 "You can change or disable this setting by editing the options of the current "
 "post / page."
 msgstr ""
+"Güncel yazı / sayfa düzenleme seçenekleri ile bu ayarı değiştirmek veya "
+"devre dışı bırakabilirsiniz."
 
-#: functions/init-front.php:124
+#: functions/init-front.php:136
 msgid "Add widgets to the zone :"
-msgstr ""
+msgstr "Bölge için widget ekleyin :"
 
-#: functions/init-meta-boxes.php:29
+#: functions/init-front.php:234
+msgid "Search result"
+msgstr "Arama sonucu"
+
+#: functions/init-front.php:236
+msgid "Search results"
+msgstr "Arama sonuçları"
+
+#: functions/init-front.php:247
+msgid "Error 404."
+msgstr "HATA 404"
+
+#: functions/init-front.php:248
+msgid "Page not found!"
+msgstr "Sayfa bulunamadı!"
+
+#: functions/init-front.php:260
+msgid "Author:"
+msgstr "Yazar:"
+
+#: functions/init-front.php:274
+msgid "Category:"
+msgstr "Kategori:"
+
+#: functions/init-front.php:279
+msgid "Tagged:"
+msgstr "Etiketlendi:"
+
+#: functions/init-front.php:294
+msgid "Daily Archive:"
+msgstr "Günlük Arşiv:"
+
+#: functions/init-front.php:299
+msgid "Monthly Archive:"
+msgstr "Aylık Arşiv:"
+
+#: functions/init-front.php:304
+msgid "Yearly Archive:"
+msgstr "Yıllık Arşiv:"
+
+#: functions/init-meta-boxes.php:30
 msgid "Select a widget zone for the primary sidebar."
-msgstr ""
+msgstr "Birincil kenar çubuğu için widget bir bölge seçin."
 
-#: functions/init-meta-boxes.php:29
+#: functions/init-meta-boxes.php:30
 msgid ""
 "Notes : 1)This will override any default settings of the customizer options "
 "panel. 2) The primary sidebar is placed on the left in a 3 columns layout. "
 "It can be on the right in a 2 columns layout, when the content is on the "
 "left."
 msgstr ""
+"Notlar : 1)Bu özelleştirici seçenekleri panelin varsayılan ayarlarını "
+"geçersiz kılar. 2) birincil Kenar Çubuğu Sol tarafta 3 sütun yerleştirilir. "
+"İçeriği, soldaki 2 sütun, sağ tarafta da olabilir."
 
-#: functions/init-meta-boxes.php:35
+#: functions/init-meta-boxes.php:36
 msgid "Select a widget zone for the secondary sidebar."
-msgstr ""
+msgstr "İkincil kenar çubuğu için widget'e bir bölge seçin."
 
-#: functions/init-meta-boxes.php:35
+#: functions/init-meta-boxes.php:36
 msgid ""
 "Notes : 1)This will override any default settings of the customizer options "
 "panel. 2) The secondary sidebar is placed on the right in a 3 columns layout."
 msgstr ""
+"Notlar : 1)Bu özelleştirici seçenekleri panelinin varsayılan ayarları "
+"geçersiz kılar. 2) ikincil Kenar Çubuğu sağda 3 sütun yerleştirir."
 
-#: functions/init-meta-boxes.php:41
+#: functions/init-meta-boxes.php:42
 msgid "Select a layout for this page."
-msgstr ""
+msgstr "Bu sayfa için bir düzen seçin."
 
-#: functions/init-meta-boxes.php:41 functions/init-meta-boxes.php:96
-#: functions/init-meta-boxes.php:102
+#: functions/init-meta-boxes.php:42 functions/init-meta-boxes.php:97
+#: functions/init-meta-boxes.php:103
 msgid ""
 "This will override any default settings of the customizer options panel."
 msgstr ""
+"Bu özelleştirme seçenekleri panelinin varsayılan ayarlarını geçersiz kılar."
 
-#: functions/init-meta-boxes.php:96
+#: functions/init-meta-boxes.php:97
 msgid "Select a widget zone for the left sidebar."
+msgstr "Sol kenar çubuğu için widget'e bir bölge seçin."
+
+#: functions/init-meta-boxes.php:103
+msgid "Select a widget zone for the right sidebar."
+msgstr "Sağ kenar çubuğu için widget'e bir bölge seçin."
+
+#: functions/plugins-compatibility.php:202
+msgid "Top-Menu items"
+msgstr "Üst Menü öğeleri"
+
+#: functions/plugins-compatibility.php:203
+msgid "Featured Pages"
+msgstr "Öne Çıkan Sayfalar"
+
+#: functions/plugins-compatibility.php:204
+msgid "Single Post titles"
+msgstr "Tek Yazı başlıkları"
+
+#: functions/plugins-compatibility.php:205
+msgid "Single Page titles"
+msgstr "Tek Sayfa başlıkları"
+
+#: functions/plugins-compatibility.php:206
+msgid "Post content"
+msgstr "Post içeriği"
+
+#: functions/plugins-compatibility.php:207
+msgid "Post excerpt"
+msgstr "Yazı alıntı"
+
+#: functions/plugins-compatibility.php:208
+msgid "Lists in post/pages"
+msgstr "Yazı/sayfa listeler"
+
+#: functions/plugins-compatibility.php:209
+msgid "Single Post Categories meta"
+msgstr "Tek Post Kategori meta"
+
+#: functions/plugins-compatibility.php:210
+msgid "Single Post tags"
+msgstr "Tek etiketler"
+
+#: functions/plugins-compatibility.php:211
+msgid "Archive Type Title"
+msgstr "Arşiv Başlığı"
+
+#: functions/plugins-compatibility.php:212
+msgid "Post list post metas"
 msgstr ""
 
-#: functions/init-meta-boxes.php:102
-msgid "Select a widget zone for the right sidebar."
+#: functions/plugins-compatibility.php:213
+msgid "Post list category meta"
 msgstr ""
+
+#: functions/plugins-compatibility.php:214
+msgid "Single post tags"
+msgstr "Tek etiketler"
+
+#: functions/plugins-compatibility.php:215
+msgid "Comments metas"
+msgstr ""
+
+#: functions/plugins-compatibility.php:216
+msgid "Sidebar Social Links"
+msgstr "Sidebar, Sosyal Bağlantılar"
+
+#: functions/plugins-compatibility.php:218
+msgid "Footer Social Links"
+msgstr "Altbilgi Sosyal Bağlantılar"
+
+#: functions/plugins-compatibility.php:227
+msgid "Featured pages"
+msgstr "Öne çıkan sayfalar"
 
 #: functions/widgets/alx-posts.php:21
 msgid "Hueman Posts"
-msgstr ""
+msgstr "Hueman Mesaj"
 
 #: functions/widgets/alx-posts.php:23
 msgid "Display posts from a category"
-msgstr ""
+msgstr "Bir kategoriden mesajları görüntüle"
 
 #: functions/widgets/alx-tabs.php:21
 msgid "Hueman Dynamic Tabs"
-msgstr ""
+msgstr "Hueman Dinamik Sekmeler"
 
 #: functions/widgets/alx-tabs.php:23
 msgid "List posts, comments, and/or tags with or without tabs."
-msgstr ""
+msgstr "Sekmeler olmadan liste mesajları, yorum ve/veya etiketler."
 
 #: functions/widgets/alx-tabs.php:66
 msgid "Recent Posts"
@@ -1628,53 +2163,13 @@ msgstr "dedi ki:"
 
 #: functions/widgets/alx-video.php:21
 msgid "Hueman Videos"
-msgstr ""
+msgstr "Hueman Videolar"
 
 #: functions/widgets/alx-video.php:23
 msgid "Display a responsive video with a YouTube or Vimeo link."
-msgstr ""
+msgstr "YouTube ya da Vimeo linki ile cevap veren bir video görüntüleyicisi."
 
-#: parts/page-title.php:22
-msgid "Search result"
-msgstr "Arama sonucu"
-
-#: parts/page-title.php:24
-msgid "Search results"
-msgstr "Arama sonuçları"
-
-#: parts/page-title.php:30
-msgid "Error 404."
-msgstr "HATA 404"
-
-#: parts/page-title.php:30
-msgid "Page not found!"
-msgstr "Sayfa bulunamadı!"
-
-#: parts/page-title.php:34
-msgid "Author:"
-msgstr "Yazar:"
-
-#: parts/page-title.php:37
-msgid "Category:"
-msgstr "Kategori:"
-
-#: parts/page-title.php:40
-msgid "Tagged:"
-msgstr "Etiketlendi:"
-
-#: parts/page-title.php:43
-msgid "Daily Archive:"
-msgstr "Günlük Arşiv:"
-
-#: parts/page-title.php:46
-msgid "Monthly Archive:"
-msgstr "Aylık Arşiv:"
-
-#: parts/page-title.php:49
-msgid "Yearly Archive:"
-msgstr "Yıllık Arşiv:"
-
-#: parts/post-list-author-date.php:11 parts/single-author-date.php:6
+#: parts/post-list-author-date.php:11 parts/single-author-date.php:7
 msgid "by"
 msgstr "tarafından"
 
@@ -1690,13 +2185,13 @@ msgstr "Önceki yazı"
 msgid "You may also like..."
 msgstr "Sevebilirsin..."
 
-#: parts/single-author-date.php:12
-msgid "Published"
-msgstr ""
-
 #: parts/single-author-date.php:13
+msgid "Published"
+msgstr "Yayınlanan"
+
+#: parts/single-author-date.php:14
 msgid "Updated"
-msgstr ""
+msgstr "Güncellendi"
 
 #: search.php:10
 msgid "For the term"
@@ -1722,10 +2217,10 @@ msgstr "daha fazlası"
 msgid "Follow:"
 msgstr "Takip Et:"
 
-#: single.php:29
+#: single.php:28
 msgid "Pages:"
 msgstr "Sayfalar:"
 
-#: single.php:45
+#: single.php:44
 msgid "Tags:"
 msgstr "Etikerler:"
