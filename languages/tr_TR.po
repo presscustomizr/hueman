@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Hueman v3.2.3\n"
 "POT-Creation-Date: 2016-09-27 21:33+0300\n"
-"PO-Revision-Date: 2016-09-27 21:33+0300\n"
+"PO-Revision-Date: 2016-09-27 23:29+0300\n"
 "Last-Translator: Mertcan <admin@mertcangokgoz.com>\n"
 "Language-Team: Press Customizr\n"
 "Language: tr_TR\n"
@@ -26,7 +26,7 @@ msgid ""
 "The page you are trying to reach does not exist, or has been moved. Please "
 "use the menus or the search box to find what you are looking for."
 msgstr ""
-"Ulaşmaya çalıştığınız sayfa mevcut değil yada taşındı.Aradığınızı bulmak "
+"Ulaşmaya çalıştığınız sayfa mevcut değil yada taşındı. Aradığınızı bulmak "
 "istiyorsanız menüleri veya arama kısmını kullanabilirsiniz."
 
 #: comments.php:7
@@ -67,7 +67,7 @@ msgid ""
 "<h2>As per the WordPress themes guidelines (%1$s), all the Hueman theme "
 "options have been moved to the %2$s.</h2>"
 msgstr ""
-"<h2>(%1$s) WordPress tema kurallarına göre, tüm Hueman teması seçeneklerine "
+"<h2>(%1$s) WordPress tema kurallarına göre, tüm Hueman teması seçenekleri "
 "%2$s taşındı.</h2>"
 
 #: functions/admin/class-admin-page.php:36
@@ -584,7 +584,7 @@ msgstr "Dinamik Stiller"
 
 #: functions/class-utils-settings-map.php:157
 msgid "Turn on to use the styling options below"
-msgstr "Aşağıda stil seçenekleri kullanmak için tıklayın"
+msgstr "Aşağıdaki stil seçeneklerini kullanmak için tıklayın"
 
 #: functions/class-utils-settings-map.php:162
 msgid "Boxed Layout"
@@ -613,6 +613,11 @@ msgid ""
 "<strong>1380px</strong> for 2 sidebars and <strong>1120px</strong> for 1 "
 "sidebar. If you use a combination of both, try something inbetween.</i>"
 msgstr ""
+"Kapsayıcının maksimum genişliği. Eğer 2 kenar çubuğu kullanıyorsanız, "
+"kapsayıcı en az 1024 olmalıdır.<br /><i>Not: (Varsayılan) 720px içerik İçin "
+"1 Kenar Çubuğu, 2 kenar çubuğunu ve <strong>1120px</strong> için "
+"<strong>1380px</strong> kullanın. Eğer her ikisini bir arada kullanırsanız, "
+"arada bir değer deneyin.</i>"
 
 #: functions/class-utils-settings-map.php:191
 msgid "Sidebar Width"
@@ -668,11 +673,11 @@ msgstr "Görüntü Yarıçap Sınırı"
 
 #: functions/class-utils-settings-map.php:285
 msgid "Give your thumbnails and layout images rounded corners"
-msgstr ""
+msgstr "Mini resim  ve düzen resimlerinin koselerini yuvarlak yap"
 
 #: functions/class-utils-settings-map.php:290
 msgid "Display an icon next to external links"
-msgstr "Dış bağlantılar yanında bir simge görüntüler"
+msgstr "Dış bağlantıların yanında bir simge görüntüle"
 
 #: functions/class-utils-settings-map.php:293
 #: functions/class-utils-settings-map.php:303
@@ -686,7 +691,7 @@ msgstr "Dış bağlantıları yeni bir sekmede aç"
 
 #: functions/class-utils-settings-map.php:326
 msgid "Create and organize your social links"
-msgstr "Sosyal bağlantılar oluştur ve düzenle"
+msgstr "Sosyal bağlantı oluştur ve düzenle"
 
 #: functions/class-utils-settings-map.php:344
 msgid "Posts Comments"
@@ -818,7 +823,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:496
 msgid "Display your site's description (tagline)"
-msgstr "(slogan)sitenin açıklaması görüntüle"
+msgstr "Sitenin açıklamasını(slogan) görüntüle"
 
 #: functions/class-utils-settings-map.php:499
 msgid "The description that appears next to your logo"
@@ -982,7 +987,7 @@ msgstr "Öne çıkan gönderiler"
 
 #: functions/class-utils-settings-map.php:678
 msgid "Feature posts on top of your blog"
-msgstr ""
+msgstr "Blogunuzun üstüne öne çıkan gönderiler"
 
 #: functions/class-utils-settings-map.php:681
 msgid ""
@@ -1036,7 +1041,7 @@ msgstr "Bir slayt gösterisi ile öne çıkan mesajlar animasyon"
 
 #: functions/class-utils-settings-map.php:718
 msgid "Enables the automatic animation of the featured posts carousel."
-msgstr ""
+msgstr "Otomatik animasyonu aktif hale getir"
 
 #: functions/class-utils-settings-map.php:724
 msgid "Featured Slideshow Speed"
@@ -1048,7 +1053,7 @@ msgstr "Otomatik slayt animasyon hızı"
 
 #: functions/class-utils-settings-map.php:735
 msgid "Display the featured posts also in the list of posts"
-msgstr ""
+msgstr "Mesaj listesinde öne çıkan mesajları göster"
 
 #: functions/class-utils-settings-map.php:738
 msgid ""
@@ -1056,6 +1061,9 @@ msgid ""
 "featured slider and in the post list below. Usually not recommended because "
 "a given post might appear two times on the same page."
 msgstr ""
+"Eğer bu kutu işaretlenirse,  öne çıkan gönderiler hem sliderda da "
+"ozellestirilmis olarak hem de post listesi arasinda goruntulenecek. Belirli "
+"bir yazı iki kez aynı sayfada görünebilir, genellikle tavsiye edilmez."
 
 #: functions/class-utils-settings-map.php:753
 msgid "Single - Author Bio"
@@ -1063,7 +1071,7 @@ msgstr "Tek Yazar Biografisi"
 
 #: functions/class-utils-settings-map.php:756
 msgid "Display post author description, if it exists"
-msgstr ""
+msgstr "Eğer varsa, yazar detaylarını göster"
 
 #: functions/class-utils-settings-map.php:761
 msgid "Single - Related Posts"
@@ -1085,7 +1093,7 @@ msgstr "Etiketler ile ilgili"
 
 #: functions/class-utils-settings-map.php:769
 msgid "Display randomized related articles below the post"
-msgstr ""
+msgstr "İlgili makaleleri başlık altında rastgele göster"
 
 #: functions/class-utils-settings-map.php:774
 msgid "Single - Post Navigation"
@@ -1113,7 +1121,7 @@ msgstr "Küçük Resim Yer Tutucu"
 
 #: functions/class-utils-settings-map.php:800
 msgid "Display featured image placeholders if no featured image is set"
-msgstr ""
+msgstr "Eğer öncelikli resim eklenmemiş ise resim yer tutucularını göster"
 
 #: functions/class-utils-settings-map.php:805
 msgid "Thumbnail Comment Count"
@@ -1130,7 +1138,7 @@ msgstr "Kenar Çubuğu, Üst Kutuları"
 
 #: functions/class-utils-settings-map.php:832
 msgid "Display boxes at the top of the sidebars"
-msgstr ""
+msgstr "Sidebar üzerindeki kutuları göster"
 
 #: functions/class-utils-settings-map.php:837
 msgid "Mobile Sidebar Content"
@@ -1424,7 +1432,7 @@ msgstr "WordPress dokümantasyonu"
 
 #: functions/czr/class-czr-init.php:246
 msgid "SITE ICON"
-msgstr "Site İkon"
+msgstr "Site simgesi"
 
 #: functions/czr/class-czr-init.php:272
 msgid "Create And Order Widget Areas"
@@ -1778,7 +1786,7 @@ msgstr "Id"
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:48
 msgid "Social icon"
-msgstr "Sosyal ikonlar"
+msgstr "Sosyal simgeler"
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:55
 msgid "Social link"
