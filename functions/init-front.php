@@ -106,49 +106,65 @@ if ( ! function_exists('hu_print_widgets_in_location') ) {
   }
 }//endif
 
-
+//@param $sidebars_widgets = wp_get_sidebars_widgets()
+//@param $_zone_id = id of the widget zone, ex : primary
 function hu_maybe_print_default_widgets( $sidebars_widgets, $_zone_id ) {
-    // if ( hu_is_checked( 'display_default_widgets') )
-    //   return;
-
+    //has user enable default widgets?
+    if ( ! hu_is_checked('show-sb-example-wgt') || ! hu_is_checked( "{$_zone_id}-example-wgt") )
+      return;
 
     if ( ! array_key_exists($_zone_id, $sidebars_widgets) || ( is_array( $sidebars_widgets[$_zone_id] ) && ! empty($sidebars_widgets[$_zone_id] ) ) )
       return;
 
+    //we only want to print default widgets in primary and secondary sidebars
+    if ( ! in_array( $_zone_id, array( 'primary', 'secondary') ) )
+      return;
+
     global $wp_registered_sidebars, $wp_registered_widgets;
-    /* if ( is_array() )
-      array_walk_recursive(, function(&$v) { $v = htmlspecialchars($v); }); */
-    /*?>
-      <pre>
-        <?php print_r($wp_registered_widgets); ?>
-      </pre>
-    <?php*/
-    //Which widget shall we display
-    //$defaut_wgt =  ? : '';
 
-    //find the widget
-    $found_match = false;
+    $_widgets_to_print = array();;
+    switch ($_zone_id) {
+      case 'secondary':
+        $_widgets_to_print[] = 'search';
+        $_widgets_to_print[] = 'alxtabs';
+        break;
+
+      case 'primary':
+        $_widgets_to_print[] = 'alxposts';
+        break;
+    }
+    if ( empty($_widgets_to_print) )
+      return;
+
+
+    //find the widget instance ids
+    $_wgt_instance_ids = array();
     foreach ( $wp_registered_widgets as $_id => $_data ) {
-       if ( 'alxtabs' != substr( $_id, 0, 7 ) || $found_match )
-        continue;
-      $found_match = true;
-      $_widget_id = $_id;
+      $found_match = false;
+      foreach ( $_widgets_to_print as $_wgt_id) {
+        if ( $_wgt_id != substr( $_id, 0, strlen($_wgt_id) ) || $found_match )
+          continue;
+        $found_match = true;
+        $_wgt_instance_ids[] = $_id;
+      }
     }
 
+    if ( empty($_wgt_instance_ids) )
+      return;
 
-    //////////////
     $sidebar = $wp_registered_sidebars[$_zone_id];
-    $callback = $wp_registered_widgets[$_widget_id]['callback'];
+    foreach ( $_wgt_instance_ids as $_widget_id ) {
+      $callback = $wp_registered_widgets[$_widget_id]['callback'];
 
-    $params = array_merge(
-      array( array_merge( $sidebar, array('widget_id' => $id, 'widget_name' => $wp_registered_widgets[$_widget_id]['name']) ) ),
-      (array) $wp_registered_widgets[$_widget_id]['params']
-    );
+      $params = array_merge(
+        array( array_merge( $sidebar, array('widget_id' => $_widget_id, 'widget_name' => $wp_registered_widgets[$_widget_id]['name']) ) ),
+        (array) $wp_registered_widgets[$_widget_id]['params']
+      );
 
-    if ( is_callable($callback) ) {
-      $callback[0] -> widget( $params[0], $callback[0]);
+      if ( is_callable($callback) ) {
+        $callback[0] -> widget( $params[0], $callback );
+      }
     }
-    //////////////
 }
 
 
@@ -161,7 +177,8 @@ function hu_print_dynamic_sidebars( $_id, $location ) {
   }
 
   $sidebars_widgets = wp_get_sidebars_widgets();
-  //hu_maybe_print_default_widgets( $sidebars_widgets, $_id );
+
+  hu_maybe_print_default_widgets( $sidebars_widgets, $_id );
 
   if ( hu_is_customize_preview_frame() ) {
     //is there a meta setting overriding the customizer ?
@@ -489,12 +506,7 @@ if ( ! function_exists( 'hu_print_placeholder_thumb' ) ) {
       <svg class="hu-svg-placeholder <?php echo $_size; ?>" id="<?php echo $_unique_id; ?>" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M928 832q0-14-9-23t-23-9q-66 0-113 47t-47 113q0 14 9 23t23 9 23-9 9-23q0-40 28-68t68-28q14 0 23-9t9-23zm224 130q0 106-75 181t-181 75-181-75-75-181 75-181 181-75 181 75 75 181zm-1024 574h1536v-128h-1536v128zm1152-574q0-159-112.5-271.5t-271.5-112.5-271.5 112.5-112.5 271.5 112.5 271.5 271.5 112.5 271.5-112.5 112.5-271.5zm-1024-642h384v-128h-384v128zm-128 192h1536v-256h-828l-64 128h-644v128zm1664-256v1280q0 53-37.5 90.5t-90.5 37.5h-1536q-53 0-90.5-37.5t-37.5-90.5v-1280q0-53 37.5-90.5t90.5-37.5h1536q53 0 90.5 37.5t37.5 90.5z"/></svg>
 
       <script type="text/javascript">
-        jQuery( function($){
-          var  _unique_id = '<?php echo $_unique_id; ?>';
-          $.when( $('#' + _unique_id ).css('opacity', 1 ) ).done( function() {
-              new Vivus( _unique_id, {type: 'delayed', duration: HUParams.vivusSvgSpeed || 400 } );
-          });
-        });
+        jQuery( function($){ $( '#<?php echo $_unique_id; ?>' ).animateSvg(); });
       </script>
       <?php
     }
@@ -742,6 +754,7 @@ if ( ! function_exists( 'hu_scripts' ) ) {
               'goldenRatio'         => apply_filters( 'hu_grid_golden_ratio' , 1.618 ),
               'gridGoldenRatioLimit' => apply_filters( 'hu_grid_golden_ratio_limit' , 350),
               'vivusSvgSpeed' => apply_filters( 'hu_vivus_svg_duration' , 300),
+              'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('TC_DEV') && true === TC_DEV )
             )
         )//end of filter
        );

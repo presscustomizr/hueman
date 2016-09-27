@@ -114,6 +114,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         'hu_content_thumbnail_sec',
         'hu_content_layout_sec',
         'hu_sidebars_design_sec',
+        'hu_widgets_sec',
 
         //FOOTER
         'hu_footer_design_sec',
@@ -537,7 +538,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     function hu_header_widget_sec() {
       return array(
           'header-ads' => array(
-                'default'   => 1,
+                'default'   => hu_user_started_before_version( '3.2.4' ) ? 1 : 0,
                 'control'   => 'HU_controls',
                 'label'     => __("Display a widget in your header", 'hueman'),
                 'section'   => 'header_widget_sec',
@@ -890,10 +891,44 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                   's1-s2'       => __( 'Hide both sidebars' , 'hueman' )
                 ),
                 'notice'    => __('Control how the sidebar content is displayed on smartphone mobile devices (320px). Note : on smartphones the sidebars are displayed below the content.' , 'hueman')
-          )
+          ),
+          'show-sb-example-wgt' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __('Display default widgets', 'hueman'),
+                'section'   => 'sidebars_design_sec',
+                'type'      => 'checkbox',
+                'skoped'    => false,
+                'notice'    => __('When your right or left sidebars have no widgets, the Hueman theme will display example widgets.' , 'hueman')
+          ),
       );
     }
 
+    /*-----------------------------------------------------------------------------------------------------
+                                EXAMPLE WIDGETS
+    ------------------------------------------------------------------------------------------------------*/
+    function hu_widgets_sec() {
+      return array(
+          'primary-example-wgt' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __('Display default widgets', 'hueman'),
+                'section'   => 'sidebar-widgets-primary',
+                'type'      => 'checkbox',
+                'priority'  => 0,
+                'skoped'    => false
+          ),
+          'secondary-example-wgt' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __('Display default widgets', 'hueman'),
+                'section'   => 'sidebar-widgets-secondary',
+                'type'      => 'checkbox',
+                'priority'  => 0,
+                'skoped'    => false
+          ),
+      );
+    }
 
 
 
@@ -910,7 +945,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
       global $wp_version;
       return array(
           'footer-ads' => array(
-                'default'   => 1,
+                'default'   => hu_user_started_before_version( '3.2.4' ) ? 1 : 0,
                 'control'   => 'HU_controls',
                 'label'     => __("Display a full width widget area in your footer", 'hueman'),
                 'section'   => 'footer_design_sec',
@@ -918,7 +953,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'notice'    => __('This zone is located before the other footer widgets and takes 100% of the width. Very appropriate to display a Google Map or an advertisement banner.', 'hueman')
           ),
           'footer-widgets' => array(
-                'default'   => '0',
+                'default'   => hu_user_started_before_version( '3.2.4' ) ? '0' : '3',
                 'control'   => 'HU_Customize_Layout_Control',
                 'label'     => __('Select columns to enable footer widgets', 'hueman'),
                 'section'   => 'footer_design_sec',

@@ -947,7 +947,47 @@ if (!Array.prototype.map) {
       });
   };
 
-})( jQuery, window, document );// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+})( jQuery, window, document );/* ===================================================
+ * jqueryAnimateSvg.js v1.0.0
+ * @dependency : Vivus.js (MIT licensed)
+ * @dependency : HUParams
+ * ===================================================
+ * (c) 2016 Nicolas Guillaume, Nice, France
+ * Animates an svg icon with Vivus given its #id
+ * =================================================== */
+;(function ( $, window, document, _ ) {
+  var pluginName = 'animateSvg',
+      defaults = {},
+      _drawSvgIcon = function(options) {
+          var id = $(this).attr('id');
+          if ( _.isUndefined(id) || _.isEmpty(id) || 'function' != typeof( Vivus ) ) {
+            if ( window.czrapp )
+              czrapp.consoleLog( 'An svg icon could not be animated with Vivus.');
+            return;
+          }
+          if ( $('[id=' + id + ']').length > 1 ) {
+            if ( window.czrapp )
+              czrapp.consoleLog( 'Svg icons must have a unique css #id to be animated. Multiple id found for : ' + id );
+          }
+          $.when( $('#' + id ).css('opacity', 1 ) ).done( function() {
+              new Vivus( id, {type: 'delayed', duration: HUParams.vivusSvgSpeed || 400 } );
+          });
+      };
+
+  // prevents against multiple instantiations
+  $.fn[pluginName] = function ( options ) {
+      options  = $.extend( {}, defaults, options) ;
+      return this.each(function () {
+          if ( ! $.data(this, 'plugin_' + pluginName) ) {
+              $.data(
+                this,
+                'plugin_' + pluginName,
+                _drawSvgIcon.call( this, options )
+              );
+          }
+      });
+  };
+})( jQuery, window, document, _ );// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
 // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
 
 // requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
@@ -2530,6 +2570,15 @@ var czrapp = czrapp || {};
       //if empty => all selectors are allowed
       //if not, at least one is not allowed
       return 0 === _filtered.length;
+    },
+
+
+    //Dev mode aware and IE compatible consoleLog()
+    consoleLog : function() {
+      //fix for IE, because console is only defined when in F12 debugging mode in IE
+      if ( ( _.isUndefined( console ) && typeof window.console.log != 'function' ) || ! HUParams.isDevMode )
+        return;
+      console.log.apply( console, arguments );
     },
 
     /***************************************************************************
