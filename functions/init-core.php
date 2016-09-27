@@ -761,7 +761,7 @@ function hu_maybe_copy_logo_to_theme_mod( $_options ) {
   if ( ! function_exists( 'the_custom_logo' ) )
     return;
 
-  $_old_custom_logo_exists = isset($_options['custom-logo']) && false != $_options['custom-logo'] && ! empty($_options['custom-logo']) && is_int($_options['custom-logo']);
+  $_old_custom_logo_exists = isset($_options['custom-logo']) && false != $_options['custom-logo'] && ! empty($_options['custom-logo']);
   if ( $_old_custom_logo_exists ) {
     set_theme_mod( 'custom_logo', $_options['custom-logo'] );
     $_options['display-header-logo'] = 1;
