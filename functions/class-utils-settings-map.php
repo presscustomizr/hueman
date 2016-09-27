@@ -1019,7 +1019,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     function hu_footer_menu_sec() {
       return array(
           'default-menu-footer' => array(
-                'default'   => 1,
+                'default'   => 0,
                 'control'   => 'HU_controls',
                 'label'     => __("Use a default page menu if no menu has been assigned.", 'hueman'),
                 'section'   => 'footer_menu_sec',
