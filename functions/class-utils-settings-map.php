@@ -557,7 +557,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     function hu_header_menu_sec() {
       return array(
           'default-menu-header' => array(
-                'default'   => hu_user_started_before_version( '3.2.4' ) ? 0 : 1,
+                'default'   => 1,
                 'control'   => 'HU_controls',
                 'label'     => __("Use a default page menu if no menu has been assigned.", 'hueman'),
                 'section'   => 'header_menu_sec',
@@ -1019,7 +1019,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     function hu_footer_menu_sec() {
       return array(
           'default-menu-footer' => array(
-                'default'   => hu_user_started_before_version( '3.2.4' ) ? 0 : 1,
+                'default'   => 1,
                 'control'   => 'HU_controls',
                 'label'     => __("Use a default page menu if no menu has been assigned.", 'hueman'),
                 'section'   => 'footer_menu_sec',
