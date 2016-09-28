@@ -1,11 +1,11 @@
 <?php if ( post_password_required() ) { return; } ?>
 
 <section id="comments" class="themeform">
-	
+
 	<?php if ( have_comments() ) : global $wp_query; ?>
-	
+
 		<h3 class="heading"><?php comments_number( __( 'No Responses', 'hueman' ), __( '1 Response', 'hueman' ), __( '% Responses', 'hueman' ) ); ?></h3>
-	
+
 		<ul class="comment-tabs group">
 			<li class="active"><a href="#commentlist-container"><i class="fa fa-comments-o"></i><?php _e( 'Comments', 'hueman' ); ?><span><?php echo count($wp_query->comments_by_type['comment']); ?></span></a></li>
 			<li><a href="#pinglist-container"><i class="fa fa-share"></i><?php _e( 'Pingbacks', 'hueman' ); ?><span><?php echo count($wp_query->comments_by_type['pings']); ?></span></a></li>
@@ -13,24 +13,24 @@
 
 		<?php if ( ! empty( $comments_by_type['comment'] ) ) { ?>
 		<div id="commentlist-container" class="comment-tab">
-			
+
 			<ol class="commentlist">
-				<?php wp_list_comments( 'avatar_size=96&type=comment' ); ?>	
+				<?php wp_list_comments( sprintf( "avatar_size=%s&type=comment", apply_filters('hu_avatar_size', 48 ) ) ); ?>
 			</ol><!--/.commentlist-->
-			
+
 			<?php if ( get_comment_pages_count() > 1 && get_option('page_comments') ) : ?>
 			<nav class="comments-nav group">
 				<div class="nav-previous"><?php previous_comments_link(); ?></div>
 				<div class="nav-next"><?php next_comments_link(); ?></div>
 			</nav><!--/.comments-nav-->
 			<?php endif; ?>
-			
-		</div>	
+
+		</div>
 		<?php } ?>
-		
+
 		<?php if ( ! empty( $comments_by_type['pings'] ) ) { ?>
 		<div id="pinglist-container" class="comment-tab">
-			
+
 			<ol class="pinglist">
 				<?php // not calling wp_list_comments twice, as it breaks pagination
 				$pings = $comments_by_type['pings'];
@@ -42,7 +42,7 @@
 					</li>
 				<?php } ?>
 			</ol><!--/.pinglist-->
-			
+
 		</div>
 		<?php } ?>
 
@@ -53,9 +53,9 @@
 		<?php else : ?>
 			<!-- comments closed, no comments -->
 		<?php endif; ?>
-	
+
 	<?php endif; ?>
-	
+
 	<?php if ( comments_open() ) { comment_form(); } ?>
 
 </section><!--/#comments-->
