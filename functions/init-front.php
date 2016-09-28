@@ -693,7 +693,7 @@ if ( ! function_exists( 'hu_scripts' ) ) {
         true
     );
 
-    if ( is_singular() && get_option( 'thread_comments' ) ) {
+    if ( is_singular() && get_option( 'thread_comments' ) && comments_open() ) {
       wp_enqueue_script( 'comment-reply' );
     }
 
