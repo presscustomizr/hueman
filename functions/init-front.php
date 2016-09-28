@@ -138,7 +138,8 @@ function hu_maybe_print_default_widgets( $sidebars_widgets, $_zone_id ) {
     $_wgt_instances = array();
 
     foreach ( $_widgets_to_print as $_class) {
-      $_wgt_instances[] = new $_class();
+      if ( class_exists( $_class) )
+        $_wgt_instances[] = new $_class();
     }
 
     if ( empty($_wgt_instances) )
