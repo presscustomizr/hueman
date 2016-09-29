@@ -51,8 +51,9 @@ class AlxPosts extends WP_Widget {
     $instance = wp_parse_args( (array) $instance, $defaults );
 
 		$title = apply_filters('widget_title',$instance['title']);
+    $title = empty( $title ) ? '' : $title;
 		$output = $before_widget."\n";
-		if($title)
+		if( $title || ! empty( $before_title) )
 			$output .= $before_title.$title.$after_title;
 		ob_start();
 

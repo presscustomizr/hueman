@@ -122,11 +122,11 @@ function hu_maybe_print_default_widgets( $sidebars_widgets, $_zone_id ) {
     $_widgets_to_print = array();
     switch ($_zone_id) {
       case 'secondary':
-        $_widgets_to_print[] = 'AlxTabs';
+        $_widgets_to_print[] = array( 'AlxTabs' => array('before_title' => sprintf('<h3 class="widget-title">%s</h3>', __( 'Recommended', 'hueman') ) ) );
         break;
 
       case 'primary':
-        $_widgets_to_print[] = 'AlxPosts';
+        $_widgets_to_print[] = array( 'AlxPosts' => array('before_title' => sprintf('<h3 class="widget-title">%s</h3>', __( 'Discover', 'hueman') ) ) );
         break;
     }
     if ( empty($_widgets_to_print) )
@@ -135,9 +135,11 @@ function hu_maybe_print_default_widgets( $sidebars_widgets, $_zone_id ) {
     //find the widget instance ids
     $_wgt_instances = array();
 
-    foreach ( $_widgets_to_print as $_class) {
-      if ( class_exists( $_class) )
-        the_widget( $_class );
+    foreach ( $_widgets_to_print as $_wgt ) {
+      foreach (  $_wgt as $_class => $_args ) {
+          if ( class_exists( $_class) )
+            the_widget( $_class, array(), $_args );
+      }
     }
 }
 
