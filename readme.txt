@@ -1,4 +1,4 @@
-# Hueman v3.2.7
+# Hueman v3.2.8
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > Hueman is a mobile friendly WordPress theme for blogs, magazines and business websites. It's been designed to beautifully display pictures and text content, and engineered to be easy to use and fast. The Hueman theme helps you attract and retain more visitors, that's why it's already used by 70K+ active websites in the world and has received hundreds of five stars ratings.
@@ -75,6 +75,7 @@ See headers of files for further details.
 # Changelog
 = 3.2.8 September 29th 2016 =
 * improved : remove unused code
+* improved : set avatar size to 48px by default, like the stylesheet.apply_filters('hu_avatar_size', 48 )
 
 = 3.2.7 September 29th 2016 =
 * fixed : use WordPress core method the_widget() to render the optional default widgets
