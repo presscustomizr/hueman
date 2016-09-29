@@ -112,18 +112,16 @@ function hu_maybe_print_default_widgets( $sidebars_widgets, $_zone_id ) {
     //has user enable default widgets?
     if ( ! hu_is_checked('show-sb-example-wgt') || ! hu_is_checked( "{$_zone_id}-example-wgt") )
       return;
-    if ( ! array_key_exists($_zone_id, $sidebars_widgets) || ( is_array( $sidebars_widgets[$_zone_id] ) && ! empty($sidebars_widgets[$_zone_id] ) ) )
+    //stop here is the zone id has already been populated with widgets
+    if ( array_key_exists( $_zone_id, $sidebars_widgets ) && is_array( $sidebars_widgets[$_zone_id] ) && ! empty($sidebars_widgets[$_zone_id] ) )
       return;
     //we only want to print default widgets in primary and secondary sidebars
     if ( ! in_array( $_zone_id, array( 'primary', 'secondary') ) )
       return;
 
-    global $wp_registered_sidebars;
-
     $_widgets_to_print = array();
     switch ($_zone_id) {
       case 'secondary':
-        $_widgets_to_print[] = 'WP_Widget_Search';
         $_widgets_to_print[] = 'AlxTabs';
         break;
 
@@ -139,20 +137,7 @@ function hu_maybe_print_default_widgets( $sidebars_widgets, $_zone_id ) {
 
     foreach ( $_widgets_to_print as $_class) {
       if ( class_exists( $_class) )
-        $_wgt_instances[] = new $_class();
-    }
-
-    if ( empty($_wgt_instances) )
-      return;
-
-    $sidebar = $wp_registered_sidebars[$_zone_id];
-    foreach ( $_wgt_instances as $_inst ) {
-      $_array_inst = (array)$_inst;
-      $params = array_merge( $sidebar, array('widget_id' => $_array_inst['id_base'], 'widget_name' => $_array_inst['name']) );
-      $callback = $_inst -> _get_display_callback();
-      if ( is_callable($callback) ) {
-        $callback[0] -> widget( $params, $callback );
-      }
+        the_widget( $_class );
     }
 }
 
@@ -698,6 +683,11 @@ if ( ! function_exists( 'hu_scripts' ) ) {
       wp_enqueue_script( 'comment-reply' );
     }
 
+    global $wp_registered_widgets;
+    $_regwdgt = array();
+    foreach ( $wp_registered_widgets as $_key => $_value) {
+      $_regwdgt[] = $_key;
+    }
     wp_localize_script(
           'hu-front-scripts',
           'HUParams',
