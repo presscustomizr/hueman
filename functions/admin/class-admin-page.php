@@ -122,7 +122,7 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
 
           <?php endif; ?>
 
-          <?php if ( hu_is_child() ) : ?>
+          <?php if ( is_child_theme() ) : ?>
             <div class="changelog point-releases"></div>
 
             <div class="tc-upgrade-notice">
