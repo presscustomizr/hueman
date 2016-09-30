@@ -1619,14 +1619,15 @@ html[xmlns] .flexslider .slides { display: block; }
 }
 
 /* ------------------------------------------------------------------------- *
- *  SVG thumbnail placeholders
+ *  SVG thumbnails placeholders
 /* ------------------------------------------------------------------------- */
 svg.hu-svg-placeholder {
   fill: none;
-  stroke: #fff;
+  stroke: #eee;
   stroke-width:50px;
   opacity: 0;
   position: absolute;
+  z-index: 1;
   width: 100%;
   height: 50%;
   top: 25%;
@@ -1636,6 +1637,29 @@ svg.hu-svg-placeholder {
   transition: opacity 1.2s ease;
 }
 
+.filter-placeholder {
+  opacity: 0;
+  -webkit-transition: opacity 2s ease;
+  -moz-transition: opacity 2s ease;
+  -o-transition: opacity 2s ease;
+  transition: opacity 2s ease;
+}
+.filter-placeholder::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+  content: '';
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  position: absolute;
+  background: rgba(34, 34, 34, 0.55);
+}
 
 /* ------------------------------------------------------------------------- *
  *  Shortcodes
