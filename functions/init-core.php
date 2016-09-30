@@ -83,24 +83,6 @@ function hu_checked( $val ) {
   echo hu_is_checked( $val ) ? 'checked="checked"' : '';
 }
 
-/**
-* Checks if we use a child theme. Uses a deprecated WP functions (get _theme_data) for versions <3.4
-* @return boolean
-*
-*/
-function hu_is_child() {
-  // get themedata version wp 3.4+
-  if ( function_exists( 'wp_get_theme' ) ) {
-    //get WP_Theme object
-    $_theme       = wp_get_theme();
-    //define a boolean if using a child theme
-    return $_theme -> parent() ? true : false;
-  }
-  else {
-    $_theme       = call_user_func('get_' .'theme_data', get_stylesheet_directory().'/style.css' );
-    return ! empty($_theme['Template']) ? true : false;
-  }
-}
 
 
 /**
@@ -152,6 +134,27 @@ function hu_has_nav_menu( $_location ) {
 
 
 
+//@return an array of unfiltered options
+//=> all options or a single option val
+function hu_get_raw_option( $opt_name = null, $opt_group = null ) {
+    $alloptions = wp_cache_get( 'alloptions', 'options' );
+    $alloptions = maybe_unserialize($alloptions);
+    if ( ! is_null( $opt_group ) && isset($alloptions[$opt_group]) ) {
+      $alloptions = maybe_unserialize($alloptions[$opt_group]);
+    }
+    if ( is_null( $opt_name ) )
+      return $alloptions;
+    return isset( $alloptions[$opt_name] ) ? $alloptions[$opt_name] : false;
+}
+
+
+//@return bool
+function hu_is_demo() {
+  $_active_theme = hu_get_raw_option( 'template' );
+  return ( $_active_theme != strtolower(THEMENAME) && ! is_child_theme() );
+}
+
+
 /* ------------------------------------------------------------------------- *
  *  Various Helpers
 /* ------------------------------------------------------------------------- */
@@ -193,10 +196,11 @@ function hu_is_post_list() {
   global $wp_query;
 
   return apply_filters( 'hu_is_post_list',
-    ! is_singular()
+    ( ! is_singular()
     && ! is_404()
-    && 0 != $wp_query -> post_count
-    && ! hu_is_home_empty()
+    && ( is_search() && 0 != $wp_query -> post_count )
+    && ! hu_is_home_empty() )
+    || hu_is_blogpage() || is_home()
   );
 }
 
@@ -338,7 +342,7 @@ if( ! defined( 'HU_THEME_OPTIONS' ) ) define( 'HU_THEME_OPTIONS' , apply_filters
 
 if( ! defined( 'HU_OPT_AJAX_ACTION' ) ) define( 'HU_OPT_AJAX_ACTION' , 'hu_get_option' );
 
-if( ! defined( 'HU_SKOP_ON' ) ) define( 'HU_SKOP_ON' , false );
+if( ! defined( 'HU_SKOP_ON' ) ) define( 'HU_SKOP_ON' , true );
 if( ! defined( 'HU_SEK_ON' ) ) define( 'HU_SEK_ON' , false );
 
 //HU_IS_PRO

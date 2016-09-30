@@ -32,7 +32,7 @@ $featured = new WP_Query(
 				if (image.complete || image.readyState == 'complete' || image.readyState == 4) {
 					clearInterval(checkforloaded);
 
-					$('#flexslider-featured').flexslider({
+					$.when( $('#flexslider-featured').flexslider({
 						animation: "slide",
 						useCSS: false, // Fix iPad flickering issue
 						directionNav: true,
@@ -43,7 +43,14 @@ $featured = new WP_Query(
 						touch: <?php echo apply_filters('hu_flexslider_touch_support' , true); ?>,
 						slideshow: <?php echo hu_is_checked('featured-slideshow') ? 'true' : 'false'; ?>,
 						slideshowSpeed: <?php echo hu_get_option('featured-slideshow-speed', 5000); ?>,
-					});
+					}) ).done( function() {
+            var $_self = $(this);
+                _trigger = function( $_self ) {
+              $_self.trigger('featured-slider-ready');
+            };
+            _trigger = _.debounce( _trigger, 100 );
+            _trigger( $_self );
+          } );
 
 				}
 			}, 20);

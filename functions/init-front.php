@@ -468,6 +468,7 @@ if ( ! function_exists( 'hu_print_placeholder_thumb' ) ) {
 
   function hu_print_placeholder_thumb( $_size = 'thumb-medium' ) {
     $_unique_id = uniqid();
+    $filter = false;
     $_sizes = array( 'thumb-medium', 'thumb-small', 'thumb-standard' );
     if ( ! in_array($_size, $_sizes) )
       $_size = 'thumb-medium';
@@ -475,19 +476,33 @@ if ( ! function_exists( 'hu_print_placeholder_thumb' ) ) {
     if ( ! apply_filters( 'hu-use-svg-thumb-placeholder', true ) ) {
       $_img_src = get_template_directory_uri() . "/assets/front/img/{$_size}.png";
     } else {
-      $_size = $_size . '-empty';
-      $_img_src = get_template_directory_uri() . "/assets/front/img/{$_size}.png";
+      //this first case is typically a wp.org demo context
+      if ( hu_is_demo() ) {
+        $_img_src = get_template_directory_uri() . "/assets/front/img/salt-lake-720x340.jpg";
+        $filter = '<span class="filter-placeholder"></span>';
+      } else {
+        $_size = $_size . '-empty';
+        $_img_src = get_template_directory_uri() . "/assets/front/img/{$_size}.png";
+      }
+
       $_svg_height = in_array($_size, array( 'thumb-medium', 'thumb-standard' ) ) ? 100 : 60;
       ?>
       <svg class="hu-svg-placeholder <?php echo $_size; ?>" id="<?php echo $_unique_id; ?>" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M928 832q0-14-9-23t-23-9q-66 0-113 47t-47 113q0 14 9 23t23 9 23-9 9-23q0-40 28-68t68-28q14 0 23-9t9-23zm224 130q0 106-75 181t-181 75-181-75-75-181 75-181 181-75 181 75 75 181zm-1024 574h1536v-128h-1536v128zm1152-574q0-159-112.5-271.5t-271.5-112.5-271.5 112.5-112.5 271.5 112.5 271.5 271.5 112.5 271.5-112.5 112.5-271.5zm-1024-642h384v-128h-384v128zm-128 192h1536v-256h-828l-64 128h-644v128zm1664-256v1280q0 53-37.5 90.5t-90.5 37.5h-1536q-53 0-90.5-37.5t-37.5-90.5v-1280q0-53 37.5-90.5t90.5-37.5h1536q53 0 90.5 37.5t37.5 90.5z"/></svg>
 
       <script type="text/javascript">
-        jQuery( function($){ $( '#<?php echo $_unique_id; ?>' ).animateSvg(); });
+        jQuery( function($){
+          if ( $('#flexslider-featured').length ) {
+            $('#flexslider-featured').on('featured-slider-ready', function() {
+              $( '#<?php echo $_unique_id; ?>' ).animateSvg();
+            });
+          } else { $( '#<?php echo $_unique_id; ?>' ).animateSvg(); }
+        });
       </script>
       <?php
     }
 
-    printf( '<img class="hu-img-placeholder" src="%1$s" alt="%2$s" data-hu-post-id="%3$s" />',
+    printf( ' %1$s<img class="hu-img-placeholder" src="%2$s" alt="%3$s" data-hu-post-id="%4$s" />',
+      false !== $filter ? $filter : '',
       apply_filters( 'hu_placeholder_thumb_src' , $_img_src ),
       get_the_title(),
       $_unique_id
@@ -513,11 +528,25 @@ if ( ! function_exists( 'hu_print_placeholder_thumb' ) ) {
 /* ------------------------------------------------------------------------- *
  *  Filters
 /* ------------------------------------------------------------------------- */
+/* Demo place Holder thumbs
+/* ------------------------------------ */
+add_filter( 'hu_opt_featured-posts-count', 'hu_alter_featured_posts_count');
+function hu_alter_featured_posts_count( $num ) {
+  return hu_is_demo() ? '3' : $num;
+}
+add_filter('hu_opt_featured-posts-enabled', 'hu_enable_home_featured_posts');
+function hu_enable_home_featured_posts( $bool ) {
+  return hu_is_demo() ? true : $bool;
+}
+add_filter('hu_opt_featured-posts-include', 'hu_enable_featured_posts_include');
+function hu_enable_featured_posts_include( $bool ) {
+  return hu_is_demo() ? true : $bool;
+}
+
 
 /*  Body class
 /* ------------------------------------ */
 if ( ! function_exists( 'hu_body_class' ) ) {
-
   function hu_body_class( $classes ) {
     $classes[] = hu_layout_class();
     $classes[] = hu_is_checked( 'boxed' ) ? 'boxed' : 'full-width';
@@ -527,7 +556,6 @@ if ( ! function_exists( 'hu_body_class' ) ) {
     if ( hu_get_option( 'mobile-sidebar-hide' ) == 's1-s2' ) { $classes[] = 'mobile-sidebar-hide'; }
     return $classes;
   }
-
 }
 add_filter( 'body_class', 'hu_body_class' );
 
