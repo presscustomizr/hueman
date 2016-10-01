@@ -77,10 +77,18 @@ module.exports = {
       '<%= paths.czr_assets %>fmk/js/control_dev/0_1_skope/_0_0_0_pre_8_skope_model_view.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/0_1_skope/_0_0_0_pre_9_skope_model_reset.js',
 
-      '<%= paths.czr_assets %>fmk/js/control_dev/0_2_api_override/_0_0_0_pre_90_api_overrides.js',
+      '<%= paths.czr_assets %>fmk/js/control_dev/0_2_api_override/_0_0_0_pre_90_set.js',
+      '<%= paths.czr_assets %>fmk/js/control_dev/0_2_api_override/_0_0_0_pre_91_query.js',
+      '<%= paths.czr_assets %>fmk/js/control_dev/0_2_api_override/_0_0_0_pre_92_save.js',
+      '<%= paths.czr_assets %>fmk/js/control_dev/0_2_api_override/_0_0_0_pre_93_reset.js',
+      '<%= paths.czr_assets %>fmk/js/control_dev/0_2_api_override/_0_0_0_pre_94_synchronizer.js',
+      '<%= paths.czr_assets %>fmk/js/control_dev/0_2_api_override/_0_0_0_pre_95_refresh.js',
+      '<%= paths.czr_assets %>fmk/js/control_dev/0_2_api_override/_0_0_0_pre_96_various_overrides.js',
 
-      '<%= paths.czr_assets %>fmk/js/control_dev/0_3_api_helpers/_0_0_0_pre_91_api_helpers_various.js',
-      '<%= paths.czr_assets %>fmk/js/control_dev/0_3_api_helpers/_0_0_0_pre_92_api_helpers_dom.js',
+      '<%= paths.czr_assets %>fmk/js/control_dev/0_3_api_helpers/_0_0_0_pre_97_api_helpers_various.js',
+      '<%= paths.czr_assets %>fmk/js/control_dev/0_3_api_helpers/_0_0_0_pre_98_api_helpers_dom.js',
+
+      '<%= paths.czr_assets %>fmk/js/control_dev/0_4_preview_listeners/_0_0_0_pre_99_preview_listeners.js',
 
       '<%= paths.czr_assets %>fmk/js/control_dev/1_0_input/_0_0_1_input_0_init.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/1_0_input/_0_0_1_input_1_img_upload.js',
