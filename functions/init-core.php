@@ -144,7 +144,7 @@ function hu_get_raw_option( $opt_name = null, $opt_group = null ) {
     }
     if ( is_null( $opt_name ) )
       return $alloptions;
-    return isset( $alloptions[$opt_name] ) ? $alloptions[$opt_name] : false;
+    return isset( $alloptions[$opt_name] ) ? maybe_unserialize($alloptions[$opt_name]) : false;
 }
 
 
@@ -996,6 +996,12 @@ function hu_get_default_widget_zones() {
       'after_title' => '</h3>'
     )
   );
+}
+
+//@return an array of default widgets ids
+function hu_get_widget_zone_ids() {
+  $widgets = hu_get_default_widget_zones();
+  return array_keys( $widgets );
 }
 
 
