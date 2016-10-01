@@ -957,7 +957,9 @@ if (!Array.prototype.map) {
  * =================================================== */
 ;(function ( $, window, document, _ ) {
   var pluginName = 'animateSvg',
-      defaults = {},
+      defaults = {
+        opacity : 0.8
+      },
       _drawSvgIcon = function(options) {
           var id = $(this).attr('id');
           if ( _.isUndefined(id) || _.isEmpty(id) || 'function' != typeof( Vivus ) ) {
@@ -969,7 +971,13 @@ if (!Array.prototype.map) {
             if ( window.czrapp )
               czrapp.consoleLog( 'Svg icons must have a unique css #id to be animated. Multiple id found for : ' + id );
           }
-          $.when( $('#' + id ).css('opacity', 1 ) ).done( function() {
+          var set_opacity = function() {
+            if ( $('#' + id ).siblings('.filter-placeholder').length )
+              return $('#' + id ).css('opacity', 0.8 ).siblings('.filter-placeholder').css('opacity', options.opacity);
+            else
+              return $('#' + id ).css('opacity', 0.8 );
+          };
+          $.when( set_opacity() ).done( function() {
               new Vivus( id, {type: 'delayed', duration: HUParams.vivusSvgSpeed || 400 } );
           });
       };
