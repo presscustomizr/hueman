@@ -368,6 +368,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
                     'module_type' => 'czr_widget_areas_module',
                     'notice'    => __('You must save changes for the new areas to appear below. <br /><i>Warning: Make sure each area has a unique ID.</i>' , 'hueman'),
                     'transport' => 'postMessage',
+                    'skoped' => false
               )
 
           )

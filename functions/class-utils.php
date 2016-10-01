@@ -357,6 +357,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
             'layout-search',
             'layout-404',
             'layout-page',
+            'sidebar-areas',
 
             //wp built-ins
             'show_on_front',
