@@ -332,7 +332,7 @@ if( ! defined( 'HU_BASE_CHILD' ) )      define( 'HU_BASE_CHILD' , get_stylesheet
 if( ! defined( 'HU_BASE_URL' ) )        define( 'HU_BASE_URL' , get_template_directory_uri() . '/' );
 //HU_BASE_URL_CHILD http url of the loaded child theme
 if( ! defined( 'HU_BASE_URL_CHILD' ) )  define( 'HU_BASE_URL_CHILD' , get_stylesheet_directory_uri() . '/' );
-//THEMENAME contains the Name of the currently loaded theme
+//THEMENAME contains the Name of the currently loaded theme. Will always be the parent theme name is a child theme is activated.
 if( ! defined( 'THEMENAME' ) )       define( 'THEMENAME' , $hu_base_data['title'] );
 //TEXT DOMAIN FOR TRANSLATIONS
 if( ! defined( 'THEME_TEXT_DOM' ) )       define( 'THEME_TEXT_DOM' , 'hueman' );
@@ -919,6 +919,10 @@ if ( ! function_exists( 'hu_setup' ) ) {
 add_action( 'after_setup_theme', 'hu_setup' );
 
 
+
+
+
+
 /*  Register sidebars
 /* ------------------------------------ */
 //@return the array of built-in widget zones
@@ -1003,6 +1007,21 @@ function hu_get_widget_zone_ids() {
   $widgets = hu_get_default_widget_zones();
   return array_keys( $widgets );
 }
+
+
+//@return an array of widget option names
+function hu_get_registered_widgets_option_names() {
+  global $wp_registered_widgets;
+  $opt_names = array();
+  foreach ($wp_registered_widgets as $id => $data ) {
+    if ( ! isset($data['callback']) || ! isset($data['callback'][0]) || ! isset($data['callback'][0] -> option_name ) )
+      continue;
+    if ( ! in_array( $data['callback'][0] -> option_name, $opt_names ) )
+      array_push( $opt_names, $data['callback'][0] -> option_name );
+  }
+  return $opt_names;
+}
+
 
 
 //@return the array describing the previous correspondance between location => widget zone name
