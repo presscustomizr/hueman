@@ -170,7 +170,7 @@ function hu_is_demo() {
 */
 function hu_is_home() {
   //get info whether the front page is a list of last posts or a page
-  return ( is_home() && ( 'posts' == get_option( 'show_on_front' ) || '__nothing__' == get_option( 'show_on_front' ) ) ) || is_front_page();
+  return is_home() || ( is_home() && ( 'posts' == get_option( 'show_on_front' ) || '__nothing__' == get_option( 'show_on_front' ) ) ) || is_front_page();
 }
 
 /**
