@@ -37,6 +37,11 @@ function hu_doing_customizer_ajax() {
 }
 
 
+//@return boolean
+function hu_is_partial_refreshed_on() {
+  return apply_filters( 'hu_partial_refresh_on', true );
+}
+
 
 /**
 * Are we in a customization context ? => ||
