@@ -115,7 +115,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         'hu_content_thumbnail_sec',
         'hu_content_layout_sec',
         'hu_sidebars_design_sec',
-        'hu_widgets_sec',
 
         //FOOTER
         'hu_footer_design_sec',
@@ -232,7 +231,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'notice'        => __('Max-width of the container. If you use 2 sidebars, your container should be at least 1200px.<br /><i>Note: For 720px content (default) use <strong>1380px</strong> for 2 sidebars and <strong>1120px</strong> for 1 sidebar. If you use a combination of both, try something inbetween.</i>', 'hueman')//@todo sprintf and split translations
           ),
           'sidebar-padding' => array(
-                'default'   => 30,
+                'default'   => '30',
                 'control'   => 'HU_controls',
                 'label'     => __("Sidebar Width", 'hueman'),
                 'section'   => 'general_design_sec',
@@ -738,7 +737,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'active_callback' => 'is_home'
           ),
           'featured-category' => array(
-                'default'   => 0,
+                'default'   => "0",
                 'control'   => 'HU_controls',
                 'label'     => __("Select a category to feature", 'hueman'),
                 'section'   => 'content_blog_sec',
@@ -907,45 +906,9 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                   's1-s2'       => __( 'Hide both sidebars' , 'hueman' )
                 ),
                 'notice'    => __('Control how the sidebar content is displayed on smartphone mobile devices (320px). Note : on smartphones the sidebars are displayed below the content.' , 'hueman')
-          ),
-          'show-sb-example-wgt' => array(
-                'default'   => 1,
-                'control'   => 'HU_controls',
-                'label'     => __('Display default widgets', 'hueman'),
-                'section'   => 'sidebars_design_sec',
-                'type'      => 'checkbox',
-                'skoped'    => false,
-                'notice'    => __('When your right or left sidebars have no widgets, the Hueman theme will display example widgets.' , 'hueman')
-          ),
+          )
       );
     }
-
-    /*-----------------------------------------------------------------------------------------------------
-                                EXAMPLE WIDGETS
-    ------------------------------------------------------------------------------------------------------*/
-    function hu_widgets_sec() {
-      return array(
-          'primary-example-wgt' => array(
-                'default'   => 1,
-                'control'   => 'HU_controls',
-                'label'     => __('Display default widgets', 'hueman'),
-                'section'   => 'sidebar-widgets-primary',
-                'type'      => 'checkbox',
-                'priority'  => 0,
-                'skoped'    => false
-          ),
-          'secondary-example-wgt' => array(
-                'default'   => 1,
-                'control'   => 'HU_controls',
-                'label'     => __('Display default widgets', 'hueman'),
-                'section'   => 'sidebar-widgets-secondary',
-                'type'      => 'checkbox',
-                'priority'  => 0,
-                'skoped'    => false
-          ),
-      );
-    }
-
 
 
     /******************************************************************************************************
