@@ -326,14 +326,14 @@ if ( ! class_exists( 'HU_utils' ) ) :
 
 
     /***************************
-    * SKOPE COMPAT
+    * SKOPE
     ****************************/
     /**
     * Boolean helper
     * @return bool
     */
-    function hu_is_option_never_skoped( $opt_name ) {
-      return in_array( $opt_name, $this -> hu_get_skope_excluded_options() );
+    function hu_is_option_skoped( $opt_name ) {
+      return ! in_array( $opt_name, $this -> hu_get_skope_excluded_options() );
     }
 
 
