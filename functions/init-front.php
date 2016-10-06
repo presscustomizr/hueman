@@ -109,9 +109,6 @@ if ( ! function_exists('hu_print_widgets_in_location') ) {
 //@param $sidebars_widgets = wp_get_sidebars_widgets()
 //@param $_zone_id = id of the widget zone, ex : primary
 function hu_maybe_print_default_widgets( $sidebars_widgets, $_zone_id ) {
-    //has user enable default widgets?
-    if ( ! hu_is_checked('show-sb-example-wgt') || ! hu_is_checked( "{$_zone_id}-example-wgt") )
-      return;
     //stop here is the zone id has already been populated with widgets
     if ( array_key_exists( $_zone_id, $sidebars_widgets ) && is_array( $sidebars_widgets[$_zone_id] ) && ! empty($sidebars_widgets[$_zone_id] ) )
       return;
