@@ -373,7 +373,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'social_links_sec',
                 'type'      => 'czr_module',
                 'module_type' => 'czr_social_module',
-                'transport' => 'postMessage',
+                'transport' => hu_is_partial_refreshed_on() ? 'postMessage' : 'refresh',
                 'priority'  => 10
           )
       );
