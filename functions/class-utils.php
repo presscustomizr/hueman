@@ -354,6 +354,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
             'layout-home',
             'layout-single',
             'layout-archive',
+            'layout-archive-category',
             'layout-search',
             'layout-404',
             'layout-page',
