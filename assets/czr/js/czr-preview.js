@@ -29,10 +29,7 @@
   //     console.log('ON SETTING', e, o);
   //   });
   // });
-  //
-  //
-  //
-  //
+
   wp.customize.bind( 'preview-ready', function() {
       //SEKTIONS
       wp.customize.preview.bind('edit_sek', function(o) {
@@ -118,12 +115,21 @@
 
 
 
+
+
+  /////////////// SEND UPDATED SERVER SIDE DATA TO THE PANEL
+  /////////////// SET REACTIONS ON PANEL SETTING CHANGES
+  //////////////////////////////////////////////////////////
   if ( HUPreviewParams && ! HUPreviewParams.preview_ready_event_exists ) {
     api.czr_preview = new api.CZR_preview();
   }
   else {
     api.bind( 'preview-ready', function(){
-      api.czr_preview = new api.CZR_preview();
+        //Talk with the panel when he informs us that the current preview frame is 'active'.
+        //We could also use the 'sync' event, just before 'active'.
+        api.preview.bind('active', function() {
+            api.czr_preview = new api.CZR_preview();
+        });
     });
   }
 
