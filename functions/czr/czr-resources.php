@@ -244,160 +244,164 @@ function hu_extend_visibilities() {
   ?>
   <script id="control-visibilities" type="text/javascript">
     (function (api, $, _) {
+      //@return boolean
       var _is_checked = function( to ) {
               return 0 !== to && '0' !== to && false !== to && 'off' !== to;
-          };
+      };
+      //when a dominus object define both visibility and action callbacks, the visibility can return 'unchanged' for non relevant servos
+      //=> when getting the visibility result, the 'unchanged' value will always be checked and resumed to the servus control current active() state
+      api.CZR_visibilities.prototype.dominosDeps = _.extend(
+            api.CZR_visibilities.prototype.dominosDeps,
+            [
+                  {
+                        dominus : 'show_on_front',
+                        servos : ['show_on_front', 'page_for_posts' ],
+                        visibility : function( to, servusShortId ) {
+                              if ( 'show_on_front' == servusShortId )
+                                return 'unchanged';
+                              return 'page' == to;
+                        },
+                        actions : function( to, servusShortId ) {
+                              var wpServusId = api.CZR_Helpers.build_setId( servusShortId ),
+                                    _class = 'hu-front-posts-notice',
+                                    _maybe_print_html = function() {
+                                        if ( $( '.' + _class , api.control(wpServusId).container ).length )
+                                          return;
+                                        var _html = '<span class="description customize-control-description ' + _class +'"><?php echo $_front_page_content_notice; ?></span>';
+                                        api.control(wpServusId).container.find('.customize-control-title').after( _html );
+                                    };
 
-      api.CZR_visibilities.prototype.controlDeps = _.extend(
-        api.CZR_visibilities.prototype.controlDeps,
-        {
-          'show_on_front' : {
-              controls : ['show_on_front', 'page_for_posts' ],
-              callback : function(to, dependant_setting_id ) {
-                var wpDepSetId = api.CZR_Helpers.build_setId( dependant_setting_id ),
-                    _class = 'hu-front-posts-notice',
-                    _maybe_print_html = function() {
-                        if ( $( '.' + _class , api.control(wpDepSetId).container ).length )
-                          return;
-                        var _html = '<span class="description customize-control-description ' + _class +'"><?php echo $_front_page_content_notice; ?></span>';
-                        api.control(wpDepSetId).container.find('.customize-control-title').after( _html );
-                    };
-
-                if ( 'show_on_front' == dependant_setting_id ) {
-                    if ( 'posts' != to && $( '.' + _class , api.control(wpDepSetId).container ).length ) {
-                      $('.' + _class, api.control(wpDepSetId).container ).remove();
-                    } else if ( 'posts' == to ) {
-                      _maybe_print_html();
-                    }
-                } else if ( 'page_for_posts' == dependant_setting_id ) {
-                    if ( 'page' != to && $( '.' + _class , api.control(wpDepSetId).container ).length ) {
-                      $('.' + _class, api.control(wpDepSetId).container ).remove();
-                    } else if ( 'page' == to ) {
-                      _maybe_print_html();
-                    }
-                }
-                if ( 'show_on_front' == dependant_setting_id )
-                  return api.control(wpDepSetId).active();
-                else
-                  return 'page' == to;
-            }
-          },
-          'display-header-logo' : {
-              controls : ['logo-max-height', 'custom_logo', 'custom-logo' ],//depending on the WP version, the custom logo option is different.
-              callback : function(to) {
-                return _is_checked(to);
-              }
-          },
-          'use-header-image' : {
-            onSectionExpand : false,
-            controls : ['header_image', 'display-header-logo', 'custom_logo', 'custom-logo', 'logo-max-height', 'blogname', 'blogdescription', 'header-ads'],
-            callback : function(to, dependant_setting_id ) {
-                var wpDepSetId = api.CZR_Helpers.build_setId( dependant_setting_id ),
-                    shortSetId = api.CZR_Helpers.getOptionName( dependant_setting_id ),
-                    _return = api.control(wpDepSetId).active();
-                //print a notice
-                switch( shortSetId ) {
-                    case 'display-header-logo' :
-                    case 'custom_logo' :
-                    case 'blogname' :
-                    case 'blogdescription' :
-                    case 'custom-logo' :
-                    case 'header-ads' :
-                        if ( ! api.control.has(wpDepSetId) )
-                          return;
-
-                        if ( ! _is_checked(to) && $( '.hu-header-image-notice', api.control(wpDepSetId).container ).length ) {
-                          $('.hu-header-image-notice', api.control(wpDepSetId).container ).remove();
-                        } else if ( _is_checked(to) ) {
-                          if ( $( '.hu-header-image-notice', api.control(wpDepSetId).container ).length )
-                            return;
-                          var _html = '<span class="description customize-control-description hu-header-image-notice"><?php echo $_header_img_notice; ?></span>';
-                          api.control(wpDepSetId).container.find('.customize-control-title').after( _html );
+                              if ( 'show_on_front' == servusShortId ) {
+                                    if ( 'posts' != to && $( '.' + _class , api.control(wpServusId).container ).length ) {
+                                          $('.' + _class, api.control(wpServusId).container ).remove();
+                                    } else if ( 'posts' == to ) {
+                                          _maybe_print_html();
+                                    }
+                              } else if ( 'page_for_posts' == servusShortId ) {
+                                    if ( 'page' != to && $( '.' + _class , api.control(wpServusId).container ).length ) {
+                                          $('.' + _class, api.control(wpServusId).container ).remove();
+                                    } else if ( 'page' == to ) {
+                                          _maybe_print_html();
+                                    }
+                              }
                         }
-                    break;
-
-                    case 'header_image' :
-                      _return = _is_checked(to);
-                    break;
-                }
-
-                //change opacity
-                switch( shortSetId ) {
-                    case 'display-header-logo' :
-                    case 'logo-max-height' :
-                    case 'custom_logo' :
-                    case 'custom-logo' :
-                    case 'header-ads' :
-                        if ( ! api.control.has(wpDepSetId) )
-                          return;
-                        if ( ! _is_checked(to) ) {
-                          $(api.control(wpDepSetId).container ).css('opacity', 1);
-                        } else {
-                          $(api.control(wpDepSetId).container ).css('opacity', 0.6);
+                },
+                {
+                        dominus : 'display-header-logo',
+                        servos : ['logo-max-height', 'custom_logo', 'custom-logo' ],//depending on the WP version, the custom logo option is different.
+                        visibility : function( to ) {
+                              return _is_checked(to);
                         }
-                    break;
-                }
+                },
+                {
+                        dominus : 'use-header-image',
+                        onSectionExpand : false,
+                        servos : ['header_image', 'display-header-logo', 'custom_logo', 'custom-logo', 'logo-max-height', 'blogname', 'blogdescription', 'header-ads'],
+                        visibility : function( to, servusShortId ) {
+                              if ( 'header_image' != servusShortId )
+                                return 'unchanged';
+                              return _is_checked(to);
+                        },
+                        actions : function( to, servusShortId ) {
+                              var wpServusId = api.CZR_Helpers.build_setId( servusShortId ),
+                                  shortServusId = api.CZR_Helpers.getOptionName( servusShortId ),
+                                  _return = api.control(wpServusId).active();
 
-                return _return;
-            }
-          },
-          'dynamic-styles' : {
-            controls: [
-              'boxed',
-              'font',
-              'container-width',
-              'sidebar-padding',
-              'color-1',
-              'color-2',
-              'color-topbar',
-              'color-header',
-              'color-header-menu',
-              'image-border-radius',
-              'body-background'
-            ],
-            callback : function (to) {
-              return _is_checked(to);
-            },
-          },
-          'blog-heading-enabled' : {
-            controls: [
-              'blog-heading',
-              'blog-subheading'
-            ],
-            callback : function (to) {
-              return _is_checked(to);
-            },
-          },
-          'featured-posts-enabled' : {
-            controls: [
-              'featured-category',
-              'featured-posts-count',
-              'featured-posts-full-content',
-              'featured-slideshow',
-              'featured-slideshow-speed',
-              'featured-posts-include'
-            ],
-            callback : function (to) {
-              return _is_checked(to);
-            },
-          },
-          'featured-slideshow' : {
-            controls: [
-              'featured-slideshow-speed'
-            ],
-            callback : function (to) {
-              return _is_checked(to);
-            },
-          },
-          'about-page' : {
-            controls: [
-              'help-button'
-            ],
-            callback : function (to) {
-              return _is_checked(to);
-            },
-          }
-        }//end of visibility {}
+                              //print a notice
+                              switch( shortServusId ) {
+                                    case 'display-header-logo' :
+                                    case 'custom_logo' :
+                                    case 'blogname' :
+                                    case 'blogdescription' :
+                                    case 'custom-logo' :
+                                    case 'header-ads' :
+                                        if ( ! api.control.has(wpServusId) )
+                                          return;
+
+                                        if ( ! _is_checked(to) && $( '.hu-header-image-notice', api.control(wpServusId).container ).length ) {
+                                              $('.hu-header-image-notice', api.control(wpServusId).container ).remove();
+                                        } else if ( _is_checked(to) ) {
+                                              if ( $( '.hu-header-image-notice', api.control(wpServusId).container ).length )
+                                                return;
+                                              var _html = '<span class="description customize-control-description hu-header-image-notice"><?php echo $_header_img_notice; ?></span>';
+                                              api.control(wpServusId).container.find('.customize-control-title').after( _html );
+                                        }
+                                    break;
+                              }
+
+                              //change opacity
+                              switch( shortServusId ) {
+                                    case 'display-header-logo' :
+                                    case 'logo-max-height' :
+                                    case 'custom_logo' :
+                                    case 'custom-logo' :
+                                    case 'header-ads' :
+                                        if ( ! api.control.has(wpServusId) )
+                                          return;
+                                        if ( ! _is_checked(to) ) {
+                                              $(api.control(wpServusId).container ).css('opacity', 1);
+                                        } else {
+                                              $(api.control(wpServusId).container ).css('opacity', 0.6);
+                                        }
+                                    break;
+                              }
+                        }//actions()
+                  },
+                  {
+                        dominus : 'dynamic-styles',
+                        servos : [
+                              'boxed',
+                              'font',
+                              'container-width',
+                              'sidebar-padding',
+                              'color-1',
+                              'color-2',
+                              'color-topbar',
+                              'color-header',
+                              'color-header-menu',
+                              'image-border-radius',
+                              'body-background'
+                        ],
+                        visibility : function ( to ) {
+                              return _is_checked(to);
+                        }
+                  },
+                  {
+                        dominus : 'blog-heading-enabled',
+                        servos : [ 'blog-heading', 'blog-subheading' ],
+                        visibility : function ( to ) {
+                              return _is_checked(to);
+                        }
+                  },
+                  {
+                        dominus : 'featured-posts-enabled',
+                        servos : [
+                              'featured-category',
+                              'featured-posts-count',
+                              'featured-posts-full-content',
+                              'featured-slideshow',
+                              'featured-slideshow-speed',
+                              'featured-posts-include'
+                        ],
+                        visibility : function ( to ) {
+                              return _is_checked(to);
+                        }
+                  },
+                  {
+                        dominus : 'featured-slideshow',
+                        servos : [ 'featured-slideshow-speed' ],
+                        visibility : function ( to ) {
+                              return _is_checked(to);
+                        }
+                  },
+                  {
+                        dominus : 'about-page',
+                        servos : [ 'help-button' ],
+                        visibility : function ( to ) {
+                              return _is_checked( to );
+                        }
+                  }
+            ]//dominosDeps {}
       );//_.extend()
     }) ( wp.customize, jQuery, _);
   </script>
