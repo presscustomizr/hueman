@@ -36,6 +36,17 @@ var api = api || wp.customize, $ = $ || jQuery;
       api.sidebar_insights.create('registered');
       api.sidebar_insights.create('available_locations');
       api.czr_partials = new api.Value();
+      api.czr_activeSectionId = new api.Value();
+      api.bind('ready', function() {
+          if ( 'function' != typeof api.Section ) {
+            throw new Error( 'Your current version of WordPress does not support the customizer sections needed for this theme. Please upgrade WordPress to the latest version.' );
+          }
+          api.section.each( function( _sec ) {
+                _sec.expanded.bind( function( expanded ) {
+                      api.czr_activeSectionId( expanded ? _sec.id : api.czr_activeSectionId() );
+                });
+          });
+      });
 
 })( wp.customize , jQuery, _);
 var CZRSkopeBaseMths = CZRSkopeBaseMths || {};
@@ -53,12 +64,6 @@ $.extend( CZRSkopeBaseMths, {
           self.initialSkopeCollectionPopulated = $.Deferred();
           api.czr_isResettingSkope = new api.Value( false );
           api.czr_globalDBoptions = new api.Value([]);
-          api.czr_activeSectionId = new api.Value();
-          api.section.each( function( _sec ) {
-                _sec.expanded.bind( function( expanded ) {
-                      api.czr_activeSectionId( expanded ? _sec.id : api.czr_activeSectionId() );
-                });
-          });
 
           api.czr_savedDirties = new api.Value({ channel : '', saved : {} });
           if ( 'pending' == self.skopeWrapperEmbedded.state() ) {
@@ -74,11 +79,10 @@ $.extend( CZRSkopeBaseMths, {
           }
           api.czr_activeSectionId.bind( function( active_section ) {
                 self.initialSkopeCollectionPopulated.then( function() {
-                      var _update_candidates = self._getSilentUpdateCandidates( active_section );
-                      self.silentlyUpdateSettings( _update_candidates );
-                      self.setupControlsReset();
-                      if ( ! self.isExcludedSidebarsWidgets() )
-                        _forceSidebarDirtyRefresh( active_section, api.czr_activeSkope() );
+                      self.processSilentUpdates( { section_id : active_section } );
+                      if ( ! self.isExcludedSidebarsWidgets() ) {
+                            _forceSidebarDirtyRefresh( active_section, api.czr_activeSkope() );
+                      }
                 });
 
           } );
@@ -152,10 +156,6 @@ $.extend( CZRSkopeBaseMths, {
                     if ( api(setId)._dirty ) {
                         self.updateSkopeDirties( setId, new_val );
                     }
-                    if ( api.control.has( setId ) && _.contains( self.refreshedControls, api.control( setId ).params.type ) ) {
-                          self.setupControlsReset = _.debounce( self.setupControlsReset, 200 );
-                          self.setupControlsReset( setId );
-                    }
                     if ( _.has( api.control(setId), 'czr_isDirty' ) ) {
                         api.control(setId).czr_isDirty( api(setId)._dirty );
                     }
@@ -163,14 +163,10 @@ $.extend( CZRSkopeBaseMths, {
 
 
           if ( ! _.isUndefined( requestedSetId ) ) {
-              if ( ! self.isSettingSkopeEligible( requestedSetId ) )
-                return;
               api( requestedSetId ).bind( function(to, from, o ) { _bindListener( requestedSetId, to, from, o ); });
           }
           else {
               api.each( function ( _setting ) {
-                  if ( ! self.isSettingSkopeEligible( _setting.id ) )
-                    return;
                   _setting.bind( function(to, from, o ) { _bindListener( _setting.id, to, from, o ); });
               });
           }
@@ -196,19 +192,287 @@ $.extend( CZRSkopeBaseMths, {
     globalDBoptionsReact : function( to, from ) {
           var self = this,
               resetted_opts = _.difference( from, to );
+          if ( ! _.isEmpty(resetted_opts) ) {
+              api.consoleLog( 'HAS RESET OPTIONS', resetted_opts );
+              _.each( resetted_opts, function( shortSetId ) {
+                    var wpSetId = api.CZR_Helpers.build_setId( shortSetId );
+                    if ( _.has( api.settings.settings, wpSetId) )
+                      api.settings.settings[wpSetId].value = serverControlParams.defaultOptionsValues[shortSetId];
+                    self.silentlyUpdateSettings( [], false );//silently update with no refresh
+              });
+          }
+          api.czr_skope( self.getGlobalSkopeId() ).hasDBValues( ! _.isEmpty( to ) );//might trigger cb hasDBValuesReact()
+          api.czr_skope( self.getGlobalSkopeId() )().has_db_val = ! _.isEmpty( to );
 
-          if ( _.isEmpty(resetted_opts) )
-            return;
-
-          api.consoleLog( 'HAS RESET OPTIONS', resetted_opts );
-          _.each( resetted_opts, function( shortSetId ) {
-                var wpSetId = api.CZR_Helpers.build_setId( shortSetId );
-                if ( _.has( api.settings.settings, wpSetId) )
-                  api.settings.settings[wpSetId].value = serverControlParams.defaultOptionsValues[shortSetId];
-                self.silentlyUpdateSettings( [], false );//silently update with no refresh
-          });
     }
 });//$.extend()
+var CZRSkopeBaseMths = CZRSkopeBaseMths || {};
+$.extend( CZRSkopeBaseMths, {
+    isSkopeRegisteredInCollection : function( skope_id, collection ) {
+          var self = this;
+          collection = collection || api.czr_skopeCollection();
+          return ! _.isUndefined( _.findWhere( collection, { id : skope_id } ) );
+    },
+    isSkopeRegisteredInCurrentCollection : function( skope_id, collection ) {
+          var self = this;
+          collection = collection || api.czr_currentSkopesCollection();
+          return ! _.isUndefined( _.findWhere( collection, { id : skope_id } ) );
+    },
+    isGlobalSkopeRegistered : function() {
+          var _model = _.findWhere( api.czr_currentSkopesCollection(), { skope : 'global'} );
+          return _.isObject( _model ) && _.has( _model, 'id' );
+    },
+    getGlobalSkopeId : function() {
+          if ( ! _.has(api, 'czr_skope') )
+            return '';
+          var id = '';
+          api.czr_skope.each( function(skp){
+              if ( 'global' == skp().skope )
+                id = skp().id;
+          });
+          return id;
+    },
+    getChangedGlobalDBSettingValues : function( serverGlobalDBValues ) {
+          var _changedDbVal = {};
+
+          _.each( serverGlobalDBValues, function( _val, _setId ){
+              _wpSetId = api.CZR_Helpers.build_setId( _setId);
+
+              if ( ! _.has( api.settings.settings, _wpSetId ) )
+                return;
+              if ( _.isEqual( _val , api.settings.settings[ _wpSetId ].value ) )
+                return;
+              _changedDbVal[_setId] = _val;
+          });
+          return _changedDbVal;
+    },
+    getActiveSkope : function( _current_skope_collection ) {
+          var _active_candidates = {},
+              _def = _.findWhere( _current_skope_collection, {is_default : true } ).id;
+          _def = ! _.isUndefined(_def) ? _def : _.findWhere( _current_skope_collection, { skope : 'global' } ).id;
+
+          _.each( _current_skope_collection, function( _skop ) {
+                _active_candidates[_skop.skope] = _skop.id;
+          });
+          if ( _.has( _active_candidates, 'local' ) )
+            return _active_candidates.local;
+          if ( _.has( _active_candidates, 'group' ) )
+            return _active_candidates.group;
+          if ( _.has( _active_candidates, 'special_group' ) )
+            return active_candidates.special_group;
+          return _def;
+    },
+    isSettingSkopeEligible : function( setId ) {
+          var self = this,
+              shortSetId = api.CZR_Helpers.getOptionName( setId );
+
+          if( _.isUndefined( setId ) || ! api.has( setId ) ) {
+            api.consoleLog( 'THE SETTING ' + setId + ' IS NOT ELIGIBLE TO SKOPE BECAUSE UNDEFINED OR NOT REGISTERED IN THE API.' );
+            return false;
+          }
+          if ( self.isExcludedWPBuiltinSetting( setId ) )
+            return false;
+          if ( _.contains( serverControlParams.skopeExcludedSettings, shortSetId ) ) {
+            return false;
+          } else if ( -1 != setId.indexOf( serverControlParams.themeOptions ) ) {
+            return true;
+          } else
+           return true;
+    },
+    isSettingResetEligible : function( setId ) {
+          var self = this,
+              shortSetId = api.CZR_Helpers.getOptionName( setId );
+
+          if( _.isUndefined( setId ) || ! api.has( setId ) ) {
+            api.consoleLog( 'THE SETTING ' + setId + ' IS NOT ELIGIBLE TO RESET BECAUSE UNDEFINED OR NOT REGISTERED IN THE API.' );
+            return;
+          }
+          if ( self.isExcludedWPBuiltinSetting( setId ) )
+            return;
+          if ( -1 == setId.indexOf( serverControlParams.themeOptions ) && ! _.contains( serverControlParams.wpBuiltinSettings, setId ) ) {
+            api.consoleLog( 'THE SETTING ' + setId + ' IS NOT ELIGIBLE TO RESET BECAUSE NOT PART OF THE THEME OPTIONS AND NOT WP AUTHORIZED BUILT IN OPTIONS' );
+          } else
+           return true;
+    },
+    isExcludedWPBuiltinSetting : function( setId ) {
+          if ( _.isUndefined(setId) )
+            return true;
+          if ( 'active_theme' == setId )
+            return true;
+          if ( _.contains( serverControlParams.wpBuiltinSettings, setId ) )
+            return false;
+          if ( 'sidebars_' == setId.substring(0, 9) )
+            return this.isExcludedSidebarsWidgets();
+          if ( 'widget_' == setId.substring(0, 7) )
+            return this.isExcludedSidebarsWidgets();
+          return 'nav_menu' == setId.substring(0, 8);
+    },
+    isExcludedSidebarsWidgets : function() {
+          var SidWidgParam = serverControlParams.isSidebarsWigetsAuthorized;//can be a boolean or a string "" for false, "1" for true
+              isSidebarWidgetSkoped = ! _.isUndefined(SidWidgParam) && ! _.isEmpty( SidWidgParam ) && false !== SidWidgParam;
+          return ! isSidebarWidgetSkoped;
+    },
+    getSkopeSettingVal : function( setId, skope_id ) {
+          if ( ! api.has( api.CZR_Helpers.build_setId(setId) ) ) {
+              throw new Error('getSkopeSettingVal : the requested setting id does not exist in the api : ' + api.CZR_Helpers.build_setId(setId) );
+          }
+          if ( ! api.czr_skope.has( skope_id ) ) {
+              throw new Error('getSkopeSettingVal : the requested skope id is not registered : ' + skope_id );
+          }
+
+          var self = this,
+              wpSetId = api.CZR_Helpers.build_setId( setId ),
+              val_candidate = '___',
+              skope_model = api.czr_skope( skope_id )(),
+              initial_val;
+          if ( _.has( api.settings.settings, wpSetId ) )
+            initial_val = api.settings.settings[wpSetId].value;
+          else
+            initial_val = null;
+          if ( api.czr_skope( skope_id ).getSkopeSettingDirtyness( wpSetId ) )
+            return api.czr_skope( skope_id ).dirtyValues()[ wpSetId ];
+          var _skope_db_val = self._getDBSettingVal( setId, skope_model );
+          if ( _skope_db_val != '_no_db_val' )
+            return _skope_db_val;
+          else if( 'global' == skope_model.skope ) {
+            return '___' == val_candidate ? initial_val : val_candidate;
+          }
+          else
+            return '___' != val_candidate ? val_candidate : self.getSkopeSettingVal( setId, self._getParentSkopeId( skope_model ) );
+    },
+    applyDirtyCustomizedInheritance : function( dirtyCustomized, skope_id ) {
+          skope_id = skope_id || api.czr_activeSkope() || api.czr_skopeBase.getGlobalSkopeId();
+          dirtyCustomized = dirtyCustomized || {};
+
+          var self = this,
+              skope_model = api.czr_skope( skope_id )();
+
+          if ( 'global' == skope_model.skope )
+            return dirtyCustomized;
+
+          var parent_skope_id = self._getParentSkopeId( skope_model ),
+              parent_dirties = api.czr_skope( parent_skope_id ).dirtyValues();
+          _.each( parent_dirties, function( _val, wpSetId ){
+                var shortSetId = api.CZR_Helpers.getOptionName( wpSetId );
+                if ( _.isUndefined( dirtyCustomized[wpSetId] ) && _.isUndefined( skope_model.db[shortSetId] ) )
+                    dirtyCustomized[wpSetId] = _val;
+          });
+          return 'global' == api.czr_skope( parent_skope_id )().skope ? dirtyCustomized : self.applyDirtyCustomizedInheritance( dirtyCustomized, parent_skope_id );
+    },
+    _getParentSkopeId : function( skope_model, _index ) {
+          var self = this,
+              hierark = ['local', 'group', 'special_group', 'global'],
+              parent_skope_ind = _index || ( _.findIndex( hierark, function( _skp ) { return skope_model.skope == _skp; } ) + 1 ) * 1,
+              parent_skope_skope = hierark[ parent_skope_ind ];
+
+          if ( _.isUndefined( parent_skope_skope ) ) {
+              return _.findWhere( api.czr_currentSkopesCollection(), { skope : 'global' } ).id;
+          }
+          if ( _.isUndefined( _.findWhere( api.czr_currentSkopesCollection(), { skope : parent_skope_skope } ) ) ) {
+              return self._getParentSkopeId( skope_model, parent_skope_ind + 1 );
+          }
+          return _.findWhere( api.czr_currentSkopesCollection(), { skope : parent_skope_skope } ).id;
+    },
+    _getDBSettingVal : function( setId, skope_model  ) {
+          var shortSetId = api.CZR_Helpers.getOptionName(setId),
+              wpSetId = api.CZR_Helpers.build_setId(setId);
+
+          return _.has( skope_model.db, shortSetId ) ? skope_model.db[shortSetId] : '_no_db_val';
+    },
+    isAPIDirty : function() {
+          var isDirty = false;
+          _.each( api.czr_currentSkopesCollection(), function( skp ){
+                if ( ! isDirty && api.czr_skope( skp.id ).dirtyness() )
+                  isDirty = true;
+          });
+          return isDirty;
+    },
+    getSkopeDirties : function( skope_id ) {
+          if ( ! api.czr_skope.has( skope_id) )
+            return {};
+          return api.czr_skope( skope_id ).dirtyValues();
+    },
+
+    getSkopeExcludedDirties : function() {
+          var self = this,
+              _wpDirties = {};
+          api.each( function ( value, setId ) {
+                if ( value._dirty ) {
+                  _wpDirties[ setId ] = value();
+                }
+          } );
+          var _globalSkopeId = self.getGlobalSkopeId(),
+              _globalSkpDirties = self.getSkopeDirties( _globalSkopeId );
+          return _.omit( _wpDirties, function( _value, setId ) {
+              return self.isSettingSkopeEligible( setId );
+          } );
+    },
+    parseWidgetId : function( widgetId, prefixToRemove ) {
+        var matches, parsed = {
+          number: null,
+          id_base: null
+        };
+
+        matches = widgetId.match( /^(.+)-(\d+)$/ );
+        if ( matches ) {
+          parsed.id_base = matches[1];
+          parsed.number = parseInt( matches[2], 10 );
+        } else {
+          parsed.id_base = widgetId;
+        }
+
+        if ( ! _.isUndefined( prefixToRemove ) )
+          parsed.id_base = parsed.id_base.replace( prefixToRemove , '');
+        return parsed;
+    },
+    widgetIdToSettingId: function( widgetId , prefixToRemove ) {
+        var parsed = this.parseWidgetId( widgetId, prefixToRemove ), settingId;
+
+        settingId = parsed.id_base;
+        if ( parsed.number ) {
+          settingId += '[' + parsed.number + ']';
+        }
+        return settingId;
+    },
+
+
+
+
+    isWidgetRegisteredGlobally : function( widgetId ) {
+        var self = this;
+            registered = false;
+        _.each( _wpCustomizeWidgetsSettings.registeredWidgets, function( _val, _short_id ) {
+            if ( ! registered && 'widget_' + self.widgetIdToSettingId(_short_id) == widgetId )
+              registered = true;
+        } );
+        return registered;
+    },
+    _getSilentUpdateCandidates : function( section_id ) {
+          var self = this,
+              SilentUpdateCands = [];
+          section_id = ( _.isUndefined( section_id ) || _.isNull( section_id ) ) ? api.czr_activeSectionId() : section_id;
+
+          if ( _.isUndefined( section_id ) ) {
+            api.consoleLog( '_getSilentUpdateCandidates : No active section provided');
+            return;
+          }
+          if ( ! api.section.has( section_id ) ) {
+              throw new Error( '_getSilentUpdateCandidates : The section ' + section_id + ' is not registered in the API.');
+          }
+          var section_settings = api.CZR_Helpers.getSectionSettingIds( section_id );
+          section_settings = _.filter( section_settings, function(setId) {
+              return self.isSettingSkopeEligible( setId );
+          });
+          _.each( section_settings, function( setId ) {
+                SilentUpdateCands.push( setId );
+          });
+
+          return SilentUpdateCands;
+    }
+
+
+
+});//$.extend
 var CZRSkopeBaseMths = CZRSkopeBaseMths || {};
 $.extend( CZRSkopeBaseMths, {
     updateSkopeCollection : function( sent_collection, sent_channel ) {
@@ -436,53 +700,51 @@ $.extend( CZRSkopeBaseMths, {
             api.czr_skope(to).active(true);
           else
             throw new Error('listenToActiveSkope : requested scope ' + to + ' does not exist in the collection');
-          self.writeCurrentSkopeTitle( to );
+          self._writeCurrentSkopeTitle( to );
+          api.consoleLog('ACTIVE SKOPE SWITCH : ' + from + ' => ' + to );
+
           if ( _.isUndefined( api.czr_activeSectionId() ) ) {
-              if ( 'pending' == api.czr_isPreviewerSkopeAware.state() ) {
-                api.consoleLog('ACTIVE SKOPE SWITCH : ' + from + ' => ' + to );
-                api.previewer.refresh();
-              }
-              return;
+                if ( 'pending' == api.czr_isPreviewerSkopeAware.state() ) {
+                    api.previewer.refresh();
+                } else {
+                    api.previewer.refresh();
+                }
+                return;
           }
           if ( _.has( api, 'czrModulePanelState') )
             api.czrModulePanelState(false);
+          var SilentUpdateCands = self._getSilentUpdateCandidates();
+          if ( ! _.isUndefined( from ) ) {
+            _.each( api.czr_skope( from ).dirtyValues(), function( val, _setId ) {
+                  if ( ! _.contains( SilentUpdateCands, _setId ) )
+                      SilentUpdateCands.push( _setId );
+            } );
+          }
+          if ( ! _.isUndefined( to ) ) {
+            _.each( api.czr_skope( to ).dirtyValues(), function( val, _setId ) {
+                  if ( ! _.contains( SilentUpdateCands, _setId ) )
+                      SilentUpdateCands.push( _setId );
+            } );
+          }
 
-
-          var _process_silent_update = function() {
-                var silent_update_candidates = self._getSilentUpdateCandidates();
-                if ( ! _.isUndefined( from ) ) {
-                  _.each( api.czr_skope( from ).dirtyValues(), function( val, _setId ) {
-                        if ( ! _.contains( silent_update_candidates, _setId ) )
-                            silent_update_candidates.push(_setId);
-                  } );
-                }
-                if ( ! _.isUndefined( to ) ) {
-                  _.each( api.czr_skope( to ).dirtyValues(), function( val, _setId ) {
-                        if ( ! _.contains( silent_update_candidates, _setId ) )
-                            silent_update_candidates.push(_setId);
-                  } );
-                }
-                self.silentlyUpdateSettings( silent_update_candidates );
-                var _setup_control_reset = function() {
-                    self.setupControlsReset();
-                };
-                _setup_control_reset = _.debounce(_setup_control_reset, 1200 );
-                _setup_control_reset();
-
+          var _debouncedProcessSilentUpdates = function() {
+                var _promises = self.processSilentUpdates( {
+                      silent_update_candidates : SilentUpdateCands,
+                      section_id : null
+                } );
+                $.when.apply( null, _promises )
+                      .then( function() {
+                            api.czr_visibilities.setServiVisibility( api.czr_activeSectionId() );
+                      });
           };
           if ( _.has(api, 'czr_isModuleExpanded') && false !== api.czr_isModuleExpanded() ) {
                 api.czr_isModuleExpanded().setupModuleViewStateListeners(false);
-                _process_silent_update = _.debounce( _process_silent_update, 400 );
-                _process_silent_update();
+                _debouncedProcessSilentUpdates = _.debounce( _debouncedProcessSilentUpdates, 400 );
           } else {
-                _process_silent_update();
+                _debouncedProcessSilentUpdates();
           }
-
     },
-
-
-
-    writeCurrentSkopeTitle : function( skope_id ) {
+    _writeCurrentSkopeTitle : function( skope_id ) {
           var self = this,
               current_title = api.czr_skope( skope_id|| api.czr_activeSkope() ).long_title;
 
@@ -494,74 +756,86 @@ $.extend( CZRSkopeBaseMths, {
                 );
           });
 
-    },
-    _getSilentUpdateCandidates : function( section_id ) {
-          var self = this,
-              silent_update_candidates = [];
-          section_id = section_id || api.czr_activeSectionId();
-
-          if ( _.isUndefined( section_id ) ) {
-            api.consoleLog( '_getSilentUpdateCandidates : No active section provided');
-            return;
+    }
+});//$.extend
+var CZRSkopeBaseMths = CZRSkopeBaseMths || {};
+$.extend( CZRSkopeBaseMths, {
+    processSilentUpdates : function( obj ) {
+          var self = this, silentUpdateCands, _params,
+              defaultParams = {
+                  silent_update_candidates : [],
+                  section_id : api.czr_activeSectionId()
+              };
+          _params = $.extend( defaultParams, obj );
+          if ( _.isUndefined( _params.silent_update_candidates ) || _.isEmpty( _params.silent_update_candidates ) )
+                silentUpdateCands = self._getSilentUpdateCandidates( _params.section_id );
+          else if ( ! _.isArray( _params.silent_update_candidates ) ) {
+                throw new Error('processSilentUpdates : the update candidates must be an array.');
+          } else {
+                silentUpdateCands = _params.silent_update_candidates;
           }
-          if ( ! api.section.has( section_id ) ) {
-              throw new Error( '_getSilentUpdateCandidates : The section ' + section_id + ' is not registered in the API.');
-          }
-          var section_settings = self._getSectionSettingIds( section_id );
-          section_settings = _.filter( section_settings, function(setId) {
-              return self.isSettingSkopeEligible( setId );
-          });
-          _.each( section_settings, function( setId ) {
-                silent_update_candidates.push( setId );
-          });
 
-          return silent_update_candidates;
+          console.log('silentUpdateCands ============>>> ', _params, silentUpdateCands);
+          var _promises = self.silentlyUpdateSettings( silentUpdateCands );
+          $.when.apply( null, _promises )
+                .then( function() {
+                      var _debouncedSetupControlReset = function() {
+                          self.setupControlsReset( {
+                              section_id : _params.section_id
+                          });
+                      };
+                      _debouncedSetupControlReset = _.debounce( _debouncedSetupControlReset, 1200 );
+                      _debouncedSetupControlReset();
+                });
+
+          return _promises;
     },
-    silentlyUpdateSettings : function( _silent_update_candidates, refresh ) {
+    silentlyUpdateSettings : function( _silentUpdateCands, refresh ) {
           var self = this,
-              silent_update_promises = {};
+              SilentUpdatePromises = {};
 
           refresh = refresh || true;
 
-          if ( _.isUndefined( _silent_update_candidates ) || _.isEmpty( _silent_update_candidates ) ) {
-            _silent_update_candidates = self._getSilentUpdateCandidates();
+          if ( _.isUndefined( _silentUpdateCands ) || _.isEmpty( _silentUpdateCands ) ) {
+            _silentUpdateCands = self._getSilentUpdateCandidates();
           }
 
-          if ( _.isString( _silent_update_candidates ) ) {
-            _silent_update_candidates = [ _silent_update_candidates ];
+          if ( _.isString( _silentUpdateCands ) ) {
+            _silentUpdateCands = [ _silentUpdateCands ];
           }
 
-          api.consoleLog('the silent_update_candidates', _silent_update_candidates );
-          _.each( _silent_update_candidates, function( setId ) {
+          api.consoleLog('the silentUpdateCands', _silentUpdateCands );
+          _.each( _silentUpdateCands, function( setId ) {
                 if ( api.control.has( setId ) &&  'czr_multi_module' == api.control(setId).params.type )
                   return;
-                silent_update_promises[setId] = self.getSettingUpdatePromise( setId );
+                SilentUpdatePromises[setId] = self.getSettingUpdatePromise( setId );
           });
 
 
           var _deferred = [],
-              _silently_update = function( silent_update_promises ) {
-                   _.each( silent_update_promises, function( obj, setId ) {
-                          var wpSetId = api.CZR_Helpers.build_setId( setId ),
-                              _skopeDirtyness = api.czr_skope( api.czr_activeSkope() ).getSkopeSettingDirtyness( setId );
-                          api( wpSetId ).silent_set( obj.val, _skopeDirtyness );
-                    });
+              _silently_update = function( SilentUpdatePromises ) {
+                     _.each( SilentUpdatePromises, function( obj, setId ) {
+                            var wpSetId = api.CZR_Helpers.build_setId( setId ),
+                                _skopeDirtyness = api.czr_skope( api.czr_activeSkope() ).getSkopeSettingDirtyness( setId );
+                            api( wpSetId ).silent_set( obj.val, _skopeDirtyness );
+                      });
               };
-          _.each( silent_update_promises, function( obj, setId ) {
-              _deferred.push(obj.promise);
+          _.each( SilentUpdatePromises, function( obj, setId ) {
+                _deferred.push(obj.promise);
           });
-          console.log('_deferred', _deferred );
           $.when.apply( null, _deferred )
           .then( function() {
                 _.each( _deferred, function(prom){
                       if ( _.isObject( prom ) )
-                        api.consoleLog( prom.state() );
+                        api.consoleLog( 'promise state() after silent update', prom.state() );
                 });
-                $.when( _silently_update( silent_update_promises ) ).done( function() {
+                $.when( _silently_update( SilentUpdatePromises ) ).done( function() {
+                    console.log( '!!!! SilentUpdatePromises', SilentUpdatePromises );
                     if ( refresh )
                         api.previewer.refresh();
                 });
           });
+          return _deferred;
     },
     getSettingUpdatePromise : function( setId ) {
           if ( _.isUndefined( setId ) ) {
@@ -584,17 +858,18 @@ $.extend( CZRSkopeBaseMths, {
                     _constructor;
 
                 switch ( control_type ) {
-                    case 'czr_cropped_image' :
-                          _promise = self._getCzrCroppedImagePromise( wpSetId, _control_data );
-                    break;
+                      case 'czr_cropped_image' :
+                            _promise = self._getCzrCroppedImagePromise( wpSetId, _control_data );
+                      break;
 
-                    case 'czr_module' :
-                          self._processCzrModuleSilentActions( wpSetId, control_type, skope_id , _control_data);
-                    break;
+                      case 'czr_module' :
+                            self._processCzrModuleSilentActions( wpSetId, control_type, skope_id , _control_data);
+                      break;
                 }//switch
           }//end if api.control.has( wpSetId )
-          if ( _.has(api.settings.controls, 'header_image') && 'header_image' == wpSetId  )
+          if ( _.has(api.settings.controls, 'header_image') && 'header_image' == wpSetId  ) {
               _promise = self._getHeaderImagePromise( wpSetId, skope_id );
+          }
 
           return  { promise : _promise || true, val : val };
     },//getSettingUpdatePromise()
@@ -604,7 +879,6 @@ $.extend( CZRSkopeBaseMths, {
               _shortSetId =  api.CZR_Helpers.build_setId(wpSetId),
               _val = api.czr_skopeBase.getSkopeSettingVal( _shortSetId, skope_id ),
               current_skope_instance = api.czr_skope( api.czr_activeSkope() );
-          console.log('_synced_short_id', _synced_short_id );
           if ( ! _.isEmpty( _synced_short_id ) && ! _.isUndefined( _synced_short_id ) ) {
                 _synced_control_id = api.CZR_Helpers.build_setId( _synced_short_id );
                 _synced_control_val = api.czr_skopeBase.getSkopeSettingVal( _synced_control_id, skope_id );
@@ -625,8 +899,8 @@ $.extend( CZRSkopeBaseMths, {
           $.extend( _control_data, { czr_skope : skope_id });
           api.control.add( wpSetId,  new _constructor( wpSetId, { params : _control_data, previewer : api.previewer }) );
           if ( ! _.isEmpty( _synced_short_id ) && ! _.isUndefined( _synced_short_id ) ) {
-              api.consoleLog('FIRE SEKTION MODULE?', _syncSektionModuleId, api.control( wpSetId ).czr_Module( _syncSektionModuleId ).isReady.state() );
-              api.control( wpSetId ).czr_Module( _syncSektionModuleId ).fireSektionModule();
+                api.consoleLog('FIRE SEKTION MODULE?', _syncSektionModuleId, api.control( wpSetId ).czr_Module( _syncSektionModuleId ).isReady.state() );
+                api.control( wpSetId ).czr_Module( _syncSektionModuleId ).fireSektionModule();
           }
     },
     _getCzrCroppedImagePromise : function( wpSetId, _control_data ) {
@@ -646,7 +920,7 @@ $.extend( CZRSkopeBaseMths, {
           return wp.media.attachment( val ).fetch();
     },
     _getHeaderImagePromise : function( wpSetId, skope_id ) {
-          if ( _.has(api.settings.controls, 'header_image') && 'header_image' == wpSetId  )
+          if ( ! _.has(api.settings.controls, 'header_image') || 'header_image' != wpSetId  )
             return;
 
           var _header_constructor = api.controlConstructor.header,
@@ -692,15 +966,33 @@ $.extend( CZRSkopeBaseMths, {
 });//$.extend
 var CZRSkopeBaseMths = CZRSkopeBaseMths || {};
 $.extend( CZRSkopeBaseMths, {
-    setupControlsReset : function( controls ) {
-          var self = this,
-              section_id = api.czr_activeSectionId();
+    setupControlsReset : function( obj ) {
+          var self = this, section_id, controls, setupParams,
+              defaultSetupParams = {
+                  controls : [],
+                  section_id : api.czr_activeSectionId()
+              };
+          setupParams = $.extend( defaultSetupParams, obj );
 
-          api.consoleLog('SETUP CONTROLS RESET ?', controls );
-          controls = _.isUndefined( controls ) ? self._getSectionControlIds( section_id  ) : controls;
+          api.consoleLog('SETUP CONTROLS RESET ?', obj.controls );
+
+          if ( ! _.isObject( setupParams ) || ! _.has( setupParams, 'controls' ) || ! _.has( setupParams, 'section_id' ) ) {
+                throw new Error( 'SetupControlsReset : the setupParams param must be an object with properties controls and section_id.');
+          }
+
+          section_id = setupParams.section_id;
+          controls = setupParams.controls;
+
+          if ( _.isEmpty( section_id ) || ! _.isString( section_id ) ) {
+                section_id = api.czr_activeSectionId();
+          }
+          if ( _.isEmpty( controls ) ) {
+                controls = api.CZR_Helpers.getSectionControlIds( section_id  );
+          }
+
           controls = _.isString( controls ) ? [controls] : controls;
           controls = _.filter( controls, function( setId ) {
-              return self.isSettingResetEligible( setId );
+              return true;
           });
 
           if ( _.isEmpty(controls) )
@@ -714,7 +1006,7 @@ $.extend( CZRSkopeBaseMths, {
     renderControlsSingleReset : function( controls ) {
           var self = this;
           if ( _.isUndefined( controls ) || _.isEmpty( controls ) ) {
-                controls = self._getSectionControlIds( api.czr_activeSectionId() );
+                controls = api.CZR_Helpers.getSectionControlIds( api.czr_activeSectionId() );
                 controls = _.filter( controls, function( setId ) {
                     return self.isSettingSkopeEligible( setId );
                 });
@@ -733,7 +1025,7 @@ $.extend( CZRSkopeBaseMths, {
 
                           ctrl.deferred.embedded.then( function() {
                                 $.when( ctrl.container
-                                    .find('.customize-control-title')
+                                    .find('.customize-control-title').first()//was.find('.customize-control-title')
                                     .prepend( $( '<span/>', {
                                       class : 'czr-setting-reset fa fa-refresh',
                                       title : 'Reset'
@@ -752,7 +1044,6 @@ $.extend( CZRSkopeBaseMths, {
           _.each( controls, function( setId ) {
                 if ( ! api.has( setId ) || _.isUndefined( api.control( setId ) ) )
                   return;
-
                 var ctrl = api.control( setId ),
                     shortSetId = api.CZR_Helpers.getOptionName( setId );
 
@@ -789,7 +1080,7 @@ $.extend( CZRSkopeBaseMths, {
                                   actions   : function() {
                                         if ( ! ctrl.czr_isDirty() && ! ctrl.czr_hasDBVal() )
                                           return;
-                                        _.each( _.without( self._getSectionControlIds( ctrl.section() ), setId ) , function( _id ) {
+                                        _.each( _.without( api.CZR_Helpers.getSectionControlIds( ctrl.section() ), setId ) , function( _id ) {
                                               if ( _.has( api.control(_id), 'czr_resetVisibility') )
                                                 api.control(_id).czr_resetVisibility(false);
                                         });
@@ -875,7 +1166,7 @@ $.extend( CZRSkopeBaseMths, {
                           setTimeout( function() {
                               ctrl.container.removeClass('czr-resetting-control');//hides the spinner
                               ctrl.czr_resetVisibility(false);
-                              self.setupControlsReset( setId );
+                              self.setupControlsReset( { controls : [ setId ] } );
                           }, 2000 );
                     });
 
@@ -944,7 +1235,7 @@ $.extend( CZRSkopeBaseMths, {
               section_id = api.czr_activeSectionId();
 
           api.consoleLog('SETUP CONTROLS RESET ?', controls );
-          controls = _.isUndefined( controls ) ? self._getSectionControlIds( section_id  ) : controls;
+          controls = _.isUndefined( controls ) ? api.CZR_Helpers.getSectionControlIds( section_id  ) : controls;
           controls = _.isString( controls ) ? [controls] : controls;
           controls = _.filter( controls, function( setId ) {
               return self.isSettingSkopeEligible( setId );
@@ -961,277 +1252,6 @@ $.extend( CZRSkopeBaseMths, {
 
 
 });//$.extend()
-var CZRSkopeBaseMths = CZRSkopeBaseMths || {};
-$.extend( CZRSkopeBaseMths, {
-    isSkopeRegisteredInCollection : function( skope_id, collection ) {
-          var self = this;
-          collection = collection || api.czr_skopeCollection();
-          return ! _.isUndefined( _.findWhere( collection, { id : skope_id } ) );
-    },
-    isSkopeRegisteredInCurrentCollection : function( skope_id, collection ) {
-          var self = this;
-          collection = collection || api.czr_currentSkopesCollection();
-          return ! _.isUndefined( _.findWhere( collection, { id : skope_id } ) );
-    },
-    isGlobalSkopeRegistered : function() {
-          var _model = _.findWhere( api.czr_currentSkopesCollection(), { skope : 'global'} );
-          return _.isObject( _model ) && _.has( _model, 'id' );
-    },
-    getGlobalSkopeId : function() {
-          if ( ! _.has(api, 'czr_skope') )
-            return '';
-          var id = '';
-          api.czr_skope.each( function(skp){
-              if ( 'global' == skp().skope )
-                id = skp().id;
-          });
-          return id;
-    },
-    getChangedGlobalDBSettingValues : function( serverGlobalDBValues ) {
-          var _changedDbVal = {};
-
-          _.each( serverGlobalDBValues, function( _val, _setId ){
-              _wpSetId = api.CZR_Helpers.build_setId( _setId);
-
-              if ( ! _.has( api.settings.settings, _wpSetId ) )
-                return;
-              if ( _.isEqual( _val , api.settings.settings[ _wpSetId ].value ) )
-                return;
-              _changedDbVal[_setId] = _val;
-          });
-          return _changedDbVal;
-    },
-    getActiveSkope : function( _current_skope_collection ) {
-          var _active_candidates = {},
-              _def = _.findWhere( _current_skope_collection, {is_default : true } ).id;
-          _def = ! _.isUndefined(_def) ? _def : _.findWhere( _current_skope_collection, { skope : 'global' } ).id;
-
-          _.each( _current_skope_collection, function( _skop ) {
-                _active_candidates[_skop.skope] = _skop.id;
-          });
-          if ( _.has( _active_candidates, 'local' ) )
-            return _active_candidates.local;
-          if ( _.has( _active_candidates, 'group' ) )
-            return _active_candidates.group;
-          if ( _.has( _active_candidates, 'special_group' ) )
-            return active_candidates.special_group;
-          return _def;
-    },
-    isSettingSkopeEligible : function( setId ) {
-          var self = this,
-              shortSetId = api.CZR_Helpers.getOptionName( setId );
-
-          if( _.isUndefined( setId ) || ! api.has( setId ) ) {
-            api.consoleLog( 'THE SETTING ' + setId + ' IS NOT ELIGIBLE TO SKOPE BECAUSE UNDEFINED OR NOT REGISTERED IN THE API.' );
-            return false;
-          }
-          if ( self.isExcludedWPBuiltinSetting( setId ) )
-            return false;
-          if ( _.contains( serverControlParams.skopeExcludedSettings, shortSetId ) ) {
-            return false;
-          } else if ( -1 != setId.indexOf( serverControlParams.themeOptions ) ) {
-            return true;
-          } else
-           return true;
-    },
-    isSettingResetEligible : function( setId ) {
-          var self = this,
-              shortSetId = api.CZR_Helpers.getOptionName( setId );
-
-          if( _.isUndefined( setId ) || ! api.has( setId ) ) {
-            api.consoleLog( 'THE SETTING ' + setId + ' IS NOT ELIGIBLE TO RESET BECAUSE UNDEFINED OR NOT REGISTERED IN THE API.' );
-            return;
-          }
-          if ( self.isExcludedWPBuiltinSetting( setId ) )
-            return;
-          if ( -1 == setId.indexOf( serverControlParams.themeOptions ) && ! _.contains( serverControlParams.wpBuiltinSettings, setId ) ) {
-            api.consoleLog( 'THE SETTING ' + setId + ' IS NOT ELIGIBLE TO RESET BECAUSE NOT PART OF THE THEME OPTIONS AND NOT WP AUTHORIZED BUILT IN OPTIONS' );
-          } else
-           return true;
-    },
-    isExcludedWPBuiltinSetting : function( setId ) {
-          if ( _.isUndefined(setId) )
-            return true;
-          if ( 'active_theme' == setId )
-            return true;
-          if ( _.contains( serverControlParams.wpBuiltinSettings, setId ) )
-            return false;
-          if ( 'sidebars_' == setId.substring(0, 9) )
-            return this.isExcludedSidebarsWidgets();
-          if ( 'widget_' == setId.substring(0, 7) )
-            return this.isExcludedSidebarsWidgets();
-          return 'nav_menu' == setId.substring(0, 8);
-    },
-    isExcludedSidebarsWidgets : function() {
-          var SidWidgParam = serverControlParams.isSidebarsWigetsAuthorized;//can be a boolean or a string "" for false, "1" for true
-              isSidebarWidgetSkoped = ! _.isUndefined(SidWidgParam) && ! _.isEmpty( SidWidgParam ) && false !== SidWidgParam;
-          return ! isSidebarWidgetSkoped;
-    },
-    getSkopeSettingVal : function( setId, skope_id ) {
-          if ( ! api.has( api.CZR_Helpers.build_setId(setId) ) ) {
-              throw new Error('getSkopeSettingVal : the requested setting id does not exist in the api : ' + api.CZR_Helpers.build_setId(setId) );
-          }
-          if ( ! api.czr_skope.has( skope_id ) ) {
-              throw new Error('getSkopeSettingVal : the requested skope id is not registered : ' + skope_id );
-          }
-
-          var self = this,
-              wpSetId = api.CZR_Helpers.build_setId( setId ),
-              val_candidate = '___',
-              skope_model = api.czr_skope( skope_id )(),
-              initial_val;
-          if ( _.has( api.settings.settings, wpSetId ) )
-            initial_val = api.settings.settings[wpSetId].value;
-          else
-            initial_val = null;
-          if ( api.czr_skope( skope_id ).getSkopeSettingDirtyness( wpSetId ) )
-            return api.czr_skope( skope_id ).dirtyValues()[ wpSetId ];
-          var _skope_db_val = self._getDBSettingVal( setId, skope_model );
-          if ( _skope_db_val != '_no_db_val' )
-            return _skope_db_val;
-          else if( 'global' == skope_model.skope ) {
-            return '___' == val_candidate ? initial_val : val_candidate;
-          }
-          else
-            return '___' != val_candidate ? val_candidate : self.getSkopeSettingVal( setId, self._getParentSkopeId( skope_model ) );
-    },
-    applyDirtyCustomizedInheritance : function( dirtyCustomized, skope_id ) {
-          skope_id = skope_id || api.czr_activeSkope() || api.czr_skopeBase.getGlobalSkopeId();
-          dirtyCustomized = dirtyCustomized || {};
-
-          var self = this,
-              skope_model = api.czr_skope( skope_id )();
-
-          if ( 'global' == skope_model.skope )
-            return dirtyCustomized;
-
-          var parent_skope_id = self._getParentSkopeId( skope_model ),
-              parent_dirties = api.czr_skope( parent_skope_id ).dirtyValues();
-          _.each( parent_dirties, function( _val, wpSetId ){
-                var shortSetId = api.CZR_Helpers.getOptionName( wpSetId );
-                if ( _.isUndefined( dirtyCustomized[wpSetId] ) && _.isUndefined( skope_model.db[shortSetId] ) )
-                    dirtyCustomized[wpSetId] = _val;
-          });
-          return 'global' == api.czr_skope( parent_skope_id )().skope ? dirtyCustomized : self.applyDirtyCustomizedInheritance( dirtyCustomized, parent_skope_id );
-    },
-    _getParentSkopeId : function( skope_model, _index ) {
-          var self = this,
-              hierark = ['local', 'group', 'special_group', 'global'],
-              parent_skope_ind = _index || ( _.findIndex( hierark, function( _skp ) { return skope_model.skope == _skp; } ) + 1 ) * 1,
-              parent_skope_skope = hierark[ parent_skope_ind ];
-
-          if ( _.isUndefined( parent_skope_skope ) ) {
-              return _.findWhere( api.czr_currentSkopesCollection(), { skope : 'global' } ).id;
-          }
-          if ( _.isUndefined( _.findWhere( api.czr_currentSkopesCollection(), { skope : parent_skope_skope } ) ) ) {
-              return self._getParentSkopeId( skope_model, parent_skope_ind + 1 );
-          }
-          return _.findWhere( api.czr_currentSkopesCollection(), { skope : parent_skope_skope } ).id;
-    },
-    _getDBSettingVal : function( setId, skope_model  ) {
-          var shortSetId = api.CZR_Helpers.getOptionName(setId),
-              wpSetId = api.CZR_Helpers.build_setId(setId);
-
-          return _.has( skope_model.db, shortSetId ) ? skope_model.db[shortSetId] : '_no_db_val';
-    },
-    _getSectionControlIds : function( section_id ) {
-          section_id = section_id || api.czr_activeSectionId();
-          if ( ! api.section.has( section_id) )
-            return;
-          var sec_ctrl = [];
-          api.control.each( function( _ctrl ) {
-              if ( section_id == _ctrl.section() )
-                sec_ctrl.push( _ctrl.id );
-          });
-          return sec_ctrl;
-    },
-    _getSectionSettingIds : function( section_id ) {
-          section_id = section_id || api.czr_activeSectionId();
-          if ( ! api.section.has( section_id) )
-            return;
-          var self = this,
-              _sec_settings = [],
-              _sec_controls = self._getSectionControlIds( section_id );
-
-          _.each( _sec_controls, function( ctrlId ) {
-              _.each( api.control(ctrlId).settings, function( _instance, _k ) {
-                  _sec_settings.push( _instance.id );
-              });
-          });
-          return _sec_settings;
-    },
-    isAPIDirty : function() {
-          var isDirty = false;
-          _.each( api.czr_currentSkopesCollection(), function( skp ){
-                if ( ! isDirty && api.czr_skope( skp.id ).dirtyness() )
-                  isDirty = true;
-          });
-          return isDirty;
-    },
-    getSkopeDirties : function( skope_id ) {
-          if ( ! api.czr_skope.has( skope_id) )
-            return {};
-          return api.czr_skope( skope_id ).dirtyValues();
-    },
-
-    getSkopeExcludedDirties : function() {
-          var self = this,
-              _wpDirties = {};
-          api.each( function ( value, setId ) {
-                if ( value._dirty ) {
-                  _wpDirties[ setId ] = value();
-                }
-          } );
-          var _globalSkopeId = self.getGlobalSkopeId(),
-              _globalSkpDirties = self.getSkopeDirties( _globalSkopeId );
-          return _.omit( _wpDirties, function( _value, setId ) {
-              return self.isSettingSkopeEligible( setId );
-          } );
-    },
-    parseWidgetId : function( widgetId, prefixToRemove ) {
-        var matches, parsed = {
-          number: null,
-          id_base: null
-        };
-
-        matches = widgetId.match( /^(.+)-(\d+)$/ );
-        if ( matches ) {
-          parsed.id_base = matches[1];
-          parsed.number = parseInt( matches[2], 10 );
-        } else {
-          parsed.id_base = widgetId;
-        }
-
-        if ( ! _.isUndefined( prefixToRemove ) )
-          parsed.id_base = parsed.id_base.replace( prefixToRemove , '');
-        return parsed;
-    },
-    widgetIdToSettingId: function( widgetId , prefixToRemove ) {
-        var parsed = this.parseWidgetId( widgetId, prefixToRemove ), settingId;
-
-        settingId = parsed.id_base;
-        if ( parsed.number ) {
-          settingId += '[' + parsed.number + ']';
-        }
-        return settingId;
-    },
-
-
-
-
-    isWidgetRegisteredGlobally : function( widgetId ) {
-        var self = this;
-            registered = false;
-        _.each( _wpCustomizeWidgetsSettings.registeredWidgets, function( _val, _short_id ) {
-            if ( ! registered && 'widget_' + self.widgetIdToSettingId(_short_id) == widgetId )
-              registered = true;
-        } );
-        return registered;
-    }
-
-
-
-});//$.extend
 
 var CZRSkopeMths = CZRSkopeMths || {};
 
@@ -1682,7 +1702,7 @@ $.extend( CZRSkopeMths, {
                       throw new Error( 'QUERY : A SAVE QUERY MUST HAVE A NOT EMPTY DIRTY OBJECT TO SUBMIT' );
                     }
                     if ( _.isNull( query_params.dyn_type ) )
-                      query_params.dyn_type = api.czr_skope( query_params.skope_id )()[ query_params.dyn_type ];//post_meta, term_meta, user_meta, trans, option
+                      query_params.dyn_type = api.czr_skope( query_params.skope_id )().dyn_type;//post_meta, term_meta, user_meta, trans, option
                     if ( _.isNull( query_params.dyn_type ) || _.isUndefined( query_params.dyn_type ) ) {
                       throw new Error( 'QUERY : A SAVE QUERY MUST HAVE A VALID DYN TYPE.' + query_params.skope_id );
                     }
@@ -1690,6 +1710,11 @@ $.extend( CZRSkopeMths, {
                 break;
 
                 case 'reset' :
+                    if ( _.isNull( query_params.dyn_type ) )
+                      query_params.dyn_type = api.czr_skope( query_params.skope_id )().dyn_type;//post_meta, term_meta, user_meta, trans, option
+                    if ( _.isNull( query_params.dyn_type ) || _.isUndefined( query_params.dyn_type ) ) {
+                      throw new Error( 'QUERY : A RESET QUERY MUST HAVE A VALID DYN TYPE.' + query_params.skope_id );
+                    }
                 break;
             }
             return {
@@ -2148,20 +2173,6 @@ $.extend( CZRSkopeMths, {
 
 })( wp.customize , jQuery, _ );
 (function (api, $, _) {
-  api.Control.prototype.onChangeActive = function ( active, args ) {
-        if ( args.unchanged )
-          return;
-        if ( this.container[0] && ! $.contains( document, this.container[0] ) ) {
-          this.container.toggle( active );
-          if ( args.completeCallback ) {
-            args.completeCallback();
-          }
-        } else if ( active ) {
-          this.container.slideDown( args.duration, args.completeCallback );
-        } else {
-          this.container.slideUp( args.duration, args.completeCallback );
-        }
-  };
   if ( 'function' == typeof api.Section ) {
     var _original_section_initialize = api.Section.prototype.initialize;
     api.Section.prototype.initialize = function( id, options ) {
@@ -2216,6 +2227,32 @@ $.extend( CZRSkopeMths, {
                 return  _.contains( _.map( api.czr_partials(), function( partial, key ) {
                   return _.contains( partial.settings, setId );
                 }), true );
+        },
+        getSectionControlIds : function( section_id ) {
+                section_id = section_id || api.czr_activeSectionId();
+                if ( ! api.section.has( section_id) )
+                  return;
+                var sec_ctrl = [];
+                api.control.each( function( _ctrl ) {
+                    if ( section_id == _ctrl.section() )
+                      sec_ctrl.push( _ctrl.id );
+                });
+                return sec_ctrl;
+        },
+        getSectionSettingIds : function( section_id ) {
+                section_id = section_id || api.czr_activeSectionId();
+                if ( ! api.section.has( section_id) )
+                  return;
+                var self = this,
+                    _sec_settings = [],
+                    _sec_controls = self.getSectionControlIds( section_id );
+
+                _.each( _sec_controls, function( ctrlId ) {
+                    _.each( api.control(ctrlId).settings, function( _instance, _k ) {
+                        _sec_settings.push( _instance.id );
+                    });
+                });
+                return _sec_settings;
         },
         capitalize : function( string ) {
                 if( ! _.isString(string) )
@@ -7037,9 +7074,9 @@ $.extend( CZRLayoutSelectMths , {
     api.czr_HeaderTool = $.extend(  true, {}, api.HeaderTool );
   }
   api.bind( 'ready' , function() {
-      if ( serverControlParams.isSkopOn ) {
-        api.czr_skopeBase = new api.CZR_skopeBase();
-      }
+        if ( serverControlParams.isSkopOn ) {
+              api.czr_skopeBase = new api.CZR_skopeBase();
+        }
   } );
   api.CZRInput                 = api.Value.extend( CZRInputMths );
   api.CZRItem                  = api.Value.extend( CZRItemMths );
@@ -7130,143 +7167,226 @@ $.extend( CZRLayoutSelectMths , {
       translatedStrings = serverControlParams.translatedStrings || {};
 
   api.bind( 'ready' , function() {
-    api.czr_visibilities = new api.CZR_visibilities();
+    if ( ! _.has( api, 'czr_visibilities') )
+      api.czr_visibilities = new api.CZR_visibilities();
   } );
 
+
   api.CZR_visibilities = api.Class.extend( {
-          controlDeps : {},
+          dominiDeps : [],
           initialize: function() {
                 var self = this;
-                this.controlDeps = _.extend( this.controlDeps, this._getControlDeps() );
-                this._setControlVisibilities();
+
+                this.defaultDominusParams = {
+                      dominus : '',
+                      servi : [],
+                      visibility : null,
+                      actions : null,
+                      onSectionExpand : true
+                };
+                this.dominiDeps = _.extend( this.dominiDeps, this._getControlDeps() );
+                if ( ! _.isArray( self.dominiDeps ) ) {
+                    throw new Error('Visibilities : the dominos dependency array is not an array.');
+                }
+                api.czr_activeSectionId.bind( function( section_id ) {
+                    self.setServiVisibility( section_id );
+                });
+                api.bind( 'awaken-section', function( target_source ) {
+                      if ( _.has( api ,'czr_skopeBase' ) ) {
+                            var _promises = api.czr_skopeBase.processSilentUpdates( {
+                                  silent_update_candidates : {},
+                                  section_id : target_source.target
+                            } );
+                            $.when.apply( null, _promises )
+                                  .then( function() {
+                                        self.setServiVisibility( target_source.target, target_source.source );
+                                  });
+                      } else {
+                            self.setServiVisibility( target_source.target, target_source.source );
+                      }
+                });
                 this._handleFaviconNote();
+          },
+          setServiVisibility : function( targetSectionId, sourceSectionId ) {
+                var self = this, params;
+                if ( _.isUndefined( targetSectionId ) || ! api.section.has( targetSectionId ) ) {
+                  throw new Error( 'Visibilities : the targetSectionId is missing or not registered : ' + targetSectionId );
+                }
+                _.each( self.dominiDeps , function( params ) {
+                      params = self._prepareDominusParams( params );
+                      var wpDominusId = api.CZR_Helpers.build_setId( params.dominus );
+                      if ( api.control( wpDominusId ).section() != targetSectionId )
+                        return;
+                      self._processDominusCallbacks( params.dominus, params );
+                });
+                var _secCtrls = api.CZR_Helpers.getSectionControlIds( targetSectionId ),
+                    _getServusDomini = function( shortServudId ) {
+                          var _dominiIds = [];
+                          _.each( self.dominiDeps , function( params ) {
+                                params = self._prepareDominusParams( params );
+                                if ( _.contains( params.servi , shortServudId ) &&  ! _.contains( _dominiIds , params.dominus ) ) {
+                                    _dominiIds.push( params.dominus );
+                                }
+                          });
+                          return ! _.isArray( _dominiIds ) ? [] : _dominiIds;
+                    },
+                    _servusDominiIds = [];
+                _.each( _secCtrls, function( servusCandidateId ) {
+                      if ( _.isEmpty( _getServusDomini( servusCandidateId ) ) )
+                        return;
+
+                      _servusDominiIds = _.union( _servusDominiIds, _getServusDomini( servusCandidateId ) );
+                });
+                _.each( _servusDominiIds, function( shortDominusId ){
+                      var wpDominusId = api.CZR_Helpers.build_setId( shortDominusId );
+                      if ( api.control( wpDominusId ).section() == targetSectionId )
+                          return;
+                      if ( sourceSectionId == api.control( wpDominusId ).section() )
+                          return;
+                      api.trigger( 'awaken-section', {
+                          target : api.control( wpDominusId ).section(),
+                          source : targetSectionId
+                      } );
+                } );
 
           },
-          _setControlVisibilities : function() {
-                var self = this;
-                _.each( self.controlDeps , function( opts , setId ) {
-                      self._prepare_visibilities( setId, opts );
+          _deferCallbackForControl : function( wpCrtlId, callback, args ) {
+                if ( _.isEmpty(wpCrtlId) || ! _.isString(wpCrtlId) ) {
+                    throw new Error( '_deferCallbackForControl : the control id is missing.' );
+                }
+                if ( ! _.isFunction( callback ) ) {
+                    throw new Error( '_deferCallbackForControl : callback must be a funtion.' );
+                }
+                args = ( _.isUndefined(args) || ! _.isArray( args ) ) ? [] : args;
+
+                if ( api.control.has( wpCrtlId ) ) {
+                      if ( 'resolved' == api.control(wpCrtlId ).deferred.embedded.state() ) {
+                            callback.apply( null, args );
+                      } else {
+                            api.control( wpCrtlId ).deferred.embedded.then( function(){
+                                  callback.apply( null, args );
+                            });
+                      }
+                } else {
+                      api.control.when( wpCrtlId, function() {
+                            api.control( wpCrtlId ).deferred.embedded.then( function(){
+                                  callback.apply( null, args );
+                            });
+                      });
+                }
+          },
+          _processDominusCallbacks : function( shortDominusId, dominusParams ) {
+                var self = this,
+                    wpDominusId = api.CZR_Helpers.build_setId( shortDominusId ),
+                    dominusSetInst = api( wpDominusId );
+                _.each( dominusParams.servi , function( servusShortSetId ) {
+                        if ( ! api.control.has( api.CZR_Helpers.build_setId( servusShortSetId ) ) ) {
+                            return;
+                        }
+                        var _fireDominusCallbacks = function( dominusSetVal, servusShortSetId, dominusParams ) {
+                                  var _toFire = [],
+                                      _args = arguments;
+                                  _.each( dominusParams, function( _item, _key ) {
+                                        switch( _key ) {
+                                            case 'visibility' :
+                                                self._setVisibility.apply( null, _args );
+                                            break;
+                                            case 'actions' :
+                                                if ( _.isFunction( _item ) )
+                                                    _item.apply( null, _args );
+                                            break;
+                                        }
+                                  });
+                            },
+                            _deferCallbacks = function( dominusSetVal ) {
+                                  dominusSetVal = dominusSetVal  || dominusSetInst();
+                                  var wpServusSetId = api.CZR_Helpers.build_setId( servusShortSetId );
+                                  self._deferCallbackForControl(
+                                        wpServusSetId,
+                                        _fireDominusCallbacks,
+                                        [ dominusSetVal, servusShortSetId, dominusParams ]
+                                  );
+                            };
+                        _deferCallbacks();
+                        if ( ! _.has( dominusSetInst, 'czr_visibilityServi' ) )
+                            dominusSetInst.czr_visibilityServi = new api.Value( [] );
+                        var _currentDependantBound = dominusSetInst.czr_visibilityServi();
+                        if ( ! _.contains( _currentDependantBound, servusShortSetId ) ) {
+                              dominusSetInst.bind( function( dominusSetVal ) {
+                                  _deferCallbacks( dominusSetVal );
+                              });
+                              dominusSetInst.czr_visibilityServi( _.union( _currentDependantBound, [ servusShortSetId ] ) );
+                        }
+                } );//_.each
+          },
+          _setVisibility : function ( dominusSetVal, servusShortSetId, dominusParams ) {
+                var wpServusSetId = api.CZR_Helpers.build_setId( servusShortSetId ),
+                    visibility = dominusParams.visibility( dominusSetVal, servusShortSetId, dominusParams.dominus );
+                if ( ! _.isBoolean( visibility ) || 'unchanged' == visibility )
+                  return;
+                api.control( wpServusSetId, function( _controlInst ) {
+                      var _args = {
+                            duration : 'fast',
+                            completeCallback : function() {},
+                            unchanged : false
+                      };
+
+                      if ( _.has( _controlInst, 'active' ) )
+                        visibility = visibility && _controlInst.active();
+
+                      if ( _.has( _controlInst, 'defaultActiveArguments' ) )
+                        _args = control.defaultActiveArguments;
+
+                      _controlInst.onChangeActive( visibility , _controlInst.defaultActiveArguments );
                 });
           },
           _getControlDeps : function() {
             return {};
           },
-          _get_dependants : function( setId ) {
-                if ( ! this.controlDeps[setId] )
-                  return [];
-                var _dependants = this.controlDeps[setId];
-
-                if ( _dependants.show && _dependants.hide )
-                  return _.union(_dependants.show.controls , _dependants.hide.controls);
-                if ( _dependants.show && ! _dependants.hide )
-                  return _dependants.show.controls;
-                if ( ! _dependants.show && _dependants.hide )
-                  return _dependants.hide.controls;
-
-                return _dependants.controls;
-          },
-          _get_visibility_action : function ( setId , depSetId ) {
-                if ( ! this.controlDeps[setId] )
-                  return 'both';
-                var _dependants = this.controlDeps[setId];
-                if ( _dependants.show && -1 != _.indexOf( _dependants.show.controls, depSetId ) )
-                  return 'show';
-                if ( _dependants.hide && -1 != _.indexOf( _dependants.hide.controls, depSetId ) )
-                  return 'hide';
-                return 'both';
-          },
-
-
-          _get_visibility_cb : function( setId , _action ) {
-                if ( ! this.controlDeps[setId] )
-                  return;
-                var _dependants = this.controlDeps[setId];
-                if ( ! _dependants[_action] )
-                  return _dependants.callback;
-                return (_dependants[_action]).callback;
-          },
-
-
-          _check_cross_dependant : function( setId, depSetId ) {
-                if ( ! this.controlDeps[setId] )
-                  return true;
-                var _dependants = this.controlDeps[setId];
-                if ( ! _dependants.cross || ! _dependants.cross[depSetId] )
-                  return true;
-                var _cross  = _dependants.cross[depSetId],
-                    _id     = _cross.master,
-                    _cb     = _cross.callback;
-
-                _id = api.CZR_Helpers.build_setId(_id);
-                return _cb( api.instance(_id)() );
-              },
-          _prepare_visibilities : function( setId, o ) {
+          _prepareDominusParams : function( params_candidate ) {
                 var self = this,
-                    wpSetId = api.CZR_Helpers.build_setId( setId );
-                if ( ! api.has( wpSetId ) ) {
-                  api.consoleLog( 'The following setting for which visibility dependencies are defined, is not registered in the api : ' + wpSetId );
-                  return;
+                    _ready_params = {};
+                if ( ! _.isObject( params_candidate ) ) {
+                    throw new Error('Visibilities : a dominus param definition must be an object.');
                 }
-                var _set_visibility = function() {
-                    api( wpSetId , function (setting) {
-                          var _params = {
-                            setting   : setting,
-                            setId : setId,
-                            controls  : self._get_dependants(setId),
-                            onSectionExpand : ! _.isUndefined( o.onSectionExpand ) ? o.onSectionExpand : true
-                          };
-                          _.each( _params.controls , function( depSetId ) {
-                              wpDepSetId = api.CZR_Helpers.build_setId(depSetId );
-                              if ( ! api.control.has(wpDepSetId) )
-                                return;
-                              if ( 'function' == typeof( api.control( wpDepSetId ).section ) && _params.onSectionExpand ) {
-                                  api.section( api.control( wpDepSetId ).section() ).expanded.bind( function(to) {
-                                        self._set_single_dependant_control_visibility( depSetId , _params);
-                                  });
-                              } else {
-                                  var _debounce_visibility = function(depSetId , _params) {
-                                    self._set_single_dependant_control_visibility( depSetId , _params);
-                                  };
-                                  _debounce_visibility = _.debounce(_debounce_visibility, 1000 );
-                                  _debounce_visibility( depSetId , _params );
+                if ( ! _.has( params_candidate, 'visibility' ) && ! _.has( params_candidate, 'actions' ) ) {
+                    throw new Error('Visibilities : a dominus definition must include a visibility or an actions callback.');
+                }
+                if ( ! _.has( params_candidate, 'dominus' ) || ! _.isString( params_candidate.dominus ) || _.isEmpty( params_candidate.dominus ) ) {
+                      throw new Error( 'Visibilities : a dominus control id must be a not empty string.');
+                }
+                var wpDominusId = api.CZR_Helpers.build_setId( params_candidate.dominus );
+                if ( ! api.control.has( wpDominusId ) ) {
+                      throw new Error( 'Visibilities : a dominus control id is not registered : ' + wpDominusId );
+                }
+                if ( ! _.has( params_candidate, 'servi' ) || _.isUndefined( params_candidate.servi ) || ! _.isArray( params_candidate.servi ) || _.isEmpty( params_candidate.servi ) ) {
+                      throw new Error( 'Visibilities : servi must be set as an array not empty.');
+                }
+
+                _.each( self.defaultDominusParams , function( _value, _key ) {
+                    var _candidate_val = params_candidate[ _key ];
+
+                    switch( _key ) {
+                          case 'visibility' :
+                              if ( ! _.isUndefined( _candidate_val ) && ! _.isEmpty( _candidate_val ) && ! _.isFunction( _candidate_val ) ) {
+                                    throw new Error( 'Visibilities : a dominus visibility callback must be a function : ' + params_candidate.dominus );
                               }
+                          break;
+                          case 'actions' :
+                              if ( ! _.isUndefined( _candidate_val ) && ! _.isEmpty( _candidate_val ) && ! _.isFunction( _candidate_val ) ) {
+                                    throw new Error( 'Visibilities : a dominus actions callback must be a function : ' + params_candidate.dominus );
+                              }
+                          break;
+                          case 'onSectionExpand' :
+                              if ( ! _.isUndefined( _candidate_val ) && ! _.isEmpty( _candidate_val ) && ! _.isBoolean( _candidate_val ) ) {
+                                    throw new Error( 'Visibilities : a dominus onSectionExpand param must be a boolean : ' + params_candidate.dominus );
+                              }
+                          break;
+                    }
+                    _ready_params[_key] = _candidate_val;
+                });
 
-                          } );
-                    });
-                };
-                _set_visibility();
-          },
-
-
-
-          _set_single_dependant_control_visibility : function( depSetId , _params ) {
-                var self = this;
-
-                depSetId = api.CZR_Helpers.build_setId(depSetId);
-                var control = api.control( depSetId );
-
-                var _visibility = function (to) {
-                  var _action   = self._get_visibility_action( _params.setId , depSetId ),
-                      _callback = self._get_visibility_cb( _params.setId , _action ),
-                      _bool     = false;
-
-                  if ( 'show' == _action && _callback(to, depSetId, _params.setId ) )
-                    _bool = true;
-                  if ( 'hide' == _action && _callback(to, depSetId, _params.setId ) )
-                    _bool = false;
-                  if ( 'both' == _action )
-                    _bool = _callback(to, depSetId, _params.setId );
-                  _bool = self._check_cross_dependant( _params.setId, depSetId ) && _bool;
-
-                  if ( _.has(control, 'active') )
-                    control.container.toggle( _bool && control.active() );
-                  else
-                    control.container.toggle( _bool );
-              };//_visibility()
-              api.control( depSetId ).deferred.embedded.then( function(){
-                  _visibility( _params.setting() );
-              });
-              _params.setting.bind( _visibility );
+                return _ready_params;
           },
           _handleFaviconNote : function() {
                 var self = this,
