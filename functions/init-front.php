@@ -150,8 +150,8 @@ function hu_print_dynamic_sidebars( $_id, $location ) {
   }
 
   $sidebars_widgets = wp_get_sidebars_widgets();
-
-  hu_maybe_print_default_widgets( $sidebars_widgets, $_id );
+  if ( hu_isprevdem() )
+    hu_maybe_print_default_widgets( $sidebars_widgets, $_id );
 
   if ( hu_is_customize_preview_frame() ) {
     //is there a meta setting overriding the customizer ?
@@ -469,34 +469,37 @@ if ( ! function_exists( 'hu_print_placeholder_thumb' ) ) {
     $_sizes = array( 'thumb-medium', 'thumb-small', 'thumb-standard' );
     if ( ! in_array($_size, $_sizes) )
       $_size = 'thumb-medium';
+    //default $img_src
+    $_img_src = get_template_directory_uri() . "/assets/front/img/{$_size}.png";
 
-    if ( ! apply_filters( 'hu-use-svg-thumb-placeholder', true ) ) {
-      $_img_src = get_template_directory_uri() . "/assets/front/img/{$_size}.png";
-    } else {
-      //this first case is typically a wp.org demo context
-      if ( hu_is_demo() ) {
-        $_img_src = get_template_directory_uri() . "/assets/front/img/salt-lake-720x340.jpg";
-        $filter = '<span class="filter-placeholder"></span>';
-      } else {
-        $_size = $_size . '-empty';
-        $_img_src = get_template_directory_uri() . "/assets/front/img/{$_size}.png";
-      }
+    if ( apply_filters( 'hu-use-svg-thumb-placeholder', true ) ) {
+        if ( hu_isprevdem() ) {
+          $_img_src = hu_get_prevdem_img( $_size );
+          $filter = '<span class="filter-placeholder"></span>';
+        } else {
+          $_size = $_size . '-empty';
+          $_img_src = get_template_directory_uri() . "/assets/front/img/{$_size}.png";
+        }
 
-      $_svg_height = in_array($_size, array( 'thumb-medium', 'thumb-standard' ) ) ? 100 : 60;
-      ?>
-      <svg class="hu-svg-placeholder <?php echo $_size; ?>" id="<?php echo $_unique_id; ?>" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M928 832q0-14-9-23t-23-9q-66 0-113 47t-47 113q0 14 9 23t23 9 23-9 9-23q0-40 28-68t68-28q14 0 23-9t9-23zm224 130q0 106-75 181t-181 75-181-75-75-181 75-181 181-75 181 75 75 181zm-1024 574h1536v-128h-1536v128zm1152-574q0-159-112.5-271.5t-271.5-112.5-271.5 112.5-112.5 271.5 112.5 271.5 271.5 112.5 271.5-112.5 112.5-271.5zm-1024-642h384v-128h-384v128zm-128 192h1536v-256h-828l-64 128h-644v128zm1664-256v1280q0 53-37.5 90.5t-90.5 37.5h-1536q-53 0-90.5-37.5t-37.5-90.5v-1280q0-53 37.5-90.5t90.5-37.5h1536q53 0 90.5 37.5t37.5 90.5z"/></svg>
+        $_svg_height = in_array($_size, array( 'thumb-medium', 'thumb-standard' ) ) ? 100 : 60;
+        ?>
+        <svg class="hu-svg-placeholder <?php echo $_size; ?>" id="<?php echo $_unique_id; ?>" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M928 832q0-14-9-23t-23-9q-66 0-113 47t-47 113q0 14 9 23t23 9 23-9 9-23q0-40 28-68t68-28q14 0 23-9t9-23zm224 130q0 106-75 181t-181 75-181-75-75-181 75-181 181-75 181 75 75 181zm-1024 574h1536v-128h-1536v128zm1152-574q0-159-112.5-271.5t-271.5-112.5-271.5 112.5-112.5 271.5 112.5 271.5 271.5 112.5 271.5-112.5 112.5-271.5zm-1024-642h384v-128h-384v128zm-128 192h1536v-256h-828l-64 128h-644v128zm1664-256v1280q0 53-37.5 90.5t-90.5 37.5h-1536q-53 0-90.5-37.5t-37.5-90.5v-1280q0-53 37.5-90.5t90.5-37.5h1536q53 0 90.5 37.5t37.5 90.5z"/></svg>
 
-      <script type="text/javascript">
-        jQuery( function($){
-          if ( $('#flexslider-featured').length ) {
-            $('#flexslider-featured').on('featured-slider-ready', function() {
-              $( '#<?php echo $_unique_id; ?>' ).animateSvg();
-            });
-          } else { $( '#<?php echo $_unique_id; ?>' ).animateSvg(); }
-        });
-      </script>
-      <?php
+        <script type="text/javascript">
+          jQuery( function($){
+            if ( $('#flexslider-featured').length ) {
+              $('#flexslider-featured').on('featured-slider-ready', function() {
+                $( '#<?php echo $_unique_id; ?>' ).animateSvg();
+              });
+            } else { $( '#<?php echo $_unique_id; ?>' ).animateSvg( { svg_opacity : 0.3, filter_opacity : 0.5 } ); }
+          });
+        </script>
+        <?php
     }
+
+    //make sure we did not last the img_src
+    if ( false == $_img_src )
+      $_img_src = get_template_directory_uri() . "/assets/front/img/{$_size}.png";
 
     printf( ' %1$s<img class="hu-img-placeholder" src="%2$s" alt="%3$s" data-hu-post-id="%4$s" />',
       false !== $filter ? $filter : '',
@@ -509,7 +512,60 @@ if ( ! function_exists( 'hu_print_placeholder_thumb' ) ) {
 }
 
 
+function hu_get_prevdem_img( $_size = 'thumb-medium', $i = 0 ) {
+    //prevent infinite loop
+    if ( 10 == $i ) {
+      return;
+    }
+    $sizes_suffix_map = array(
+        'thumb-small'     => '160x160',
+        'thumb-medium'    => '520x245',
+        'thumb-standard'  => '320x320'
+    );
+    $requested_size = isset( $sizes_suffix_map[$_size] ) ? $sizes_suffix_map[$_size] : '520x245';
+    $path = HU_BASE . 'assets/front/img/demo/';
+    //Build or re-build the global dem img array
+    if ( ! isset( $GLOBALS['prevdem_img'] ) || empty( $GLOBALS['prevdem_img'] ) ) {
+        if ( is_dir( $path ) ) {
+          $imgs = scandir( $path );
+        }
+        $candidates = array();
+        if ( ! $imgs )
+          return array();
 
+        foreach ( $imgs as $img ) {
+          if ( '.' === $img[0] || is_dir( $path . $img ) ) {
+            continue;
+          }
+          $candidates[] = $img;
+        }
+        $GLOBALS['prevdem_img'] = $candidates;
+    }
+    $candidates = $GLOBALS['prevdem_img'];
+    //get a random image name
+    $rand_key = array_rand($candidates);
+    $img_name = $candidates[ $rand_key ];
+    //extract img prefix
+    $img_prefix_expl = explode( '-', $img_name );
+    $img_prefix = $img_prefix_expl[0];
+
+    $requested_size_img_name = "{$img_prefix}-{$requested_size}.jpg";
+    //if file does not exists, reset the global and recursively call it again
+    if ( ! file_exists( $path . $requested_size_img_name ) ) {
+      unset( $GLOBALS['prevdem_img'] );
+      $i++;
+      return hu_get_prevdem_img( $_size, $i );
+    }
+    //unset all sizes of the img found and update the global
+    $new_candidates = $candidates;
+    foreach ( $candidates as $_key => $_img ) {
+      if ( substr( $_img , 0, strlen( "{$img_prefix}-" ) ) == "{$img_prefix}-" ) {
+        unset( $new_candidates[$_key] );
+      }
+    }
+    $GLOBALS['prevdem_img'] = $new_candidates;
+    return get_template_directory_uri() . '/assets/front/img/demo/' . $requested_size_img_name;
+}
 
 
 
@@ -525,21 +581,6 @@ if ( ! function_exists( 'hu_print_placeholder_thumb' ) ) {
 /* ------------------------------------------------------------------------- *
  *  Filters
 /* ------------------------------------------------------------------------- */
-/* Demo place Holder thumbs
-/* ------------------------------------ */
-add_filter( 'hu_opt_featured-posts-count', 'hu_alter_featured_posts_count');
-function hu_alter_featured_posts_count( $num ) {
-  return hu_is_demo() ? '3' : $num;
-}
-add_filter('hu_opt_featured-posts-enabled', 'hu_enable_home_featured_posts');
-function hu_enable_home_featured_posts( $bool ) {
-  return hu_is_demo() ? true : $bool;
-}
-add_filter('hu_opt_featured-posts-include', 'hu_enable_featured_posts_include');
-function hu_enable_featured_posts_include( $bool ) {
-  return hu_is_demo() ? true : $bool;
-}
-
 
 /*  Body class
 /* ------------------------------------ */

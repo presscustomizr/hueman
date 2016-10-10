@@ -154,9 +154,9 @@ function hu_get_raw_option( $opt_name = null, $opt_group = null ) {
 
 
 //@return bool
-function hu_is_demo() {
+function hu_isprevdem() {
   $_active_theme = hu_get_raw_option( 'template' );
-  return ( $_active_theme != strtolower(THEMENAME) && ! is_child_theme() );
+  return apply_filters( 'hu_ispredem', ( $_active_theme != strtolower(THEMENAME) && ! is_child_theme() ) );
 }
 
 

@@ -958,7 +958,8 @@ if (!Array.prototype.map) {
 ;(function ( $, window, document, _ ) {
   var pluginName = 'animateSvg',
       defaults = {
-        opacity : 0.8
+        filter_opacity : 0.8,
+        svg_opacity : 0.5
       },
       _drawSvgIcon = function(options) {
           var id = $(this).attr('id');
@@ -973,9 +974,9 @@ if (!Array.prototype.map) {
           }
           var set_opacity = function() {
             if ( $('#' + id ).siblings('.filter-placeholder').length )
-              return $('#' + id ).css('opacity', 0.8 ).siblings('.filter-placeholder').css('opacity', options.opacity);
+              return $('#' + id ).css('opacity', options.svg_opacity ).siblings('.filter-placeholder').css('opacity', options.filter_opacity);
             else
-              return $('#' + id ).css('opacity', 0.8 );
+              return $('#' + id ).css('opacity', options.svg_opacity );
           };
           $.when( set_opacity() ).done( function() {
               new Vivus( id, {type: 'delayed', duration: HUParams.vivusSvgSpeed || 400 } );

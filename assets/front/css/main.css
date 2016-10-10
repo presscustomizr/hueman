@@ -1631,12 +1631,14 @@ svg.hu-svg-placeholder {
   width: 100%;
   height: 50%;
   top: 25%;
-  -webkit-transition: opacity 1.2s ease;
-  -moz-transition: opacity 1.2s ease;
-  -o-transition: opacity 1.2s ease;
-  transition: opacity 1.2s ease;
+  -webkit-transition: opacity 0.5s ease;
+  -moz-transition: opacity 0.5s ease;
+  -o-transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease;
 }
-
+.alx-posts li:hover .hu-svg-placeholder, .alx-tab li:hover .hu-svg-placeholder, .post-hover:hover .hu-svg-placeholder {
+    opacity: 0!important;
+}
 .filter-placeholder {
   opacity: 0;
   -webkit-transition: opacity 2s ease;
