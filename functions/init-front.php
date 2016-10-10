@@ -457,8 +457,14 @@ if ( ! function_exists( 'hu_get_featured_post_ids' ) ) {
 }
 
 
+
+
+
+/* ------------------------------------------------------------------------- *
+ *  Placeholder thumbs for preview demo mode
+/* ------------------------------------------------------------------------- */
 /* Echoes the <img> tag of the placeholder thumbnail
-*  or an animated svg icon
+*  + an animated svg icon
 *  the src property can be filtered
 /* ------------------------------------ */
 if ( ! function_exists( 'hu_print_placeholder_thumb' ) ) {
@@ -474,7 +480,7 @@ if ( ! function_exists( 'hu_print_placeholder_thumb' ) ) {
 
     if ( apply_filters( 'hu-use-svg-thumb-placeholder', true ) ) {
         if ( hu_isprevdem() ) {
-          $_img_src = hu_get_prevdem_img( $_size );
+          $_img_src = hu_get_prevdem_img_src( $_size );
           $filter = '<span class="filter-placeholder"></span>';
         } else {
           $_size = $_size . '-empty';
@@ -508,11 +514,15 @@ if ( ! function_exists( 'hu_print_placeholder_thumb' ) ) {
       $_unique_id
     );
   }
-
 }
 
 
-function hu_get_prevdem_img( $_size = 'thumb-medium', $i = 0 ) {
+
+/* Placeholder thumb helper
+*  @return a random img src string
+*  Can be recursive if a specific img size is not found
+/* ------------------------------------ */
+function hu_get_prevdem_img_src( $_size = 'thumb-medium', $i = 0 ) {
     //prevent infinite loop
     if ( 10 == $i ) {
       return;
@@ -554,7 +564,7 @@ function hu_get_prevdem_img( $_size = 'thumb-medium', $i = 0 ) {
     if ( ! file_exists( $path . $requested_size_img_name ) ) {
       unset( $GLOBALS['prevdem_img'] );
       $i++;
-      return hu_get_prevdem_img( $_size, $i );
+      return hu_get_prevdem_img_src( $_size, $i );
     }
     //unset all sizes of the img found and update the global
     $new_candidates = $candidates;
@@ -566,10 +576,6 @@ function hu_get_prevdem_img( $_size = 'thumb-medium', $i = 0 ) {
     $GLOBALS['prevdem_img'] = $new_candidates;
     return get_template_directory_uri() . '/assets/front/img/demo/' . $requested_size_img_name;
 }
-
-
-
-
 
 
 
