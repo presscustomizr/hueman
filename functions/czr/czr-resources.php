@@ -248,14 +248,14 @@ function hu_extend_visibilities() {
       var _is_checked = function( to ) {
               return 0 !== to && '0' !== to && false !== to && 'off' !== to;
       };
-      //when a dominus object define both visibility and action callbacks, the visibility can return 'unchanged' for non relevant servos
+      //when a dominus object define both visibility and action callbacks, the visibility can return 'unchanged' for non relevant servi
       //=> when getting the visibility result, the 'unchanged' value will always be checked and resumed to the servus control current active() state
-      api.CZR_visibilities.prototype.dominosDeps = _.extend(
-            api.CZR_visibilities.prototype.dominosDeps,
+      api.CZR_visibilities.prototype.dominiDeps = _.extend(
+            api.CZR_visibilities.prototype.dominiDeps,
             [
-                  {
+                {
                         dominus : 'show_on_front',
-                        servos : ['show_on_front', 'page_for_posts' ],
+                        servi : ['show_on_front', 'page_for_posts' ],
                         visibility : function( to, servusShortId ) {
                               if ( 'show_on_front' == servusShortId )
                                 return 'unchanged';
@@ -288,7 +288,7 @@ function hu_extend_visibilities() {
                 },
                 {
                         dominus : 'display-header-logo',
-                        servos : ['logo-max-height', 'custom_logo', 'custom-logo' ],//depending on the WP version, the custom logo option is different.
+                        servi : ['logo-max-height', 'custom_logo', 'custom-logo' ],//depending on the WP version, the custom logo option is different.
                         visibility : function( to ) {
                               return _is_checked(to);
                         }
@@ -296,7 +296,7 @@ function hu_extend_visibilities() {
                 {
                         dominus : 'use-header-image',
                         onSectionExpand : false,
-                        servos : ['header_image', 'display-header-logo', 'custom_logo', 'custom-logo', 'logo-max-height', 'blogname', 'blogdescription', 'header-ads'],
+                        servi : ['header_image', 'display-header-logo', 'custom_logo', 'custom-logo', 'logo-max-height', 'blogname', 'blogdescription', 'header-ads'],
                         visibility : function( to, servusShortId ) {
                               if ( 'header_image' != servusShortId )
                                 return 'unchanged';
@@ -349,7 +349,7 @@ function hu_extend_visibilities() {
                   },
                   {
                         dominus : 'dynamic-styles',
-                        servos : [
+                        servi : [
                               'boxed',
                               'font',
                               'container-width',
@@ -368,14 +368,14 @@ function hu_extend_visibilities() {
                   },
                   {
                         dominus : 'blog-heading-enabled',
-                        servos : [ 'blog-heading', 'blog-subheading' ],
+                        servi : [ 'blog-heading', 'blog-subheading' ],
                         visibility : function ( to ) {
                               return _is_checked(to);
                         }
                   },
                   {
                         dominus : 'featured-posts-enabled',
-                        servos : [
+                        servi : [
                               'featured-category',
                               'featured-posts-count',
                               'featured-posts-full-content',
@@ -389,19 +389,19 @@ function hu_extend_visibilities() {
                   },
                   {
                         dominus : 'featured-slideshow',
-                        servos : [ 'featured-slideshow-speed' ],
+                        servi : [ 'featured-slideshow-speed' ],
                         visibility : function ( to ) {
                               return _is_checked(to);
                         }
                   },
                   {
                         dominus : 'about-page',
-                        servos : [ 'help-button' ],
+                        servi : [ 'help-button' ],
                         visibility : function ( to ) {
                               return _is_checked( to );
                         }
                   }
-            ]//dominosDeps {}
+            ]//dominiDeps {}
       );//_.extend()
     }) ( wp.customize, jQuery, _);
   </script>
