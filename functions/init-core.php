@@ -134,7 +134,17 @@ function hu_user_started_before_version( $_ver ) {
 function hu_has_nav_menu( $_location ) {
   if ( has_nav_menu( $_location ) || ! in_array( $_location, array( 'header', 'footer') ) )
     return has_nav_menu( $_location );
-  return hu_is_checked( "default-menu-{$_location}" );
+  $bool = false;
+  switch ($_location) {
+    case 'header':
+      $bool = hu_is_checked( "default-menu-{$_location}" );
+    break;
+
+    case 'footer':
+      $bool = hu_isprevdem();
+    break;
+  }
+  return $bool;
 }
 
 
@@ -156,7 +166,7 @@ function hu_get_raw_option( $opt_name = null, $opt_group = null ) {
 //@return bool
 function hu_isprevdem() {
   $_active_theme = hu_get_raw_option( 'template' );
-  return apply_filters( 'hu_ispredem', ( $_active_theme != strtolower(THEMENAME) && ! is_child_theme() ) );
+  return apply_filters( 'hu_isprevdem', ( $_active_theme != strtolower(THEMENAME) && ! is_child_theme() ) );
 }
 
 
@@ -1575,4 +1585,65 @@ if ( ! function_exists('alx_sidebar_primary') ) {
   function alx_sidebar_primary() {
     return 'primary';
   }
+}
+
+
+/* ------------------------------------------------------------------------- *
+ *  Demo
+/* ------------------------------------------------------------------------- */
+if ( hu_isprevdem() ) {
+    add_filter('hu_display_header_logo', '__return_true');
+    add_filter('hu_header_logo_src', 'hu_prevdem_logo' );
+    add_filter('hu_footer_logo_src', 'hu_prevdem_logo' );
+    function hu_prevdem_logo( $_src ) {
+      $logo_path = 'assets/front/img/demo/logo/logo.png';
+      if ( file_exists( HU_BASE . $logo_path ) )
+        return get_template_directory_uri() . '/' . $logo_path;
+      return $_src;
+    }
+    add_filter('hu_blog_title', 'hu_prevdem_blogheading');
+    function hu_prevdem_blogheading() {
+        return sprintf('%1$s <span class="hu-blog-subheading">%2$s</span>',
+            "THE BLOG",
+            "WHAT'S NEW?"
+        );
+    }
+
+    add_filter('hu_opt_social-links', 'hu_prevdem_socials');
+    function hu_prevdem_socials() {
+      $def_social = array(
+          'title' => '',
+          'social-icon' => '',
+          'social-link' => '',
+          'social-color' => 'rgba(255,255,255,0.7)',
+          'social-target' => 1
+      );
+      $raw = array(
+            array(
+                'title' => 'Follow us on Twitter',
+                'social-icon' => 'fa-twitter'
+            ),
+            array(
+                'title' => 'Follow us on Facebook',
+                'social-icon' => 'fa-facebook'
+            ),
+            array(
+                'title' => 'Follow us on Linkedin',
+                'social-icon' => 'fa-linkedin'
+            ),
+            array(
+                'title' => 'Follow us on Google',
+                'social-icon' => 'fa-google'
+            ),
+            array(
+                'title' => 'Rss feed',
+                'social-icon' => 'fa-rss'
+            )
+      );
+      $socials = array();
+      foreach ( $raw as $key => $data) {
+        $socials[] = wp_parse_args( $data, $def_social );
+      }
+      return $socials;
+    }
 }

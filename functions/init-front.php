@@ -106,25 +106,73 @@ if ( ! function_exists('hu_print_widgets_in_location') ) {
   }
 }//endif
 
+
 //@param $sidebars_widgets = wp_get_sidebars_widgets()
 //@param $_zone_id = id of the widget zone, ex : primary
 function hu_maybe_print_default_widgets( $sidebars_widgets, $_zone_id ) {
     //stop here is the zone id has already been populated with widgets
     if ( array_key_exists( $_zone_id, $sidebars_widgets ) && is_array( $sidebars_widgets[$_zone_id] ) && ! empty($sidebars_widgets[$_zone_id] ) )
       return;
+
     //we only want to print default widgets in primary and secondary sidebars
-    if ( ! in_array( $_zone_id, array( 'primary', 'secondary') ) )
+    if ( ! in_array( $_zone_id, array( 'primary', 'secondary', 'footer-1', 'footer-2', 'footer-3') ) )
       return;
 
     $_widgets_to_print = array();
     switch ($_zone_id) {
-      case 'secondary':
-        $_widgets_to_print[] = array( 'AlxTabs' => array('before_title' => sprintf('<h3 class="widget-title">%s</h3>', __( 'Recommended', 'hueman') ) ) );
-        break;
-
       case 'primary':
-        $_widgets_to_print[] = array( 'AlxPosts' => array('before_title' => sprintf('<h3 class="widget-title">%s</h3>', __( 'Discover', 'hueman') ) ) );
-        break;
+        $_widgets_to_print[] = array(
+          'AlxPosts' => array(
+            'args' => array('before_title' => sprintf('<h3 class="widget-title">%s</h3>', __( 'Discover', 'hueman') ) )
+          )
+        );
+      break;
+      case 'secondary':
+        $_widgets_to_print[] = array(
+          'AlxTabs' => array(
+            'args' => array('before_title' => sprintf('<h3 class="widget-title">%s</h3>', __( 'Recommended', 'hueman') ) )
+          )
+        );
+      break;
+      case 'footer-1':
+        $_widgets_to_print[] = array(
+          'WP_Widget_Recent_Posts' => array(
+            'instance' => array(
+              'title' => __( 'RECENT POSTS', 'hueman'),
+              'number' => 4
+            ),
+            'args' => array(
+              //'before_title' => sprintf('<h3 class="widget-title">%s</h3>', __( 'Recent Posts', 'hueman') )
+            )
+          )
+        );
+      break;
+      case 'footer-2':
+        $_widgets_to_print[] = array(
+          'WP_Widget_Recent_Comments' => array(
+            'instance' => array(
+              'title' => __( 'RECENT COMMENTS', 'hueman'),
+              'number' => 4
+            ),
+            'args' => array(
+              //'before_title' => sprintf('<h3 class="widget-title">%s</h3>', __( 'Recent Posts', 'hueman') )
+            )
+          )
+        );
+      break;
+      case 'footer-3':
+        $_widgets_to_print[] = array(
+          'AlxTabs' => array(
+            'instance' => array(
+              'recent_enable'   => 0,
+              'comments_enable'   => 0,
+              'tags_enable'     => 0,
+              'popular_num' => 2,
+            ),
+            'args' => array('before_title' => sprintf('<h3 class="widget-title"><strong>%s</strong></h3>', __( 'HIGHLIGHTS', 'hueman') ) )
+          )
+        );
+      break;
     }
     if ( empty($_widgets_to_print) )
       return;
@@ -133,9 +181,12 @@ function hu_maybe_print_default_widgets( $sidebars_widgets, $_zone_id ) {
     $_wgt_instances = array();
 
     foreach ( $_widgets_to_print as $_wgt ) {
-      foreach (  $_wgt as $_class => $_args ) {
-          if ( class_exists( $_class) )
-            the_widget( $_class, array(), $_args );
+      foreach (  $_wgt as $_class => $params ) {
+          if ( class_exists( $_class) ) {
+            $_instance = isset( $params['instance'] ) ? $params['instance'] : array();
+            $_args = isset( $params['args'] ) ? $params['args'] : array();
+            the_widget( $_class, $_instance, $_args );
+          }
       }
     }
 }
@@ -214,13 +265,14 @@ if ( ! function_exists( 'hu_site_title' ) ) {
   function hu_site_title() {
     // Text or image?
     // Since v3.2.4, uses the WP 'custom_logo' theme mod option. Set with a filter.
-    if ( hu_is_checked('display-header-logo') && false != hu_get_img_src_from_option( 'custom-logo' ) ) {
-      $logo = '<img src="'. hu_get_img_src_from_option( 'custom-logo' ) . '" alt="'.get_bloginfo('name').'">';
+    if ( apply_filters( 'hu_display_header_logo', hu_is_checked('display-header-logo') && false != hu_get_img_src_from_option( 'custom-logo' ) ) ) {
+      $logo_src = apply_filters( 'hu_header_logo_src' , hu_get_img_src_from_option( 'custom-logo' ) );
+      $logo_title = '<img src="'. $logo_src . '" alt="' .get_bloginfo('name'). '">';
     } else {
-      $logo = get_bloginfo('name');
+      $logo_title = get_bloginfo('name');
     }
 
-    $link = '<a class="custom-logo-link" href="'.home_url('/').'" rel="home">'.$logo.'</a>';
+    $link = '<a class="custom-logo-link" href="'.home_url('/').'" rel="home">'.$logo_title.'</a>';
 
     if ( hu_is_home() ) {
       $sitename = '<h1 class="site-title">'.$link.'</h1>'."\n";
@@ -228,7 +280,7 @@ if ( ! function_exists( 'hu_site_title' ) ) {
       $sitename = '<p class="site-title">'.$link.'</p>'."\n";
     }
 
-    return apply_filters('hu_logo_title', $sitename, $logo );
+    return apply_filters('hu_logo_title', $sitename, $logo_title );
   }
 
 }
@@ -354,9 +406,10 @@ if ( ! function_exists( 'hu_blog_title' ) ) {
     $subheading =  wp_kses_post( hu_get_option('blog-subheading') );
     $subheading = $subheading ? $subheading : __('Blog', 'hueman');
 
-    return sprintf('%1$s <span class="hu-blog-subheading">%2$s</span>',
-      $heading,
-      $subheading
+    return apply_filters( 'hu_blog_title', sprintf('%1$s <span class="hu-blog-subheading">%2$s</span>',
+        $heading,
+        $subheading
+      )
     );
   }
 

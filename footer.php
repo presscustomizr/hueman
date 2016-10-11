@@ -48,7 +48,7 @@
       for ( $i = 1; $i <= $_footer_columns; $i++ ) {
         if ( $_one_widget_zone_active )
           continue;
-        if ( is_active_sidebar( "footer-{$i}" ) )
+        if ( is_active_sidebar( "footer-{$i}" ) || hu_isprevdem() )
           $_one_widget_zone_active = true;
       }//for
 
@@ -91,7 +91,7 @@
         <div class="pad group">
 
           <div class="grid one-half">
-            <?php $_footer_logo_img_src = hu_get_img_src_from_option('footer-logo'); ?>
+            <?php $_footer_logo_img_src = apply_filters( 'hu_footer_logo_src', hu_get_img_src_from_option('footer-logo') ); ?>
             <?php if ( false !== $_footer_logo_img_src && ! empty($_footer_logo_img_src) ) : ?>
               <img id="footer-logo" src="<?php echo $_footer_logo_img_src; ?>" alt="<?php get_bloginfo('name'); ?>">
             <?php endif; ?>
