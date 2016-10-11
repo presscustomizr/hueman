@@ -1,4 +1,4 @@
-# Hueman v3.2.8
+# Hueman v3.2.9
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > Hueman is a mobile friendly WordPress theme for blogs, magazines and business websites. It's been designed to beautifully display pictures and text content, and engineered to be easy to use and fast. The Hueman theme helps you attract and retain more visitors, that's why it's already used by 70K+ active websites in the world and has received hundreds of five stars ratings.
@@ -73,6 +73,17 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 # Changelog
+= 3.2.9 October 11th 2016 =
+* fixed : WP embed not displayed correctly #298
+* fixed : the saved item of mono item module has to be cast to array #323
+* fixed : <code> blocks not formatted in comments fix #322
+* fixed : WP embed not displayed correctly #298
+* added : better demo placeholder thumbnail
+* improved : replaced hu_is_child() by WP core function
+* improved : placeholder thumb style
+* improved : customizer js code updates
+* removed :  custom.css File From Theme. A  better option is for the user to install a child theme or use a plugin. #319
+
 = 3.2.8 September 29th 2016 =
 * improved : remove unused code
 * improved : set avatar size to 48px by default, like the stylesheet.apply_filters('hu_avatar_size', 48 )

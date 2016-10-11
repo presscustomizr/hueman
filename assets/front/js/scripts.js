@@ -959,7 +959,7 @@ if (!Array.prototype.map) {
   var pluginName = 'animateSvg',
       defaults = {
         filter_opacity : 0.8,
-        svg_opacity : 0.5
+        svg_opacity : 0.8
       },
       _drawSvgIcon = function(options) {
           var id = $(this).attr('id');
