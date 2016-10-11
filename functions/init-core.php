@@ -1293,19 +1293,21 @@ add_filter( 'embed_oembed_html', 'hu_embed_wmode_transparent', 10, 3 );
 /*  Add responsive container to embeds
 /* ------------------------------------ */
 if ( ! function_exists( 'hu_embed_html' ) ) {
-
   function hu_embed_html( $html, $url ) {
-
-    $pattern    = '/^https?:\/\/(www\.)?twitter\.com/';
-    $is_twitter = preg_match( $pattern, $url );
-
-    if ( 1 === $is_twitter ) {
+    require_once( ABSPATH . WPINC . '/class-oembed.php' );
+    $wp_oembed = _wp_oembed_get_object();
+    $provider = $wp_oembed -> get_provider( $url, $args = '' );
+    if ( ! $provider || false === $data = $wp_oembed->fetch( $provider, $url, $args ) ) {
       return $html;
     }
-
-    return '<div class="video-container">' . $html . '</div>';
+    $type = $data -> type;
+    switch( $type ) {
+        case 'video' :
+          $html = sprintf('<div class="video-container">%1$s</div>', $html );
+        break;
+    }
+    return $html;
   }
-
 }
 add_filter( 'embed_oembed_html', 'hu_embed_html', 10, 3 );
 
