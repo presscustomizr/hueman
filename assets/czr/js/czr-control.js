@@ -3053,8 +3053,6 @@ $.extend( CZRItemMths , {
         item.contentRendered = $.Deferred();
         $.extend( item, options || {} );
         item.defaultItemModel = _.clone( options.defaultItemModel ) || { id : '', title : '' };
-
-        console.log('options.initial_item_model', options.initial_item_model );
         var _initial_model = $.extend( item.defaultItemModel, options.initial_item_model );
         item.set( _initial_model );
         item.userEventMap = new api.Value( [
@@ -3249,7 +3247,6 @@ $.extend( CZRItemMths , {
                 item.czr_ItemState.callbacks.add( function( to, from ) {
                     item.toggleItemExpansion.apply(item, arguments );
                 });
-                console.log('ALORS ITEM MODEL?', item_model, item() );
                 $.when( item.renderItemContent( item_model ) ).done( function( $_item_content ) {
                       _updateItemContentDeferred( $_item_content, true );
                 });
@@ -3397,7 +3394,6 @@ $.extend( CZRModuleMths, {
         if ( _.isUndefined(constructorOptions.control) || _.isEmpty(constructorOptions.control) ) {
             throw new Error('No control assigned to module ' + id );
         }
-        console.log('MODULE constructorOptions', constructorOptions);
         var module = this;
         api.Value.prototype.initialize.call( this, null, constructorOptions );
         module.isReady = $.Deferred();
