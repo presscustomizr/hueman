@@ -2267,6 +2267,30 @@ $.extend( CZRSkopeMths, {
                     s_ = isTooLong ? string.substr(0,n-1) : string;
                     s_ = (useWordBoundary && isTooLong) ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
                 return  isTooLong ? s_ + '...' : s_;
+        },
+        isMultiItemModule : function( module_type, moduleInst ) {
+              if ( _.isUndefined( module_type ) && ! _.isObject( moduleInst ) )
+                return;
+              if ( _.isObject( moduleInst ) && _.has( moduleInst, 'module_type' ) )
+                module_type = moduleInst.module_type;
+              else if ( _.isUndefined( module_type ) || _.isNull( module_type ) )
+                return;
+              if ( ! _.has( api.czrModuleMap, module_type ) )
+                return;
+
+              return api.czrModuleMap[module_type].crud || api.czrModuleMap[module_type].multi_item || false;
+        },
+        isCrudModule : function( module_type, moduleInst ) {
+              if ( _.isUndefined( module_type ) && ! _.isObject( moduleInst ) )
+                return;
+              if ( _.isObject( moduleInst ) && _.has( moduleInst, 'module_type' ) )
+                module_type = moduleInst.module_type;
+              else if ( _.isUndefined( module_type ) || _.isNull( module_type ) )
+                return;
+              if ( ! _.has( api.czrModuleMap, module_type ) )
+                return;
+
+              return api.czrModuleMap[module_type].crud || false;
         }
 
   });//$.extend
@@ -3029,6 +3053,8 @@ $.extend( CZRItemMths , {
         item.contentRendered = $.Deferred();
         $.extend( item, options || {} );
         item.defaultItemModel = _.clone( options.defaultItemModel ) || { id : '', title : '' };
+
+        console.log('options.initial_item_model', options.initial_item_model );
         var _initial_model = $.extend( item.defaultItemModel, options.initial_item_model );
         item.set( _initial_model );
         item.userEventMap = new api.Value( [
@@ -3223,6 +3249,7 @@ $.extend( CZRItemMths , {
                 item.czr_ItemState.callbacks.add( function( to, from ) {
                     item.toggleItemExpansion.apply(item, arguments );
                 });
+                console.log('ALORS ITEM MODEL?', item_model, item() );
                 $.when( item.renderItemContent( item_model ) ).done( function( $_item_content ) {
                       _updateItemContentDeferred( $_item_content, true );
                 });
@@ -3370,6 +3397,7 @@ $.extend( CZRModuleMths, {
         if ( _.isUndefined(constructorOptions.control) || _.isEmpty(constructorOptions.control) ) {
             throw new Error('No control assigned to module ' + id );
         }
+        console.log('MODULE constructorOptions', constructorOptions);
         var module = this;
         api.Value.prototype.initialize.call( this, null, constructorOptions );
         module.isReady = $.Deferred();
@@ -3484,18 +3512,10 @@ $.extend( CZRModuleMths, {
         return _.has( module, 'sektion_id' );
   },
   isMultiItem : function() {
-        var module = this;
-        if ( ! _.has( api.czrModuleMap, module.module_type ) )
-          return;
-
-        return api.czrModuleMap[module.module_type].crud || api.czrModuleMap[module.module_type].multi_item || false;
+        return api.CZR_Helpers.isMultiItemModule( null, this );
   },
   isCrud : function() {
-        var module = this;
-        if ( ! _.has( api.czrModuleMap, module.module_type ) )
-          return;
-
-        return api.czrModuleMap[module.module_type].crud || false;
+        return api.CZR_Helpers.isCrudModule( null, this );
   }
 });//$.extend//CZRBaseControlMths//MULTI CONTROL CLASS
 
@@ -6112,6 +6132,7 @@ $.extend( CZRBaseModuleControlMths, {
                 });
           } else {
                 var single_module = {};
+                console.log('control.getSavedModules()', control.getSavedModules() );
                 _.each( control.getSavedModules() , function( _mod, _key ) {
                       single_module = _mod;
                       control.instantiateModule( _mod, {} );
@@ -6174,11 +6195,15 @@ $.extend( CZRBaseModuleControlMths, {
   },
   getSavedModules : function() {
           var control = this,
-              savedModules = [];
+              savedModules = [],
+              _module_type = control.params.module_type;
           if ( control.isMultiModuleControl() ) {
               savedModules = $.extend( true, [], api(control.id)() );//deep clone
           } else {
-             var _saved_items = _.isArray( api(control.id)() ) ? api(control.id)() : [];
+              if ( api.CZR_Helpers.isMultiItemModule( _module_type ) && ! _.isEmpty( api(control.id)() ) && ! _.isObject( api(control.id)() ) ) {
+                  api.consoleLog('Module Control Init for ' + control.id + '  : a mono item module control value should be an object if not empty.');
+              }
+              var _saved_items = _.isArray( api(control.id)() ) ? api(control.id)() : [ api(control.id)() ];
               savedModules.push(
                     {
                       id : api.CZR_Helpers.getOptionName( control.id ) + '_' + control.params.type,
