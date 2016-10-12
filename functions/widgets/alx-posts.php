@@ -82,11 +82,7 @@ class AlxPosts extends WP_Widget {
 			<?php if($instance['posts_thumb']) { // Thumbnails enabled? ?>
 			<div class="post-item-thumbnail">
 				<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
-					<?php if ( has_post_thumbnail() ): ?>
-						<?php hu_the_post_thumbnail('thumb-medium'); ?>
-					<?php else: ?>
-						<?php hu_print_placeholder_thumb(); ?>
-					<?php endif; ?>
+					<?php hu_the_post_thumbnail('thumb-medium'); ?>
 					<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fa fa-play"></i></span>'; ?>
 					<?php if ( has_post_format('audio') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fa fa-volume-up"></i></span>'; ?>
 					<?php if ( is_sticky() ) echo'<span class="thumb-icon small"><i class="fa fa-star"></i></span>'; ?>

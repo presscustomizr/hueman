@@ -1,7 +1,7 @@
 <?php if ( has_post_thumbnail() ): ?>
   <div class="page-image">
   	<div class="image-container">
-  		<?php hu_the_post_thumbnail('thumb-large'); ?>
+  		<?php hu_the_post_thumbnail('thumb-large', '', false );//no attr and no placeholder ?>
   		<?php
   			$caption = get_post(get_post_thumbnail_id())->post_excerpt;
   			$description = get_post(get_post_thumbnail_id())->post_content;
