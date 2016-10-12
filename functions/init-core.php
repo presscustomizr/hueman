@@ -1,4 +1,65 @@
 <?php
+/* ------------------------------------------------------------------------- *
+ *  Some useful constants
+/* ------------------------------------------------------------------------- */
+//get WP_Theme object of Hueman
+$hu_theme                     = wp_get_theme();
+
+
+//Get infos from parent theme if using a child theme
+$hu_theme = $hu_theme -> parent() ? $hu_theme -> parent() : $hu_theme;
+
+$hu_base_data['prefix']       = $hu_base_data['title'] = $hu_theme -> name;
+$hu_base_data['version']      = $hu_theme -> version;
+$hu_base_data['authoruri']    = $hu_theme -> {'Author URI'};
+
+
+//HUEMAN_VER is the Version
+if( ! defined( 'HUEMAN_VER' ) )      define( 'HUEMAN_VER' , $hu_base_data['version'] );
+//HU_BASE is the root server path of the parent theme
+if( ! defined( 'HU_BASE' ) )            define( 'HU_BASE' , get_template_directory().'/' );
+//HU_BASE_CHILD is the root server path of the child theme
+if( ! defined( 'HU_BASE_CHILD' ) )      define( 'HU_BASE_CHILD' , get_stylesheet_directory().'/' );
+//HU_BASE_URL http url of the loaded parent theme
+if( ! defined( 'HU_BASE_URL' ) )        define( 'HU_BASE_URL' , get_template_directory_uri() . '/' );
+//HU_BASE_URL_CHILD http url of the loaded child theme
+if( ! defined( 'HU_BASE_URL_CHILD' ) )  define( 'HU_BASE_URL_CHILD' , get_stylesheet_directory_uri() . '/' );
+//THEMENAME contains the Name of the currently loaded theme. Will always be the parent theme name is a child theme is activated.
+if( ! defined( 'THEMENAME' ) )       define( 'THEMENAME' , $hu_base_data['title'] );
+//TEXT DOMAIN FOR TRANSLATIONS
+if( ! defined( 'THEME_TEXT_DOM' ) )       define( 'THEME_TEXT_DOM' , 'hueman' );
+//HU_OPTION_GROUP contains the Name of the hueman theme options in wp_options
+//=> was previously option tree default name
+if( ! defined( 'HU_THEME_OPTIONS' ) ) define( 'HU_THEME_OPTIONS' , apply_filters( 'hu_theme_options', 'hu_theme_options' ) );
+
+if( ! defined( 'HU_OPT_AJAX_ACTION' ) ) define( 'HU_OPT_AJAX_ACTION' , 'hu_get_option' );
+
+if( ! defined( 'HU_SKOP_ON' ) ) define( 'HU_SKOP_ON' , false );
+if( ! defined( 'HU_SEK_ON' ) ) define( 'HU_SEK_ON' , false );
+
+//HU_IS_PRO
+if( ! defined( 'HU_IS_PRO' ) ) define( 'HU_IS_PRO' , file_exists( HU_BASE . 'functions/init-pro.php' ) && "hueman-pro" == sanitize_file_name( strtolower($hu_theme -> name) ) );
+
+//HU_WEBSITE is the home website of Hueman
+if( ! defined( 'HU_WEBSITE' ) )         define( 'HU_WEBSITE' , $hu_base_data['authoruri'] );
+
+
+
+
+/* ------------------------------------------------------------------------- *
+ *  Demo
+/* ------------------------------------------------------------------------- */
+//@return bool
+function hu_isprevdem() {
+  $_active_theme = hu_get_raw_option( 'template' );
+  return apply_filters( 'hu_isprevdem', ( $_active_theme != strtolower(THEMENAME) && ! is_child_theme() ) );
+}
+
+if ( hu_isprevdem() ) {
+  load_template( get_template_directory() . '/functions/prevdem/init-prevdem.php' );
+}
+
+
 /****************************************************************************
 ****************************** HELPERS **************************************
 *****************************************************************************/
@@ -132,19 +193,17 @@ function hu_user_started_before_version( $_ver ) {
 * @return bool
 */
 function hu_has_nav_menu( $_location ) {
-  if ( has_nav_menu( $_location ) || ! in_array( $_location, array( 'header', 'footer') ) )
-    return has_nav_menu( $_location );
   $bool = false;
-  switch ($_location) {
-    case 'header':
-      $bool = hu_is_checked( "default-menu-{$_location}" );
-    break;
-
-    case 'footer':
-      $bool = hu_isprevdem();
-    break;
+  if ( has_nav_menu( $_location ) || ! in_array( $_location, array( 'header', 'footer') ) ) {
+    $bool = has_nav_menu( $_location );
+  } else {
+    switch ($_location) {
+      case 'header':
+        $bool = hu_is_checked( "default-menu-{$_location}" );
+      break;
+    }
   }
-  return $bool;
+  return apply_filters( 'hu_has_nav_menu', $bool, $_location );
 }
 
 
@@ -162,12 +221,6 @@ function hu_get_raw_option( $opt_name = null, $opt_group = null ) {
     return isset( $alloptions[$opt_name] ) ? maybe_unserialize($alloptions[$opt_name]) : false;
 }
 
-
-//@return bool
-function hu_isprevdem() {
-  $_active_theme = hu_get_raw_option( 'template' );
-  return apply_filters( 'hu_isprevdem', ( $_active_theme != strtolower(THEMENAME) && ! is_child_theme() ) );
-}
 
 
 /* ------------------------------------------------------------------------- *
@@ -276,17 +329,24 @@ function hu_get_img_src_from_option( $option_name ) {
 
 
 /**
-* wrapper of the_post_thumbnail
+* Wrapper of the_post_thumbnail
+* It also handles the placeholder image if requested and option checked
 * => the goal is to "scope" the filter the thumbnail html only to the Hueman theme.
 * => avoid potential conflict with plugins
+*
 * @echo html
 */
-function hu_the_post_thumbnail( $size = 'post-thumbnail', $attr = '' ) {
+function hu_the_post_thumbnail( $size = 'post-thumbnail', $attr = '', $placeholder = true ) {
+  $html = '';
   $post = get_post();
-  if ( ! $post ) {
-    return '';
+  if ( ! $post || ! has_post_thumbnail() ) {
+    if ( hu_is_checked('placeholder') && (bool)$placeholder ) {
+      $html = hu_get_placeholder_thumb( $size );
+    }
+  } else {
+    $html = get_the_post_thumbnail( null, $size, $attr );
   }
-  $html = get_the_post_thumbnail( null, $size, $attr );
+
   echo apply_filters( 'hu_post_thumbnail_html', $html, $size, $attr );
 }
 
@@ -318,53 +378,6 @@ add_filter('ot_theme_options_menu_title', 'hu_change_option_tree_title');
 function hu_change_option_tree_title() {
   return __('Theme Options [OLD]', 'hueman');
 }
-
-
-
-
-/* ------------------------------------------------------------------------- *
- *  Define some useful constants
-/* ------------------------------------------------------------------------- */
-//get WP_Theme object of Hueman
-$hu_theme                     = wp_get_theme();
-
-
-//Get infos from parent theme if using a child theme
-$hu_theme = $hu_theme -> parent() ? $hu_theme -> parent() : $hu_theme;
-
-$hu_base_data['prefix']       = $hu_base_data['title'] = $hu_theme -> name;
-$hu_base_data['version']      = $hu_theme -> version;
-$hu_base_data['authoruri']    = $hu_theme -> {'Author URI'};
-
-
-//HUEMAN_VER is the Version
-if( ! defined( 'HUEMAN_VER' ) )      define( 'HUEMAN_VER' , $hu_base_data['version'] );
-//HU_BASE is the root server path of the parent theme
-if( ! defined( 'HU_BASE' ) )            define( 'HU_BASE' , get_template_directory().'/' );
-//HU_BASE_CHILD is the root server path of the child theme
-if( ! defined( 'HU_BASE_CHILD' ) )      define( 'HU_BASE_CHILD' , get_stylesheet_directory().'/' );
-//HU_BASE_URL http url of the loaded parent theme
-if( ! defined( 'HU_BASE_URL' ) )        define( 'HU_BASE_URL' , get_template_directory_uri() . '/' );
-//HU_BASE_URL_CHILD http url of the loaded child theme
-if( ! defined( 'HU_BASE_URL_CHILD' ) )  define( 'HU_BASE_URL_CHILD' , get_stylesheet_directory_uri() . '/' );
-//THEMENAME contains the Name of the currently loaded theme. Will always be the parent theme name is a child theme is activated.
-if( ! defined( 'THEMENAME' ) )       define( 'THEMENAME' , $hu_base_data['title'] );
-//TEXT DOMAIN FOR TRANSLATIONS
-if( ! defined( 'THEME_TEXT_DOM' ) )       define( 'THEME_TEXT_DOM' , 'hueman' );
-//HU_OPTION_GROUP contains the Name of the hueman theme options in wp_options
-//=> was previously option tree default name
-if( ! defined( 'HU_THEME_OPTIONS' ) ) define( 'HU_THEME_OPTIONS' , apply_filters( 'hu_theme_options', 'hu_theme_options' ) );
-
-if( ! defined( 'HU_OPT_AJAX_ACTION' ) ) define( 'HU_OPT_AJAX_ACTION' , 'hu_get_option' );
-
-if( ! defined( 'HU_SKOP_ON' ) ) define( 'HU_SKOP_ON' , false );
-if( ! defined( 'HU_SEK_ON' ) ) define( 'HU_SEK_ON' , false );
-
-//HU_IS_PRO
-if( ! defined( 'HU_IS_PRO' ) ) define( 'HU_IS_PRO' , file_exists( HU_BASE . 'functions/init-pro.php' ) && "hueman-pro" == sanitize_file_name( strtolower($hu_theme -> name) ) );
-
-//HU_WEBSITE is the home website of Hueman
-if( ! defined( 'HU_WEBSITE' ) )         define( 'HU_WEBSITE' , $hu_base_data['authoruri'] );
 
 
 
@@ -1585,65 +1598,4 @@ if ( ! function_exists('alx_sidebar_primary') ) {
   function alx_sidebar_primary() {
     return 'primary';
   }
-}
-
-
-/* ------------------------------------------------------------------------- *
- *  Demo
-/* ------------------------------------------------------------------------- */
-if ( hu_isprevdem() ) {
-    add_filter('hu_display_header_logo', '__return_true');
-    add_filter('hu_header_logo_src', 'hu_prevdem_logo' );
-    add_filter('hu_footer_logo_src', 'hu_prevdem_logo' );
-    function hu_prevdem_logo( $_src ) {
-      $logo_path = 'assets/front/img/demo/logo/logo.png';
-      if ( file_exists( HU_BASE . $logo_path ) )
-        return get_template_directory_uri() . '/' . $logo_path;
-      return $_src;
-    }
-    add_filter('hu_blog_title', 'hu_prevdem_blogheading');
-    function hu_prevdem_blogheading() {
-        return sprintf('%1$s <span class="hu-blog-subheading">%2$s</span>',
-            "THE BLOG",
-            "WHAT'S NEW?"
-        );
-    }
-
-    add_filter('hu_opt_social-links', 'hu_prevdem_socials');
-    function hu_prevdem_socials() {
-      $def_social = array(
-          'title' => '',
-          'social-icon' => '',
-          'social-link' => '',
-          'social-color' => 'rgba(255,255,255,0.7)',
-          'social-target' => 1
-      );
-      $raw = array(
-            array(
-                'title' => 'Follow us on Twitter',
-                'social-icon' => 'fa-twitter'
-            ),
-            array(
-                'title' => 'Follow us on Facebook',
-                'social-icon' => 'fa-facebook'
-            ),
-            array(
-                'title' => 'Follow us on Linkedin',
-                'social-icon' => 'fa-linkedin'
-            ),
-            array(
-                'title' => 'Follow us on Google',
-                'social-icon' => 'fa-google'
-            ),
-            array(
-                'title' => 'Rss feed',
-                'social-icon' => 'fa-rss'
-            )
-      );
-      $socials = array();
-      foreach ( $raw as $key => $data) {
-        $socials[] = wp_parse_args( $data, $def_social );
-      }
-      return $socials;
-    }
 }

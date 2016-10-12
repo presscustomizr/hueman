@@ -48,7 +48,7 @@
       for ( $i = 1; $i <= $_footer_columns; $i++ ) {
         if ( $_one_widget_zone_active )
           continue;
-        if ( is_active_sidebar( "footer-{$i}" ) || hu_isprevdem() )
+        if ( apply_filters( 'hu_is_active_footer_widget_zone', is_active_sidebar( "footer-{$i}" ), $i, $_footer_columns ) )
           $_one_widget_zone_active = true;
       }//for
 

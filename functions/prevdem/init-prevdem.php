@@ -1,0 +1,256 @@
+<?php
+/* ------------------------------------------------------------------------- *
+ *  This file is loaded when hu_isprevdem() === true
+/* ------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------- *
+ *  Footer Widgets
+/* ------------------------------------------------------------------------- */
+//print demo widgets in the footer
+add_filter('hu_is_active_footer_widget_zone', '__return_true' );
+
+
+
+/* ------------------------------------------------------------------------- *
+ *  PlaceHolder Thumbnails
+/* ------------------------------------------------------------------------- */
+add_filter('hu_placeholder_thumb_src', 'hu_filter_prevdem_placeholder_thumb_src', 10, 2 );
+function hu_filter_prevdem_placeholder_thumb_src( $_src, $_size ) {
+  if ( ! apply_filters( 'hu-use-svg-thumb-placeholder', true ) )
+    return $_src;
+  return hu_get_prevdem_img_src( $_size );
+}
+add_filter('hu_placeholder_thumb_filter', 'hu_filter_prevdem_placeholder_thumb_filter' );
+function hu_filter_prevdem_placeholder_thumb_filter() {
+  return '<span class="filter-placeholder"></span>';
+}
+
+/* Placeholder thumb helper
+*  @return a random img src string
+*  Can be recursive if a specific img size is not found
+*/
+function hu_get_prevdem_img_src( $_size = 'thumb-medium', $i = 0 ) {
+    //prevent infinite loop
+    if ( 10 == $i ) {
+      return;
+    }
+    $sizes_suffix_map = array(
+        'thumb-small'     => '160x160',
+        'thumb-medium'    => '520x245',
+        'thumb-standard'  => '320x320'
+    );
+    $requested_size = isset( $sizes_suffix_map[$_size] ) ? $sizes_suffix_map[$_size] : '520x245';
+    $path = HU_BASE . 'assets/front/img/demo/';
+    //Build or re-build the global dem img array
+    if ( ! isset( $GLOBALS['prevdem_img'] ) || empty( $GLOBALS['prevdem_img'] ) ) {
+        if ( is_dir( $path ) ) {
+          $imgs = scandir( $path );
+        }
+        $candidates = array();
+        if ( ! $imgs )
+          return array();
+
+        foreach ( $imgs as $img ) {
+          if ( '.' === $img[0] || is_dir( $path . $img ) ) {
+            continue;
+          }
+          $candidates[] = $img;
+        }
+        $GLOBALS['prevdem_img'] = $candidates;
+    }
+    $candidates = $GLOBALS['prevdem_img'];
+    //get a random image name
+    $rand_key = array_rand($candidates);
+    $img_name = $candidates[ $rand_key ];
+    //extract img prefix
+    $img_prefix_expl = explode( '-', $img_name );
+    $img_prefix = $img_prefix_expl[0];
+
+    $requested_size_img_name = "{$img_prefix}-{$requested_size}.jpg";
+    //if file does not exists, reset the global and recursively call it again
+    if ( ! file_exists( $path . $requested_size_img_name ) ) {
+      unset( $GLOBALS['prevdem_img'] );
+      $i++;
+      return hu_get_prevdem_img_src( $_size, $i );
+    }
+    //unset all sizes of the img found and update the global
+    $new_candidates = $candidates;
+    foreach ( $candidates as $_key => $_img ) {
+      if ( substr( $_img , 0, strlen( "{$img_prefix}-" ) ) == "{$img_prefix}-" ) {
+        unset( $new_candidates[$_key] );
+      }
+    }
+    $GLOBALS['prevdem_img'] = $new_candidates;
+    return get_template_directory_uri() . '/assets/front/img/demo/' . $requested_size_img_name;
+}
+
+
+
+
+
+/* ------------------------------------------------------------------------- *
+ *  Sidebars Widgets
+/* ------------------------------------------------------------------------- */
+add_action('__before_print_dynamic_sidebar', 'hu_maybe_print_prevdem_widgets', 10, 2 );
+//@param $sidebars_widgets = wp_get_sidebars_widgets()
+//@param $_zone_id = id of the widget zone, ex : primary
+function hu_maybe_print_prevdem_widgets( $sidebars_widgets, $_zone_id ) {
+     //stop here is the zone id has already been populated with widgets
+    if ( array_key_exists( $_zone_id, $sidebars_widgets ) && is_array( $sidebars_widgets[$_zone_id] ) && ! empty($sidebars_widgets[$_zone_id] ) )
+      return;
+
+    //we only want to print default widgets in primary and secondary sidebars
+    if ( ! in_array( $_zone_id, array( 'primary', 'secondary', 'footer-1', 'footer-2', 'footer-3') ) )
+      return;
+
+    $_widgets_to_print = array();
+    switch ($_zone_id) {
+      case 'primary':
+        $_widgets_to_print[] = array(
+          'AlxPosts' => array(
+            'args' => array('before_title' => sprintf('<h3 class="widget-title">%s</h3>', __( 'Discover', 'hueman') ) )
+          )
+        );
+      break;
+      case 'secondary':
+        $_widgets_to_print[] = array(
+          'AlxTabs' => array(
+            'args' => array('before_title' => sprintf('<h3 class="widget-title">%s</h3>', __( 'Recommended', 'hueman') ) )
+          )
+        );
+      break;
+      case 'footer-1':
+        $_widgets_to_print[] = array(
+          'WP_Widget_Recent_Posts' => array(
+            'instance' => array(
+              'title' => __( 'RECENT POSTS', 'hueman'),
+              'number' => 4
+            ),
+            'args' => array(
+              //'before_title' => sprintf('<h3 class="widget-title">%s</h3>', __( 'Recent Posts', 'hueman') )
+            )
+          )
+        );
+      break;
+      case 'footer-2':
+        $_widgets_to_print[] = array(
+          'WP_Widget_Recent_Comments' => array(
+            'instance' => array(
+              'title' => __( 'RECENT COMMENTS', 'hueman'),
+              'number' => 4
+            ),
+            'args' => array(
+              //'before_title' => sprintf('<h3 class="widget-title">%s</h3>', __( 'Recent Posts', 'hueman') )
+            )
+          )
+        );
+      break;
+      case 'footer-3':
+        $_widgets_to_print[] = array(
+          'AlxTabs' => array(
+            'instance' => array(
+              'recent_enable'   => 0,
+              'comments_enable'   => 0,
+              'tags_enable'     => 0,
+              'popular_num' => 2,
+            ),
+            'args' => array('before_title' => sprintf('<h3 class="widget-title"><strong>%s</strong></h3>', __( 'HIGHLIGHTS', 'hueman') ) )
+          )
+        );
+      break;
+    }
+    if ( empty($_widgets_to_print) )
+      return;
+
+    //find the widget instance ids
+    $_wgt_instances = array();
+
+    foreach ( $_widgets_to_print as $_wgt ) {
+      foreach (  $_wgt as $_class => $params ) {
+          if ( class_exists( $_class) ) {
+            $_instance = isset( $params['instance'] ) ? $params['instance'] : array();
+            $_args = isset( $params['args'] ) ? $params['args'] : array();
+            the_widget( $_class, $_instance, $_args );
+          }
+      }
+    }
+}
+
+/* ------------------------------------------------------------------------- *
+ *  Nav Menu
+/* ------------------------------------------------------------------------- */
+add_filter('hu_has_nav_menu', 'hu_display_prevdem_footer_menu', 10, 2 );
+function hu_display_prevdem_footer_menu( $bool, $_location ) {
+    switch ($_location) {
+      case 'footer':
+        $bool = true;
+      break;
+    }
+    return $bool;
+}
+
+/* ------------------------------------------------------------------------- *
+ *  Header and Footer Logo
+/* ------------------------------------------------------------------------- */
+add_filter('hu_display_header_logo', '__return_true');
+add_filter('hu_header_logo_src', 'hu_prevdem_logo' );
+add_filter('hu_footer_logo_src', 'hu_prevdem_logo' );
+function hu_prevdem_logo( $_src ) {
+  $logo_path = 'assets/front/img/demo/logo/logo.png';
+  if ( file_exists( HU_BASE . $logo_path ) )
+    return get_template_directory_uri() . '/' . $logo_path;
+  return $_src;
+}
+
+
+/* ------------------------------------------------------------------------- *
+ *  Blog title
+/* ------------------------------------------------------------------------- */
+add_filter('hu_blog_title', 'hu_prevdem_blogheading');
+function hu_prevdem_blogheading() {
+    return sprintf('%1$s <span class="hu-blog-subheading">%2$s</span>',
+        "THE BLOG",
+        "WHAT'S NEW?"
+    );
+}
+
+
+/* ------------------------------------------------------------------------- *
+ *  Social Links
+/* ------------------------------------------------------------------------- */
+add_filter('hu_opt_social-links', 'hu_prevdem_socials');
+function hu_prevdem_socials() {
+  $def_social = array(
+      'title' => '',
+      'social-icon' => '',
+      'social-link' => '',
+      'social-color' => 'rgba(255,255,255,0.7)',
+      'social-target' => 1
+  );
+  $raw = array(
+        array(
+            'title' => 'Follow us on Twitter',
+            'social-icon' => 'fa-twitter'
+        ),
+        array(
+            'title' => 'Follow us on Facebook',
+            'social-icon' => 'fa-facebook'
+        ),
+        array(
+            'title' => 'Follow us on Linkedin',
+            'social-icon' => 'fa-linkedin'
+        ),
+        array(
+            'title' => 'Follow us on Google',
+            'social-icon' => 'fa-google'
+        ),
+        array(
+            'title' => 'Rss feed',
+            'social-icon' => 'fa-rss'
+        )
+  );
+  $socials = array();
+  foreach ( $raw as $key => $data) {
+    $socials[] = wp_parse_args( $data, $def_social );
+  }
+  return $socials;
+}
