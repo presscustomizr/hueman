@@ -97,6 +97,14 @@ function hu_get_option( $option_id, $default = '' ) {
 
 
 /* ------------------------------------------------------------------------- *
+ *  Sidebars and Widgets Init
+ *  => Loads Custom Widgets
+ *  => Registers sidebars
+/* ------------------------------------------------------------------------- */
+load_template( get_template_directory() . '/functions/init-sidebars-widgets.php' );
+
+
+/* ------------------------------------------------------------------------- *
  *  Retro compatibility process and functions
 /* ------------------------------------------------------------------------- */
 load_template( get_template_directory() . '/functions/init-retro-compat.php' );
@@ -133,13 +141,6 @@ load_template( get_template_directory() . '/functions/init-after-setup-theme.php
 load_template( get_template_directory() . '/functions/init-plugins-compat.php' );
 
 
-/* ------------------------------------------------------------------------- *
- *  Sidebars and Widgets Init
- *  => Loads Custom Widgets
- *  => Registers sidebars
-/* ------------------------------------------------------------------------- */
-load_template( get_template_directory() . '/functions/init-sidebars-widgets.php' );
-
 
 /* ------------------------------------------------------------------------- *
  *   WP Core Filters : upload_mimes, embeds, image_resize_dimensions, widget_text
@@ -172,3 +173,5 @@ if ( hu_is_customizing() ) {
 load_template( get_template_directory() . '/functions/init-front.php' );
 // Load dynamic styles
 load_template( get_template_directory() . '/functions/dynamic-styles.php' );
+
+do_action('hu_hueman_loaded');
