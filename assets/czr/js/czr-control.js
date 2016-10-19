@@ -645,11 +645,33 @@ $.extend( CZRSkopeBaseMths, {
           });
           if ( _.isUndefined( _.findWhere( api.czr_currentSkopesCollection(), {id : api.czr_activeSkope() } ) ) )
             api.czr_activeSkope( self.getActiveSkope( _new_collection ) );
+          var _activeSkopeNum = _.size( _new_collection ),
+              _setLayoutClass = function( _skp_instance ) {
+                    var _newClasses = _skp_instance.container.attr('class').split(' ');
+                    _.each( _skp_instance.container.attr('class').split(' '), function( _c ) {
+                          if ( 'width-' == _c.substring( 0, 6) ) {
+                              _newClasses = _.without( _newClasses, _c );
+                          }
+                    });
+                    $.when( _skp_instance.container.attr('class', _newClasses.join(' ') ) )
+                          .done( function() {
+                                _skp_instance.container.addClass( 'width-' + ( Math.round( 100 / _activeSkopeNum ) ) );
+                          });
+              };
           api.czr_skope.each( function( _skp_instance ){
-              if ( _.isUndefined( _.findWhere( _new_collection, { id : _skp_instance().id } ) ) )
-                _skp_instance.visible(false);
-              else
-                _skp_instance.visible(true);
+                if ( _.isUndefined( _.findWhere( _new_collection, { id : _skp_instance().id } ) ) ) {
+                      _skp_instance.visible(false);
+                }
+                else {
+                      _skp_instance.visible(true);
+                      if ( 'pending' == _skp_instance.embedded.state() ) {
+                            _skp_instance.embedded.then( function() {
+                                  _setLayoutClass( _skp_instance );
+                            });
+                      } else {
+                            _setLayoutClass( _skp_instance );
+                      }
+                }
           } );
           if ( _.isEmpty(from) && ! _.isEmpty(to) )
             self.initialSkopeCollectionPopulated.resolve();

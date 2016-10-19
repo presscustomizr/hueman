@@ -1884,10 +1884,11 @@ body.czr-editing-sektion #customize-preview {
 
 
 .czr-scope-switcher {
-  width: 105%;
+  width: 100%;
   float: right;
-  position: relative;
-  right: -2%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }
 h2.czr-current-skope-title {
   font-size: 14px;
@@ -1923,11 +1924,12 @@ span.czr-skope-title {
 .czr-scope {
     float: left;
     width: 30.5%;
-    margin-left: 1.5%;
+    /*margin-left: 1.5%;*/
     background: #fff;
-    border: 1px solid #cccccc;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
+    /*border: 1px solid #cccccc;*/
+    border-top: 1px solid #cccccc;
+    /*-webkit-border-radius: 3px;
+    border-radius: 3px;*/
     overflow: hidden;
     opacity: 0.6;
     -webkit-transition: opacity .3s ease-in-out;
@@ -1936,6 +1938,12 @@ span.czr-skope-title {
     -o-transition: opacity .3s ease-in-out;
     transition: opacity .3s ease-in-out;
 }
+/* LAYOUTS */
+.czr-scope-switcher .width-100 { width: 100%; }
+.czr-scope-switcher .width-50 { width: 50%; }
+.czr-scope-switcher .width-33 { width: 33.33%; }
+.czr-scope-switcher .width-25 { width: 25%; }
+
 .czr-scope-header, .czr-scope-footer {
     width: 100%;
     min-height: 16px;
