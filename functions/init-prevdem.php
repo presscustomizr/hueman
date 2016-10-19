@@ -42,11 +42,12 @@ function hu_get_prevdem_img_src( $_size = 'thumb-medium', $i = 0 ) {
     $path = HU_BASE . 'assets/front/img/demo/';
     //Build or re-build the global dem img array
     if ( ! isset( $GLOBALS['prevdem_img'] ) || empty( $GLOBALS['prevdem_img'] ) ) {
+        $imgs = array();
         if ( is_dir( $path ) ) {
           $imgs = scandir( $path );
         }
         $candidates = array();
-        if ( ! $imgs )
+        if ( ! $imgs || empty( $imgs ) )
           return array();
 
         foreach ( $imgs as $img ) {
