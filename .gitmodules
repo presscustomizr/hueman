@@ -1,0 +1,6 @@
+[submodule "assets/czr/fmk"]
+	path = assets/czr/fmk
+	url = https://github.com/presscustomizr/themes-customizer-fmk.git
+[submodule "assets/front/js/jquery-plugins"]
+	path = assets/front/js/jquery-plugins
+	url = https://github.com/presscustomizr/front-jquery-plugins.git
