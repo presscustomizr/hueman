@@ -48,12 +48,6 @@ function hu_doing_customizer_ajax() {
 }
 
 
-//@return boolean
-function hu_is_partial_refreshed_on() {
-  return apply_filters( 'hu_partial_refresh_on', true );
-}
-
-
 /**
 * Are we in a customization context ? => ||
 * 1) Left panel ?
@@ -70,6 +64,13 @@ function hu_is_customizing() {
     hu_doing_customizer_ajax()
   ) );
 }
+
+
+//@return boolean
+function hu_is_partial_refreshed_on() {
+  return apply_filters( 'hu_partial_refresh_on', true );
+}
+
 
 /* HELPER FOR CHECKBOX OPTIONS */
 //the old options used 'on' and 'off'
