@@ -45,6 +45,86 @@ add_action('__before_content', function() {
 
       <div class="container">
           <div class="raw-option">
+            <h2>HA_SKOP_OPT() -> ha_get_sanitized_post_value( 'opt_name' ) </h2>
+            <p>
+               <pre>
+                <?php print_r( HA_SKOP_OPT() -> ha_get_sanitized_post_value( 'opt_name' ) );  ?>
+              </pre>
+            </p>
+
+            <h2>HA_SKOP_OPT() -> ha_get_sanitized_post_value( 'skope_id' ) </h2>
+            <p>
+               <pre>
+                <?php print_r(HA_SKOP_OPT() -> ha_get_sanitized_post_value( 'skope_id' ) );  ?>
+              </pre>
+            </p>
+
+            <h2>$wp_customize -> _skope_post_values </h2>
+            <p>
+               <pre>
+                <?php print_r( HA_SKOP_OPT() ->_get_skope_post_values( HA_SKOP_OPT() -> ha_get_sanitized_post_value( 'skope_id' ) ) );  ?>
+              </pre>
+            </p>
+
+            <h2>HA_SKOP_OPT() -> _get_skope_changeset_values( $skope_meta_key ) </h2>
+            <p>
+               <pre>
+                <?php
+                $skope_meta_key = HA_SKOP_OPT() -> ha_get_sanitized_post_value( 'opt_name') ;
+                print_r( HA_SKOP_OPT() -> _get_skope_changeset_values( $skope_meta_key ) );  ?>
+              </pre>
+            </p>
+
+            <h2> HA_SKOP_OPT() -> _get_skope_post_values( $skope_id ) </h2>
+            <p>
+               <pre>
+                <?php print_r( HA_SKOP_OPT() -> _get_skope_post_values( HA_SKOP_OPT() -> ha_get_sanitized_post_value( 'skope_id' ) ) );  ?>
+              </pre>
+            </p>
+
+            <h2>HA_SKOP_OPT() -> ha_get_current_customized_skope() </h2>
+            <p>
+               <pre>
+                <?php print_r( HA_SKOP_OPT() -> ha_get_current_customized_skope() );  ?>
+              </pre>
+            </p>
+
+            <h2>HA_SKOP_OPT() -> ha_get_unsanitized_customized_values() </h2>
+            <p>
+               <pre>
+                <?php print_r( HA_SKOP_OPT() -> ha_get_unsanitized_customized_values() );  ?>
+              </pre>
+            </p>
+
+            <h2>HA_SKOP_OPT() -> ha_get_customized_value( 'copyright' ) </h2>
+            <p>
+               <pre>
+                <?php print_r( HA_SKOP_OPT() -> ha_get_customized_value( 'copyright' ) );  ?>
+              </pre>
+            </p>
+
+            <h2>CHANGESET POST META HOME ? </h2>
+            <p>
+               <?php
+                $_id = $wp_customize -> changeset_post_id();
+                  ?>
+                    <pre>
+                      <?php print_r( get_post_meta( $_id , 'hueman_czr_home', true ) );  ?>
+                    </pre>
+                  <?php
+               ?>
+            </p>
+            <h2>ALL CHANGESET POST METAS </h2>
+            <p>
+               <?php
+                $_id = $wp_customize -> changeset_post_id();
+                  ?>
+                    <pre>
+                      <?php print_r( get_post_meta( $_id ) );  ?>
+                    </pre>
+                  <?php
+               ?>
+            </p>
             <h2>CHANGESET POST DATA </h2>
             <p>
               <pre>
