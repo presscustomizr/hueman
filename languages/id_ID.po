@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman v3.2.9\n"
+"Project-Id-Version: Hueman v3.2.10\n"
 "POT-Creation-Date: 2016-08-31 16:10+0200\n"
 "PO-Revision-Date: 2016-08-31 16:10+0200\n"
 "Last-Translator: \n"
