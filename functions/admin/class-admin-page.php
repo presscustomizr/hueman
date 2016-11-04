@@ -14,10 +14,11 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
       add_action( 'admin_menu'             , array( $this , 'hu_add_welcome_page' ));
       //upgrade notice
       //add_action( '__before_changelog'     , array( $this, 'hu_print_upgrade_admin_notice'));
-      //changelog
-      add_action( '__after_welcome_panel'  , array( $this , 'hu_extract_changelog' ));
       //config infos
-      add_action( '__after_welcome_panel'  , array( $this , 'hu_config_infos' ), 20 );
+      add_action( '__after_welcome_panel'  , array( $this , 'hu_config_infos' ), 10 );
+      //changelog
+      add_action( '__after_welcome_panel'  , array( $this , 'hu_print_changelog' ), 20);
+
       //build the support url
       $this -> support_url = esc_url('wordpress.org/support/theme/hueman');
       //fix #wpfooter absolute positioning in the welcome and about pages
@@ -99,7 +100,7 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
 
             <div class="about-text tc-welcome">
               <?php
-                printf( '<p><strong>%1$s %2$s</p> <p>%3$s</p><p>%4$s</strong></p>',
+                printf( '<p>%1$s %2$s</p> <p>%3$s</p><p>%4$s. <strong>%5$s</strong></p>',
                   __( "Thank you for using the Hueman WordPress theme for your website.", 'hueman' ),
                   sprintf( __( "Hueman %s has more features, is safer and more stable than ever to help you designing an awesome webdesign.", 'hueman' ), HUEMAN_VER ),
                   sprintf( __( "Since version 3.0+, all the options have been moved to the %s, allowing you to design your website safely and in live preview before publishing the changes. If you just upgraded from a lower version, you'll be able to find all your previous settings in the customizer." , "hueman" ),
@@ -107,7 +108,8 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
                   ),
                   sprintf( __( "For more informations about this new version of the theme, %s or check the changelog below", "hueman" ),
                     sprintf('<a href="%1$s" target="_blank">%2$s</a>', HU_WEBSITE . "/category/hueman-releases/", __( "read the latest release notes" , "hueman" ) )
-                  )
+                  ),
+                  sprintf('<a href="#hueman-changelog" title="%1$s">%1$s</a>', __( 'Changelog' , 'hueman' ) )
                 );
 
                 printf( '<p><strong>%1$s</strong></p>',
@@ -192,7 +194,9 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
    * Extract changelog of latest version from readme.txt file
    *
    */
-    function hu_extract_changelog() {
+    function hu_print_changelog() {
+      if ( isset($_GET['help']) )
+        return;
       if( ! file_exists(HU_BASE."readme.txt") ) {
         return;
       }
@@ -201,42 +205,33 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
         return;
       }
 
-      ob_start();
+      $html = '';
       $stylelines = explode("\n", implode('', file(HU_BASE."readme.txt")));
       $read = false;
-      $i = 0;
+      $is_title = false;
 
       foreach ($stylelines as $line) {
-        //echo 'i = '.$i.'|read = '.$read.'pos = '.strpos($line, '= ').'|line :'.$line.'<br/>';
-        //we stop reading if we reach the next version change
-        if ($i == 1 && strpos($line, '= ') === 0 ) {
-          $read = false;
-          $i = 0;
-        }
-        //we write the line if between current and previous version
-        if ($read) {
-          echo $line.'<br/>';
-        }
-        //we skip all lines before the current version changelog
-        if ($line != strpos($line, '= '.HUEMAN_VER)) {
-          if ($i == 0) {
-            $read = false;
-          }
-        }
-        //we begin to read after current version title
-        else {
-          $read = true;
-          $i = 1;
-        }
-      }
-      $html = ob_get_contents();
-      if ($html) ob_end_clean();
+          $is_title = 0 === strpos($line, '= ');
 
+          //we start reading after current version title
+          if ( 0 === strpos($line, '= '.HUEMAN_VER) ) {
+            $read = true;
+          }
+
+          if ( ! $read )
+            continue;
+
+          if ( $is_title ) {
+            $html .= sprintf( '<strong>%1$s</strong><br/>', esc_attr( $line ) );
+          } else {
+            $html .= sprintf( '<i>%1$s</i><br/>', esc_attr( $line ) );
+          }
+      }
       do_action('__before_changelog')
       ?>
 
       <div id="hueman-changelog" class="changelog">
-        <h3><?php printf( __( 'Changelog in version %1$s' , 'hueman' ) , HUEMAN_VER ); ?></h3>
+        <h3><?php printf( __( 'Changelog' , 'hueman' ) , HUEMAN_VER ); ?></h3>
           <p><?php echo $html ?></p>
       </div>
       <?php
@@ -262,27 +257,32 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
 <h4 style="text-align: left"><?php _e( 'Please include the following informations when posting support requests' , 'hueman' ) ?></h4>
 <textarea readonly="readonly" onclick="this.focus();this.select()" id="system-info-textarea" name="tc-sysinfo" title="<?php _e( 'To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'hueman' ); ?>" style="width: 800px;min-height: 800px;font-family: Menlo,Monaco,monospace;background: 0 0;white-space: pre;overflow: auto;display:block;">
 <?php do_action( '__system_config_before' ); ?>
-# SITE_URL:                 <?php echo site_url() . "\n"; ?>
-# HOME_URL:                 <?php echo home_url() . "\n"; ?>
-# IS MULTISITE :            <?php echo is_multisite() ? 'Yes' . "\n" : 'No' . "\n" ?>
+# SITE_URL:               <?php echo site_url() . "\n"; ?>
+# HOME_URL:               <?php echo home_url() . "\n"; ?>
+# IS MULTISITE :          <?php echo is_multisite() ? 'Yes' . "\n" : 'No' . "\n" ?>
 
-# THEME | VERSION :         <?php printf( '%1$s | v%2$s', $_theme -> name , HUEMAN_VER ) . "\n"; ?>
-# WP VERSION :              <?php echo get_bloginfo( 'version' ) . "\n"; ?>
-# PERMALINK STRUCTURE :     <?php echo get_option( 'permalink_structure' ) . "\n"; ?>
-
-# ACTIVE PLUGINS :
+# THEME | VERSION :       <?php echo sprintf( '%1$s | v%2$s', $_theme -> name , HUEMAN_VER ) . "\n"; ?>
+# WP VERSION :            <?php echo get_bloginfo( 'version' ) . "\n"; ?>
+# PERMALINK STRUCTURE :   <?php echo get_option( 'permalink_structure' ) . "\n"; ?>
 <?php
 $plugins = get_plugins();
 $active_plugins = get_option( 'active_plugins', array() );
+?>
+<?php if ( empty($active_plugins) ) : ?>
+# NO ACTIVE PLUGINS
+<?php else : ?>
+# <?php echo count($active_plugins); ?> ACTIVE PLUGINS :
+<?php
+  foreach ( $plugins as $plugin_path => $plugin ) {
+    // If the plugin isn't active, don't show it.
+    if ( ! in_array( $plugin_path, $active_plugins ) )
+      continue;
 
-foreach ( $plugins as $plugin_path => $plugin ) {
-  // If the plugin isn't active, don't show it.
-  if ( ! in_array( $plugin_path, $active_plugins ) )
-    continue;
-
-  echo $plugin['Name'] . ': ' . $plugin['Version'] ."\n";
-}
-
+    echo '                          - ' . $plugin['Name'] . ' (version ' . $plugin['Version'] .')' ."\n";
+  }
+?>
+<?php endif;//end if active plugins not empty ?>
+<?php
 if ( is_multisite() ) :
 ?>
 #  NETWORK ACTIVE PLUGINS:
@@ -299,7 +299,7 @@ foreach ( $plugins as $plugin_path ) {
 
   $plugin = get_plugin_data( $plugin_path );
 
-  echo $plugin['Name'] . ' :' . $plugin['Version'] ."\n";
+  echo '                          - ' . $plugin['Name'] . ' ( version ' . $plugin['Version'] .' )' ."\n";
 }
 endif;
 //GET MYSQL VERSION
@@ -307,25 +307,25 @@ global $wpdb;
 $mysql_ver =  ( ! empty( $wpdb->use_mysqli ) && $wpdb->use_mysqli ) ? @mysqli_get_server_info( $wpdb->dbh ) : '';
 ?>
 
-PHP Version:              <?php echo PHP_VERSION . "\n"; ?>
-MySQL Version:            <?php echo $mysql_ver . "\n"; ?>
-Web Server Info:          <?php echo $_SERVER['SERVER_SOFTWARE'] . "\n"; ?>
+# PHP Version:            <?php echo PHP_VERSION . "\n"; ?>
+# MySQL Version:          <?php echo $mysql_ver . "\n"; ?>
+# Web Server Info:        <?php echo $_SERVER['SERVER_SOFTWARE'] . "\n"; ?>
 
-WordPress Memory Limit:   <?php echo ( $this -> hu_let_to_num( WP_MEMORY_LIMIT )/( 1024 ) )."MB"; ?><?php echo "\n"; ?>
-PHP Memory Limit:         <?php echo ini_get( 'memory_limit' ) . "\n"; ?>
-PHP Upload Max Size:      <?php echo ini_get( 'upload_max_filesize' ) . "\n"; ?>
-PHP Post Max Size:        <?php echo ini_get( 'post_max_size' ) . "\n"; ?>
-PHP Upload Max Filesize:  <?php echo ini_get( 'upload_max_filesize' ) . "\n"; ?>
-PHP Time Limit:           <?php echo ini_get( 'max_execution_time' ) . "\n"; ?>
-PHP Max Input Vars:       <?php echo ini_get( 'max_input_vars' ) . "\n"; ?>
-PHP Arg Separator:        <?php echo ini_get( 'arg_separator.output' ) . "\n"; ?>
-PHP Allow URL File Open:  <?php echo ini_get( 'allow_url_fopen' ) ? "Yes" : "No\n"; ?>
+# WordPress Memory Limit: <?php echo ( $this -> hu_let_to_num( WP_MEMORY_LIMIT )/( 1024 ) )."MB"; ?><?php echo "\n"; ?>
+# PHP Memory Limit:       <?php echo ini_get( 'memory_limit' ) . "\n"; ?>
+# PHP Upload Max Size:    <?php echo ini_get( 'upload_max_filesize' ) . "\n"; ?>
+# PHP Post Max Size:      <?php echo ini_get( 'post_max_size' ) . "\n"; ?>
+# PHP Upload Max Filesize:<?php echo ini_get( 'upload_max_filesize' ) . "\n"; ?>
+# PHP Time Limit:         <?php echo ini_get( 'max_execution_time' ) . "\n"; ?>
+# PHP Max Input Vars:     <?php echo ini_get( 'max_input_vars' ) . "\n"; ?>
+# PHP Arg Separator:      <?php echo ini_get( 'arg_separator.output' ) . "\n"; ?>
+# PHP Allow URL File Open:<?php echo ini_get( 'allow_url_fopen' ) ? "Yes" : "No\n"; ?>
 
-WP_DEBUG:                 <?php echo defined( 'WP_DEBUG' ) ? WP_DEBUG ? 'Enabled' . "\n" : 'Disabled' . "\n" : 'Not set' . "\n" ?>
+# WP_DEBUG:               <?php echo defined( 'WP_DEBUG' ) ? WP_DEBUG ? 'Enabled' . "\n" : 'Disabled' . "\n" : 'Not set' . "\n" ?>
 
-Show On Front:            <?php echo get_option( 'show_on_front' ) . "\n" ?>
-Page On Front:            <?php $id = get_option( 'page_on_front' ); echo get_the_title( $id ) . ' (#' . $id . ')' . "\n" ?>
-Page For Posts:           <?php $id = get_option( 'page_for_posts' ); echo get_the_title( $id ) . ' (#' . $id . ')' . "\n" ?>
+# Show On Front:          <?php echo get_option( 'show_on_front' ) . "\n" ?>
+# Page On Front:          <?php $id = get_option( 'page_on_front' ); echo get_the_title( $id ) . '(#' . $id . ')' . "\n" ?>
+# Page For Posts:         <?php $id = get_option( 'page_for_posts' ); echo get_the_title( $id ) . '(#' . $id . ')' . "\n" ?>
 <?php do_action( '__system_config_after' ); ?>
 </textarea>
 </div>
