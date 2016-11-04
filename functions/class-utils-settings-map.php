@@ -1225,7 +1225,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
               'panel'   => 'hu-content-panel'
         ),
         'content_blog_sec'         => array(
-              'title'    => __( 'Blog Design and Content', 'hueman' ),
+              'title'    => __( 'Post Lists Design and Content : Blog, Archives, Search Results', 'hueman' ),
               'priority' => 30,
               'panel'   => 'hu-content-panel',
               'active_callback' => 'hu_is_post_list'
