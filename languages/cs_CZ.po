@@ -1,14 +1,14 @@
-# Translation of Themes - Hueman in German
+# Translation of Themes - Hueman in Czech
 # This file is distributed under the same license as the Themes - Hueman package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2016-11-04 13:55+0100\n"
+"PO-Revision-Date: 2016-11-04 13:54+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Poedit 1.8.8\n"
-"Language: de\n"
+"Language: cs_CZ\n"
 "Project-Id-Version: Themes - Hueman\n"
 "POT-Creation-Date: \n"
 "Last-Translator: \n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #. Description of the plugin/theme
 msgid "Hueman is a mobile friendly WordPress theme for blogs, magazines and business websites. It's been designed to beautifully display pictures and text content, and engineered to be easy to use and fast. The Hueman theme helps you attract and retain more visitors, that's why it's already used by 70K+ active websites in the world and has received hundreds of five stars ratings."
-msgstr "Hueman ist ein Mobile-freundliches WordPress Theme für Blogs, Magazine und Business-Websites. Es wurde entwickelt um auf schöne Art und Weise Bilder und Texte darzustellen, und um leicht und schnell benutzbar zu sein. Das Hueman Theme hilft dir mehr Besucher zu erhalten und zu behalten, weshalb es bereits von über 70.000 aktiven Wesites in der Welt genutzt wird und auch hunderte von 5-Sterne Bewertungen bekommen hat."
+msgstr "Hueman je responzivní šablona pro WordPress, kterou můžete použít na osobní weby, magazíny i podnikání. Její předností je vyvážená prezentace obrázků a textového obsahu, je uživatelsky přívětivá a snadno se používá. Šablona pomůže přitáhnout a udržet více návštěvníků, o čemž hovoří fakt, že je používána na víc jak 70.000 aktivních webech a získala stovky pětihvězdičkových hodnocení."
 
 #. Theme Name of the plugin/theme
 msgid "Hueman"
@@ -44,11 +44,11 @@ msgstr ""
 
 #: functions/czr/czr-resources.php:238
 msgid "Jump to the %s."
-msgstr ""
+msgstr "Přejít na %s."
 
 #: functions/czr/czr-resources.php:235
 msgid "header image is enabled"
-msgstr ""
+msgstr "obrázek záhlaví je povolen"
 
 #: functions/czr/czr-resources.php:232
 msgid "When the %s, this element will not be displayed in your header."
@@ -56,31 +56,31 @@ msgstr ""
 
 #: functions/czr/class-czr-init.php:236
 msgid "A static page"
-msgstr ""
+msgstr "Statickou stránku"
 
 #: functions/czr/class-czr-init.php:235
 msgid "Your latest posts"
-msgstr ""
+msgstr "Nejnovější příspěvky"
 
 #: functions/czr/class-czr-init.php:234
 msgid "Don't show any posts or page"
-msgstr ""
+msgstr "Nezobrazovat žádné příspěvky ani stránky"
 
 #: functions/czr/class-czr-init.php:227
 msgid "Front Page Content"
-msgstr ""
+msgstr "Obsah úvodní stránky"
 
 #: functions/class-utils-settings-map.php:1253
 msgid "Footer Menu"
-msgstr ""
+msgstr "Menu v zápatí"
 
 #: functions/class-utils-settings-map.php:1208
 msgid "Header Menu"
-msgstr ""
+msgstr "Menu v záhlaví"
 
 #: functions/class-utils-settings-map.php:1198
 msgid "Header Design : banner image, ..."
-msgstr ""
+msgstr "Rozvržení záhlaví: banner, ..."
 
 #: functions/class-utils-settings-map.php:1128
 #: functions/class-utils-settings-map.php:1136
@@ -89,7 +89,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:726
 msgid "custom excerpt"
-msgstr ""
+msgstr "vlastní stručný výpis příspěvku"
 
 #: functions/class-utils-settings-map.php:725
 msgid "The WordPress Excerpt is the summary or description of a post. By default, it will be the first words of a post, but you can write a %s if you want. You can set the number of words you want to display with this option."
@@ -97,11 +97,11 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:717
 msgid "Post Summary"
-msgstr ""
+msgstr "Pouze několik úvodních vět"
 
 #: functions/class-utils-settings-map.php:708
 msgid "Post List Design"
-msgstr ""
+msgstr "Rozvržení seznamu příspěvků"
 
 #: functions/class-utils-settings-map.php:561
 #: functions/class-utils-settings-map.php:987
@@ -114,34 +114,34 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:172
 msgid "Display a logo in your header"
-msgstr ""
+msgstr "Zobrazit logo v záhlaví"
 
 #: functions/admin/class-tgm-plugin-activation.php:2941
 msgid "Update"
-msgstr "Update"
+msgstr "Aktualizovat"
 
 #. translators: %2$s: plugin name in screen reader markup
 #: functions/admin/class-tgm-plugin-activation.php:2832
 msgid "Activate %2$s"
-msgstr "Aktiviere %2$s"
+msgstr "Aktivovat %2$s"
 
 #. translators: %2$s: plugin name in screen reader markup
 #: functions/admin/class-tgm-plugin-activation.php:2826
 msgid "Update %2$s"
-msgstr "Update von %2$s"
+msgstr "Aktualizovat %2$s"
 
 #. translators: %2$s: plugin name in screen reader markup
 #: functions/admin/class-tgm-plugin-activation.php:2821
 msgid "Install %2$s"
-msgstr "Installiere %2$s"
+msgstr "Instalovat %2$s"
 
 #: functions/admin/class-tgm-plugin-activation.php:2771
 msgid "Version"
-msgstr "Version"
+msgstr "Verze"
 
 #: functions/admin/class-tgm-plugin-activation.php:2751
 msgid "No plugins to install, update or activate."
-msgstr "Keine Plugins zu installieren, aktualisieren, oder zu aktivieren. "
+msgstr "Žádné pluginy k instalaci, aktualizaci nebo aktivaci."
 
 #. translators: 1: install status, 2: update status
 #: functions/admin/class-tgm-plugin-activation.php:2560
@@ -156,29 +156,29 @@ msgstr "TGMPA v%s"
 
 #: functions/admin/class-tgm-plugin-activation.php:579
 msgid "There are one or more required or recommended plugins to install, update or activate."
-msgstr "Ein oder mehrere notwendige, oder empfohlene Plugins  sollten installiert, upgedated, oder aktiviert werden. "
+msgstr "Existuje jeden nebo více požadovaných nebo dorporučených pluginů k instalaci, aktualizaci, nebo aktivaci."
 
 #. translators: %s: plugin name.
 #: functions/admin/class-tgm-plugin-activation.php:514
 msgid "Updating Plugin: %s"
-msgstr "Plugin %s  wird aktualisiert"
+msgstr "Aktualizace pluginu:%s"
 
 #. translators: 1: dashboard link.
 #: functions/admin/class-tgm-plugin-activation.php:576
 msgid "All plugins installed and activated successfully. %1$s"
-msgstr " Alle Plugins erfolgreich installiert und aktiviert. %1$s"
+msgstr "Všechny pluginy byly úspěšně nainstalovány a aktivovány. %1$s"
 
 #: functions/admin/class-tgm-plugin-activation.php:1342
 msgid "Hueman Addons"
-msgstr ""
+msgstr "Doplňky šablony Hueman"
 
 #: functions/admin/class-tgm-plugin-activation.php:1332
 msgid "The plugin has been designed specifically for the Hueman WordPress theme. Lightweight and safe."
-msgstr ""
+msgstr "Plugin byl navržen speciálně pro šablonu Hueman. Optimalizovaný a bezpečný."
 
 #: functions/admin/class-tgm-plugin-activation.php:1330
 msgid "useful shortcodes"
-msgstr ""
+msgstr "užitečné shortkódy"
 
 #: functions/admin/class-tgm-plugin-activation.php:1329
 msgid "social share bar"
@@ -186,29 +186,32 @@ msgstr ""
 
 #: functions/admin/class-tgm-plugin-activation.php:1328
 msgid "The Hueman Addons is a free plugin including some cool additional features like a %1$s and %2$s."
-msgstr ""
+msgstr "Doplňky šablony Hueman zdarma přidávají zajímavé funkce jako %1$s a %2$s."
 
 #: functions/admin/class-tgm-plugin-activation.php:578
 msgid "Remind me later"
-msgstr " Später erinnern"
+msgstr "Připomenout později"
 
 #: functions/init-core.php:1508
 msgid "Activate Hueman Addons"
 msgid_plural "Activate installed plugins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Aktivovat plugin Hueman Addons"
+msgstr[1] "Aktivovat instalované pluginy"
+msgstr[2] "Aktivovat instalované pluginy"
 
 #: functions/init-core.php:1503
 msgid "The Hueman Addons plugin is currently inactive: %1$s."
 msgid_plural "The following recommended plugins are currently inactive: %1$s."
-msgstr[0] "Das Hueman-Erweiterungs-Plugin  ist momentan inaktiv: %1$s."
-msgstr[1] "Die folgenden empfohlenen Plugins sind momentan inaktiv: %1$s. "
+msgstr[0] "Plugin doplňku šablony Hueman není aktivován: %1$s."
+msgstr[1] "Následující doporučené pluginy nejsou aktivovány: %1$s."
+msgstr[2] "Následující doporučené pluginy nejsou aktivovány: %1$s."
 
 #: functions/init-core.php:1500
 msgid "The Hueman theme recommends the Hueman Addons: %1$s."
 msgid_plural "This theme recommends the following plugins: %1$s."
-msgstr[0] "Das Hueman-Theme  erfordert die Hueman- Erweiterungen: %1$s"
-msgstr[1] "Dieses Theme erfordert die folgenden Plugins: %1$s"
+msgstr[0] "Doporučený plugin k šabloně Hueman: %1$s."
+msgstr[1] "Doporučené pluginy k šabloně Hueman: %1$s."
+msgstr[2] "Doporučené pluginy k šabloně Hueman: %1$s."
 
 #: functions/plugins-compatibility.php:203
 msgid "Featured Pages"
@@ -216,7 +219,7 @@ msgstr ""
 
 #: functions/plugins-compatibility.php:218
 msgid "Footer Social Links"
-msgstr ""
+msgstr "Odkazy sociálních sítí v zápatí"
 
 #: functions/plugins-compatibility.php:216
 msgid "Sidebar Social Links"
@@ -256,11 +259,11 @@ msgstr ""
 
 #: functions/plugins-compatibility.php:207
 msgid "Post excerpt"
-msgstr ""
+msgstr "Stručný výpis příspěvku"
 
 #: functions/plugins-compatibility.php:206
 msgid "Post content"
-msgstr ""
+msgstr "Obsah příspěvku"
 
 #: functions/plugins-compatibility.php:205
 msgid "Single Page titles"
@@ -277,42 +280,42 @@ msgstr ""
 #: functions/czr/tmpl/modules/slide-module-tmpl.php:25
 #: functions/czr/tmpl/modules/slide-module-tmpl.php:62
 msgid "Enter a subtitle"
-msgstr ""
+msgstr "Zadejte podnadpis"
 
 #: functions/czr/tmpl/modules/slide-module-tmpl.php:23
 #: functions/czr/tmpl/modules/slide-module-tmpl.php:60
 msgid "Slide subtitle"
-msgstr ""
+msgstr "Podnadpis snímku"
 
 #: functions/czr/tmpl/modules/slide-module-tmpl.php:17
 #: functions/czr/tmpl/modules/slide-module-tmpl.php:54
 msgid "Slide Title"
-msgstr ""
+msgstr "Nadpis snímku"
 
 #: functions/czr/tmpl/modules/slide-module-tmpl.php:10
 #: functions/czr/tmpl/modules/slide-module-tmpl.php:47
 msgid "Slide Background"
-msgstr ""
+msgstr "Pozadí snímku"
 
 #: functions/czr/czr-resources.php:441
 msgid "New Slide created ! Scroll down to edit it."
-msgstr ""
+msgstr "Nový snímek vytvořen! Editujte níže."
 
 #: functions/czr/czr-resources.php:438
 msgid "Close Editor"
-msgstr ""
+msgstr "Zavřít editor"
 
 #: functions/class-utils.php:161
 msgid "Page %s"
-msgstr ""
+msgstr "Stránka %s"
 
 #: functions/class-utils-settings-map.php:1172
 msgid "Smooth Scroll"
-msgstr ""
+msgstr "Plynulé posouvání"
 
 #: functions/class-utils-settings-map.php:467
 msgid "Check this option to delay the loading of non visible images. Images below the viewport will be loaded dynamically on scroll. This can really boost speed performances by reducing the weight of long pages that include many images."
-msgstr ""
+msgstr "Zaškrtněte pokud chcete zpozdit načítání obrázků mimo aktuální výřez zobrazení (viewport). Obrázky pod aktuálním výřezem zobrazení budou načteny dynamicky při posouvání stránky. Výrazně zvýší rychlost načítání dlouhých stránek s mnoha obrázky."
 
 #: functions/czr/tmpl/inputs/text_editor-input-tmpl.php:29
 msgid "Resize Editor"
@@ -320,36 +323,36 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:464
 msgid "Load images on scroll"
-msgstr ""
+msgstr "Načítat obrázky při posouvání"
 
 #: functions/class-utils-settings-map.php:416
 msgid "This option enables a smoother page scroll."
-msgstr ""
+msgstr "Volba aktivuje plynulejší posouvání stránky."
 
 #: functions/class-utils-settings-map.php:413
 msgid "Enable Smooth Scrolling"
-msgstr ""
+msgstr "Aktivovat plynulé posouvání"
 
 #: functions/class-utils-settings-map.php:345
 msgid "Open external links in a new tab"
-msgstr ""
+msgstr "Otevírat externí odkazy v nové záložce"
 
 #: functions/class-utils-settings-map.php:338
 #: functions/class-utils-settings-map.php:348
 msgid "This will be applied to the links included in post or page content only."
-msgstr ""
+msgstr "Platí jen pro odkazy vložené do příspěvků a stránek."
 
 #: functions/class-utils-settings-map.php:335
 msgid "Display an icon next to external links"
-msgstr ""
+msgstr "Zobrazovat ikonu u externích odkazů"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:102
 msgid "here"
-msgstr "hier"
+msgstr "tady"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:101
 msgid "Learn more"
-msgstr ""
+msgstr "Zjistit více"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:99
 msgid "The background-size CSS property specifies the size of the background images. The size of the image can be fully constrained or only partially in order to preserve its intrinsic ratio."
@@ -361,31 +364,31 @@ msgstr ""
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:34
 msgid "Right Bottom"
-msgstr ""
+msgstr "Vpravo dole"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:33
 msgid "Right Center"
-msgstr ""
+msgstr "Vpravo uprostřed"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:32
 msgid "Right Top"
-msgstr ""
+msgstr "Vpravo nahoře"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:31
 msgid "Center Bottom"
-msgstr ""
+msgstr "Uprostřed dole"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:30
 msgid "Center Center"
-msgstr ""
+msgstr "Uprostřed"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:29
 msgid "Center Top"
-msgstr ""
+msgstr "Uprostřed nahoře"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:28
 msgid "Left Bottom"
-msgstr ""
+msgstr "Vlevo dole"
 
 #: functions/czr/czr-resources.php:428
 msgid "Select position property"
@@ -397,49 +400,49 @@ msgstr ""
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:12
 msgid "Repeat Horizontally"
-msgstr ""
+msgstr "Opakovat vodorovně"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:26
 msgid "Left Top"
-msgstr ""
+msgstr "Vlevo nahoře"
 
 #: functions/czr/tmpl/inputs/img-uploader-tmpl.php:61
 msgid "Choose Image"
-msgstr ""
+msgstr "Vybrat obrázek"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:11
 msgid "Repeat All"
-msgstr ""
+msgstr "Opakovat vše"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:10
 msgid "No Repeat"
-msgstr ""
+msgstr "Použít obrázek jenom jednou"
 
 #: functions/czr/tmpl/inputs/img-uploader-tmpl.php:55
 #: functions/czr/tmpl/inputs/img-uploader-tmpl.php:60
 msgid "Select Image"
-msgstr ""
+msgstr "Vybrat obrázek"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:20
 msgid "Scroll"
-msgstr ""
+msgstr "Posuvné"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:19
 msgid "Fixed"
-msgstr ""
+msgstr "Pevné"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:14
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:21
 msgid "Inherit"
-msgstr ""
+msgstr "Zdědit"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:13
 msgid "Repeat Vertically"
-msgstr ""
+msgstr "Opakovat svisle"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:27
 msgid "Left Center"
-msgstr ""
+msgstr "Vlevo uprostřed"
 
 #: functions/czr/czr-resources.php:426
 msgid "Select repeat property"
@@ -447,23 +450,23 @@ msgstr ""
 
 #: functions/czr/czr-resources.php:429
 msgid "Widget Zone"
-msgstr ""
+msgstr "Oblast pro widgety"
 
 #: functions/czr/tmpl/inputs/img-uploader-tmpl.php:59
 msgid "No image selected"
-msgstr ""
+msgstr "Zatím nebyl zvolen žádný obrázek"
 
 #: functions/czr/tmpl/inputs/img-uploader-tmpl.php:56
 msgid "Change Image"
-msgstr ""
+msgstr "Změnit obrázek"
 
 #: functions/init-core.php:1011
 msgid "The Footer Widget Zone is located before the other footer widgets and takes 100% of the width. Very appropriate to display a Google Map or an advertisement banner."
-msgstr ""
+msgstr "Oblast pro widgety v zápatí s plnou šířkou se nachází nad ostatními widgety zápatí a zabírá 100% šířky stránky. Vhodné místo pro zobrazení Google mapy nebo reklamního banneru."
 
 #: functions/init-core.php:1009 functions/init-core.php:1085
 msgid "Footer Full Width"
-msgstr ""
+msgstr "Zápatí s plnou šířkou"
 
 #: functions/init-core.php:1002
 msgid "The Header Widget Zone is located next to your logo or site title."
@@ -485,27 +488,27 @@ msgstr ""
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:59
 msgid "Enter the full url of your social profile (must be a valid url)."
-msgstr ""
+msgstr "Zadejte adresu sociálního profilu (musí být platnou adresou URL)."
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:21
 msgid "Enter the full url of your social profile (must be valid url)."
-msgstr ""
+msgstr "Zadejte adresu sociálního profilu (musí být platnou adresou URL)."
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:17
 msgid "Social link url"
-msgstr ""
+msgstr "Sociální síť"
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:11
 msgid "Select an icon"
-msgstr ""
+msgstr "Vybrat ikonu"
 
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:16
 msgid "Add it"
-msgstr ""
+msgstr "Přidat"
 
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:16
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušit"
 
 #: functions/czr/czr-resources.php:434
 msgid "Learn more about this in the documentation"
@@ -533,35 +536,35 @@ msgstr ""
 
 #: functions/czr/czr-resources.php:424
 msgid "Done !"
-msgstr ""
+msgstr "Hotovo!"
 
 #: functions/czr/czr-resources.php:423
 msgid "Follow us on"
-msgstr ""
+msgstr "Sledujte nás na"
 
 #: functions/czr/czr-resources.php:422
 msgid "Select a social icon"
-msgstr ""
+msgstr "Vyberte ikonu sítě"
 
 #: functions/class-utils-settings-map.php:932
 msgid "This zone is located before the other footer widgets and takes 100% of the width. Very appropriate to display a Google Map or an advertisement banner."
-msgstr ""
+msgstr "Tato oblast se nachází nad ostatními widgety zápatí a zabírá 100% šířky stránky. Vhodné místo pro zobrazení Google mapy nebo reklamního banneru."
 
 #: functions/class-utils-settings-map.php:929
 msgid "Display a full width widget area in your footer"
-msgstr ""
+msgstr "Zobrazit oblast pro widgety v zápatí s plnou šířkou"
 
 #: functions/class-utils-settings-map.php:768
 msgid "By default, your featured posts display the first words of their content ( the \"excerpt\"). Check this box to display the full content."
-msgstr ""
+msgstr "Ve výchozím nastavení se u doporučených příspěvků zobrazuje stručný výpis. Zaškrtnutím políčka se bude zobrazovat celý obsah příspěvku."
 
 #: functions/class-utils-settings-map.php:765
 msgid "Display the full post content"
-msgstr ""
+msgstr "Zobrazit celý obsah příspěvku"
 
 #: parts/single-author-date.php:13
 msgid "Published"
-msgstr "Veröffentlicht"
+msgstr "Publikováno"
 
 #: functions/init-meta-boxes.php:36
 msgid "Notes : 1)This will override any default settings of the customizer options panel. 2) The secondary sidebar is placed on the right in a 3 columns layout."
@@ -569,7 +572,7 @@ msgstr ""
 
 #: functions/init-meta-boxes.php:36
 msgid "Select a widget zone for the secondary sidebar."
-msgstr ""
+msgstr "Vybrat oblast pro widgety v podružném postranním panelu."
 
 #: functions/init-meta-boxes.php:30
 msgid "Notes : 1)This will override any default settings of the customizer options panel. 2) The primary sidebar is placed on the left in a 3 columns layout. It can be on the right in a 2 columns layout, when the content is on the left."
@@ -577,148 +580,148 @@ msgstr ""
 
 #: functions/init-meta-boxes.php:30
 msgid "Select a widget zone for the primary sidebar."
-msgstr ""
+msgstr "Vybrat oblast pro widgety v hlavním postranním panelu."
 
 #: functions/init-core.php:958
 msgid "Full width widget zone. Located in the right sidebar in a 3 columns layout."
-msgstr ""
+msgstr "Oblast pro widgety s plnou šířkou. Umístění v pravém postranním panelu 3-sloupcového rozvržení stránky."
 
 #: functions/init-core.php:949
 msgid "Full width widget zone. Located in the left sidebar in a 3 columns layout. Can be on the right of a 2 columns sidebar when content is on the left."
-msgstr ""
+msgstr "Oblast pro widgety s plnou šířkou. Umístění v levém postranním panelu 3-sloupcového rozvržení stránky. Bude umístěna vpravo, zobrazují-li se dva postranní panely a hlavní obsah je vlevo."
 
 #: functions/class-utils-settings-map.php:1187
 msgid "Hueman Admin Settings"
-msgstr ""
+msgstr "Administrační menu"
 
 #: functions/class-utils-settings-map.php:1182
 msgid "Performances and SEO"
-msgstr ""
+msgstr "Výkon a optimalizace pro vyhledávače"
 
 #: functions/class-utils-settings-map.php:493
 msgid "This button links to the \"About Hueman\" page."
-msgstr ""
+msgstr "Tlačítko odkazuje na stránku \"O šabloně Hueman\"."
 
 #: functions/class-utils-settings-map.php:490
 msgid "Display a Help button in the admin bar"
-msgstr ""
+msgstr "Zobrazit tlačítko nápovědy v horní administrační liště"
 
 #: functions/class-utils-settings-map.php:485
 msgid "This page is intended to provide informations about the Hueman theme : changelog, release note, documentation link. It also display informations about your current install that can be useful if you need to report an issue."
-msgstr ""
+msgstr "Na této stránce naleznete souhrnné informace o šabloně Hueman: seznam změn, poznámky k verzi, odkaz na dokumentaci. Jsou zde také zobrazeny informace o aktuální instalaci, které mohou být užitečné v případě kdy kontaktujete podporu. "
 
 #: functions/class-utils-settings-map.php:482
 msgid "Display the \"About Hueman\" page in the \"Appearance\" admin menu"
-msgstr ""
+msgstr "Zobrazit položku \"O šabloně Hueman\" v administračním menu \"Vzhled\" "
 
 #: functions/class-utils-settings-map.php:459
 msgid "\"Structured data markup\" is a standard way to annotate your content so machines can understand it. Implementing it will help your website rank higher in search engines."
-msgstr ""
+msgstr "Strukturovaný značkovací jazyk je standardní způsob označování obsahu tak, aby byl strojově srozumitelný. Jeho použitím se zvyšuje pravděpodobnost, že vyhledávače zobrazí web na vyšších pozicích."
 
 #: functions/class-utils-settings-map.php:456
 msgid "Use Structured Data Markup for your posts"
-msgstr ""
+msgstr "Použít strukturovaný značkovací jazyk v příspěvcích"
 
 #: functions/class-utils-settings-map.php:451
 msgid "Unchecking this option is not recommended. Minifying css stylesheets improves performance for your website overall by decreasing the load time."
-msgstr ""
+msgstr "Nedoporučujeme tuto možnost vypínat. Komprimování kaskádových stylů (CSS) zkracuje dobu načítání stránky a zvyšuje tak celkový výkon webu."
 
 #: functions/class-utils-settings-map.php:448
 msgid "Use a minified stylesheet"
-msgstr ""
+msgstr "Použít komprimované styly"
 
 #: functions/class-utils-settings-map.php:313
 msgid "Footer Background"
-msgstr ""
+msgstr "Pozadí zápatí"
 
 #: functions/class-utils-settings-map.php:965
 msgid "Note : Html is allowed."
-msgstr ""
+msgstr "Poznámka: HTML je povoleno"
 
 #: functions/class-utils-settings-map.php:701
 msgid "Your blog sub-heading. Html is allowed. Note : write a blank space to hide the default content."
-msgstr ""
+msgstr "Podnadpis blogu. HTML je povoleno. Poznámka: chcete-li skrýt výchozí obsah, zadejte mezeru."
 
 #: functions/class-utils-settings-map.php:691
 msgid "Your blog heading. Html is allowed. Note : write a blank space to hide the default content."
-msgstr ""
+msgstr "Nadpis blogu. HTML je povoleno. Poznámka: chcete-li skrýt výchozí obsah, zadejte mezeru."
 
 #: functions/czr/czr-resources.php:421
 msgid "Rss"
-msgstr ""
+msgstr "RSS"
 
 #: functions/czr/czr-resources.php:420
 msgid "Not set"
-msgstr "Nicht festgelegt"
+msgstr "Nenastaveno"
 
 #: functions/init-core.php:1079
 msgid "Secondary Sidebar (on the right in a 3 columns layout)"
-msgstr ""
+msgstr "Podružný postranní panel (nalevo v 3-sloupcovém rozvržení)"
 
 #: functions/init-core.php:1078
 msgid "Primary Sidebar (on the left in a 3 columns layout)"
-msgstr ""
+msgstr "Hlavní postranní panel (nalevo v 3-sloupcovém rozvržení)"
 
 #: functions/init-core.php:1063
 msgid "Blog Page"
-msgstr "Blog-Seite"
+msgstr "Stránka příspěvků (Blog)"
 
 #: functions/class-utils-settings-map.php:746
 msgid "If no specific category is selected, the featured posts block will display your latest post(s) from all categories."
-msgstr ""
+msgstr "Nevyberete-li rubriku, v doporučených příspěvcích se budou zobrazovat nejnovější příspěvky ze všech rubrik."
 
 #: functions/class-utils-settings-map.php:742
 msgid "Select a category to feature"
-msgstr ""
+msgstr "Vybrat rubriku pro doporučené příspěvky"
 
 #: functions/widgets/alx-video.php:23
 msgid "Display a responsive video with a YouTube or Vimeo link."
-msgstr ""
+msgstr "Responzivní video s odkazem na Youtube nebo Vimeo."
 
 #: functions/widgets/alx-video.php:21
 msgid "Hueman Videos"
-msgstr "Hueman Videos"
+msgstr "Hueman video"
 
 #: functions/widgets/alx-tabs.php:23
 msgid "List posts, comments, and/or tags with or without tabs."
-msgstr ""
+msgstr "Příspěvky, komentáře a štítky v záložkách."
 
 #: functions/widgets/alx-tabs.php:21
 msgid "Hueman Dynamic Tabs"
-msgstr ""
+msgstr "Hueman záložky"
 
 #: functions/widgets/alx-posts.php:23
 msgid "Display posts from a category"
-msgstr "Beiträge einer Kategorie anzeigen"
+msgstr "Zobrazit příspěvky z rubriky"
 
 #: functions/widgets/alx-posts.php:21
 msgid "Hueman Posts"
-msgstr ""
+msgstr "Hueman příspěvky"
 
 #: functions/init-meta-boxes.php:42
 msgid "Select a layout for this page."
-msgstr "Wähle ein Layout für diese Seite."
+msgstr "Vyberte rozvržení stránky."
 
 #: functions/init-meta-boxes.php:103
 msgid "Select a widget zone for the right sidebar."
-msgstr ""
+msgstr "Vyberte prostor pro widgety pravého postranního panelu."
 
 #: functions/init-meta-boxes.php:42 functions/init-meta-boxes.php:97
 #: functions/init-meta-boxes.php:103
 msgid "This will override any default settings of the customizer options panel."
-msgstr ""
+msgstr "Zruší výchozí konfiguraci v aktuálních možnostech nastavení."
 
 #: functions/init-meta-boxes.php:97
 msgid "Select a widget zone for the left sidebar."
-msgstr ""
+msgstr "Vyberte prostor pro widgety levého postranního panelu"
 
 #: functions/init-front.php:220
 msgid "Add widgets to the zone :"
-msgstr ""
+msgstr "Přidat widgety do oblasti:"
 
 #: functions/init-front.php:214
 msgid "You can change or disable this setting by editing the options of the current post / page."
-msgstr ""
+msgstr "Toto nastavení se dá ještě změnit u konkrétního příspěvku nebo stránky."
 
 #: functions/init-front.php:213
 msgid "in this post or page options."
@@ -726,7 +729,7 @@ msgstr ""
 
 #: functions/init-front.php:211
 msgid "You have already assigned the following widget zone here : "
-msgstr ""
+msgstr "Následující prostor pro widgety jste již přidělili zde:"
 
 #: functions/init-front.php:98
 msgid "You can add Widget Areas here from the customizer, in the <strong>Dynamic Sidebars and Widgets</strong> panel, or you can change the layout to remove this sidebar in <strong>Content &raquo; Layout Options for the main content</strong>."
@@ -734,27 +737,27 @@ msgstr ""
 
 #: functions/init-front.php:97
 msgid "No widget zones available in this sidebar."
-msgstr ""
+msgstr "Žádný prostor pro widgety není v tomto psotranním panelu dostupný."
 
 #: functions/init-core.php:1412
 msgid "Need help with the Hueman theme ? Click here!"
-msgstr "Du benötigst Hilfe mit dem Hueman Theme? Klick hier!"
+msgstr "Potřebujete pomoc se šablonou Hueman? Klikněte zde!"
 
 #: functions/init-core.php:1409
 msgid "Help"
-msgstr "Hilfe"
+msgstr "Nápověda"
 
 #: functions/init-core.php:1069
 msgid "404 Error Pages"
-msgstr ""
+msgstr "Chybová stránka 404"
 
 #: functions/init-core.php:1068
 msgid "Search Results"
-msgstr "Suchergebnisseiten"
+msgstr "Výsledky hledání"
 
 #: functions/init-core.php:1067
 msgid "Categories"
-msgstr "Kategorien"
+msgstr "Rubriky"
 
 #: functions/init-core.php:1066
 msgid "Archives"
@@ -762,11 +765,11 @@ msgstr "Archiv"
 
 #: functions/init-core.php:1065
 msgid "Single Posts"
-msgstr "Einzelne Beiträge"
+msgstr "Jednotlivé příspěvky"
 
 #: functions/init-core.php:1064 functions/init-front.php:1282
 msgid "Pages"
-msgstr "Seite"
+msgstr "Počet stran"
 
 #: functions/init-core.php:1061
 msgid "All contexts"
@@ -774,136 +777,136 @@ msgstr ""
 
 #: functions/init-core.php:994
 msgid "Widgetized footer 4"
-msgstr ""
+msgstr "Oblast pro widgety zápatí 4"
 
 #: functions/init-core.php:992 functions/init-core.php:1083
 msgid "Footer 4"
-msgstr "Footer 4"
+msgstr "Zápatí 4"
 
 #: functions/init-core.php:985
 msgid "Widgetized footer 3"
-msgstr ""
+msgstr "Oblast pro widgety zápatí 3"
 
 #: functions/init-core.php:983 functions/init-core.php:1082
 msgid "Footer 3"
-msgstr "Footer 3"
+msgstr "Zápatí 3"
 
 #: functions/init-core.php:976
 msgid "Widgetized footer 2"
-msgstr ""
+msgstr "Oblast pro widgety zápatí 2"
 
 #: functions/init-core.php:974 functions/init-core.php:1081
 msgid "Footer 2"
-msgstr "Footer 2"
+msgstr "Zápatí 2"
 
 #: functions/init-core.php:967
 msgid "Widgetized footer 1"
-msgstr ""
+msgstr "Oblast pro widgety zápatí 1"
 
 #: functions/init-core.php:965 functions/init-core.php:1080
 msgid "Footer 1"
-msgstr "Footer 1"
+msgstr "Zápatí 1"
 
 #: functions/init-core.php:956
 msgid "Secondary"
-msgstr "Sekundär"
+msgstr "Podružný panel"
 
 #: functions/init-core.php:947
 msgid "Primary"
-msgstr "Grundfarbe"
+msgstr "Hlavní panel"
 
 #: functions/init-core.php:319
 msgid "Theme Options [OLD]"
-msgstr ""
+msgstr "Možnosti šablony"
 
 #: functions/class-utils-settings-map.php:1388
 msgid "4 Columns"
-msgstr "4 Spalten"
+msgstr "4 sloupce"
 
 #: functions/class-utils-settings-map.php:1384
 msgid "3 Columns"
-msgstr "3 Spalten"
+msgstr "3 sloupce "
 
 #: functions/class-utils-settings-map.php:1380
 msgid "2 Columns"
-msgstr "2 Spalten"
+msgstr "2 sloupce"
 
 #: functions/class-utils-settings-map.php:1354
 msgid "Inherit Global Layout"
-msgstr ""
+msgstr "Zdědit výchozí rozvržení"
 
 #: functions/class-utils-settings-map.php:1346
 msgid "3 Columns - Content Right"
-msgstr ""
+msgstr "3 sloupce – obsah vpravo"
 
 #: functions/class-utils-settings-map.php:1342
 msgid "3 Columns - Content Left"
-msgstr ""
+msgstr "3 sloupce – obsah vlevo"
 
 #: functions/class-utils-settings-map.php:1338
 msgid "3 Columns - Content Middle"
-msgstr ""
+msgstr "3 sloupce – obsah uprostřed"
 
 #: functions/class-utils-settings-map.php:1334
 msgid "2 Columns - Content Right"
-msgstr ""
+msgstr "2 sloupce – obsah vpravo"
 
 #: functions/class-utils-settings-map.php:1330
 msgid "2 Columns - Content Left"
-msgstr ""
+msgstr "2 sloupce – obsah vlevo"
 
 #: functions/class-utils-settings-map.php:1326
 #: functions/class-utils-settings-map.php:1376
 msgid "1 Column"
-msgstr "1 Spalte"
+msgstr "1 sloupec"
 
 #: functions/class-utils-settings-map.php:1307
 msgid "Choose one "
-msgstr ""
+msgstr "Vybrat"
 
 #: functions/class-utils-settings-map.php:1248
 msgid "Footer Design : Logo, layout, ..."
-msgstr ""
+msgstr "Vzhled zápatí: logo, rozvržení, ..."
 
 #: functions/class-utils-settings-map.php:1239
 msgid "Thumbnails Settings"
-msgstr ""
+msgstr "Náhled a jeho přizpůsobení"
 
 #: functions/class-utils-settings-map.php:1234
 msgid "Single Posts Settings"
-msgstr ""
+msgstr "Nastavení zobrazení příspěvku"
 
 #: functions/class-utils-settings-map.php:1228
 msgid "Blog Design and Content"
-msgstr ""
+msgstr "Vzhled a obsah stránky s příspěvky"
 
 #: functions/class-utils-settings-map.php:1223
 msgid "Sidebars : Design and Mobile Settings"
-msgstr ""
+msgstr "Postranní panely: vzhled a nastavení mobilního zobrazení"
 
 #: functions/class-utils-settings-map.php:1218
 msgid "Layout options for the main content"
-msgstr ""
+msgstr "Nastavení rozvržení hlavního obsahu webu"
 
 #: functions/class-utils-settings-map.php:1203
 msgid "Header Advertisement Widget"
-msgstr ""
+msgstr "Widget reklamy v záhlaví"
 
 #: functions/class-utils-settings-map.php:1177
 msgid "Mobile devices"
-msgstr "Mobile Endgeräte"
+msgstr "Mobilní zařízení"
 
 #: functions/class-utils-settings-map.php:1162
 msgid "Social links"
-msgstr "Verweise auf Soziale Medien"
+msgstr "Sociální sítě"
 
 #: functions/class-utils-settings-map.php:1157
 msgid "General Design Options : Font, Colors, ..."
-msgstr ""
+msgstr "Obecná nastavení vzhledu: Písmo, Barvy, ..."
 
 #: functions/class-utils-settings-map.php:1152
 msgid "Site Identity : Logo, Title, Tagline and Site Icon"
-msgstr ""
+msgstr "Základní informace: název, popis a ikona webu"
 
 #: functions/class-utils-settings-map.php:1139
 msgid "in the menu panel"
@@ -912,7 +915,7 @@ msgstr ""
 #: functions/class-utils-settings-map.php:1132
 #: functions/class-utils-settings-map.php:1140
 msgid "create/edit menus"
-msgstr ""
+msgstr "vytvořit/upravit menu"
 
 #: functions/class-utils-settings-map.php:1131
 msgid "on the Menus screen in the Appearance section"
@@ -921,272 +924,273 @@ msgstr ""
 #: functions/class-utils-settings-map.php:1125
 msgid "Your theme supports %s menu. Select which menu you would like to use."
 msgid_plural "Your theme supports %s menus. Select which menu appears in each location."
-msgstr[0] "Dein Theme unterstützt %s Menü. Wähle, welches Menü du gerne verwenden möchtest."
-msgstr[1] "Dein Theme unterstützt %s Menüs. Wähle, welches Menü du in der jeweiligen Position verwenden möchtest."
+msgstr[0] "V šabloně je definována %s oblast, kam můžete umístit vlastní menu. Zvolte si konkrétní menu, které zde chcete zobrazit."
+msgstr[1] "V šabloně jsou definovány %s oblasti, kam můžete umístit vlastní menu. Zvolte si konkrétní menu, která zde chcete zobrazit."
+msgstr[2] "V šabloně je definováno %s oblastí, kam můžete umístit vlastní menu. Zvolte si konkrétní menu, která zde chcete zobrazit."
 
 #: functions/class-utils-settings-map.php:1051
 msgid "Advanced settings for the Hueman theme."
-msgstr "Erweiterte Einstellungen für das Hueman Theme"
+msgstr "Pokročilá nastavení šablony Hueman"
 
 #: functions/class-utils-settings-map.php:1050
 msgid "Advanced options"
-msgstr "Erweiterte Einstellungen"
+msgstr "Rozšířené možnosti"
 
 #: functions/class-utils-settings-map.php:1045
 msgid "Footer settings for the Hueman theme."
-msgstr ""
+msgstr "Nastavení zápatí šablony Hueman"
 
 #: functions/class-utils-settings-map.php:1044
 msgid "Footer"
-msgstr "Fußbereich"
+msgstr "Zápatí"
 
 #: functions/class-utils-settings-map.php:1039
 msgid "Sidebars settings for the Hueman theme."
-msgstr ""
+msgstr "Nastavení postranních panelů šablony Hueman"
 
 #: functions/class-utils-settings-map.php:1038
 msgid "Sidebars"
-msgstr "Sidebars"
+msgstr "Postranní panely"
 
 #: functions/class-utils-settings-map.php:1033
 msgid "Content settings for the Hueman theme."
-msgstr ""
+msgstr "Nastavení obsahu šablony Hueman."
 
 #: functions/class-utils-settings-map.php:1027
 msgid "Header settings for the Hueman theme."
-msgstr ""
+msgstr "Nastavení záhlaví šablony Hueman"
 
 #: functions/class-utils-settings-map.php:1026
 msgid "Header"
-msgstr "Kopfbereich"
+msgstr "Záhlaví"
 
 #: functions/class-utils-settings-map.php:1021
 msgid "General settings for the Hueman theme : design, comments, mobile, ..."
-msgstr ""
+msgstr "Obecná nastavení šablony Hueman: vzhled, komentáře, mobilní..."
 
 #: functions/class-utils-settings-map.php:1020
 msgid "Global settings"
-msgstr "Globale Einstellungen"
+msgstr "Obecná nastavení"
 
 #: functions/class-utils-settings-map.php:970
 msgid "Footer credit text"
-msgstr ""
+msgstr "Text autorů a poděkování v zápatí"
 
 #: functions/class-utils-settings-map.php:961
 msgid "Replace the footer copyright text"
-msgstr ""
+msgstr "Přepsat text o autorských právech v zápatí"
 
 #: functions/class-utils-settings-map.php:945
 msgid "Upload your custom logo image"
-msgstr ""
+msgstr "Nahrajte své vlastní logo"
 
 #: functions/class-utils-settings-map.php:941
 msgid "Recommended number of columns : 3"
-msgstr ""
+msgstr "Doporučený počet sloupců: 3"
 
 #: functions/class-utils-settings-map.php:937
 msgid "Select columns to enable footer widgets"
-msgstr ""
+msgstr "Oblast pro widgety v zápatí"
 
 #: functions/class-utils-settings-map.php:908
 msgid "Control how the sidebar content is displayed on smartphone mobile devices (320px). Note : on smartphones the sidebars are displayed below the content."
-msgstr ""
+msgstr "Nastavte, jak se obsah postranních panelů zobrazí na mobilních zařízeních (320px). Pozn.: na mobilních zařízeních se postranní panely zobrazují pod hlavním obsahem."
 
 #: functions/class-utils-settings-map.php:906
 msgid "Hide both sidebars"
-msgstr ""
+msgstr "Skrýt oba postranní panely"
 
 #: functions/class-utils-settings-map.php:905
 msgid "Hide secondary sidebar"
-msgstr ""
+msgstr "Skrýt podružný postranní panel"
 
 #: functions/class-utils-settings-map.php:904
 msgid "Hide primary sidebar"
-msgstr ""
+msgstr "Skrýt hlavní postranní panel"
 
 #: functions/class-utils-settings-map.php:903
 msgid "Display both sidebars"
-msgstr ""
+msgstr "Zobrazit oba postranní panely"
 
 #: functions/class-utils-settings-map.php:899
 msgid "Mobile Sidebar Content"
-msgstr ""
+msgstr "Obsah postranního panelu na mobilním zařízení"
 
 #: functions/class-utils-settings-map.php:894
 msgid "Display boxes at the top of the sidebars"
-msgstr ""
+msgstr "Zobrazit pole nadpisů na vrchu postranních panelů"
 
 #: functions/class-utils-settings-map.php:891
 #: functions/plugins-compatibility.php:217
 msgid "Sidebar Top Boxes"
-msgstr ""
+msgstr "Pole nadpisů"
 
 #: functions/class-utils-settings-map.php:870
 msgid "Display comment count on thumbnails"
-msgstr ""
+msgstr "Zobrazit počet komentářů v náhledu"
 
 #: functions/class-utils-settings-map.php:867
 msgid "Thumbnail Comment Count"
-msgstr ""
+msgstr "Počet komentářů v náhledu"
 
 #: functions/class-utils-settings-map.php:862
 msgid "Display featured image placeholders if no featured image is set"
-msgstr ""
+msgstr "Zobrazit zástupný náhledový obrázek, pokud není žádný nastaven"
 
 #: functions/class-utils-settings-map.php:859
 msgid "Thumbnail Placeholder"
-msgstr ""
+msgstr "Zástupný náhled"
 
 #: functions/class-utils-settings-map.php:845
 msgid "Display links to the next and previous article"
-msgstr ""
+msgstr "Zobrazit odkazy na předchozí a následující příspěvek"
 
 #: functions/class-utils-settings-map.php:843
 msgid "Below content"
-msgstr "Unter dem Inhalt"
+msgstr "Pod obsahem"
 
 #: functions/class-utils-settings-map.php:836
 msgid "Single - Post Navigation"
-msgstr ""
+msgstr "Navigace u příspěvku"
 
 #: functions/class-utils-settings-map.php:831
 msgid "Display randomized related articles below the post"
-msgstr ""
+msgstr "Zobrazit náhodný seznam souvisejících příspěvků pod příspěvkem"
 
 #: functions/class-utils-settings-map.php:829
 msgid "Related by tags"
-msgstr ""
+msgstr "Související podle štítků"
 
 #: functions/class-utils-settings-map.php:828
 msgid "Related by categories"
-msgstr ""
+msgstr "Související podle rubrik"
 
 #: functions/class-utils-settings-map.php:827
 #: functions/class-utils-settings-map.php:840
 #: functions/class-utils-settings-map.php:1372
 msgid "Disable"
-msgstr "Verbieten"
+msgstr "Deaktivovat"
 
 #: functions/class-utils-settings-map.php:823
 msgid "Single - Related Posts"
-msgstr ""
+msgstr "Související příspěvky"
 
 #: functions/class-utils-settings-map.php:818
 msgid "Display post author description, if it exists"
-msgstr ""
+msgstr "Zobrazit informace o autorovi příspěvku, pokud jsou dostupné."
 
 #: functions/class-utils-settings-map.php:815
 msgid "Single - Author Bio"
-msgstr ""
+msgstr "Informace o autorovi v příspěvku"
 
 #: functions/class-utils-settings-map.php:799
 msgid "If this box is checked, your featured posts will be displayed both in the featured slider and in the post list below. Usually not recommended because a given post might appear two times on the same page."
-msgstr ""
+msgstr "Zobrazit doporučené příspěvky také v seznamu pod prezentací. Nedoporučuje se, protože některé příspěvky mohou být na stejné stránce zobrazeny dvakrát."
 
 #: functions/class-utils-settings-map.php:796
 msgid "Display the featured posts also in the list of posts"
-msgstr "Die hervorgehobenen Beiträge auch in der Beitragsliste anzeigen"
+msgstr "Zobrazit doporučené příspěvky také v seznamu příspěvků"
 
 #: functions/class-utils-settings-map.php:790
 msgid "Speed of the automatic slideshow animation"
-msgstr ""
+msgstr "Rychlost automatického přehrávání prezentace"
 
 #: functions/class-utils-settings-map.php:784
 msgid "Featured Slideshow Speed"
-msgstr ""
+msgstr "Rychlost přehrávání prezentace"
 
 #: functions/class-utils-settings-map.php:777
 msgid "Enables the automatic animation of the featured posts carousel."
-msgstr ""
+msgstr "Aktivuje automatické přehrávání doporučených příspěvků dokola."
 
 #: functions/class-utils-settings-map.php:774
 msgid "Animate your featured posts with a slideshow"
-msgstr "Animiere deine hervorgehobenen Beiträge mit einer Slideshow"
+msgstr "Animovat doporučené příspěvky v prezentaci"
 
 #: functions/class-utils-settings-map.php:759
 msgid "Max number of featured posts to display. <br /><i>Set to 1 and it will show it without any slider script</i><br /><i>Set it to 0 to disable</i>"
-msgstr ""
+msgstr "Počet zobrazených doporučených příspěvků.  <br /><i>Hodnota 1: nezobrazovat jako prezentaci.</i><br /><i> Hodnota 0: skrýt doporučené příspěvky.</i>"
 
 #: functions/class-utils-settings-map.php:753
 msgid "Featured Post Count"
-msgstr ""
+msgstr "Počet doporučených příspěvků"
 
 #: functions/class-utils-settings-map.php:736
 msgid "Check this box to display a selection of posts with a slideshow, on top of your blog."
-msgstr ""
+msgstr "Zaškrtněte pokud chcete zobrazit doporučené příspěvky jako prezentaci v horní části stránky s příspěvky."
 
 #: functions/class-utils-settings-map.php:733
 msgid "Feature posts on top of your blog"
-msgstr ""
+msgstr "Zobrazit doporučené příspěvky v horní části stránky s příspěvky"
 
 #: functions/class-utils-settings-map.php:731
 msgid "Featured posts"
-msgstr "Vorgeschlagene Beiträge"
+msgstr "Doporučené příspěvky"
 
 #: functions/class-utils-settings-map.php:712
 msgid "While the default blog design is a grid of posts, you can check this option and display one post per row, whith the thumbnail beside the text."
-msgstr ""
+msgstr "V základním nastavení se příspěvky blogu zobrazují do mřížky. Zaškrtnutím tohoto políčka se příspěvky budou zobrazovat po řádcích, s náhledem vedle stručného výpisu příspěvku."
 
 #: functions/class-utils-settings-map.php:709
 msgid "Display your blog posts as a standard list."
-msgstr ""
+msgstr "Zobrazit příspěvky jako seznam."
 
 #: functions/class-utils-settings-map.php:719
 msgid "Excerpt Length"
-msgstr "Auszug Länge"
+msgstr "Délka stručného výpisu"
 
 #: functions/class-utils-settings-map.php:698
 msgid "Blog Sub-Heading"
-msgstr ""
+msgstr "Podnadpis blogu"
 
 #: functions/class-utils-settings-map.php:696 functions/init-front.php:407
 msgid "Blog"
-msgstr "Seite"
+msgstr "Blog"
 
 #: functions/class-utils-settings-map.php:679
 #: functions/class-utils-settings-map.php:688
 msgid "Blog Heading"
-msgstr ""
+msgstr "Nadpis blogu"
 
 #: functions/class-utils-settings-map.php:680
 msgid "Display a custom heading for your blog."
-msgstr ""
+msgstr "Zobrazit vlastní nadpis blogu"
 
 #: functions/class-utils-settings-map.php:665
 msgid "[ <strong>is_page</strong> ] Default page layout - If a page has a set layout, it will override this."
-msgstr ""
+msgstr "[ <strong>is_page</strong> ] Výchozí rozvržení stránky – toto nastavení se dá změnit u konkrétní stránky."
 
 #: functions/class-utils-settings-map.php:661
 msgid "Default Page"
-msgstr "Standardseite"
+msgstr "Výchozí stránka"
 
 #: functions/class-utils-settings-map.php:656
 msgid "[ <strong>is_404</strong> ] Error 404 page layout"
-msgstr ""
+msgstr "[ <strong>is_404</strong> ] rozvržení stránky Chyba 404 – nenalezeno"
 
 #: functions/class-utils-settings-map.php:652
 msgid "Error 404"
-msgstr "﻿Fehler 404"
+msgstr "Chyba 404 – nenalezeno"
 
 #: functions/class-utils-settings-map.php:647
 msgid "[ <strong>is_search</strong> ] Search page layout"
-msgstr ""
+msgstr "[ <strong>is_search</strong> ] Rozvržení stránky vyhledávání"
 
 #: functions/class-utils-settings-map.php:643
 msgid "Search"
-msgstr "bei der Suche"
+msgstr "Vyhledávání"
 
 #: functions/class-utils-settings-map.php:638
 msgid "[ <strong>is_category</strong> ] Category archive layout"
-msgstr ""
+msgstr "[ <strong>is_category</strong> ] rozvržení archivu rubriky"
 
 #: functions/class-utils-settings-map.php:634
 msgid "Archive - Category"
-msgstr ""
+msgstr "Archiv – rubrika"
 
 #: functions/class-utils-settings-map.php:629
 msgid "[ <strong>is_archive</strong> ] Category, date, tag and author archive layout"
-msgstr ""
+msgstr "[ <strong>is_archive</strong> ] Rozvržení archivu (rubrika, datum, štítek, autor)"
 
 #: functions/class-utils-settings-map.php:625
 msgid "Archive"
@@ -1194,218 +1198,218 @@ msgstr "Archiv"
 
 #: functions/class-utils-settings-map.php:620
 msgid "[ <strong>is_single</strong> ] Single post layout - If a post has a set layout, it will override this."
-msgstr ""
+msgstr "[ <strong>is_single</strong> ] Rozvržení příspěvku – toto nastavení se dá změnit u konkrétního příspěvku."
 
 #: functions/class-utils-settings-map.php:616
 msgid "Single"
-msgstr "Einzel"
+msgstr "Příspěvek"
 
 #: functions/class-utils-settings-map.php:611
 msgid "[ <strong>is_home</strong> ] Posts homepage layout"
-msgstr ""
+msgstr "[ <strong>is_home</strong> ] rozvržení stránky s příspěvky"
 
 #: functions/class-utils-settings-map.php:607 functions/init-core.php:1062
 #: functions/init-front.php:1234
 msgid "Home"
-msgstr "Anfang"
+msgstr "Úvodní stránka"
 
 #: functions/class-utils-settings-map.php:602
 msgid "Other layouts will override this option if they are set"
-msgstr ""
+msgstr "Rozvržení u konkrétních stránek přepíší toto nastavení"
 
 #: functions/class-utils-settings-map.php:598
 msgid "Global Layout"
-msgstr ""
+msgstr "Výchozí rozvržení"
 
 #: functions/class-utils-settings-map.php:547
 msgid "Header widget area, perfect to insert advertisements. Note : this feature is not available when a header image is being displayed."
-msgstr ""
+msgstr "Oblast pro widgety v záhlaví. Perfektní pro umístění reklamy. Pozn.: vlastnost není dostupná, když je nastaven obrázek záhlaví."
 
 #: functions/class-utils-settings-map.php:544
 msgid "Display a widget in your header"
-msgstr ""
+msgstr "Zobrazit widget v záhlaví"
 
 #: functions/class-utils-settings-map.php:530
 msgid "Upload a header image (supported formats : .jpg, .png, .gif, svg, svgz). This will disable header title/logo, site description, header ads widget"
-msgstr ""
+msgstr "Nahrajte obrázek záhlaví (podporované formáty: .jpg, .png, .gif, .svg, .svgz). Zobrazí se místo názvu/loga, popisu webu, widgetu reklamy."
 
 #: functions/class-utils-settings-map.php:522
 msgid "The description that appears next to your logo"
-msgstr ""
+msgstr "Popis se zobrazí vedle loga"
 
 #: functions/class-utils-settings-map.php:519
 msgid "Display your site's description (tagline)"
-msgstr ""
+msgstr "Zobrazit popis webu"
 
 #: functions/class-utils-settings-map.php:181
 msgid "Header Logo Image Max-height"
-msgstr ""
+msgstr "Maximální výška loga v záhlaví"
 
 #: functions/class-utils-settings-map.php:956
 #: functions/czr/class-czr-init.php:108
 msgid "Upload your custom logo image. Supported formats : .jpg, .png, .gif, svg, svgz"
-msgstr ""
+msgstr "Nahrajte své vlastní logo (podporované formáty: .jpg, .png, .gif, .svg, .svgz)."
 
 #: functions/czr/class-czr-init.php:97
 msgid "Custom Header Logo"
-msgstr ""
+msgstr "Vlastní logo v záhlaví"
 
 #: functions/class-utils-settings-map.php:371
 msgid "Create and organize your social links"
-msgstr ""
+msgstr "Vytvořte a uspořádejte odkazy na sociální sítě"
 
 #: functions/class-utils-settings-map.php:434
 msgid "Hueman is a mobile friendly WordPress theme out of the box. This means that it will adapt and render nicely on any devices : desktops, laptops, tablets, smartphones. <br/>If you uncheck this box, this adaptive (or reponsive) behaviour will not be working anymore. In most of the cases, you won't need to disable this option, and it is not recommended."
-msgstr ""
+msgstr "Hueman je od základu responzivní šablona pro WordPress. To znamená, že zobrazení webu se přizpůsobuje použitému zařízení: počítači, notebooku, tabletu, telefonu. <br/>Nezaškrtnete-li toto políčko, rezponzivní chování šablony bude vypnuto. Ve většině případů není nutné tuto možnost vypínat. Doporučujeme nechat zapnuté."
 
 #: functions/class-utils-settings-map.php:431
 msgid "Enable the Mobile Friendly (or Responsive) layout"
-msgstr ""
+msgstr "Aktivovat k mobilním zařízením přívětivé (responzivní) rozvržení"
 
 #: functions/class-utils-settings-map.php:400
 msgid "Comments on pages"
-msgstr "Kommentare zu Seiten"
+msgstr "Povolit komentáře na stránkách"
 
 #: functions/class-utils-settings-map.php:397
 msgid "Pages Comments"
-msgstr ""
+msgstr "Komentáře na stránkách"
 
 #: functions/class-utils-settings-map.php:392
 msgid "Comments on posts"
-msgstr "Kommentare zu Beiträgen"
+msgstr "Povolit komentáře u příspěvků"
 
 #: functions/class-utils-settings-map.php:389
 msgid "Posts Comments"
-msgstr ""
+msgstr "Komentáře u příspěvků"
 
 #: functions/class-utils-settings-map.php:270
 msgid "Set the website background color"
-msgstr ""
+msgstr "Nastavit barvu pozadí webu"
 
 #: functions/class-utils-settings-map.php:269
 msgid "Body Background"
-msgstr "Seiten Hintergrund"
+msgstr "Pozadí webu"
 
 #: functions/class-utils-settings-map.php:330
 msgid "Give your thumbnails and layout images rounded corners"
-msgstr ""
+msgstr "Nastavte obrázkům zaoblení rohů"
 
 #: functions/class-utils-settings-map.php:324
 msgid "Image Border Radius"
-msgstr ""
+msgstr "Poloměr zaoblení obrázků"
 
 #: functions/class-utils-settings-map.php:303
 msgid "Header Menu Background"
-msgstr ""
+msgstr "Pozadí menu v záhlaví"
 
 #: functions/class-utils-settings-map.php:293
 msgid "Header Background"
-msgstr "Header Hintergrund"
+msgstr "Pozadí záhlaví"
 
 #: functions/class-utils-settings-map.php:283
 msgid "Topbar Background"
-msgstr "Topbar Hintergrund"
+msgstr "Pozadí horní lišty"
 
 #: functions/class-utils-settings-map.php:258
 msgid "Secondary Color"
-msgstr "Sekundärfarbe"
+msgstr "Doplňková barva"
 
 #: functions/class-utils-settings-map.php:248
 msgid "Primary Color"
-msgstr "Hauptfarbe"
+msgstr "Základní barva"
 
 #: functions/class-utils-settings-map.php:243
 msgid "Change left and right sidebars padding"
-msgstr ""
+msgstr "Upravit odsazení textu v postranních panelech"
 
 #: functions/class-utils-settings-map.php:241
 msgid "20px padding for widgets"
-msgstr ""
+msgstr "odsazení okraje widgetů 20 px"
 
 #: functions/class-utils-settings-map.php:240
 msgid "30px padding for widgets"
-msgstr ""
+msgstr "odsazení okraje widgetů 30 px"
 
 #: functions/class-utils-settings-map.php:236
 msgid "Sidebar Width"
-msgstr "Sidebar Breite"
+msgstr "Šířka postranních panelů"
 
 #: functions/class-utils-settings-map.php:231
 msgid "Max-width of the container. If you use 2 sidebars, your container should be at least 1200px.<br /><i>Note: For 720px content (default) use <strong>1380px</strong> for 2 sidebars and <strong>1120px</strong> for 1 sidebar. If you use a combination of both, try something inbetween.</i>"
-msgstr ""
+msgstr "Maximální šířka kontejneru s obsahem. Když používáte 2 postranní panely, šířka musí být nejméně 1200px. <br /><i>Pozn.: má-li obsah 720px (default) nastavte <strong>1380px</strong> se 2 postranními panely a <strong>1120px</strong> s 1 panelem. Pokud používáte kombinaci obojího, nastavte něco mezi tím. </i>"
 
 #: functions/class-utils-settings-map.php:225
 msgid "Website Max-width"
-msgstr ""
+msgstr "Maximální šířka webu"
 
 #: functions/class-utils-settings-map.php:219
 msgid "Select a font for your website"
-msgstr "Wähle eine Schriftart für deine Website"
+msgstr "Zvolte písmo webu"
 
 #: functions/class-utils-settings-map.php:215
 msgid "Font"
-msgstr "Schriftart"
+msgstr "Písmo"
 
 #: functions/class-utils-settings-map.php:210
 msgid "Use a boxed layout"
-msgstr ""
+msgstr "Použít pevné rozvržení"
 
 #: functions/class-utils-settings-map.php:207
 msgid "Boxed Layout"
-msgstr ""
+msgstr "Pevné rozvržení"
 
 #: functions/class-utils-settings-map.php:202
 msgid "Turn on to use the styling options below"
-msgstr ""
+msgstr "Zaškrtněte, chcete-li použít volby vzhledu uvedené níže"
 
 #: functions/class-utils-settings-map.php:199
 msgid "Dynamic Styles"
-msgstr ""
+msgstr "Přizpůsobit vzhled"
 
 #: functions/class-utils-settings-map.php:163
 msgid "FAVICON"
-msgstr ""
+msgstr "FAVICON"
 
 #: functions/class-utils-settings-map.php:162
 msgid "Favicon Upload (supported formats : .ico, .png, .gif)"
-msgstr ""
+msgstr "Nahrajte ikonu webu (podporované formáty: .ico, .png, .gif)"
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:85
 msgid "Check this option to open the link in a another tab of the browser."
-msgstr ""
+msgstr "Zaškrtněte pokud chcete otevírat odkazy v nové záložce prohlížeče."
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:81
 msgid "Link target"
-msgstr "Linkziel"
+msgstr "Cíl odkazu"
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:74
 msgid "Set a unique color for your icon."
-msgstr ""
+msgstr "Nastavte barvu vlastní ikony."
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:70
 msgid "Icon color"
-msgstr ""
+msgstr "Barva ikony"
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:66
 msgid "This is the text displayed on mouse over."
-msgstr ""
+msgstr "Tento text se zobrazí při přejetí myší."
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:19
 #: functions/czr/tmpl/modules/social-module-tmpl.php:57
 msgid "http://..."
-msgstr ""
+msgstr "http://..."
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:55
 msgid "Social link"
-msgstr ""
+msgstr "Odkaz sociální sítě"
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:48
 msgid "Social icon"
-msgstr ""
+msgstr "Ikona sociální sítě"
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:42
 msgid "Id"
-msgstr "ID"
+msgstr "Id"
 
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:120
 msgid "Pick the context(s) where this widget area will be displayed."
@@ -1418,7 +1422,7 @@ msgstr ""
 
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:107
 msgid "Enter a name"
-msgstr "Gib einen Namen ein"
+msgstr "Vložte název"
 
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:76
 msgid "Pick the contexts where this widget area will be displayed."
@@ -1428,7 +1432,7 @@ msgstr ""
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:75
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:119
 msgid "Context(s)"
-msgstr ""
+msgstr "Kontext(y)"
 
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:23
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:69
@@ -1441,132 +1445,132 @@ msgstr ""
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:68
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:112
 msgid "Location(s)"
-msgstr ""
+msgstr "Oblast(i)"
 
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:58
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:101
 msgid "unique id"
-msgstr ""
+msgstr "jedinečné id"
 
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:56
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:99
 msgid "id"
-msgstr "ID"
+msgstr "id"
 
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:23
 msgid "Are you sure you want to remove : <strong>{{ data.title }} ?</strong>"
-msgstr ""
+msgstr "Určitě chcete smazat: <strong>{{ data.title }} ?</strong>"
 
 #: functions/czr/controls/class-upload-control.php:68
 #: functions/czr/tmpl/inputs/img-uploader-tmpl.php:57
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:32
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:103
 msgid "Remove"
-msgstr "Klscgeb"
+msgstr "Odebrat"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:65
 msgid "Background Image"
-msgstr "Hintergrundbild"
+msgstr "Obrázek na pozadí"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:94
 msgid "Background size"
-msgstr "Hintergrundbild Größe"
+msgstr "Velikost pozadí"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:87
 msgid "Background position"
-msgstr "Position des Hintergrunds"
+msgstr "Zarovnání pozadí"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:80
 msgid "Background attachment"
-msgstr ""
+msgstr "Chování pozadí"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:73
 msgid "Repeat"
-msgstr "Wiederholung"
+msgstr "Opakování"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:58
 msgid "Color"
-msgstr "Farbe"
+msgstr "Barva"
 
 #: functions/czr/sections/class-widgets-section.php:36
 msgid "Press return or enter to open this section"
-msgstr "Drücke Enter, um diesen Bereich zu öffnen"
+msgstr "Stisknutím tlačítka Enter otevřete tuto sekci"
 
 #: functions/admin/class-admin-update-notification.php:107
 msgid "close"
-msgstr "Schließen"
+msgstr "Zavřít"
 
 #: functions/admin/class-admin-update-notification.php:106
 msgid "I already know what's new thanks !"
-msgstr ""
+msgstr "Už vím, co je nového. Díky!"
 
 #: functions/admin/class-admin-update-notification.php:100
 msgid "Visit the demo"
-msgstr ""
+msgstr "Zobrazit demo"
 
 #: functions/admin/class-admin-update-notification.php:98
 msgid "Read the latest release notes"
-msgstr ""
+msgstr "Přečíst poznámky k nejnovější verzi"
 
 #: functions/admin/class-admin-update-notification.php:96
 msgid "We'd like to introduce the new features we've been working on."
-msgstr "Wir möchten dir gerne die neuen Features vorstellen, an denen wir gearbeitet haben."
+msgstr "Chceme předvést nové funkce, na kterých jsme pracovali."
 
 #: functions/admin/class-admin-update-notification.php:85
 msgid "Good, you've just upgraded to"
-msgstr ""
+msgstr "Výborně. Právě jste upgradovali na"
 
 #: functions/admin/class-admin-page.php:263
 msgid "To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C (Mac)."
-msgstr ""
+msgstr "Chcete-li zkopírovat informace o systému, klikněte níže a stiskněte Ctrl + C (PC) nebo Cmd + C (Mac)."
 
 #: functions/admin/class-admin-page.php:262
 msgid "Please include the following informations when posting support requests"
-msgstr ""
+msgstr "Při odesílání žádosti o podporu uveďte následující informace"
 
 #: functions/admin/class-admin-page.php:261
 msgid "System Informations"
-msgstr "Systeminformationen"
+msgstr "Informace o systému"
 
 #: functions/admin/class-admin-page.php:239
 msgid "Changelog in version %1$s"
-msgstr ""
+msgstr "Změny ve verzi %1$s"
 
 #: functions/admin/class-admin-page.php:179
 msgid "Get help in the support forum"
-msgstr "Lass dir im Support-Forum helfen"
+msgstr "Získat pomoc na fóru podpory"
 
 #: functions/admin/class-admin-page.php:175
 msgid "Read the documentation"
-msgstr "Lies die Dokumentation"
+msgstr "Přečíst dokumentaci"
 
 #: functions/admin/class-admin-page.php:169
 msgid "support forum"
-msgstr "Support-Forum"
+msgstr "fórum podpory"
 
 #: functions/admin/class-admin-page.php:167
 msgid "If you don't find an answer to your question in the documentation, don't panic :) ! The Hueman theme is used by a large number of webmasters constantly reporting bugs and potential issues. If you encounter a problem with the theme, chances are that it's already been reported and fixed in the"
-msgstr ""
+msgstr "Pokud nenajdete odpověď na svou otázku v dokumentaci, nepropadejte panice! Šablonu Hueman používá velké množství webmasterů, kteří stále řeší chyby a potenciální problémy. Pokud narazíte na problém se šablonou, je pravděpodobné, že již byl nahlášen i vyřešen na"
 
 #: functions/admin/class-admin-page.php:163
 msgid "documentation"
-msgstr "Dokumentation"
+msgstr "dokumentace"
 
 #: functions/admin/class-admin-page.php:162
 msgid "The best way to start is to read the %s."
-msgstr ""
+msgstr "Nejlepší způsob jak začít je tady: %s."
 
 #: functions/admin/class-admin-page.php:147
 msgid "Go to Dashboard"
-msgstr "zum Dashboard gehen"
+msgstr "Přejít na Nástěnku"
 
 #: functions/admin/class-admin-page.php:147
 msgid "Go to Dashboard &rarr; Home"
-msgstr "Zum Dashboard &rarr; Home"
+msgstr "Přejít na úvodní stránku administrace &rarr; Nástěnka"
 
 #: functions/admin/class-admin-page.php:131
 msgid "You are using a child theme of Hueman %1$s : always check the %2$s after upgrading to see if a function or a template has been deprecated."
-msgstr ""
+msgstr "Používáte odvozenou šablonu od Hueman %1$s: po aktualizaci vždy zkontrolujte %2$s, zda funkce nebo šablona nejsou zastaralé."
 
 #: functions/admin/class-admin-page.php:117
 msgid "demo website"
@@ -1578,15 +1582,15 @@ msgstr ""
 
 #: functions/admin/class-admin-page.php:114
 msgid "The best way to start with %s is to read the %s and visit the %s."
-msgstr ""
+msgstr "Nejlepší způsob jak začít s %s je přečíst %s a navštívit %s."
 
 #: functions/admin/class-admin-page.php:109
 msgid "read the latest release notes"
-msgstr ""
+msgstr "přečíst poznámky k nejnovější verzi"
 
 #: functions/admin/class-admin-page.php:108
 msgid "For more informations about this new version of the theme, %s or check the changelog below"
-msgstr ""
+msgstr "Chcete-li se dozvědět více o nové verzi šablony, %s nebo si přečtěte seznam změn níže"
 
 #: functions/admin/class-admin-page.php:106
 msgid "customizer panel"
@@ -1594,35 +1598,35 @@ msgstr ""
 
 #: functions/admin/class-admin-page.php:105
 msgid "Since version 3.0+, all the options have been moved to the %s, allowing you to design your website safely and in live preview before publishing the changes. If you just upgraded from a lower version, you'll be able to find all your previous settings in the customizer."
-msgstr ""
+msgstr "Počínaje verzí 3.0+, byla veškerá nastavení šablony přesunuta do %s. Web lze nyní navrhovat bezpečně s aktuálním náhledem změn před jejich publikováním. Pokud jste právě aktualizovali ze starší verze, naleznete veškerá předchozí nastavení šablony v aktuálních možnostech nastavení."
 
 #: functions/admin/class-admin-page.php:104
 msgid "Hueman %s has more features, is safer and more stable than ever to help you designing an awesome webdesign."
-msgstr ""
+msgstr "Šablona Hueman %s má více funkcí, je bezpečnější a stabilnější než doposud."
 
 #: functions/admin/class-admin-page.php:103
 msgid "Thank you for using the Hueman WordPress theme for your website."
-msgstr "Danke, dass du das Hueman WordPress Theme für deine Website verwendest."
+msgstr "Děkujeme, že používáte šablonu Hueman."
 
 #: functions/admin/class-admin-page.php:86
 msgid "Welcome to"
-msgstr "Willkommen bei"
+msgstr "Vítejte v"
 
 #: functions/admin/class-admin-page.php:81
 msgid "Need help with"
-msgstr ""
+msgstr "Potřebujete pomoc s"
 
 #: functions/admin/class-admin-page.php:53
 msgid "About Hueman"
-msgstr "Informationen zu Hueman"
+msgstr "O šabloně Hueman"
 
 #: functions/admin/class-admin-page.php:40
 msgid "All your previous options have been kept and are available in the customizer options panel."
-msgstr ""
+msgstr "Veškerá dřívější nastavení byla zachována a přesunuta do aktuálních možností nastavení."
 
 #: functions/admin/class-admin-page.php:37
 msgid "customizer"
-msgstr ""
+msgstr "Aktuální možnosti nastavení"
 
 #: functions/admin/class-admin-page.php:36
 msgid "more informations here"
@@ -1638,7 +1642,7 @@ msgstr ""
 
 #: functions/czr/class-czr-init.php:426
 msgid "Dynamic Sidebars and Widgets"
-msgstr ""
+msgstr "Dynamické postranní panely a widgety"
 
 #: functions/czr/class-czr-init.php:405
 msgid "Create and manage widget zones"
@@ -1662,7 +1666,7 @@ msgstr ""
 
 #: functions/czr/class-czr-init.php:308
 msgid "WordPress documentation"
-msgstr "WordPress Dokumentation"
+msgstr ""
 
 #: functions/czr/class-czr-init.php:307
 msgid "Create a new menu now"
@@ -1678,232 +1682,237 @@ msgstr ""
 
 #: functions/czr/class-czr-init.php:259
 msgid "&mdash; Select &mdash;"
-msgstr "&mdash; Wähle &mdash; "
+msgstr "&mdash; Vybrat &mdash;"
 
 #. translators: 1: plugin name, 2: action number 3: total number of actions.
 #: functions/admin/class-tgm-plugin-activation.php:3716
 msgid "Updating Plugin %1$s (%2$d/%3$d)"
-msgstr "Aktualisiere Plugin %1$s (%2$d von %3$d)"
+msgstr "Probíhá aktualizace pluginu %1$s (%2$d/%3$d)"
 
 #: functions/admin/class-tgm-plugin-activation.php:3152
 msgid "No plugins are available to be activated at this time."
-msgstr "Momentan stehen keine Plugins zur Aktivierung zur Verfügung."
+msgstr "V tuto chvíli nejsou k dipozici žádné pluginy k aktivaci."
 
 #: functions/admin/class-tgm-plugin-activation.php:3126
 msgid "No plugins were selected to be activated. No action taken."
-msgstr "Es wurden keine Plugins zur Aktualisierung ausgewählt. Keine Aktion ausgeführt."
+msgstr "Žádné pluginy nebyly vybrány k aktivaci. Akce nebyla provedena."
 
 #: functions/admin/class-tgm-plugin-activation.php:3020
 msgid "No plugins are available to be updated at this time."
-msgstr "Momentan stehen keine Plugins zur Aktualisierung zur Verfügung."
+msgstr "V tuto chvíli nejsou k dipozici žádné pluginy k aktualizaci."
 
 #: functions/admin/class-tgm-plugin-activation.php:3018
 msgid "No plugins are available to be installed at this time."
-msgstr "Momentan stehen keine Plugins zur Installation zur Verfügung."
+msgstr "V tuto chvíli nejsou k dipozici žádné pluginy k instalaci."
 
 #: functions/admin/class-tgm-plugin-activation.php:2977
 msgid "No plugins were selected to be updated. No action taken."
-msgstr "Es wurden keine Plugins zur Aktualisierung ausgewählt. Keine Aktion ausgeführt."
+msgstr "Žádné pluginy nebyly vybrány k aktualizaci. Akce nebyla provedena."
 
 #: functions/admin/class-tgm-plugin-activation.php:2975
 msgid "No plugins were selected to be installed. No action taken."
-msgstr "Es wurden keine Plugins zur Installation ausgewählt. Keine Aktion ausgeführt."
+msgstr "Žádné pluginy nebyly vybrány k instalaci. Akce nebyla provedena."
 
 #: parts/single-author-date.php:14
 msgid "Updated"
-msgstr "Aktualisiert"
+msgstr "Aktualizováno"
 
 #: functions/admin/class-tgm-plugin-activation.php:2902
 msgid "Upgrade message from the plugin author:"
-msgstr "Upgrade-Nachricht vom Plugin-Autor:"
+msgstr "Aktualizovat zprávu od autora pluginu:"
 
 #: functions/admin/class-admin-update-notification.php:87
 msgid "version"
-msgstr "Version"
+msgstr "verze"
 
 #: functions/admin/class-tgm-plugin-activation.php:2728
 msgid "Available version:"
-msgstr "Verfügbare Version:"
+msgstr "Dostupná verze:"
 
 #: functions/admin/class-tgm-plugin-activation.php:2716
 msgid "Minimum required version:"
-msgstr "mindestens benötigte Version:"
+msgstr "Minimální požadovaná verze:"
 
 #: functions/admin/class-tgm-plugin-activation.php:2708
 msgid "Installed version:"
-msgstr "Installierte Version:"
+msgstr "Nainstalovaná verze:"
 
 #: functions/admin/class-tgm-plugin-activation.php:2700
 msgctxt "as in: \"version nr unknown\""
 msgid "unknown"
-msgstr "unbekannt"
+msgstr "neznámá"
 
 #. translators: 1: number of plugins.
 #: functions/admin/class-tgm-plugin-activation.php:2618
 msgid "To Activate <span class=\"count\">(%s)</span>"
 msgid_plural "To Activate <span class=\"count\">(%s)</span>"
-msgstr[0] "<span class=\"count\">(%s)</span> aktivieren"
-msgstr[1] "<span class=\"count\">(%s)</span> aktivieren"
+msgstr[0] "K aktivaci  <span class=\"count\">(%s)</span>"
+msgstr[1] "K aktivaci  <span class=\"count\">(%s)</span>"
+msgstr[2] "K aktivaci  <span class=\"count\">(%s)</span>"
 
 #. translators: 1: number of plugins.
 #: functions/admin/class-tgm-plugin-activation.php:2614
 msgid "Update Available <span class=\"count\">(%s)</span>"
 msgid_plural "Update Available <span class=\"count\">(%s)</span>"
-msgstr[0] "Aktualisierung verfügbar <span class=\"count\">(%s)</span>"
-msgstr[1] "Aktualisierungen verfügbar <span class=\"count\">(%s)</span>"
+msgstr[0] "Dostupné aktualizace <span class=\"count\">(%s)</span>"
+msgstr[1] "Dostupné aktualizace <span class=\"count\">(%s)</span>"
+msgstr[2] "Dostupné aktualizace <span class=\"count\">(%s)</span>"
 
 #. translators: 1: number of plugins.
 #: functions/admin/class-tgm-plugin-activation.php:2610
 msgid "To Install <span class=\"count\">(%s)</span>"
 msgid_plural "To Install <span class=\"count\">(%s)</span>"
-msgstr[0] "<span class=\"count\">(%s)</span> installieren"
-msgstr[1] "<span class=\"count\">(%s)</span> installieren"
+msgstr[0] "K instalaci <span class=\"count\">(%s)</span>"
+msgstr[1] "K instalaci <span class=\"count\">(%s)</span>"
+msgstr[2] "K instalaci <span class=\"count\">(%s)</span>"
 
 #. translators: 1: number of plugins.
 #: functions/admin/class-tgm-plugin-activation.php:2606
 msgctxt "plugins"
 msgid "All <span class=\"count\">(%s)</span>"
 msgid_plural "All <span class=\"count\">(%s)</span>"
-msgstr[0] "Alle <span class=\"count\">(%s)</span>"
-msgstr[1] "Alle <span class=\"count\">(%s)</span>"
+msgstr[0] "Vše <span class=\"count\">(%s)</span>"
+msgstr[1] "Vše <span class=\"count\">(%s)</span>"
+msgstr[2] "Vše <span class=\"count\">(%s)</span>"
 
 #: functions/admin/class-tgm-plugin-activation.php:2551
 msgid "Update recommended"
-msgstr "Aktualisierung empfohlen"
+msgstr "Doporučujeme aktualizovat"
 
 #: functions/admin/class-tgm-plugin-activation.php:2548
 msgid "Requires Update"
-msgstr "Aktualisierung nötig"
+msgstr "Vyžaduje aktualizaci"
 
 #: functions/admin/class-tgm-plugin-activation.php:2545
 msgid "Required Update not Available"
-msgstr "benötigte Aktualisierung nicht verfügbar"
+msgstr "Vyžadovaná aktualizace není dostupná"
 
 #: functions/admin/class-tgm-plugin-activation.php:2539
 msgid "Active"
-msgstr "Aktivieren"
+msgstr "Aktivní"
 
 #: functions/admin/class-tgm-plugin-activation.php:2513
 msgid "External Source"
-msgstr "externe Quelle"
+msgstr "Externí zdroj"
 
 #: functions/admin/class-tgm-plugin-activation.php:1310
 #: functions/admin/class-tgm-plugin-activation.php:3166
 msgctxt "plugin A *and* plugin B"
 msgid "and"
-msgstr "und"
+msgstr "a"
 
 #: functions/admin/class-tgm-plugin-activation.php:1125
 msgid "The remote plugin package consists of more than one file, but the files are not packaged in a folder."
-msgstr "Das entfernte Plugin-Paket besteht aus mehr als einer Datei, aber die Dateien sind nicht in einem Verzeichnis verpackt."
+msgstr "Vzdálený balíček pluginu obsahuje více než jeden soubor, ale soubory nejsou zabaleny ve složce."
 
 #: functions/admin/class-tgm-plugin-activation.php:1122
 #: functions/admin/class-tgm-plugin-activation.php:1125
 msgid "Please contact the plugin provider and ask them to package their plugin according to the WordPress guidelines."
-msgstr "Bitte setze dich mit dem Plugin-Anbieter in Verbindung und bitte ihn, sein Plugin entsprechend den WordPress-Richtlinien zu packen."
+msgstr "Obraťte se prosím na poskytovatele pluginu a požádejte jej, aby plugin zabalil dle směrnic WordPressu."
 
 #: functions/admin/class-tgm-plugin-activation.php:1122
 msgid "The remote plugin package does not contain a folder with the desired slug and renaming did not work."
-msgstr "Das entfernte Plugin-Paket enthält kein Verzeichnis mit dem gewünschten Titelformat und Umbenennen hat nicht funktioniert."
+msgstr "Vzdálený komprimovaný plugin neobsahuje složku s vyžadovaným názvem v URL a přejmenování nefunguje."
 
 #: functions/admin/class-tgm-plugin-activation.php:706
 msgid "Update Required"
-msgstr "Update erforderlich"
+msgstr "Je vyžadována aktualizace"
 
 #: functions/admin/class-tgm-plugin-activation.php:705
 msgid "This plugin needs to be updated to be compatible with your theme."
-msgstr "Dieses Plugin muss aktualisiert werden um mit Deinem Theme kompatibel zu sein."
+msgstr "Pro zajištění kompatibility s vaší šablonou, je nutné tento plugin třeba aktualizovat."
 
 #: functions/admin/class-tgm-plugin-activation.php:580
 msgid "Please contact the administrator of this site for help."
-msgstr "Bitte kontaktieren Sie den Administrator dieser Website für Hilfe."
+msgstr "Pro pomoc, kontaktujte administrátora tohoto webu."
 
 #. translators: 1: plugin name.
 #: functions/admin/class-tgm-plugin-activation.php:574
 msgid "Plugin not activated. A higher version of %s is needed for this theme. Please update the plugin."
-msgstr "Plugin nicht aktiviert. Eine aktuellere Version von %s wird für dieses Theme benötigt. Bitte aktualisiere das Plugin."
+msgstr "Plugin není aktivován. Pro tuto šablonu je zapotřebí vyšší verze pluginu %s. Aktualizujte, prosím, tento plugin."
 
 #. translators: 1: plugin name.
 #: functions/admin/class-tgm-plugin-activation.php:572
 msgid "No action taken. Plugin %1$s was already active."
-msgstr "Keine Aktion ausgeführt. Plugin %1$s war schon aktiviert."
+msgstr "Nic se nestalo. Plugin %1$s již byl aktivní."
 
 #: functions/admin/class-tgm-plugin-activation.php:557
 msgid "Begin updating plugin"
 msgid_plural "Begin updating plugins"
-msgstr[0] "Update des Plugins starten"
-msgstr[1] "Update der Plugins starten"
+msgstr[0] "Začít aktualizaci pluginu"
+msgstr[1] "Začít aktualizaci pluginů"
+msgstr[2] "Začít aktualizaci pluginů"
 
 #: functions/admin/class-tgm-plugin-activation.php:515
 #: functions/init-core.php:1498
 msgid "Something went wrong with the plugin API."
-msgstr "Etwas ging mit der Plugin-API schief."
+msgstr "Došlo k potížím s API pluginu."
 
 #. Template Name of the plugin/theme
 msgid "Child Menu"
-msgstr "Untermenü"
+msgstr "Child Menu"
 
 #: single.php:44
 msgid "Tags:"
-msgstr "Tags: "
+msgstr "Štítky:"
 
 #: single.php:28
 msgid "Pages:"
-msgstr "Seiten:"
+msgstr "Stránky:"
 
 #: parts/post-list-author-date.php:11 parts/single-author-date.php:7
 msgid "by"
-msgstr "nach"
+msgstr "Autor"
 
 #: sidebar.php:12
 msgid "Follow:"
-msgstr "Folgen:"
+msgstr "Sledujte:"
 
 #: sidebar-2.php:9
 msgid "More"
-msgstr "Mehr"
+msgstr "Další"
 
 #: sidebar-2.php:3 sidebar.php:6
 msgid "Expand Sidebar"
-msgstr "Sidebar ausklappen"
+msgstr "Rozbalit postranní panel"
 
 #: searchform.php:3
 msgid "To search type and hit enter"
-msgstr "Zum Suchen Tippen und Enter drücken"
+msgstr "Zadejte hledaný text a stiskněte enter"
 
 #: search.php:12
 msgid "Please try another search:"
-msgstr "Bitte versuchen Sie einen anderen Suchbegriff"
+msgstr "Zkuste zadat něco jiného:"
 
 #: search.php:10
 msgid "For the term"
-msgstr "Für den Suchbegriff"
+msgstr "Hledaný výraz"
 
 #: functions/class-utils-settings-map.php:1413
 #: option-tree/includes/ot-functions-option-types.php:235
 msgid "No Sidebars"
-msgstr "Keine Seitenleiste"
+msgstr "Bez postranních bannerů"
 
 #: functions/class-utils-settings-map.php:1418
 #: option-tree/includes/ot-functions-option-types.php:230
 msgid "Choose Sidebar"
-msgstr "Wähle Sidebar"
+msgstr "Vybrat postranní panel"
 
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:11
 msgid "Add New"
-msgstr "Hinzufügen"
+msgstr "Přidat nový"
 
 #: option-tree/includes/ot-functions-option-types.php:441
 msgid "Add Media"
-msgstr "Dateien hinzufügen"
+msgstr "Mediální soubory"
 
 #: functions/czr/tmpl/inputs/img-uploader-tmpl.php:58
 msgid "Default"
-msgstr "Standard"
+msgstr "Výchozí"
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:62
 msgid "Title"
-msgstr "Titel"
+msgstr "Název"
 
 #: functions/czr/czr-resources.php:415 functions/czr/czr-resources.php:437
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:32
@@ -1911,25 +1920,25 @@ msgstr "Titel"
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:103
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:44
 msgid "Edit"
-msgstr "Bearbeiten"
+msgstr "Upravit"
 
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:15
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:62
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:105
 msgid "Name"
-msgstr "Name"
+msgstr "Jméno"
 
 #: functions/class-utils-settings-map.php:842
 msgid "Right Sidebar"
-msgstr "Sidebar rechts"
+msgstr "Postranní panel vpravo"
 
 #: functions/class-utils-settings-map.php:841
 msgid "Left Sidebar"
-msgstr "Sidebar links"
+msgstr "Postranní panel vlevo"
 
 #: functions/czr/czr-resources.php:442
 msgid "Slide"
-msgstr ""
+msgstr "Snímek"
 
 #: functions/plugins-compatibility.php:227
 msgid "Featured pages"
@@ -1937,27 +1946,27 @@ msgstr ""
 
 #: functions/czr/czr-resources.php:416
 msgid "Close"
-msgstr "Schließen"
+msgstr "Zavřít"
 
 #: option-tree/includes/ot-functions-option-types.php:457
 msgid "Remove Media"
-msgstr ""
+msgstr "Odstranit média"
 
 #: functions/czr/controls/class-upload-control.php:67
 msgid "Upload"
-msgstr "Hochladen"
+msgstr "Nahrát"
 
 #: functions/class-utils-settings-map.php:1032
 msgid "Content"
-msgstr "Inhalt"
+msgstr "Obsah"
 
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:24
 msgid "Yes"
-msgstr "Ja"
+msgstr "Ano"
 
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:24
 msgid "No"
-msgstr "Nein"
+msgstr "Ne"
 
 #: functions/czr/tmpl/modules/text_editor-module-tmpl.php:14
 msgid "Text"
@@ -1965,35 +1974,35 @@ msgstr "Text"
 
 #: parts/related-posts.php:6
 msgid "You may also like..."
-msgstr ""
+msgstr "Mohlo by se vám líbit..."
 
 #: parts/post-nav.php:4
 msgid "Previous story"
-msgstr ""
+msgstr "Předchozí příspěvek"
 
 #: parts/post-nav.php:3
 msgid "Next story"
-msgstr ""
+msgstr "Následující příspěvek"
 
 #: functions/init-front.php:390
 msgid "Yearly Archive:"
-msgstr ""
+msgstr "Archiv roku:"
 
 #: functions/init-front.php:385
 msgid "Monthly Archive:"
-msgstr ""
+msgstr "Archiv měsíce:"
 
 #: functions/init-front.php:380
 msgid "Daily Archive:"
-msgstr ""
+msgstr "Archiv dne:"
 
 #: functions/init-front.php:365
 msgid "Tagged:"
-msgstr "Stichwörter:"
+msgstr "Štítek:"
 
 #: functions/init-front.php:360
 msgid "Category:"
-msgstr "Katgeorie:"
+msgstr "Rubrika:"
 
 #: functions/init-front.php:346
 msgid "Author:"
@@ -2001,103 +2010,103 @@ msgstr "Autor:"
 
 #: functions/init-front.php:334
 msgid "Page not found!"
-msgstr "Seite nicht gefunden!"
+msgstr "Stránka nenalezena!"
 
 #: functions/init-front.php:333
 msgid "Error 404."
-msgstr "Fehler 404."
+msgstr "Chyba 404"
 
 #: functions/init-front.php:322
 msgid "Search results"
-msgstr "Suchergebnisse"
+msgstr "Výsledky vyhledávání"
 
 #: functions/init-front.php:320
 msgid "Search result"
-msgstr "Suchergebnis"
+msgstr "Výsledky hledání"
 
 #: functions/widgets/alx-tabs.php:235
 msgid "says:"
-msgstr "sagt:"
+msgstr "říká:"
 
 #: functions/widgets/alx-tabs.php:69
 msgid "Tags"
-msgstr "Schlagwörter"
+msgstr "Štítky"
 
 #: functions/widgets/alx-tabs.php:68
 msgid "Recent Comments"
-msgstr "Letzte Kommentare"
+msgstr "Nejnovější komentáře"
 
 #: functions/widgets/alx-tabs.php:67
 msgid "Popular Posts"
-msgstr "Beliebte Meldungen"
+msgstr "Oblíbené příspěvky"
 
 #: functions/widgets/alx-tabs.php:66
 msgid "Recent Posts"
-msgstr "Letzte Beiträge"
+msgstr "Nejnovější příspěvky"
 
 #. translators: 1: plugin name, 2: action number 3: total number of actions.
 #: functions/admin/class-tgm-plugin-activation.php:3738
 msgid "Installing Plugin %1$s (%2$d/%3$d)"
-msgstr "Installieren Plugin %1$s (%2$d/%3$d)"
+msgstr "Probíhá instalace pluginu %1$s (%2$d/%3$d)"
 
 #: functions/admin/class-tgm-plugin-activation.php:3736
 msgid "All installations have been completed."
-msgstr "Alle Installationen sind abgeschlossen."
+msgstr "Veškeré instalace byly dokončeny."
 
 #. translators: 1: plugin name.
 #: functions/admin/class-tgm-plugin-activation.php:3735
 msgid "%1$s installed successfully."
-msgstr "%1$s erfolgreich installiert."
+msgstr "Plugin %1$s byl úspěšně nainstalován."
 
 #. translators: 1: plugin name.
 #: functions/admin/class-tgm-plugin-activation.php:3721
 msgid "The installation of %1$s failed."
-msgstr "Die Installation von %1$s fehlgeschlagen."
+msgstr "Instalace pluginu %1$s se nezdařila."
 
 #. translators: 1: plugin name, 2: error message.
 #: functions/admin/class-tgm-plugin-activation.php:3719
 msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
-msgstr "Ein Fehler ist aufgetreten während der Installation %1$s: <strong>%2$s</strong>."
+msgstr "Při instalaci pluginu %1$s došlo k chybě: <strong>%2$s</strong>."
 
 #: functions/admin/class-tgm-plugin-activation.php:3733
 msgid "The installation process is starting. This process may take a while on some hosts, so please be patient."
-msgstr "Der Installationsvorgang wird gestartet. Dieser Vorgang kann eine Weile auf einigen Hosts dauern, bitte haben sie Geduld."
+msgstr "Proces instalace byl zahájen. Na některých serverech může tato operace trvat delší dobu."
 
 #. translators: 1: plugin name, 2: action number 3: total number of actions.
 #: functions/admin/class-tgm-plugin-activation.php:3730
 msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
-msgstr "Installation und Aktivierung Plugin %1$s (%2$d/%3$d)"
+msgstr "Probíhá instalace a aktivace pluginu %1$s (%2$d/%3$d)"
 
 #: functions/admin/class-tgm-plugin-activation.php:3728
 msgid "All installations and activations have been completed."
-msgstr "Alle Installationen und Aktivierungen abgeschlossen sind."
+msgstr "Všechny instalace a aktivace byly úspěšně dokončeny."
 
 #: functions/admin/class-tgm-plugin-activation.php:3727
 #: functions/admin/class-tgm-plugin-activation.php:3735
 msgid "Hide Details"
-msgstr "Details ausblenden"
+msgstr "Skrýt podrobnosti"
 
 #: functions/admin/class-tgm-plugin-activation.php:3727
 #: functions/admin/class-tgm-plugin-activation.php:3735
 msgid "Show Details"
-msgstr "Details anzeigen"
+msgstr "Zobrazit podrobnosti"
 
 #. translators: 1: plugin name.
 #: functions/admin/class-tgm-plugin-activation.php:3727
 msgid "%1$s installed and activated successfully."
-msgstr "%1$s erfolgreich installiert und aktiviert."
+msgstr "Plugin %1$s byl úspěšně nainstalován a aktivován."
 
 #: functions/admin/class-tgm-plugin-activation.php:3725
 msgid "The installation and activation process is starting. This process may take a while on some hosts, so please be patient."
-msgstr "Die Installation und Aktivierung beginnt. Dieser Vorgang kann eine Weile auf einigen Hosts dauern, bitte haben sie Geduld."
+msgstr "Proces instalace a aktivace byl zahájen. Na některých serverech může tato operace trvat delší dobu."
 
 #: functions/admin/class-tgm-plugin-activation.php:3376
 msgid "Plugin activation failed."
-msgstr "Plugin Aktivierung fehlgeschlagen."
+msgstr "Aktivace pluginu selhala."
 
 #: functions/admin/class-tgm-plugin-activation.php:2772
 msgid "Status"
-msgstr "Status"
+msgstr "Stav"
 
 #: functions/admin/class-tgm-plugin-activation.php:2767
 msgid "Type"
@@ -2105,7 +2114,7 @@ msgstr "Typ"
 
 #: functions/admin/class-tgm-plugin-activation.php:2766
 msgid "Source"
-msgstr "Quelle"
+msgstr "Zdroj"
 
 #: functions/admin/class-tgm-plugin-activation.php:2765
 msgid "Plugin"
@@ -2113,169 +2122,177 @@ msgstr "Plugin"
 
 #: functions/admin/class-tgm-plugin-activation.php:2944
 msgid "Activate"
-msgstr "Aktivieren"
+msgstr "Aktivovat"
 
 #: functions/admin/class-tgm-plugin-activation.php:2935
 msgid "Install"
-msgstr "Installieren"
+msgstr "Instalovat"
 
 #: functions/admin/class-tgm-plugin-activation.php:2537
 msgid "Installed But Not Activated"
-msgstr "Installiert, aber nicht aktiviert"
+msgstr "Nainstalováno, ale neaktivováno"
 
 #: functions/admin/class-tgm-plugin-activation.php:2533
 msgid "Not Installed"
-msgstr "Nicht installiert"
+msgstr "Není nainstalováno"
 
 #: functions/admin/class-tgm-plugin-activation.php:2494
 #: functions/init-front.php:133
 msgid "Recommended"
-msgstr "EMPFOHLEN"
+msgstr "Doporučený"
 
 #: functions/admin/class-tgm-plugin-activation.php:2491
 msgid "Required"
-msgstr "Erforderlich"
+msgstr "Požadovaný"
 
 #: functions/admin/class-tgm-plugin-activation.php:2510
 msgid "WordPress Repository"
-msgstr "WordPress Projektarchiv"
+msgstr "Úložiště WordPressu"
 
 #: functions/admin/class-tgm-plugin-activation.php:2516
 msgid "Pre-Packaged"
-msgstr "Abgepackten"
+msgstr "Součástí šablony"
 
 #: functions/admin/class-tgm-plugin-activation.php:568
 #: functions/admin/class-tgm-plugin-activation.php:1015
 #: functions/admin/class-tgm-plugin-activation.php:2751
 #: functions/admin/class-tgm-plugin-activation.php:3798
 msgid "Return to the Dashboard"
-msgstr "Zurück zum Dashboard"
+msgstr "Návrat na nástěnku"
 
 #: functions/admin/class-tgm-plugin-activation.php:577
 msgid "Dismiss this notice"
-msgstr "Entlassen diese Mitteilung"
+msgstr "Zavřít toto oznámení"
 
 #: functions/init-core.php:1511
 msgid "All plugins installed and activated successfully. %s"
-msgstr ""
+msgstr "Všechny pluginy byly úspěšně nainstalovány a aktivovány. %1$s"
 
 #: functions/admin/class-tgm-plugin-activation.php:570
 #: functions/admin/class-tgm-plugin-activation.php:3170
 msgid "The following plugin was activated successfully:"
-msgstr "Das folgende Plugin wurde erfolgreich aktiviert:"
+msgstr "Následující plugin byl úspěšně aktivován:"
 
 #: functions/admin/class-tgm-plugin-activation.php:569
 #: functions/admin/class-tgm-plugin-activation.php:3377
 #: functions/init-core.php:1510
 msgid "Plugin activated successfully."
-msgstr "Plugin erfolgreich aktiviert."
+msgstr "Plugin byl úspěšně aktivován."
 
 #: functions/admin/class-tgm-plugin-activation.php:567
 #: functions/init-core.php:1509
 msgid "Return to Required Plugins Installer"
-msgstr "Zurück zur Erforderliche Plugins Installer"
+msgstr "Návrat do instalátoru požadovaných pluginů"
 
 #: functions/admin/class-tgm-plugin-activation.php:562
 msgid "Begin activating plugin"
 msgid_plural "Begin activating plugins"
-msgstr[0] "BEGIN Plugin aktivieren"
-msgstr[1] "BEGIN Plugins aktivieren"
+msgstr[0] "Začít aktivaci pluginu"
+msgstr[1] "Začít aktivaci pluginů"
+msgstr[2] "Začít aktivaci pluginů"
 
 #. translators: 1: plugin name(s).
 #: functions/admin/class-tgm-plugin-activation.php:552
 #: functions/init-core.php:1507
 msgid "Begin installing plugin"
 msgid_plural "Begin installing plugins"
-msgstr[0] "Starten Sie die Installation des plugin"
-msgstr[1] "Starten Sie die Installation von plugins"
+msgstr[0] "Začít instalaci pluginu"
+msgstr[1] "Začít instalaci pluginů"
+msgstr[2] "Začít instalaci pluginů"
 
 #: functions/init-core.php:1506
 msgid "Sorry, but you do not have the correct permissions to update the %s plugin. Contact the administrator of this site for help on getting the plugin updated."
 msgid_plural "Sorry, but you do not have the correct permissions to update the %s plugins. Contact the administrator of this site for help on getting the plugins updated."
-msgstr[0] "Leider reichen die Zugriffsrechte nicht aus, um das %s Plugin zu aktualisieren. Bitte wende dich an den Administrator der Site."
-msgstr[1] "Leider reichen die Zugriffsrechte nicht aus, um die %s Plugins zu aktualisieren. Bitte wende dich an den Administrator der Site."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: functions/init-core.php:1505
 msgid "The Hueman Addons plugin needs to be updated to its latest version to ensure maximum compatibility with the Hueman theme: %1$s."
 msgid_plural "The following plugins need to be updated to their latest version to ensure maximum compatibility with this theme: %1$s."
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: functions/init-core.php:1504
 msgid "Sorry, but you do not have the correct permissions to activate the %s plugin. Contact the administrator of this site for help on getting the plugin activated."
 msgid_plural "Sorry, but you do not have the correct permissions to activate the %s plugins. Contact the administrator of this site for help on getting the plugins activated."
-msgstr[0] "Leider reichen die Zugriffsrechte nicht aus, um das %s Plugin zu aktivieren. Bitte wende dich an den Administrator der Site."
-msgstr[1] "Leider reichen die Zugriffsrechte nicht aus, um die %s Plugins zu aktivieren. Bitte wende dich an den Administrator der Site."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: functions/init-core.php:1502
 msgid "The Hueman Addons required plugin is currently inactive: %1$s."
 msgid_plural "The following required plugins are currently inactive: %1$s."
-msgstr[0] "Folgende erforderliche Plugin ist derzeit inaktiv: %1$s."
-msgstr[1] "Die folgenden erforderlichen Plugins sind derzeit inaktiv: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: functions/init-core.php:1501
 msgid "Sorry, but you do not have the correct permissions to install the %s plugin. Contact the administrator of this site for help on getting the plugin installed."
 msgid_plural "Sorry, but you do not have the correct permissions to install the %s plugins. Contact the administrator of this site for help on getting the plugins installed."
-msgstr[0] "Leider reichen die Zugriffsrechte nicht aus, um das %s Plugin zu installieren. Bitte wende dich an den Administrator der Site."
-msgstr[1] "Leider reichen die Zugriffsrechte nicht aus, um die %s Plugins zu installieren. Bitte wende dich an den Administrator der Site."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: functions/init-core.php:1499
 msgid "The Hueman theme requires the following plugin: %1$s."
 msgid_plural "This theme requires the following plugins: %1$s."
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #. translators: %s: plugin name.
 #: functions/admin/class-tgm-plugin-activation.php:512
 #: functions/init-core.php:1497
 msgid "Installing Plugin: %s"
-msgstr "Installiere Plugin: %s"
+msgstr "Instaluji plugin: %s"
 
 #: functions/admin/class-tgm-plugin-activation.php:510
 #: functions/init-core.php:1496
 msgid "Install Plugins"
-msgstr "Plugins installieren"
+msgstr "Instalovat pluginy"
 
 #: functions/admin/class-tgm-plugin-activation.php:509
 #: functions/init-core.php:1495
 msgid "Install Required Plugins"
-msgstr "Installieren Sie die erforderlichen Plugins"
+msgstr "Instalovat vyžadované pluginy"
 
 #: footer.php:109
 msgid "Theme by"
-msgstr "Thema von"
+msgstr "Šablona od"
 
 #: footer.php:109
 msgid "Powered by"
-msgstr "Powered by"
+msgstr "Podporováno "
 
 #: footer.php:103 functions/czr/czr-resources.php:40
 msgid "All Rights Reserved."
-msgstr "Alle Rechte vorbehalten."
+msgstr "Všechna práva vyhrazena."
 
 #: comments.php:11
 msgid "Pingbacks"
-msgstr ""
+msgstr "Pingbacky"
 
 #: comments.php:10 functions/class-utils-settings-map.php:1167
 msgid "Comments"
-msgstr "Kommentare"
+msgstr "Komentáře"
 
 #: comments.php:7
 msgid "% Responses"
-msgstr "% Antworten"
+msgstr "Počet komentářů: %"
 
 #: comments.php:7
 msgid "1 Response"
-msgstr "1 Reaktion"
+msgstr "1 odpověď"
 
 #: comments.php:7
 msgid "No Responses"
-msgstr "Keine Antworten"
+msgstr "Žádné komentáře"
 
 #: 404.php:14
 msgid "The page you are trying to reach does not exist, or has been moved. Please use the menus or the search box to find what you are looking for."
-msgstr ""
+msgstr "Stránka, kterou se snažíte najít, neexistuje nebo byla přesunuta. Prosím, použijte menu nebo vyhledávací pole, abyste našli, co hledáte."
 
 #. Author URI of the plugin/theme
 msgid "http://presscustomizr.com"
