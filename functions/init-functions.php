@@ -219,7 +219,7 @@ function hu_is_post_list() {
     && ! is_404()
     && ( is_search() && 0 != $wp_query -> post_count )
     && ! hu_is_home_empty() )
-    || hu_is_blogpage() || is_home()
+    || hu_is_blogpage() || is_home() || is_search() || is_archive()
   );
 }
 
