@@ -241,6 +241,12 @@ function hu_extend_visibilities() {
         __('blog design panel', 'hueman')
       )
   );
+  $_header_menu_notice = sprintf( __( "The menu currently displayed in your header is a default page menu, you can disable it in the %s.", 'hueman'),
+      sprintf('<a href="%1$s" title="%2$s">%2$s</a>',
+        "javascript:wp.customize.section(\'header_menu_sec\').focus();",
+        __('Header Panel', 'hueman')
+      )
+  );
   ?>
   <script id="control-visibilities" type="text/javascript">
     (function (api, $, _) {
@@ -403,6 +409,83 @@ function hu_extend_visibilities() {
                   }
             ]//dominiDeps {}
       );//_.extend()
+
+
+      //add a notice in the Menus panel to easily disable the default page menu in the header
+      <?php if ( ! is_multisite() ) : //no default menu for multisite installs ?>
+        api.when('nav_menu_locations[header]', function( header_menu_loc_settting ) {
+              //bail for old version of WP
+              if ( ! _.has( api, 'section' ) || ! _.has( api, 'panel') )
+                return;
+
+              var _notice_selector = 'hu-menu-notice',
+                  _toggle_menu_notice = function( show ) {
+                    var $menu_panel_content = api.panel('nav_menus').container.find('.control-panel-content'),
+                        notice_rendered = 0 !== $menu_panel_content.find( '.' + _notice_selector ).length,
+                        _html = '<p class="description customize-control-description ' + _notice_selector +'"><?php echo $_header_menu_notice; ?></p>',
+                        _render_notice = function() {
+                              //defer the rendering when all sections of this panel have been embedded
+                              $.when.apply(
+                                    null,
+                                    ( function() {
+                                          var _promises = [];
+                                          //build the promises array
+                                          api.section.each( function( _sec ){
+                                                if ( 'nav_menus' == _sec.panel() ) {
+                                                      _promises.push( _sec.deferred.embedded );
+                                                }
+                                          });
+                                          return _promises;
+                                    })
+                                    )
+                              .then( function() {
+                                    $menu_panel_content.append( _html );
+                              });
+                        },
+                        _toggle_notice = function() {
+                              if ( ! notice_rendered ) {
+                                _render_notice();
+                              };
+                              $('.' + _notice_selector, $menu_panel_content).toggle( show );
+                        };
+
+                    //bail if the menu panel is still not yet rendered
+                    if ( ! $menu_panel_content.length )
+                      return;
+
+                    if ( api.topics && api.topics.ready && api.topics.ready.fired() ) {
+                          _toggle_notice();
+                    } else {
+                          api.bind('ready', _toggle_notice );
+                    }
+              };//_toggle_menu_notice
+
+              //API based toggling : maybe toggle the notice when nav_menu panel has been registered AND embedded
+              api.panel.when('nav_menus', function( panel_instance ){
+                    panel_instance.deferred.embedded.then( function() {
+                          _toggle_menu_notice( 0 == header_menu_loc_settting() );
+                    });
+              });
+
+              //User action based toggling : Maybe toggle the notice when user changes the related settings
+              api.bind('ready', function() {
+                    //bail if the [default-menu-header] has been removed
+                    if ( ! api.has('hu_theme_options[default-menu-header]') )
+                      return;
+
+                    //react to header menu location changes
+                    header_menu_loc_settting.bind( function( to, from ) {
+                          _toggle_menu_notice( 0 == to && _is_checked( api('hu_theme_options[default-menu-header]')() ) );
+                    } );
+                    //react to hu_theme_options[default-menu-header]
+                    api('hu_theme_options[default-menu-header]').bind( function( to ) {
+                          _toggle_menu_notice( _is_checked( to ) && 0 == header_menu_loc_settting() );
+                    });
+              });
+
+        });
+      <?php endif; ?>
+
     }) ( wp.customize, jQuery, _);
   </script>
   <?php

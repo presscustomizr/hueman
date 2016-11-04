@@ -528,6 +528,12 @@ li#customize-control-tc_theme_options-tc_custom_css textarea {
 #customize-theme-controls .control-panel-widgets, #customize-theme-controls #accordion-panel-nav_menus{
   margin-top: 14px;
   border-bottom: 1px solid #ddd;
+}
+
+
+/* HEADER MENU NOTICE */
+.control-panel-content .hu-menu-notice {
+    margin-left: 3%;
 }/*******************************************************************
 * DYNAMIC CONTROLS : sidebars, socials, ...
 ********************************************************************/
