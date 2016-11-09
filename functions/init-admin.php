@@ -418,7 +418,13 @@ function hu_custom_meta_boxes() {
           'id'    => '_video_url',
           'type'    => 'text',
           'desc'    => ''
-        )
+        ),
+		    array(
+			    'label'		=> 'Video Embed Code',
+			    'id'		=> '_video_embed_code',
+			    'type'		=> 'textarea',
+			    'rows'		=> '2'
+		    )
       )
     );
 
