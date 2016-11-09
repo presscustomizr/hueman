@@ -31,6 +31,7 @@ class AlxVideo extends WP_Widget {
       'title'       => '',
     // Video
       'video_url'     => '',
+      'video_embed_code' 	=> '',
     );
   }
 
@@ -52,6 +53,11 @@ class AlxVideo extends WP_Widget {
 			global $wp_embed;
 			$video = $wp_embed->run_shortcode('[embed]'.$instance['video_url'].'[/embed]');
 		}
+		elseif ( !empty($instance['video_embed_code']) ) {
+			echo '<div class="video-container">';
+			$video = $instance['video_embed_code'];
+			echo '</div>';
+		}
 		else {
 			$video = '';
 		}
@@ -70,6 +76,7 @@ class AlxVideo extends WP_Widget {
 		$instance['title'] = esc_attr($new['title']);
 	// Video
 		$instance['video_url'] = esc_url($new['video_url']);
+		$instance['video_embed_code'] = $new['video_embed_code'];
 		return $instance;
 	}
 
@@ -99,6 +106,10 @@ class AlxVideo extends WP_Widget {
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id("video_url") ); ?>">Video URL</label>
 			<input style="width:100%;" id="<?php echo esc_attr( $this->get_field_id("video_url") ); ?>" name="<?php echo esc_attr( $this->get_field_name("video_url") ); ?>" type="text" value="<?php echo esc_url( $instance["video_url"] ); ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id("video_embed_code"); ?>">Video Embed Code</label>
+			<textarea class="widefat" id="<?php echo $this->get_field_id('video_embed_code'); ?>" name="<?php echo $this->get_field_name('video_embed_code'); ?>"><?php echo $instance["video_embed_code"]; ?></textarea>
 		</p>
 	</div>
 <?php
