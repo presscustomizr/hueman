@@ -69,6 +69,7 @@ module.exports = {
       '<%= paths.czr_assets %>fmk/js/control_dev/_0_pre_base.js',
 
       '<%= paths.czr_assets %>fmk/js/control_dev/0_1_skope/_0_0_0_pre_100_skope_base_init.js',
+      '<%= paths.czr_assets %>fmk/js/control_dev/0_1_skope/_0_0_0_pre_101_skope_base_server_notification.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/0_1_skope/_0_0_0_pre_111_skope_base_helpers_utilities.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/0_1_skope/_0_0_0_pre_112_skope_base_helpers_priority_inheritance.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/0_1_skope/_0_0_0_pre_20_skope_base_current_skopes_collection.js',
@@ -82,7 +83,6 @@ module.exports = {
       '<%= paths.czr_assets %>fmk/js/control_dev/0_1_skope/_0_0_0_pre_502_skope_save_submit_promise.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/0_1_skope/_0_0_0_pre_503_skope_save_recursive_calls.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/0_1_skope/_0_0_0_pre_504_skope_save_postprocessing.js',
-      '<%= paths.czr_assets %>fmk/js/control_dev/0_1_skope/_0_0_0_pre_60_skope_refresh_postprocessing.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/0_1_skope/_0_0_0_pre_700_skope_widget_sidebar_specifics.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/0_1_skope/_0_0_0_pre_800_skope_header_buttons.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/0_1_skope/_0_0_0_pre_91_skope_model_init.js',

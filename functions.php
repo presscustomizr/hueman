@@ -21,7 +21,7 @@ if ( class_exists( 'HA_skop_dev_logs') ) {
   );
 }
 
-//delete_post_meta( ha_get_skope_post_id(), 'hueman_czr_all_page' );
+// delete_post_meta( ha_get_skope_post_id(), 'hueman_czr_all_page' );
 // foreach ( get_post_meta( ha_get_skope_post_id() )  as $key => $value) {
 //   delete_post_meta( ha_get_skope_post_id(), $key );
 // }
