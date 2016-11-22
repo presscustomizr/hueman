@@ -36,6 +36,7 @@
         api.preview.bind( 'sync', function( events ) {
               api.preview.send( 'czr-skopes-synced', {
                     czr_skopes : _wpCustomizeSettings.czr_skopes || [],
+                    isChangesetDirty : _wpCustomizeSettings.isChangesetDirty || false,
                     skopeGlobalDBOpt : _wpCustomizeSettings.skopeGlobalDBOpt || [],
               } );
         });

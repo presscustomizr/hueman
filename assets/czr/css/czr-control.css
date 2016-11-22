@@ -1918,15 +1918,17 @@ span.czr-skope-title {
   font-weight: bold;
   opacity: 1;
 }
-.czr-scope-switcher .active {
+.czr-scope-switcher .active, .czr-scope-switcher .czr-scope:hover {
   opacity: 1;
+  border-bottom: 2px solid #82b965;
 }
+
 .czr-scope {
     float: left;
     width: 30.5%;
     /*margin-left: 1.5%;*/
     background: #fff;
-    /*border: 1px solid #cccccc;*/
+    border-bottom: 2px solid #cccccc;
     border-top: 1px solid #cccccc;
     /*-webkit-border-radius: 3px;
     border-radius: 3px;*/
@@ -1938,6 +1940,7 @@ span.czr-skope-title {
     -o-transition: opacity .3s ease-in-out;
     transition: opacity .3s ease-in-out;
 }
+
 /* LAYOUTS */
 .czr-scope-switcher .width-100 { width: 100%; }
 .czr-scope-switcher .width-50 { width: 50%; }
@@ -2112,4 +2115,103 @@ body.czr-resetting-skope #czr-reset-skope-pane .czr-resetting {
 }
 .czr-reset-skope-pane-open .wp-full-overlay.expanded .collapse-sidebar {
   bottom: 0 !important;
+}
+
+
+/* CONTROL INFOS */
+.customize-control .czr-skope-notice {
+  color: #357315;
+}
+.czr-skope-notice .czr-skope-switch {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.czr-toggle-notice {
+  color: #95a5a6;
+  -webkit-transition: color 0.4s;
+  transition: color 0.4s;
+  position: absolute;
+  padding-left: 3px;
+  line-height: 21px;
+  display: none;
+}
+.czr-notice-visible .czr-toggle-notice, .czr-toggle-notice:hover {
+  color: #357315;
+}
+
+
+/* HOME BUTTON */
+#customize-header-actions .customize-controls-close {
+  left:45px;
+}
+.customize-controls-home {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 45px;
+    height: 41px;
+    padding: 0 2px 0 0;
+    background: #eee;
+    border: none;
+    border-top: 4px solid #eee;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    color: #444;
+    text-align: left;
+    cursor: pointer;
+    text-decoration: none;
+    -webkit-transition: color .15s ease-in-out, border-color .15s ease-in-out, background .15s ease-in-out;
+    transition: color .1s ease-in-out, border-color .15s ease-in-out, background .15s ease-in-out;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.customize-controls-home:before {
+    font-size: 17px;
+    line-height:45px;
+    position: relative;
+    top: -4px;
+    left: 14px;
+}
+.customize-controls-home:hover {
+    background: #fff;
+    color: #0073aa;
+    border-top-color: #0073aa;
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+
+/* Error Notification */
+.wp-full-overlay-header, .wp-full-overlay-sidebar .wp-full-overlay-sidebar-content {
+    -webkit-transition: height, top, .4s ease-in-out;
+    -moz-transition: height, top, .4s ease-in-out;
+    -ms-transition: height, top, .4s ease-in-out;
+    -o-transition: height, top, .4s ease-in-out;
+    transition: height, top, .4s ease-in-out;
+}
+.czr-server-notice {
+    width: calc(100% - 2px);
+    top: 0;
+    text-align: center;
+    background: white;
+    border:1px solid green;
+    color: green;
+    display: none;
+    position: relative;
+}
+.czr-server-notice.czr-server-error {
+    color: red;
+    border-color: red;
+}
+
+.czr-dismiss-notification {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
 }
