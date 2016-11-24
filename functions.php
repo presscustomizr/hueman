@@ -14,7 +14,7 @@ if ( class_exists( 'HA_skop_dev_logs') ) {
   new HA_skop_dev_logs(
     array(
         'hook' => '__header_after_container_inner',
-        'display_header' => false,
+        'display_header' => true,
         'tested_option' => 'copyright'
       )
 
@@ -25,3 +25,12 @@ if ( class_exists( 'HA_skop_dev_logs') ) {
 // foreach ( get_post_meta( ha_get_skope_post_id() )  as $key => $value) {
 //   delete_post_meta( ha_get_skope_post_id(), $key );
 // }
+
+/*$theme = get_option( 'stylesheet' );
+$_raw_theme_mods = hu_get_raw_option( "theme_mods_{$theme}" );
+?>
+  <pre>
+    <?php print_r($_raw_theme_mods); ?>
+  </pre>
+<?php
+wp_die();*/

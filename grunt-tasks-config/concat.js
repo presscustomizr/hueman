@@ -163,7 +163,7 @@ module.exports = {
       '<%= paths.czr_assets %>fmk/js/control_dev/6_0_control_list/_2_4_layout_control.js',
 
       '<%= paths.czr_assets %>fmk/js/control_dev/_5_extend_api.js',
-      '<%= paths.czr_assets %>fmk/js/control_dev/_6_visibilities.js',
+      '<%= paths.czr_assets %>fmk/js/control_dev/_6_control_dependencies.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/_7_various_dom_ready.js'
     ],
     dest: '<%= paths.czr_assets %>fmk/js/czr-control.js',
