@@ -55,6 +55,13 @@ var api = api || wp.customize, $ = $ || jQuery;
                 });
           });
       });
+      api.bind('ready', function() {
+            api.previewer.bind( 'synced', function() {
+                  if ( api.section.has('themes') )
+                    api.section('themes').active(  _.has( serverControlParams, 'isThemeSwitchOn' ) ? ! _.isEmpty( serverControlParams.isThemeSwitchOn ) : true );
+            });
+      });
+
 
 })( wp.customize , jQuery, _);
 var CZRSkopeBaseMths = CZRSkopeBaseMths || {};
@@ -160,7 +167,8 @@ $.extend( CZRSkopeBaseMths, {
                           skope_id = self.isSettingSkopeEligible( setId ) ? api.czr_activeSkopeId() : self.getGlobalSkopeId();
                           api.czr_skope( skope_id ).updateSkopeDirties( setId, new_val );
                     }
-                    self.renderControlSkopeNotice( setId );
+                    if ( self.isSettingSkopeEligible( setId ) )
+                      self.renderControlSkopeNotice( setId );
               };//bindListener()
 
 
@@ -1423,7 +1431,7 @@ $.extend( CZRSkopeBaseMths, {
                 controls = api.CZR_Helpers.getSectionControlIds( api.czr_activeSectionId() );
                 controls = _.filter( controls, function( _id ) {
                     var setId = api.CZR_Helpers.getControlSettingId( _id );
-                    return self.isSettingSkopeEligible( setId );
+                    return setId && self.isSettingSkopeEligible( setId );
                 });
           }
 
@@ -1646,6 +1654,8 @@ $.extend( CZRSkopeBaseMths, {
                 api.control.when( _id, function() {
                       var ctrl = api.control( _id ),
                           setId = api.CZR_Helpers.getControlSettingId( _id );//get the relevant setting_id for this control
+                      if ( ! self.isSettingSkopeEligible( setId ) )
+                        return;
 
                       ctrl.deferred.embedded.then( function() {
                             var _localSkopeId = _.findWhere( api.czr_currentSkopesCollection(), { skope : 'local' } ).id,
@@ -2336,7 +2346,7 @@ $.extend( CZRSkopeMths, {
     updateSkopeDirties : function( setId, new_val ) {
           var skope = this,
               shortSetId = api.CZR_Helpers.getOptionName( setId );
-          if ( ! api.czr_skopeBase.isSettingSkopeEligible( setId ) )
+          if ( ! api.czr_skopeBase.isSettingSkopeEligible( setId ) && 'global' != skope().skope )
             return api.czr_skope( api.czr_skopeBase.getGlobalSkopeId() ).updateSkopeDirties( setId, new_val );
 
           var current_dirties = $.extend( true, {}, skope.dirtyValues() ),

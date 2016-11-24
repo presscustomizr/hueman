@@ -25,7 +25,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
       if( ! defined( 'CZR_DYN_WIDGETS_SECTION' ) )      define( 'CZR_DYN_WIDGETS_SECTION' , 'dyn_widgets_section' );
 
       //add control class
-      add_action( 'customize_register'                        , array( $this , 'hu_augment_customizer' ),10,1);
+      add_action( 'customize_register'                       , array( $this , 'hu_augment_customizer' ),10,1);
 
       //add the customizer built with the builder below
       add_action( 'customize_register'                       , array( $this , 'hu_customize_register' ), 20, 1 );
@@ -326,6 +326,12 @@ if ( ! class_exists( 'HU_customize' ) ) :
       if ( isset( $wp_customize->selective_refresh ) && is_object($wp_customize->get_setting( 'custom_logo' ) ) ) {
         $wp_customize -> selective_refresh -> remove_partial( 'custom_logo' );
         $wp_customize -> get_setting( 'custom_logo' ) -> transport = 'refresh';
+      }
+
+      //MOVE THE CUSTOM CSS SECTION (introduced in 4.7) INTO THE GLOBAL SETTINGS PANEL
+      if ( is_object($wp_customize->get_section( 'custom_css' ) ) ) {
+        $wp_customize -> get_section( 'custom_css' ) -> panel = 'hu-general-panel';
+        $wp_customize -> get_section( 'custom_css' ) -> priority = 75;
       }
     }//end of hu_alter_wp_customizer_settings()
 

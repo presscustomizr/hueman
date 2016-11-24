@@ -86,7 +86,8 @@ function hu_customize_controls_js_css() {
           'faviconOptionName' => 'favicon',
           'css_attr' => HU_customize::$instance -> hu_get_controls_css_attr(),
           'translatedStrings' => hu_get_translated_strings(),
-          'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('TC_DEV') && true === TC_DEV )
+          'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('TC_DEV') && true === TC_DEV ),
+          'isThemeSwitchOn' => isset( $_GET['theme'])
       )
     )
   );
@@ -360,7 +361,8 @@ function hu_extend_ctrl_dependencies() {
                               'color-header',
                               'color-header-menu',
                               'image-border-radius',
-                              'body-background'
+                              'body-background',
+                              'color-footer'
                         ],
                         visibility : function ( to ) {
                               return _is_checked(to);
