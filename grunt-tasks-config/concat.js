@@ -97,6 +97,7 @@ module.exports = {
       '<%= paths.czr_assets %>fmk/js/control_dev/0_2_api_override/_0_0_0_pre_905_refresh.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/0_2_api_override/_0_0_0_pre_906_dirtyValues.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/0_2_api_override/_0_0_0_pre_907_requestChangesetUpdate.js',
+      '<%= paths.czr_assets %>fmk/js/control_dev/0_2_api_override/_0_0_0_pre_908_Setting_prototype.js',
       '<%= paths.czr_assets %>fmk/js/control_dev/0_2_api_override/_0_0_0_pre_990_various_overrides.js',
 
       '<%= paths.czr_assets %>fmk/js/control_dev/0_3_api_helpers/_0_0_0_pre_97_api_helpers_various.js',

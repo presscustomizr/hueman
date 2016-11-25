@@ -1127,7 +1127,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
       $menus          = wp_get_nav_menus();
       $num_locations  = count( array_keys( $locations ) );
       global $wp_version;
-      $nav_section_desc =  sprintf( _n('Your theme supports %s menu. Select which menu you would like to use.', 'Your theme supports %s menus. Select which menu appears in each location.', $num_locations, 'hueman' ), number_format_i18n( $num_locations ) );
+      $nav_section_desc =  __( 'Select which menu appears in each location.', 'hueman' );
       //adapt the nav section description for v4.3 (menu in the customizer from now on)
       if ( version_compare( $wp_version, '4.3', '<' ) ) {
         $nav_section_desc .= "<br/>" . sprintf( __("You can create menus and set their locations %s." , "hueman"),

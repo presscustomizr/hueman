@@ -254,65 +254,65 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
 
       //CHANGE MENUS PROPERTIES
-      $locations    = get_registered_nav_menus();
-      $menus        = wp_get_nav_menus();
-      $choices      = array( '' => __( '&mdash; Select &mdash;', 'hueman' ) );
-      foreach ( $menus as $menu ) {
-        $choices[ $menu->term_id ] = wp_html_excerpt( $menu->name, 40, '&hellip;' );
-      }
-      $_priorities  = array(
-        'topbar' => 10,
-        'header' => 20,
-        'footer' => 30
-      );
+      // $locations    = get_registered_nav_menus();
+      // $menus        = wp_get_nav_menus();
+      // $choices      = array( '' => __( '&mdash; Select &mdash;', 'hueman' ) );
+      // foreach ( $menus as $menu ) {
+      //   $choices[ $menu->term_id ] = wp_html_excerpt( $menu->name, 40, '&hellip;' );
+      // }
+      // $_priorities  = array(
+      //   'topbar' => 10,
+      //   'header' => 20,
+      //   'footer' => 30
+      // );
 
-      //WP only adds the menu(s) settings and controls if the user has created at least one menu.
-      //1) if no menus yet, we still want to display the menu picker + add a notice with a link to the admin menu creation panel
-      //=> add_setting and add_control for each menu location. Check if they are set first by security
-      //2) if user has already created a menu, the settings are already created, we just need to update the controls.
-      $_priority = 0;
-      //assign new priorities to the menus controls
-      foreach ( $locations as $location => $description ) {
-        $menu_setting_id = "nav_menu_locations[{$location}]";
+      // //WP only adds the menu(s) settings and controls if the user has created at least one menu.
+      // //1) if no menus yet, we still want to display the menu picker + add a notice with a link to the admin menu creation panel
+      // //=> add_setting and add_control for each menu location. Check if they are set first by security
+      // //2) if user has already created a menu, the settings are already created, we just need to update the controls.
+      // $_priority = 0;
+      // //assign new priorities to the menus controls
+      // foreach ( $locations as $location => $description ) {
+      //   $menu_setting_id = "nav_menu_locations[{$location}]";
 
-        //create the settings if they don't exist
-        //=> in the condition, make sure that the setting has really not been created yet (maybe over secured)
-        if ( ! $menus && ! is_object( $wp_customize->get_setting($menu_setting_id ) ) ) {
-          $wp_customize -> add_setting( $menu_setting_id, array(
-            'sanitize_callback' => 'absint',
-            'theme_supports'    => 'menus',
-          ) );
-        }
+      //   //create the settings if they don't exist
+      //   //=> in the condition, make sure that the setting has really not been created yet (maybe over secured)
+      //   if ( ! $menus && ! is_object( $wp_customize->get_setting($menu_setting_id ) ) ) {
+      //     $wp_customize -> add_setting( $menu_setting_id, array(
+      //       'sanitize_callback' => 'absint',
+      //       'theme_supports'    => 'menus',
+      //     ) );
+      //   }
 
-        //remove the controls if they exists
-        if ( is_object( $wp_customize->get_control( $menu_setting_id ) ) ) {
-          $wp_customize -> remove_control( $menu_setting_id );
-        }
+      //   //remove the controls if they exists
+      //   if ( is_object( $wp_customize->get_control( $menu_setting_id ) ) ) {
+      //     $wp_customize -> remove_control( $menu_setting_id );
+      //   }
 
-        //replace the controls by our custom controls
-        $_control_properties = array(
-          'label'   => $description,
-          'section' => 'nav',
-          'title'   => "main" == $location ? __( 'Assign menus to locations' , 'hueman') : false,
-          'type'    => 'select',
-          'choices' => $choices,
-          'priority' => isset($_priorities[$location]) ? $_priorities[$location] : $_priority
-        );
+      //   //replace the controls by our custom controls
+      //   $_control_properties = array(
+      //     'label'   => $description,
+      //     'section' => 'menu_locations',
+      //     'title'   => "main" == $location ? __( 'Assign menus to locations' , 'hueman') : false,
+      //     'type'    => 'select',
+      //     'choices' => $choices,
+      //     'priority' => isset($_priorities[$location]) ? $_priorities[$location] : $_priority
+      //   );
 
-        //add a notice property if no menu created yet.
-        if ( ! $menus ) {
-          //adapt the nav section description for v4.3 (menu in the customizer from now on)
-          $_create_menu_link =  version_compare( $GLOBALS['wp_version'], '4.3', '<' ) ? admin_url('nav-menus.php') : "javascript:wp.customize.section('nav').container.find('.customize-section-back').trigger('click'); wp.customize.panel('nav_menus').focus();";
-          $_control_properties['notice'] = sprintf( __("You haven't created any menu yet. %s or check the %s to learn more about menus.", "hueman"),
-            sprintf( '<strong><a href="%1$s" title="%2$s">%2$s</a></strong>', $_create_menu_link, __("Create a new menu now" , "hueman") ),
-            sprintf( '<a href="%1$s" title="%2$s" target="_blank">%2$s</a>', esc_url('codex.wordpress.org/WordPress_Menu_User_Guide'),  __("WordPress documentation" , "hueman") )
-          );
-        }
+      //   //add a notice property if no menu created yet.
+      //   if ( ! $menus ) {
+      //     //adapt the nav section description for v4.3 (menu in the customizer from now on)
+      //     $_create_menu_link =  version_compare( $GLOBALS['wp_version'], '4.3', '<' ) ? admin_url('nav-menus.php') : "javascript:wp.customize.section('nav').container.find('.customize-section-back').trigger('click'); wp.customize.panel('nav_menus').focus();";
+      //     $_control_properties['notice'] = sprintf( __("You haven't created any menu yet. %s or check the %s to learn more about menus.", "hueman"),
+      //       sprintf( '<strong><a href="%1$s" title="%2$s">%2$s</a></strong>', $_create_menu_link, __("Create a new menu now" , "hueman") ),
+      //       sprintf( '<a href="%1$s" title="%2$s" target="_blank">%2$s</a>', esc_url('codex.wordpress.org/WordPress_Menu_User_Guide'),  __("WordPress documentation" , "hueman") )
+      //     );
+      //   }
 
-        $wp_customize -> add_control( new HU_controls( $wp_customize, $menu_setting_id, $_control_properties ) );
+      //   $wp_customize -> add_control( new HU_controls( $wp_customize, $menu_setting_id, $_control_properties ) );
 
-        $_priority = $_priority + 10;
-      }//foreach
+      //   $_priority = $_priority + 10;
+      // }//foreach
 
 
       //MOVE THE HEADER IMAGE CONTROL INTO THE HEADER DESIGN SECTION
