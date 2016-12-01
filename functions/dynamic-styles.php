@@ -256,7 +256,15 @@ a,
           }
         }
       }
-
+	  // font color 
+ 	  $font_color = hu_get_option('font-color');
+ 	  if ( ! empty( $font_color ) ) {
+		  $styles .= '.entry.excerpt, .entry-inner, .entry p { color: '.$font_color.'; } '."\n";
+ 	  }
+ 	  $font_color_wi = hu_get_option('font-color-widgets');
+ 	  if ( ! empty( $font_color ) ) {
+ 		  $styles .= '.widget a { color: '.$font_color_wi.'; } '."\n";
+	  }
       $styles .= '</style>'."\n";
       // end output
 

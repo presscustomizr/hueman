@@ -218,6 +218,26 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'choices'    => $this -> hu_get_fonts(),
                 'notice'    => __( 'Select a font for your website' , 'hueman' )
           ),
+		  'font-color' => array(
+ 				'default'	=> '#666',
+ 				'control'	=> 'WP_Customize_Color_Control',
+ 				'label'		=> __( 'Font Color for excerpts and articles' , 'hueman' ),
+ 				'section'	=> 'general_design_sec',
+ 				'type'		=> 'color',
+ 				'sanitize_callback'		=> array( $this, 'hu_sanitize_hex_color' ),
+ 				'sanitize_js_callback'	=> 'maybe_hash_hex_color',
+ 				'notice'	=> __( 'Select color for excerpts and articles' , 'hueman' )
+ 		  ),
+ 		  'font-color-widgets' => array(
+ 				'default'	=> '#666',
+ 				'control'	=> 'WP_Customize_Color_Control',
+ 				'label'		=> __( 'Font Color for widget links' , 'hueman' ),
+ 				'section'	=> 'general_design_sec',
+ 				'type'		=> 'color',
+ 				'sanitize_callback'		=> array( $this, 'hu_sanitize_hex_color' ),
+ 				'sanitize_js_callback'	=> 'maybe_hash_hex_color',
+ 				'notice'	=> __( 'Select color for links in widgets' , 'hueman' )
+ 		  ),
           'container-width'  =>  array(
                 'default'       => 1380,
                 'control'       => 'HU_controls' ,
