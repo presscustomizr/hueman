@@ -18,7 +18,7 @@ if ( ! class_exists( 'HU_Customize_Manage_Widgets_Section' ) ) :
   public function __construct( $manager, $id, $args = array() ) {
     //let the parent say what he needs to. We need to hear that sometimes.
     parent::__construct($manager, $id, $args );
-    add_action( 'customize_controls_print_footer_scripts', array( $this, 'hu_render_widget_zone_template' ), 1 );
+    //add_action( 'customize_controls_print_footer_scripts', array( $this, 'hu_render_widget_zone_template' ), 1 );
 
   }
 

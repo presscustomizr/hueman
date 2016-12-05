@@ -59,7 +59,9 @@ if ( ! class_exists( 'HU_customize' ) ) :
     }
 
 
-
+    /* ------------------------------------------------------------------------- *
+     *  DEPRECATED OPTIONS
+    /* ------------------------------------------------------------------------- */
     //hook : customize_save_after
     //When the users modifies the header_image, check if the old option exists and remove it if needed
     function hu_clean_deprecated_options( $manager_inst ) {
@@ -113,6 +115,12 @@ if ( ! class_exists( 'HU_customize' ) ) :
     }
 
 
+
+
+
+    /* ------------------------------------------------------------------------- *
+     *  AUGMENT CUSTOMIZER SERVER SIDE
+    /* ------------------------------------------------------------------------- */
     /**
     * Augments wp customize controls and settings classes
     * @package Hueman
@@ -144,6 +152,12 @@ if ( ! class_exists( 'HU_customize' ) ) :
     }
 
 
+
+
+
+    /* ------------------------------------------------------------------------- *
+     *  PARTIALS
+    /* ------------------------------------------------------------------------- */
     //hook : customize_register
     function hu_register_partials( WP_Customize_Manager $wp_customize ) {
         //Bail if selective refresh is not available (old versions) or disabled (for skope for example)
@@ -160,6 +174,11 @@ if ( ! class_exists( 'HU_customize' ) ) :
     }
 
 
+
+
+    /* ------------------------------------------------------------------------- *
+     *  LOAD MODULES AND INPUTS TEMPLATES
+    /* ------------------------------------------------------------------------- */
     function hu_load_tmpl() {
       $_tmpl = array(
         'tmpl/modules/all-modules-tmpl.php',
@@ -183,33 +202,12 @@ if ( ! class_exists( 'HU_customize' ) ) :
       locate_template( 'functions/czr/modules/modules-resources.php' , $load = true, $require_once = true );
     }
 
-    //updates the names of the built-in widget zones for users who installed the theme before v3.1.2
-    function hu_update_widget_database_option() {
-      if ( ! hu_user_started_before_version('3.1.2') )
-        return;
-
-      $_options             = get_option('hu_theme_options');
-      $_update_widget_areas = array();
-
-      if ( ! isset($_options['sidebar-areas']) || ! is_array($_options['sidebar-areas']) )
-        return;
-
-      $_zones   = hu_get_default_widget_zones();
-      foreach ( $_options['sidebar-areas'] as $key => $data ) {
-        if ( ! array_key_exists($data['id'], $_zones) )
-          continue;
-        $_id = $data['id'];
-        $_options['sidebar-areas'][$key]['title'] = $_zones[$_id]['name'];
-      }
-
-      update_option('hu_theme_options', $_options );
-    }
 
 
 
-
-
-
+    /* ------------------------------------------------------------------------- *
+     *  MODIFY SETTINGS, CONTROLS, SECTIONS, PANELS SERVER SIDE
+    /* ------------------------------------------------------------------------- */
     /*
     * Since the WP_Customize_Manager::$controls and $settings are protected properties, one way to alter them is to use the get_setting and get_control methods
     * Another way is to remove the control and add it back as an instance of a custom class and with new properties
@@ -346,6 +344,36 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
 
 
+
+
+
+
+
+    /* ------------------------------------------------------------------------- *
+     *  WIDGETS SPECIFICS
+    /* ------------------------------------------------------------------------- */
+    //updates the names of the built-in widget zones for users who installed the theme before v3.1.2
+    function hu_update_widget_database_option() {
+      if ( ! hu_user_started_before_version('3.1.2') )
+        return;
+
+      $_options             = get_option('hu_theme_options');
+      $_update_widget_areas = array();
+
+      if ( ! isset($_options['sidebar-areas']) || ! is_array($_options['sidebar-areas']) )
+        return;
+
+      $_zones   = hu_get_default_widget_zones();
+      foreach ( $_options['sidebar-areas'] as $key => $data ) {
+        if ( ! array_key_exists($data['id'], $_zones) )
+          continue;
+        $_id = $data['id'];
+        $_options['sidebar-areas'][$key]['title'] = $_zones[$_id]['name'];
+      }
+
+      update_option('hu_theme_options', $_options );
+    }
+
     /**
      * Why this ?
      * Unlike the other panels, which are all added on customize_register, the Widgets panel is added on 2 different hooks
@@ -379,7 +407,6 @@ if ( ! class_exists( 'HU_customize' ) ) :
           )
         )
       );
-
 
       //$this->hu_customize_register( $wp_customize );
       if ( is_admin() ) {
@@ -433,6 +460,17 @@ if ( ! class_exists( 'HU_customize' ) ) :
     }
 
 
+
+
+
+
+
+
+
+
+    /* ------------------------------------------------------------------------- *
+     *  FACTORY
+    /* ------------------------------------------------------------------------- */
     /**
     * Generates customizer sections, settings and controls
     * @package Hueman
@@ -682,6 +720,16 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
 
 
+
+
+
+
+
+
+
+    /* ------------------------------------------------------------------------- *
+     *  HELPERS
+    /* ------------------------------------------------------------------------- */
     function hu_get_controls_css_attr() {
       return apply_filters('controls_css_attr',
           array(

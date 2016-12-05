@@ -302,9 +302,11 @@ li[id*="customize-control-"] {
 	transition: background .1s ease-in-out;
 }
 
-#customize-theme-controls > .control-section:hover .accordion-section-title::after, #customize-theme-controls .control-section .accordion-section-title:hover::after, #customize-theme-controls .control-section.open .accordion-section-title::after, #customize-theme-controls .control-section .accordion-section-title:focus::after {
+/*#customize-theme-controls > .control-section:hover .accordion-section-title::after, #customize-theme-controls .control-section .accordion-section-title:hover::after, #customize-theme-controls .control-section.open .accordion-section-title::after, #customize-theme-controls .control-section .accordion-section-title:focus::after {
 	color: #FFF;
-}
+}*/
+
+
 .customize-control-checkbox label, .customize-control-nav_menu_auto_add label, .customize-control-radio label {
 	line-height: 16px;
   margin-left: 0;
@@ -534,6 +536,53 @@ li#customize-control-tc_theme_options-tc_custom_css textarea {
 #customize-theme-controls .control-panel-widgets, #customize-theme-controls #accordion-panel-nav_menus{
   margin-top: 14px;
   border-bottom: 1px solid #ddd;
+}
+
+
+/* HOME BUTTON */
+#customize-header-actions .customize-controls-close {
+  left:45px;
+}
+.customize-controls-home, .customize-controls-close {
+  top: -1px;
+}
+.customize-controls-home {
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 45px;
+    height: 41px;
+    padding: 0 2px 0 0;
+    background: #eee;
+    border: none;
+    border-top: 4px solid #eee;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    color: #444;
+    text-align: left;
+    cursor: pointer;
+    text-decoration: none;
+    -webkit-transition: color .15s ease-in-out, border-color .15s ease-in-out, background .15s ease-in-out;
+    transition: color .1s ease-in-out, border-color .15s ease-in-out, background .15s ease-in-out;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.customize-controls-home:before {
+    font-size: 17px;
+    line-height:45px;
+    position: relative;
+    top: -4px;
+    left: 14px;
+}
+.customize-controls-home:hover {
+    background: #fff;
+    color: #0073aa;
+    border-top-color: #0073aa;
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }/*******************************************************************
 * DYNAMIC CONTROLS : sidebars, socials, ...
 ********************************************************************/
@@ -863,14 +912,15 @@ li#customize-control-tc_theme_options-tc_custom_css textarea {
 
 
 /* WIDGETS ZONE SPECIFICS */
-.czr-widget-zone-section {
+.control-section-widget_zones_management {
   margin: 10px 0;
+  z-index: 1;
 }
-#customize-theme-controls .czr-widget-zone-section .accordion-section-content {
+/*#customize-theme-controls .control-section-widget_zones_management .accordion-section-content {
   display: none;
   left: 0;
   position: relative;
-}
+}*/
 
 .czr-zone-infos {
   width: 96%;
@@ -880,7 +930,7 @@ li#customize-control-tc_theme_options-tc_custom_css textarea {
   font-style: italic;
 }
 
-#customize-theme-controls .czr-widget-zone-section .accordion-section-title:after {
+/*#customize-theme-controls .control-section-widget_zones_management .accordion-section-title:after {
   content: "\f078";
   display: inline-block;
   font: normal normal normal 14px/1 FontAwesome;
@@ -890,9 +940,9 @@ li#customize-control-tc_theme_options-tc_custom_css textarea {
   -moz-osx-font-smoothing: grayscale;
 }
 
-#customize-theme-controls .czr-widget-zone-section.open .accordion-section-title:after {
+#customize-theme-controls .control-section-widget_zones_management.open .accordion-section-title:after {
   content: "\f077";
-}
+}*/
 .czr-unavailable-location {
   opacity: 0.7;
 }
@@ -2242,51 +2292,6 @@ body.czr-resetting-skope #czr-reset-skope-pane .czr-resetting {
   color: #357315;
 }
 
-
-/* HOME BUTTON */
-#customize-header-actions .customize-controls-close {
-  left:45px;
-}
-
-.customize-controls-home {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 45px;
-    height: 41px;
-    padding: 0 2px 0 0;
-    background: #eee;
-    border: none;
-    border-top: 4px solid #eee;
-    border-right: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    color: #444;
-    text-align: left;
-    cursor: pointer;
-    text-decoration: none;
-    -webkit-transition: color .15s ease-in-out, border-color .15s ease-in-out, background .15s ease-in-out;
-    transition: color .1s ease-in-out, border-color .15s ease-in-out, background .15s ease-in-out;
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-}
-
-.customize-controls-home:before {
-    font-size: 17px;
-    line-height:45px;
-    position: relative;
-    top: -4px;
-    left: 14px;
-}
-.customize-controls-home:hover {
-    background: #fff;
-    color: #0073aa;
-    border-top-color: #0073aa;
-    outline: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-}
 
 
 /* Error Notification */
