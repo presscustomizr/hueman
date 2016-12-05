@@ -1,4 +1,4 @@
-# Translation of Themes - Hueman in German
+# Translation of Themes - Hueman in English (Canada)
 # This file is distributed under the same license as the Themes - Hueman package.
 msgid ""
 msgstr ""
@@ -8,7 +8,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Poedit 1.8.8\n"
-"Language: de\n"
+"Language: en_CA\n"
 "Project-Id-Version: Themes - Hueman\n"
 "POT-Creation-Date: \n"
 "Last-Translator: \n"
@@ -16,11 +16,11 @@ msgstr ""
 
 #. Description of the plugin/theme
 msgid "Hueman is a mobile friendly WordPress theme for blogs, magazines and business websites. It's been designed to beautifully display pictures and text content, and engineered to be easy to use and fast. The Hueman theme helps you attract and retain more visitors, that's why it's already used by 70K+ active websites in the world and has received hundreds of five stars ratings."
-msgstr "Hueman ist ein Mobile-freundliches WordPress Theme für Blogs, Magazine und Business-Websites. Es wurde entwickelt um auf schöne Art und Weise Bilder und Texte darzustellen, und um leicht und schnell benutzbar zu sein. Das Hueman Theme hilft dir mehr Besucher zu erhalten und zu behalten, weshalb es bereits von über 70.000 aktiven Wesites in der Welt genutzt wird und auch hunderte von 5-Sterne Bewertungen bekommen hat."
+msgstr ""
 
 #. Theme Name of the plugin/theme
 msgid "Hueman"
-msgstr "Hueman"
+msgstr ""
 
 #: functions/init-front.php:172
 msgid "HIGHLIGHTS"
@@ -118,55 +118,55 @@ msgstr ""
 
 #: functions/admin/class-tgm-plugin-activation.php:2941
 msgid "Update"
-msgstr "Update"
+msgstr ""
 
 #. translators: %2$s: plugin name in screen reader markup
 #: functions/admin/class-tgm-plugin-activation.php:2832
 msgid "Activate %2$s"
-msgstr "Aktiviere %2$s"
+msgstr ""
 
 #. translators: %2$s: plugin name in screen reader markup
 #: functions/admin/class-tgm-plugin-activation.php:2826
 msgid "Update %2$s"
-msgstr "Update von %2$s"
+msgstr ""
 
 #. translators: %2$s: plugin name in screen reader markup
 #: functions/admin/class-tgm-plugin-activation.php:2821
 msgid "Install %2$s"
-msgstr "Installiere %2$s"
+msgstr ""
 
 #: functions/admin/class-tgm-plugin-activation.php:2771
 msgid "Version"
-msgstr "Version"
+msgstr ""
 
 #: functions/admin/class-tgm-plugin-activation.php:2751
 msgid "No plugins to install, update or activate."
-msgstr "Keine Plugins zu installieren, aktualisieren, oder zu aktivieren. "
+msgstr ""
 
 #. translators: 1: install status, 2: update status
 #: functions/admin/class-tgm-plugin-activation.php:2560
 msgctxt "Install/Update Status"
 msgid "%1$s, %2$s"
-msgstr "%1$s, %2$s"
+msgstr ""
 
 #. translators: %s: version number
 #: functions/admin/class-tgm-plugin-activation.php:2200
 msgid "TGMPA v%s"
-msgstr "TGMPA v%s"
+msgstr ""
 
 #: functions/admin/class-tgm-plugin-activation.php:579
 msgid "There are one or more required or recommended plugins to install, update or activate."
-msgstr "Ein oder mehrere notwendige, oder empfohlene Plugins  sollten installiert, upgedated, oder aktiviert werden. "
+msgstr ""
 
 #. translators: %s: plugin name.
 #: functions/admin/class-tgm-plugin-activation.php:514
 msgid "Updating Plugin: %s"
-msgstr "Plugin %s  wird aktualisiert"
+msgstr ""
 
 #. translators: 1: dashboard link.
 #: functions/admin/class-tgm-plugin-activation.php:576
 msgid "All plugins installed and activated successfully. %1$s"
-msgstr " Alle Plugins erfolgreich installiert und aktiviert. %1$s"
+msgstr ""
 
 #: functions/admin/class-tgm-plugin-activation.php:1342
 msgid "Hueman Addons"
@@ -190,7 +190,7 @@ msgstr ""
 
 #: functions/admin/class-tgm-plugin-activation.php:578
 msgid "Remind me later"
-msgstr " Später erinnern"
+msgstr ""
 
 #: functions/init-core.php:1508
 msgid "Activate Hueman Addons"
@@ -201,14 +201,14 @@ msgstr[1] ""
 #: functions/init-core.php:1503
 msgid "The Hueman Addons plugin is currently inactive: %1$s."
 msgid_plural "The following recommended plugins are currently inactive: %1$s."
-msgstr[0] "Das Hueman-Erweiterungs-Plugin  ist momentan inaktiv: %1$s."
-msgstr[1] "Die folgenden empfohlenen Plugins sind momentan inaktiv: %1$s. "
+msgstr[0] ""
+msgstr[1] ""
 
 #: functions/init-core.php:1500
 msgid "The Hueman theme recommends the Hueman Addons: %1$s."
 msgid_plural "This theme recommends the following plugins: %1$s."
-msgstr[0] "Das Hueman-Theme  erfordert die Hueman- Erweiterungen: %1$s"
-msgstr[1] "Dieses Theme erfordert die folgenden Plugins: %1$s"
+msgstr[0] ""
+msgstr[1] ""
 
 #: functions/plugins-compatibility.php:203
 msgid "Featured Pages"
@@ -345,7 +345,7 @@ msgstr ""
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:102
 msgid "here"
-msgstr "hier"
+msgstr ""
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:101
 msgid "Learn more"
@@ -561,7 +561,7 @@ msgstr ""
 
 #: parts/single-author-date.php:13
 msgid "Published"
-msgstr "Veröffentlicht"
+msgstr ""
 
 #: functions/init-meta-boxes.php:36
 msgid "Notes : 1)This will override any default settings of the customizer options panel. 2) The secondary sidebar is placed on the right in a 3 columns layout."
@@ -649,7 +649,7 @@ msgstr ""
 
 #: functions/czr/czr-resources.php:420
 msgid "Not set"
-msgstr "Nicht festgelegt"
+msgstr ""
 
 #: functions/init-core.php:1079
 msgid "Secondary Sidebar (on the right in a 3 columns layout)"
@@ -661,7 +661,7 @@ msgstr ""
 
 #: functions/init-core.php:1063
 msgid "Blog Page"
-msgstr "Blog-Seite"
+msgstr "Blog Page"
 
 #: functions/class-utils-settings-map.php:746
 msgid "If no specific category is selected, the featured posts block will display your latest post(s) from all categories."
@@ -677,7 +677,7 @@ msgstr ""
 
 #: functions/widgets/alx-video.php:21
 msgid "Hueman Videos"
-msgstr "Hueman Videos"
+msgstr ""
 
 #: functions/widgets/alx-tabs.php:23
 msgid "List posts, comments, and/or tags with or without tabs."
@@ -689,7 +689,7 @@ msgstr ""
 
 #: functions/widgets/alx-posts.php:23
 msgid "Display posts from a category"
-msgstr "Beiträge einer Kategorie anzeigen"
+msgstr ""
 
 #: functions/widgets/alx-posts.php:21
 msgid "Hueman Posts"
@@ -697,7 +697,7 @@ msgstr ""
 
 #: functions/init-meta-boxes.php:42
 msgid "Select a layout for this page."
-msgstr "Wähle ein Layout für diese Seite."
+msgstr ""
 
 #: functions/init-meta-boxes.php:103
 msgid "Select a widget zone for the right sidebar."
@@ -738,11 +738,11 @@ msgstr ""
 
 #: functions/init-core.php:1412
 msgid "Need help with the Hueman theme ? Click here!"
-msgstr "Du benötigst Hilfe mit dem Hueman Theme? Klick hier!"
+msgstr ""
 
 #: functions/init-core.php:1409
 msgid "Help"
-msgstr "Hilfe"
+msgstr "Help"
 
 #: functions/init-core.php:1069
 msgid "404 Error Pages"
@@ -750,23 +750,23 @@ msgstr ""
 
 #: functions/init-core.php:1068
 msgid "Search Results"
-msgstr "Suchergebnisseiten"
+msgstr "Search Results"
 
 #: functions/init-core.php:1067
 msgid "Categories"
-msgstr "Kategorien"
+msgstr "Categories"
 
 #: functions/init-core.php:1066
 msgid "Archives"
-msgstr "Archiv"
+msgstr "Archives"
 
 #: functions/init-core.php:1065
 msgid "Single Posts"
-msgstr "Einzelne Beiträge"
+msgstr "Single Posts"
 
 #: functions/init-core.php:1064 functions/init-front.php:1282
 msgid "Pages"
-msgstr "Seite"
+msgstr "Pages"
 
 #: functions/init-core.php:1061
 msgid "All contexts"
@@ -806,11 +806,11 @@ msgstr "Footer 1"
 
 #: functions/init-core.php:956
 msgid "Secondary"
-msgstr "Sekundär"
+msgstr ""
 
 #: functions/init-core.php:947
 msgid "Primary"
-msgstr "Grundfarbe"
+msgstr "Primary"
 
 #: functions/init-core.php:319
 msgid "Theme Options [OLD]"
@@ -818,15 +818,15 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:1388
 msgid "4 Columns"
-msgstr "4 Spalten"
+msgstr "4 Columns"
 
 #: functions/class-utils-settings-map.php:1384
 msgid "3 Columns"
-msgstr "3 Spalten"
+msgstr "3 Columns"
 
 #: functions/class-utils-settings-map.php:1380
 msgid "2 Columns"
-msgstr "2 Spalten"
+msgstr "2 Columns"
 
 #: functions/class-utils-settings-map.php:1354
 msgid "Inherit Global Layout"
@@ -855,7 +855,7 @@ msgstr ""
 #: functions/class-utils-settings-map.php:1326
 #: functions/class-utils-settings-map.php:1376
 msgid "1 Column"
-msgstr "1 Spalte"
+msgstr "1 Column"
 
 #: functions/class-utils-settings-map.php:1307
 msgid "Choose one "
@@ -891,11 +891,11 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:1177
 msgid "Mobile devices"
-msgstr "Mobile Endgeräte"
+msgstr ""
 
 #: functions/class-utils-settings-map.php:1162
 msgid "Social links"
-msgstr "Verweise auf Soziale Medien"
+msgstr "Social links"
 
 #: functions/class-utils-settings-map.php:1157
 msgid "General Design Options : Font, Colors, ..."
@@ -907,30 +907,30 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:1139
 msgid "in the menu panel"
-msgstr ""
+msgstr "in the menu panel"
 
 #: functions/class-utils-settings-map.php:1132
 #: functions/class-utils-settings-map.php:1140
 msgid "create/edit menus"
-msgstr ""
+msgstr "create/edit menus"
 
 #: functions/class-utils-settings-map.php:1131
 msgid "on the Menus screen in the Appearance section"
-msgstr ""
+msgstr "on the Menus screen in the Appearance section"
 
 #: functions/class-utils-settings-map.php:1125
 msgid "Your theme supports %s menu. Select which menu you would like to use."
 msgid_plural "Your theme supports %s menus. Select which menu appears in each location."
-msgstr[0] "Dein Theme unterstützt %s Menü. Wähle, welches Menü du gerne verwenden möchtest."
-msgstr[1] "Dein Theme unterstützt %s Menüs. Wähle, welches Menü du in der jeweiligen Position verwenden möchtest."
+msgstr[0] "Your theme supports %s menu. Select which menu you would like to use."
+msgstr[1] "Your theme supports %s menus. Select which menu appears in each location."
 
 #: functions/class-utils-settings-map.php:1051
 msgid "Advanced settings for the Hueman theme."
-msgstr "Erweiterte Einstellungen für das Hueman Theme"
+msgstr ""
 
 #: functions/class-utils-settings-map.php:1050
 msgid "Advanced options"
-msgstr "Erweiterte Einstellungen"
+msgstr "Advanced options"
 
 #: functions/class-utils-settings-map.php:1045
 msgid "Footer settings for the Hueman theme."
@@ -938,7 +938,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:1044
 msgid "Footer"
-msgstr "Fußbereich"
+msgstr "Footer"
 
 #: functions/class-utils-settings-map.php:1039
 msgid "Sidebars settings for the Hueman theme."
@@ -958,7 +958,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:1026
 msgid "Header"
-msgstr "Kopfbereich"
+msgstr "Header"
 
 #: functions/class-utils-settings-map.php:1021
 msgid "General settings for the Hueman theme : design, comments, mobile, ..."
@@ -966,7 +966,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:1020
 msgid "Global settings"
-msgstr "Globale Einstellungen"
+msgstr "Global settings"
 
 #: functions/class-utils-settings-map.php:970
 msgid "Footer credit text"
@@ -1043,7 +1043,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:843
 msgid "Below content"
-msgstr "Unter dem Inhalt"
+msgstr ""
 
 #: functions/class-utils-settings-map.php:836
 msgid "Single - Post Navigation"
@@ -1065,7 +1065,7 @@ msgstr ""
 #: functions/class-utils-settings-map.php:840
 #: functions/class-utils-settings-map.php:1372
 msgid "Disable"
-msgstr "Verbieten"
+msgstr "Disable"
 
 #: functions/class-utils-settings-map.php:823
 msgid "Single - Related Posts"
@@ -1085,7 +1085,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:796
 msgid "Display the featured posts also in the list of posts"
-msgstr "Die hervorgehobenen Beiträge auch in der Beitragsliste anzeigen"
+msgstr ""
 
 #: functions/class-utils-settings-map.php:790
 msgid "Speed of the automatic slideshow animation"
@@ -1101,7 +1101,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:774
 msgid "Animate your featured posts with a slideshow"
-msgstr "Animiere deine hervorgehobenen Beiträge mit einer Slideshow"
+msgstr ""
 
 #: functions/class-utils-settings-map.php:759
 msgid "Max number of featured posts to display. <br /><i>Set to 1 and it will show it without any slider script</i><br /><i>Set it to 0 to disable</i>"
@@ -1121,7 +1121,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:731
 msgid "Featured posts"
-msgstr "Vorgeschlagene Beiträge"
+msgstr "Featured posts"
 
 #: functions/class-utils-settings-map.php:712
 msgid "While the default blog design is a grid of posts, you can check this option and display one post per row, whith the thumbnail beside the text."
@@ -1133,7 +1133,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:719
 msgid "Excerpt Length"
-msgstr "Auszug Länge"
+msgstr "Excerpt Length"
 
 #: functions/class-utils-settings-map.php:698
 msgid "Blog Sub-Heading"
@@ -1141,7 +1141,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:696 functions/init-front.php:407
 msgid "Blog"
-msgstr "Seite"
+msgstr "Blog"
 
 #: functions/class-utils-settings-map.php:679
 #: functions/class-utils-settings-map.php:688
@@ -1158,7 +1158,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:661
 msgid "Default Page"
-msgstr "Standardseite"
+msgstr ""
 
 #: functions/class-utils-settings-map.php:656
 msgid "[ <strong>is_404</strong> ] Error 404 page layout"
@@ -1166,7 +1166,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:652
 msgid "Error 404"
-msgstr "﻿Fehler 404"
+msgstr "Error 404"
 
 #: functions/class-utils-settings-map.php:647
 msgid "[ <strong>is_search</strong> ] Search page layout"
@@ -1174,7 +1174,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:643
 msgid "Search"
-msgstr "bei der Suche"
+msgstr "Search"
 
 #: functions/class-utils-settings-map.php:638
 msgid "[ <strong>is_category</strong> ] Category archive layout"
@@ -1190,7 +1190,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:625
 msgid "Archive"
-msgstr "Archiv"
+msgstr "archive"
 
 #: functions/class-utils-settings-map.php:620
 msgid "[ <strong>is_single</strong> ] Single post layout - If a post has a set layout, it will override this."
@@ -1198,7 +1198,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:616
 msgid "Single"
-msgstr "Einzel"
+msgstr "Single"
 
 #: functions/class-utils-settings-map.php:611
 msgid "[ <strong>is_home</strong> ] Posts homepage layout"
@@ -1207,7 +1207,7 @@ msgstr ""
 #: functions/class-utils-settings-map.php:607 functions/init-core.php:1062
 #: functions/init-front.php:1234
 msgid "Home"
-msgstr "Anfang"
+msgstr "Home"
 
 #: functions/class-utils-settings-map.php:602
 msgid "Other layouts will override this option if they are set"
@@ -1215,7 +1215,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:598
 msgid "Global Layout"
-msgstr ""
+msgstr "Global Layout"
 
 #: functions/class-utils-settings-map.php:547
 msgid "Header widget area, perfect to insert advertisements. Note : this feature is not available when a header image is being displayed."
@@ -1264,7 +1264,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:400
 msgid "Comments on pages"
-msgstr "Kommentare zu Seiten"
+msgstr ""
 
 #: functions/class-utils-settings-map.php:397
 msgid "Pages Comments"
@@ -1272,7 +1272,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:392
 msgid "Comments on posts"
-msgstr "Kommentare zu Beiträgen"
+msgstr ""
 
 #: functions/class-utils-settings-map.php:389
 msgid "Posts Comments"
@@ -1284,7 +1284,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:269
 msgid "Body Background"
-msgstr "Seiten Hintergrund"
+msgstr "Body Background"
 
 #: functions/class-utils-settings-map.php:330
 msgid "Give your thumbnails and layout images rounded corners"
@@ -1300,19 +1300,19 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:293
 msgid "Header Background"
-msgstr "Header Hintergrund"
+msgstr "Header Background"
 
 #: functions/class-utils-settings-map.php:283
 msgid "Topbar Background"
-msgstr "Topbar Hintergrund"
+msgstr ""
 
 #: functions/class-utils-settings-map.php:258
 msgid "Secondary Color"
-msgstr "Sekundärfarbe"
+msgstr "Secondary Colour"
 
 #: functions/class-utils-settings-map.php:248
 msgid "Primary Color"
-msgstr "Hauptfarbe"
+msgstr "Primary Colour"
 
 #: functions/class-utils-settings-map.php:243
 msgid "Change left and right sidebars padding"
@@ -1328,7 +1328,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:236
 msgid "Sidebar Width"
-msgstr "Sidebar Breite"
+msgstr ""
 
 #: functions/class-utils-settings-map.php:231
 msgid "Max-width of the container. If you use 2 sidebars, your container should be at least 1200px.<br /><i>Note: For 720px content (default) use <strong>1380px</strong> for 2 sidebars and <strong>1120px</strong> for 1 sidebar. If you use a combination of both, try something inbetween.</i>"
@@ -1340,11 +1340,11 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:219
 msgid "Select a font for your website"
-msgstr "Wähle eine Schriftart für deine Website"
+msgstr ""
 
 #: functions/class-utils-settings-map.php:215
 msgid "Font"
-msgstr "Schriftart"
+msgstr "Font"
 
 #: functions/class-utils-settings-map.php:210
 msgid "Use a boxed layout"
@@ -1352,7 +1352,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:207
 msgid "Boxed Layout"
-msgstr ""
+msgstr "Boxed Layout"
 
 #: functions/class-utils-settings-map.php:202
 msgid "Turn on to use the styling options below"
@@ -1364,11 +1364,11 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:163
 msgid "FAVICON"
-msgstr ""
+msgstr "FAVICON"
 
 #: functions/class-utils-settings-map.php:162
 msgid "Favicon Upload (supported formats : .ico, .png, .gif)"
-msgstr ""
+msgstr "Favicon Upload (supported formats : .ico, .png, .gif)"
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:85
 msgid "Check this option to open the link in a another tab of the browser."
@@ -1376,7 +1376,7 @@ msgstr ""
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:81
 msgid "Link target"
-msgstr "Linkziel"
+msgstr "Link target"
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:74
 msgid "Set a unique color for your icon."
@@ -1405,7 +1405,7 @@ msgstr ""
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:42
 msgid "Id"
-msgstr "ID"
+msgstr "Id"
 
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:120
 msgid "Pick the context(s) where this widget area will be displayed."
@@ -1418,7 +1418,7 @@ msgstr ""
 
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:107
 msgid "Enter a name"
-msgstr "Gib einen Namen ein"
+msgstr ""
 
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:76
 msgid "Pick the contexts where this widget area will be displayed."
@@ -1451,7 +1451,7 @@ msgstr ""
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:56
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:99
 msgid "id"
-msgstr "ID"
+msgstr ""
 
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:23
 msgid "Are you sure you want to remove : <strong>{{ data.title }} ?</strong>"
@@ -1462,19 +1462,19 @@ msgstr ""
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:32
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:103
 msgid "Remove"
-msgstr "Klscgeb"
+msgstr "Remove"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:65
 msgid "Background Image"
-msgstr "Hintergrundbild"
+msgstr "Background Image"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:94
 msgid "Background size"
-msgstr "Hintergrundbild Größe"
+msgstr "Background size"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:87
 msgid "Background position"
-msgstr "Position des Hintergrunds"
+msgstr "Background Position"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:80
 msgid "Background attachment"
@@ -1482,67 +1482,67 @@ msgstr ""
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:73
 msgid "Repeat"
-msgstr "Wiederholung"
+msgstr "Repeat"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:58
 msgid "Color"
-msgstr "Farbe"
+msgstr "Colour"
 
 #: functions/czr/sections/class-widgets-section.php:36
 msgid "Press return or enter to open this section"
-msgstr "Drücke Enter, um diesen Bereich zu öffnen"
+msgstr "Press return or enter to open this section"
 
 #: functions/admin/class-admin-update-notification.php:107
 msgid "close"
-msgstr "Schließen"
+msgstr "Close"
 
 #: functions/admin/class-admin-update-notification.php:106
 msgid "I already know what's new thanks !"
-msgstr ""
+msgstr "I already know what's new thanks !"
 
 #: functions/admin/class-admin-update-notification.php:100
 msgid "Visit the demo"
-msgstr ""
+msgstr "Visit the demo"
 
 #: functions/admin/class-admin-update-notification.php:98
 msgid "Read the latest release notes"
-msgstr ""
+msgstr "Read the latest release notes"
 
 #: functions/admin/class-admin-update-notification.php:96
 msgid "We'd like to introduce the new features we've been working on."
-msgstr "Wir möchten dir gerne die neuen Features vorstellen, an denen wir gearbeitet haben."
+msgstr "We'd like to introduce the new features we've been working on."
 
 #: functions/admin/class-admin-update-notification.php:85
 msgid "Good, you've just upgraded to"
-msgstr ""
+msgstr "Good, you've just upgraded to"
 
 #: functions/admin/class-admin-page.php:263
 msgid "To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C (Mac)."
-msgstr ""
+msgstr "To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C (Mac)."
 
 #: functions/admin/class-admin-page.php:262
 msgid "Please include the following informations when posting support requests"
-msgstr ""
+msgstr "Please include the following informations when posting support requests"
 
 #: functions/admin/class-admin-page.php:261
 msgid "System Informations"
-msgstr "Systeminformationen"
+msgstr "System Informations"
 
 #: functions/admin/class-admin-page.php:239
 msgid "Changelog in version %1$s"
-msgstr ""
+msgstr "Changelog in version %1$s"
 
 #: functions/admin/class-admin-page.php:179
 msgid "Get help in the support forum"
-msgstr "Lass dir im Support-Forum helfen"
+msgstr ""
 
 #: functions/admin/class-admin-page.php:175
 msgid "Read the documentation"
-msgstr "Lies die Dokumentation"
+msgstr "Read the documentation"
 
 #: functions/admin/class-admin-page.php:169
 msgid "support forum"
-msgstr "Support-Forum"
+msgstr ""
 
 #: functions/admin/class-admin-page.php:167
 msgid "If you don't find an answer to your question in the documentation, don't panic :) ! The Hueman theme is used by a large number of webmasters constantly reporting bugs and potential issues. If you encounter a problem with the theme, chances are that it's already been reported and fixed in the"
@@ -1550,19 +1550,19 @@ msgstr ""
 
 #: functions/admin/class-admin-page.php:163
 msgid "documentation"
-msgstr "Dokumentation"
+msgstr "documentation"
 
 #: functions/admin/class-admin-page.php:162
 msgid "The best way to start is to read the %s."
-msgstr ""
+msgstr "The best way to start is to read the %s."
 
 #: functions/admin/class-admin-page.php:147
 msgid "Go to Dashboard"
-msgstr "zum Dashboard gehen"
+msgstr "Go to Dashboard"
 
 #: functions/admin/class-admin-page.php:147
 msgid "Go to Dashboard &rarr; Home"
-msgstr "Zum Dashboard &rarr; Home"
+msgstr "Go to Dashboard &rarr; Home"
 
 #: functions/admin/class-admin-page.php:131
 msgid "You are using a child theme of Hueman %1$s : always check the %2$s after upgrading to see if a function or a template has been deprecated."
@@ -1570,7 +1570,7 @@ msgstr ""
 
 #: functions/admin/class-admin-page.php:117
 msgid "demo website"
-msgstr ""
+msgstr "demo website"
 
 #: functions/admin/class-admin-page.php:116
 msgid "getting started guide"
@@ -1578,7 +1578,7 @@ msgstr ""
 
 #: functions/admin/class-admin-page.php:114
 msgid "The best way to start with %s is to read the %s and visit the %s."
-msgstr ""
+msgstr "The best way to start with %s is to read the %s and visit the %s."
 
 #: functions/admin/class-admin-page.php:109
 msgid "read the latest release notes"
@@ -1602,19 +1602,19 @@ msgstr ""
 
 #: functions/admin/class-admin-page.php:103
 msgid "Thank you for using the Hueman WordPress theme for your website."
-msgstr "Danke, dass du das Hueman WordPress Theme für deine Website verwendest."
+msgstr ""
 
 #: functions/admin/class-admin-page.php:86
 msgid "Welcome to"
-msgstr "Willkommen bei"
+msgstr "Welcome to"
 
 #: functions/admin/class-admin-page.php:81
 msgid "Need help with"
-msgstr ""
+msgstr "Need help with"
 
 #: functions/admin/class-admin-page.php:53
 msgid "About Hueman"
-msgstr "Informationen zu Hueman"
+msgstr ""
 
 #: functions/admin/class-admin-page.php:40
 msgid "All your previous options have been kept and are available in the customizer options panel."
@@ -1622,7 +1622,7 @@ msgstr ""
 
 #: functions/admin/class-admin-page.php:37
 msgid "customizer"
-msgstr ""
+msgstr "customizer"
 
 #: functions/admin/class-admin-page.php:36
 msgid "more informations here"
@@ -1634,7 +1634,7 @@ msgstr ""
 
 #: functions/czr/czr-resources.php:417
 msgid "Your favicon is currently handled with an old method and will not be properly displayed on all devices. You might consider to re-upload your favicon with the new control below."
-msgstr ""
+msgstr "Your favicon is currently handled with an old method and will not be properly displayed on all devices. You might consider to re-upload your favicon with the new control below."
 
 #: functions/czr/class-czr-init.php:426
 msgid "Dynamic Sidebars and Widgets"
@@ -1658,252 +1658,252 @@ msgstr ""
 
 #: functions/czr/class-czr-init.php:338
 msgid "SITE ICON"
-msgstr ""
+msgstr "SITE ICON"
 
 #: functions/czr/class-czr-init.php:308
 msgid "WordPress documentation"
-msgstr "WordPress Dokumentation"
+msgstr "WordPress documentation"
 
 #: functions/czr/class-czr-init.php:307
 msgid "Create a new menu now"
-msgstr ""
+msgstr "Create a new menu now"
 
 #: functions/czr/class-czr-init.php:306
 msgid "You haven't created any menu yet. %s or check the %s to learn more about menus."
-msgstr ""
+msgstr "You haven't created any menu yet. %s or check the %s to learn more about menus."
 
 #: functions/czr/class-czr-init.php:296
 msgid "Assign menus to locations"
-msgstr ""
+msgstr "Assign menus to locations"
 
 #: functions/czr/class-czr-init.php:259
 msgid "&mdash; Select &mdash;"
-msgstr "&mdash; Wähle &mdash; "
+msgstr "&mdash; Select &mdash;"
 
 #. translators: 1: plugin name, 2: action number 3: total number of actions.
 #: functions/admin/class-tgm-plugin-activation.php:3716
 msgid "Updating Plugin %1$s (%2$d/%3$d)"
-msgstr "Aktualisiere Plugin %1$s (%2$d von %3$d)"
+msgstr "Updating Plugin %1$s (%2$d/%3$d)"
 
 #: functions/admin/class-tgm-plugin-activation.php:3152
 msgid "No plugins are available to be activated at this time."
-msgstr "Momentan stehen keine Plugins zur Aktivierung zur Verfügung."
+msgstr "No plugins are available to be activated at this time."
 
 #: functions/admin/class-tgm-plugin-activation.php:3126
 msgid "No plugins were selected to be activated. No action taken."
-msgstr "Es wurden keine Plugins zur Aktualisierung ausgewählt. Keine Aktion ausgeführt."
+msgstr "No plugins were selected to be activated. No action taken."
 
 #: functions/admin/class-tgm-plugin-activation.php:3020
 msgid "No plugins are available to be updated at this time."
-msgstr "Momentan stehen keine Plugins zur Aktualisierung zur Verfügung."
+msgstr "No plugins are available to be updated at this time."
 
 #: functions/admin/class-tgm-plugin-activation.php:3018
 msgid "No plugins are available to be installed at this time."
-msgstr "Momentan stehen keine Plugins zur Installation zur Verfügung."
+msgstr "No plugins are available to be installed at this time."
 
 #: functions/admin/class-tgm-plugin-activation.php:2977
 msgid "No plugins were selected to be updated. No action taken."
-msgstr "Es wurden keine Plugins zur Aktualisierung ausgewählt. Keine Aktion ausgeführt."
+msgstr "No plugins were selected to be updated. No action taken."
 
 #: functions/admin/class-tgm-plugin-activation.php:2975
 msgid "No plugins were selected to be installed. No action taken."
-msgstr "Es wurden keine Plugins zur Installation ausgewählt. Keine Aktion ausgeführt."
+msgstr "No plugins were selected to be installed. No action taken."
 
 #: parts/single-author-date.php:14
 msgid "Updated"
-msgstr "Aktualisiert"
+msgstr "Updated"
 
 #: functions/admin/class-tgm-plugin-activation.php:2902
 msgid "Upgrade message from the plugin author:"
-msgstr "Upgrade-Nachricht vom Plugin-Autor:"
+msgstr "Upgrade message from the plugin author:"
 
 #: functions/admin/class-admin-update-notification.php:87
 msgid "version"
-msgstr "Version"
+msgstr "version"
 
 #: functions/admin/class-tgm-plugin-activation.php:2728
 msgid "Available version:"
-msgstr "Verfügbare Version:"
+msgstr "Available version:"
 
 #: functions/admin/class-tgm-plugin-activation.php:2716
 msgid "Minimum required version:"
-msgstr "mindestens benötigte Version:"
+msgstr "Minimum required version:"
 
 #: functions/admin/class-tgm-plugin-activation.php:2708
 msgid "Installed version:"
-msgstr "Installierte Version:"
+msgstr "Installed version:"
 
 #: functions/admin/class-tgm-plugin-activation.php:2700
 msgctxt "as in: \"version nr unknown\""
 msgid "unknown"
-msgstr "unbekannt"
+msgstr "unknown"
 
 #. translators: 1: number of plugins.
 #: functions/admin/class-tgm-plugin-activation.php:2618
 msgid "To Activate <span class=\"count\">(%s)</span>"
 msgid_plural "To Activate <span class=\"count\">(%s)</span>"
-msgstr[0] "<span class=\"count\">(%s)</span> aktivieren"
-msgstr[1] "<span class=\"count\">(%s)</span> aktivieren"
+msgstr[0] "To Activate <span class=\"count\">(%s)</span>"
+msgstr[1] "To Activate <span class=\"count\">(%s)</span>"
 
 #. translators: 1: number of plugins.
 #: functions/admin/class-tgm-plugin-activation.php:2614
 msgid "Update Available <span class=\"count\">(%s)</span>"
 msgid_plural "Update Available <span class=\"count\">(%s)</span>"
-msgstr[0] "Aktualisierung verfügbar <span class=\"count\">(%s)</span>"
-msgstr[1] "Aktualisierungen verfügbar <span class=\"count\">(%s)</span>"
+msgstr[0] "Update Available <span class=\"count\">(%s)</span>"
+msgstr[1] "Update Available <span class=\"count\">(%s)</span>"
 
 #. translators: 1: number of plugins.
 #: functions/admin/class-tgm-plugin-activation.php:2610
 msgid "To Install <span class=\"count\">(%s)</span>"
 msgid_plural "To Install <span class=\"count\">(%s)</span>"
-msgstr[0] "<span class=\"count\">(%s)</span> installieren"
-msgstr[1] "<span class=\"count\">(%s)</span> installieren"
+msgstr[0] "To Install <span class=\"count\">(%s)</span>"
+msgstr[1] "To Install <span class=\"count\">(%s)</span>"
 
 #. translators: 1: number of plugins.
 #: functions/admin/class-tgm-plugin-activation.php:2606
 msgctxt "plugins"
 msgid "All <span class=\"count\">(%s)</span>"
 msgid_plural "All <span class=\"count\">(%s)</span>"
-msgstr[0] "Alle <span class=\"count\">(%s)</span>"
-msgstr[1] "Alle <span class=\"count\">(%s)</span>"
+msgstr[0] "All <span class=\"count\">(%s)</span>"
+msgstr[1] "All <span class=\"count\">(%s)</span>"
 
 #: functions/admin/class-tgm-plugin-activation.php:2551
 msgid "Update recommended"
-msgstr "Aktualisierung empfohlen"
+msgstr "Update recommended"
 
 #: functions/admin/class-tgm-plugin-activation.php:2548
 msgid "Requires Update"
-msgstr "Aktualisierung nötig"
+msgstr "Requires Update"
 
 #: functions/admin/class-tgm-plugin-activation.php:2545
 msgid "Required Update not Available"
-msgstr "benötigte Aktualisierung nicht verfügbar"
+msgstr "Required Update not Available"
 
 #: functions/admin/class-tgm-plugin-activation.php:2539
 msgid "Active"
-msgstr "Aktivieren"
+msgstr "Active"
 
 #: functions/admin/class-tgm-plugin-activation.php:2513
 msgid "External Source"
-msgstr "externe Quelle"
+msgstr "External Source"
 
 #: functions/admin/class-tgm-plugin-activation.php:1310
 #: functions/admin/class-tgm-plugin-activation.php:3166
 msgctxt "plugin A *and* plugin B"
 msgid "and"
-msgstr "und"
+msgstr "and"
 
 #: functions/admin/class-tgm-plugin-activation.php:1125
 msgid "The remote plugin package consists of more than one file, but the files are not packaged in a folder."
-msgstr "Das entfernte Plugin-Paket besteht aus mehr als einer Datei, aber die Dateien sind nicht in einem Verzeichnis verpackt."
+msgstr "The remote plugin package consists of more than one file, but the files are not packaged in a folder."
 
 #: functions/admin/class-tgm-plugin-activation.php:1122
 #: functions/admin/class-tgm-plugin-activation.php:1125
 msgid "Please contact the plugin provider and ask them to package their plugin according to the WordPress guidelines."
-msgstr "Bitte setze dich mit dem Plugin-Anbieter in Verbindung und bitte ihn, sein Plugin entsprechend den WordPress-Richtlinien zu packen."
+msgstr "Please contact the plugin provider and ask them to package their plugin according to the WordPress guidelines."
 
 #: functions/admin/class-tgm-plugin-activation.php:1122
 msgid "The remote plugin package does not contain a folder with the desired slug and renaming did not work."
-msgstr "Das entfernte Plugin-Paket enthält kein Verzeichnis mit dem gewünschten Titelformat und Umbenennen hat nicht funktioniert."
+msgstr "The remote plugin package does not contain a folder with the desired slug and renaming did not work."
 
 #: functions/admin/class-tgm-plugin-activation.php:706
 msgid "Update Required"
-msgstr "Update erforderlich"
+msgstr "Update Required"
 
 #: functions/admin/class-tgm-plugin-activation.php:705
 msgid "This plugin needs to be updated to be compatible with your theme."
-msgstr "Dieses Plugin muss aktualisiert werden um mit Deinem Theme kompatibel zu sein."
+msgstr "This plugin needs to be updated to be compatible with your theme."
 
 #: functions/admin/class-tgm-plugin-activation.php:580
 msgid "Please contact the administrator of this site for help."
-msgstr "Bitte kontaktieren Sie den Administrator dieser Website für Hilfe."
+msgstr "Please contact the administrator of this site for help."
 
 #. translators: 1: plugin name.
 #: functions/admin/class-tgm-plugin-activation.php:574
 msgid "Plugin not activated. A higher version of %s is needed for this theme. Please update the plugin."
-msgstr "Plugin nicht aktiviert. Eine aktuellere Version von %s wird für dieses Theme benötigt. Bitte aktualisiere das Plugin."
+msgstr "Plugin not activated. A higher version of %s is needed for this theme. Please update the plugin."
 
 #. translators: 1: plugin name.
 #: functions/admin/class-tgm-plugin-activation.php:572
 msgid "No action taken. Plugin %1$s was already active."
-msgstr "Keine Aktion ausgeführt. Plugin %1$s war schon aktiviert."
+msgstr "No action taken. Plugin %1$s was already active."
 
 #: functions/admin/class-tgm-plugin-activation.php:557
 msgid "Begin updating plugin"
 msgid_plural "Begin updating plugins"
-msgstr[0] "Update des Plugins starten"
-msgstr[1] "Update der Plugins starten"
+msgstr[0] "Begin updating plugin."
+msgstr[1] "Begin updating plugins."
 
 #: functions/admin/class-tgm-plugin-activation.php:515
 #: functions/init-core.php:1498
 msgid "Something went wrong with the plugin API."
-msgstr "Etwas ging mit der Plugin-API schief."
+msgstr "Something went wrong with the plugin API."
 
 #. Template Name of the plugin/theme
 msgid "Child Menu"
-msgstr "Untermenü"
+msgstr ""
 
 #: single.php:44
 msgid "Tags:"
-msgstr "Tags: "
+msgstr "Tags:"
 
 #: single.php:28
 msgid "Pages:"
-msgstr "Seiten:"
+msgstr "Pages:"
 
 #: parts/post-list-author-date.php:11 parts/single-author-date.php:7
 msgid "by"
-msgstr "nach"
+msgstr "by"
 
 #: sidebar.php:12
 msgid "Follow:"
-msgstr "Folgen:"
+msgstr "Follow:"
 
 #: sidebar-2.php:9
 msgid "More"
-msgstr "Mehr"
+msgstr "More"
 
 #: sidebar-2.php:3 sidebar.php:6
 msgid "Expand Sidebar"
-msgstr "Sidebar ausklappen"
+msgstr "Expand Sidebar"
 
 #: searchform.php:3
 msgid "To search type and hit enter"
-msgstr "Zum Suchen Tippen und Enter drücken"
+msgstr ""
 
 #: search.php:12
 msgid "Please try another search:"
-msgstr "Bitte versuchen Sie einen anderen Suchbegriff"
+msgstr ""
 
 #: search.php:10
 msgid "For the term"
-msgstr "Für den Suchbegriff"
+msgstr ""
 
 #: functions/class-utils-settings-map.php:1413
 #: option-tree/includes/ot-functions-option-types.php:235
 msgid "No Sidebars"
-msgstr "Keine Seitenleiste"
+msgstr "No Sidebars"
 
 #: functions/class-utils-settings-map.php:1418
 #: option-tree/includes/ot-functions-option-types.php:230
 msgid "Choose Sidebar"
-msgstr "Wähle Sidebar"
+msgstr "Choose Sidebar"
 
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:11
 msgid "Add New"
-msgstr "Hinzufügen"
+msgstr "Add New"
 
 #: option-tree/includes/ot-functions-option-types.php:441
 msgid "Add Media"
-msgstr "Dateien hinzufügen"
+msgstr "Add Media"
 
 #: functions/czr/tmpl/inputs/img-uploader-tmpl.php:58
 msgid "Default"
-msgstr "Standard"
+msgstr "Default"
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:62
 msgid "Title"
-msgstr "Titel"
+msgstr "Title"
 
 #: functions/czr/czr-resources.php:415 functions/czr/czr-resources.php:437
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:32
@@ -1911,7 +1911,7 @@ msgstr "Titel"
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:103
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:44
 msgid "Edit"
-msgstr "Bearbeiten"
+msgstr "Edit"
 
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:15
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:62
@@ -1921,11 +1921,11 @@ msgstr "Name"
 
 #: functions/class-utils-settings-map.php:842
 msgid "Right Sidebar"
-msgstr "Sidebar rechts"
+msgstr "Right Sidebar"
 
 #: functions/class-utils-settings-map.php:841
 msgid "Left Sidebar"
-msgstr "Sidebar links"
+msgstr "Left Sidebar"
 
 #: functions/czr/czr-resources.php:442
 msgid "Slide"
@@ -1937,7 +1937,7 @@ msgstr ""
 
 #: functions/czr/czr-resources.php:416
 msgid "Close"
-msgstr "Schließen"
+msgstr "Close"
 
 #: option-tree/includes/ot-functions-option-types.php:457
 msgid "Remove Media"
@@ -1945,19 +1945,19 @@ msgstr ""
 
 #: functions/czr/controls/class-upload-control.php:67
 msgid "Upload"
-msgstr "Hochladen"
+msgstr "Upload"
 
 #: functions/class-utils-settings-map.php:1032
 msgid "Content"
-msgstr "Inhalt"
+msgstr "Content"
 
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:24
 msgid "Yes"
-msgstr "Ja"
+msgstr "Yes"
 
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:24
 msgid "No"
-msgstr "Nein"
+msgstr "No"
 
 #: functions/czr/tmpl/modules/text_editor-module-tmpl.php:14
 msgid "Text"
@@ -1977,123 +1977,123 @@ msgstr ""
 
 #: functions/init-front.php:390
 msgid "Yearly Archive:"
-msgstr ""
+msgstr "Yearly Archive:"
 
 #: functions/init-front.php:385
 msgid "Monthly Archive:"
-msgstr ""
+msgstr "Monthly Archive:"
 
 #: functions/init-front.php:380
 msgid "Daily Archive:"
-msgstr ""
+msgstr "Daily Archive:"
 
 #: functions/init-front.php:365
 msgid "Tagged:"
-msgstr "Stichwörter:"
+msgstr "Tagged:"
 
 #: functions/init-front.php:360
 msgid "Category:"
-msgstr "Katgeorie:"
+msgstr "Category: "
 
 #: functions/init-front.php:346
 msgid "Author:"
-msgstr "Autor:"
+msgstr "Author:"
 
 #: functions/init-front.php:334
 msgid "Page not found!"
-msgstr "Seite nicht gefunden!"
+msgstr ""
 
 #: functions/init-front.php:333
 msgid "Error 404."
-msgstr "Fehler 404."
+msgstr ""
 
 #: functions/init-front.php:322
 msgid "Search results"
-msgstr "Suchergebnisse"
+msgstr "Search Results"
 
 #: functions/init-front.php:320
 msgid "Search result"
-msgstr "Suchergebnis"
+msgstr ""
 
 #: functions/widgets/alx-tabs.php:235
 msgid "says:"
-msgstr "sagt:"
+msgstr "says:"
 
 #: functions/widgets/alx-tabs.php:69
 msgid "Tags"
-msgstr "Schlagwörter"
+msgstr "Tags"
 
 #: functions/widgets/alx-tabs.php:68
 msgid "Recent Comments"
-msgstr "Letzte Kommentare"
+msgstr "Recent Comments"
 
 #: functions/widgets/alx-tabs.php:67
 msgid "Popular Posts"
-msgstr "Beliebte Meldungen"
+msgstr "Popular Posts"
 
 #: functions/widgets/alx-tabs.php:66
 msgid "Recent Posts"
-msgstr "Letzte Beiträge"
+msgstr "Recent Posts"
 
 #. translators: 1: plugin name, 2: action number 3: total number of actions.
 #: functions/admin/class-tgm-plugin-activation.php:3738
 msgid "Installing Plugin %1$s (%2$d/%3$d)"
-msgstr "Installieren Plugin %1$s (%2$d/%3$d)"
+msgstr "Installing Plugin %1$s (%2$d/%3$d)"
 
 #: functions/admin/class-tgm-plugin-activation.php:3736
 msgid "All installations have been completed."
-msgstr "Alle Installationen sind abgeschlossen."
+msgstr "All installations have been completed."
 
 #. translators: 1: plugin name.
 #: functions/admin/class-tgm-plugin-activation.php:3735
 msgid "%1$s installed successfully."
-msgstr "%1$s erfolgreich installiert."
+msgstr "%1$s installed successfully."
 
 #. translators: 1: plugin name.
 #: functions/admin/class-tgm-plugin-activation.php:3721
 msgid "The installation of %1$s failed."
-msgstr "Die Installation von %1$s fehlgeschlagen."
+msgstr "The installation of %1$s failed."
 
 #. translators: 1: plugin name, 2: error message.
 #: functions/admin/class-tgm-plugin-activation.php:3719
 msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
-msgstr "Ein Fehler ist aufgetreten während der Installation %1$s: <strong>%2$s</strong>."
+msgstr "An error occurred while installing %1$s: <strong>%2$s</strong>."
 
 #: functions/admin/class-tgm-plugin-activation.php:3733
 msgid "The installation process is starting. This process may take a while on some hosts, so please be patient."
-msgstr "Der Installationsvorgang wird gestartet. Dieser Vorgang kann eine Weile auf einigen Hosts dauern, bitte haben sie Geduld."
+msgstr "The installation process is starting. This process may take a while on some hosts, so please be patient."
 
 #. translators: 1: plugin name, 2: action number 3: total number of actions.
 #: functions/admin/class-tgm-plugin-activation.php:3730
 msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
-msgstr "Installation und Aktivierung Plugin %1$s (%2$d/%3$d)"
+msgstr "Installing and Activating Plugin %1$s (%2$d/%3$d)"
 
 #: functions/admin/class-tgm-plugin-activation.php:3728
 msgid "All installations and activations have been completed."
-msgstr "Alle Installationen und Aktivierungen abgeschlossen sind."
+msgstr "All installations and activations have been completed."
 
 #: functions/admin/class-tgm-plugin-activation.php:3727
 #: functions/admin/class-tgm-plugin-activation.php:3735
 msgid "Hide Details"
-msgstr "Details ausblenden"
+msgstr "Hide Details"
 
 #: functions/admin/class-tgm-plugin-activation.php:3727
 #: functions/admin/class-tgm-plugin-activation.php:3735
 msgid "Show Details"
-msgstr "Details anzeigen"
+msgstr "Show Details"
 
 #. translators: 1: plugin name.
 #: functions/admin/class-tgm-plugin-activation.php:3727
 msgid "%1$s installed and activated successfully."
-msgstr "%1$s erfolgreich installiert und aktiviert."
+msgstr "%1$s installed and activated successfully."
 
 #: functions/admin/class-tgm-plugin-activation.php:3725
 msgid "The installation and activation process is starting. This process may take a while on some hosts, so please be patient."
-msgstr "Die Installation und Aktivierung beginnt. Dieser Vorgang kann eine Weile auf einigen Hosts dauern, bitte haben sie Geduld."
+msgstr "The installation and activation process is starting. This process may take a while on some hosts, so please be patient."
 
 #: functions/admin/class-tgm-plugin-activation.php:3376
 msgid "Plugin activation failed."
-msgstr "Plugin Aktivierung fehlgeschlagen."
+msgstr "Plugin activation failed."
 
 #: functions/admin/class-tgm-plugin-activation.php:2772
 msgid "Status"
@@ -2101,11 +2101,11 @@ msgstr "Status"
 
 #: functions/admin/class-tgm-plugin-activation.php:2767
 msgid "Type"
-msgstr "Typ"
+msgstr "Type"
 
 #: functions/admin/class-tgm-plugin-activation.php:2766
 msgid "Source"
-msgstr "Quelle"
+msgstr "Source"
 
 #: functions/admin/class-tgm-plugin-activation.php:2765
 msgid "Plugin"
@@ -2113,47 +2113,47 @@ msgstr "Plugin"
 
 #: functions/admin/class-tgm-plugin-activation.php:2944
 msgid "Activate"
-msgstr "Aktivieren"
+msgstr "Activate"
 
 #: functions/admin/class-tgm-plugin-activation.php:2935
 msgid "Install"
-msgstr "Installieren"
+msgstr "Install"
 
 #: functions/admin/class-tgm-plugin-activation.php:2537
 msgid "Installed But Not Activated"
-msgstr "Installiert, aber nicht aktiviert"
+msgstr "Installed But Not Activated"
 
 #: functions/admin/class-tgm-plugin-activation.php:2533
 msgid "Not Installed"
-msgstr "Nicht installiert"
+msgstr "Not Installed"
 
 #: functions/admin/class-tgm-plugin-activation.php:2494
 #: functions/init-front.php:133
 msgid "Recommended"
-msgstr "EMPFOHLEN"
+msgstr "Recommended"
 
 #: functions/admin/class-tgm-plugin-activation.php:2491
 msgid "Required"
-msgstr "Erforderlich"
+msgstr "Required"
 
 #: functions/admin/class-tgm-plugin-activation.php:2510
 msgid "WordPress Repository"
-msgstr "WordPress Projektarchiv"
+msgstr "WordPress Repository"
 
 #: functions/admin/class-tgm-plugin-activation.php:2516
 msgid "Pre-Packaged"
-msgstr "Abgepackten"
+msgstr "Pre-Packaged"
 
 #: functions/admin/class-tgm-plugin-activation.php:568
 #: functions/admin/class-tgm-plugin-activation.php:1015
 #: functions/admin/class-tgm-plugin-activation.php:2751
 #: functions/admin/class-tgm-plugin-activation.php:3798
 msgid "Return to the Dashboard"
-msgstr "Zurück zum Dashboard"
+msgstr "Return to the dashboard"
 
 #: functions/admin/class-tgm-plugin-activation.php:577
 msgid "Dismiss this notice"
-msgstr "Entlassen diese Mitteilung"
+msgstr "Dismiss this notice"
 
 #: functions/init-core.php:1511
 msgid "All plugins installed and activated successfully. %s"
@@ -2162,38 +2162,38 @@ msgstr ""
 #: functions/admin/class-tgm-plugin-activation.php:570
 #: functions/admin/class-tgm-plugin-activation.php:3170
 msgid "The following plugin was activated successfully:"
-msgstr "Das folgende Plugin wurde erfolgreich aktiviert:"
+msgstr "The following plugin was activated successfully:"
 
 #: functions/admin/class-tgm-plugin-activation.php:569
 #: functions/admin/class-tgm-plugin-activation.php:3377
 #: functions/init-core.php:1510
 msgid "Plugin activated successfully."
-msgstr "Plugin erfolgreich aktiviert."
+msgstr "Plugin activated successfully."
 
 #: functions/admin/class-tgm-plugin-activation.php:567
 #: functions/init-core.php:1509
 msgid "Return to Required Plugins Installer"
-msgstr "Zurück zur Erforderliche Plugins Installer"
+msgstr "Return to Required Plugins Installer"
 
 #: functions/admin/class-tgm-plugin-activation.php:562
 msgid "Begin activating plugin"
 msgid_plural "Begin activating plugins"
-msgstr[0] "BEGIN Plugin aktivieren"
-msgstr[1] "BEGIN Plugins aktivieren"
+msgstr[0] "Begin activating plugin"
+msgstr[1] "Begin activating plugins"
 
 #. translators: 1: plugin name(s).
 #: functions/admin/class-tgm-plugin-activation.php:552
 #: functions/init-core.php:1507
 msgid "Begin installing plugin"
 msgid_plural "Begin installing plugins"
-msgstr[0] "Starten Sie die Installation des plugin"
-msgstr[1] "Starten Sie die Installation von plugins"
+msgstr[0] "Begin installing plugin"
+msgstr[1] "Begin installing plugins"
 
 #: functions/init-core.php:1506
 msgid "Sorry, but you do not have the correct permissions to update the %s plugin. Contact the administrator of this site for help on getting the plugin updated."
 msgid_plural "Sorry, but you do not have the correct permissions to update the %s plugins. Contact the administrator of this site for help on getting the plugins updated."
-msgstr[0] "Leider reichen die Zugriffsrechte nicht aus, um das %s Plugin zu aktualisieren. Bitte wende dich an den Administrator der Site."
-msgstr[1] "Leider reichen die Zugriffsrechte nicht aus, um die %s Plugins zu aktualisieren. Bitte wende dich an den Administrator der Site."
+msgstr[0] "Sorry, but you do not have the correct permissions to update the %s plugin. Contact the administrator of this site for help on getting the plugin updated."
+msgstr[1] "Sorry, but you do not have the correct permissions to update the %s plugins. Contact the administrator of this site for help on getting the plugins updated."
 
 #: functions/init-core.php:1505
 msgid "The Hueman Addons plugin needs to be updated to its latest version to ensure maximum compatibility with the Hueman theme: %1$s."
@@ -2204,20 +2204,20 @@ msgstr[1] ""
 #: functions/init-core.php:1504
 msgid "Sorry, but you do not have the correct permissions to activate the %s plugin. Contact the administrator of this site for help on getting the plugin activated."
 msgid_plural "Sorry, but you do not have the correct permissions to activate the %s plugins. Contact the administrator of this site for help on getting the plugins activated."
-msgstr[0] "Leider reichen die Zugriffsrechte nicht aus, um das %s Plugin zu aktivieren. Bitte wende dich an den Administrator der Site."
-msgstr[1] "Leider reichen die Zugriffsrechte nicht aus, um die %s Plugins zu aktivieren. Bitte wende dich an den Administrator der Site."
+msgstr[0] "Sorry, but you do not have the correct permissions to activate the %s plugin. Contact the administrator of this site for help on getting the plugin activated."
+msgstr[1] "Sorry, but you do not have the correct permissions to activate the %s plugins. Contact the administrator of this site for help on getting the plugins activated."
 
 #: functions/init-core.php:1502
 msgid "The Hueman Addons required plugin is currently inactive: %1$s."
 msgid_plural "The following required plugins are currently inactive: %1$s."
-msgstr[0] "Folgende erforderliche Plugin ist derzeit inaktiv: %1$s."
-msgstr[1] "Die folgenden erforderlichen Plugins sind derzeit inaktiv: %1$s."
+msgstr[0] ""
+msgstr[1] ""
 
 #: functions/init-core.php:1501
 msgid "Sorry, but you do not have the correct permissions to install the %s plugin. Contact the administrator of this site for help on getting the plugin installed."
 msgid_plural "Sorry, but you do not have the correct permissions to install the %s plugins. Contact the administrator of this site for help on getting the plugins installed."
-msgstr[0] "Leider reichen die Zugriffsrechte nicht aus, um das %s Plugin zu installieren. Bitte wende dich an den Administrator der Site."
-msgstr[1] "Leider reichen die Zugriffsrechte nicht aus, um die %s Plugins zu installieren. Bitte wende dich an den Administrator der Site."
+msgstr[0] "Sorry, but you do not have the correct permissions to install the %s plugin. Contact the administrator of this site for help on getting the plugin installed."
+msgstr[1] "Sorry, but you do not have the correct permissions to install the %s plugins. Contact the administrator of this site for help on getting the plugins installed."
 
 #: functions/init-core.php:1499
 msgid "The Hueman theme requires the following plugin: %1$s."
@@ -2229,21 +2229,21 @@ msgstr[1] ""
 #: functions/admin/class-tgm-plugin-activation.php:512
 #: functions/init-core.php:1497
 msgid "Installing Plugin: %s"
-msgstr "Installiere Plugin: %s"
+msgstr "Installing Plugin: %s"
 
 #: functions/admin/class-tgm-plugin-activation.php:510
 #: functions/init-core.php:1496
 msgid "Install Plugins"
-msgstr "Plugins installieren"
+msgstr "Install Plugins"
 
 #: functions/admin/class-tgm-plugin-activation.php:509
 #: functions/init-core.php:1495
 msgid "Install Required Plugins"
-msgstr "Installieren Sie die erforderlichen Plugins"
+msgstr "Install Required Plugins"
 
 #: footer.php:109
 msgid "Theme by"
-msgstr "Thema von"
+msgstr "Theme by"
 
 #: footer.php:109
 msgid "Powered by"
@@ -2251,7 +2251,7 @@ msgstr "Powered by"
 
 #: footer.php:103 functions/czr/czr-resources.php:40
 msgid "All Rights Reserved."
-msgstr "Alle Rechte vorbehalten."
+msgstr "All rights reserved."
 
 #: comments.php:11
 msgid "Pingbacks"
@@ -2259,19 +2259,19 @@ msgstr ""
 
 #: comments.php:10 functions/class-utils-settings-map.php:1167
 msgid "Comments"
-msgstr "Kommentare"
+msgstr "Comments"
 
 #: comments.php:7
 msgid "% Responses"
-msgstr "% Antworten"
+msgstr "% responses"
 
 #: comments.php:7
 msgid "1 Response"
-msgstr "1 Reaktion"
+msgstr "1 response"
 
 #: comments.php:7
 msgid "No Responses"
-msgstr "Keine Antworten"
+msgstr "No Responses"
 
 #: 404.php:14
 msgid "The page you are trying to reach does not exist, or has been moved. Please use the menus or the search box to find what you are looking for."
@@ -2279,7 +2279,7 @@ msgstr ""
 
 #. Author URI of the plugin/theme
 msgid "http://presscustomizr.com"
-msgstr "http://presscustomizr.com"
+msgstr ""
 
 #. Author of the plugin/theme
 msgid "nikeo"
@@ -2287,4 +2287,4 @@ msgstr "nikeo"
 
 #. Theme URI of the plugin/theme
 msgid "http://presscustomizr.com/hueman/"
-msgstr "http://presscustomizr.com/hueman/"
+msgstr ""

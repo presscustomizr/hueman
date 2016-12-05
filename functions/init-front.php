@@ -119,7 +119,7 @@ function hu_print_dynamic_sidebars( $_id, $location ) {
 
   $sidebars_widgets = wp_get_sidebars_widgets();
 
-  if ( hu_is_customize_preview_frame() ) {
+  if ( hu_is_customize_preview_frame() && ! hu_isprevdem() ) {
     //is there a meta setting overriding the customizer ?
     if ( false != hu_get_singular_meta_widget_zone($location) ) {
       printf('<div class="widget"><div class="hu-placeholder-widget"><h3>%1$s<br/><span class="zone-name">"%2$s"</span> %3$s</h3><br/><p>%4$s</p></div></div>',

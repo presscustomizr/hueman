@@ -1,4 +1,4 @@
-# Hueman v3.2.9
+# Hueman v3.2.10
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > Hueman is a mobile friendly WordPress theme for blogs, magazines and business websites. It's been designed to beautifully display pictures and text content, and engineered to be easy to use and fast. The Hueman theme helps you attract and retain more visitors, that's why it's already used by 70K+ active websites in the world and has received hundreds of five stars ratings.
@@ -82,6 +82,22 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 ## Changelog
+= 3.2.10 November 4th 2016 =
+* fixed : php7 compatibility issues (#335)
+* fixed : check if custom_logo is registered first for backward compatibility => custom_logo was introduced in WP 4.5. (#338)
+* fixed : search results and archive pages must be included in the post list context check (#331)
+* fixed : page=welcome.php. Changelog not properly displayed (#328)
+* improved : Moved has_post_thumbnail() check inside the utility hu_the_post_thumbnail()
+* improved : moved all preview demo actions and filter into a separate php file
+* improved : core files reorganization. functions/init-core.php loads the various core files in a clearer sequence.
+* improved : replace post loop counter with core variable (#274), in index.php, archive.php, search.php. No impact for child theme users.
+* improved : in the customizer, the section 'Blog Design and Content' has been renamed 'Post Lists Design and Content : Blog, Archives, Search Results'
+* improved : included all .po translation files in the theme between 30 and 95% translated (#325)
+* improved : disabled the default page menu by default for multisite installs (#326)
+* improved : added a note in the "Menus" customizer panel, explaining where to disable the default header page menu. (#329)
+* improved : don't display widget placeholder when previewing the theme
+* removed : useless old functions/theme-options.php file, related to the previous option system.
+
 = 3.2.9 October 11th 2016 =
 * fixed : WP embed not displayed correctly #298
 * fixed : the saved item of mono item module has to be cast to array #323

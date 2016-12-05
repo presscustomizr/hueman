@@ -320,7 +320,10 @@ if ( ! class_exists( 'HU_customize' ) ) :
       $wp_customize -> get_control( 'header_image' ) -> priority = 100;
 
       //CHANGE THE CUSTOM LOGO PRIORITY
-      $wp_customize -> get_control( 'custom_logo' ) -> priority = 7;
+      //check if custom_logo is registered first for backward compatibility => custom_logo was introduced in WP 4.5.
+      if ( is_object( $wp_customize->get_setting( 'custom_logo' ) ) ) {
+        $wp_customize -> get_control( 'custom_logo' ) -> priority = 7;
+      }
 
       //The selective refresh support will be added later to the custom logo
       if ( isset( $wp_customize->selective_refresh ) && is_object($wp_customize->get_setting( 'custom_logo' ) ) ) {
