@@ -18,6 +18,7 @@ node_modules/
 .ftpauth
 #assets/czr/fmk
 npm-debug.log
+grunt-tasks-config
 
 # TRAVIS
 .travis.yml

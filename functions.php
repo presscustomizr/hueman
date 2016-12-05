@@ -10,27 +10,3 @@ load_template( get_template_directory() . '/functions/init-core.php' );
 * https://codex.wordpress.org/Child_Themes
 *
 */
-if ( class_exists( 'HA_skop_dev_logs') ) {
-  new HA_skop_dev_logs(
-    array(
-        'hook' => '__header_after_container_inner',
-        'display_header' => true,
-        'tested_option' => 'copyright'
-      )
-
-  );
-}
-
-// delete_post_meta( ha_get_skope_post_id(), 'hueman_czr_all_page' );
-// foreach ( get_post_meta( ha_get_skope_post_id() )  as $key => $value) {
-//   delete_post_meta( ha_get_skope_post_id(), $key );
-// }
-
-/*$theme = get_option( 'stylesheet' );
-$_raw_theme_mods = hu_get_raw_option( "theme_mods_{$theme}" );
-?>
-  <pre>
-    <?php print_r($_raw_theme_mods); ?>
-  </pre>
-<?php
-wp_die();*/
