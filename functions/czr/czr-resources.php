@@ -7,8 +7,8 @@ add_action( 'customize_controls_enqueue_scripts'        ,  'hu_customize_control
 add_action( 'customize_preview_init'                    , 'hu_customize_preview_js', 20 );
 //exports some wp_query informations. Updated on each preview refresh.
 add_action( 'customize_preview_init'                    , 'hu_add_preview_footer_action', 20 );
-//Add the visibilities
-add_action( 'customize_controls_print_footer_scripts'   , 'hu_extend_visibilities', 10 );
+//Add the control dependencies
+add_action( 'customize_controls_print_footer_scripts'   , 'hu_extend_ctrl_dependencies', 10 );
 
 //hook : customize_preview_init
 function hu_customize_preview_js() {
@@ -25,7 +25,7 @@ function hu_customize_preview_js() {
   //localizes
   wp_localize_script(
         'hu-customizer-preview',
-        'HUPreviewParams',
+        'CZRPreviewParams',
         apply_filters('hu_js_customizer_preview_params' ,
           array(
             'themeFolder'     => get_template_directory_uri(),
@@ -86,7 +86,9 @@ function hu_customize_controls_js_css() {
           'faviconOptionName' => 'favicon',
           'css_attr' => HU_customize::$instance -> hu_get_controls_css_attr(),
           'translatedStrings' => hu_get_translated_strings(),
-          'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('TC_DEV') && true === TC_DEV )
+          'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('TC_DEV') && true === TC_DEV ),
+          'isThemeSwitchOn' => isset( $_GET['theme']),
+          'themeSettingList' => HU_utils::$_theme_setting_list
       )
     )
   );
@@ -228,7 +230,7 @@ function hu_add_customize_preview_data() {
 
 
 //hook : 'customize_controls_enqueue_scripts':10
-function hu_extend_visibilities() {
+function hu_extend_ctrl_dependencies() {
   $_header_img_notice = sprintf( __( "When the %s, this element will not be displayed in your header.", 'hueman'),
       sprintf('<a href="%1$s" title="%2$s">%2$s</a>',
         "javascript:wp.customize.section(\'header_design_sec\').focus();",
@@ -248,7 +250,7 @@ function hu_extend_visibilities() {
       )
   );
   ?>
-  <script id="control-visibilities" type="text/javascript">
+  <script id="control-dependencies" type="text/javascript">
     (function (api, $, _) {
       //@return boolean
       var _is_checked = function( to ) {
@@ -256,8 +258,8 @@ function hu_extend_visibilities() {
       };
       //when a dominus object define both visibility and action callbacks, the visibility can return 'unchanged' for non relevant servi
       //=> when getting the visibility result, the 'unchanged' value will always be checked and resumed to the servus control current active() state
-      api.CZR_visibilities.prototype.dominiDeps = _.extend(
-            api.CZR_visibilities.prototype.dominiDeps,
+      api.CZR_ctrlDependencies.prototype.dominiDeps = _.extend(
+            api.CZR_ctrlDependencies.prototype.dominiDeps,
             [
                 {
                         dominus : 'show_on_front',
@@ -366,7 +368,8 @@ function hu_extend_visibilities() {
                               'color-header',
                               'color-header-menu',
                               'image-border-radius',
-                              'body-background'
+                              'body-background',
+                              'color-footer'
                         ],
                         visibility : function ( to ) {
                               return _is_checked(to);

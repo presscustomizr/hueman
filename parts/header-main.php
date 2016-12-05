@@ -3,6 +3,7 @@
     <?php get_template_part('parts/header-nav-topbar'); ?>
   <?php endif; ?>
   <div class="container group">
+    <?php do_action('__before_after_container_inner'); ?>
     <div class="container-inner">
       <?php
         $_header_img_src = get_header_image();// hu_get_img_src_from_option('header-image');
@@ -49,5 +50,6 @@
       <?php endif; ?>
 
     </div><!--/.container-inner-->
+    <?php do_action('__header_after_container_inner'); ?>
   </div><!--/.container-->
 </header><!--/#header-->

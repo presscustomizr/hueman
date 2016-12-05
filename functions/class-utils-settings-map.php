@@ -42,7 +42,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         add_filter( 'hu_add_panel_map'        , array( $this, 'hu_popul_panels_map'));
         add_filter( 'hu_remove_section_map'   , array( $this, 'hu_popul_remove_section_map'));
         //theme switcher's enabled when user opened the customizer from the theme's page
-        add_filter( 'hu_remove_section_map'   , array( $this, 'hu_set_theme_switcher_visibility'));
+        //add_filter( 'hu_remove_section_map'   , array( $this, 'hu_set_theme_switcher_visibility'));
         add_filter( 'hu_add_section_map'      , array( $this, 'hu_popul_section_map' ));
         //add controls to the map
         add_filter( 'hu_add_setting_control_map' , array( $this , 'hu_popul_setting_control_map' ), 10, 2 );
@@ -1088,8 +1088,13 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
       //=> because once the preview is ready, a postMessage is sent to the panel frame to refresh the sections and panels
       //Do nothing if WP version under 4.2
       global $wp_version;
-      if ( hu_is_customize_preview_frame() || ! version_compare( $wp_version, '4.2', '>=') )
+      if ( ! version_compare( $wp_version, '4.2', '>=') )
         return $_sections;
+
+      if ( isset($_GET['theme']) && is_array($_sections) ) {
+        array_push( $_sections, 'themes');
+        return $_sections;
+      }
 
       //when user access the theme switcher from the admin bar
       $_theme_switcher_requested = false;
@@ -1100,7 +1105,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         }
       }
 
-      if ( isset($_GET['theme']) || ! is_array($_sections) || $_theme_switcher_requested )
+      if (  ! is_array($_sections) || $_theme_switcher_requested )
         return $_sections;
 
       array_push( $_sections, 'themes');
@@ -1122,7 +1127,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
       $menus          = wp_get_nav_menus();
       $num_locations  = count( array_keys( $locations ) );
       global $wp_version;
-      $nav_section_desc =  sprintf( _n('Your theme supports %s menu. Select which menu you would like to use.', 'Your theme supports %s menus. Select which menu appears in each location.', $num_locations, 'hueman' ), number_format_i18n( $num_locations ) );
+      $nav_section_desc =  __( 'Select which menu appears in each location.', 'hueman' );
       //adapt the nav section description for v4.3 (menu in the customizer from now on)
       if ( version_compare( $wp_version, '4.3', '<' ) ) {
         $nav_section_desc .= "<br/>" . sprintf( __("You can create menus and set their locations %s." , "hueman"),

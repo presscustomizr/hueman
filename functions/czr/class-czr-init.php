@@ -25,7 +25,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
       if( ! defined( 'CZR_DYN_WIDGETS_SECTION' ) )      define( 'CZR_DYN_WIDGETS_SECTION' , 'dyn_widgets_section' );
 
       //add control class
-      add_action( 'customize_register'                        , array( $this , 'hu_augment_customizer' ),10,1);
+      add_action( 'customize_register'                       , array( $this , 'hu_augment_customizer' ),10,1);
 
       //add the customizer built with the builder below
       add_action( 'customize_register'                       , array( $this , 'hu_customize_register' ), 20, 1 );
@@ -59,7 +59,9 @@ if ( ! class_exists( 'HU_customize' ) ) :
     }
 
 
-
+    /* ------------------------------------------------------------------------- *
+     *  DEPRECATED OPTIONS
+    /* ------------------------------------------------------------------------- */
     //hook : customize_save_after
     //When the users modifies the header_image, check if the old option exists and remove it if needed
     function hu_clean_deprecated_options( $manager_inst ) {
@@ -113,6 +115,12 @@ if ( ! class_exists( 'HU_customize' ) ) :
     }
 
 
+
+
+
+    /* ------------------------------------------------------------------------- *
+     *  AUGMENT CUSTOMIZER SERVER SIDE
+    /* ------------------------------------------------------------------------- */
     /**
     * Augments wp customize controls and settings classes
     * @package Hueman
@@ -144,6 +152,12 @@ if ( ! class_exists( 'HU_customize' ) ) :
     }
 
 
+
+
+
+    /* ------------------------------------------------------------------------- *
+     *  PARTIALS
+    /* ------------------------------------------------------------------------- */
     //hook : customize_register
     function hu_register_partials( WP_Customize_Manager $wp_customize ) {
         //Bail if selective refresh is not available (old versions) or disabled (for skope for example)
@@ -160,6 +174,11 @@ if ( ! class_exists( 'HU_customize' ) ) :
     }
 
 
+
+
+    /* ------------------------------------------------------------------------- *
+     *  LOAD MODULES AND INPUTS TEMPLATES
+    /* ------------------------------------------------------------------------- */
     function hu_load_tmpl() {
       $_tmpl = array(
         'tmpl/modules/all-modules-tmpl.php',
@@ -183,33 +202,12 @@ if ( ! class_exists( 'HU_customize' ) ) :
       locate_template( 'functions/czr/modules/modules-resources.php' , $load = true, $require_once = true );
     }
 
-    //updates the names of the built-in widget zones for users who installed the theme before v3.1.2
-    function hu_update_widget_database_option() {
-      if ( ! hu_user_started_before_version('3.1.2') )
-        return;
-
-      $_options             = get_option('hu_theme_options');
-      $_update_widget_areas = array();
-
-      if ( ! isset($_options['sidebar-areas']) || ! is_array($_options['sidebar-areas']) )
-        return;
-
-      $_zones   = hu_get_default_widget_zones();
-      foreach ( $_options['sidebar-areas'] as $key => $data ) {
-        if ( ! array_key_exists($data['id'], $_zones) )
-          continue;
-        $_id = $data['id'];
-        $_options['sidebar-areas'][$key]['title'] = $_zones[$_id]['name'];
-      }
-
-      update_option('hu_theme_options', $_options );
-    }
 
 
 
-
-
-
+    /* ------------------------------------------------------------------------- *
+     *  MODIFY SETTINGS, CONTROLS, SECTIONS, PANELS SERVER SIDE
+    /* ------------------------------------------------------------------------- */
     /*
     * Since the WP_Customize_Manager::$controls and $settings are protected properties, one way to alter them is to use the get_setting and get_control methods
     * Another way is to remove the control and add it back as an instance of a custom class and with new properties
@@ -254,65 +252,65 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
 
       //CHANGE MENUS PROPERTIES
-      $locations    = get_registered_nav_menus();
-      $menus        = wp_get_nav_menus();
-      $choices      = array( '' => __( '&mdash; Select &mdash;', 'hueman' ) );
-      foreach ( $menus as $menu ) {
-        $choices[ $menu->term_id ] = wp_html_excerpt( $menu->name, 40, '&hellip;' );
-      }
-      $_priorities  = array(
-        'topbar' => 10,
-        'header' => 20,
-        'footer' => 30
-      );
+      // $locations    = get_registered_nav_menus();
+      // $menus        = wp_get_nav_menus();
+      // $choices      = array( '' => __( '&mdash; Select &mdash;', 'hueman' ) );
+      // foreach ( $menus as $menu ) {
+      //   $choices[ $menu->term_id ] = wp_html_excerpt( $menu->name, 40, '&hellip;' );
+      // }
+      // $_priorities  = array(
+      //   'topbar' => 10,
+      //   'header' => 20,
+      //   'footer' => 30
+      // );
 
-      //WP only adds the menu(s) settings and controls if the user has created at least one menu.
-      //1) if no menus yet, we still want to display the menu picker + add a notice with a link to the admin menu creation panel
-      //=> add_setting and add_control for each menu location. Check if they are set first by security
-      //2) if user has already created a menu, the settings are already created, we just need to update the controls.
-      $_priority = 0;
-      //assign new priorities to the menus controls
-      foreach ( $locations as $location => $description ) {
-        $menu_setting_id = "nav_menu_locations[{$location}]";
+      // //WP only adds the menu(s) settings and controls if the user has created at least one menu.
+      // //1) if no menus yet, we still want to display the menu picker + add a notice with a link to the admin menu creation panel
+      // //=> add_setting and add_control for each menu location. Check if they are set first by security
+      // //2) if user has already created a menu, the settings are already created, we just need to update the controls.
+      // $_priority = 0;
+      // //assign new priorities to the menus controls
+      // foreach ( $locations as $location => $description ) {
+      //   $menu_setting_id = "nav_menu_locations[{$location}]";
 
-        //create the settings if they don't exist
-        //=> in the condition, make sure that the setting has really not been created yet (maybe over secured)
-        if ( ! $menus && ! is_object( $wp_customize->get_setting($menu_setting_id ) ) ) {
-          $wp_customize -> add_setting( $menu_setting_id, array(
-            'sanitize_callback' => 'absint',
-            'theme_supports'    => 'menus',
-          ) );
-        }
+      //   //create the settings if they don't exist
+      //   //=> in the condition, make sure that the setting has really not been created yet (maybe over secured)
+      //   if ( ! $menus && ! is_object( $wp_customize->get_setting($menu_setting_id ) ) ) {
+      //     $wp_customize -> add_setting( $menu_setting_id, array(
+      //       'sanitize_callback' => 'absint',
+      //       'theme_supports'    => 'menus',
+      //     ) );
+      //   }
 
-        //remove the controls if they exists
-        if ( is_object( $wp_customize->get_control( $menu_setting_id ) ) ) {
-          $wp_customize -> remove_control( $menu_setting_id );
-        }
+      //   //remove the controls if they exists
+      //   if ( is_object( $wp_customize->get_control( $menu_setting_id ) ) ) {
+      //     $wp_customize -> remove_control( $menu_setting_id );
+      //   }
 
-        //replace the controls by our custom controls
-        $_control_properties = array(
-          'label'   => $description,
-          'section' => 'nav',
-          'title'   => "main" == $location ? __( 'Assign menus to locations' , 'hueman') : false,
-          'type'    => 'select',
-          'choices' => $choices,
-          'priority' => isset($_priorities[$location]) ? $_priorities[$location] : $_priority
-        );
+      //   //replace the controls by our custom controls
+      //   $_control_properties = array(
+      //     'label'   => $description,
+      //     'section' => 'menu_locations',
+      //     'title'   => "main" == $location ? __( 'Assign menus to locations' , 'hueman') : false,
+      //     'type'    => 'select',
+      //     'choices' => $choices,
+      //     'priority' => isset($_priorities[$location]) ? $_priorities[$location] : $_priority
+      //   );
 
-        //add a notice property if no menu created yet.
-        if ( ! $menus ) {
-          //adapt the nav section description for v4.3 (menu in the customizer from now on)
-          $_create_menu_link =  version_compare( $GLOBALS['wp_version'], '4.3', '<' ) ? admin_url('nav-menus.php') : "javascript:wp.customize.section('nav').container.find('.customize-section-back').trigger('click'); wp.customize.panel('nav_menus').focus();";
-          $_control_properties['notice'] = sprintf( __("You haven't created any menu yet. %s or check the %s to learn more about menus.", "hueman"),
-            sprintf( '<strong><a href="%1$s" title="%2$s">%2$s</a></strong>', $_create_menu_link, __("Create a new menu now" , "hueman") ),
-            sprintf( '<a href="%1$s" title="%2$s" target="_blank">%2$s</a>', esc_url('codex.wordpress.org/WordPress_Menu_User_Guide'),  __("WordPress documentation" , "hueman") )
-          );
-        }
+      //   //add a notice property if no menu created yet.
+      //   if ( ! $menus ) {
+      //     //adapt the nav section description for v4.3 (menu in the customizer from now on)
+      //     $_create_menu_link =  version_compare( $GLOBALS['wp_version'], '4.3', '<' ) ? admin_url('nav-menus.php') : "javascript:wp.customize.section('nav').container.find('.customize-section-back').trigger('click'); wp.customize.panel('nav_menus').focus();";
+      //     $_control_properties['notice'] = sprintf( __("You haven't created any menu yet. %s or check the %s to learn more about menus.", "hueman"),
+      //       sprintf( '<strong><a href="%1$s" title="%2$s">%2$s</a></strong>', $_create_menu_link, __("Create a new menu now" , "hueman") ),
+      //       sprintf( '<a href="%1$s" title="%2$s" target="_blank">%2$s</a>', esc_url('codex.wordpress.org/WordPress_Menu_User_Guide'),  __("WordPress documentation" , "hueman") )
+      //     );
+      //   }
 
-        $wp_customize -> add_control( new HU_controls( $wp_customize, $menu_setting_id, $_control_properties ) );
+      //   $wp_customize -> add_control( new HU_controls( $wp_customize, $menu_setting_id, $_control_properties ) );
 
-        $_priority = $_priority + 10;
-      }//foreach
+      //   $_priority = $_priority + 10;
+      // }//foreach
 
 
       //MOVE THE HEADER IMAGE CONTROL INTO THE HEADER DESIGN SECTION
@@ -330,6 +328,12 @@ if ( ! class_exists( 'HU_customize' ) ) :
         $wp_customize -> selective_refresh -> remove_partial( 'custom_logo' );
         $wp_customize -> get_setting( 'custom_logo' ) -> transport = 'refresh';
       }
+
+      //MOVE THE CUSTOM CSS SECTION (introduced in 4.7) INTO THE GLOBAL SETTINGS PANEL
+      if ( is_object($wp_customize->get_section( 'custom_css' ) ) ) {
+        $wp_customize -> get_section( 'custom_css' ) -> panel = 'hu-general-panel';
+        $wp_customize -> get_section( 'custom_css' ) -> priority = 75;
+      }
     }//end of hu_alter_wp_customizer_settings()
 
 
@@ -342,6 +346,36 @@ if ( ! class_exists( 'HU_customize' ) ) :
     }
 
 
+
+
+
+
+
+
+    /* ------------------------------------------------------------------------- *
+     *  WIDGETS SPECIFICS
+    /* ------------------------------------------------------------------------- */
+    //updates the names of the built-in widget zones for users who installed the theme before v3.1.2
+    function hu_update_widget_database_option() {
+      if ( ! hu_user_started_before_version('3.1.2') )
+        return;
+
+      $_options             = get_option('hu_theme_options');
+      $_update_widget_areas = array();
+
+      if ( ! isset($_options['sidebar-areas']) || ! is_array($_options['sidebar-areas']) )
+        return;
+
+      $_zones   = hu_get_default_widget_zones();
+      foreach ( $_options['sidebar-areas'] as $key => $data ) {
+        if ( ! array_key_exists($data['id'], $_zones) )
+          continue;
+        $_id = $data['id'];
+        $_options['sidebar-areas'][$key]['title'] = $_zones[$_id]['name'];
+      }
+
+      update_option('hu_theme_options', $_options );
+    }
 
     /**
      * Why this ?
@@ -376,7 +410,6 @@ if ( ! class_exists( 'HU_customize' ) ) :
           )
         )
       );
-
 
       //$this->hu_customize_register( $wp_customize );
       if ( is_admin() ) {
@@ -430,6 +463,17 @@ if ( ! class_exists( 'HU_customize' ) ) :
     }
 
 
+
+
+
+
+
+
+
+
+    /* ------------------------------------------------------------------------- *
+     *  FACTORY
+    /* ------------------------------------------------------------------------- */
     /**
     * Generates customizer sections, settings and controls
     * @package Hueman
@@ -679,6 +723,16 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
 
 
+
+
+
+
+
+
+
+    /* ------------------------------------------------------------------------- *
+     *  HELPERS
+    /* ------------------------------------------------------------------------- */
     function hu_get_controls_css_attr() {
       return apply_filters('controls_css_attr',
           array(
