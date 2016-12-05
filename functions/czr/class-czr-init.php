@@ -217,22 +217,30 @@ if ( ! class_exists( 'HU_customize' ) ) :
     */
     function hu_alter_wp_customizer_settings( $wp_customize ) {
       //CHANGE BLOGNAME AND BLOGDESCRIPTION TRANSPORT
-      $wp_customize -> get_setting( 'blogname' )->transport = 'postMessage';
-      $wp_customize -> get_setting( 'blogdescription' )->transport = 'postMessage';
+      if ( is_object( $wp_customize -> get_setting( 'blogname' ) ) ) {
+        $wp_customize -> get_setting( 'blogname' )->transport = 'postMessage';
+      }
+      if ( is_object( $wp_customize -> get_setting( 'blogdescription' ) ) ) {
+        $wp_customize -> get_setting( 'blogdescription' )->transport = 'postMessage';
+      }
 
       //MOVE WP FRONT PAGE SECTION TO CONTENT PANEL
-      $wp_customize -> get_section( 'static_front_page' ) -> panel = 'hu-content-panel';
-      $wp_customize -> get_section( 'static_front_page' ) -> title = __( 'Front Page Content', 'hueman' );
-      $wp_customize -> get_section( 'static_front_page' ) -> priority = 5;
-      $wp_customize -> get_section( 'static_front_page' ) -> active_callback = 'hu_is_home';
+      if ( is_object( $wp_customize -> get_section( 'static_front_page' ) ) ) {
+        $wp_customize -> get_section( 'static_front_page' ) -> panel = 'hu-content-panel';
+        $wp_customize -> get_section( 'static_front_page' ) -> title = __( 'Front Page Content', 'hueman' );
+        $wp_customize -> get_section( 'static_front_page' ) -> priority = 5;
+        $wp_customize -> get_section( 'static_front_page' ) -> active_callback = 'hu_is_home';
+      }
 
       //CHANGE THE STATIC FRONT PAGE WP CONTROLS
-      $wp_customize -> get_control( 'show_on_front' ) -> type = 'select';
-      $wp_customize -> get_control( 'show_on_front' ) -> choices = array(
-          '__nothing__'   => __( 'Don\'t show any posts or page' , 'hueman'),
-          'posts'   => __( 'Your latest posts' , 'hueman'),
-          'page'    => __( 'A static page' , 'hueman'  )
-      );
+      if ( is_object( $wp_customize -> get_control( 'show_on_front' ) ) ) {
+        $wp_customize -> get_control( 'show_on_front' ) -> type = 'select';
+        $wp_customize -> get_control( 'show_on_front' ) -> choices = array(
+            '__nothing__'   => __( 'Don\'t show any posts or page' , 'hueman'),
+            'posts'   => __( 'Your latest posts' , 'hueman'),
+            'page'    => __( 'A static page' , 'hueman'  )
+        );
+      }
 
 
       //IF WP VERSION >= 4.3 AND SITE_ICON SETTING EXISTS
@@ -314,12 +322,14 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
 
       //MOVE THE HEADER IMAGE CONTROL INTO THE HEADER DESIGN SECTION
-      $wp_customize -> get_control( 'header_image' ) -> section = 'header_design_sec';
-      $wp_customize -> get_control( 'header_image' ) -> priority = 100;
+      if ( is_object( $wp_customize -> get_control( 'header_image' ) ) ) {
+        $wp_customize -> get_control( 'header_image' ) -> section = 'header_design_sec';
+        $wp_customize -> get_control( 'header_image' ) -> priority = 100;
+      }
 
       //CHANGE THE CUSTOM LOGO PRIORITY
       //check if custom_logo is registered first for backward compatibility => custom_logo was introduced in WP 4.5.
-      if ( is_object( $wp_customize->get_setting( 'custom_logo' ) ) ) {
+      if ( is_object( $wp_customize->get_control( 'custom_logo' ) ) ) {
         $wp_customize -> get_control( 'custom_logo' ) -> priority = 7;
       }
 
