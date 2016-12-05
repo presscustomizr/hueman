@@ -83,7 +83,10 @@ See headers of files for further details.
 
 ## Changelog
 = 3.2.11 December 5th 2016 =
-* updated to Font Awesome 4.7.0. (#352)
+* updated : customizer made compatible with WP 4.7
+* updated to Font Awesome 4.7.0 (#352)
+* added : a home icon in the customizer
+* fix : always check the existence of controls and settings instances before altering them ( #340 )
 
 = 3.2.10 November 4th 2016 =
 * fixed : php7 compatibility issues (#335)
