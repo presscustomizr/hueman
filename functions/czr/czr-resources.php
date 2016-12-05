@@ -25,7 +25,7 @@ function hu_customize_preview_js() {
   //localizes
   wp_localize_script(
         'hu-customizer-preview',
-        'HUPreviewParams',
+        'CZRPreviewParams',
         apply_filters('hu_js_customizer_preview_params' ,
           array(
             'themeFolder'     => get_template_directory_uri(),

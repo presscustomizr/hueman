@@ -133,7 +133,7 @@
   /////////////// SEND UPDATED SERVER SIDE DATA TO THE PANEL
   /////////////// SET REACTIONS ON PANEL SETTING CHANGES
   //////////////////////////////////////////////////////////
-  if ( HUPreviewParams && ! HUPreviewParams.preview_ready_event_exists ) {
+  if ( CZRPreviewParams && ! CZRPreviewParams.preview_ready_event_exists ) {
         api.czr_preview = new api.CZR_preview();
   }
   else {
@@ -150,8 +150,8 @@
   api.CZR_preview = api.Class.extend( {
         setting_cbs : {},
         subsetting_cbs : {},//nested sub settings
-        _wp_sets : HUPreviewParams.wpBuiltinSettings || [],
-        _theme_options_name : HUPreviewParams.themeOptions,
+        _wp_sets : CZRPreviewParams.wpBuiltinSettings || [],
+        _theme_options_name : CZRPreviewParams.themeOptions,
         initialize: function() {
               var self = this;
               //store the default control dependencies
@@ -177,7 +177,10 @@
                         }
                   )
             );
-            api.preview.send( 'czr-partial-refresh', ! _.isUndefined(_customizePartialRefreshExports) ? _customizePartialRefreshExports.partials : {} );
+            api.preview.send(
+                  'czr-partial-refresh',
+                  typeof( undefined ) === typeof( _customizePartialRefreshExports ) ? {} : _customizePartialRefreshExports.partials
+            );
 
             //TEST
             //console.log('_wpCustomizeSettings', _wpCustomizeSettings, _wpCustomizeSettings.activeSections );
