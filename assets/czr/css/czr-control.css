@@ -539,11 +539,7 @@ li#customize-control-tc_theme_options-tc_custom_css textarea {
 }
 
 
-<<<<<<< HEAD
-/* HEADER MENU NOTICE */
-.control-panel-content .hu-menu-notice {
-    margin-left: 3%;
-=======
+
 /* HOME BUTTON */
 #customize-header-actions .customize-controls-close {
   left:45px;
@@ -588,7 +584,12 @@ li#customize-control-tc_theme_options-tc_custom_css textarea {
     outline: none;
     -webkit-box-shadow: none;
     box-shadow: none;
->>>>>>> customize-changesets-compat
+}
+
+/* HEADER MENU NOTICE */
+.control-panel-content .hu-menu-notice {
+    margin-left: 3%;
+
 }/*******************************************************************
 * DYNAMIC CONTROLS : sidebars, socials, ...
 ********************************************************************/
