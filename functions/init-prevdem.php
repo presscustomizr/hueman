@@ -15,14 +15,13 @@ add_filter('hu_is_active_footer_widget_zone', '__return_true' );
 /* ------------------------------------------------------------------------- */
 add_filter('hu_placeholder_thumb_src', 'hu_filter_prevdem_placeholder_thumb_src', 10, 2 );
 function hu_filter_prevdem_placeholder_thumb_src( $_src, $_size ) {
-  if ( ! apply_filters( 'hu-use-svg-thumb-placeholder', true ) )
-    return $_src;
   return hu_get_prevdem_img_src( $_size );
 }
 add_filter('hu_placeholder_thumb_filter', 'hu_filter_prevdem_placeholder_thumb_filter' );
 function hu_filter_prevdem_placeholder_thumb_filter() {
   return '<span class="filter-placeholder"></span>';
 }
+add_filter( 'hu-use-svg-thumb-placeholder', '__return_false' );
 
 /* Placeholder thumb helper
 *  @return a random img src string
@@ -254,4 +253,13 @@ function hu_prevdem_socials() {
     $socials[] = wp_parse_args( $data, $def_social );
   }
   return $socials;
+}
+
+/* ------------------------------------------------------------------------- *
+ *  Front Page
+/* ------------------------------------------------------------------------- */
+add_filter('option_show_on_front', 'hu_prevdem_fp_content', 9999 );
+add_filter('pre_option_show_on_front', 'hu_prevdem_fp_content', 9999 );
+function hu_prevdem_fp_content() {
+    return 'posts';
 }

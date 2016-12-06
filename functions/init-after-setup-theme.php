@@ -79,6 +79,8 @@ if ( ! function_exists( 'hu_setup' ) ) {
     add_theme_support( 'post-formats', array( 'audio', 'aside', 'chat', 'gallery', 'image', 'link', 'quote', 'status', 'video' ) );
     // Declare WooCommerce support
     add_theme_support( 'woocommerce' );
+    // Add theme support for selective refresh for widgets.
+    add_theme_support( 'customize-selective-refresh-widgets' );
 
     // Thumbnail sizes
     add_image_size( 'thumb-small', 160, 160, true );

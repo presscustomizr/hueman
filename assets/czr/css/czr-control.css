@@ -47,6 +47,17 @@
   right: 440px;
 }
 
+/* CUSTOM CSS ( since wp 4.7 ) */
+.customize-section-description-container + #customize-control-custom_css:last-child {
+  margin: 0;
+  width: 100%;
+}
+li#customize-control-custom_css textarea {
+  font-size: 13px;
+  background: #394143;
+  color: #95ff0c;
+  min-height: 300px;
+}
 
 @media screen and (max-width: 1400px) {
   .wp-customizer .wp-full-overlay.expanded {
