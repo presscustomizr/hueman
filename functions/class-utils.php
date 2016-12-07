@@ -32,7 +32,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
       }
 
       //IMPORTANT : this callback needs to be ran AFTER hu_init_properties.
-      add_action( 'after_setup_theme', array( $this, 'ha_cache_theme_setting_list' ), 100 );
+      add_action( 'after_setup_theme', array( $this, 'hu_cache_theme_setting_list' ), 100 );
 
       //Various WP filters for
       //content
@@ -83,7 +83,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
     /* ------------------------------------------------------------------------- */
     //Fired in __construct()
     //Note : the 'sidebar-areas' setting is not listed in that list because registered specifically
-    function ha_cache_theme_setting_list() {
+    function hu_cache_theme_setting_list() {
         if ( is_array(self::$_theme_setting_list) && ! empty( self::$_theme_setting_list ) )
           return;
         $_settings_map = HU_utils_settings_map::$instance -> hu_get_customizer_map( null, 'add_setting_control' );
