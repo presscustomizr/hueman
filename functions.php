@@ -10,3 +10,8 @@ load_template( get_template_directory() . '/functions/init-core.php' );
 * https://codex.wordpress.org/Child_Themes
 *
 */
+
+// delete_post_meta( ha_get_skope_post_id(), 'hueman_czr_all_page' );
+// foreach ( get_post_meta( ha_get_skope_post_id() )  as $key => $value) {
+//   delete_post_meta( ha_get_skope_post_id(), $key );
+// }

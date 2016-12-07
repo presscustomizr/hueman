@@ -834,13 +834,12 @@ li#customize-control-tc_theme_options-tc_custom_css textarea {
   display: none;
   clear: both;
   float: left;
-  color: #F00;
   padding: 2%;
   width: 95%;
   margin: 10px 0;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
   background-color: #EEE;
-  border: 1px solid #F00;
+  color: #000;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
@@ -2148,8 +2147,8 @@ h2.czr-current-skope-title {
 .czr-scope .czr-scope-reset {
   /*opacity: 0;*/
   display: none;
-  font-size: 15px;
-  text-shadow: 1px 1px 0px #a0a0a0;
+  font-size: 13px;
+  text-shadow: 1px 1px 0px #dedede;
 
 }
 .has-db-val .czr-scope-reset {
@@ -2171,9 +2170,9 @@ h2.czr-current-skope-title {
 /**************************************
 ******* RESET */
 /* RESET COMMONS */
-/*.czr-resetting {
+.czr-spinner-wrapper {
   visibility: hidden;
-}*/
+}
 .czr-reset-success, .czr-reset-fail {
   display: none;
 }
@@ -2241,6 +2240,13 @@ h2.czr-current-skope-title {
   color: #000;
 }
 
+.czr-resetting-control .czr-remove-alert-wrapper {
+  -webkit-transition: all, 0.3s ease-in-out;
+  -moz-transition: all, 0.3s ease-in-out;
+  -ms-transition: all, 0.3s ease-in-out;
+  -o-transition: all, 0.3s ease-in-out;
+  transition: all, 0.3s ease-in-out;
+}
 
 /* RESET */
 /* WP TEXT EDITOR */
@@ -2264,6 +2270,7 @@ h2.czr-current-skope-title {
 .czr-reset-content {
     display: inline-block;
     line-height: 20px;
+    width: 90%;
 }
 
 #czr-reset-skope-pane h2 {
@@ -2279,7 +2286,7 @@ body.czr-reset-skope-pane-open #customize-preview, body.czr-reset-skope-pane-ope
   opacity: 0.5;
 }
 
-body.czr-resetting-skope #czr-reset-skope-pane .czr-resetting {
+body.czr-resetting-skope #czr-reset-skope-pane .czr-spinner-wrapper {
   visibility: visible;
 }
 
@@ -2325,7 +2332,6 @@ body.czr-resetting-skope #czr-reset-skope-pane .czr-resetting {
     top: 0;
     text-align: center;
     background: rgba(0, 156, 0, 0.18);
-    border: 1px solid green;
     color: #000;
     display: none;
     position: relative;
@@ -2334,7 +2340,6 @@ body.czr-resetting-skope #czr-reset-skope-pane .czr-resetting {
 }
 .czr-server-notice.czr-server-error {
     color: #000;
-    border-color: red;
     background: rgba(255, 0, 0, 0.24);
 }
 
