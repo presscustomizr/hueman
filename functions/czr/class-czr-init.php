@@ -32,7 +32,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
       //add the customizer built with the builder below
       add_action( 'customize_register'                       , array( $this , 'hu_schedule_register_sidebar_section' ), 1000, 1 );
       //modify some WP built-in settings / controls / sections
-      add_action( 'customize_register'                       , array( $this , 'hu_alter_wp_customizer_settings' ), 30, 1 );
+      add_action( 'customize_register'                       , array( $this , 'hu_alter_wp_customizer_settings' ), 1000, 1 );
 
       //Partial refreshs
       add_action( 'customize_register'                       , array( $this,  'hu_register_partials' ) );
@@ -164,11 +164,17 @@ if ( ! class_exists( 'HU_customize' ) ) :
         if ( ! isset( $wp_customize->selective_refresh ) || ! hu_is_partial_refreshed_on() ) {
             return;
         }
-
         $wp_customize->selective_refresh->add_partial( 'social_links', array(
             'selector' => '.social-links',
             'settings' => array( 'hu_theme_options[social-links]' ),
             'render_callback' => 'hu_print_social_links',
+            //'type' => 'my_partial'
+        ) );
+
+        $wp_customize->selective_refresh->add_partial( 'header_image', array(
+            'selector' => '#header-image-wrap',
+            'settings' => array( 'header_image' ),
+            'render_callback' => 'hu_render_header_image',
             //'type' => 'my_partial'
         ) );
     }
@@ -216,12 +222,20 @@ if ( ! class_exists( 'HU_customize' ) ) :
     * @return void()
     */
     function hu_alter_wp_customizer_settings( $wp_customize ) {
-      //CHANGE BLOGNAME AND BLOGDESCRIPTION TRANSPORT
+      //SOME SETTINGS TRANSPORT
       if ( is_object( $wp_customize -> get_setting( 'blogname' ) ) ) {
         $wp_customize -> get_setting( 'blogname' )->transport = 'postMessage';
       }
       if ( is_object( $wp_customize -> get_setting( 'blogdescription' ) ) ) {
         $wp_customize -> get_setting( 'blogdescription' )->transport = 'postMessage';
+      }
+
+      //ONLY IF SELECTIVE REFRESH IS SUPPORTED
+      if ( isset( $wp_customize->selective_refresh ) && is_object( $wp_customize -> get_setting( 'header_image' ) ) ) {
+        $wp_customize -> get_setting( 'header_image' )->transport = 'postMessage';
+      }
+      if ( isset( $wp_customize->selective_refresh ) && is_object( $wp_customize -> get_setting( 'header_image_data' ) ) ) {
+        $wp_customize -> get_setting( 'header_image_data' )->transport = 'postMessage';
       }
 
       //MOVE WP FRONT PAGE SECTION TO CONTENT PANEL

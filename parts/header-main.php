@@ -22,11 +22,10 @@
           <?php endif; ?>
 
         </div>
-
       <?php else :  ?>
-          <a href="<?php echo home_url('/'); ?>" rel="home">
-            <img class="site-image" src="<?php echo $_header_img_src; ?>" alt="<?php echo get_bloginfo('name'); ?>">
-          </a>
+          <div id="header-image-wrap">
+              <?php hu_render_header_image( $_header_img_src ); ?>
+          </div>
       <?php endif; ?>
 
       <?php if ( hu_has_nav_menu('header') ): ?>
