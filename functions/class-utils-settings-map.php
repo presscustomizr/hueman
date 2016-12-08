@@ -507,11 +507,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     ------------------------------------------------------------------------------------------------------*/
     function hu_header_design_sec() {
       global $wp_version;
-      //the header_image was previously handled with a specific Hueman option.
-      //=> for users who had set this option, the use-header-image checkbox should be checked
-      $_old_header_img_id = hu_get_option('header-image');
-      $did_user_set_a_header_image = false != $_old_header_img_id && ! empty($_old_header_img_id);
-
       return array(
           'site-description' => array(
                 'default'   => 1,
@@ -522,7 +517,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'notice'    => __( 'The description that appears next to your logo' , 'hueman' )
           ),
           'use-header-image' => array(
-                'default'   => $did_user_set_a_header_image,
+                'default'   => 0,
                 'control'   => 'HU_controls',
                 'label'     => __( 'Use a header banner image' , 'hueman' ),
                 'section'   => 'header_design_sec',
