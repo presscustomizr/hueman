@@ -1982,13 +1982,20 @@ body.czr-editing-sektion #customize-preview {
 h2.czr-current-skope-title {
   font-size: 13px;
   line-height: 21px;
-  margin: 5px 0;
+  margin: 6px 0 4px;
   text-align: center;
   height: 63px;
   font-weight:normal;
   overflow: hidden;
 }
-
+.czr-main-title {
+  max-height: 24px;
+  overflow: hidden;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 90%;
+}
 .czr-skope-title {
   display: block;
   font-size: 17px;
@@ -1996,10 +2003,13 @@ h2.czr-current-skope-title {
   line-height: 25px;
 }
 .czr-skope-inherits-from {
+    width: 90%;
     font-size: 12px;
     line-height: 18px;
-    display: block;
+    display: inline-block;
     color: #5f5f5f;
+    top: -6px;
+    position: relative;
 }
 .czr-scope-switcher .button {
   float: left;
@@ -2043,6 +2053,10 @@ h2.czr-current-skope-title {
     box-shadow: 4px 0px 15px 0px rgba(119, 119, 119, 0.58);
     top: 0;
     z-index: 3;
+}
+
+.czr-skopes-wrapper .active-collection.local:after {
+  right:0;
 }
 .czr-scope-switcher .czr-scope:last-child:after {
     -webkit-box-shadow :none;
@@ -2109,6 +2123,7 @@ h2.czr-current-skope-title {
     font-size: 14px;
     line-height: 18px;
     font-weight: normal;
+    text-shadow: 1px 1px 0px #dedede;
 }
 .czr-scope .fa {
     font-size: 10px;
@@ -2157,8 +2172,17 @@ h2.czr-current-skope-title {
 .dirty .czr-scope-reset {
   color: #FFBD2E!important;
 }
+
 .is_winner .czr-scope-winner {
   color: #52ff3f;
+  font-size: 14px;
+  position: absolute;
+  bottom: 2px;
+  left: 2px;
+}
+
+.czr-scope-force {
+  display: none;
 }
 
 /* Underline skope switch text in control notices and in the main skope switcher title */
@@ -2192,14 +2216,18 @@ h2.czr-current-skope-title {
 
 
 /* SINGLE CONTROL RESET */
-.customize-control.czr-skoped span.customize-control-title {
+.customize-control span.customize-control-title:first-child {
   padding-left: 16px;
-  -webkit-transition: left, right, 0.3s ease-in-out;
-  -moz-transition: left, right, 0.3s ease-in-out;
-  -ms-transition: left, right, 0.3s ease-in-out;
-  -o-transition: left, right, 0.3s ease-in-out;
-  transition: left, right, 0.3s ease-in-out;
+  -webkit-transition: left, right, 0.15s ease-in-out;
+  -moz-transition: left, right, 0.15s ease-in-out;
+  -ms-transition: left, right, 0.15s ease-in-out;
+  -o-transition: left, right, 0.15s ease-in-out;
+  transition: left, right, 0.15s ease-in-out;
   position: relative;
+}
+
+.customize-control.czr-not-skoped .customize-control-title {
+  padding-left: 0px;
 }
 .czr-setting-reset {
   color: #eee;
@@ -2260,17 +2288,24 @@ h2.czr-current-skope-title {
   right: 0;
   left: 0;
   z-index: 20;
-  background: rgba(0, 0, 0, 0.63);
   color: #fff;
   display: block;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
   visibility: hidden;
 }
+#czr-reset-skope-pane.dirty-reset {
+  background: rgba(252, 173, 6, 0.23);
+}
+#czr-reset-skope-pane.db-reset {
+  background: rgba(0, 160, 210, 0.3);
+}
 .czr-reset-content {
     display: inline-block;
     line-height: 20px;
-    width: 90%;
+    width: 80%;
+    padding: 5%;
+    background: rgba(0, 0, 0, 0.63);
 }
 
 #czr-reset-skope-pane h2 {
