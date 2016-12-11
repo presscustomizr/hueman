@@ -28,15 +28,15 @@ msgstr ""
 
 #: functions/init-front.php:154
 msgid "RECENT COMMENTS"
-msgstr ""
+msgstr "NEUESTE KOMMENTARE"
 
 #: functions/init-front.php:141
 msgid "RECENT POSTS"
-msgstr ""
+msgstr "NEUESTE BEITRÄGE"
 
 #: functions/init-front.php:126
 msgid "Discover"
-msgstr ""
+msgstr "Entdecken"
 
 #: functions/czr/czr-resources.php:241
 msgid "blog design panel"
@@ -56,15 +56,15 @@ msgstr ""
 
 #: functions/czr/class-czr-init.php:236
 msgid "A static page"
-msgstr ""
+msgstr "Eine statische Seite"
 
 #: functions/czr/class-czr-init.php:235
 msgid "Your latest posts"
-msgstr ""
+msgstr "Deine neuesten Beiträge"
 
 #: functions/czr/class-czr-init.php:234
 msgid "Don't show any posts or page"
-msgstr ""
+msgstr "Zeige keine Seiten oder Beiträge"
 
 #: functions/czr/class-czr-init.php:227
 msgid "Front Page Content"
@@ -72,11 +72,11 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:1253
 msgid "Footer Menu"
-msgstr ""
+msgstr "Footer-Menü"
 
 #: functions/class-utils-settings-map.php:1208
 msgid "Header Menu"
-msgstr ""
+msgstr "Header-Menü"
 
 #: functions/class-utils-settings-map.php:1198
 msgid "Header Design : banner image, ..."
@@ -89,7 +89,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:726
 msgid "custom excerpt"
-msgstr ""
+msgstr "Benutzerdefinierter Auszug"
 
 #: functions/class-utils-settings-map.php:725
 msgid "The WordPress Excerpt is the summary or description of a post. By default, it will be the first words of a post, but you can write a %s if you want. You can set the number of words you want to display with this option."
@@ -106,15 +106,15 @@ msgstr ""
 #: functions/class-utils-settings-map.php:561
 #: functions/class-utils-settings-map.php:987
 msgid "Use a default page menu if no menu has been assigned."
-msgstr ""
+msgstr "Nutze ein Standardseitenmenü, wenn kein Menü zugewiesen ist."
 
 #: functions/class-utils-settings-map.php:527
 msgid "Use a header banner image"
-msgstr ""
+msgstr "Nutze ein Header-Banner-Bild"
 
 #: functions/class-utils-settings-map.php:172
 msgid "Display a logo in your header"
-msgstr ""
+msgstr "Zeige ein Logo im Header an"
 
 #: functions/admin/class-tgm-plugin-activation.php:2941
 msgid "Update"
@@ -178,7 +178,7 @@ msgstr ""
 
 #: functions/admin/class-tgm-plugin-activation.php:1330
 msgid "useful shortcodes"
-msgstr ""
+msgstr "Hilfreiche Tastenkürzel"
 
 #: functions/admin/class-tgm-plugin-activation.php:1329
 msgid "social share bar"
@@ -190,7 +190,7 @@ msgstr ""
 
 #: functions/admin/class-tgm-plugin-activation.php:578
 msgid "Remind me later"
-msgstr " Später erinnern"
+msgstr "Später erinnern"
 
 #: functions/init-core.php:1508
 msgid "Activate Hueman Addons"
@@ -212,7 +212,7 @@ msgstr[1] "Dieses Theme erfordert die folgenden Plugins: %1$s"
 
 #: functions/plugins-compatibility.php:203
 msgid "Featured Pages"
-msgstr ""
+msgstr "Hervorgehobene Seiten"
 
 #: functions/plugins-compatibility.php:218
 msgid "Footer Social Links"
@@ -277,7 +277,7 @@ msgstr ""
 #: functions/czr/tmpl/modules/slide-module-tmpl.php:25
 #: functions/czr/tmpl/modules/slide-module-tmpl.php:62
 msgid "Enter a subtitle"
-msgstr ""
+msgstr "Gib einen Untertitel ein"
 
 #: functions/czr/tmpl/modules/slide-module-tmpl.php:23
 #: functions/czr/tmpl/modules/slide-module-tmpl.php:60
@@ -300,15 +300,15 @@ msgstr ""
 
 #: functions/czr/czr-resources.php:438
 msgid "Close Editor"
-msgstr ""
+msgstr "Editor schließen"
 
 #: functions/class-utils.php:161
 msgid "Page %s"
-msgstr ""
+msgstr "Seite %s"
 
 #: functions/class-utils-settings-map.php:1172
 msgid "Smooth Scroll"
-msgstr ""
+msgstr "Weiches Scrollen"
 
 #: functions/class-utils-settings-map.php:467
 msgid "Check this option to delay the loading of non visible images. Images below the viewport will be loaded dynamically on scroll. This can really boost speed performances by reducing the weight of long pages that include many images."
@@ -320,19 +320,19 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:464
 msgid "Load images on scroll"
-msgstr ""
+msgstr "Bilder beim Scrollen laden"
 
 #: functions/class-utils-settings-map.php:416
 msgid "This option enables a smoother page scroll."
-msgstr ""
+msgstr "Diese Option aktiviert ein weicheres Scrollen."
 
 #: functions/class-utils-settings-map.php:413
 msgid "Enable Smooth Scrolling"
-msgstr ""
+msgstr "Aktiviere weiches Scrollen"
 
 #: functions/class-utils-settings-map.php:345
 msgid "Open external links in a new tab"
-msgstr ""
+msgstr "Öffne externe Links in einem neuen Tab"
 
 #: functions/class-utils-settings-map.php:338
 #: functions/class-utils-settings-map.php:348
@@ -341,7 +341,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:335
 msgid "Display an icon next to external links"
-msgstr ""
+msgstr "Zeige neben externen Links ein Icon an"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:102
 msgid "here"
@@ -349,7 +349,7 @@ msgstr "hier"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:101
 msgid "Learn more"
-msgstr ""
+msgstr "Mehr erfahren"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:99
 msgid "The background-size CSS property specifies the size of the background images. The size of the image can be fully constrained or only partially in order to preserve its intrinsic ratio."
@@ -357,7 +357,7 @@ msgstr ""
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:60
 msgid "Hex Value"
-msgstr ""
+msgstr "Hex-Wert"
 
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:34
 msgid "Right Bottom"
@@ -475,13 +475,13 @@ msgstr ""
 
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:17
 msgid "Give it a name"
-msgstr ""
+msgstr "Gib einen Namen ein"
 
 #: functions/czr/tmpl/modules/slide-module-tmpl.php:19
 #: functions/czr/tmpl/modules/slide-module-tmpl.php:56
 #: functions/czr/tmpl/modules/social-module-tmpl.php:64
 msgid "Enter a title"
-msgstr ""
+msgstr "Gib einen Titel ein"
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:59
 msgid "Enter the full url of your social profile (must be a valid url)."
@@ -505,11 +505,11 @@ msgstr ""
 
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:16
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #: functions/czr/czr-resources.php:434
 msgid "Learn more about this in the documentation"
-msgstr ""
+msgstr "Erfahre mehr darüber in der Dokumentation"
 
 #: functions/czr/czr-resources.php:433
 msgid "A selected location is not available with the current settings."
@@ -533,7 +533,7 @@ msgstr ""
 
 #: functions/czr/czr-resources.php:424
 msgid "Done !"
-msgstr ""
+msgstr "Erledigt!"
 
 #: functions/czr/czr-resources.php:423
 msgid "Follow us on"
@@ -746,7 +746,7 @@ msgstr "Hilfe"
 
 #: functions/init-core.php:1069
 msgid "404 Error Pages"
-msgstr ""
+msgstr "404-Fehlerseite"
 
 #: functions/init-core.php:1068
 msgid "Search Results"
@@ -867,7 +867,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:1239
 msgid "Thumbnails Settings"
-msgstr ""
+msgstr "Vorschaubildeinstellungen"
 
 #: functions/class-utils-settings-map.php:1234
 msgid "Single Posts Settings"
@@ -938,7 +938,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:1044
 msgid "Footer"
-msgstr "Fußbereich"
+msgstr ""
 
 #: functions/class-utils-settings-map.php:1039
 msgid "Sidebars settings for the Hueman theme."
@@ -946,7 +946,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:1038
 msgid "Sidebars"
-msgstr "Sidebars"
+msgstr ""
 
 #: functions/class-utils-settings-map.php:1033
 msgid "Content settings for the Hueman theme."
@@ -958,7 +958,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:1026
 msgid "Header"
-msgstr "Kopfbereich"
+msgstr ""
 
 #: functions/class-utils-settings-map.php:1021
 msgid "General settings for the Hueman theme : design, comments, mobile, ..."
@@ -1051,15 +1051,15 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:831
 msgid "Display randomized related articles below the post"
-msgstr ""
+msgstr "Zeige unter dem Beitrag zufällige, verwandte Themen an"
 
 #: functions/class-utils-settings-map.php:829
 msgid "Related by tags"
-msgstr ""
+msgstr "Verwandt nach Tags"
 
 #: functions/class-utils-settings-map.php:828
 msgid "Related by categories"
-msgstr ""
+msgstr "Verwandt nach Kategorien"
 
 #: functions/class-utils-settings-map.php:827
 #: functions/class-utils-settings-map.php:840
@@ -1166,7 +1166,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:652
 msgid "Error 404"
-msgstr "﻿Fehler 404"
+msgstr "Fehler 404"
 
 #: functions/class-utils-settings-map.php:647
 msgid "[ <strong>is_search</strong> ] Search page layout"
@@ -1276,11 +1276,11 @@ msgstr "Kommentare zu Beiträgen"
 
 #: functions/class-utils-settings-map.php:389
 msgid "Posts Comments"
-msgstr ""
+msgstr "Beitragkommentare"
 
 #: functions/class-utils-settings-map.php:270
 msgid "Set the website background color"
-msgstr ""
+msgstr "Wähle einen Webseitenhintergrund"
 
 #: functions/class-utils-settings-map.php:269
 msgid "Body Background"
@@ -1292,19 +1292,19 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:324
 msgid "Image Border Radius"
-msgstr ""
+msgstr "Bildkantenradius"
 
 #: functions/class-utils-settings-map.php:303
 msgid "Header Menu Background"
-msgstr ""
+msgstr "Header-Menühintergrund"
 
 #: functions/class-utils-settings-map.php:293
 msgid "Header Background"
-msgstr "Header Hintergrund"
+msgstr "Header-Hintergrund"
 
 #: functions/class-utils-settings-map.php:283
 msgid "Topbar Background"
-msgstr "Topbar Hintergrund"
+msgstr "Topbar-Hintergrund"
 
 #: functions/class-utils-settings-map.php:258
 msgid "Secondary Color"
@@ -1320,11 +1320,11 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:241
 msgid "20px padding for widgets"
-msgstr ""
+msgstr "20px Padding für Widgets"
 
 #: functions/class-utils-settings-map.php:240
 msgid "30px padding for widgets"
-msgstr ""
+msgstr 30px Padding für Widgets""
 
 #: functions/class-utils-settings-map.php:236
 msgid "Sidebar Width"
@@ -1336,7 +1336,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:225
 msgid "Website Max-width"
-msgstr ""
+msgstr "Maximale Webseitenbreite"
 
 #: functions/class-utils-settings-map.php:219
 msgid "Select a font for your website"
@@ -1348,7 +1348,7 @@ msgstr "Schriftart"
 
 #: functions/class-utils-settings-map.php:210
 msgid "Use a boxed layout"
-msgstr ""
+msgstr "Benutze ein Boxed Layout"
 
 #: functions/class-utils-settings-map.php:207
 msgid "Boxed Layout"
@@ -1368,7 +1368,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:162
 msgid "Favicon Upload (supported formats : .ico, .png, .gif)"
-msgstr ""
+msgstr "Favicon-Upload (unterstütze Formate: .ico, .png, .gif)"
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:85
 msgid "Check this option to open the link in a another tab of the browser."
@@ -1384,7 +1384,7 @@ msgstr ""
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:70
 msgid "Icon color"
-msgstr ""
+msgstr "Iconfarbe"
 
 #: functions/czr/tmpl/modules/social-module-tmpl.php:66
 msgid "This is the text displayed on mouse over."
@@ -1446,7 +1446,7 @@ msgstr ""
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:58
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:101
 msgid "unique id"
-msgstr ""
+msgstr "einzigartige ID"
 
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:56
 #: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:99
@@ -1498,11 +1498,11 @@ msgstr "Schließen"
 
 #: functions/admin/class-admin-update-notification.php:106
 msgid "I already know what's new thanks !"
-msgstr ""
+msgstr "Ich kenne die Neuerungen, danke!"
 
 #: functions/admin/class-admin-update-notification.php:100
 msgid "Visit the demo"
-msgstr ""
+msgstr "Schau die Demo an"
 
 #: functions/admin/class-admin-update-notification.php:98
 msgid "Read the latest release notes"
@@ -1514,7 +1514,7 @@ msgstr "Wir möchten dir gerne die neuen Features vorstellen, an denen wir gearb
 
 #: functions/admin/class-admin-update-notification.php:85
 msgid "Good, you've just upgraded to"
-msgstr ""
+msgstr "Klasse, du hast aktualisiert auf"
 
 #: functions/admin/class-admin-page.php:263
 msgid "To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C (Mac)."
@@ -1853,7 +1853,7 @@ msgstr "Seiten:"
 
 #: parts/post-list-author-date.php:11 parts/single-author-date.php:7
 msgid "by"
-msgstr "nach"
+msgstr "von"
 
 #: sidebar.php:12
 msgid "Follow:"
@@ -2243,7 +2243,7 @@ msgstr "Installieren Sie die erforderlichen Plugins"
 
 #: footer.php:109
 msgid "Theme by"
-msgstr "Thema von"
+msgstr "Theme von"
 
 #: footer.php:109
 msgid "Powered by"
