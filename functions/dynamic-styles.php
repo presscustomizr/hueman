@@ -244,12 +244,15 @@ a,
           //background_image retrieve src
           $body_bg[ 'background-image' ]   = hu_get_img_src( $body_bg[ 'background-image' ] );
 
+          $body_bg_style                   = '';
+
           //set-up style
-          if ( $body_bg[ 'background-image' ] && $body_bg[ 'background-size' ] == "" ) {
-            $styles .= 'body { background: '.$body_bg['background-color'].' url('.$body_bg['background-image'].') '.$body_bg['background-attachment'].' '.$body_bg['background-position'].' '.$body_bg['background-repeat'].'; }'."\n";
-          }
-          elseif ( $body_bg[ 'background-image' ] && $body_bg[ 'background-size' ] != "" ) {
-            $styles .= 'body { background: '.$body_bg['background-color'].' url('.$body_bg['background-image'].') '.$body_bg['background-attachment'].' '.$body_bg['background-position'].' '.$body_bg['background-repeat'].'; background-size: '.$body_bg['background-size'].'; }'."\n";
+          if ( $body_bg[ 'background-image' ]  ) {
+            $body_bg_style  = 'background: '.$body_bg['background-color'].' url('.$body_bg['background-image'].') '.$body_bg['background-repeat'].' '.$body_bg['background-position']. ';';
+            $body_bg_style .= 'background-attachment:'.$body_bg[ 'background-attachment' ].';';
+            if ( $body_bg[ 'background-size' ] )
+              $body_bg_style .=  'background-size: '.$body_bg['background-size'].';';
+            $styles .= 'body {'. $body_bg_style . "}\n";
           }
           elseif ( $body_bg['background-color'] ) {
             $styles .= 'body { background-color: '.$body_bg['background-color'].'; }'."\n";
