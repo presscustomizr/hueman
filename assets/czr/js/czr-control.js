@@ -196,7 +196,7 @@ $.extend( CZRSkopeBaseMths, {
                 api.czr_activeSectionId.callbacks.add( function() { return self.activeSectionReact.apply(self, arguments ); } );
                 api.czr_activePanelId.callbacks.add( function() { return self.activePanelReact.apply(self, arguments ); } );
           });
-          api.bind( 'skope-switched', function( skope_id ) {
+          api.bind( 'skope-switched', function( skope_id, previous_id ) {
                 api.czr_skopeReady.then( function() {
                       api.czr_CrtlDependenciesReady.then( function() {
                             if ( ! _.isUndefined( api.czr_activeSectionId() ) && ! _.isEmpty( api.czr_activeSectionId() ) ) {
@@ -204,6 +204,12 @@ $.extend( CZRSkopeBaseMths, {
                             }
                       });
                       self.updateCtrlSkpNot( api.CZR_Helpers.getSectionControlIds() );
+                      if ( api.czr_skope.has( previous_id ) ) {
+                            $('#customize-controls').removeClass( [ 'czr-', api.czr_skope( previous_id )().skope, '-skope-level'].join('') );
+                      }
+                      if ( api.czr_skope.has( skope_id ) ) {
+                            $('#customize-controls').addClass( [ 'czr-', api.czr_skope( skope_id )().skope, '-skope-level'].join('') );
+                      }
                 });
           });
           api.czr_serverNotification   = new api.Value({status : 'success', message : '', expanded : true} );
@@ -1401,6 +1407,7 @@ $.extend( CZRSkopeBaseMths, {
           self._writeCurrentSkopeTitle( to );
           api.trigger( 'czr-paint', { is_skope_switch : true } );
           if ( _.isUndefined( api.czr_activeSectionId() ) ) {
+                api.state('switching-skope')( false );
                 api.previewer.refresh();
                 return dfd.resolve().promise();
           }
@@ -1433,7 +1440,7 @@ $.extend( CZRSkopeBaseMths, {
                       .done( function( _updatedSetIds ) {
                             api.previewer.refresh()
                                   .always( function() {
-                                        api.trigger( 'skope-switched', to );
+                                        api.trigger( 'skope-switched', to, from );
                                         dfd.resolve();
                                         api.state('switching-skope')( false );
                                   });
@@ -1825,11 +1832,14 @@ $.extend( CZRSkopeBaseMths, {
 
           controls = _.isString( controls ) ? [controls] : controls;
           eligibleCtrls = _.filter( controls, function( ctrlId ) {
-              var setId = api.CZR_Helpers.getControlSettingId( ctrlId );
-              if ( setId && ! self.isSettingSkopeEligible( setId ) ) {
-                    api.control( ctrlId ).container.addClass('czr-not-skoped');
-              }
-              return setId && self.isSettingSkopeEligible( setId );
+                var setId = api.CZR_Helpers.getControlSettingId( ctrlId );
+                if ( setId && ! self.isSettingSkopeEligible( setId ) ) {
+                      api.control( ctrlId ).container.addClass('czr-not-skoped');
+                }
+                if ( setId && self.isWPAuthorizedSetting( setId ) ) {
+                      api.control( ctrlId ).container.addClass('is-wp-authorized-setting');
+                }
+                return setId && self.isSettingSkopeEligible( setId );
           });
           if ( ! _.isEmpty( controls ) ) {
                 api.czr_skopeReady.then( function() {
@@ -1929,9 +1939,7 @@ $.extend( CZRSkopeBaseMths, {
           var self = this,
               setId = api.CZR_Helpers.getControlSettingId( ctrl.id );
           ctrl.czr_states('hasDBVal').bind( function( bool ) {
-                if ( 'global' == api.czr_skope( api.czr_activeSkopeId() )().skope && self.isWPAuthorizedSetting( setId ) ) {
-                      ctrl.container.toggleClass( 'has-db-val', false );
-                }
+                ctrl.container.toggleClass( 'has-db-val', bool );
                 if ( bool ) {
                       _title = 'Reset your customized ( and published ) value';//@to_translate
                 } else if ( ctrl.czr_states('isDirty')() ) {

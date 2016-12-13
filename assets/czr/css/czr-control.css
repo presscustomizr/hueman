@@ -2239,7 +2239,9 @@ h2.czr-current-skope-title {
   display: none;
   text-shadow: 1px 1px 0px #a0a0a0;
 }
-
+.czr-global-skope-level .is-wp-authorized-setting.has-db-val .czr-setting-reset {
+  color: #eee;
+}
 .has-db-val .czr-setting-reset {
   color: #00a0d2;
 }
