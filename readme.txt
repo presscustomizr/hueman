@@ -1,4 +1,4 @@
-# Hueman v3.2.12
+# Hueman v3.2.13-beta
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > Hueman is a mobile friendly WordPress theme for blogs, magazines and business websites. It's been designed to beautifully display pictures and text content, and engineered to be easy to use and fast. The Hueman theme helps you attract and retain more visitors, that's why it's already used by 70K+ active websites in the world and has received hundreds of five stars ratings.
@@ -73,6 +73,13 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 # Changelog
+= 3.2.13 December 13th 2016 =
+* added : support for customize selective refresh for header image
+* added : support for customize selective refresh for site title
+* improved : customizer UI
+* improved : compatibility with the scope feature of Hueman Addons
+* fixed : set option use-header-image default to false
+
 = 3.2.12 December 6th 2016 =
 * added : support for customize selective refresh for widgets
 * improved : UI for custom css in the customizer
