@@ -19,3 +19,7 @@ load_template( get_template_directory() . '/functions/init-core.php' );
 // foreach ( get_post_meta( ha_get_skope_post_id() )  as $key => $value) {
 //   delete_post_meta( ha_get_skope_post_id(), $key );
 // }
+
+// $options = get_option( 'hu_theme_options');
+// $options['_primary-example-wgte'] = 's100';
+// update_option( 'hu_theme_options', $options );
