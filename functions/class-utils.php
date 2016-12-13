@@ -207,18 +207,17 @@ if ( ! class_exists( 'HU_utils' ) ) :
         return apply_filters( 'hu_default_options', $def_options );
 
       //Always update/generate the default option when (OR) :
-      // 1) user is logged in
+      // 1) current user can edit theme options
       // 2) they are not defined
       // 3) theme version not defined
       // 4) versions are different
-      if ( is_user_logged_in() || empty($def_options) || ! isset($def_options['ver']) || 0 != version_compare( $def_options['ver'] , HUEMAN_VER ) ) {
+      if ( current_user_can('edit_theme_options') || empty($def_options) || ! isset($def_options['ver']) || 0 != version_compare( $def_options['ver'] , HUEMAN_VER ) ) {
         $def_options          = $this -> hu_generate_default_options( HU_utils_settings_map::$instance -> hu_get_customizer_map( $get_default_option = 'true' ) , HU_THEME_OPTIONS );
         //Adds the version in default
         $def_options['ver']   =  HUEMAN_VER;
 
-        $_db_opts['defaults'] = $def_options;
-        //writes the new value in db
-        update_option( HU_THEME_OPTIONS , $_db_opts );
+        //writes the new value in db (merging raw options with the new defaults )
+        $this -> hu_set_option( 'defaults', $def_options, HU_THEME_OPTIONS );
       }
       return apply_filters( 'hu_default_options', $def_options );
     }
@@ -311,6 +310,11 @@ if ( ! class_exists( 'HU_utils' ) ) :
     function hu_set_option( $option_name , $option_value, $option_group = null ) {
       $option_group           = is_null($option_group) ? HU_THEME_OPTIONS : $option_group;
       $_options               = $this -> hu_get_theme_options( $option_group );
+
+      //Get raw to :
+      //avoid filtering
+      //avoid merging with defaults
+      $_options               = hu_get_raw_option( $option_group );
       $_options[$option_name] = $option_value;
 
       update_option( $option_group, $_options );

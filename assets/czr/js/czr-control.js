@@ -582,6 +582,8 @@ $.extend( CZRSkopeBaseMths, {
             }, notice );
             if ( 'changeset_already_published' == notice.message )
               return;
+            if ( ! serverControlParams.isDevMode )
+              return;
 
             this.serverNoticeEmbedded = this.serverNoticeEmbedded || $.Deferred();
 
@@ -769,13 +771,16 @@ $.extend( CZRSkopeBaseMths, {
           }
           if ( self.isExcludedWPBuiltinSetting( setId ) )
             return;
-          if ( ! self.isThemeSetting( setId ) && ! _.contains( serverControlParams.wpBuiltinSettings, setId ) ) {
+          if ( ! self.isThemeSetting( setId ) && ! self.isWPAuthorizedSetting( setId ) ) {
             api.consoleLog( 'THE SETTING ' + setId + ' IS NOT ELIGIBLE TO RESET BECAUSE NOT PART OF THE THEME OPTIONS AND NOT WP AUTHORIZED BUILT IN OPTIONS' );
           } else
            return true;
     },
     isThemeSetting : function( setId ) {
-          return -1 !== setId.indexOf( serverControlParams.themeOptions );
+          return _.isString( setId ) && -1 !== setId.indexOf( serverControlParams.themeOptions );
+    },
+    isWPAuthorizedSetting : function( setId ) {
+          return _.isString( setId ) && _.contains( serverControlParams.wpBuiltinSettings, setId );
     },
     isExcludedWPBuiltinSetting : function( setId ) {
           var self = this;
@@ -1460,7 +1465,7 @@ $.extend( CZRSkopeBaseMths, {
                           _.isEmpty( _inheritedFrom ) ? ' ' : 'inherits from',//@to_translate
                           _inheritedFrom,
                           _.isEmpty( _inheritedFrom ) ? '' : _.isEmpty( _overrides ) ? '.' : ', and',//@to_translate
-                          _.isEmpty( _overrides ) ? ' ' : 'overriden by',//@to_translate
+                          _.isEmpty( _overrides ) ? ' ' : 'overridden by',//@to_translate
                           _overrides,
                           _.isEmpty( _overrides ) ? '' : '.',
                           '</span>'
@@ -1921,9 +1926,12 @@ $.extend( CZRSkopeBaseMths, {
           if ( ! api.control.has( ctrl.id ) ) {
                 throw new Error( 'in bindControlStates, the provided ctrl id is not registered in the api : ' + ctrl.id );
           }
-          var self = this;
+          var self = this,
+              setId = api.CZR_Helpers.getControlSettingId( ctrl.id );
           ctrl.czr_states('hasDBVal').bind( function( bool ) {
-                ctrl.container.toggleClass( 'has-db-val', bool );
+                if ( 'global' == api.czr_skope( api.czr_activeSkopeId() )().skope && self.isWPAuthorizedSetting( setId ) ) {
+                      ctrl.container.toggleClass( 'has-db-val', false );
+                }
                 if ( bool ) {
                       _title = 'Reset your customized ( and published ) value';//@to_translate
                 } else if ( ctrl.czr_states('isDirty')() ) {
