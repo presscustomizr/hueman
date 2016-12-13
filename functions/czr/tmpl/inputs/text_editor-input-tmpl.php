@@ -4,7 +4,7 @@
 //used in multi input controls for example
 //defined in the parent class
 add_action( 'customize_controls_print_footer_scripts', 'hu_print_text_editor_input_template', 1 );
-add_action( 'customize_controls_print_footer_scripts', 'hu_print_text_content_editor_template', 0 );
+//add_action( 'customize_controls_print_footer_scripts', 'hu_print_text_content_editor_template', 0 );
 
 /**
  * Render a JS template for the content of the image control.

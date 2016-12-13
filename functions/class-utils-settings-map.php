@@ -705,6 +705,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'content_blog_sec',
                 'type'      => 'checkbox',
                 'notice'    => __( 'While the default blog design is a grid of posts, you can check this option and display one post per row, whith the thumbnail beside the text.' , 'hueman'),
+                'active_callback' => 'hu_is_post_list'
           ),
           'excerpt-length'  =>  array(
                 'default'   => 34,
@@ -719,7 +720,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 //'transport' => 'postMessage',
                 'notice'    => sprintf( __( "The WordPress Excerpt is the summary or description of a post. By default, it will be the first words of a post, but you can write a %s if you want. You can set the number of words you want to display with this option." , "hueman" ),
                       sprintf('<a href="%1$s" title="%2$s" target="_blank">%2$s <span class="dashicons dashicons-external" style="font-size: inherit;display: inherit;"></span></a>', esc_url('codex.wordpress.org/Excerpt#How_to_add_excerpts_to_posts'), __('custom excerpt', 'hueman') )
-                )
+                ),
+                'active_callback' => 'hu_is_post_list'
           ),
           'featured-posts-enabled' => array(
                 'default'   => 1,
@@ -810,7 +812,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'     => __("Single - Author Bio", 'hueman'),
                 'section'   => 'content_single_sec',
                 'type'      => 'checkbox',
-                'notice'    => __( 'Display post author description, if it exists' , 'hueman')
+                'notice'    => __( 'Display post author description, if it exists' , 'hueman'),
+                'active_callback' => function_exists('HU_AD') ? 'hu_is_single' : ''//enabled when hueman-addons is enabled
           ),
           'related-posts' => array(
                 'default'   => 'categories',
@@ -823,7 +826,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                   'categories'  => __( 'Related by categories' , 'hueman' ),
                   'tags'        => __( 'Related by tags' , 'hueman' )
                 ),
-                'notice'    => __( 'Display randomized related articles below the post' , 'hueman')
+                'notice'    => __( 'Display randomized related articles below the post' , 'hueman'),
+                'active_callback' => function_exists('HU_AD') ? 'hu_is_single' : ''//enabled when hueman-addons is enabled
           ),
           'post-nav' => array(
                 'default'   => 's1',
@@ -837,7 +841,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                   's2'          => __( 'Right Sidebar' , 'hueman' ),
                   'content'     => __( 'Below content' , 'hueman' )
                 ),
-                'notice'    => __( 'Display links to the next and previous article' , 'hueman')
+                'notice'    => __( 'Display links to the next and previous article' , 'hueman'),
+                'active_callback' => function_exists('HU_AD') ? 'hu_is_single' : ''//enabled when hueman-addons is enabled
           )
         );
     }
@@ -1233,7 +1238,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         'content_single_sec'         => array(
               'title'    => __( 'Single Posts Settings', 'hueman' ),
               'priority' => 40,
-              'panel'   => 'hu-content-panel'
+              'panel'   => 'hu-content-panel',
+              'active_callback' => function_exists('HU_AD') ? 'hu_is_single' : ''
         ),
         'content_thumbnail_sec'         => array(
               'title'    => __( 'Thumbnails Settings', 'hueman' ),

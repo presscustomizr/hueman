@@ -199,50 +199,6 @@ function hu_custom_meta_boxes() {
           'id'    => '_sidebar_secondary',
           'type'    => 'sidebar-select',
           'desc'    => ''
-        ),
-        array(
-          'label'   => sprintf('%1$s</br><i style="font-size:12px">%2$s</i>', __('Select a layout for this page.', 'hueman'), __('This will override any default settings of the customizer options panel.', 'hueman') ),
-          'id'    => '_layout',
-          'type'    => 'radio-image',
-          'desc'    => '',
-          'std'   => 'inherit',
-          'choices' => array(
-            array(
-              'value'   => 'inherit',
-              'label'   => 'Inherit Layout',
-              'src'   => get_template_directory_uri() . '/assets/admin/img/layout-off.png'
-            ),
-            array(
-              'value'   => 'col-1c',
-              'label'   => '1 Column',
-              'src'   => get_template_directory_uri() . '/assets/admin/img/col-1c.png'
-            ),
-            array(
-              'value'   => 'col-2cl',
-              'label'   => '2 Column Left',
-              'src'   => get_template_directory_uri() . '/assets/admin/img/col-2cl.png'
-            ),
-            array(
-              'value'   => 'col-2cr',
-              'label'   => '2 Column Right',
-              'src'   => get_template_directory_uri() . '/assets/admin/img/col-2cr.png'
-            ),
-            array(
-              'value'   => 'col-3cm',
-              'label'   => '3 Column Middle',
-              'src'   => get_template_directory_uri() . '/assets/admin/img/col-3cm.png'
-            ),
-            array(
-              'value'   => 'col-3cl',
-              'label'   => '3 Column Left',
-              'src'   => get_template_directory_uri() . '/assets/admin/img/col-3cl.png'
-            ),
-            array(
-              'value'   => 'col-3cr',
-              'label'   => '3 Column Right',
-              'src'   => get_template_directory_uri() . '/assets/admin/img/col-3cr.png'
-            )
-          )
         )
       )
     );
@@ -266,8 +222,13 @@ function hu_custom_meta_boxes() {
           'id'    => '_sidebar_secondary',
           'type'    => 'sidebar-select',
           'desc'    => ''
-        ),
-        array(
+        )
+      )
+    );
+
+
+    if ( apply_filters( 'hu_enable_singular_layout_meta_box', true ) ) {
+      $post_options['fields'][] = array(
           'label'   => 'Layout',
           'id'    => '_layout',
           'type'    => 'radio-image',
@@ -310,9 +271,54 @@ function hu_custom_meta_boxes() {
               'src'   => get_template_directory_uri() . '/assets/admin/img/col-3cr.png'
             )
           )
-        )
-      )
-    );
+        );
+
+        $page_options['fields'][] = array(
+          'label'   => sprintf('%1$s</br><i style="font-size:12px">%2$s</i>', __('Select a layout for this page.', 'hueman'), __('This will override any default settings of the customizer options panel.', 'hueman') ),
+          'id'    => '_layout',
+          'type'    => 'radio-image',
+          'desc'    => '',
+          'std'   => 'inherit',
+          'choices' => array(
+            array(
+              'value'   => 'inherit',
+              'label'   => 'Inherit Layout',
+              'src'   => get_template_directory_uri() . '/assets/admin/img/layout-off.png'
+            ),
+            array(
+              'value'   => 'col-1c',
+              'label'   => '1 Column',
+              'src'   => get_template_directory_uri() . '/assets/admin/img/col-1c.png'
+            ),
+            array(
+              'value'   => 'col-2cl',
+              'label'   => '2 Column Left',
+              'src'   => get_template_directory_uri() . '/assets/admin/img/col-2cl.png'
+            ),
+            array(
+              'value'   => 'col-2cr',
+              'label'   => '2 Column Right',
+              'src'   => get_template_directory_uri() . '/assets/admin/img/col-2cr.png'
+            ),
+            array(
+              'value'   => 'col-3cm',
+              'label'   => '3 Column Middle',
+              'src'   => get_template_directory_uri() . '/assets/admin/img/col-3cm.png'
+            ),
+            array(
+              'value'   => 'col-3cl',
+              'label'   => '3 Column Left',
+              'src'   => get_template_directory_uri() . '/assets/admin/img/col-3cl.png'
+            ),
+            array(
+              'value'   => 'col-3cr',
+              'label'   => '3 Column Right',
+              'src'   => get_template_directory_uri() . '/assets/admin/img/col-3cr.png'
+            )
+          )
+        );
+    }
+
 
 
     //post format are @fromfull => keep it in hueman on wp.org

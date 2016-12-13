@@ -223,6 +223,17 @@ function hu_is_post_list() {
   );
 }
 
+
+/**
+* helper
+* used to define active callback in the customizer
+* => is_single triggers an error in 4.7
+* @return  bool
+*/
+function hu_is_single() {
+  return is_single();
+}
+
 /**
 * helper
 * @return  bool

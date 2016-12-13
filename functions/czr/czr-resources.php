@@ -1,7 +1,7 @@
 <?php
 
 //control scripts and style
-add_action( 'customize_controls_enqueue_scripts'        ,  'hu_customize_controls_js_css' );
+add_action( 'customize_controls_enqueue_scripts'        , 'hu_customize_controls_js_css', 10 );
 //preview scripts
 //set with priority 20 to be fired after hu_customize_store_db_opt in HU_utils
 add_action( 'customize_preview_init'                    , 'hu_customize_preview_js', 20 );

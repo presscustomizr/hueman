@@ -12,6 +12,7 @@ if ( ! function_exists( 'hu_layout_class' ) ) {
     // Default layout
     $layout = 'col-3cm';
     $default = 'col-3cm';
+    $has_post_meta = false;
 
     // Check for page/post specific layout
     if ( is_page() || is_single() ) {
@@ -21,7 +22,10 @@ if ( ! function_exists( 'hu_layout_class' ) ) {
       // Get meta
       $meta = get_post_meta($post->ID,'_layout',true);
       // Get if set and not set to inherit
-      if ( isset($meta) && !empty($meta) && $meta != 'inherit' ) { $layout = $meta; }
+      if ( isset($meta) && !empty($meta) && $meta != 'inherit' ) {
+        $layout = $meta;
+        $has_post_meta = true;
+      }
       // Else check for page-global / single-global
       elseif ( is_single() && ( hu_get_option('layout-single') !='inherit' ) ) $layout = hu_get_option('layout-single',''.$default.'');
       elseif ( is_page() && ( hu_get_option('layout-page') !='inherit' ) ) $layout = hu_get_option('layout-page',''.$default.'');
@@ -40,7 +44,7 @@ if ( ! function_exists( 'hu_layout_class' ) ) {
     else $layout = hu_get_option('layout-global',''.$default.'');
 
     // Return layout class
-    return $layout;
+    return apply_filters( 'hu_layout_class', $layout, $has_post_meta );
   }
 
 }
@@ -185,33 +189,45 @@ if ( ! function_exists( 'hu_render_header_image' ) ) {
   }
 }
 
-/*  Site name/logo
+/*  Site name/logo and tagline callbacks
 /* ------------------------------------ */
-if ( ! function_exists( 'hu_site_title' ) ) {
+if ( ! function_exists( 'hu_print_logo_or_title' ) ) {
+  function hu_print_logo_or_title() {
+    ob_start();
+    if ( hu_is_home() ) {
+      ?>
+        <h1 class="site-title"><?php hu_do_render_logo_site_tite() ?></h1>
+      <?php
+    } else {
+      ?>
+        <p class="site-title"><?php hu_do_render_logo_site_tite() ?></p>
+      <?php
+    }
+    $html = ob_get_contents();
+    if ($html) ob_end_clean();
+    echo apply_filters('hu_logo_title', $html );
+  }
+}
 
-  function hu_site_title() {
+function hu_do_render_logo_site_tite() {
     // Text or image?
     // Since v3.2.4, uses the WP 'custom_logo' theme mod option. Set with a filter.
     if ( apply_filters( 'hu_display_header_logo', hu_is_checked('display-header-logo') && false != hu_get_img_src_from_option( 'custom-logo' ) ) ) {
-      $logo_src = apply_filters( 'hu_header_logo_src' , hu_get_img_src_from_option( 'custom-logo' ) );
-      $logo_title = '<img src="'. $logo_src . '" alt="' .get_bloginfo('name'). '">';
+        $logo_src = apply_filters( 'hu_header_logo_src' , hu_get_img_src_from_option( 'custom-logo' ) );
+        $logo_title = '<img src="'. $logo_src . '" alt="' .get_bloginfo('name'). '">';
     } else {
-      $logo_title = get_bloginfo('name');
+        $logo_title = get_bloginfo('name');
     }
 
-    $link = '<a class="custom-logo-link" href="'.home_url('/').'" rel="home">'.$logo_title.'</a>';
-
-    if ( hu_is_home() ) {
-      $sitename = '<h1 class="site-title">'.$link.'</h1>'."\n";
-    } else {
-      $sitename = '<p class="site-title">'.$link.'</p>'."\n";
-    }
-
-    return apply_filters('hu_logo_title', $sitename, $logo_title );
-  }
-
+    printf( '<a class="custom-logo-link" href="%1$s" rel="home">%2$s</a>',
+        home_url('/'),
+        $logo_title
+    );
 }
 
+function hu_render_blog_description() {
+    echo bloginfo( 'description' );
+}
 
 /*  Page title
 /* ------------------------------------ */

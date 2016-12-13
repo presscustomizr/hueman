@@ -177,6 +177,19 @@ if ( ! class_exists( 'HU_customize' ) ) :
             'render_callback' => 'hu_render_header_image',
             //'type' => 'my_partial'
         ) );
+
+        $wp_customize->selective_refresh->add_partial( 'site_title', array(
+            'selector' => '.site-title',
+            'settings' => array( 'blogname' ),
+            'render_callback' => 'hu_do_render_logo_site_tite',
+            //'type' => 'my_partial'
+        ) );
+        $wp_customize->selective_refresh->add_partial( 'site_description', array(
+            'selector' => '.site-description',
+            'settings' => array( 'blodescription' ),
+            'render_callback' => 'hu_render_blog_description',
+            //'type' => 'my_partial'
+        ) );
     }
 
 
@@ -362,13 +375,13 @@ if ( ! class_exists( 'HU_customize' ) ) :
       //CHANGE CUSTOM_CSS DEFAULT
       $custom_css_setting_id = sprintf( 'custom_css[%s]', get_stylesheet() );
       if ( is_object( $wp_customize->get_setting( $custom_css_setting_id ) ) ) {
-        $original = $wp_customize->get_setting( $custom_css_setting_id ) -> default;
+        $original = $wp_customize->get_setting( $custom_css_setting_id )->default;
         $new_def = sprintf( "%s\n%s\n%s\n*/",
             substr( $original, 0, strlen($original) - 2),
             __( "Use this field to test small chunks of CSS code. For important CSS customizations, it is recommended to modify the style.css file of a child theme." , 'hueman' ),
             'http' . esc_url( '//codex.wordpress.org/Child_Themes' )
         );
-        $wp_customize->get_setting( $custom_css_setting_id ) -> default = $new_def;
+        $wp_customize->get_setting( $custom_css_setting_id )->default = $new_def;
       }
     }//end of hu_alter_wp_customizer_settings()
 
