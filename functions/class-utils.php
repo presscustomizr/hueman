@@ -103,7 +103,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
     * hook : wp_head
     */
     function hu_wp_filters() {
-      if ( apply_filters( 'hu_img_smart_load_enabled', hu_is_checked('smart_load_img') ) ) {
+      if ( apply_filters( 'hu_img_smart_load_enabled', ! hu_is_ajax() && hu_is_checked('smart_load_img') ) ) {
           add_filter( 'the_content'                       , array( $this , 'hu_parse_imgs' ), PHP_INT_MAX );
           add_filter( 'hu_post_thumbnail_html'            , array( $this , 'hu_parse_imgs' ) );
       }
