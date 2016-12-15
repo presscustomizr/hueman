@@ -469,6 +469,9 @@ $.extend( CZRSkopeBaseMths, {
                                 if ( self.isExcludedWPCustomCss() && 'custom_css' == active_sec_id ) {
                                       _switchBack( api.section( active_sec_id ).params.title );
                                 }
+                                if ( self.isExcludedWPCustomCss() && 'admin_sec' == active_sec_id ) {
+                                      _switchBack( api.section( active_sec_id ).params.title );
+                                }
                                 if ( 'nav_menu' == active_sec_id.substring( 0, 'nav_menu'.length ) ) {
                                       _switchBack( api.section( active_sec_id ).params.title );
                                 }
@@ -669,7 +672,8 @@ $.extend( CZRSkopeBaseMths, {
                           _set_height = function( _h ) {
                                 return true;
                           };
-                      self.skopeTitleNoticeVisible( false );
+                      if ( self.skopeTitleNoticeVisible )
+                          self.skopeTitleNoticeVisible( false );
 
                       if ( ! notice.expanded ) {
                             $notif_wrap
@@ -1468,6 +1472,9 @@ $.extend( CZRSkopeBaseMths, {
                 return _switchBack( api.panel( api.czr_activePanelId() ).params.title );
           }
           if ( self.isExcludedWPCustomCss() && 'custom_css' == api.czr_activeSectionId() && to != self.getGlobalSkopeId() ) {
+                return _switchBack( api.section( api.czr_activeSectionId() ).params.title );
+          }
+          if ( self.isExcludedWPCustomCss() && 'admin_sec' == api.czr_activeSectionId() && to != self.getGlobalSkopeId() ) {
                 return _switchBack( api.section( api.czr_activeSectionId() ).params.title );
           }
           if ( 'nav_menu' == api.czr_activeSectionId().substring( 0, 'nav_menu'.length ) ) {
