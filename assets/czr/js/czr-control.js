@@ -216,7 +216,7 @@ $.extend( CZRSkopeBaseMths, {
           api.czr_serverNotification.bind( function( to, from ) {
                   self.toggleServerNotice( to );
           });
-          self.notificationsEventMap = [
+          self.scopeSwitcherEventMap = [
                 {
                       trigger   : 'click keydown',
                       selector  : '.czr-dismiss-notification',
@@ -224,9 +224,25 @@ $.extend( CZRSkopeBaseMths, {
                       actions   : function() {
                             api.czr_serverNotification( { expanded : false } );
                       }
+                },
+                {
+                      trigger   : 'click keydown',
+                      selector  : '.czr-toggle-title-notice',
+                      name      : 'toggle-title-notice',
+                      actions   : function( params ) {
+                            if ( _.isUndefined( self.skopeTitleNoticeVisible ) ) {
+                                  self.skopeTitleNoticeVisible = new api.Value( false );
+                                  self.skopeTitleNoticeVisible.bind( function( to ) {
+                                        params.dom_el.find( '.czr-skope-title')
+                                              .toggleClass( 'notice-visible', to );
+                                  });
+                            }
+
+                            self.skopeTitleNoticeVisible( ! self.skopeTitleNoticeVisible() );
+                      }
                 }
           ];
-          api.CZR_Helpers.setupDOMListeners( self.notificationsEventMap , { dom_el : $('.czr-scope-switcher') }, self );
+          api.CZR_Helpers.setupDOMListeners( self.scopeSwitcherEventMap , { dom_el : $('.czr-scope-switcher') }, self );
           self.refreshedControls = [ 'czr_cropped_image'];// [ 'czr_cropped_image', 'czr_multi_module', 'czr_module' ];
           self.initWidgetSidebarSpecifics();
           api.bind( 'czr-paint', function( params ) {
@@ -441,6 +457,23 @@ $.extend( CZRSkopeBaseMths, {
                                 self._maybeSetupAssignedMenuLocations( params );
                           });
                     }
+                    api.czr_skopeReady.then( function() {
+                          var _switchBack = function( _title ) {
+                                api.czr_serverNotification({
+                                      status:'success',
+                                      message : [ _title, 'can only be customized site wide.' ].join(' ')
+                                });
+                                api.czr_activeSkopeId( self.getGlobalSkopeId() );
+                          };
+                          if ( 'global' != api.czr_skope( api.czr_activeSkopeId() )().skope ) {
+                                if ( self.isExcludedWPCustomCss() && 'custom_css' == active_sec_id ) {
+                                      _switchBack( api.section( active_sec_id ).params.title );
+                                }
+                                if ( 'nav_menu' == active_sec_id.substring( 0, 'nav_menu'.length ) ) {
+                                      _switchBack( api.section( active_sec_id ).params.title );
+                                }
+                          }
+                    });
                     api.trigger('active-section-setup', active_section );
               };
           api.czr_initialSkopeCollectionPopulated.then( function() {
@@ -455,8 +488,23 @@ $.extend( CZRSkopeBaseMths, {
           });
     },
     activePanelReact : function( active_panel_id , previous_panel_id ) {
+          var self = this;
           api.czr_initialSkopeCollectionPopulated.then( function() {
                 api.trigger('czr-paint', { active_panel_id : active_panel_id } );
+                var _switchBack = function( _title ) {
+                      api.czr_serverNotification({
+                            status:'success',
+                            message : [ _title, 'can only be customized site wide.' ].join(' ')
+                      });
+                      api.czr_activeSkopeId( self.getGlobalSkopeId() );
+                };
+                api.czr_skopeReady.then( function() {
+                      if ( 'global' != api.czr_skope( api.czr_activeSkopeId() )().skope ) {
+                            if ( self.isExcludedSidebarsWidgets() && 'widgets' == active_panel_id ) {
+                                  _switchBack( api.panel( active_panel_id ).params.title );
+                            }
+                      }
+                });
           });
     },
     wash : function( params ) {
@@ -465,7 +513,7 @@ $.extend( CZRSkopeBaseMths, {
                     if ( ! _.has( element, 'el') || ! element.el.length )
                       return;
                     $.when( element.el.removeClass('czr-painted') ).done( function() {
-                          $(this).css( 'background', '' );
+                          $(this).css( 'background', '' ).css('color', '');
                     });
               };
           if ( api.czr_skopeBase.paintedElements ) {
@@ -475,7 +523,7 @@ $.extend( CZRSkopeBaseMths, {
           return this;
     },
     paint : function( params ) {
-          var _color = 'inherit',
+          var _bgColor = 'inherit',
               defaults = {
                     active_panel_id : api.czr_activePanelId(),
                     active_section_id : api.czr_activeSectionId(),
@@ -485,17 +533,20 @@ $.extend( CZRSkopeBaseMths, {
           params = $.extend( defaults, params );
 
           if ( ! _.isUndefined( api.czr_activeSkopeId() ) && api.czr_skope.has( api.czr_activeSkopeId() ) ) {
-                  _color = api.czr_skope( api.czr_activeSkopeId() ).color;
+                  _bgColor = api.czr_skope( api.czr_activeSkopeId() ).color;
           }
           var _do_paint = function( element ) {
                 if ( ! _.has( element, 'el') || ! element.el.length )
                   return;
                 if ( params.is_skope_switch ) {
                       $.when( element.el.addClass('czr-painted') ).done( function() {
-                            $(this).css( 'background', element.color || _color );
+                            $(this).css( 'background', element.bgColor || _bgColor );
                       });
                 } else {
-                      element.el.css( 'background', element.color || _color );
+                      element.el.css( 'background', element.bgColor || _bgColor );
+                }
+                if ( 'global' != api.czr_skope( api.czr_activeSkopeId() )().skope ) {
+                       element.el.css( 'color', '#000');
                 }
 
           };
@@ -508,6 +559,13 @@ $.extend( CZRSkopeBaseMths, {
                 api.panel.each( function( _panel ) {
                       _paint_candidates.push( {
                             el : _panel.container.find( '.accordion-section-title').first()
+                      });
+                });
+                api.section.each( function( _section ) {
+                      if ( ! _.isEmpty( _section.panel() ) )
+                        return;
+                      _paint_candidates.push( {
+                            el : _section.container.find( '.accordion-section-title').first()
                       });
                 });
           }
@@ -526,7 +584,7 @@ $.extend( CZRSkopeBaseMths, {
                             _paint_candidates.push(
                                   {
                                         el : active_section.container.find( '.customize-section-title, .customize-section-back' ),
-                                        color : 'inherit'
+                                        bgColor : 'inherit'
                                   },
                                   {
                                         el : active_section.container
@@ -609,20 +667,15 @@ $.extend( CZRSkopeBaseMths, {
                           _header_height,
                           _notif_wrap_height,
                           _set_height = function( _h ) {
-                                $header.css( 'height', '');
-                                $sidebar.css( 'top', '' );
-                                if ( _.isUndefined( _h ) )
-                                  return;
-                                $header.css( 'height', _h + 'px' );
-                                $sidebar.css( 'top', _h + 'px' );
+                                return true;
                           };
+                      self.skopeTitleNoticeVisible( false );
 
                       if ( ! notice.expanded ) {
                             $notif_wrap
                                   .fadeOut( {
                                         duration : 200,
                                         complete : function() {
-                                              $( this ).css( 'height', 'auto' );
                                   } } );
                             setTimeout( function() {
                                   _set_height();
@@ -665,7 +718,7 @@ $.extend( CZRSkopeBaseMths, {
             _.delay( function() {
                         api.czr_serverNotification( { expanded : false } );
                   },
-                  ( 'success' == notice.status || false !== notice.auto_collapse ) ? 2500 : 4000
+                  ( 'success' == notice.status || false !== notice.auto_collapse ) ? 3000 : 4000
             );
       },
       buildServerResponse : function( _r ) {
@@ -1403,6 +1456,23 @@ $.extend( CZRSkopeBaseMths, {
             api.czr_skope(to).active(true);
           else
             throw new Error('listenToActiveSkope : requested scope ' + to + ' does not exist in the collection');
+          var _switchBack = function( _title ) {
+                api.czr_activeSkopeId( self.getGlobalSkopeId() );
+                api.czr_serverNotification({
+                      status:'success',
+                      message : [ _title , 'can only be customized site wide.' ].join(' ')
+                });
+                return dfd.resolve().promise();
+          };
+          if ( self.isExcludedSidebarsWidgets() && 'widgets' == api.czr_activePanelId() && to != self.getGlobalSkopeId() ) {
+                return _switchBack( api.panel( api.czr_activePanelId() ).params.title );
+          }
+          if ( self.isExcludedWPCustomCss() && 'custom_css' == api.czr_activeSectionId() && to != self.getGlobalSkopeId() ) {
+                return _switchBack( api.section( api.czr_activeSectionId() ).params.title );
+          }
+          if ( 'nav_menu' == api.czr_activeSectionId().substring( 0, 'nav_menu'.length ) ) {
+                _switchBack( api.section( api.czr_activeSectionId() ).params.title );
+          }
           api.state('switching-skope')( true );
           self._writeCurrentSkopeTitle( to );
           api.trigger( 'czr-paint', { is_skope_switch : true } );
@@ -1464,7 +1534,7 @@ $.extend( CZRSkopeBaseMths, {
                         _overrides = self.getOverridenSkopeTitles();
 
                     return $.trim( [
-                          '<span class="czr-main-title">',
+                          '<span class="czr-main-title"><span class="czr-toggle-title-notice fa fa-info-circle"></span>',
                           'global' == api.czr_skope( skope_id || api.czr_activeSkopeId() )().skope ? current_title : ['Customizing', current_title ].join(' '),
                           '</span>',
                           '<span class="czr-skope-inherits-from">',
@@ -3038,7 +3108,7 @@ $.extend( CZRSkopeMths, {
           skope.userEventMap = new api.Value( [
                 {
                       trigger   : 'click keydown',
-                      selector  : '.czr-scope-switch',
+                      selector  : '.czr-scope-switch, .czr-skp-switch-link',
                       name      : 'skope_switch',
                       actions   : function() {
                             api.czr_activeSkopeId( skope().id );

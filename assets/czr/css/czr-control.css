@@ -263,9 +263,15 @@ li[id*="customize-control-"] {
 	margin: 8px 0;
 }
 
-.wp-customizer .control-section .accordion-section-title {
+.wp-customizer .control-section h3.accordion-section-title {
 	padding: 10px 25px 11px 14px;
+
 }
+.wp-customizer #customize-controls h3 {
+  font-size: 15px;
+  font-weight: 400;
+}
+
 .control-section .accordion-section-title:after {
 	top: 7px;
 }
@@ -540,16 +546,28 @@ li#customize-control-tc_theme_options-tc_custom_css textarea {
 
 
 
-/* WIDGET PANEL MARGIN */
-#customize-theme-controls #accordion-panel-nav_menus, #customize-theme-controls #accordion-panel-czr-footer-panel {
+/* SPECIFIC PANELS AND SECTIONS MARGIN */
+#customize-theme-controls #accordion-panel-czr-footer-panel {
   border-bottom: 1px solid #ddd;
 }
-#customize-theme-controls .control-panel-widgets, #customize-theme-controls #accordion-panel-nav_menus{
-  margin-top: 14px;
-  border-bottom: 1px solid #ddd;
+#customize-theme-controls .control-panel-widgets,
+#customize-theme-controls #accordion-panel-nav_menus,
+#customize-theme-controls #accordion-panel-hu-advanced-panel {
+  margin-top: 10px;
+}
+#customize-theme-controls #accordion-panel-hu-header-panel,
+#customize-theme-controls .control-panel-widgets,
+#customize-theme-controls #accordion-panel-nav_menus,
+#customize-theme-controls #accordion-panel-hu-advanced-panel {
+  border-top: 1px solid #ddd;
+}
+#customize-theme-controls #accordion-panel-hu-general-panel {
+  margin-bottom: 10px;
 }
 
-
+#customize-theme-controls #accordion-section-static_front_page {
+  margin-bottom: 10px;
+}
 
 /* HOME BUTTON */
 #customize-header-actions .customize-controls-close {
@@ -601,6 +619,13 @@ li#customize-control-tc_theme_options-tc_custom_css textarea {
 .control-panel-content .hu-menu-notice {
     margin-left: 3%;
 
+}
+
+/* PANEL SUBTITLE */
+span.czr-panel-subtitle {
+    display: block;
+    font-size: 12px;
+    font-style: italic;
 }/*******************************************************************
 * DYNAMIC CONTROLS : sidebars, socials, ...
 ********************************************************************/
@@ -1994,7 +2019,7 @@ h2.czr-current-skope-title {
   display: inline-block;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 90%;
+  width: 95%;
 }
 .czr-skope-title {
   display: block;
@@ -2002,14 +2027,31 @@ h2.czr-current-skope-title {
   font-style: italic;
   line-height: 25px;
 }
+.czr-toggle-title-notice {
+  cursor: pointer;
+  font-size: 14px;
+  color: #777;
+}
 .czr-skope-inherits-from {
+    display: inline-block;
+    opacity: 0;
     width: 90%;
     font-size: 12px;
     line-height: 18px;
-    display: inline-block;
-    color: #5f5f5f;
+    color: #357315;
     top: -6px;
     position: relative;
+}
+.notice-visible .czr-toggle-title-notice {
+  color: #357315;
+}
+.notice-visible .czr-skope-inherits-from {
+  opacity: 1;
+  -webkit-transition: opacity .3s ease-in-out;
+  -moz-transition: opacity .3s ease-in-out;
+  -ms-transition: opacity .3s ease-in-out;
+  -o-transition: opacity .3s ease-in-out;
+  transition: opacity .3s ease-in-out;
 }
 .czr-scope-switcher .button {
   float: left;
@@ -2108,8 +2150,8 @@ h2.czr-current-skope-title {
 }
 .czr-scope-content {
     height: 35px;
-    padding: 0 4%;
-    width: 92%;
+    padding: 0 3%;
+    width: 94%;
     line-height: 35px;
     text-align: center;
     clear: both;
@@ -2144,7 +2186,12 @@ h2.czr-current-skope-title {
     padding: 0 2px 0 0;
     text-shadow: 1px 1px 2px white;
 }
-
+.czr-skp-switch-link {
+  cursor: pointer;
+}
+.czr-skp-switch-link:hover {
+  text-decoration: underline;
+}
 .czr-pull-left {
   float: left;
 }
@@ -2459,14 +2506,16 @@ body.czr-resetting-skope #czr-skope-pane .czr-spinner-wrapper {
 }
 .czr-server-notice {
     width: calc(96% - 2px);
-    top: 0;
+    bottom: 75px;
     text-align: center;
     background: rgba(0, 156, 0, 0.18);
     color: #000;
     display: none;
-    position: relative;
-    line-height: 21px;
+    position: absolute;
+    font-size: 12px;
+    line-height: 13px;
     padding: 2%;
+    overflow: hidden;
 }
 .czr-server-notice.czr-server-error {
     color: #000;

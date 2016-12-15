@@ -1017,38 +1017,48 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         'hu-general-panel' => array(
                   'priority'       => 10,
                   'capability'     => 'edit_theme_options',
-                  'title'          => __( 'Global settings' , 'hueman' ),
-                  'description'    => __( "General settings for the Hueman theme : design, comments, mobile, ..." , 'hueman' )
+                  'title'          => __( 'Web Page Design' , 'hueman' ),
+                  'czr_subtitle'   => __( 'Title, Logo, Fonts, Colors, Background, Socials, Links', 'hueman'),
+                  'description'    => __( "General settings for the Hueman theme : design, comments, mobile, ..." , 'hueman' ),
+                  'type'           => 'hu_panel'
         ),
         'hu-header-panel' => array(
                   'priority'       => 20,
                   'capability'     => 'edit_theme_options',
-                  'title'          => __( 'Header' , 'hueman' ),
-                  'description'    => __( "Header settings for the Hueman theme." , 'hueman' )
+                  'title'          => __( 'Header Design' , 'hueman' ),
+                  'czr_subtitle'   => __( 'Header Image, Menu, Widget', 'hueman'),
+                  'description'    => __( "Header settings for the Hueman theme." , 'hueman' ),
+                  'type'           => 'hu_panel'
         ),
         'hu-content-panel' => array(
                   'priority'       => 30,
                   'capability'     => 'edit_theme_options',
-                  'title'          => __( 'Content' , 'hueman' ),
-                  'description'    => __( "Content settings for the Hueman theme." , 'hueman' )
+                  'title'          => __( 'Main Body Design' , 'hueman' ),
+                  'czr_subtitle'   => __( 'Layout, Sidebars, Blog Posts, Thumbnails', 'hueman'),
+                  'description'    => __( "Content settings for the Hueman theme." , 'hueman' ),
+                  'type'           => 'hu_panel'
         ),
-        'hu-sidebars-panel' => array(
-                  'priority'       => 30,
-                  'capability'     => 'edit_theme_options',
-                  'title'          => __( 'Sidebars' , 'hueman' ),
-                  'description'    => __( "Sidebars settings for the Hueman theme." , 'hueman' )
-        ),
+        // 'hu-sidebars-panel' => array(
+        //           'priority'       => 30,
+        //           'capability'     => 'edit_theme_options',
+        //           'title'          => __( 'Sidebars' , 'hueman' ),
+        //           'description'    => __( "Sidebars settings for the Hueman theme." , 'hueman' )
+        // ),
         'hu-footer-panel' => array(
                   'priority'       => 40,
                   'capability'     => 'edit_theme_options',
-                  'title'          => __( 'Footer' , 'hueman' ),
-                  'description'    => __( "Footer settings for the Hueman theme." , 'hueman' )
+                  'title'          => __( 'Footer Design' , 'hueman' ),
+                  'czr_subtitle'   => __( 'Logo, Layout, Menu', 'hueman'),
+                  'description'    => __( "Footer settings for the Hueman theme." , 'hueman' ),
+                  'type'           => 'hu_panel'
         ),
         'hu-advanced-panel' => array(
                   'priority'       => 1000,
                   'capability'     => 'edit_theme_options',
                   'title'          => __( 'Advanced options' , 'hueman' ),
-                  'description'    => __( "Advanced settings for the Hueman theme." , 'hueman' )
+                  'czr_subtitle'   => __( 'Performances, SEO, CSS, Scroll', 'hueman'),
+                  'description'    => __( "Advanced settings for the Hueman theme." , 'hueman' ),
+                  'type'           => 'hu_panel'
         )
       );
       return array_merge( $panel_map, $_new_panels );
@@ -1168,31 +1178,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
               'priority' => 30,
               'panel'   => 'hu-general-panel'
         ),
-        'comments_sec'         => array(
-              'title'    => __( 'Comments', 'hueman' ),
-              'priority' => 40,
-              'panel'   => 'hu-general-panel'
-        ),
-        'smoothscroll_sec'         => array(
-              'title'    => __( 'Smooth Scroll', 'hueman' ),
-              'priority' => 50,
-              'panel'   => 'hu-general-panel'
-        ),
-        'mobiles_sec'         => array(
-              'title'    => __( 'Mobile devices', 'hueman' ),
-              'priority' => 60,
-              'panel'   => 'hu-general-panel'
-        ),
-        'performance_sec'         => array(
-              'title'    => __( 'Performances and SEO', 'hueman' ),
-              'priority' => 70,
-              'panel'   => 'hu-general-panel'
-        ),
-        'admin_sec'         => array(
-              'title'    => __( 'Hueman Admin Settings', 'hueman' ),
-              'priority' => 80,
-              'panel'   => 'hu-general-panel'
-        ),
 
 
 
@@ -1243,8 +1228,14 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         ),
         'content_thumbnail_sec'         => array(
               'title'    => __( 'Thumbnails Settings', 'hueman' ),
-              'priority' => 40,
+              'priority' => 50,
               'panel'   => 'hu-content-panel'
+        ),
+        'comments_sec'         => array(
+              'title'    => __( 'Comments', 'hueman' ),
+              'priority' => 60,
+              'panel'   => 'hu-content-panel',
+              'active_callback' => 'hu_is_singular'
         ),
 
         /*---------------------------------------------------------------------------------------------
@@ -1260,6 +1251,32 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
               'priority' => 20,
               'panel'   => 'hu-footer-panel',
               'description'    => $nav_section_desc
+        ),
+
+
+
+                /*---------------------------------------------------------------------------------------------
+        -> PANEL : ADVANCED
+        ----------------------------------------------------------------------------------------------*/
+        'smoothscroll_sec'         => array(
+              'title'    => __( 'Smooth Scroll', 'hueman' ),
+              'priority' => 10,
+              'panel'   => 'hu-advanced-panel'
+        ),
+        'mobiles_sec'         => array(
+              'title'    => __( 'Mobile devices', 'hueman' ),
+              'priority' => 20,
+              'panel'   => 'hu-advanced-panel'
+        ),
+        'performance_sec'         => array(
+              'title'    => __( 'Performances and SEO', 'hueman' ),
+              'priority' => 30,
+              'panel'   => 'hu-advanced-panel'
+        ),
+        'admin_sec'         => array(
+              'title'    => __( 'Hueman Admin Settings', 'hueman' ),
+              'priority' => 50,
+              'panel'   => 'hu-advanced-panel'
         )
 
       );

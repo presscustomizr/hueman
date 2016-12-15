@@ -236,6 +236,16 @@ function hu_is_single() {
 
 /**
 * helper
+* used to define active callback in the customizer
+* => is_single triggers an error in 4.7
+* @return  bool
+*/
+function hu_is_singular() {
+  return is_singular();
+}
+
+/**
+* helper
 * @return  bool
 */
 function hu_has_social_links() {

@@ -138,6 +138,8 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
         'controls/class-upload-control.php',
 
+        'panels/class-panels.php',
+
         'sections/class-widgets-section.php',
 
         'settings/class-settings.php'
@@ -149,6 +151,9 @@ if ( ! class_exists( 'HU_customize' ) ) :
       //Registered types are eligible to be rendered via JS and created dynamically.
       if ( class_exists('HU_Customize_Cropped_Image_Control') )
         $manager -> register_control_type( 'HU_Customize_Cropped_Image_Control' );
+
+      if ( class_exists('HU_Customize_Panels') )
+        $manager -> register_panel_type( 'HU_Customize_Panels');
     }
 
 
@@ -253,9 +258,9 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
       //MOVE WP FRONT PAGE SECTION TO CONTENT PANEL
       if ( is_object( $wp_customize -> get_section( 'static_front_page' ) ) ) {
-        $wp_customize -> get_section( 'static_front_page' ) -> panel = 'hu-content-panel';
+        $wp_customize -> get_section( 'static_front_page' ) -> panel = '';//'hu-content-panel';
         $wp_customize -> get_section( 'static_front_page' ) -> title = __( 'Front Page Content', 'hueman' );
-        $wp_customize -> get_section( 'static_front_page' ) -> priority = 5;
+        $wp_customize -> get_section( 'static_front_page' ) -> priority = 10;
         $wp_customize -> get_section( 'static_front_page' ) -> active_callback = 'hu_is_home';
       }
 
@@ -368,8 +373,8 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
       //MOVE THE CUSTOM CSS SECTION (introduced in 4.7) INTO THE GLOBAL SETTINGS PANEL
       if ( is_object( $wp_customize->get_section( 'custom_css' ) ) ) {
-        $wp_customize -> get_section( 'custom_css' ) -> panel = 'hu-general-panel';
-        $wp_customize -> get_section( 'custom_css' ) -> priority = 75;
+        $wp_customize -> get_section( 'custom_css' ) -> panel = 'hu-advanced-panel';
+        $wp_customize -> get_section( 'custom_css' ) -> priority = 40;
       }
 
       //CHANGE CUSTOM_CSS DEFAULT
@@ -547,11 +552,13 @@ if ( ! class_exists( 'HU_customize' ) ) :
     function hu_customize_arguments() {
       $args = array(
           'panels' => array(
-                'title' ,
+                'title',
+                'czr_subtitle',
                 'description',
                 'priority' ,
                 'theme_supports',
-                'capability'
+                'capability',
+                'type'
           ),
           'sections' => array(
                 'title' ,
@@ -629,7 +636,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
           foreach( $args['panels'] as $p_set) {
             $panel_options[$p_set] = isset( $p_options[$p_set]) ?  $p_options[$p_set] : null;
           }
-          $wp_customize -> add_panel( $p_key, $panel_options );
+          $wp_customize -> add_panel( new HU_Customize_Panels( $wp_customize, $p_key, $panel_options ) );
         }
       }
 
