@@ -90,9 +90,11 @@ load_template( HU_BASE . 'functions/class-utils-settings-map.php' );
 new HU_utils_settings_map;
 load_template( HU_BASE . 'functions/class-utils.php' );
 new HU_utils;
-//note:  $default is never used => to remove
-function hu_get_option( $option_id, $default = '' ) {
-  return HU_utils::$inst -> hu_opt( $option_id );
+
+//@param $use_default = boolean
+//hu_opt( $option_name , $option_group = null, $use_default = true )
+function hu_get_option( $option_id, $use_default = true ) {
+  return HU_utils::$inst -> hu_opt( $option_id, null, $use_default );
 }
 
 
