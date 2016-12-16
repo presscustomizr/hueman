@@ -2409,6 +2409,54 @@ body.czr-skop-loading #customize-preview {
 
 
 
+/* TOP NOTE ( for Welcome, etc ) */
+#czr-top-note {
+  position: absolute;
+  text-align: center;
+  padding: 2%;
+  top : -100%;
+  right: 0;
+  left: 0;
+  z-index: 20;
+  color: #fff;
+  display: block;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all, 0.3s ease-in-out;
+  -ms-transition: all, 0.3s ease-in-out;
+  -o-transition: all, 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  visibility: hidden;
+  background: rgba(0, 0, 0, 0.63);
+}
+#czr-top-note h2 {
+  color: #fff;
+}
+#czr-top-note a {
+  color: #fff;
+}
+#czr-top-note .czr-top-note-close {
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 31px;
+  cursor: pointer;
+}
+
+#czr-top-note .fa-arrow-left {
+  position: absolute;
+  bottom: 10px;
+  left: 25px;
+  font-size: 40px;
+}
+#czr-top-note .czr-note-content {
+  display: inline-block;
+  line-height: 20px;
+  width: 80%;
+}
+body.czr-top-note-open #czr-top-note {
+  top: 0;
+  visibility: inherit;
+}
 
 
 
@@ -2416,7 +2464,6 @@ body.czr-skop-loading #customize-preview {
 /* SKOPE PANE */
 /* WP TEXT EDITOR */
 #czr-skope-pane {
-  border-bottom: solid 1px #ddd;
   position: absolute;
   min-height: 100%;
   text-align: center;

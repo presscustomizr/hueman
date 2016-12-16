@@ -212,9 +212,28 @@ $.extend( CZRSkopeBaseMths, {
                       }
                 });
           });
-          api.czr_serverNotification   = new api.Value({status : 'success', message : '', expanded : true} );
+          api.czr_serverNotification   = new api.Value( {status : 'success', message : '', expanded : true} );
           api.czr_serverNotification.bind( function( to, from ) {
                   self.toggleServerNotice( to );
+          });
+          api.czr_topNoteVisible = new api.Value( false );
+          api.czr_skopeReady.then( function() {
+                api.czr_topNoteVisible.bind( function( visible ) {
+                        self.toggleTopNote( visible, serverControlParams.topNoteParams || {} );
+                        if ( ! visible ) {
+                              var _query = $.extend(
+                                    api.previewer.query(),
+                                    { nonce:  api.previewer.nonce.save }
+                              );
+                              wp.ajax.post( 'czr_dismiss_top_note' , _query )
+                                  .always( function () {})
+                                  .fail( function ( response ) { api.consoleLog( 'czr_dismiss_top_note failed', _query, response ); })
+                                  .done( function( response ) { api.consoleLog( 'czr_dismiss_top_note done', _query, response ); });
+                        }
+                });
+                _.delay( function() {
+                      api.czr_topNoteVisible( ! _.isEmpty( serverControlParams.isTopNoteOn ) || 1 == serverControlParams.isTopNoteOn );
+                }, 2000 );
           });
           self.scopeSwitcherEventMap = [
                 {
@@ -747,6 +766,72 @@ $.extend( CZRSkopeBaseMths, {
                   resp = 'Identification issue detected, please refresh your page.';//@to_translate
             }
             return resp;
+      }
+});//$.extend()
+
+var CZRSkopeBaseMths = CZRSkopeBaseMths || {};
+$.extend( CZRSkopeBaseMths, {
+      toggleTopNote : function( visible, noteParams ) {
+            noteParams = _.isObject( noteParams ) ? noteParams : {};
+            var self = this,
+                _defaultParams = {
+                      title : '',
+                      message : ''
+                };
+
+            noteParams = $.extend( _defaultParams , noteParams);
+
+            if ( visible ) {
+                  $.when( self.renderTopNoteTmpl( noteParams ) ).done( function( $_el ) {
+                        self.welcomeNote = $_el;
+                        _.delay( function() {
+                            $('body').addClass('czr-top-note-open');
+                        }, 200 );
+                        api.CZR_Helpers.setupDOMListeners(
+                              [ {
+                                    trigger   : 'click keydown',
+                                    selector  : '.czr-top-note-close',
+                                    name      : 'close-top-note',
+                                    actions   : function() {
+                                          api.czr_topNoteVisible( false );
+                                    }
+                              } ] ,
+                              { dom_el : self.welcomeNote },
+                              self
+                        );
+                  });
+            } else {
+                  $('body').removeClass('czr-top-note-open');
+                  if ( self.welcomeNote.length ) {
+                        _.delay( function() {
+                              self.welcomeNote.remove();
+                        }, 300 );
+                  }
+            }
+            _.delay( function() {
+                        api.czr_topNoteVisible( false );
+                  },
+                  20000
+            );
+      },
+      renderTopNoteTmpl : function( params ) {
+            if ( $( '#czr-top-note' ).length )
+              return $( '#czr-top-note' );
+
+            var self = this,
+                _tmpl = '',
+                _title = params.title || '',
+                _message = params.message || '';
+
+            try {
+                  _tmpl =  wp.template( 'czr-top-note' )( { title : _title } );
+            }
+            catch(e) {
+                  throw new Error('Error when parsing the the top note template : ' + e );//@to_translate
+            }
+            $('#customize-preview').after( $( _tmpl ) );
+            $('.czr-note-message', '#czr-top-note').html( _message );
+            return $( '#czr-top-note' );
       }
 });//$.extend()
 var CZRSkopeBaseMths = CZRSkopeBaseMths || {};
