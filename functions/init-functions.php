@@ -149,6 +149,7 @@ function hu_has_nav_menu( $_location ) {
     $bool = has_nav_menu( $_location );
   } else {
     switch ($_location) {
+      case 'footer':
       case 'header':
         $bool = hu_is_checked( "default-menu-{$_location}" );
       break;
