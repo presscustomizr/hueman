@@ -57,11 +57,15 @@ var api = api || wp.customize, $ = $ || jQuery;
                   _sec.expanded.bind( function( expanded ) { _bindSectionExpanded( expanded, _sec.id ); } );
             });
             api.section.bind( 'add', function( section_instance ) {
+                  api.trigger('czr-paint', { active_panel_id : section_instance.panel() } );
                   section_instance.expanded.bind( function( expanded ) { _bindSectionExpanded( expanded, section_instance.id ); } );
             });
 
             var _bindPanelExpanded = function( expanded, panel_id ) {
                   api.czr_activePanelId( expanded ? panel_id : '' );
+                  if ( _.isEmpty( api.czr_activePanelId() ) ) {
+                        api.czr_activeSectionId( '' );
+                  }
             };
             api.panel.each( function( _panel ) {
                   _panel.expanded.bind( function( expanded ) { _bindPanelExpanded( expanded, _panel.id ); } );
@@ -228,7 +232,7 @@ $.extend( CZRSkopeBaseMths, {
                               wp.ajax.post( 'czr_dismiss_top_note' , _query )
                                   .always( function () {})
                                   .fail( function ( response ) { api.consoleLog( 'czr_dismiss_top_note failed', _query, response ); })
-                                  .done( function( response ) { api.consoleLog( 'czr_dismiss_top_note done', _query, response ); });
+                                  .done( function( response ) {});
                         }
                 });
                 _.delay( function() {
@@ -339,293 +343,6 @@ $.extend( CZRSkopeBaseMths, {
               }
           ];
           api.CZR_Helpers.setupDOMListeners( _eventMap , { dom_el : $('.czr-scope-switcher') }, self );
-    },
-    bindAPISettings : function( requestedSetId ) {
-          var self = this,
-              _settingChangeReact = function( new_val, old_val, o ) {
-                    var setId = this.id,
-                        skope_id;
-
-                    if ( ! _.has( api, 'czr_activeSkopeId') || _.isUndefined( api.czr_activeSkopeId() ) ) {
-                      api.consoleLog( 'The api.czr_activeSkopeId() is undefined in the api.previewer._new_refresh() method.');
-                    }
-                    if ( api( setId )._dirty ) {
-                          skope_id = self.isSettingSkopeEligible( setId ) ? api.czr_activeSkopeId() : self.getGlobalSkopeId();
-                          api.czr_skope( skope_id ).updateSkopeDirties( setId, new_val );
-                    }
-                    if ( _.has( api.control(setId), 'czr_states' ) && ! api.control(setId).czr_states( 'isResetting' )() ) {
-                          api.control(setId).czr_states( 'resetVisible' )( false );
-                    }
-                    if ( self.isSettingSkopeEligible( setId ) ) {
-                          self.updateCtrlSkpNot( setId );
-                    }
-              };//bindListener()
-          if ( ! _.isUndefined( requestedSetId ) ) {
-                api( requestedSetId ).bind( _settingChangeReact );
-          }
-          else {
-                api.each( function ( _setting ) {
-                    _setting.bind( _settingChangeReact );
-                });
-          }
-          var _dynamicallyAddedSettingsReact = function( setting_instance ) {
-                if ( setting_instance.callbacks.has( _settingChangeReact ) )
-                  return;
-                setting_instance.bind( _settingChangeReact );
-          };
-
-          if ( ! api.topics.change.has( _dynamicallyAddedSettingsReact ) ) {
-                api.bind( 'change', _dynamicallyAddedSettingsReact );
-          }
-    },
-    reactWhenSkopeSyncedDone : function( server_params ) {
-          var self = this, dfd = $.Deferred();
-          if ( ! _.has( server_params, 'czr_skopes' ) || _.isEmpty( server_params.czr_skopes ) ) {
-                throw new Error( 'Missing skope data after refresh', server_params );
-          }
-          if ( ! api.czr_dirtyness() ) {
-                api.czr_dirtyness( _.isBoolean( server_params.isChangesetDirty ) ? server_params.isChangesetDirty : false );
-          }
-
-          var _sentSkopeCollection = server_params.czr_skopes;
-          _.each( api.czr_skopeCollection(), function( _skp ) {
-                var _sent_skope = _.findWhere( _sentSkopeCollection, { opt_name : _skp.opt_name } );
-                if ( _.isUndefined( _sent_skope ) )
-                  return;
-                var _changeset_candidate = _.isEmpty( _sent_skope.changeset || {} ) ? {} : _sent_skope.changeset,
-                    _api_ready_chgset = {};
-                _.each( _changeset_candidate, function( _val, _setId ) {
-                      if ( ! api.has( _setId ) ) {
-                            api.consoleLog( 'In reactWhenSkopeSyncedDone : attempting to update the changeset with a non registered setting : ' + _setId );
-                      }
-                      _api_ready_chgset[_setId] = _val;
-                });
-                api.czr_skope( _skp.id ).changesetValues( _api_ready_chgset );
-          });
-          _.each( api.czr_skopeCollection(), function( _skp ) {
-                var _sent_skope = _.findWhere( _sentSkopeCollection, { opt_name : _skp.opt_name } );
-                if ( _.isUndefined( _sent_skope ) )
-                  return;
-                var _current_db_vals  = $.extend( true, {}, api.czr_skope( _skp.id ).dbValues() ),
-                    _dbVals_candidate = $.extend( _current_db_vals , _sent_skope.db || {} ),
-                    _api_ready_dbvals = {};
-                _.each( _dbVals_candidate, function( _val, _setId ) {
-                      if ( ! api.has( _setId ) ) {
-                            api.consoleLog( 'In reactWhenSkopeSyncedDone : attempting to update the db values with a non registered setting : ' + _setId );
-                      }
-                      _api_ready_dbvals[_setId] = _val;
-                });
-
-
-                api.czr_skope( _skp.id ).dbValues( _api_ready_dbvals );
-          });
-          _.delay( function() {
-              dfd.resolve();
-          }, 500 );
-          return dfd.promise();
-    },
-    _maybeSetupAssignedMenuLocations : function( active_section ) {
-          if ( _.isUndefined( active_section ) || _.isEmpty( active_section ) || ! api.section.has( active_section.id ) ) {
-                api.consoleLog( 'In _maybeSetupAssignedMenuLocations : no valid section_id provided.');
-          }
-          var self = this;
-          if ( ! active_section.assignedLocations )
-            return;
-          var _assignedLocReact = function( locations ) {};
-
-          if ( ! active_section.assignedLocations.callbacks.has( _assignedLocReact ) ) {
-                active_section.assignedLocations.bind( _assignedLocReact );
-          }
-    },
-    activeSectionReact : function( active_sec_id , previous_sec_id ) {
-          api.trigger('czr-paint', { active_section_id : active_sec_id } );
-
-          var self = this,
-              _doReactPrevious = function( previous_sec_id ) {
-                    var controls = api.CZR_Helpers.getSectionControlIds( previous_sec_id  );
-                    _.each( controls, function( ctrlId ) {
-                          if ( ! api.has( ctrlId ) || _.isUndefined( api.control( ctrlId ) ) )
-                            return;
-                          var ctrl = api.control( ctrlId );
-                          if ( ! _.has( ctrl, 'czr_states' ) )
-                            return;
-                          ctrl.czr_states( 'noticeVisible' )( false );
-                          ctrl.czr_states( 'resetVisible' )( false );
-                    });
-              },
-              _doReactActive = function( active_section, active_sec_id ) {
-                    self.setupActiveSkopedControls( {
-                          section_id : active_sec_id
-                    });
-                    self.processSilentUpdates( { section_id : active_sec_id  } )
-                          .fail( function() {
-                                throw new Error( 'Fail to process silent updates after initial skope collection has been populated' );
-                          })
-                          .done( function() {
-                                if ( ! self.isExcludedSidebarsWidgets() ) {
-                                      self.forceSidebarDirtyRefresh( active_sec_id , api.czr_activeSkopeId() );
-                                }
-                          });
-                    if ( ! _.has( api.topics, 'active-section-setup' ) ) {
-                          api.bind( 'active-section-setup', function( params ) {
-                                var defaults = {
-                                      controls : [],
-                                      section_id : ''
-                                };
-                                params = _.extend( defaults, params );
-                                self._maybeSetupAssignedMenuLocations( params );
-                          });
-                    }
-                    api.czr_skopeReady.then( function() {
-                          var _switchBack = function( _title ) {
-                                api.czr_serverNotification({
-                                      status:'success',
-                                      message : [ _title, 'can only be customized site wide.' ].join(' ')
-                                });
-                                api.czr_activeSkopeId( self.getGlobalSkopeId() );
-                          };
-                          if ( 'global' != api.czr_skope( api.czr_activeSkopeId() )().skope ) {
-                                if (
-                                  self.isExcludedWPCustomCss() &&
-                                  ( 'custom_css' == active_sec_id || 'admin_sec' == active_sec_id || 'add_menu' == active_sec_id )
-                                ) {
-                                      _switchBack( api.section( active_sec_id ).params.title );
-                                }
-
-                                if ( 'nav_menu' == active_sec_id.substring( 0, 'nav_menu'.length ) ) {
-                                      _switchBack( api.section( active_sec_id ).params.title );
-                                }
-                          }
-                    });
-                    api.trigger('active-section-setup', active_section );
-              };
-          api.czr_initialSkopeCollectionPopulated.then( function() {
-                api.section.when( active_sec_id , function( active_section ) {
-                      active_section.deferred.embedded.then( function() {
-                            _doReactActive( active_section, active_sec_id );
-                      });
-                });
-                if ( ! _.isEmpty( previous_sec_id ) && api.section.has( previous_sec_id ) ) {
-                      _doReactPrevious( previous_sec_id );
-                }
-          });
-    },
-    activePanelReact : function( active_panel_id , previous_panel_id ) {
-          var self = this;
-          api.czr_initialSkopeCollectionPopulated.then( function() {
-                api.trigger('czr-paint', { active_panel_id : active_panel_id } );
-                var _switchBack = function( _title ) {
-                      api.czr_serverNotification({
-                            status:'success',
-                            message : [ _title, 'can only be customized site wide.' ].join(' ')
-                      });
-                      api.czr_activeSkopeId( self.getGlobalSkopeId() );
-                };
-                api.czr_skopeReady.then( function() {
-                      if ( 'global' != api.czr_skope( api.czr_activeSkopeId() )().skope ) {
-                            if ( self.isExcludedSidebarsWidgets() && 'widgets' == active_panel_id ) {
-                                  _switchBack( api.panel( active_panel_id ).params.title );
-                            }
-                      }
-                });
-          });
-    },
-    wash : function( params ) {
-          var self = this,
-              _do_wash = function( element ) {
-                    if ( ! _.has( element, 'el') || ! element.el.length )
-                      return;
-                    $.when( element.el.removeClass('czr-painted') ).done( function() {
-                          $(this).css( 'background', '' ).css('color', '');
-                    });
-              };
-          if ( api.czr_skopeBase.paintedElements ) {
-                _.each( api.czr_skopeBase.paintedElements(), function( _el ) { _do_wash( _el ); } );
-                api.czr_skopeBase.paintedElements( [] );
-          }
-          return this;
-    },
-    paint : function( params ) {
-          var _bgColor = 'inherit',
-              defaults = {
-                    active_panel_id : api.czr_activePanelId(),
-                    active_section_id : api.czr_activeSectionId(),
-                    is_skope_switch : false
-              },
-              _paint_candidates = [];
-          params = $.extend( defaults, params );
-
-          if ( ! _.isUndefined( api.czr_activeSkopeId() ) && api.czr_skope.has( api.czr_activeSkopeId() ) ) {
-                  _bgColor = api.czr_skope( api.czr_activeSkopeId() ).color;
-          }
-          var _do_paint = function( element ) {
-                if ( ! _.has( element, 'el') || ! element.el.length )
-                  return;
-                if ( params.is_skope_switch ) {
-                      $.when( element.el.addClass('czr-painted') ).done( function() {
-                            $(this).css( 'background', element.bgColor || _bgColor );
-                      });
-                } else {
-                      element.el.css( 'background', element.bgColor || _bgColor );
-                }
-                if ( 'global' != api.czr_skope( api.czr_activeSkopeId() )().skope ) {
-                       element.el.css( 'color', '#000');
-                }
-
-          };
-
-          api.czr_skopeBase.paintedElements = api.czr_skopeBase.paintedElements || new api.Value( [] );
-          if ( _.isEmpty( params.active_panel_id ) && _.isEmpty( params.active_section_id ) ) {
-                _paint_candidates.push( {
-                      el : $( '#customize-info' ).find('.accordion-section-title').first()
-                });
-                api.panel.each( function( _panel ) {
-                      _paint_candidates.push( {
-                            el : _panel.container.find( '.accordion-section-title').first()
-                      });
-                });
-                api.section.each( function( _section ) {
-                      if ( ! _.isEmpty( _section.panel() ) )
-                        return;
-                      _paint_candidates.push( {
-                            el : _section.container.find( '.accordion-section-title').first()
-                      });
-                });
-          }
-          if ( ! _.isEmpty( params.active_panel_id ) && _.isEmpty( params.active_section_id ) ) {
-                api.panel.when( params.active_panel_id , function( active_panel ) {
-                      active_panel.deferred.embedded.then( function() {
-                            _paint_candidates.push( {
-                                  el : active_panel.container.find( '.accordion-section-title, .customize-panel-back' )
-                            });
-                      });
-                });
-          }
-          if ( ! _.isEmpty( params.active_section_id ) ) {
-                api.section.when( params.active_section_id , function( active_section ) {
-                      active_section.deferred.embedded.then( function() {
-                            _paint_candidates.push(
-                                  {
-                                        el : active_section.container.find( '.customize-section-title, .customize-section-back' ),
-                                        bgColor : 'inherit'
-                                  },
-                                  {
-                                        el : active_section.container
-                                  }
-                            );
-                            if ( ! api.czr_isChangeSetOn() ) {
-                                  _paint_candidates.push(
-                                        {
-                                              el : active_section.container.find('.accordion-section-content')
-                                        }
-                                  );
-                            }
-                      });
-                });
-          }
-          _.each( _paint_candidates, function( _el ) { _do_paint( _el ); } );
-          api.czr_skopeBase.paintedElements( _paint_candidates );
-          return this;
     },
     apiDirtynessReact : function( is_dirty ) {
           $('body').toggleClass('czr-api-dirty', is_dirty );
@@ -742,7 +459,7 @@ $.extend( CZRSkopeBaseMths, {
             _.delay( function() {
                         api.czr_serverNotification( { expanded : false } );
                   },
-                  ( 'success' == notice.status || false !== notice.auto_collapse ) ? 3000 : 4000
+                  ( 'success' == notice.status || false !== notice.auto_collapse ) ? 4000 : 5000
             );
       },
       buildServerResponse : function( _r ) {
@@ -834,6 +551,325 @@ $.extend( CZRSkopeBaseMths, {
             $('.czr-note-message', '#czr-top-note').html( _message );
             return $( '#czr-top-note' );
       }
+});//$.extend()
+var CZRSkopeBaseMths = CZRSkopeBaseMths || {};
+$.extend( CZRSkopeBaseMths, {
+    bindAPISettings : function( requestedSetId ) {
+          var self = this,
+              _settingChangeReact = function( new_val, old_val, o ) {
+                    var setId = this.id,
+                        skope_id;
+
+                    if ( ! _.has( api, 'czr_activeSkopeId') || _.isUndefined( api.czr_activeSkopeId() ) ) {
+                      api.consoleLog( 'The api.czr_activeSkopeId() is undefined in the api.previewer._new_refresh() method.');
+                    }
+                    if ( api( setId )._dirty ) {
+                          skope_id = self.isSettingSkopeEligible( setId ) ? api.czr_activeSkopeId() : self.getGlobalSkopeId();
+                          api.czr_skope( skope_id ).updateSkopeDirties( setId, new_val );
+                    }
+                    if ( _.has( api.control(setId), 'czr_states' ) && ! api.control(setId).czr_states( 'isResetting' )() ) {
+                          api.control(setId).czr_states( 'resetVisible' )( false );
+                    }
+                    if ( self.isSettingSkopeEligible( setId ) ) {
+                          self.updateCtrlSkpNot( setId );
+                    }
+              };//bindListener()
+          if ( ! _.isUndefined( requestedSetId ) ) {
+                api( requestedSetId ).bind( _settingChangeReact );
+          }
+          else {
+                api.each( function ( _setting ) {
+                    _setting.bind( _settingChangeReact );
+                });
+          }
+          var _dynamicallyAddedSettingsReact = function( setting_instance ) {
+                if ( setting_instance.callbacks.has( _settingChangeReact ) )
+                  return;
+                setting_instance.bind( _settingChangeReact );
+          };
+
+          if ( ! api.topics.change.has( _dynamicallyAddedSettingsReact ) ) {
+                api.bind( 'change', _dynamicallyAddedSettingsReact );
+          }
+    }
+});//$.extend()
+var CZRSkopeBaseMths = CZRSkopeBaseMths || {};
+$.extend( CZRSkopeBaseMths, {
+    reactWhenSkopeSyncedDone : function( server_params ) {
+          var self = this, dfd = $.Deferred();
+          if ( ! _.has( server_params, 'czr_skopes' ) || _.isEmpty( server_params.czr_skopes ) ) {
+                throw new Error( 'Missing skope data after refresh', server_params );
+          }
+          if ( ! api.czr_dirtyness() ) {
+                api.czr_dirtyness( _.isBoolean( server_params.isChangesetDirty ) ? server_params.isChangesetDirty : false );
+          }
+
+          var _sentSkopeCollection = server_params.czr_skopes;
+          _.each( api.czr_skopeCollection(), function( _skp ) {
+                var _sent_skope = _.findWhere( _sentSkopeCollection, { opt_name : _skp.opt_name } );
+                if ( _.isUndefined( _sent_skope ) )
+                  return;
+                var _changeset_candidate = _.isEmpty( _sent_skope.changeset || {} ) ? {} : _sent_skope.changeset,
+                    _api_ready_chgset = {};
+                _.each( _changeset_candidate, function( _val, _setId ) {
+                      if ( ! api.has( _setId ) ) {
+                            api.consoleLog( 'In reactWhenSkopeSyncedDone : attempting to update the changeset with a non registered setting : ' + _setId );
+                      }
+                      _api_ready_chgset[_setId] = _val;
+                });
+                api.czr_skope( _skp.id ).changesetValues( _api_ready_chgset );
+          });
+          _.each( api.czr_skopeCollection(), function( _skp ) {
+                var _sent_skope = _.findWhere( _sentSkopeCollection, { opt_name : _skp.opt_name } );
+                if ( _.isUndefined( _sent_skope ) )
+                  return;
+                var _current_db_vals  = $.extend( true, {}, api.czr_skope( _skp.id ).dbValues() ),
+                    _dbVals_candidate = $.extend( _current_db_vals , _sent_skope.db || {} ),
+                    _api_ready_dbvals = {};
+                _.each( _dbVals_candidate, function( _val, _setId ) {
+                      if ( ! api.has( _setId ) ) {
+                            api.consoleLog( 'In reactWhenSkopeSyncedDone : attempting to update the db values with a non registered setting : ' + _setId );
+                      }
+                      _api_ready_dbvals[_setId] = _val;
+                });
+
+
+                api.czr_skope( _skp.id ).dbValues( _api_ready_dbvals );
+          });
+          _.delay( function() {
+              dfd.resolve();
+          }, 500 );
+          return dfd.promise();
+    }
+});//$.extend()
+
+var CZRSkopeBaseMths = CZRSkopeBaseMths || {};
+$.extend( CZRSkopeBaseMths, {
+    _maybeSetupAssignedMenuLocations : function( active_section ) {
+          if ( _.isUndefined( active_section ) || _.isEmpty( active_section ) || ! api.section.has( active_section.id ) ) {
+                api.consoleLog( 'In _maybeSetupAssignedMenuLocations : no valid section_id provided.');
+          }
+          var self = this;
+          if ( ! active_section.assignedLocations )
+            return;
+          var _assignedLocReact = function( locations ) {};
+
+          if ( ! active_section.assignedLocations.callbacks.has( _assignedLocReact ) ) {
+                active_section.assignedLocations.bind( _assignedLocReact );
+          }
+    },
+    activeSectionReact : function( active_sec_id , previous_sec_id ) {
+          if ( 'add_menu' != active_sec_id ) {
+                api.trigger('czr-paint', { active_section_id : active_sec_id } );
+          }
+
+          var self = this,
+              _doReactPrevious = function( previous_sec_id ) {
+                    var controls = api.CZR_Helpers.getSectionControlIds( previous_sec_id  );
+                    _.each( controls, function( ctrlId ) {
+                          if ( ! api.has( ctrlId ) || _.isUndefined( api.control( ctrlId ) ) )
+                            return;
+                          var ctrl = api.control( ctrlId );
+                          if ( ! _.has( ctrl, 'czr_states' ) )
+                            return;
+                          ctrl.czr_states( 'noticeVisible' )( false );
+                          ctrl.czr_states( 'resetVisible' )( false );
+                    });
+              },
+              _doReactActive = function( active_section, active_sec_id ) {
+                    self.setupActiveSkopedControls( {
+                          section_id : active_sec_id
+                    });
+                    self.processSilentUpdates( { section_id : active_sec_id  } )
+                          .fail( function() {
+                                throw new Error( 'Fail to process silent updates after initial skope collection has been populated' );
+                          })
+                          .done( function() {
+                                if ( ! self.isExcludedSidebarsWidgets() ) {
+                                      self.forceSidebarDirtyRefresh( active_sec_id , api.czr_activeSkopeId() );
+                                }
+                          });
+                    if ( ! _.has( api.topics, 'active-section-setup' ) ) {
+                          api.bind( 'active-section-setup', function( params ) {
+                                var defaults = {
+                                      controls : [],
+                                      section_id : ''
+                                };
+                                params = _.extend( defaults, params );
+                                self._maybeSetupAssignedMenuLocations( params );
+                          });
+                    }
+                    api.czr_skopeReady.then( function() {
+                          var _switchBack = function( _title ) {
+                                api.czr_serverNotification({
+                                      status:'success',
+                                      message : [ _title, 'can only be customized site wide.' ].join(' ')//@to_translate
+                                });
+                                api.czr_activeSkopeId( self.getGlobalSkopeId() );
+                          };
+                          if ( 'global' != api.czr_skope( api.czr_activeSkopeId() )().skope ) {
+                                if (
+                                  self.isExcludedWPCustomCss() &&
+                                  ( 'custom_css' == active_sec_id || 'admin_sec' == active_sec_id )
+                                ) {
+                                      _switchBack( api.section( active_sec_id ).params.title );
+                                }
+
+                                if ( 'nav_menu[' == active_sec_id.substring( 0, 'nav_menu['.length ) || 'add_menu' == active_sec_id ) {
+                                      api.czr_serverNotification({
+                                            status:'success',
+                                            message : [
+                                                  'Menus are created site wide.'//@to_translate
+                                            ].join(' ')
+                                      });
+                                }
+                          }
+                    });
+                    api.trigger('active-section-setup', active_section );
+              };
+          api.czr_initialSkopeCollectionPopulated.then( function() {
+                api.section.when( active_sec_id , function( active_section ) {
+                      active_section.deferred.embedded.then( function() {
+                            _doReactActive( active_section, active_sec_id );
+                      });
+                });
+                if ( ! _.isEmpty( previous_sec_id ) && api.section.has( previous_sec_id ) ) {
+                      _doReactPrevious( previous_sec_id );
+                }
+          });
+    },
+    activePanelReact : function( active_panel_id , previous_panel_id ) {
+          var self = this;
+          api.czr_initialSkopeCollectionPopulated.then( function() {
+                api.trigger('czr-paint', { active_panel_id : active_panel_id } );
+                var _switchBack = function( _title ) {
+                      api.czr_serverNotification({
+                            status:'success',
+                            message : [ _title, 'can only be customized site wide.' ].join(' ')
+                      });
+                      api.czr_activeSkopeId( self.getGlobalSkopeId() );
+                };
+                api.czr_skopeReady.then( function() {
+                      if ( 'global' != api.czr_skope( api.czr_activeSkopeId() )().skope ) {
+                            if ( self.isExcludedSidebarsWidgets() && 'widgets' == active_panel_id ) {
+                                  api.czr_serverNotification({
+                                        status:'success',
+                                        message : [
+                                              'Widgets are created site wide.'//@to_translate
+                                        ].join(' ')
+                                  });
+                            }
+                      }
+                });
+                api.czr_skopeReady.then( function() {
+                      if ( 'nav_menus' == active_panel_id ) {
+                            _.each( api.panel( active_panel_id ).sections(), function( _sec ) {
+                                  self.processSilentUpdates( { section_id : _sec.id, awake_if_not_active : true } );
+                            });
+                      }
+                });
+          });
+    }
+});//$.extend()
+var CZRSkopeBaseMths = CZRSkopeBaseMths || {};
+$.extend( CZRSkopeBaseMths, {
+    wash : function( params ) {
+          var self = this,
+              _do_wash = function( element ) {
+                    if ( ! _.has( element, 'el') || ! element.el.length )
+                      return;
+                    $.when( element.el.removeClass('czr-painted') ).done( function() {
+                          $(this).css( 'background', '' ).css('color', '');
+                    });
+              };
+          if ( api.czr_skopeBase.paintedElements ) {
+                _.each( api.czr_skopeBase.paintedElements(), function( _el ) { _do_wash( _el ); } );
+                api.czr_skopeBase.paintedElements( [] );
+          }
+          return this;
+    },
+    paint : function( params ) {
+          var _bgColor = 'inherit',
+              defaults = {
+                    active_panel_id : api.czr_activePanelId(),
+                    active_section_id : api.czr_activeSectionId(),
+                    is_skope_switch : false
+              },
+              _paint_candidates = [];
+          params = $.extend( defaults, params );
+
+          if ( ! _.isUndefined( api.czr_activeSkopeId() ) && api.czr_skope.has( api.czr_activeSkopeId() ) ) {
+                  _bgColor = api.czr_skope( api.czr_activeSkopeId() ).color;
+          }
+          var _do_paint = function( element ) {
+                if ( ! _.has( element, 'el') || ! element.el.length )
+                  return;
+                if ( params.is_skope_switch ) {
+                      $.when( element.el.addClass('czr-painted') ).done( function() {
+                            $(this).css( 'background', element.bgColor || _bgColor );
+                      });
+                } else {
+                      element.el.css( 'background', element.bgColor || _bgColor );
+                }
+                if ( 'global' != api.czr_skope( api.czr_activeSkopeId() )().skope ) {
+                       element.el.css( 'color', '#000');
+                }
+
+          };
+
+          api.czr_skopeBase.paintedElements = api.czr_skopeBase.paintedElements || new api.Value( [] );
+          if ( _.isEmpty( params.active_panel_id ) && _.isEmpty( params.active_section_id ) ) {
+                _paint_candidates.push( {
+                      el : $( '#customize-info' ).find('.accordion-section-title').first()
+                });
+                api.panel.each( function( _panel ) {
+                      _paint_candidates.push( {
+                            el : _panel.container.find( '.accordion-section-title').first()
+                      });
+                });
+                api.section.each( function( _section ) {
+                      if ( ! _.isEmpty( _section.panel() ) )
+                        return;
+                      _paint_candidates.push( {
+                            el : _section.container.find( '.accordion-section-title').first()
+                      });
+                });
+          }
+          if ( ! _.isEmpty( params.active_panel_id ) && _.isEmpty( params.active_section_id ) ) {
+                api.panel.when( params.active_panel_id , function( active_panel ) {
+                      active_panel.deferred.embedded.then( function() {
+                            _paint_candidates.push( {
+                                  el : active_panel.container.find( '.accordion-section-title, .customize-panel-back' )
+                            });
+                      });
+                });
+          }
+          if ( ! _.isEmpty( params.active_section_id ) ) {
+                api.section.when( params.active_section_id , function( active_section ) {
+                      active_section.deferred.embedded.then( function() {
+                            _paint_candidates.push(
+                                  {
+                                        el : active_section.container.find( '.customize-section-title, .customize-section-back' ),
+                                        bgColor : 'inherit'
+                                  },
+                                  {
+                                        el : active_section.container
+                                  }
+                            );
+                            if ( ! api.czr_isChangeSetOn() ) {
+                                  _paint_candidates.push(
+                                        {
+                                              el : active_section.container.find('.accordion-section-content')
+                                        }
+                                  );
+                            }
+                      });
+                });
+          }
+          _.each( _paint_candidates, function( _el ) { _do_paint( _el ); } );
+          api.czr_skopeBase.paintedElements( _paint_candidates );
+          return this;
+    }
 });//$.extend()
 var CZRSkopeBaseMths = CZRSkopeBaseMths || {};
 $.extend( CZRSkopeBaseMths, {
@@ -1555,19 +1591,31 @@ $.extend( CZRSkopeBaseMths, {
                 return dfd.resolve().promise();
           };
           if ( self.isExcludedSidebarsWidgets() && 'widgets' == api.czr_activePanelId() && to != self.getGlobalSkopeId() ) {
-                return _switchBack( api.panel( api.czr_activePanelId() ).params.title );
+                api.czr_serverNotification({
+                      status:'success',
+                      message : [
+                            'Widgets are created site wide.'//@to_translate
+                      ].join(' ')
+                });
           }
           if ( self.isExcludedWPCustomCss() && 'custom_css' == api.czr_activeSectionId() && to != self.getGlobalSkopeId() ) {
                 return _switchBack( api.section( api.czr_activeSectionId() ).params.title );
           }
-          if ( self.isExcludedWPCustomCss() && 'admin_sec' == api.czr_activeSectionId() && to != self.getGlobalSkopeId() ) {
+          if ( 'admin_sec' == api.czr_activeSectionId() && to != self.getGlobalSkopeId() ) {
                 return _switchBack( api.section( api.czr_activeSectionId() ).params.title );
           }
-          if ( self.isExcludedWPCustomCss() && 'add_menu' == api.czr_activeSectionId() && to != self.getGlobalSkopeId() ) {
-                return _switchBack( api.section( api.czr_activeSectionId() ).params.title );
+          if ( ( 'nav_menu' == api.czr_activeSectionId().substring( 0, 'nav_menu'.length ) || 'add_menu' == api.czr_activeSectionId() ) && to != self.getGlobalSkopeId() )  {
+                api.czr_serverNotification({
+                      status:'success',
+                      message : [
+                            'Menus are created site wide.'//@to_translate
+                      ].join(' ')
+                });
           }
-          if ( 'nav_menu' == api.czr_activeSectionId().substring( 0, 'nav_menu'.length ) ) {
-                _switchBack( api.section( api.czr_activeSectionId() ).params.title );
+          if ( 'nav_menus' == api.czr_activePanelId() ) {
+                _.each( api.panel( api.czr_activePanelId() ).sections(), function( _sec ) {
+                      self.processSilentUpdates( { section_id : _sec.id, awake_if_not_active : true } );
+                });
           }
           api.state('switching-skope')( true );
           self._writeCurrentSkopeTitle( to );
@@ -1693,7 +1741,8 @@ $.extend( CZRSkopeBaseMths, {
               defaultParams = {
                   candidates : [],
                   section_id : api.czr_activeSectionId(),
-                  refresh : true
+                  refresh : true,
+                  awake_if_not_active : false
               },
               dfd = $.Deferred();
 
@@ -1702,7 +1751,7 @@ $.extend( CZRSkopeBaseMths, {
             params.candidates = [ params.candidates ];
           }
           if ( _.isEmpty( params.candidates ) )
-                params.candidates = self._getSilentUpdateCandidates( params.section_id );
+                params.candidates = self._getSilentUpdateCandidates( params.section_id, params.awake_if_not_active );
           if ( ! _.isArray( params.candidates ) ) {
                 throw new Error('processSilentUpdates : the update candidates must be an array.');
           }
@@ -1845,11 +1894,11 @@ $.extend( CZRSkopeBaseMths, {
 
           return dfd.promise();
     },//getSettingUpdatePromise()
-    _getSilentUpdateCandidates : function( section_id ) {
+    _getSilentUpdateCandidates : function( section_id, awake_if_not_active ) {
           var self = this,
               SilentUpdateCands = [];
           section_id = ( _.isUndefined( section_id ) || _.isNull( section_id ) ) ? api.czr_activeSectionId() : section_id;
-          if ( _.isEmpty( api.czr_activeSectionId() ) ) {
+          if ( _.isEmpty( api.czr_activeSectionId() ) && ! awake_if_not_active ) {
                 return [];
           }
           if ( _.isUndefined( section_id ) ) {
@@ -1860,7 +1909,7 @@ $.extend( CZRSkopeBaseMths, {
                 throw new Error( '_getSilentUpdateCandidates : The section ' + section_id + ' is not registered in the API.');
           }
           var section_settings = api.CZR_Helpers.getSectionSettingIds( section_id );
-          section_settings = _.filter( section_settings, function(setId) {
+          section_settings = _.filter( section_settings, function( setId ) {
               return self.isSettingSkopeEligible( setId );
           });
           _.each( section_settings, function( setId ) {
@@ -2007,6 +2056,8 @@ $.extend( CZRSkopeBaseMths, {
                 }
                 return setId && self.isSettingSkopeEligible( setId );
           });
+          if ( 'nav_menu[' == section_id.substring( 0, 'nav_menu['.length ) )
+            return;
           if ( ! _.isEmpty( controls ) ) {
                 api.czr_skopeReady.then( function() {
                       $.when( self.renderControlsSingleReset( eligibleCtrls ) ).done( function() {

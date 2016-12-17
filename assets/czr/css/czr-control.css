@@ -2426,10 +2426,11 @@ body.czr-skop-loading #customize-preview {
   -o-transition: all, 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   visibility: hidden;
-  background: rgba(0, 0, 0, 0.63);
+  background: rgba(0, 0, 0, 0.80);
 }
 #czr-top-note h2 {
   color: #fff;
+  font-size: 25px
 }
 #czr-top-note a {
   color: #fff;
@@ -2452,6 +2453,10 @@ body.czr-skop-loading #customize-preview {
   display: inline-block;
   line-height: 20px;
   width: 80%;
+}
+#czr-top-note .czr-note-message {
+  font-size: 16px;
+  line-height: 20px;
 }
 body.czr-top-note-open #czr-top-note {
   top: 0;

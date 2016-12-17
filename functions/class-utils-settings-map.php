@@ -389,7 +389,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'     => __('Posts Comments', 'hueman'),
                 'section'   => 'comments_sec',
                 'type'      => 'checkbox',
-                'notice'    => __( 'Comments on posts' , 'hueman' )
+                'notice'    => __( 'Comments on posts' , 'hueman' ),
+                'active_callback' => 'hu_is_single'
           ),
           'page-comments' => array(
                 'default'   => 0,
@@ -397,7 +398,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'     => __('Pages Comments', 'hueman'),
                 'section'   => 'comments_sec',
                 'type'      => 'checkbox',
-                'notice'    => __( 'Comments on pages' , 'hueman' )
+                'notice'    => __( 'Comments on pages' , 'hueman' ),
+                'active_callback' => 'hu_is_page'
           )
       );
     }
