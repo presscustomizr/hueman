@@ -254,6 +254,28 @@ function hu_has_social_links() {
 }
 
 /**
+* helper
+* Whether or not we are in the ajax context
+* @since v3.2.14
+* @return bool
+*/
+function hu_is_ajax() {
+
+  /*
+  * wp_doing_ajax() introduced in 4.7.0
+  */
+  $wp_doing_ajax = ( function_exists('wp_doing_ajax') && wp_doing_ajax() ) || ( ( defined('DOING_AJAX') && 'DOING_AJAX' ) );
+
+  /*
+  * https://core.trac.wordpress.org/ticket/25669#comment:19
+  * http://stackoverflow.com/questions/18260537/how-to-check-if-the-request-is-an-ajax-request-with-php
+  */
+  $_is_ajax      = $wp_doing_ajax || ( ! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+
+  return apply_filters( 'hu_is_ajax', $_is_ajax );
+}
+
+/**
 * helper ensuring backward compatibility with the previous option system
 * @return img src string
 */
