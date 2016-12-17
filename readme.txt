@@ -81,7 +81,8 @@ See headers of files for further details.
 * added : support for customize selective refresh for header image
 * added : support for customize selective refresh for site title
 * changed : disable the default header page menu
-* improved : removed persian translation files fa_IR, now more than 95% translated on wp.org, https://translate.wordpress.org/locale/fa/default/wp-themes/hueman
+* removed : Persian translation files fa_IR, now more than 95% translated on wp.org, https://translate.wordpress.org/locale/fa/default/wp-themes/hueman
+* removed : Czech translation files cz_CZ, now more than 95% translated on wp.org, https://translate.wordpress.org/locale/cs/default/wp-themes/hueman
 * improved : avoid img smartload php parsing in ajax requests
 * improved : customizer UI
 * improved : compatibility with the scope feature of Hueman Addons
