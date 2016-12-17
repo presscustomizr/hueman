@@ -272,7 +272,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
         }
 
         //assign false value if does not exist, just like WP does
-        $_single_opt    = isset($__options[$option_name]) ? $__options[$option_name] : false;
+        $_single_opt    = isset( $__options[$option_name] ) ? $__options[$option_name] : false;
 
         //allow ctx filtering globally
         $_single_opt = apply_filters( "hu_opt" , $_single_opt , $option_name , $option_group, $_default_val );
