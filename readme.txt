@@ -73,17 +73,19 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 # Changelog
-= 3.2.13 December 13th 2016 =
+= 3.2.13 December 17th 2016 =
 * fixed : php version older than 5.2 compatibility problem (#361)
 * fixed : case when background-attachment is inherit (#363)
 * fixed : set option use-header-image default to false
+* fixed : default page menu in footer not taken in account (#368)
 * added : support for customize selective refresh for header image
 * added : support for customize selective refresh for site title
+* changed : disable the default header page menu
+* improved : avoid img smartload php parsing in ajax requests
 * improved : customizer UI
 * improved : compatibility with the scope feature of Hueman Addons
 * improved : de_DE language file now translated at 97%, .po files removed from the theme. thanks @jaylinski
 * improved : theme's option performances
-
 
 = 3.2.12 December 6th 2016 =
 * added : support for customize selective refresh for widgets
