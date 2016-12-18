@@ -90,8 +90,8 @@ See headers of files for further details.
 * added : support for customize selective refresh for header image
 * added : support for customize selective refresh for site title
 * changed : disable the default header page menu
-* removed : Persian translation files fa_IR, now more than 95% translated on wp.org, https://translate.wordpress.org/locale/fa/default/wp-themes/hueman
-* removed : Czech translation files cz_CZ, now more than 95% translated on wp.org, https://translate.wordpress.org/locale/cs/default/wp-themes/hueman
+* changed : in parts/header-main.php, echo hu_site_title() has been replaced by hu_print_logo_or_title(). The function hu_site_title() has been kept in the theme to ensure back compatibility for child theme users
+* removed : Spanish, Persian and Czech translation files (es_ES, fa_IR, cz_CZ),now more than 95% translated on wp.org
 * improved : avoid img smartload php parsing in ajax requests
 * improved : customizer UI
 * improved : compatibility with the scope feature of Hueman Addons
