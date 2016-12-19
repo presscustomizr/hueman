@@ -181,6 +181,9 @@ function hu_maybe_print_prevdem_widgets( $sidebars_widgets, $_zone_id ) {
 add_filter('hu_has_nav_menu', 'hu_display_prevdem_footer_menu', 10, 2 );
 function hu_display_prevdem_footer_menu( $bool, $_location ) {
     switch ($_location) {
+      case 'header':
+        $bool = true;
+      break;
       case 'footer':
         $bool = true;
       break;
