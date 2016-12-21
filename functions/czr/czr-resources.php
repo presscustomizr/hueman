@@ -275,8 +275,8 @@ function hu_extend_ctrl_dependencies() {
                                     _maybe_print_html = function() {
                                         if ( $( '.' + _class , api.control(wpServusId).container ).length )
                                           return;
-                                        var _html = '<span class="description customize-control-description ' + _class +'"><?php echo $_front_page_content_notice; ?></span>';
-                                        api.control(wpServusId).container.find('.customize-control-title').after( _html );
+                                        var _html = '<span class="description customize-control-description ' + _class +'"><?php echo html_entity_decode( $_front_page_content_notice ); ?></span>';
+                                        api.control(wpServusId).container.find('.customize-control-title').after( $.parseHTML( _html ) );
                                     };
 
                               if ( 'show_on_front' == servusShortId ) {
@@ -333,10 +333,10 @@ function hu_extend_ctrl_dependencies() {
                                                 return;
                                               var _html = [
                                                     '<span class="description customize-control-description hu-header-image-notice">',
-                                                    '<?php echo $_header_img_notice; ?>',
+                                                    '<?php echo html_entity_decode( $_header_img_notice ); ?>',
                                                     '</span>'
                                               ].join('');
-                                              api.control(wpServusId).container.find('.customize-control-title').after( _html );
+                                              api.control(wpServusId).container.find('.customize-control-title').after( $.parseHTML( _html ) );
                                         }
                                     break;
                               }
@@ -429,7 +429,7 @@ function hu_extend_ctrl_dependencies() {
                   _toggle_menu_notice = function( show ) {
                     var $menu_panel_content = api.panel('nav_menus').container.find('.control-panel-content'),
                         notice_rendered = 0 !== $menu_panel_content.find( '.' + _notice_selector ).length,
-                        _html = '<p class="description customize-control-description ' + _notice_selector +'"><?php echo $_header_menu_notice; ?></p>',
+                        _html = '<p class="description customize-control-description ' + _notice_selector +'"><?php echo html_entity_decode( $_header_menu_notice ); ?></p>',
                         _render_notice = function() {
                               //defer the rendering when all sections of this panel have been embedded
                               $.when.apply(
@@ -446,7 +446,7 @@ function hu_extend_ctrl_dependencies() {
                                     })
                                     )
                               .then( function() {
-                                    $menu_panel_content.append( _html );
+                                    $menu_panel_content.append( $.parseHTML( _html ) );
                               });
                         },
                         _toggle_notice = function() {
