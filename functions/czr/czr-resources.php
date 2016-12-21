@@ -231,24 +231,24 @@ function hu_add_customize_preview_data() {
 
 //hook : 'customize_controls_enqueue_scripts':10
 function hu_extend_ctrl_dependencies() {
-  $_header_img_notice = sprintf( __( "When the %s, this element will not be displayed in your header.", 'hueman'),
+  $_header_img_notice = esc_js( sprintf( __( "When the %s, this element will not be displayed in your header.", 'hueman'),
       sprintf('<a href="%1$s" title="%2$s">%2$s</a>',
         "javascript:wp.customize.section(\'header_design_sec\').focus();",
         __('header image is enabled', 'hueman')
       )
-  );
-  $_front_page_content_notice = sprintf( __( "Jump to the %s.", 'hueman'),
+  ) );
+  $_front_page_content_notice = esc_js( sprintf( __( "Jump to the %s.", 'hueman'),
       sprintf('<a href="%1$s" title="%2$s">%2$s</a>',
         "javascript:wp.customize.section(\'content_blog_sec\').focus();",
         __('blog design panel', 'hueman')
       )
-  );
-  $_header_menu_notice = sprintf( __( "The menu currently displayed in your header is a default page menu, you can disable it in the %s.", 'hueman'),
+  ) );
+  $_header_menu_notice = esc_js( sprintf( __( "The menu currently displayed in your header is a default page menu, you can disable it in the %s.", 'hueman'),
       sprintf('<a href="%1$s" title="%2$s">%2$s</a>',
         "javascript:wp.customize.section(\'header_menu_sec\').focus();",
         __('Header Panel', 'hueman')
       )
-  );
+  ) );
   ?>
   <script id="control-dependencies" type="text/javascript">
     (function (api, $, _) {
@@ -331,7 +331,11 @@ function hu_extend_ctrl_dependencies() {
                                         } else if ( _is_checked(to) ) {
                                               if ( $( '.hu-header-image-notice', api.control(wpServusId).container ).length )
                                                 return;
-                                              var _html = '<span class="description customize-control-description hu-header-image-notice"><?php echo $_header_img_notice; ?></span>';
+                                              var _html = [
+                                                    '<span class="description customize-control-description hu-header-image-notice">',
+                                                    '<?php echo $_header_img_notice; ?>',
+                                                    '</span>'
+                                              ].join('');
                                               api.control(wpServusId).container.find('.customize-control-title').after( _html );
                                         }
                                     break;
