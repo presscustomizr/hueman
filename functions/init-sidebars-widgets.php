@@ -158,94 +158,14 @@ function hu_get_builtin_widget_zones_location() {
 
 
 if ( ! function_exists( 'hu_maybe_register_builtin_widget_zones' ) ) :
-
   function hu_maybe_register_builtin_widget_zones() {
     $_map = hu_get_default_widget_zones();
-    //when customizing, widgets_init is too early.
-    //Therefore, we need to access the customized data from the post global.
-    $customized       = array();
-    if ( hu_is_customizing() && isset($_POST['customized']) ) {
-      $_json = json_decode( wp_unslash( $_POST['customized'] ), true );
-      if ( ! empty( $_json ) )
-        $customized = $_json;
+    foreach ( $_map as $zone_id => $data ) {
+      register_sidebar( $data );
     }
-
-    //Default conditions.
-    //Will apply on front-end and admin
-    $_has_header_ads    = hu_is_checked('header-ads');
-    $_has_footer_ads    = hu_is_checked('footer-ads');
-    $_footer_widgets    = intval ( hu_get_option('footer-widgets') );
-
-
-    //When customizing, use the customized option
-    if ( isset($customized[ HU_THEME_OPTIONS . '[header-ads]']) ) {
-      $_has_header_ads = hu_booleanize_checkbox_val( $customized[HU_THEME_OPTIONS . '[header-ads]'] );
-    }
-
-    if ( isset($customized[HU_THEME_OPTIONS . '[footer-ads]']) ) {
-      $_has_footer_ads = hu_booleanize_checkbox_val( $customized[HU_THEME_OPTIONS . '[footer-ads]'] );
-    }
-
-    if ( isset($customized[HU_THEME_OPTIONS . '[footer-widgets]']) ) {
-      $_footer_widgets = intval ( $customized[HU_THEME_OPTIONS . '[footer-widgets]'] );
-    }
-
-    //right and left sidebar default widget zones
-    //They are always registered because on front end, they can depend on post_metas which are not accessible at this point ( 'widget_init' is too early )
-    register_sidebar( $_map['primary'] );
-    register_sidebar( $_map['secondary'] );
-
-    if ( $_has_header_ads )
-      register_sidebar( $_map['header-ads'] );
-    if ( $_has_footer_ads )
-      register_sidebar( $_map['footer-ads'] );
-    if ( $_footer_widgets >= 1 )
-      register_sidebar( $_map['footer-1'] );
-    if ( $_footer_widgets >= 2 )
-      register_sidebar( $_map['footer-2'] );
-    if ( $_footer_widgets >= 3 )
-      register_sidebar( $_map['footer-3'] );
-    if ( $_footer_widgets >= 4 )
-      register_sidebar( $_map['footer-4'] );
   }
 endif;
 add_action( 'widgets_init', 'hu_maybe_register_builtin_widget_zones' );
-
-
-
-//helper
-//must be fired after 'wp' to have access to the $wp_query
-//"real" because left and right sidebars are always registered
-//@return array of locations
-function hu_get_available_widget_loc() {
-  $_available       = array();
-  $_footer_widgets  = intval ( hu_get_option('footer-widgets') );
-  $layout           = hu_layout_class();
-
-  if ( hu_is_checked('header-ads') )
-    $_available[] = 'header-ads';
-  if ( hu_is_checked('footer-ads') )
-    $_available[] = 'footer-ads';
-  if ( $_footer_widgets >= 1 )
-    $_available[] = 'footer-1';
-  if ( $_footer_widgets >= 2 )
-    $_available[] = 'footer-2';
-  if ( $_footer_widgets >= 3 )
-    $_available[] = 'footer-3';
-  if ( $_footer_widgets >= 4 )
-    $_available[] = 'footer-4';
-
-  //for left and right sidebar, it depends on the $layout class computed with options and post_metas
-  if ( $layout != 'col-1c' )
-    $_available[] = 's1';
-  if ( in_array( $layout, array('col-3cm', 'col-3cm', 'col-3cr' ) ) )
-    $_available[] = 's2';
-
-  return $_available;
-}
-
-
-
 
 
 
@@ -308,3 +228,37 @@ endif;
 //add_action( hu_is_customize_preview_frame() ? 'customize_preview_init' : 'widgets_init' , 'hu_maybe_register_custom_widget_zones' );
 add_action( 'widgets_init' , 'hu_maybe_register_custom_widget_zones' );
 //add_action( 'customize_preview_init' , 'hu_maybe_register_custom_widget_zones' );
+
+
+
+//helper
+//must be fired after 'wp' to have access to the $wp_query
+//"real" because left and right sidebars are always registered
+//@return array of locations
+function hu_get_available_widget_loc() {
+  $_available       = array();
+  $_footer_widgets  = intval ( hu_get_option('footer-widgets') );
+  $layout           = hu_layout_class();
+
+  if ( hu_is_checked('header-ads') )
+    $_available[] = 'header-ads';
+  if ( hu_is_checked('footer-ads') )
+    $_available[] = 'footer-ads';
+  if ( $_footer_widgets >= 1 )
+    $_available[] = 'footer-1';
+  if ( $_footer_widgets >= 2 )
+    $_available[] = 'footer-2';
+  if ( $_footer_widgets >= 3 )
+    $_available[] = 'footer-3';
+  if ( $_footer_widgets >= 4 )
+    $_available[] = 'footer-4';
+
+  //for left and right sidebar, it depends on the $layout class computed with options and post_metas
+  if ( $layout != 'col-1c' )
+    $_available[] = 's1';
+  if ( in_array( $layout, array('col-3cm', 'col-3cm', 'col-3cr' ) ) )
+    $_available[] = 's2';
+
+  return $_available;
+}
+
