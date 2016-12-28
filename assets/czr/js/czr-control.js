@@ -4154,9 +4154,9 @@ $.extend( CZRSkopeMths, {
 
           return dfd.promise();
     };//_new_refresh()
-    api.Previewer.prototype.refresh = _new_refresh;
     api.bind( 'czr-skope-started' , function() {
           czr_override_refresh_for_skope();
+          api.Previewer.prototype.refresh = _new_refresh;
     });
     api.czr_getSkopeQueryParams = function( params ) {
           if ( ! api.czr_isChangeSetOn() )
