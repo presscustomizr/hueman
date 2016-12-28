@@ -58,11 +58,7 @@ function hu_doing_customizer_ajax() {
 */
 function hu_is_customizing() {
   //checks if is customizing : two contexts, admin and front (preview frame)
-  return in_array( 1, array(
-    hu_is_customize_left_panel(),
-    hu_is_customize_preview_frame(),
-    hu_doing_customizer_ajax()
-  ) );
+  return hu_is_customize_left_panel() || hu_is_customize_preview_frame() || hu_doing_customizer_ajax();
 }
 
 
