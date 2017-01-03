@@ -141,7 +141,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
         return $matches[0];
       else
         return apply_filters( 'hu_img_smartloaded',
-          str_replace( 'srcset=', 'data-srcset=',
+          str_replace( array('srcset=', 'sizes='), array('data-srcset=', 'data-sizes='),
               sprintf('<img %1$s src="%2$s" data-src="%3$s" %4$s>',
                   $matches[1],
                   $_placeholder,
