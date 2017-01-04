@@ -1,4 +1,4 @@
-# Hueman v3.3.3
+# Hueman v3.3.4
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > Hueman is a mobile friendly WordPress theme for blogs, magazines and business websites. It's been designed to beautifully display pictures and text content, and engineered to be easy to use and fast. The Hueman theme helps you attract and retain more visitors, that's why it's already used by 70K+ active websites in the world and has received hundreds of five stars ratings.
@@ -82,7 +82,10 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 ## Changelog
-= 3.3.3 December 28th 2018 =
+= 3.3.4 January 4th 2017 =
+* fixed : customizer not loading when deprecated link widget is enabled
+
+= 3.3.3 December 28th 2016 =
 * fixed : customizer freezing on Safari 10.0.2, when Hueman Addons enabled with WP 4.7+ (#375)
 * fixed : some widget area could not be controllable for specific pages (#374)
 * improved : code : better syntax for boolean utility hu_is_customizing()
