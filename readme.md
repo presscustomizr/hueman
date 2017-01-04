@@ -82,7 +82,7 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 ## Changelog
-= 3.3.3 December 28th 2018 =
+= 3.3.3 December 28th 2016 =
 * fixed : customizer freezing on Safari 10.0.2, when Hueman Addons enabled with WP 4.7+ (#375)
 * fixed : some widget area could not be controllable for specific pages (#374)
 * improved : code : better syntax for boolean utility hu_is_customizing()

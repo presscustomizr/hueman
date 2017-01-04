@@ -94,6 +94,10 @@ var api = api || wp.customize, $ = $ || jQuery;
       api.czr_skopeReady = $.Deferred();
       api.bind( 'ready' , function() {
             if ( serverControlParams.isSkopOn ) {
+                  api.czr_isLoadingSkope  = new api.Value( false );
+                  api.czr_isLoadingSkope.bind( function( loading ) {
+                        toggleSkopeLoadPane( loading );
+                  });
                   api.czr_skopeBase   = new api.CZR_skopeBase();
                   api.czr_skopeSave   = new api.CZR_skopeSave();
                   api.czr_skopeReset  = new api.CZR_skopeReset();
@@ -101,6 +105,17 @@ var api = api || wp.customize, $ = $ || jQuery;
                   api.czr_skopeReady.done( function() {
                         api.trigger('czr-skope-ready');
                   });
+                  setTimeout( function() {
+                      if ( 'pending' == api.czr_skopeReady.state() )  {
+                            api.czr_skopeBase.toggleTopNote( true, {
+                                  title : 'There was a problem when trying to load the customizer.',//@to_translate
+                                  message : 'Please open your <a href="http://docs.presscustomizr.com/article/272-inspect-your-webpages-in-your-browser-with-the-development-tools" target="_blank">browser debug tool</a>, and report any error message (in red) printed in the javascript console in the <a href="https://wordpress.org/support/theme/hueman" target="_blank">Hueman theme forum</a>.',//@to_translate
+                                  selfCloseAfter : 40000
+                            });
+
+                            api.czr_isLoadingSkope( false );
+                      }
+                  }, 15000);
             }
             if ( serverControlParams.isChangeSetOn ) {
                   api.settings.timeouts.changesetAutoSave = 10000;
@@ -122,6 +137,66 @@ var api = api || wp.customize, $ = $ || jQuery;
                   } );
             } );
       }
+      var toggleSkopeLoadPane = function( loading ) {
+            loading = _.isUndefined( loading ) ? true : loading;
+            var self = this, $skopeLoadingPanel,
+                _render = function() {
+                      var dfd = $.Deferred();
+                      try {
+                          _tmpl =  wp.template( 'czr-skope-pane' )({ is_skope_loading : true });
+                      }
+                      catch(e) {
+                          throw new Error('Error when parsing the the reset skope template : ' + e );//@to_translate
+                      }
+                      $.when( $('#customize-preview').after( $( _tmpl ) ) )
+                            .always( function() {
+                                  dfd.resolve( $( '#czr-skope-pane' ) );
+                            });
+
+                      return dfd.promise();
+                },
+                _destroy = function() {
+                      _.delay( function() {
+                            $.when( $('body').removeClass('czr-skope-pane-open') ).done( function() {
+                                  _.delay( function() {
+                                        $.when( $('body').removeClass('czr-skop-loading') ).done( function() {
+                                              if ( false !== $( '#czr-skope-pane' ).length ) {
+                                                    setTimeout( function() {
+                                                          $( '#czr-skope-pane' ).remove();
+                                                    }, 400 );
+                                              }
+                                        });
+                                  }, 200);
+                            });
+                      }, 50);
+                };
+            if ( 'pending' == api.czr_skopeReady.state() && loading ) {
+                  $('body').addClass('czr-skop-loading');
+                  _render()
+                        .done( function( $_el ) {
+                              $skopeLoadingPanel = $_el;
+                        })
+                        .then( function() {
+                              if ( ! $skopeLoadingPanel.length )
+                                return;
+
+                              _.delay( function() {
+                                    var _height = $('#customize-preview').height();
+                                    $skopeLoadingPanel.css( 'line-height', _height +'px' ).css( 'height', _height + 'px' );
+                                    $('body').addClass('czr-skope-pane-open');
+                              }, 50 );
+                        });
+            }
+
+            api.czr_skopeReady.done( function() {
+                  _destroy();
+            });
+            if ( ! loading ) {
+                  _destroy();
+            }
+      };//toggleSkopeLoadPane
+
+
 
 })( wp.customize , jQuery, _);
 var CZRSkopeBaseMths = CZRSkopeBaseMths || {};
@@ -148,7 +223,7 @@ $.extend( CZRSkopeBaseMths, {
           api.czr_isResettingSkope        = new api.Value( false );
           api.state.create('switching-skope')(false);
           api.czr_dirtyness.callbacks.add( function() { return self.apiDirtynessReact.apply(self, arguments ); } );
-          self.toggleSkopeLoadPane();
+          api.czr_isLoadingSkope( true );
           self.bindAPISettings();
           api.state.bind( 'change', function() {
                 self.setSaveButtonStates();
@@ -223,8 +298,15 @@ $.extend( CZRSkopeBaseMths, {
           api.czr_topNoteVisible = new api.Value( false );
           api.czr_skopeReady.then( function() {
                 api.czr_topNoteVisible.bind( function( visible ) {
-                        self.toggleTopNote( visible, serverControlParams.topNoteParams || {} );
-                        if ( ! visible ) {
+                        var noteParams = {},
+                            _defaultParams = {
+                                  title : '',
+                                  message : '',
+                                  actions : '',
+                                  selfCloseAfter : 20000
+                            };
+                        noteParams = $.extend( _defaultParams , serverControlParams.topNoteParams );
+                        noteParams.actions = function() {
                               var _query = $.extend(
                                     api.previewer.query(),
                                     { nonce:  api.previewer.nonce.save }
@@ -233,7 +315,9 @@ $.extend( CZRSkopeBaseMths, {
                                   .always( function () {})
                                   .fail( function ( response ) { api.consoleLog( 'czr_dismiss_top_note failed', _query, response ); })
                                   .done( function( response ) {});
-                        }
+                        };
+
+                        self.toggleTopNote( visible, noteParams );
                 });
                 _.delay( function() {
                       api.czr_topNoteVisible( ! _.isEmpty( serverControlParams.isTopNoteOn ) || 1 == serverControlParams.isTopNoteOn );
@@ -274,58 +358,6 @@ $.extend( CZRSkopeBaseMths, {
                 });
           });
     },//initialize
-    toggleSkopeLoadPane : function() {
-          var self = this, $skopeLoadingPanel;
-              _render = function() {
-                    var dfd = $.Deferred();
-                    try {
-                        _tmpl =  wp.template( 'czr-skope-pane' )({ is_skope_loading : true });
-                    }
-                    catch(e) {
-                        throw new Error('Error when parsing the the reset skope template : ' + e );//@to_translate
-                    }
-                    $.when( $('#customize-preview').after( $( _tmpl ) ) )
-                          .always( function() {
-                                dfd.resolve( $( '#czr-skope-pane' ) );
-                          });
-
-                    return dfd.promise();
-              };
-
-
-          $('body').addClass('czr-skop-loading');
-          _render()
-                .done( function( $_el ) {
-                      $skopeLoadingPanel = $_el;
-                })
-                .then( function() {
-                      if ( ! $skopeLoadingPanel.length )
-                        return;
-
-                      _.delay( function() {
-                            var _height = $('#customize-preview').height();
-                            $skopeLoadingPanel.css( 'line-height', _height +'px' ).css( 'height', _height + 'px' );
-                            $('body').addClass('czr-skope-pane-open');
-                      }, 50 );
-                });
-
-          api.czr_skopeReady.done( function() {
-                _.delay( function() {
-                      $.when( $('body').removeClass('czr-skope-pane-open') ).done( function() {
-                            _.delay( function() {
-                                  $.when( $('body').removeClass('czr-skop-loading') ).done( function() {
-                                        if ( false !== $skopeLoadingPanel.length ) {
-                                              setTimeout( function() {
-                                                    $skopeLoadingPanel.remove();
-                                              }, 400 );
-                                        }
-                                  });
-                            }, 200);
-                      });
-                }, 50);
-
-          });
-    },
     embedSkopeWrapper : function() {
           var self = this;
           $('#customize-header-actions').append( $('<div/>', {class:'czr-scope-switcher', html:'<div class="czr-skopes-wrapper"></div>'}) );
@@ -494,42 +526,59 @@ $.extend( CZRSkopeBaseMths, {
             var self = this,
                 _defaultParams = {
                       title : '',
-                      message : ''
+                      message : '',
+                      actions : '',
+                      selfCloseAfter : 20000
+                },
+                _renderAndSetup = function() {
+                      $.when( self.renderTopNoteTmpl( noteParams ) ).done( function( $_el ) {
+                            self.welcomeNote = $_el;
+                            _.delay( function() {
+                                $('body').addClass('czr-top-note-open');
+                            }, 200 );
+                            api.CZR_Helpers.setupDOMListeners(
+                                  [ {
+                                        trigger   : 'click keydown',
+                                        selector  : '.czr-top-note-close',
+                                        name      : 'close-top-note',
+                                        actions   : function() {
+                                              _destroy().done( function() {
+                                                    if ( _.isFunction( noteParams.actions ) ) {
+                                                          noteParams.actions();
+                                                    }
+                                              });
+                                        }
+                                  } ] ,
+                                  { dom_el : self.welcomeNote },
+                                  self
+                            );
+                      });
+                },
+                _destroy = function() {
+                      var dfd = $.Deferred();
+                      $('body').removeClass('czr-top-note-open');
+                      if ( self.welcomeNote.length ) {
+                            _.delay( function() {
+                                  self.welcomeNote.remove();
+                                  dfd.resolve();
+                            }, 300 );
+                      } else {
+                          dfd.resolve();
+                      }
+                      return dfd.promise();
                 };
 
             noteParams = $.extend( _defaultParams , noteParams);
 
             if ( visible ) {
-                  $.when( self.renderTopNoteTmpl( noteParams ) ).done( function( $_el ) {
-                        self.welcomeNote = $_el;
-                        _.delay( function() {
-                            $('body').addClass('czr-top-note-open');
-                        }, 200 );
-                        api.CZR_Helpers.setupDOMListeners(
-                              [ {
-                                    trigger   : 'click keydown',
-                                    selector  : '.czr-top-note-close',
-                                    name      : 'close-top-note',
-                                    actions   : function() {
-                                          api.czr_topNoteVisible( false );
-                                    }
-                              } ] ,
-                              { dom_el : self.welcomeNote },
-                              self
-                        );
-                  });
+                  _renderAndSetup();
             } else {
-                  $('body').removeClass('czr-top-note-open');
-                  if ( self.welcomeNote.length ) {
-                        _.delay( function() {
-                              self.welcomeNote.remove();
-                        }, 300 );
-                  }
+                  _destroy();
             }
             _.delay( function() {
-                        api.czr_topNoteVisible( false );
+                        _destroy();
                   },
-                  20000
+                  noteParams.selfCloseAfter || 20000
             );
       },
       renderTopNoteTmpl : function( params ) {
