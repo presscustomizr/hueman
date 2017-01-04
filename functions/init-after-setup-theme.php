@@ -80,7 +80,11 @@ if ( ! function_exists( 'hu_setup' ) ) {
     // Declare WooCommerce support
     add_theme_support( 'woocommerce' );
     // Add theme support for selective refresh for widgets.
-    add_theme_support( 'customize-selective-refresh-widgets' );
+    // Only add if the link manager is not enabled
+    // cf WP core ticket #39451
+    if ( ! get_option( 'link_manager_enabled' ) ) {
+      add_theme_support( 'customize-selective-refresh-widgets' );
+    }
 
     // Thumbnail sizes
     add_image_size( 'thumb-small', 160, 160, true );
