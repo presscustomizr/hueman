@@ -4704,57 +4704,58 @@ $.extend( CZRSkopeMths, {
 })( wp.customize , jQuery, _ );var CZRInputMths = CZRInputMths || {};
 $.extend( CZRInputMths , {
     initialize: function( name, options ) {
-            if ( _.isUndefined(options.item ) || _.isEmpty(options.item) ) {
-              throw new Error('No item assigned to input ' + options.id + '. Aborting');
-            }
-            if ( _.isUndefined(options.module ) ) {
-              throw new Error('No module assigned to input ' + options.id + '. Aborting');
-            }
+          console.log('INPUT OPTIONS', options );
+          if ( _.isUndefined( options.input_parent ) || _.isEmpty(options.input_parent) ) {
+            throw new Error('No input_parent assigned to input ' + options.id + '. Aborting');
+          }
+          if ( _.isUndefined(options.module ) ) {
+            throw new Error('No module assigned to input ' + options.id + '. Aborting');
+          }
 
-            api.Value.prototype.initialize.call( this, null, options );
+          api.Value.prototype.initialize.call( this, null, options );
 
-            var input = this;
-            $.extend( input, options || {} );
-            input.isReady = $.Deferred();
-            if ( ! _.isUndefined(options.input_value) )
-              input.set(options.input_value);
-            input.type_map = {
-                  text : '',
-                  textarea : '',
-                  check : 'setupIcheck',
-                  select : 'setupSelect',
-                  upload : 'setupImageUploader',
-                  color : 'setupColorPicker',
-                  content_picker : 'setupContentPicker',
-                  text_editor    : 'setupTextEditor',
-                  password : ''
-            };
+          var input = this;
+          $.extend( input, options || {} );
+          input.isReady = $.Deferred();
+          if ( ! _.isUndefined(options.input_value) )
+            input.set(options.input_value);
+          input.type_map = {
+                text : '',
+                textarea : '',
+                check : 'setupIcheck',
+                select : 'setupSelect',
+                upload : 'setupImageUploader',
+                color : 'setupColorPicker',
+                content_picker : 'setupContentPicker',
+                text_editor    : 'setupTextEditor',
+                password : ''
+          };
 
-            if ( _.has( input.type_map, input.type ) ) {
-                    var _meth = input.type_map[input.type];
-                    if ( _.isFunction(input[_meth]) )
-                      input[_meth]();
-            }
+          if ( _.has( input.type_map, input.type ) ) {
+                  var _meth = input.type_map[input.type];
+                  if ( _.isFunction(input[_meth]) )
+                    input[_meth]();
+          }
 
-            var trigger_map = {
-                  text : 'keyup',
-                  textarea : 'keyup',
-                  password : 'keyup',
-                  color : 'colorpickerchange',
-                  range : 'input propertychange'
-            };
-            input.input_event_map = [
-                    {
-                      trigger   : $.trim( ['change', trigger_map[input.type] || '' ].join(' ') ),//was 'propertychange change click keyup input',//colorpickerchange is a custom colorpicker event @see method setupColorPicker => otherwise we don't
-                      selector  : 'input[data-type], select[data-type], textarea[data-type]',
-                      name      : 'set_input_value',
-                      actions   : function( obj ) {
-                          if ( ! _.has( input.item, 'syncElements') || ! _.has( input.item.syncElements, input.id ) ) {
-                              throw new Error('WARNING : THE INPUT ' + input.id + ' HAS NO SYNCED ELEMENT.');
-                          }
-                      }//was 'updateInput'
-                    }
-            ];
+          var trigger_map = {
+                text : 'keyup',
+                textarea : 'keyup',
+                password : 'keyup',
+                color : 'colorpickerchange',
+                range : 'input propertychange'
+          };
+          input.input_event_map = [
+                  {
+                    trigger   : $.trim( ['change', trigger_map[input.type] || '' ].join(' ') ),//was 'propertychange change click keyup input',//colorpickerchange is a custom colorpicker event @see method setupColorPicker => otherwise we don't
+                    selector  : 'input[data-type], select[data-type], textarea[data-type]',
+                    name      : 'set_input_value',
+                    actions   : function( obj ) {
+                        if ( ! _.has( input.input_parent, 'syncElements') || ! _.has( input.input_parent.syncElements, input.id ) ) {
+                            throw new Error('WARNING : THE INPUT ' + input.id + ' HAS NO SYNCED ELEMENT.');
+                        }
+                    }//was 'updateInput'
+                  }
+          ];
     },
     ready : function() {
             var input = this;
@@ -4767,7 +4768,7 @@ $.extend( CZRInputMths , {
     },
     setupSynchronizer: function() {
           var input       = this,
-              item        = input.item,
+              input_parent        = input.input_parent,
               $_input_el  = input.container.find('[data-type]'),
               is_textarea = input.container.find('[data-type]').is('textarea');
           if ( is_textarea ) {
@@ -4775,21 +4776,22 @@ $.extend( CZRInputMths , {
           }
 
           var syncElement = new api.Element( $_input_el );
-          item.syncElements = item.syncElements || {};
-          item.syncElements[input.id] = syncElement;//adds the input syncElement to the collection
+          input_parent.syncElements = input_parent.syncElements || {};
+          input_parent.syncElements[input.id] = syncElement;//adds the input syncElement to the collection
           syncElement.sync( input );//sync with the input instance
           syncElement.set( input() );
     },
     inputReact : function( to, from) {
+            console.log('IN INPUT REACT', to, from );
             var input = this,
-                _current_item = input.item(),
-                _new_model        = _.clone( _current_item );//initialize it to the current value
+                _current_input_parent = input.input_parent(),
+                _new_model        = _.clone( _current_input_parent );//initialize it to the current value
             _new_model =  ( ! _.isObject(_new_model) || _.isEmpty(_new_model) ) ? {} : _new_model;
             _new_model[input.id] = to;
-            input.item.set(_new_model);
+            input.input_parent.set( _new_model );
 
             if ( ! _.has( input, 'is_preItemInput' ) ) {
-              input.item.trigger( input.id + ':changed', to );
+              input.input_parent.trigger( input.id + ':changed', to );
             }
     }
 });//$.extend
@@ -5427,7 +5429,7 @@ $.extend( CZRItemMths , {
                     type : $(this).attr('data-input-type'),
                     input_value : _value,
                     container : $(this),
-                    item : item,
+                    input_parent : item,
                     module : module
               } ) );
               item.czr_Input(_id).ready();
@@ -5678,6 +5680,7 @@ $.extend( CZRItemMths , {
 var CZRModMetasMths = CZRModMetasMths || {};
 $.extend( CZRModMetasMths , {
   initialize: function( options ) {
+        console.log('OPITONS IN METAS INITIALIZE', options );
         if ( _.isUndefined(options.module) || _.isEmpty(options.module) ) {
           throw new Error('No module assigned to metas.');
         }
@@ -5685,10 +5688,11 @@ $.extend( CZRModMetasMths , {
         var metas = this;
         api.Value.prototype.initialize.call( metas, null, options );
         metas.isReady = $.Deferred();
-        metas.embedded = $.Deferred();
         metas.contentRendered = $.Deferred();
         $.extend( metas, options || {} );
-        metas.defaultMetasModel = _.clone( options.defaultMetasModel ) || { id : '', title : '' };
+        metas.defaultMetasModel = _.clone( options.defaultMetasModel ) || { is_meta : true };
+
+        console.log('defaultMetasModel', metas.defaultMetasModel );
         var _initial_model = $.extend( metas.defaultMetasModel, options.initial_metas_model );
         metas.set( _initial_model );
         metas.userEventMap = new api.Value( [
@@ -5700,11 +5704,10 @@ $.extend( CZRModMetasMths , {
               }
         ]);
         metas.isReady.done( function() {
+
+              metas.container = $(  '.' + metas.module.control.css_attr.metas_wrapper, metas.module.container );
               metas.callbacks.add( function() { return metas.metasReact.apply(metas, arguments ); } );
-              metas.mayBeRenderMetasWrapper();
-              metas.embedded.done( function() {
-                    metas.metasWrapperViewSetup( _initial_model );
-              });
+              metas.metasWrapperViewSetup( _initial_model );
               metas.contentRendered.done( function() {
                     if ( ! _.has(metas, 'czr_Input') )
                       metas.setupInputCollectionFromDOM();
@@ -5719,6 +5722,8 @@ $.extend( CZRModMetasMths , {
   metasReact : function( to, from ) {
         var metas = this,
             module = metas.module;
+
+        console.log('IN META REACT', to, from );
   },
 
 
@@ -5755,7 +5760,8 @@ $.extend( CZRModMetasMths , {
                     type : $(this).attr('data-input-type'),
                     input_value : _value,
                     container : $(this),
-                    metas : metas,
+                    input_parent : metas,
+                    is_meta : true,
                     module : module
               } ) );
               metas.czr_Input(_id).ready();
@@ -5777,21 +5783,6 @@ $.extend( CZRModMetasMths , {
 var CZRModMetasMths = CZRModMetasMths || {};
 
 $.extend( CZRModMetasMths , {
-  mayBeRenderMetasWrapper : function() {
-        var metas = this;
-
-        if ( 'pending' != metas.embedded.state() )
-          return;
-
-        $.when( metas.renderMetasWrapper() ).done( function( $_container ) {
-              metas.container = $_container;
-              if ( _.isUndefined(metas.container) || ! metas.container.length ) {
-                  throw new Error( 'In mayBeRenderMetasWrapper the Metas view has not been rendered' );
-              } else {
-                  metas.embedded.resolve();
-              }
-        });
-  },
   metasWrapperViewSetup : function( metas_model ) {
           var metas = this,
               module = this.module;
@@ -5799,7 +5790,6 @@ $.extend( CZRModMetasMths , {
           metas_model = metas() || metas.initial_metas_model;//could not be set yet
           metas.czr_MetasState = new api.Value();
           metas.czr_MetasState.set('closed');
-          metas.writeMetasViewTitle();
           var _updateMetasContentDeferred = function( $_content, to, from ) {
                 if ( ! _.isUndefined( $_content ) && false !== $_content.length ) {
                     metas.contentRendered.resolve();
@@ -5815,22 +5805,6 @@ $.extend( CZRModMetasMths , {
           $.when( metas.renderMetasContent( metas_model ) ).done( function( $_metas_content ) {
                 _updateMetasContentDeferred( $_metas_content, true );
           });
-          api.CZR_Helpers.setupDOMListeners(
-                metas.userEventMap(),//actions to execute
-                { model:metas_model, dom_el:metas.container },//model + dom scope
-                metas //instance where to look for the cb methods
-          );
-  },
-  renderMetasWrapper : function( metas_model ) {
-        var metas = this,
-            module = metas.module;
-
-        metas_model = metas_model || metas();
-        $_view_el = $('<li>', { class : module.control.css_attr.metas_wrapper } );
-        module.metasWrapper.append( $_view_el );
-        $_view_el.append( $( '<div/>', { class: module.control.css_attr.metas_content } ) );
-
-        return $_view_el;
   },
   renderMetasContent : function( metas_model ) {
           var metas = this,
@@ -5844,7 +5818,7 @@ $.extend( CZRModMetasMths , {
           var  metas_content_template = wp.template( module.getTemplateEl( 'metasInputList', metas_model ) );
           if ( ! metas_content_template )
             return this;
-          $( metas_content_template( metas_model )).appendTo( $('.' + module.control.css_attr.metas_content, metas.container ) );
+          $( metas_content_template( metas_model )).appendTo( metas.container );
 
           return $( $( metas_content_template( metas_model )), metas.container );
   },
@@ -5880,6 +5854,7 @@ var CZRModuleMths = CZRModuleMths || {};
 $.extend( CZRModuleMths, {
 
   initialize: function( id, constructorOptions ) {
+        console.log('MODULE CONSTRUCTOR OPTIONS :', constructorOptions );
         if ( _.isUndefined(constructorOptions.control) || _.isEmpty(constructorOptions.control) ) {
             throw new Error('No control assigned to module ' + id );
         }
@@ -5892,6 +5867,7 @@ $.extend( CZRModuleMths, {
               rudItemPart : 'czr-rud-item-part',//read, update, delete
               ruItemPart : 'czr-ru-item-part',//read, update
               itemInputList : '',//is specific for each crud module
+              metasInputList : '',//is specific for each module
               AlertPart : 'czr-rud-item-alert-part',//used both for items and modules removal
 
         } );
@@ -5908,6 +5884,14 @@ $.extend( CZRModuleMths, {
                     module.itemsWrapper = $_module_items_wrapper;
               });
         });
+        module.defaultAPImetasModel = {
+              initial_metas_model : {},
+              defaultMetasModel : {},
+              control : {},//control instance
+              module : {}//module instance
+        };
+        module.defaultMetasModel = {};
+        module.metasConstructor = api.CZRModMetas;
         module.itemCollection = new api.Value();
         module.itemCollection.set([]);
         module.defaultAPIitemModel = {
@@ -5940,8 +5924,17 @@ $.extend( CZRModuleMths, {
               if ( ! module.isInSektion() )
                 module.populateSavedItemCollection();
               if ( module.hasMetas() ) {
-                    module.czr_Metas = new api.CZRModMetas( { module : module } );
+                    var metas_candidate = module.prepareMetasForAPI( {} );
+                    module.czr_Metas = new module.metasConstructor( metas_candidate );
                     module.czr_Metas.ready();
+                    module.czr_Metas.callbacks.add( function( to, from ) {
+                          console.log("MODULE META CHANGED", to, from, module() );
+                          var _current_model = module(),
+                              _new_model = $.extend( true, {}, _current_model );
+                          _new_model.metas = to;
+                          module.isDirty(true);
+                          module( _new_model, {} );
+                    });
               }
         });
   },
@@ -6009,6 +6002,40 @@ $.extend( CZRModuleMths, {
 
   hasMetas : function() {
         return api.CZR_Helpers.hasModuleMetas( null, this );
+  },
+  prepareMetasForAPI : function( metas_candidate ) {
+        var module = this,
+            api_ready_metas = {};
+        metas_candidate = _.isObject( metas_candidate ) ? metas_candidate : {};
+
+        _.each( module.defaultAPImetasModel, function( _value, _key ) {
+              var _candidate_val = metas_candidate[_key];
+              switch( _key ) {
+                    case 'initial_metas_model' :
+                        _.each( module.getDefaultMetasModel() , function( _value, _property ) {
+                              if ( ! _.has( metas_candidate, _property) )
+                                 metas_candidate[_property] = _value;
+                        });
+                        api_ready_metas[_key] = metas_candidate;
+
+                    break;
+                    case  'defaultMetasModel' :
+                        api_ready_metas[_key] = _.clone( module.defaultMetasModel );
+                    break;
+                    case  'control' :
+                        api_ready_metas[_key] = module.control;
+                    break;
+                    case  'module' :
+                        api_ready_metas[_key] = module;
+                    break;
+              }//switch
+        });
+        console.log('IN PREPARE METAS FOR API : ', module.defaultAPImetasModel, module.getDefaultMetasModel() );
+        return api_ready_metas;
+  },
+  getDefaultMetasModel : function( id ) {
+          var module = this;
+          return $.extend( _.clone( module.defaultMetasModel ), { is_meta : true } );
   }
 });//$.extend//CZRBaseControlMths//MULTI CONTROL CLASS
 
@@ -6016,16 +6043,28 @@ var CZRModuleMths = CZRModuleMths || {};
 
 $.extend( CZRModuleMths, {
   populateSavedItemCollection : function() {
-          var module = this;
+          var module = this, _saved_items = [];
           if ( ! _.isArray( module().items ) ) {
-              throw new Error( 'The saved items collection must be an array in module :' + module.id );
+              throw new Error( 'populateSavedItemCollection : The saved items collection must be an array in module :' + module.id );
           }
           _.each( module().items, function( item_candidate , key ) {
+                if ( _.has( item_candidate, 'id') && ! _.has( item_candidate, 'is_meta' ) ) {
+                      _saved_items.push( item_candidate );
+                }
+                if ( module.hasMetas() && 0*0 === key ) {
+                      if ( _.has( item_candidate, 'id') ) {
+                            throw new Error( 'populateSavedItemCollection : ' + module.id + ' has no metas defined while it should.' );
+                      }
+                }
+          });
+
+          console.log('SAVED ITEMS TO INSTANTIATE', module().items, _saved_items );
+          _.each( _saved_items, function( item_candidate , key ) {
                 module.instantiateItem( item_candidate ).ready();
           });
-          _.each( module().items, function( _item ) {
+          _.each( _saved_items, function( _item ) {
                 if ( _.isUndefined( _.findWhere( module.itemCollection(), _item.id ) ) ) {
-                  throw new Error( 'The saved items have not been properly populated in module : ' + module.id );
+                      throw new Error( 'populateSavedItemCollection : The saved items have not been properly populated in module : ' + module.id );
                 }
           });
 
@@ -6065,7 +6104,7 @@ $.extend( CZRModuleMths, {
                           }
                       break;
                       case 'initial_item_model' :
-                          _.each( module.getDefaultModel() , function( _value, _property ) {
+                          _.each( module.getDefaultItemModel() , function( _value, _property ) {
                                 if ( ! _.has( item_candidate, _property) )
                                    item_candidate[_property] = _value;
                           });
@@ -6173,7 +6212,7 @@ $.extend( CZRModuleMths, {
 var CZRModuleMths = CZRModuleMths || {};
 
 $.extend( CZRModuleMths, {
-  getDefaultModel : function( id ) {
+  getDefaultItemModel : function( id ) {
           var module = this;
           return $.extend( _.clone( module.defaultItemModel ), { id : id || '' } );
   },
@@ -6194,9 +6233,9 @@ $.extend( CZRModuleMths, {
           if ( _item && ! _.isEmpty( _item) )
             _new_item = $.extend( _item, { id : _id } );
           else
-            _new_item = this.getDefaultModel( _id );
+            _new_item = this.getDefaultItemModel( _id );
           if ( _.has(_new_item, 'id') && module._isItemIdPossible(_id) ) {
-                _.map( module.getDefaultModel() , function( value, property ){
+                _.map( module.getDefaultItemModel() , function( value, property ){
                       if ( ! _.has(_new_item, property) )
                         _new_item[property] = value;
                 });
@@ -6242,6 +6281,9 @@ $.extend( CZRModuleMths, {
                   break;
                 case 'ruItemPart' :
                   _el = module.ruItemPart;
+                  break;
+                case 'metasInputList' :
+                  _el = module.metasInputList;
                   break;
                 case 'itemInputList' :
                   _el = module.itemInputList;
@@ -6353,7 +6395,7 @@ $.extend( CZRDynModuleMths, {
           var module = this;
           api.consoleLog( 'MODULE READY IN DYN MODULE CLASS : ', module.id );
           module.setupDOMListeners( module.userEventMap() , { dom_el : module.container } );
-          module.preItem = new api.Value( module.getDefaultModel() );
+          module.preItem = new api.Value( module.getDefaultItemModel() );
           module.preItemEmbedded = $.Deferred();//was module.czr_preItem.create('item_content');
           module.preItemEmbedded.done( function() {
                 module.setupPreItemInputCollection();
@@ -6376,7 +6418,7 @@ $.extend( CZRDynModuleMths, {
                             id : _id,
                             type : $(this).attr('data-input-type'),
                             container : $(this),
-                            item : module.preItem,
+                            input_parent : module.preItem,
                             module : module,
                             is_preItemInput : true
                       } ) );
@@ -6414,12 +6456,12 @@ $.extend( CZRDynModuleMths, {
 
   _resetPreItemInputs : function() {
           var module = this;
-          module.preItem.set( module.getDefaultModel() );
+          module.preItem.set( module.getDefaultItemModel() );
           module.preItem.czr_Input.each( function( input_instance ) {
                 var _input_id = input_instance.id;
-                if ( ! _.has( module.getDefaultModel(), _input_id ) )
+                if ( ! _.has( module.getDefaultItemModel(), _input_id ) )
                   return;
-                input_instance.set( module.getDefaultModel()._input_id );
+                input_instance.set( module.getDefaultItemModel()._input_id );
           });
   }
 
@@ -6570,7 +6612,7 @@ $.extend( CZRSocialModuleMths, {
   CZRSocialsInputMths : {
           setupSelect : function() {
                 var input      = this,
-                    item = input.item,
+                    item = input.input_parent,
                     module     = input.module,
                     socialList = module.social_icons,
                     _model = item();
@@ -6623,7 +6665,7 @@ $.extend( CZRSocialModuleMths, {
 
         setupColorPicker : function( obj ) {
                 var input      = this,
-                    item = input.item,
+                    item = input.input_parent,
                     module     = input.module;
 
                 $( 'input[data-type="social-color"]', input.container ).wpColorPicker( {
@@ -6808,7 +6850,7 @@ $.extend( CZRWidgetAreaModuleMths, {
           _setupContextSelect : function() {
                   var input      = this,
                       input_contexts = input(),
-                      item = input.item,
+                      item = input.input_parent,
                       module     = input.module;
                   _.each( module.contexts, function( title, key ) {
                         var _attributes = {
@@ -6825,7 +6867,7 @@ $.extend( CZRWidgetAreaModuleMths, {
           _setupLocationSelect : function(refresh ) {
                   var input      = this,
                       input_locations = input(),
-                      item = input.item,
+                      item = input.input_parent,
                       module     = input.module,
                       available_locs = api.sidebar_insights('available_locations')();
                   if ( ! $( 'select[data-type="locations"]', input.container ).children().length ) {
@@ -6861,7 +6903,7 @@ $.extend( CZRWidgetAreaModuleMths, {
           },
           mayBeDisplayModelAlert : function() {
                   var input      = this,
-                      item = input.item,
+                      item = input.input_parent,
                       module     = input.module;
                   if ( ! _.has( item(), 'locations') || _.isEmpty( item().locations ) )
                     return;
@@ -7227,7 +7269,7 @@ $.extend( CZRWidgetAreaModuleMths, {
               }
           }, 50);
   },
-  getDefaultModel : function(id) {
+  getDefaultItemModel : function(id) {
           var module = this,
               _current_collection = module.itemCollection(),
               _default = _.clone( module.defaultItemModel ),
@@ -7333,7 +7375,7 @@ $.extend( CZRBodyBgModuleMths, {
                         'background-attachment' : 'bg_attachment_options',
                         'background-position' : 'bg_position_options'
                       },
-                      item          = input.item,
+                      item          = input.input_parent,
                       serverParams  = serverControlParams.body_bg_module_params,
                       options       = {},
                       module        = input.module;
@@ -7518,26 +7560,42 @@ $.extend( CZRBaseModuleControlMths, {
   },
   getSavedModules : function() {
           var control = this,
-              savedModules = [],
-              _module_type = control.params.module_type;
+              _savedModulesCandidates = [],
+              _module_type = control.params.module_type,
+              _raw_saved_module_val = [],
+              _saved_items = [],
+              _saved_metas = {};
           if ( control.isMultiModuleControl() ) {
-              savedModules = $.extend( true, [], api(control.id)() );//deep clone
+              _savedModulesCandidates = $.extend( true, [], api( control.id )() );//deep clone
           } else {
-              if ( api.CZR_Helpers.isMultiItemModule( _module_type ) && ! _.isEmpty( api(control.id)() ) && ! _.isObject( api(control.id)() ) ) {
+              if ( api.CZR_Helpers.isMultiItemModule( _module_type ) && ! _.isEmpty( api( control.id )() ) && ! _.isObject( api( control.id )() ) ) {
                   api.consoleLog('Module Control Init for ' + control.id + '  : a mono item module control value should be an object if not empty.');
               }
-              var _saved_items = _.isArray( api(control.id)() ) ? api(control.id)() : [ api(control.id)() ];
-              savedModules.push(
+              _raw_saved_module_val = _.isArray( api( control.id )() ) ? api( control.id )() : [ api( control.id )() ];
+
+              _.each( _raw_saved_module_val, function( item_or_metas_candidate , key ) {
+                    if ( api.CZR_Helpers.hasModuleMetas( _module_type ) && 0*0 === key ) {
+                          if ( _.has( item_or_metas_candidate, 'id') ) {
+                                throw new Error( 'getSavedModules : the module ' + _module_type + ' in control ' + control.id + ' has no metas defined while it should.' );
+                          } else {
+                                _saved_metas = item_or_metas_candidate;
+                          }
+                    }
+                    if ( _.has( item_or_metas_candidate, 'id') && ! _.has( item_or_metas_candidate, 'is_meta' ) ) {
+                          _saved_items.push( item_or_metas_candidate );
+                    }
+              });
+              _savedModulesCandidates.push(
                     {
                           id : api.CZR_Helpers.getOptionName( control.id ) + '_' + control.params.type,
                           module_type : control.params.module_type,
                           section : control.section(),
-                          metas : {},
-                          items   : $.extend( true, [] , _saved_items )//deep clone//must be a collection [] of items
+                          metas : $.extend( true, {} , _saved_metas ),//disconnect with a deep cloning
+                          items : $.extend( true, [] , _saved_items )//disconnect with a deep cloning
                     }
               );
           }
-          return savedModules;
+          return _savedModulesCandidates;
   },
   isModuleRegistered : function( id_candidate ) {
         var control = this;
@@ -7553,7 +7611,6 @@ $.extend( CZRBaseModuleControlMths, {
           if ( ! _.has( module,'id') ) {
             throw new Error('CZRModule::instantiateModule() : a module has no id and could not be added in the collection of : ' + this.id +'. Aborted.' );
           }
-
           var control = this;
           if ( _.isUndefined(constructor) || _.isEmpty(constructor) ) {
               constructor = control.getModuleConstructor( module );
@@ -7629,7 +7686,7 @@ $.extend( CZRBaseModuleControlMths, {
                     break;
                     case 'metas' :
                         if ( ! _.isObject( _candidate_val )  ) {
-                            throw new Error('prepareModuleForAPI : a module metas propoerty must be an object');
+                            throw new Error('prepareModuleForAPI : a module metas property must be an object');
                         }
                         api_ready_module[_key] = _candidate_val;
                     break;
@@ -7760,7 +7817,7 @@ $.extend( CZRBaseModuleControlMths, {
           if ( ! _.has(obj, 'module') ) {
             throw new Error('updateModulesCollection, no module provided ' + control.id + '. Aborting');
           }
-          var module_api_ready = control.prepareModuleForAPI( _.clone(obj.module) );
+          var module_api_ready = control.prepareModuleForAPI( _.clone( obj.module ) );
           if ( _.findWhere( _new_collection, { id : module_api_ready.id } ) ) {
                 _.each( _current_collection , function( _elt, _ind ) {
                       if ( _elt.id != module_api_ready.id )
@@ -7779,6 +7836,7 @@ $.extend( CZRBaseModuleControlMths, {
           control.czr_moduleCollection.set( _new_collection, _params );
   },
   moduleCollectionReact : function( to, from, data ) {
+        console.log('MODULE COLLECTION REACT', to, from, data );
         var control = this,
             is_module_added = _.size(to) > _.size(from),
             is_module_removed = _.size(from) > _.size(to),
@@ -7798,12 +7856,14 @@ $.extend( CZRBaseModuleControlMths, {
               return;
         }
         else {
-              api(this.id).set( control.filterModuleCollectionBeforeAjax(to), data );
+              console.log('Values to set', control.filterModuleCollectionBeforeAjax( to ) );
+              api(this.id).set( control.filterModuleCollectionBeforeAjax( to ), data );
         }
   },
   filterModuleCollectionBeforeAjax : function( collection ) {
           var control = this,
-              _filtered_collection = $.extend( true, [], collection );
+              _filtered_collection = $.extend( true, [], collection ),
+              _to_return;
 
           _.each( collection , function( _mod, _key ) {
                 var db_ready_mod = $.extend( true, {}, _mod );
@@ -7827,11 +7887,8 @@ $.extend( CZRBaseModuleControlMths, {
                 if ( ! _.isArray( module_instance().items ) ) {
                   throw new Error('The module ' + module_id + ' should be an array in control : ' + control.id );
                 }
-                if ( module_instance.isMultiItem() )
-                  return module_instance().items;
-                else {
-                  return module_instance().items[0] || [];
-                }
+                _to_return = module_instance.isMultiItem() ? module_instance().items : ( module_instance().items[0] || [] );
+                return module_instance.hasMetas() ? _.union( [ module_instance().metas ] , _to_return ) : _to_return;
           }
   },
   prepareModuleForDB : function ( module_db_candidate ) {
@@ -8419,6 +8476,7 @@ $.extend( CZRLayoutSelectMths , {
       $.extend( CZRBaseControlMths, api.Events );
       $.extend( CZRModuleMths, api.Events );
       $.extend( CZRItemMths, api.Events );
+      $.extend( CZRModMetasMths, api.Events );
       $.extend( CZRSkopeBaseMths, api.Events );
       $.extend( CZRSkopeMths, api.Events );
       $.extend( CZRBaseControlMths, api.CZR_Helpers );
