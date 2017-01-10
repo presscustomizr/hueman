@@ -797,6 +797,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
             'sub_set_input'       => 'czr-input',
             'img_upload_container' => 'czr-imgup-container',
 
+            'metas_wrapper'     => 'czr-metas-wrapper',
             'items_wrapper'     => 'czr-items-wrapper',
             'single_item'        => 'czr-single-item',
             'item_content'      => 'czr-item-content',
