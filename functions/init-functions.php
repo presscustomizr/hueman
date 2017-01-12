@@ -177,11 +177,24 @@ function hu_get_raw_option( $opt_name = null, $opt_group = null ) {
 /**
 * helper
 * Check if we are displaying posts lists or front page
+* => not real home
 * @return  bool
 */
 function hu_is_home() {
   //get info whether the front page is a list of last posts or a page
   return is_home() || ( is_home() && ( 'posts' == get_option( 'show_on_front' ) || '__nothing__' == get_option( 'show_on_front' ) ) ) || is_front_page();
+}
+
+
+/**
+* helper
+* Check if we are really on home, all cases covered
+* @return  bool
+*/
+function hu_is_real_home() {
+  return ( is_home() && ( 'posts' == get_option( 'show_on_front' ) || '__nothing__' == get_option( 'show_on_front' ) ) )
+  || ( 0 == get_option( 'page_on_front' ) && 'page' == get_option( 'show_on_front' ) )//<= this is the case when the user want to display a page on home but did not pick a page yet
+  || is_front_page();
 }
 
 /**
