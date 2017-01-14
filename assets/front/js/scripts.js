@@ -597,30 +597,44 @@ if (!Array.prototype.map) {
       };
 
   function Plugin( element, options ) {
-    this.container = element;
-    this.options = $.extend( {}, defaults, options) ;
-    this._defaults = defaults;
-    this._name = pluginName;
+    var self = this;
+    this.container  = element;
+    this.options    = $.extend( {}, defaults, options) ;
+    this._defaults  = defaults;
+    this._name      = pluginName;
+    this._customEvt = $.isArray(self.options.oncustom) ? self.options.oncustom : self.options.oncustom.split(' ');
     this.init();
   }
 
   //can access this.element and this.option
   //@return void
   Plugin.prototype.init = function () {
-    var self = this;
+    var self = this,
+        _do = function() {
+            //applies golden ratio to all containers ( even if there are no images in container )
+            self._maybe_apply_golden_r();
 
-    //applies golden ratio to all containers ( even if there are no images in container )
-    this._maybe_apply_golden_r();
+            //parses imgs ( if any ) in current container
+            var $_imgs = $( self.options.imgSel , self.container );
 
-    //parses imgs ( if any ) in current container
-    var $_imgs = $( this.options.imgSel , this.container );
+            //if no images or centering is not active, only handle the golden ratio on resize event
+            if ( ! $_imgs.length || ! self.options.enableCentering ) {
+              //creates a golden ratio fn on resize
+              $(window).bind( 'resize' , {} , function( evt ) { self._maybe_apply_golden_r( evt ); });
+            } else {
+              self._parse_imgs($_imgs);
+            }
+        };
 
-    //if no images or centering is not active, only handle the golden ratio on resize event
-    if ( ! $_imgs.length || ! this.options.enableCentering ) {
-      //creates a golden ratio fn on resize
-      $(window).bind( 'resize' , {} , function( evt ) { self._maybe_apply_golden_r( evt ); });
-    } else {
-      this._parse_imgs($_imgs);
+    //fire
+    _do();
+
+    //bind the container element with custom events if any
+    //( the images will also be bound )
+    if ( $.isArray( self._customEvt ) ) {
+          self._customEvt.map( function( evt ) {
+              $( self.container ).bind( evt, {} , _do );
+          } );
     }
   };
 
@@ -662,8 +676,8 @@ if (!Array.prototype.map) {
     var self = this;
 
     $_imgs.each(function ( ind, img ) {
-      self._pre_img_cent( $(img) );
-      self._bind_evt ( $(img) );
+        self._pre_img_cent( $(img) );
+        self._bind_evt ( $(img) );
     });
   };
 
@@ -671,25 +685,27 @@ if (!Array.prototype.map) {
   //@return void
   //map custom events if any
   Plugin.prototype._bind_evt = function( $_img ) {
-    var self = this,
-        _customEvt = $.isArray(this.options.oncustom) ? this.options.oncustom : this.options.oncustom.split(' ');
+    var self = this;
 
     //WINDOW RESIZE EVENT ACTIONS
     //GOLDEN RATIO (before image centering)
     $(window).bind( 'resize' , {} , function( evt ) { self._maybe_apply_golden_r( evt ); });
 
     //IMG CENTERING FN
-    if ( this.options.onresize )
-      $(window).resize(function() {
-        self._pre_img_cent( $_img );
-      });
-
+    if ( this.options.onresize ) {
+        $(window).resize(function() {
+            self._pre_img_cent( $_img );
+        });
+    }
     //CUSTOM EVENTS ACTIONS
-    _customEvt.map( function( evt ) {
-      $_img.bind( evt, {} , function( evt ) {
-        self._pre_img_cent( $_img );
-      } );
-    } );
+    //bind img
+    if ( $.isArray( self._customEvt ) ) {
+        self._customEvt.map( function( evt ) {
+            $_img.bind( evt, {} , function( evt ) {
+                self._pre_img_cent( $_img );
+            } );
+        } );
+    }
   };
 
 
