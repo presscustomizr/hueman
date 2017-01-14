@@ -2501,7 +2501,7 @@ var czrapp = czrapp || {};
         _instance.init();
 
       //fire the array of methods on load
-      _instance.emit(methods);
+      _instance.emit( methods );
 
       //return czrapp for chaining
       return czrapp;
@@ -2662,28 +2662,28 @@ var czrapp = czrapp || {};
      * @return {[type]}      [description]
      */
     loadCzr : function( args ) {
-      var that = this,
-          _disabled = that.localized._disabled || {};
+            var that = this,
+                _disabled = that.localized._disabled || {};
 
-      _.each( args, function( methods, key ) {
-        //normalize methods into an array if string
-        methods = 'string' == typeof(methods) ? [methods] : methods;
+            _.each( args, function( methods, key ) {
+                  //normalize methods into an array if string
+                  methods = 'string' == typeof(methods) ? [methods] : methods;
 
-        //key is the constructor
-        //check if the constructor has been disabled => empty array of methods
-        if ( that.localized._disabled[key] && _.isEmpty(that.localized._disabled[key]) )
-          return;
+                  //key is the constructor
+                  //check if the constructor has been disabled => empty array of methods
+                  if ( that.localized._disabled[key] && _.isEmpty(that.localized._disabled[key]) )
+                    return;
 
-        if ( that.localized._disabled[key] && ! _.isEmpty(that.localized._disabled[key]) ) {
-          var _to_remove = that.localized._disabled[key];
-          _to_remove = 'string' == typeof(_to_remove) ? [_to_remove] : _to_remove;
-          methods = _.difference( methods, _to_remove );
-        }
-        //chain various treatments
-        czrapp._inherits(key)._instanciates(key)._addMethods(key)._init(key, methods);
-      });//_.each()
+                  if ( that.localized._disabled[key] && ! _.isEmpty(that.localized._disabled[key]) ) {
+                        var _to_remove = that.localized._disabled[key];
+                        _to_remove = 'string' == typeof(_to_remove) ? [_to_remove] : _to_remove;
+                        methods = _.difference( methods, _to_remove );
+                  }
+                  //chain various treatments
+                  czrapp._inherits(key)._instanciates(key)._addMethods(key)._init(key, methods);
+            });//_.each()
 
-      czrapp.trigger('czrapp-ready', this);
+            $('body').trigger('czrapp-ready', this);
     }//loadCzr
 
   });//extend
@@ -2700,11 +2700,11 @@ var czrapp = czrapp || {};
       cbs = _.isArray(cbs) ? cbs : [cbs];
       var self = this;
       _.map( cbs, function(cb) {
-        if ( 'function' == typeof(self[cb]) ) {
-          args = 'undefined' == typeof( args ) ? Array() : args ;
-          self[cb].apply(self, args );
-          czrapp.trigger( cb, _.object( _.keys(args), args ) );
-        }
+          if ( 'function' == typeof(self[cb]) ) {
+              args = 'undefined' == typeof( args ) ? Array() : args ;
+              self[cb].apply(self, args );
+              czrapp.trigger( cb, _.object( _.keys(args), args ) );
+          }
       });//_.map
     },
 
