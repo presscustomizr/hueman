@@ -8,7 +8,6 @@ function hu_print_module_templates() {
   ?>
 
     <script type="text/html" id="tmpl-czr-crud-module-part">
-      <div class="<?php echo $css_attr['mod_opt_wrapper']; ?>"></div>
       <button class="<?php echo $css_attr['open_pre_add_btn']; ?>"><?php _e('Add New', 'hueman'); ?> <span class="fa fa-plus-square"></span></button>
       <div class="<?php echo $css_attr['pre_add_wrapper']; ?>">
         <div class="<?php echo $css_attr['pre_add_success']; ?>"><p></p></div>

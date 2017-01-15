@@ -202,7 +202,6 @@ li#customize-control-custom_css textarea {
 
 
 /* PANELS AND SECTIONS TITLES */
-
 .wp-customizer .control-section.control-panel .accordion-section-title .panel-title {
   font-size: 24px;
   font-weight: inherit;
@@ -254,6 +253,16 @@ li#customize-control-custom_css textarea {
   line-height: 23px;
 }
 
+
+/* CONTROLS */
+li[id*="customize-control-"] {
+    margin: 8px 0;
+    padding: 2%;
+    width: 96%;
+    border: 1px solid #ddd;
+    box-shadow: 1px 1px 2px 1px rgba(204, 204, 204, 0.4);
+    -webkit-box-shadow: 1px 1px 2px 1px rgba(204, 204, 204, 0.4);
+}
 
 /* GENERAL STYLE */
 .control-section .accordion-section-content {
@@ -1000,6 +1009,80 @@ span.czr-panel-subtitle {
   font-size: 11px;
   font-style: italic;
 }
+
+
+/* MODULE OPTIONS ICON AND PANEL*/
+.czr-toggle-modopt {
+  color: #95a5a6;
+  text-shadow: 1px 1px 0px white;
+  -webkit-transition: color 0.4s;
+  transition: color 0.4s;
+  position: absolute;
+  right: 0;
+  padding-left: 3px;
+  font-size: 25px;
+  line-height: 24px;
+}
+
+.czr-modopt-visible .czr-toggle-modopt, .czr-toggle-modopt:hover {
+  color: #3b8dbd;
+}
+
+body.czr-editing-modopt #customize-preview  {
+  opacity: 0.7;
+}
+body #customize-controls {
+  -webkit-transition: opacity .4s ease-in-out;
+  -moz-transition: opacity .4s ease-in-out;
+  -ms-transition: opacity .4s ease-in-out;
+  -o-transition: opacity .4s ease-in-out;
+  transition: opacity .4s ease-in-out;
+}
+body.czr-editing-modopt #customize-controls  {
+  opacity: 0.4;
+}
+.czr-mod-opt-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -301px;
+  /*visibility: hidden;*/
+  opacity: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin: 0;
+  z-index: 4;
+  background: rgba(0, 0, 0, 0.47);
+  -webkit-transition: all .18s ease-in-out;
+  -moz-transition: all .18s ease-in-out;
+  -ms-transition: all .18s ease-in-out;
+  -o-transition: all .18s ease-in-out;
+  transition: all .18s ease-in-out;
+  border-right: 1px solid #4c4c4c;
+}
+.czr-mod-opt-wrapper {
+  width: 45%;
+  min-width: 300px;
+  padding: 6%;
+  color: #fff;
+}
+body.czr-editing-modopt .czr-mod-opt-wrapper {
+  left: 0;
+  visibility: visible;
+  opacity: 1;
+}
+.czr-close-modopt {
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 31px;
+  cursor: pointer;
+}
+
+/* OPTIONS STYLE */
+.czr-mod-opt-wrapper .czr-notice {
+  color: #fff;
+}
 .in-sub-panel #czr-donate-customizer,
  .in-sub-panel .czr-cta-wrap {
    left: -450px;
@@ -1686,6 +1769,9 @@ body.czr-customize-content_editor-pane-resize #customize-preview:before {
     box-shadow: none;
     cursor: pointer;
     -webkit-transition: left .18s ease-in-out, color .1s ease-in-out, background .1s ease-in-out;
+    -moz-transition: left .18s ease-in-out, color .1s ease-in-out, background .1s ease-in-out;
+    -ms-transition: left .18s ease-in-out, color .1s ease-in-out, background .1s ease-in-out;
+    -o-transition: left .18s ease-in-out, color .1s ease-in-out, background .1s ease-in-out;
     transition: left .18s ease-in-out, color .1s ease-in-out, background .1s ease-in-out;
 }
 
@@ -1796,6 +1882,9 @@ li.czr-single-module.gu-mirror, li.czr-module-candidate.gu-mirror {
   z-index: 4;
   background: rgba(0, 0, 0, 0.47);
   -webkit-transition: all .18s;
+  -moz-transition: all .18s;
+  -ms-transition: all .18s;
+  -o-transition: all .18s;
   transition: all .18s;
   border-right: 1px solid #ddd;
 }
@@ -1826,8 +1915,11 @@ body.czr-adding-module #customize-preview {
   top: -1px;
   font: normal 20px/1 dashicons;
   vertical-align: middle;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  -webkit-transition: all .2s;
+  -moz-transition: all .2s;
+  -ms-transition: all .2s;
+  -o-transition: all .2s;
+  transition: all .2s;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -1925,7 +2017,10 @@ body.czr-adding-module .add-new-module:before {
   margin: 0;
   z-index: 4;
   background: rgba(0, 0, 0, 0.47);
-  -webkit-transition: all .18s;
+ -webkit-transition: all .18s;
+  -moz-transition: all .18s;
+  -ms-transition: all .18s;
+  -o-transition: all .18s;
   transition: all .18s;
   border-right: 1px solid #ddd;
   color: #fff;
