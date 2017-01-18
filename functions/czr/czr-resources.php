@@ -10,6 +10,9 @@ add_action( 'customize_preview_init'                    , 'hu_add_preview_footer
 //Add the control dependencies
 add_action( 'customize_controls_print_footer_scripts'   , 'hu_extend_ctrl_dependencies', 10 );
 
+//Add various dom ready
+add_action( 'customize_controls_print_footer_scripts'   , 'hu_add_various_dom_ready_actions', 10 );
+
 //hook : customize_preview_init
 function hu_customize_preview_js() {
   global $wp_version;
@@ -498,6 +501,24 @@ function hu_extend_ctrl_dependencies() {
   <?php
 }
 
+function hu_add_various_dom_ready_actions() {
+  ?>
+  <script id="control-various-dom-ready" type="text/javascript">
+    (function (wp, $) {
+        $( function($) {
+            var api = wp.customize || api;
+
+            /* WIDGET PANEL ICON */
+            if ( $('.control-panel-widgets').find('.accordion-section-title').first().length ) {
+                  $('.control-panel-widgets').find('.accordion-section-title')
+                        .first()
+                        .prepend( $('<span/>', {class:'fa fa-magic'} ) );
+            }
+        });//end of $( function($) ) dom ready
+    }) ( wp, jQuery );
+  </script>
+  <?php
+}
 
 function hu_get_translated_strings() {
   return apply_filters('controls_translated_strings',
