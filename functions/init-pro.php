@@ -22,9 +22,7 @@ if ( ! class_exists( 'HU_init_pro' ) ) :
         $this -> _pro_classes = array(
           'TC_activation_key'          => array('/addons/activation-key/activation/class_activation_key.php', array(  THEMENAME, 'hueman_pro' , HUEMAN_VER )),
           'TC_theme_updater'           => array('/addons/activation-key/updates/class_theme_updater.php'),
-          'TC_theme_check_updates'     => array('/addons/activation-key/updates/class_theme_check_updates.php', array(  THEMENAME , 'hueman_pro' , HUEMAN_VER )),
-          'TC_wfc'                     => array('/addons/wfc/wordpress-font-customizer.php'),
-          'TC_fpu'                     => array('/addons/fpu/tc_unlimited_featured_pages.php'),
+          'TC_theme_check_updates'     => array('/addons/activation-key/updates/class_theme_check_updates.php', array(  THEMENAME , 'hueman_pro' , HUEMAN_VER ))
         );
         //set files to load according to the context : admin / front / customize
         add_filter( 'hu_get_files_to_load_pro' , array( $this , 'hu_set_files_to_load_pro' ) );

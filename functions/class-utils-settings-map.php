@@ -822,7 +822,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __("Single - Related Posts", 'hueman'),
                 'section'   => 'content_single_sec',
-                'type'      => 'select',//@todo create a radio type
+                'type'      => 'select',
                 'choices' => array(
                   '1'           => __( 'Disable' , 'hueman' ),
                   'categories'  => __( 'Related by categories' , 'hueman' ),
@@ -836,7 +836,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __("Single - Post Navigation", 'hueman'),
                 'section'   => 'content_single_sec',
-                'type'      => 'select',//@todo create a radio type
+                'type'      => 'select',
                 'choices' => array(
                   '1'           => __( 'Disable' , 'hueman' ),
                   's1'          => __( 'Left Sidebar' , 'hueman' ),

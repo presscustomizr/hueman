@@ -56,41 +56,41 @@ function hu_customize_preview_js() {
 function hu_customize_controls_js_css() {
 
   wp_enqueue_style(
-    'hu-customizer-controls-style',
-    sprintf('%1$s/assets/czr/css/czr-control%2$s.css' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
-    array( 'customize-controls' ),
-    HUEMAN_VER,
-    $media = 'all'
+      'hu-customizer-controls-style',
+      sprintf('%1$s/assets/czr/css/czr-control%2$s.css' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
+      array( 'customize-controls' ),
+      HUEMAN_VER,
+      $media = 'all'
   );
   wp_enqueue_script(
-    'hu-customizer-controls',
-    sprintf('%1$s/assets/czr/js/czr-control%2$s.js' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
-    array( 'customize-controls' , 'underscore'),
-    HUEMAN_VER,
-    true
+      'hu-customizer-controls',
+      sprintf('%1$s/assets/czr/js/czr-control%2$s.js' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
+      array( 'customize-controls' , 'underscore'),
+      HUEMAN_VER,
+      true
   );
 
   //localizes
   wp_localize_script(
-    'hu-customizer-controls',
-    'serverControlParams',
-    apply_filters('hu_js_customizer_control_params' ,
-      array(
-          'AjaxUrl'       => admin_url( 'admin-ajax.php' ),
-          'docURL'        => esc_url('docs.presscustomizr.com/'),
-          'HUNonce'       => wp_create_nonce( 'hu-customizer-nonce' ),
-          'wpBuiltinSettings' => HU_customize::$instance -> hu_get_wp_builtin_settings(),
-          'themeName'     => THEMENAME,
-          'themeOptions'  => HU_THEME_OPTIONS,
-          'optionAjaxAction' => HU_OPT_AJAX_ACTION,
-          'faviconOptionName' => 'favicon',
-          'css_attr' => HU_customize::$instance -> hu_get_controls_css_attr(),
-          'translatedStrings' => hu_get_translated_strings(),
-          'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('TC_DEV') && true === TC_DEV ),
-          'isThemeSwitchOn' => isset( $_GET['theme']),
-          'themeSettingList' => HU_utils::$_theme_setting_list
+      'hu-customizer-controls',
+      'serverControlParams',
+      apply_filters('hu_js_customizer_control_params' ,
+        array(
+            'AjaxUrl'       => admin_url( 'admin-ajax.php' ),
+            'docURL'        => esc_url('docs.presscustomizr.com/'),
+            'HUNonce'       => wp_create_nonce( 'hu-customizer-nonce' ),
+            'wpBuiltinSettings' => HU_customize::$instance -> hu_get_wp_builtin_settings(),
+            'themeName'     => THEMENAME,
+            'themeOptions'  => HU_THEME_OPTIONS,
+            'optionAjaxAction' => HU_OPT_AJAX_ACTION,
+            'faviconOptionName' => 'favicon',
+            'css_attr' => HU_customize::$instance -> hu_get_controls_css_attr(),
+            'translatedStrings' => hu_get_translated_strings(),
+            'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('TC_DEV') && true === TC_DEV ),
+            'isThemeSwitchOn' => isset( $_GET['theme']),
+            'themeSettingList' => HU_utils::$_theme_setting_list
+        )
       )
-    )
   );
 
 }

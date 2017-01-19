@@ -597,30 +597,44 @@ if (!Array.prototype.map) {
       };
 
   function Plugin( element, options ) {
-    this.container = element;
-    this.options = $.extend( {}, defaults, options) ;
-    this._defaults = defaults;
-    this._name = pluginName;
+    var self = this;
+    this.container  = element;
+    this.options    = $.extend( {}, defaults, options) ;
+    this._defaults  = defaults;
+    this._name      = pluginName;
+    this._customEvt = $.isArray(self.options.oncustom) ? self.options.oncustom : self.options.oncustom.split(' ');
     this.init();
   }
 
   //can access this.element and this.option
   //@return void
   Plugin.prototype.init = function () {
-    var self = this;
+    var self = this,
+        _do = function() {
+            //applies golden ratio to all containers ( even if there are no images in container )
+            self._maybe_apply_golden_r();
 
-    //applies golden ratio to all containers ( even if there are no images in container )
-    this._maybe_apply_golden_r();
+            //parses imgs ( if any ) in current container
+            var $_imgs = $( self.options.imgSel , self.container );
 
-    //parses imgs ( if any ) in current container
-    var $_imgs = $( this.options.imgSel , this.container );
+            //if no images or centering is not active, only handle the golden ratio on resize event
+            if ( ! $_imgs.length || ! self.options.enableCentering ) {
+              //creates a golden ratio fn on resize
+              $(window).bind( 'resize' , {} , function( evt ) { self._maybe_apply_golden_r( evt ); });
+            } else {
+              self._parse_imgs($_imgs);
+            }
+        };
 
-    //if no images or centering is not active, only handle the golden ratio on resize event
-    if ( ! $_imgs.length || ! this.options.enableCentering ) {
-      //creates a golden ratio fn on resize
-      $(window).bind( 'resize' , {} , function( evt ) { self._maybe_apply_golden_r( evt ); });
-    } else {
-      this._parse_imgs($_imgs);
+    //fire
+    _do();
+
+    //bind the container element with custom events if any
+    //( the images will also be bound )
+    if ( $.isArray( self._customEvt ) ) {
+          self._customEvt.map( function( evt ) {
+              $( self.container ).bind( evt, {} , _do );
+          } );
     }
   };
 
@@ -662,8 +676,8 @@ if (!Array.prototype.map) {
     var self = this;
 
     $_imgs.each(function ( ind, img ) {
-      self._pre_img_cent( $(img) );
-      self._bind_evt ( $(img) );
+        self._pre_img_cent( $(img) );
+        self._bind_evt ( $(img) );
     });
   };
 
@@ -671,25 +685,27 @@ if (!Array.prototype.map) {
   //@return void
   //map custom events if any
   Plugin.prototype._bind_evt = function( $_img ) {
-    var self = this,
-        _customEvt = $.isArray(this.options.oncustom) ? this.options.oncustom : this.options.oncustom.split(' ');
+    var self = this;
 
     //WINDOW RESIZE EVENT ACTIONS
     //GOLDEN RATIO (before image centering)
     $(window).bind( 'resize' , {} , function( evt ) { self._maybe_apply_golden_r( evt ); });
 
     //IMG CENTERING FN
-    if ( this.options.onresize )
-      $(window).resize(function() {
-        self._pre_img_cent( $_img );
-      });
-
+    if ( this.options.onresize ) {
+        $(window).resize(function() {
+            self._pre_img_cent( $_img );
+        });
+    }
     //CUSTOM EVENTS ACTIONS
-    _customEvt.map( function( evt ) {
-      $_img.bind( evt, {} , function( evt ) {
-        self._pre_img_cent( $_img );
-      } );
-    } );
+    //bind img
+    if ( $.isArray( self._customEvt ) ) {
+        self._customEvt.map( function( evt ) {
+            $_img.bind( evt, {} , function( evt ) {
+                self._pre_img_cent( $_img );
+            } );
+        } );
+    }
   };
 
 
@@ -2501,7 +2517,7 @@ var czrapp = czrapp || {};
         _instance.init();
 
       //fire the array of methods on load
-      _instance.emit(methods);
+      _instance.emit( methods );
 
       //return czrapp for chaining
       return czrapp;
@@ -2662,28 +2678,28 @@ var czrapp = czrapp || {};
      * @return {[type]}      [description]
      */
     loadCzr : function( args ) {
-      var that = this,
-          _disabled = that.localized._disabled || {};
+            var that = this,
+                _disabled = that.localized._disabled || {};
 
-      _.each( args, function( methods, key ) {
-        //normalize methods into an array if string
-        methods = 'string' == typeof(methods) ? [methods] : methods;
+            _.each( args, function( methods, key ) {
+                  //normalize methods into an array if string
+                  methods = 'string' == typeof(methods) ? [methods] : methods;
 
-        //key is the constructor
-        //check if the constructor has been disabled => empty array of methods
-        if ( that.localized._disabled[key] && _.isEmpty(that.localized._disabled[key]) )
-          return;
+                  //key is the constructor
+                  //check if the constructor has been disabled => empty array of methods
+                  if ( that.localized._disabled[key] && _.isEmpty(that.localized._disabled[key]) )
+                    return;
 
-        if ( that.localized._disabled[key] && ! _.isEmpty(that.localized._disabled[key]) ) {
-          var _to_remove = that.localized._disabled[key];
-          _to_remove = 'string' == typeof(_to_remove) ? [_to_remove] : _to_remove;
-          methods = _.difference( methods, _to_remove );
-        }
-        //chain various treatments
-        czrapp._inherits(key)._instanciates(key)._addMethods(key)._init(key, methods);
-      });//_.each()
+                  if ( that.localized._disabled[key] && ! _.isEmpty(that.localized._disabled[key]) ) {
+                        var _to_remove = that.localized._disabled[key];
+                        _to_remove = 'string' == typeof(_to_remove) ? [_to_remove] : _to_remove;
+                        methods = _.difference( methods, _to_remove );
+                  }
+                  //chain various treatments
+                  czrapp._inherits(key)._instanciates(key)._addMethods(key)._init(key, methods);
+            });//_.each()
 
-      czrapp.trigger('czrapp-ready', this);
+            $('body').trigger('czrapp-ready', this);
     }//loadCzr
 
   });//extend
@@ -2700,11 +2716,11 @@ var czrapp = czrapp || {};
       cbs = _.isArray(cbs) ? cbs : [cbs];
       var self = this;
       _.map( cbs, function(cb) {
-        if ( 'function' == typeof(self[cb]) ) {
-          args = 'undefined' == typeof( args ) ? Array() : args ;
-          self[cb].apply(self, args );
-          czrapp.trigger( cb, _.object( _.keys(args), args ) );
-        }
+          if ( 'function' == typeof(self[cb]) ) {
+              args = 'undefined' == typeof( args ) ? Array() : args ;
+              self[cb].apply(self, args );
+              czrapp.trigger( cb, _.object( _.keys(args), args ) );
+          }
       });//_.map
     },
 
