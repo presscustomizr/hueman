@@ -150,6 +150,7 @@
   api.CZR_preview = api.Class.extend( {
         setting_cbs : {},
         subsetting_cbs : {},//nested sub settings
+        input_cbs : {},
         _wp_sets : CZRPreviewParams.wpBuiltinSettings || [],
         _theme_options_name : CZRPreviewParams.themeOptions,
         initialize: function() {
@@ -157,6 +158,8 @@
               //store the default control dependencies
               this.setting_cbs = _.extend( self.setting_cbs, self.getSettingCbs() );
               this.subsetting_cbs = _.extend( self.subsetting_cbs, self.getSubSettingCbs() );
+              this.input_cbs = _.extend( self.input_cbs, self.getInputCbs() );
+
               this.syncData();
               //api.trigger('czr-preview-ready');
 
@@ -167,6 +170,7 @@
         },
         getSettingCbs : function() { return {}; },
         getSubSettingCbs : function() { return {}; },
+        getInputCbs : function() { return {}; },
         syncData : function() {
           //send infos to panel
             api.preview.send( 'czr-wp-conditional-ready', api.settings.czr_wp_conditionals );
@@ -199,10 +203,10 @@
 
 
               //obj is : {
-              // set_id : this.id,
-              // model_id : obj.model.id,
-              // changed_prop : _changed,
-              // value : obj.model[_changed]
+              //    set_id : this.id,
+              //    model_id : obj.model.id,
+              //    changed_prop : _changed,
+              //    value : obj.model[_changed]
               // }
               api.preview.bind( 'sub_setting', function(obj) {
                     //first get the "nude" option name
@@ -218,6 +222,23 @@
 
                     //execute the cb
                     self.subsetting_cbs[_opt_name][obj.changed_prop]( obj );
+              });
+
+
+              api.preview.bind( 'czr_input', function(obj) {
+                    //first get the "nude" option name
+                    var _opt_name = self._get_option_name( obj.set_id );
+
+                    //do we have custom callbacks for this subsetting ?
+                    if ( ! _.has( self.input_cbs, _opt_name ) )
+                      return;
+
+                    //do we have a custom callback for this input id ?
+                    if ( ! _.has( self.input_cbs[_opt_name], obj.input_id ) )
+                      return;
+
+                    //execute the cb
+                    self.input_cbs[_opt_name][obj.input_id]( obj );
               });
         },
 
