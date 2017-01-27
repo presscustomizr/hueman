@@ -173,7 +173,7 @@
         getInputCbs : function() { return {}; },
         syncData : function() {
           //send infos to panel
-            api.preview.send( 'czr-wp-conditional-ready', api.settings.czr_wp_conditionals );
+            api.preview.send( 'czr-query-data-ready', api.settings.czr_wpQueryInfos );
             api.preview.send( 'houston-widget-settings',
                   _.extend( _wpWidgetCustomizerPreviewSettings,
                         {
