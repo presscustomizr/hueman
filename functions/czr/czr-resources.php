@@ -206,24 +206,40 @@ function hu_extend_postmessage_cb() {
 //hook : wp_footer in the preview
 function hu_add_customize_preview_data() {
   global $wp_query, $wp_customize;
+  $current_obj  = get_queried_object();
+  $query_data = array(
+      'post_id'           => false,
+      'post_thumbnail_id' => false,
+      'post_title'        => false
+  );
+  //post, custom post types, page
+  if ( is_singular() && ! hu_is_real_home() && isset($current_obj -> post_type) ) {
+      $query_data['post_id'] = $current_obj -> ID;
+      $query_data['post_title'] = $current_obj -> post_title;
+      $query_data['post_thumbnail_id'] = has_post_thumbnail( $current_obj -> ID ) ? get_post_thumbnail_id( $current_obj -> ID ) :  false;
+  }
 
-  $_wp_conditionals = array();
+  $_wp_query_infos = array(
+      'conditional_tags' => array(),
+      'query_data' => $query_data
+  );
   $_available_locations = hu_get_available_widget_loc();
 
-  //export only the conditional tags
+  //Populates the conditional tags
   foreach( (array)$wp_query as $prop => $val ) {
-    if (  false === strpos($prop, 'is_') )
-      continue;
-    if ( 'is_home' == $prop )
-      $val = hu_is_home();
+      if (  false === strpos($prop, 'is_') )
+        continue;
+      if ( 'is_home' == $prop )
+        $val = hu_is_real_home();
 
-    $_wp_conditionals[$prop] = $val;
+      $_wp_query_infos['conditional_tags'][$prop] = $val;
   }
+  $_wp_query_infos = apply_filters( 'czr-preview-query-data', $_wp_query_infos );
 
   ?>
     <script type="text/javascript" id="czr-customizer-data">
       (function ( _export ){
-        _export.czr_wp_conditionals = <?php echo wp_json_encode( $_wp_conditionals ) ?>;
+        _export.czr_wpQueryInfos = <?php echo wp_json_encode( $_wp_query_infos ) ?>;
         _export.availableWidgetLocations = <?php echo wp_json_encode( $_available_locations ) ?>;
       })( _wpCustomizeSettings );
     </script>
