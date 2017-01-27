@@ -793,6 +793,7 @@ if ( ! function_exists( 'hu_styles' ) ) {
         ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
         'all'
     );
+    wp_add_inline_style( 'theme-stylesheet', apply_filters( 'ha_user_options_style' , '' ) );
   }
 }
 add_action( 'wp_enqueue_scripts', 'hu_styles' );
