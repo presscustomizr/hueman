@@ -15,6 +15,8 @@ function hu_set_plugins_supported() {
   add_theme_support( 'buddy-press' );
   add_theme_support( 'uris' );///Ultimate Responsive Image Slider
   add_theme_support( 'the-events-calendar' );///Ultimate Responsive Image Slider
+  add_theme_support( 'woocommerce' );///WooCoomerce
+  add_theme_support( 'wp-pagenavi' );///WP PageNavi
 }
 
 
@@ -41,6 +43,14 @@ function hu_plugins_compatibility() {
   /* The Events Calendar */
   if ( current_theme_supports( 'the-events-calendar' ) && hu_is_plugin_active('the-events-calendar/the-events-calendar.php') )
     hu_set_the_events_calendar_compat();
+
+  /* Woocommerce */
+  if ( current_theme_supports( 'woocommerce' ) && hu_is_plugin_active('woocommerce/woocommerce.php') )
+    hu_set_woocommerce_compat();
+
+  /* WP PageNavi */
+  if ( current_theme_supports( 'wp-pagenavi' ) && hu_is_plugin_active('wp-pagenavi/wp-pagenavi.php') )
+    hu_set_wp_pagenavi_compat();
 }
 
 
@@ -151,6 +161,175 @@ function hu_set_the_events_calendar_compat() {
 
 
 /**
+* The Events Calendar compat hooks
+*/
+function hu_set_woocommerce_compat() {
+  //Wrappers
+  remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
+  remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
+  add_action('woocommerce_before_main_content', 'hu_theme_wrapper_start', 10);
+  add_action('woocommerce_after_main_content', 'hu_theme_wrapper_end', 10);
+
+  if ( apply_filters( 'hu_wc_basic_support', false ) ) {
+    return;
+  }
+
+
+
+  //do not show default shop title, we'll do it
+  add_filter( 'woocommerce_show_page_title', '__return_false' );
+
+  add_filter( 'hu_in_wrapper_page_title', 'hu_print_woocommerce_page_title' );
+  if ( ! function_exists('hu_print_woocommerce_page_title') ) {
+    function hu_print_woocommerce_page_title( $title ) {
+      if ( function_exists('is_woocommerce') && is_woocommerce() && function_exists('woocommerce_page_title') ) {
+      ?>
+        <div class="page-title pad group">
+          <?php if ( is_single() ):
+                  global $product;
+                  if ( isset($product) ) :
+                    $review_enabled = get_option( 'woocommerce_enable_review_rating' ) !== 'no';
+                    $review_count   = $review_enabled ? $product->get_review_count() : '';
+          ?>
+            <ul class="meta-single group">
+              <li class="category category_products"><?php echo $product->get_categories( '<span>/</span>' ); ?></li>
+              <?php if ( comments_open() && ( hu_is_checked( 'comment-count' ) ) && $review_enabled ): ?>
+                <li class="comments rewiews"><a href="#reviews" class="woocommerce-review-link" rel="nofollow"><i class="fa fa-star-o"></i><?php echo $review_count ? '<span itemprop="reviewCount" class="count">'.$review_count.'</span>' : '' ?></a></li>
+              <?php endif /*comments_open*/ ?>
+            </ul>
+            <?php endif /*isset( $product )*/ ?>
+          <?php else: ?>
+            <h2><?php woocommerce_page_title() ?></h2>
+          <?php endif ?>
+        </div><!--/.page-title-->
+      <?php
+      }
+    }
+  }
+
+  add_filter( 'hu_in_wrapper_container_class', 'hu_add_woocommerce_context' );
+  if ( ! function_exists( 'hu_add_woocommerce_context' ) ) {
+    function hu_add_woocommerce_context( $classes ) {
+      if ( function_exists('is_woocommerce') && is_woocommerce() ) {
+        array_push( $classes, 'woocommerce' );
+      }
+      return $classes;
+    }
+  }
+
+  //add icons to the tab titles
+  foreach ( array( 'description', 'additional_information', 'reviews' ) as $filter_key ) {
+    add_filter("woocommerce_product_{$filter_key}_tab_title", "hu_wc_{$filter_key}_tab_title" );
+  }
+
+  if ( ! function_exists( 'hu_wc_description_tab_title' ) ) {
+    function hu_wc_description_tab_title( $title ){
+      return '<i class="fa fa-pencil"></i>' . $title;
+    }
+  }
+  if ( ! function_exists( 'hu_wc_additional_information_tab_title' ) ) {
+    function hu_wc_additional_information_tab_title( $title ){
+      return '<i class="fa fa-info"></i>' . $title;
+    }
+  }
+  if ( ! function_exists( 'hu_wc_reviews_tab_title' ) ) {
+    function hu_wc_reviews_tab_title( $title ) {
+      if ( apply_filters( 'hu_wc_experimental_reviews_tab_title', true ) ) {
+        global $product;
+        $review_count         = isset( $product ) ? $product->get_review_count() : '';
+        $review_count_search  = !empty($review_count) ? "($review_count)" : '';
+        $review_count_replace = !empty($review_count) ? "<span>$review_count</span>" : '';
+
+        $title                = trim( str_replace($review_count_search, '', $title) ) . $review_count_replace;
+      }
+      return '<i class="fa fa-star"></i>' . $title;
+    }
+  }
+
+  //add specific dynamic style selectors
+  foreach ( array(
+    'primary_color_color',
+    'primary_color_background_color',
+    'primary_color_border_bottom_color',
+    'secondary_color_background_color',
+    )  as $filter_key ) {
+    add_filter( "hu_dynamic_{$filter_key}_prop_selectors", "hu_wc_{$filter_key}_prop_selectors" );
+  }
+
+  if ( ! function_exists( 'hu_wc_primary_color_color_prop_selectors' ) ) {
+    /*
+    * @param array $selectors
+    * return array $selectors
+    */
+    function hu_wc_primary_color_color_prop_selectors( $selectors ) {
+      array_push( $selectors, '.entry.woocommerce div.product .woocommerce-tabs ul.tabs li.active a' );
+      return $selectors;
+    }
+  }
+
+  if ( ! function_exists( 'hu_wc_primary_color_background_color_prop_selectors' ) ) {
+    /*
+    * @param array $selectors
+    * return array $selectors
+    */
+    function hu_wc_primary_color_background_color_prop_selectors( $selectors ) {
+      array_push( $selectors,
+        '.themeform .woocommerce #respond input#submit.alt',
+        '.themeform .woocommerce a.button.alt',
+        '.themeform .woocommerce button.button.alt',
+        '.themeform .woocommerce input.button.alt'
+      );
+      return $selectors;
+    }
+  }
+
+  if ( ! function_exists( 'hu_wc_primary_color_border_bottom_color_prop_selectors' ) ) {
+    /*
+    * @param array $selectors
+    * return array $selectors
+    */
+    function hu_wc_primary_color_border_bottom_color_prop_selectors( $selectors ) {
+      array_push( $selectors, '.entry.woocommerce div.product .woocommerce-tabs ul.tabs li.active a' );
+      return $selectors;
+    }
+  }
+
+  if ( ! function_exists( 'hu_wc_secondary_color_background_color_prop_selectors' ) ) {
+    /*
+    * @param array $selectors
+    * return array $selectors
+    */
+    function hu_wc_secondary_color_background_color_prop_selectors( $selectors ) {
+      array_push( $selectors,
+        '.themeform .woocommerce #respond input#submit',
+        '.themeform .woocommerce a.button',
+        '.themeform .woocommerce button.button',
+        '.themeform .woocommerce input.button'
+      );
+      return $selectors;
+    }
+  }
+
+}
+
+
+/**
+* WP PageNavi compat hoks
+*/
+function hu_set_wp_pagenavi_compat() {
+  /*  WP-PageNavi support - @devinsays (via GitHub)
+  /* ------------------------------------ */
+  if ( ! function_exists( 'hu_deregister_wp_pagenavi_style' ) ) {
+    function hu_deregister_wp_pagenavi_style() {
+      wp_deregister_style( 'wp-pagenavi' );
+    }
+  }
+  add_action( 'wp_print_styles', 'hu_deregister_wp_pagenavi_style', 100 );
+}
+
+
+
+/**
 * HELPER
 * Check whether the plugin is active by checking the active_plugins list.
 * copy of is_plugin_active declared in wp-admin/includes/plugin.php
@@ -183,7 +362,22 @@ function hu_is_plugin_active_for_network( $plugin ) {
   return false;
 }
 
+/*
+/*  Theme's wrappers (used by WooCommerce e.g.)
+/* ------------------------------------ */
+function hu_theme_wrapper_start() {
+  echo '<section class="content">';
+  if ( $page_title = apply_filters( 'hu_in_wrapper_page_title', '' ) )
+    echo $page_title;
+  echo '<div class="pad themeform">';
+  printf( '<div class="%s">', implode(' ', apply_filters( 'hu_in_wrapper_container_class', array('group', 'entry' ) ) ) );
+}
 
+function hu_theme_wrapper_end() {
+  echo '</div>';
+  echo '</div>';
+  echo '</section>';
+}
 
 
 

@@ -77,8 +77,6 @@ if ( ! function_exists( 'hu_setup' ) ) {
     add_theme_support( 'post-thumbnails' );
     // Enable post format support
     add_theme_support( 'post-formats', array( 'audio', 'aside', 'chat', 'gallery', 'image', 'link', 'quote', 'status', 'video' ) );
-    // Declare WooCommerce support
-    add_theme_support( 'woocommerce' );
     // Add theme support for selective refresh for widgets.
     // Only add if the link manager is not enabled
     // cf WP core ticket #39451
