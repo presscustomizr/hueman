@@ -37,8 +37,7 @@ if ( ! function_exists( 'hu_google_fonts' ) ) {
       return;
 
     if ( hu_get_option( 'font' ) == 'titillium-web-ext' ) { echo '<link href="//fonts.googleapis.com/css?family=Titillium+Web:400,400italic,300italic,300,600&subset=latin,latin-ext" rel="stylesheet" type="text/css">'."\n"; }
-    if ( hu_get_option( 'font' ) == 'droid-serif' ) { echo '<link href="//fonts.googleapis.com/css?family=Droid+Serif:400,400italic,700" rel="stylesheet" type="text/css">'."
-"; }
+    if ( hu_get_option( 'font' ) == 'droid-serif' ) { echo '<link href="//fonts.googleapis.com/css?family=Droid+Serif:400,400italic,700" rel="stylesheet" type="text/css">'."\n"; }
     if ( hu_get_option( 'font' ) == 'source-sans-pro' ) { echo '<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,300italic,300,400italic,600&subset=latin,latin-ext" rel="stylesheet" type="text/css">'."\n"; }
     if ( hu_get_option( 'font' ) == 'lato' ) { echo '<link href="//fonts.googleapis.com/css?family=Lato:400,300,300italic,400italic,700" rel="stylesheet" type="text/css">'."\n"; }
     if ( hu_get_option( 'font' ) == 'raleway' ) { echo '<link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">'."\n"; }
@@ -133,8 +132,7 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
       }
       // primary color
       if ( hu_get_option('color-1') != '#3b8dbd' ) {
-        $styles[]  = '
-::selection { background-color: '.hu_get_option('color-1').'; }
+        $styles[]  = '::selection { background-color: '.hu_get_option('color-1').'; }
 ::-moz-selection { background-color: '.hu_get_option('color-1').'; }';
 
         $_primary_color_color_prop_selectors = array(
@@ -188,8 +186,7 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
         $_primary_color_background_color_prop_selectors = implode( ",{$glue}", apply_filters( 'hu_dynamic_primary_color_background_color_prop_selectors', $_primary_color_background_color_prop_selectors ) );
         $styles[] = $_primary_color_background_color_prop_selectors ? $_primary_color_background_color_prop_selectors . '{ background-color: '.hu_get_option('color-1').'; }'."{$glue}" : '';
 
-        $styles[] ='
-.post-format .format-container { border-color: '.hu_get_option('color-1').'; }';
+        $styles[] ='.post-format .format-container { border-color: '.hu_get_option('color-1').'; }';
 
         $_primary_color_border_bottom_color_prop_selectors = array(
           '.s1 .alx-tabs-nav li.active a',
@@ -207,8 +204,7 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
 
       // secondary color
       if ( hu_get_option('color-2') != '#82b965' ) {
-        $styles[] = '
-.s2 .post-nav li a:hover i,
+        $styles[] = '.s2 .post-nav li a:hover i,
 .s2 .widget_rss ul li a,
 .s2 .widget_calendar a,
 .s2 .alx-tab .tab-item-category a,
@@ -218,7 +214,6 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
 .s2 .alx-posts li:hover .post-item-title a { color: '.hu_get_option('color-2').'; }
 ';
       $_secondary_color_background_color_prop_selectors = array(
-
         '.s2 .sidebar-top',
         '.s2 .sidebar-toggle',
         '.post-comments',
@@ -230,15 +225,13 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
     $_secondary_color_background_color_prop_selectors = implode( ",{$glue}", apply_filters( 'hu_dynamic_secondary_color_background_color_prop_selectors', $_secondary_color_background_color_prop_selectors ) );
     $styles[] = $_secondary_color_background_color_prop_selectors ? $_secondary_color_background_color_prop_selectors . '{ background-color: '.hu_get_option('color-2').'; }'."{$glue}" : '';
 
-    $styles[] ='
-.s2 .alx-tabs-nav li.active a { border-bottom-color: '.hu_get_option('color-2').'; }
+    $styles[] ='.s2 .alx-tabs-nav li.active a { border-bottom-color: '.hu_get_option('color-2').'; }
 .post-comments span:before { border-right-color: '.hu_get_option('color-2').'; }
         ';
       }
       // topbar color
       if ( hu_get_option('color-topbar') != '#26272b' ) {
-        $styles[] = '
-.search-expand,
+        $styles[] = '.search-expand,
 #nav-topbar.nav-container { background-color: '.hu_get_option('color-topbar').'; }
 @media only screen and (min-width: 720px) {
   #nav-topbar .nav ul { background-color: '.hu_get_option('color-topbar').'; }
@@ -247,8 +240,7 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
       }
       // header color
       if ( hu_get_option('color-header') != '#33363b' ) {
-        $styles[] = '
-#header { background-color: '.hu_get_option('color-header').'; }
+        $styles[] = '#header { background-color: '.hu_get_option('color-header').'; }
 @media only screen and (min-width: 720px) {
   #nav-header .nav ul { background-color: '.hu_get_option('color-header').'; }
 }
@@ -256,8 +248,7 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
       }
       // header menu color
       if ( hu_get_option('color-header-menu') != '' ) {
-        $styles[] = '
-#nav-header.nav-container { background-color: '.hu_get_option('color-header-menu').'; }
+        $styles[] = '#nav-header.nav-container { background-color: '.hu_get_option('color-header-menu').'; }
 @media only screen and (min-width: 720px) {
   #nav-header .nav ul { background-color: '.hu_get_option('color-header-menu').'; }
 }
