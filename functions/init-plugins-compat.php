@@ -170,6 +170,17 @@ function hu_set_woocommerce_compat() {
   add_action('woocommerce_before_main_content', 'hu_theme_wrapper_start', 10);
   add_action('woocommerce_after_main_content', 'hu_theme_wrapper_end', 10);
 
+  //show hu custom single post meta boxes in product post type
+  add_filter( 'hu_custom_meta_boxes_post_options_in', 'hu_add_woocommerce_custom_meta_boxes_in_product');
+  if ( ! function_exists('hu_add_woocommerce_custom_meta_boxes_in_product') ) {
+    function hu_add_woocommerce_custom_meta_boxes_in_product( $array ) {
+      if ( is_array( $array ) && post_type_exists( 'product' ) )
+        array_push( $array, 'product' );
+      return $array;
+    }
+  }
+
+
   if ( apply_filters( 'hu_wc_basic_support', false ) ) {
     return;
   }
