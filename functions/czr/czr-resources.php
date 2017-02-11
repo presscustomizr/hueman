@@ -19,7 +19,7 @@ function hu_customize_preview_js() {
 
   wp_enqueue_script(
     'hu-customizer-preview' ,
-    sprintf('%1$s/assets/czr/js/czr-preview%2$s.js' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
+    sprintf('%1$s/assets/czr/js/czr-preview-base%2$s.js' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
     array( 'customize-preview', 'underscore'),
     ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
     true
@@ -60,14 +60,14 @@ function hu_customize_controls_js_css() {
 
   wp_enqueue_style(
       'hu-customizer-controls-style',
-      sprintf('%1$s/assets/czr/css/czr-control%2$s.css' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
+      sprintf('%1$s/assets/czr/css/czr-control-base%2$s.css' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
       array( 'customize-controls' ),
       HUEMAN_VER,
       $media = 'all'
   );
   wp_enqueue_script(
       'hu-customizer-controls',
-      sprintf('%1$s/assets/czr/js/czr-control%2$s.js' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
+      sprintf('%1$s/assets/czr/js/czr-control-base%2$s.js' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
       array( 'customize-controls' , 'underscore'),
       HUEMAN_VER,
       true
@@ -85,7 +85,7 @@ function hu_customize_controls_js_css() {
             'wpBuiltinSettings' => HU_customize::$instance -> hu_get_wp_builtin_settings(),
             'themeName'     => THEMENAME,
             'themeOptions'  => HU_THEME_OPTIONS,
-            'optionAjaxAction' => HU_OPT_AJAX_ACTION,
+            //'optionAjaxAction' => HU_OPT_AJAX_ACTION,//DEPRECATED
             'faviconOptionName' => 'favicon',
             'css_attr' => HU_customize::$instance -> hu_get_controls_css_attr(),
             'translatedStrings' => hu_get_translated_strings(),
