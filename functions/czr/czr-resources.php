@@ -88,7 +88,7 @@ function hu_customize_controls_js_css() {
             //'optionAjaxAction' => HU_OPT_AJAX_ACTION,//DEPRECATED
             'faviconOptionName' => 'favicon',
             'css_attr' => HU_customize::$instance -> hu_get_controls_css_attr(),
-            'translatedStrings' => hu_get_translated_strings(),
+            'i18n' => hu_get_czr_translated_strings(),
             'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('TC_DEV') && true === TC_DEV ),
             'isThemeSwitchOn' => isset( $_GET['theme']),
             'themeSettingList' => HU_utils::$_theme_setting_list
@@ -536,8 +536,8 @@ function hu_add_various_dom_ready_actions() {
   <?php
 }
 
-function hu_get_translated_strings() {
-  return apply_filters('controls_translated_strings',
+function hu_get_czr_translated_strings() {
+  return apply_filters( 'controls_translated_strings',
       array(
             'edit' => __('Edit', 'hueman'),
             'close' => __('Close', 'hueman'),
