@@ -259,9 +259,9 @@ li[id*="customize-control-"] {
     margin: 8px 0;
     padding: 2%;
     width: 96%;
-    border: 1px solid #ddd;
-    box-shadow: 1px 1px 2px 1px rgba(204, 204, 204, 0.4);
-    -webkit-box-shadow: 1px 1px 2px 1px rgba(204, 204, 204, 0.4);
+    border: 1px solid rgba(221, 221, 221, 0.43);
+    box-shadow: 1px 0px 2px 0px rgba(204, 204, 204, 0.45);
+    -webkit-box-shadow: 1px 0px 2px 0px rgba(204, 204, 204, 0.45);
 }
 
 /* GENERAL STYLE */
@@ -863,7 +863,7 @@ span.czr-panel-subtitle {
   width: 60%;
 }
 
-.width-100 .czr-input {
+.width-100 .czr-input, .czr-sub-set .customize-control-title.width-100 {
   width: 100%;
 }
 .czr-sub-set .customize-control-title {

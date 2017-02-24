@@ -114,88 +114,74 @@ function hu_extend_postmessage_cb() {
   <script id="preview-settings-cb" type="text/javascript">
     (function (api, $, _ ) {
           var $_body    = $( 'body' ),
-            setting_cbs = api.CZR_preview.prototype.setting_cbs || {},
-            subsetting_cbs = api.CZR_preview.prototype.subsetting_cbs || {};
+              setting_cbs = api.CZR_preview.prototype.setting_cbs || {},
+              input_cbs = api.CZR_preview.prototype.input_cbs || {},
+              _settingsCbsExtend = {},
+              _inputCbsExtend = {};
+
+          _inputCbsExtend = {
+                'social-links' : {
+                      'social-size' : function( data ) {
+                            if ( ! _.isObject( data ) || _.isUndefined( data.value ) || ! $('li a', '.social-links').length )
+                              return;
+                            $('li a', '.social-links').css( 'font-size', data.value + 'px');
+                      },
+                      'social-color' : function( data ) {
+                            if ( ! _.isObject( data ) || _.isUndefined( data.value ) || _.isUndefined( data.input_parent_id ) )
+                              return;
+                            if ( ! $('li', '.social-links').find('a[data-model-id=' + data.input_parent_id +']').length )
+                              return;
+                            $('li', '.social-links').find('a[data-model-id=' + data.input_parent_id +']').css( 'color', data.value );
+                      }
+                }
+          };
+
+          _settingsCbsExtend = {
+                blogname : function(to) {
+                  var self = this,
+                      _proto_ = api.CZR_preview.prototype,
+                      _hasLogo,
+                      _logoSet;
+                  //the logo was previously set with a custom hueman theme option => custom-logo
+                  if ( api.has( _proto_._build_setId('custom-logo') ) )
+                    _logoSet ? api( _proto_._build_setId('custom-logo') ).get() : '';
+                  else if ( api.has( _proto_._build_setId('custom_logo') ) )
+                     _logoSet ? api( _proto_._build_setId('custom_logo') ).get() : '';
+
+                  _hasLogo = ( _.isNumber(_logoSet) && _logoSet > 0 ) || ( ! _.isEmpty(_logoSet) && ( false !== _logoSet ) );
+
+                  if ( _hasLogo )
+                    return;
+                  $( '.site-title a' ).text( to );
+                },
+                blogdescription : function(to) {
+                  $( '.site-description' ).text( to );
+                },
+                'body-background' :  function(to) {
+                  $('body').css('background-color', to);
+                },
+                'color-topbar' : function(to) {
+                  $('.search-expand, #nav-topbar.nav-container, #nav-topbar .nav ul').css('background-color', to);
+                },
+                'color-header': function(to) {
+                  $('#header').css('background-color', to);
+                },
+                'color-header-menu' : function(to) {
+                  $('#nav-header.nav-container, #nav-header .nav ul').css('background-color', to);
+                },
+                'color-footer' : function(to) {
+                  $('#footer-bottom').css('background-color', to);
+                },
+                credit : function(to) {
+                  $( '#footer-bottom #credit' ).slideToggle();
+                }
+          };
 
           $.extend( api.CZR_preview.prototype, {
-              setting_cbs : $.extend( setting_cbs, {
-                    blogname : function(to) {
-                      var self = this,
-                          _proto_ = api.CZR_preview.prototype,
-                          _hasLogo,
-                          _logoSet;
-                      //the logo was previously set with a custom hueman theme option => custom-logo
-                      if ( api.has( _proto_._build_setId('custom-logo') ) )
-                        _logoSet ? api( _proto_._build_setId('custom-logo') ).get() : '';
-                      else if ( api.has( _proto_._build_setId('custom_logo') ) )
-                         _logoSet ? api( _proto_._build_setId('custom_logo') ).get() : '';
-
-                      _hasLogo = ( _.isNumber(_logoSet) && _logoSet > 0 ) || ( ! _.isEmpty(_logoSet) && ( false !== _logoSet ) );
-
-                      if ( _hasLogo )
-                        return;
-                      $( '.site-title a' ).text( to );
-                    },
-                    blogdescription : function(to) {
-                      $( '.site-description' ).text( to );
-                    },
-                    'body-background' :  function(to) {
-                      $('body').css('background-color', to);
-                    },
-                    'color-topbar' : function(to) {
-                      $('.search-expand, #nav-topbar.nav-container, #nav-topbar .nav ul').css('background-color', to);
-                    },
-                    'color-header': function(to) {
-                      $('#header').css('background-color', to);
-                    },
-                    'color-header-menu' : function(to) {
-                      $('#nav-header.nav-container, #nav-header .nav ul').css('background-color', to);
-                    },
-                    'color-footer' : function(to) {
-                      $('#footer-bottom').css('background-color', to);
-                    },
-                    credit : function(to) {
-                      $( '#footer-bottom #credit' ).slideToggle();
-                    }
-              }),//_.extend()
-
-
-
-              subsetting_cbs : $.extend( subsetting_cbs, {
-                  'social-links' : {
-                      'title' : function( obj ) {
-                        $( '[data-model-id="'+ obj.model_id +'"]', '.social-links' ).attr('title', obj.value );
-                      },
-                      'social-color' : function( obj ) {
-                        $( '[data-model-id="'+ obj.model_id +'"]', '.social-links' ).css('color', obj.value );
-                      },
-                      'social-icon' : function( obj ) {
-                        var $_el = $( '#'+ obj.model_id, '.social-links' ).find('i'),
-                            _classes = ! _.isUndefined( $_el.attr('class') ) ? $_el.attr('class').split(' ') : [],
-                            _prev = '';
-
-                        //find the previous class
-                        _.filter(_classes, function(_c){
-                          if ( -1 != _c.indexOf('fa-') )
-                            _prev = _c;
-                        });
-
-                        $( '[data-model-id="'+ obj.model_id +'"]', '.social-links' ).find('i').removeClass(_prev).addClass( obj.value );
-                      },
-                      'social-link' : function( obj ) {
-                        var self = this;
-                        $( '[data-model-id="'+ obj.model_id +'"]', '.social-links' ).attr('href', ! self._isValidURL(obj.value) ? 'javascript:void(0);' : obj.value );
-                      },
-                      'social-target' : function( obj ) {
-                        if ( 0 !== ( obj.value * 1 ) )
-                          $( '[data-model-id="'+ obj.model_id +'"]', '.social-links' ).attr('target', "_blank");
-                        else
-                          $( '[data-model-id="'+ obj.model_id +'"]', '.social-links' ).removeAttr('target');
-                      }
-                  }
-              })
+              setting_cbs : $.extend( setting_cbs, _settingsCbsExtend ),
+              input_cbs : $.extend( input_cbs, _inputCbsExtend )
           });
-    }) ( wp.customize, jQuery, _);
+    }) ( wp.customize, jQuery, _ );
   </script>
   <?php
 }
@@ -550,15 +536,20 @@ function hu_get_czr_translated_strings() {
             'followUs' => __('Follow us on', 'hueman'),
             'successMessage' => __('Done !', 'hueman'),
             'socialLinkAdded' => __('New Social Link created ! Scroll down to edit it.', 'hueman'),
+
             'selectBgRepeat'  => __('Select repeat property', 'hueman'),
             'selectBgAttachment'  => __('Select attachment property', 'hueman'),
             'selectBgPosition'  => __('Select position property', 'hueman'),
+
             'widgetZone' => __('Widget Zone', 'hueman'),
             'widgetZoneAdded' => __('New Widget Zone created ! Scroll down to edit it.', 'hueman'),
             'inactiveWidgetZone' => __('Inactive in current context/location', 'hueman'),
             'unavailableLocation' => __('Unavailable location. Some settings must be changed.', 'hueman'),
             'locationWarning' => __('A selected location is not available with the current settings.', 'hueman'),
+
             'readDocumentation' => __('Learn more about this in the documentation', 'hueman'),
+            'Settings' => __('Settings', 'hueman'),
+            'Options for' => __('Options for', 'hueman')
       )
   );
 }

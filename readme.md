@@ -82,6 +82,21 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 ## Changelog
+= 3.3.5 February 24th 2017 =
+* Improved : img to smartload must have an src which matches an allowed ext. Fixes issues with Ultimate Membership Pro
+* Fixed : array to string error with hu_is_checked()
+* Removed ru_RU translation files because it is not completed online
+* Moved : the WordPress loop in a separate template named for index.php, search.php and archive.php
+* Fixed : selective refresh disabled when link widget enabled. cf WP core ticket #39451
+* Added : utility hu_is_real_home() => handles the case when the user want to display a page on home but did not pick a page yet
+* Fixed : correctly handle sizes attribute when smartloading resp imgs ( fixes #316 )
+* Improved : add hueman specific widgets panel icon as inline customizer js
+* Added : Gitlab icon to social links
+* added : wp_add_inline_style() on front allowing to add user option based css
+* Improved : front end jQuery plugins, rightly handle sizes/data-sizes attribute replacement in php
+* Improved: customizer social links module user interface
+
+
 = 3.3.4 January 4th 2017 =
 * fixed : customizer not loading when deprecated link widget is enabled
 

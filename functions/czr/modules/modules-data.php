@@ -9,6 +9,7 @@ function hu_add_social_module_data( $params ) {
         'social_el_params' => array(
             //Social Module
             'defaultSocialColor' => 'rgba(255,255,255,0.7)',
+            'defaultSocialSize' => 14,
         )
     )
   );

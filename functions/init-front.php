@@ -4,6 +4,61 @@
  *  https://codex.wordpress.org/Pluggable_Functions
 /* ------------------------------------------------------------------------- */
 
+/*  Print the wp content
+/* ------------------------------------ */
+if ( ! function_exists( 'hu_get_content') ) {
+  //@return void()
+  //Print the content based on the template string
+  function hu_get_content( $tmpl = 'index-tmpl' ) {
+    $tmpl = hu_is_authorized_tmpl( $tmpl ) ? $tmpl : 'index-tmpl';
+    $seks = apply_filters(  'hu_content_sektions', array( 'wp' ) );
+    //Are we good after filtering ?
+    if ( ! is_array( $seks ) )
+      return;
+
+    ?>
+      <?php do_action( '__before_content_section', $tmpl ); ?>
+        <section class="content">
+          <?php hu_get_template_part('parts/page-title'); ?>
+          <div class="pad group">
+            <?php
+              foreach ( $seks as $_id ) {
+                  if ( 'wp' == $_id )
+                    hu_get_template_part("tmpl/{$tmpl}");
+                  else
+                    hu_print_sek( $_id );
+              }
+            ?>
+          </div><!--/.pad-->
+        </section><!--/.content-->
+      <?php do_action( '__after_content_section', $tmpl ); ?>
+    <?php
+  }
+}
+
+//helper
+//@return bool
+function hu_is_authorized_tmpl( $tmpl ) {
+    $ct_map = apply_filters(
+        'hu_content_map',
+        array( 'index-tmpl', 'archive-tmpl', 'page-tmpl', 'single-tmpl', 'search-tmpl', '404-tmpl' )
+    );
+    //Are we good after filtering ?
+    if ( ! is_array( $ct_map ) || ! is_string( $tmpl ) )
+      return;
+    return in_array( $tmpl, $ct_map );
+}
+
+
+if ( ! function_exists( 'hu_print_sek') ) {
+  //@return void
+  function hu_print_sek( $sek_id ) {
+      do_action( "hu_sek_{$sek_id}" );
+  }
+}
+
+
+
 /*  Layout class
 /* ------------------------------------ */
 if ( ! function_exists( 'hu_layout_class' ) ) {
@@ -156,23 +211,49 @@ if ( ! function_exists( 'hu_print_social_links' ) ) {
     $_socials = hu_get_option('social-links');
     if ( empty( $_socials ) )
       return;
+    $_default_color   = array('rgb(90,90,90)', '#5a5a5a'); //both notations
+    $_default_size    = '14'; //px
+    $_social_opts     = array( 'social-size' => $_default_size );
+
+    //get the social mod opts
+    foreach( $_socials as $key => $item ) {
+      if ( ! array_key_exists( 'is_mod_opt', $item ) )
+        continue;
+      $_social_opts = wp_parse_args( $item, $_social_opts );
+    }
+
+    $font_size_value = $_social_opts['social-size'];
+    //if the size is the default one, do not add the inline style css
+    $social_size_css  = empty( $font_size_value ) || $_default_size == $font_size_value ? '' : "font-size:{$font_size_value}px";
 
     echo '<ul class="social-links">';
-    foreach( $_socials as $key => $item ) {
-      //do we have an id set ?
-      //Typically not if the user still uses the old options value.
-      //So, if the id is not present, let's build it base on the key, like when added to the collection in the customizer
+      foreach( $_socials as $key => $item ) {
+        //skip if mod_opt
+        if ( array_key_exists( 'is_mod_opt', $item ) )
+          continue;
 
-      // Put them together
-      printf( '<li><a rel="nofollow" class="social-tooltip" %1$s title="%2$s" href="%3$s" %4$s style="color:%5$s"><i class="fa %6$s"></i></a></li>',
-        ! hu_is_customizing() ? '' : sprintf( 'data-model-id="%1$s"', ! isset( $item['id'] ) ? 'hu_socials_'. $key : $item['id'] ),
-        isset($item['title']) ? esc_attr( $item['title'] ) : '',
-        ( isset($item['social-link']) && ! empty( $item['social-link'] ) ) ? esc_url( $item['social-link'] ) : 'javascript:void(0)',
-        ( isset($item['social-target']) && false != $item['social-target'] ) ? 'target="_blank"' : '',
-        isset($item['social-color']) ? esc_attr($item['social-color']) : '#000',
-        isset($item['social-icon']) ? esc_attr($item['social-icon']) : ''
-      );
-    }
+         /* Maybe build inline style */
+        $social_color_css      = isset($item['social-color']) ? esc_attr($item['social-color']) : $_default_color[0];
+        //if the color is the default one, do not print the inline style css
+        $social_color_css      = in_array( $social_color_css, $_default_color ) ? '' : "color:{$social_color_css}";
+        $style_props           = implode( ';', array_filter( array( $social_color_css, $social_size_css ) ) );
+
+        $style_attr            = $style_props ? sprintf(' style="%1$s"', $style_props ) : '';
+
+        //do we have an id set ?
+        //Typically not if the user still uses the old options value.
+        //So, if the id is not present, let's build it base on the key, like when added to the collection in the customizer
+
+        // Put them together
+        printf( '<li><a rel="nofollow" class="social-tooltip" %1$s title="%2$s" href="%3$s" %4$s %5$s><i class="fa %6$s"></i></a></li>',
+            ! hu_is_customizing() ? '' : sprintf( 'data-model-id="%1$s"', ! isset( $item['id'] ) ? 'hu_socials_'. $key : $item['id'] ),
+            isset($item['title']) ? esc_attr( $item['title'] ) : '',
+            ( isset($item['social-link']) && ! empty( $item['social-link'] ) ) ? esc_url( $item['social-link'] ) : 'javascript:void(0)',
+            ( isset($item['social-target']) && false != $item['social-target'] ) ? 'target="_blank"' : '',
+            $style_attr,
+            isset($item['social-icon']) ? esc_attr($item['social-icon']) : ''
+        );
+      }
     echo '</ul>';
   }
 }
