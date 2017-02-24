@@ -72,7 +72,9 @@ function hu_is_partial_refreshed_on() {
 //the old options used 'on' and 'off'
 //the new options use 1 and 0
 function hu_is_checked( $opt_name = '') {
-  $val = hu_get_option($opt_name);
+  $val = hu_get_option( $opt_name );
+  //cast to string if array
+  $val = is_array($val) ? $val[0]: $val;
   return hu_booleanize_checkbox_val( $val );
 }
 
