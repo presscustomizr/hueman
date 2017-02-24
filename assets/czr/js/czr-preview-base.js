@@ -156,9 +156,10 @@
         initialize: function() {
               var self = this;
               //store the default control dependencies
-              this.setting_cbs = _.extend( self.setting_cbs, self.getSettingCbs() );
-              this.subsetting_cbs = _.extend( self.subsetting_cbs, self.getSubSettingCbs() );
-              this.input_cbs = _.extend( self.input_cbs, self.getInputCbs() );
+              this.pre_setting_cbs = _.extend( self.pre_setting_cbs, self.getPreSettingCbs() );
+              this.setting_cbs      = _.extend( self.setting_cbs, self.getSettingCbs() );
+              this.subsetting_cbs   = _.extend( self.subsetting_cbs, self.getSubSettingCbs() );
+              this.input_cbs        = _.extend( self.input_cbs, self.getInputCbs() );
 
               this.syncData();
               //api.trigger('czr-preview-ready');
@@ -168,6 +169,7 @@
               //=> added since changeset update, WP 4.7
               $( 'body' ).removeClass( 'wp-customizer-unloading' );
         },
+        getPreSettingCbs : function() { return {}; },
         getSettingCbs : function() { return {}; },
         getSubSettingCbs : function() { return {}; },
         getInputCbs : function() { return {}; },
@@ -182,7 +184,7 @@
                   )
             );
             api.preview.send(
-                  'czr-partial-refresh',
+                  'czr-partial-refresh-data',
                   typeof( undefined ) === typeof( _customizePartialRefreshExports ) ? {} : _customizePartialRefreshExports.partials
             );
 
@@ -195,10 +197,38 @@
 
         addCbs : function() {
               var self = this;
-              _.each( self.setting_cbs, function( _cb, _setId ) {
-                    if ( ! api.has( self._build_setId(_setId) ) )
+              //@param args looks like :
+              //{
+              //    set_id        : module.control.id,
+              //    data          : { module : {}, module_id : 'string'},
+              //    value         : to
+              //}
+              //'pre_setting' is sent before 'setting'
+              api.preview.bind( 'pre_setting', function( args ) {
+                    args = args || {};
+                    var _setId = args.set_id;
+                    if ( ! api.has( self._build_setId( _setId ) ) )
                       return;
-                    api( self._build_setId(_setId) ).bind( self.setting_cbs[_setId] );
+                    //first get the "nude" option name
+                    var _opt_name = self._get_option_name( args.set_id );
+
+                    //do we have custom callbacks for this setting ?
+                    if ( ! _.has( self.pre_setting_cbs, _opt_name ) || ! _.isFunction( self.pre_setting_cbs[ _opt_name ] ) )
+                      return;
+
+                    //execute the cb
+                    self.pre_setting_cbs[ _opt_name ]( args );
+              });
+
+
+              //'setting' event callback
+              //=> this is the native WP postMessage event
+              _.each( self.setting_cbs, function( _cb, _setId ) {
+                    if ( ! api.has( self._build_setId( _setId ) ) )
+                      return;
+                    if ( _.isFunction( self.setting_cbs[ _setId ] ) ) {
+                          api( self._build_setId(_setId) ).bind( self.setting_cbs[ _setId ] );
+                    }
               } );
 
 
@@ -209,6 +239,7 @@
               //    changed_prop : _changed,
               //    value : model[_changed]
               //}
+              //DEPRECATED ?
               api.preview.bind( 'sub_setting', function( args ) {
                     //first get the "nude" option name
                     var _opt_name = self._get_option_name( args.set_id );
@@ -225,6 +256,7 @@
                     self.subsetting_cbs[ _opt_name ][ args.changed_prop ]( args );
               });
 
+              //A module input can get a postMessage transport. This has to be declared in the js tmpl as a data-transport element property in the tmpl.
               //@param args looks like :
               //{
               //    set_id        : module.control.id,
@@ -258,6 +290,15 @@
 
                     //execute the cb
                     self.input_cbs[ _opt_name ][ args.input_id ]( args );
+              });
+
+              //Inform the panel each time a partial refresh has been done
+              //=> this will allow us to execute post partial refresh actions
+              api.selectiveRefresh.bind( 'partial-content-rendered', function( params ) {
+                      if ( ! _.has( params, 'partial' ) || ! _.has( params.partial, 'id' ) )
+                        return;
+                      var _shortOptName = params.partial.id;
+                      api.preview.send( 'czr-partial-refresh-done', { set_id : self._build_setId( params.partial.id ) } );
               });
         },
 

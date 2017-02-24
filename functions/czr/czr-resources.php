@@ -559,14 +559,6 @@ function hu_get_czr_translated_strings() {
             'unavailableLocation' => __('Unavailable location. Some settings must be changed.', 'hueman'),
             'locationWarning' => __('A selected location is not available with the current settings.', 'hueman'),
             'readDocumentation' => __('Learn more about this in the documentation', 'hueman'),
-
-            //WP TEXT EDITOR MODULE
-            'textEditorOpen' => __('Edit', 'hueman'),
-            'textEditorClose' => __('Close Editor', 'hueman'),
-
-            //SLIDER MODULE
-            'slideAdded'   => __('New Slide created ! Scroll down to edit it.', 'hueman'),
-            'slideTitle'   => __( 'Slide', 'hueman')
       )
   );
 }
