@@ -123,7 +123,27 @@ if ( ! class_exists( 'HU_utils' ) ) :
       if ( apply_filters( 'hu_disable_img_smart_load', $_bool, current_filter() ) )
         return $_html;
 
-      return preg_replace_callback('#<img([^>]+?)src=[\'"]?([^\'"\s>]+)[\'"]?([^>]*)>#', array( $this , 'hu_regex_callback' ) , $_html);
+      $allowed_image_extentions = apply_filters( 'hu_smartload_allowed_img_extensions', array(
+          'bmp',
+          'gif',
+          'jpeg',
+          'jpg',
+          'jpe',
+          'tif',
+          'tiff',
+          'ico',
+          'png',
+          'svg',
+          'svgz'
+      ) );
+
+      if ( empty( $allowed_image_extentions ) || ! is_array( $allowed_image_extentions ) ) {
+        return $_html;
+      }
+
+      $img_extensions_pattern = sprintf( "[%s]", implode( '|', $allowed_image_extentions ) );
+
+      return preg_replace_callback('#<img([^>]+?)src=[\'"]?([^\'"\s>]+.'.$img_extensions_pattern.'[^\'"\s>]*)[\'"]?([^>]*)>#i', array( $this , 'hu_regex_callback' ) , $_html);
     }
 
 
@@ -136,10 +156,9 @@ if ( ! class_exists( 'HU_utils' ) ) :
     private function hu_regex_callback( $matches ) {
       $_placeholder = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
-      if ( false !== strpos( $matches[0], 'data-src' ) ||
-          preg_match('/ data-smartload *= *"false" */', $matches[0]) )
+      if ( false !== strpos( $matches[0], 'data-src' ) || preg_match('/ data-smartload *= *"false" */', $matches[0]) ) {
         return $matches[0];
-      else
+      } else {
         return apply_filters( 'hu_img_smartloaded',
           str_replace( array('srcset=', 'sizes='), array('data-srcset=', 'data-sizes='),
               sprintf('<img %1$s src="%2$s" data-src="%3$s" %4$s>',
@@ -150,6 +169,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
               )
           )
         );
+      }
     }
 
 
