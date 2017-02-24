@@ -549,7 +549,68 @@ function hu_get_czr_translated_strings() {
 
             'readDocumentation' => __('Learn more about this in the documentation', 'hueman'),
             'Settings' => __('Settings', 'hueman'),
-            'Options for' => __('Options for', 'hueman')
+            'Options for' => __('Options for', 'hueman'),
+
+            'skope' => array(
+                //skope reset
+                'Reset the current customizations for' => __('Reset the current customizations for','hueman'),
+                'Reset the theme options published sitewide' => __('Reset the theme options published sitewide','hueman'),
+                'Reset your website published options for' => __('Reset your website published options for','hueman'),
+                'Please confirm that you want to reset your current ( not published ) customizations for' => __('Please confirm that you want to reset your current ( not published ) customizations for','hueman'),
+                'Your customizations have been reset for' => __('Your customizations have been reset for','hueman'),
+                'Please confirm that you want to reset your sitewide published customizations. Note : this will not reset the customizations made in other option scopes' => __('Please confirm that you want to reset your sitewide published customizations. Note : this will not reset the customizations made in other option scopes', 'hueman'),
+                'Please confirm that you want to reset your published customizations for' => __('Please confirm that you want to reset your published customizations for','hueman'),
+                'Your published customizations have been reset for' => __('Your published customizations have been reset for','hueman'),
+
+                //control reset
+                'Reset your customized ( and published ) value' => __('Reset your customized ( and published ) value', 'hueman'),
+                'Reset your customized ( but not yet published ) value' => __('Reset your customized ( but not yet published ) value', 'hueman'),
+                'Not customized yet, nothing to reset' => __('Not customized yet, nothing to reset', 'hueman'),
+                'Reset your customized ( but not yet published ) value' => __('Reset your customized ( but not yet published ) value', 'hueman'),
+                'Please confirm that you want to reset your current customizations for this option' => __( 'Please confirm that you want to reset your current customizations for this option', 'hueman' ),
+                'Please confirm that you want to reset your current customizations for this option in' => __('Please confirm that you want to reset your current customizations for this option in', 'hueman'),
+                'sitewide' => __('sitewide', 'hueman'),
+                'Your customizations have been reset' => __('Your customizations have been reset', 'hueman'),
+                'This WordPress setting can not be reset sitewide' => __('This WordPress setting can not be reset sitewide', 'hueman'),
+                'Please confirm that you want to reset this option' => __('Please confirm that you want to reset this option', 'hueman'),
+                'Please confirm that you want to reset this option in' => __('Please confirm that you want to reset this option in', 'hueman'),
+                'The option has been reset' => __('The option has been reset', 'hueman'),
+
+                //control notices
+                'Display informations about the scope of this option.' => __('Display informations about the scope of this option.', 'hueman'),
+                'This option is always customized sitewide and cannot be reset.' => __('This option is always customized sitewide and cannot be reset.', 'hueman'),
+                'Customized. Will be applied sitewide once published.' => __('Customized. Will be applied sitewide once published.','hueman'),
+                'Customized. Will be applied to' => __('Customized. Will be applied to', 'hueman'),
+                'once published.' => __('once published.', 'hueman'),
+                'Customized and applied sitewide.' => __('Customized and applied sitewide.', 'hueman'),
+                'Customized and applied to' => __('Customized and applied to','hueman'),
+                'Default website value applied sitewide.' => __('Default website value applied sitewide.','hueman'),
+                'Default website value.' => __('Default website value.','hueman'),
+                'You can customize this specifically for' => __('You can customize this specifically for', 'hueman'),
+                'Currently inherited from' => __('Currently inherited from','hueman'),
+                'You can customize this specifically for' => __('You can customize this specifically for','hueman'),
+                'The value currently applied to' => __('The value currently applied to','hueman'),
+                'The value that will be applied to' => __('The value that will be applied to','hueman'),
+                'is set in' => __('is set in','hueman'),
+                'is customized in' => __('is customized in','hueman'),
+
+                //various skope
+                'can only be customized sitewide.' => __('can only be customized sitewide.', 'hueman'),
+                'Menus are created sitewide.' => __('Menus are created sitewide.', 'hueman'),
+                'Widgets are created sitewide.' => __('Widgets are created sitewide.', 'hueman'),
+                'and' => __('and', 'hueman'),
+                'Switch to scope' => __('Switch to scope', 'hueman'),
+                'In this context :' => __('In this context :', 'hueman'),
+                'inherits from' => __('inherits from', 'hueman'),
+                'overridden by' => __('overridden by', 'hueman'),
+
+                //error when loading
+                'There was a problem when trying to load the customizer.' => __('There was a problem when trying to load the customizer.','hueman'),
+                'Please open your' => __('Please open your','hueman'),
+                'browser debug tool' => __('browser debug tool','hueman'),
+                'and report any error message (in red) printed in the javascript console in the' => __('and report any error message (in red) printed in the javascript console in the','hueman'),
+                'Hueman theme forum' => __('Hueman theme forum','hueman'),
+            )
       )
   );
 }
