@@ -54,7 +54,7 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
                 _truncate = function( string ){
                       if ( ! _.isString( string ) )
                         return '';
-                      return string.length > 80 ? string.substr( 0, 79 ) : string;
+                      return string.length > 150 ? string.substr( 0, 149 ) : string;
                 };
 
             //if the array to print is not composed exclusively of strings, then let's stringify it
@@ -10610,7 +10610,9 @@ $.extend( CZRModuleMths, {
                                 }
 
                                 module.closeAllItems().closeRemoveDialogs();
-
+                                var refreshPreview = function() {
+                                      api.previewer.refresh();
+                                };
                                 //refreshes the preview frame  :
                                 //1) only needed if transport is postMessage, because is triggered by wp otherwise
                                 //2) only needed when : add, remove, sort item(s).
