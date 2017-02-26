@@ -99,6 +99,7 @@ See headers of files for further details.
 * added : 6 content templates
 * Improved : post messaging for the social links customization
 * Added : icon size option for the social links
+* Added : better support for WooCommerce
 
 
 = 3.3.4 January 4th 2017 =
