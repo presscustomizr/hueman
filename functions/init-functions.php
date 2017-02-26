@@ -270,8 +270,15 @@ function hu_is_singular() {
 * @return  bool
 */
 function hu_has_social_links() {
-  $_socials = hu_get_option('social-links');
-  return ! empty( $_socials ) && false != $_socials;
+    $_raw_socials = hu_get_option('social-links');
+    if ( ! is_array( $_raw_socials ) )
+      return;
+    //get the social mod opts and the items
+    foreach( $_raw_socials as $key => $item ) {
+      if ( ! array_key_exists( 'is_mod_opt', $item ) )
+          $_social_items[] =  $item;
+    }
+    return ! empty( $_social_items );
 }
 
 /**

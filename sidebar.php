@@ -9,7 +9,12 @@
 
 			<?php if ( hu_is_checked('sidebar-top') ): ?>
   			<div class="sidebar-top group">
-          <p><?php echo hu_has_social_links() ? __('Follow:','hueman') : '&nbsp;' ; ?></p>
+          <?php if ( hu_has_social_links() ) : ?>
+              <p><?php _e('Follow:','hueman'); ?></p>
+          <?php else : //if not customizing, display an empty p for design purposes ?>
+              <?php echo hu_is_customizing() ? '' : sprintf('<p>&nbsp;</p>'); ?>
+          <?php endif; ?>
+
           <?php hu_print_social_links() ; ?>
   			</div>
 			<?php endif; ?>

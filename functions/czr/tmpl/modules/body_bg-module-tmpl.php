@@ -55,7 +55,7 @@ function hu_print_body_bg_item_content_template() {
       } #>
 
       <div class="<?php echo $css_attr['sub_set_wrapper']; ?> width-100" data-input-type="color">
-        <div class="customize-control-title width-100"><?php _e('Color', 'hueman'); ?>  <?php _e('( default : #eaeaea )'); ?></div>
+        <div class="customize-control-title width-100"><?php _e('Color', 'hueman'); ?>  ( <?php _e('default', 'hueman' ); ?> : #eaeaea )</div>
         <div class="<?php echo $css_attr['sub_set_input']; ?>">
           <input data-type="background-color" type="text" maxlength="7" placeholder="<?php esc_attr_e( 'Hex Value', 'hueman' ); ?>" value="{{ data['background-color'] }}" {{ defaultBgColor }} />
         </div>

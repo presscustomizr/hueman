@@ -208,18 +208,28 @@ function hu_print_dynamic_sidebars( $_id, $location ) {
 /* ------------------------------------ */
 if ( ! function_exists( 'hu_print_social_links' ) ) {
   function hu_print_social_links() {
-    $_socials = hu_get_option('social-links');
-    if ( empty( $_socials ) )
-      return;
+    $_raw_socials     = hu_get_option('social-links');
     $_default_color   = array('rgb(90,90,90)', '#5a5a5a'); //both notations
     $_default_size    = '14'; //px
     $_social_opts     = array( 'social-size' => $_default_size );
+    $_social_items    = array();
 
-    //get the social mod opts
-    foreach( $_socials as $key => $item ) {
-      if ( ! array_key_exists( 'is_mod_opt', $item ) )
-        continue;
-      $_social_opts = wp_parse_args( $item, $_social_opts );
+    //get the social mod opts and the items
+    foreach( $_raw_socials as $key => $item ) {
+      if ( ! array_key_exists( 'is_mod_opt', $item ) ) {
+          $_social_items[] =  $item;
+      } else {
+          $_social_opts = wp_parse_args( $item, $_social_opts );
+      }
+    }
+
+    if ( empty( $_social_items ) ) {
+        if ( hu_is_customizing() ) {
+            printf( '<ul class="social-links"><li style="font-size:0.9em;color:white"><span><i>%1$s</i></span></li></ul>',
+                __('You can set social links here from the live customizer')
+            );
+        }
+        return;
     }
 
     $font_size_value = $_social_opts['social-size'];
@@ -227,7 +237,7 @@ if ( ! function_exists( 'hu_print_social_links' ) ) {
     $social_size_css  = empty( $font_size_value ) || $_default_size == $font_size_value ? '' : "font-size:{$font_size_value}px";
 
     echo '<ul class="social-links">';
-      foreach( $_socials as $key => $item ) {
+      foreach( $_social_items as $key => $item ) {
         //skip if mod_opt
         if ( array_key_exists( 'is_mod_opt', $item ) )
           continue;

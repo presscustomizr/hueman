@@ -23,7 +23,7 @@ function hu_print_social_tmpls() {
 
   <script type="text/html" id="tmpl-czr-module-social-mod-opt">
     <div class="<?php echo $css_attr['sub_set_wrapper']; ?>" data-input-type="number" data-transport="postMessage">
-      <div class="customize-control-title"><?php _e('Size in px', 'customizr'); ?></div>
+      <div class="customize-control-title"><?php _e('Size in px', 'hueman'); ?></div>
       <div class="czr-input">
         <input data-type="social-size" type="number" step="1" min="5" value="{{ data['social-size'] }}" />
       </div>
