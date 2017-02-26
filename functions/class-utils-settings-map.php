@@ -171,7 +171,16 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __( 'Display a logo in your header' , 'hueman' ),
                 'section'   => 'title_tagline',
-                'type'      => 'checkbox'
+                'type'      => 'checkbox',
+                'notice'    => sprintf( '%3$s <strong><a href="%1$s" title="%3$s">%2$s</a><strong>',
+                    "javascript:wp.customize.section('title_tagline').focus();",
+                    __("here" , "hueman"),
+                    __("Set your logo below or", "hueman")
+                ),
+                'ubq_section'   => array(
+                    'section' => 'header_design_sec',
+                    'priority' => '0'
+                )
           ),
           'logo-max-height'  =>  array(
                 'default'       => 60,
@@ -516,7 +525,11 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'     => __("Display your site's description (tagline)", 'hueman'),
                 'section'   => 'header_design_sec',
                 'type'      => 'checkbox',
-                'notice'    => __( 'The description that appears next to your logo' , 'hueman' )
+                'notice'    => __( 'The description that appears next to your logo' , 'hueman' ),
+                'ubq_section'   => array(
+                    'section' => 'title_tagline',
+                    'priority' => '15'
+                )
           ),
           'use-header-image' => array(
                 'default'   => 0,

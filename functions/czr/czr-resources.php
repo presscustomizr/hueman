@@ -309,7 +309,7 @@ function hu_extend_ctrl_dependencies() {
                 {
                         dominus : 'use-header-image',
                         onSectionExpand : false,
-                        servi : ['header_image', 'display-header-logo', 'custom_logo', 'custom-logo', 'logo-max-height', 'blogname', 'blogdescription', 'header-ads'],
+                        servi : ['header_image', 'display-header-logo', 'custom_logo', 'custom-logo', 'logo-max-height', 'blogname', 'blogdescription', 'header-ads', 'site-description'],
                         visibility : function( to, servusShortId ) {
                               if ( 'header_image' != servusShortId )
                                 return 'unchanged';
@@ -328,6 +328,7 @@ function hu_extend_ctrl_dependencies() {
                                     case 'blogdescription' :
                                     case 'custom-logo' :
                                     case 'header-ads' :
+                                    case 'site-description' :
                                         if ( ! api.control.has(wpServusId) )
                                           return;
 
@@ -353,6 +354,7 @@ function hu_extend_ctrl_dependencies() {
                                     case 'custom_logo' :
                                     case 'custom-logo' :
                                     case 'header-ads' :
+                                    case 'site-description' :
                                         if ( ! api.control.has(wpServusId) )
                                           return;
                                         if ( ! _is_checked(to) ) {

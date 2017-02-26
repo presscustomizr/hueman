@@ -610,7 +610,9 @@ if ( ! class_exists( 'HU_customize' ) ) :
                 'flex_width',
                 'flex_height',
                 'dst_width',
-                'dst_height'
+                'dst_height',
+
+                'ubq_section'
           )
       );
       return apply_filters( 'hu_customizer_arguments', $args );

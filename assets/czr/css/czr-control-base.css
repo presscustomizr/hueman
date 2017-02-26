@@ -1,4 +1,11 @@
 /* OVERRIDE WP CUSTOMIZER */
+/* LINKS */
+.wp-customizer a {
+  color: #000;
+}
+.wp-customizer a:hover, .wp-customizer a:focus {
+  color: #0073aa;
+}
 
 /* LAYOUT */
 .wp-customizer .wp-full-overlay.expanded {
