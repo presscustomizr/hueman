@@ -9,19 +9,23 @@
     "url": "https://github.com/presscustomizr/hueman"
   },
   "devDependencies": {
-    "grunt": "^1.0.0",
+    "grunt": "^1.0.1",
+    "grunt-concurrent": "^2.3.1",
     "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-compress": "^1.2.0",
-    "grunt-contrib-concat": "^1.0.0",
+    "grunt-contrib-compress": "^1.4.1",
+    "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-cssmin": "^1.0.1",
-    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-uglify": "^1.0.1",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-lineending": "^1.0.0",
-    "grunt-stripcomments": "^0.4.0",
+    "grunt-stripcomments": "^0.6.0",
     "grunt-text-replace": "^0.4.0",
-    "jshint-stylish": "^2.1.0",
-    "load-grunt-config": "^0.19.1"
+    "jshint-stylish": "^2.2.1",
+    "load-grunt-config": "^0.19.2"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4"
   }
 }

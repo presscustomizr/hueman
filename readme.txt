@@ -1,4 +1,4 @@
-# Hueman v3.3.4
+# Hueman v3.3.5
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > Hueman is a mobile friendly WordPress theme for blogs, magazines and business websites. It's been designed to beautifully display pictures and text content, and engineered to be easy to use and fast. The Hueman theme helps you attract and retain more visitors, that's why it's already used by 70K+ active websites in the world and has received hundreds of five stars ratings.
@@ -73,6 +73,24 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 # Changelog
+= 3.3.5 February 25th 2017 =
+* Improved : img to smartload must have an src which matches an allowed ext. Fixes issues with Ultimate Membership Pro
+* Fixed : array to string error with hu_is_checked()
+* Removed ru_RU translation files because it is not completed online
+* Moved : the WordPress loop in a separate template named for index.php, search.php and archive.php
+* Fixed : selective refresh disabled when link widget enabled. cf WP core ticket #39451
+* Added : utility hu_is_real_home() => handles the case when the user want to display a page on home but did not pick a page yet
+* Fixed : correctly handle sizes attribute when smartloading resp imgs ( fixes #316 )
+* Improved : add hueman specific widgets panel icon as inline customizer js
+* Added : Gitlab icon to social links
+* Added : wp_add_inline_style() on front allowing to add user option based css
+* Improved : front end jQuery plugins, rightly handle sizes/data-sizes attribute replacement in php
+* Improved: customizer social links module user interface
+* Improved : introduced hu_get_content( $tmpl ) which takes care of all content rendering inside section > .pad accross the theme
+* added : 6 content templates
+* Improved : post messaging for the social links customization
+* Added : icon size option for the social links
+
 = 3.3.4 January 4th 2017 =
 * fixed : customizer not loading when deprecated link widget is enabled
 
