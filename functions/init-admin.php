@@ -207,7 +207,7 @@ function hu_custom_meta_boxes() {
       'id'          => 'post-options',
       'title'       => 'Post Options',
       'desc'        => '',
-      'pages'       => array( 'post' ),
+      'pages'       => apply_filters( 'hu_custom_meta_boxes_post_options_in', array( 'post') ),
       'context'     => 'normal',
       'priority'    => 'high',
       'fields'      => array(
