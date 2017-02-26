@@ -7045,6 +7045,7 @@ $.extend( CZRModuleMths, {
                                 var refreshPreview = function() {
                                       api.previewer.refresh();
                                 };
+
                                 if ( 'postMessage' == api(module.control.id).transport  && ! api.CZR_Helpers.hasPartRefresh( module.control.id ) ) {
                                       refreshPreview = _.debounce( refreshPreview, 500 );//500ms are enough
                                       refreshPreview();
