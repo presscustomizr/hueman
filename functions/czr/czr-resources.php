@@ -157,6 +157,14 @@ function hu_extend_postmessage_cb() {
                 blogdescription : function(to) {
                   $( '.site-description' ).text( to );
                 },
+                'body-font-size' : function( to ) {
+                  to = parseInt( to , 10);
+                  if ( ! _.isNumber( to ) )
+                    return;
+                  var _rem = parseFloat( to ) / 16;
+                  $( 'body' ).css( { 'font-size' : _rem + 'rem' } );
+                  $( '.nav > li').css( { 'font-size' : _rem + 'rem' } );
+                },
                 'body-background' :  function(to) {
                   $('body').css('background-color', to);
                 },

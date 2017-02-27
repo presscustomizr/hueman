@@ -846,16 +846,10 @@ add_action( 'wp_enqueue_scripts', 'hu_scripts' );
 /* ------------------------------------ */
 if ( ! function_exists( 'hu_styles' ) ) {
   function hu_styles() {
-    $_main_style = hu_is_checked('responsive') ? 'main' : 'main-not-responsive';
-
     //registered only, will be loaded as a dependency of the wp style.css
     wp_register_style(
         'hueman-main-style',
-        sprintf('%1$s/assets/front/css/%2$s%3$s.css',
-            get_template_directory_uri(),
-            $_main_style,
-            hu_is_checked('minified-css') ? '.min' : ''
-        ),
+        hu_get_front_style_url(),//defined in init-core
         array(),
         ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
         'all'

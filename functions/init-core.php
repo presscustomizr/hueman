@@ -177,3 +177,179 @@ load_template( get_template_directory() . '/functions/init-front.php' );
 load_template( get_template_directory() . '/functions/dynamic-styles.php' );
 
 do_action('hu_hueman_loaded');
+
+
+/* ------------------------------------------------------------------------- *
+ *  Utils
+/* ------------------------------------------------------------------------- */
+//@return url string
+function hu_get_front_style_url() {
+  return sprintf('%1$s/assets/front/css/%2$s%3$s.css',
+      get_template_directory_uri(),
+      hu_is_checked( 'responsive' ) ? 'main' : 'main-not-responsive',
+      hu_is_checked( 'minified-css' ) ? '.min' : ''
+  );
+}
+
+//@args = array(
+//   'request' => 'src',//can be 'title', 'src' or 'family'
+//   all = bool
+//)
+function hu_get_fonts( $args = array() ) {
+    $args = wp_parse_args(
+        $args,
+        array(
+            'request' => 'src',//can be 'title', 'src' or 'family'
+            'all'   => false,
+            'font_id'  => '',//the id of the font
+        )
+    );
+    $_key_to_return = $args['request'];
+    $font_id = empty( $args['font_id'] ) ? '___' : $args['font_id'];
+
+    //make sure the request is possible : 'title', 'src' or 'family'
+    if ( ! in_array( $_key_to_return, array( 'title', 'src', 'family' ) ) )
+      return;
+    //bail if no font id provided and request is not for all fonts
+    if ( false == $args['all'] && ! is_string( $args['font_id'] ) )
+      return;
+
+    $_fonts_map = apply_filters(
+      'hu_fonts',
+      array(
+        //Google fonts
+        'titillium-web' => array(
+              'title'   => 'Titillium Web, Latin (Self-hosted)',
+              'src'     => false,
+              'family'  => false
+        ),
+        'titillium-web-ext' => array(
+              'title'   => 'Titillium Web, Latin-Ext',
+              'src'     => 'Titillium+Web:400,400italic,300italic,300,600&subset=latin,latin-ext',
+              'family'  => "'Titillium Web', Arial, sans-serif"
+        ),
+        'poppins' => array(
+              'title'   => 'Poppins, Latin-Ext',
+              'src'     => 'Poppins:300,400,500,600,700&subset=latin-ext',
+              'family'  => "'Poppins', sans-serif"
+        ),
+        'droid-serif' => array(
+              'title'   => 'Droid Serif, Latin',
+              'src'     => 'Droid+Serif:400,400italic,700',
+              'family'  => "'Droid Serif', serif"
+        ),
+        'source-sans-pro' => array(
+              'title'   => 'Source Sans Pro, Latin-Ext',
+              'src'     => 'Source+Sans+Pro:400,300italic,300,400italic,600&subset=latin,latin-ext',
+              'family'  => "'Source Sans Pro', Arial, sans-serif"
+        ),
+        'lato' => array(
+              'title'   => 'Lato, Latin',
+              'src'     => 'Lato:400,300,300italic,400italic,700',
+              'family'  => "'Lato', Arial, sans-serif"
+        ),
+        'raleway' => array(
+              'title'   => 'Raleway, Latin',
+              'src'     => 'Raleway:400,300,600',
+              'family'  => "'Raleway', Arial, sans-serif"
+        ),
+        'ubuntu' => array(
+              'title'   => 'Ubuntu, Latin-Ext',
+              'src'     => 'Ubuntu:400,400italic,300italic,300,700&subset=latin,latin-ext',
+              'family'  => "'Ubuntu', Arial, sans-serif"
+        ),
+        'ubuntu-cyr' => array(
+              'title'   => 'Ubuntu, Latin / Cyrillic-Ext',
+              'src'     => 'Ubuntu:400,400italic,300italic,300,700&subset=latin,cyrillic-ext',
+              'family'  => "'Ubuntu', Arial, sans-serif"
+        ),
+        'roboto-condensed' => array(
+              'title'   => 'Roboto Condensed, Latin-Ext',
+              'src'     => 'Roboto+Condensed:400,300italic,300,400italic,700&subset=latin,latin-ext',
+              'family'  => "'Roboto Condensed', Arial, sans-serif"
+        ),
+        'roboto-condensed-cyr' => array(
+              'title'   => 'Roboto Condensed, Latin / Cyrillic-Ext',
+              'src'     => 'Roboto+Condensed:400,300italic,300,400italic,700&subset=latin,cyrillic-ext',
+              'family'  => "'Roboto Condensed', Arial, sans-serif"
+        ),
+        'roboto-slab' => array(
+              'title'   => 'Roboto Slab, Latin-Ext',
+              'src'     => 'Roboto+Slab:400,300italic,300,400italic,700&subset=latin,cyrillic-ext',
+              'family'  => "'Roboto Slab', Arial, sans-serif"
+        ),
+        'roboto-slab-cyr' => array(
+              'title'   => 'Roboto Slab, Latin / Cyrillic-Ext',
+              'src'     => 'Roboto+Slab:400,300italic,300,400italic,700&subset=latin,cyrillic-ext',
+              'family'  => "'Roboto Slab', Arial, sans-serif"
+        ),
+        'playfair-display' => array(
+              'title'   => 'Playfair Display, Latin-Ext',
+              'src'     => 'Playfair+Display:400,400italic,700&subset=latin,latin-ext',
+              'family'  => "'Playfair Display', Arial, sans-serif"
+        ),
+        'playfair-display-cyr' => array(
+              'title'   => 'Playfair Display, Latin / Cyrillic',
+              'src'     => 'Playfair+Display:400,400italic,700&subset=latin,cyrillic',
+              'family'  => "'Playfair Display', Arial, sans-serif"
+        ),
+        'open-sans' => array(
+              'title'   => 'Open Sans, Latin-Ext',
+              'src'     => 'Open+Sans:400,400italic,300italic,300,600&subset=latin,latin-ext',
+              'family'  => "'Open Sans', Arial, sans-serif"
+        ),
+        'open-sans-cyr' => array(
+              'title'   => 'Open Sans, Latin / Cyrillic-Ext',
+              'src'     => 'Open+Sans:400,400italic,300italic,300,600&subset=latin,cyrillic-ext',
+              'family'  => "'Open Sans', Arial, sans-serif"
+        ),
+        'pt-serif' => array(
+              'title'   => 'PT Serif, Latin-Ext',
+              'src'     => 'PT+Serif:400,700,400italic&subset=latin,latin-ext',
+              'family'  => "'PT Serif', serif"
+        ),
+        'pt-serif-cyr' => array(
+              'title'   => 'PT Serif, Latin / Cyrillic-Ext',
+              'src'     => 'PT+Serif:400,700,400italic&subset=latin,cyrillic-ext',
+              'family'  => "'PT Serif', serif"
+        ),
+
+        //Web fonts
+        'arial'               => array(
+              'title'   => 'Arial',
+              'src'     => false,
+              'family'  => 'Arial, sans-serif'
+        ),
+        'georgia'             => array(
+              'title'   => 'Georgia',
+              'src'     => false,
+              'family'  => 'Georgia, serif'
+        ),
+        'verdana'             => array(
+              'title'   => 'Verdana',
+              'src'     => false,
+              'family'  => 'Verdana, sans-serif'
+        ),
+        'tahoma'              => array(
+              'title'   => 'Tahoma',
+              'src'     => false,
+              'family'  => 'Tahoma, sans-serif'
+        )
+    ));
+
+    if ( true == $args['all'] ) {
+        $_return = array();
+        foreach ( $_fonts_map as $id => $data ) {
+            if ( ! array_key_exists( $_key_to_return, $data ) )
+              continue;
+            $_return[$id] = $data[$_key_to_return];
+        }
+    } else {
+        $_return = '';
+        if ( array_key_exists( $font_id, $_fonts_map ) ) {
+            $_return = array_key_exists( $_key_to_return, $_fonts_map[$font_id] ) ? $_fonts_map[$font_id][$_key_to_return] : $_return;
+        }
+    }
+
+    return apply_filters( 'hu_get_fonts', $_return, $args );
+}

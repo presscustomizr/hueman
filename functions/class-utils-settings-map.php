@@ -224,8 +224,20 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'     => __('Font', 'hueman'),
                 'section'   => 'general_design_sec',
                 'type'      => 'select',
-                'choices'    => $this -> hu_get_fonts(),
+                'choices'    => hu_get_fonts( array( 'all' => true, 'request' => 'title' ) ),
                 'notice'    => __( 'Select a font for your website' , 'hueman' )
+          ),
+          'body-font-size'      => array(
+                'default'       => 16,
+                'sanitize_callback' => array( $this , 'hu_sanitize_number' ),
+                'label'         => __( 'Set your website default font size in pixels.' , 'hueman' ),
+                'control'       => 'HU_controls',
+                'section'       => 'general_design_sec',
+                'type'          => 'number' ,
+                'step'          => 1,
+                'min'           => 0,
+                'transport'     => 'postMessage',
+                'notice'        => __( "This option sets the default font size applied to any text element of your website, when no font size is already applied." , 'hueman' )
           ),
           'container-width'  =>  array(
                 'default'       => 1380,
@@ -1305,38 +1317,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
 
     /***************************************************************
     * CONTROLS HELPERS
-    ***************************************************************/
-    function hu_get_fonts() {
-      return apply_filters(
-        'hu_fonts',
-        array(
-          'titillium-web'       => 'Titillium Web, Latin (Self-hosted)',
-          'titillium-web-ext'   => 'Titillium Web, Latin-Ext',
-          'droid-serif'         => 'Droid Serif, Latin',
-          'source-sans-pro'     => 'Source Sans Pro, Latin-Ext',
-          'lato'                => 'Lato, Latin',
-          'raleway'             => 'Raleway, Latin',
-          'ubuntu'              => 'Ubuntu, Latin-Ext',
-          'ubuntu-cyr'          => 'Ubuntu, Latin / Cyrillic-Ext',
-          'roboto-condensed'    => 'Roboto Condensed, Latin-Ext',
-          'roboto-condensed-cyr' => 'Roboto Condensed, Latin / Cyrillic-Ext',
-          'roboto-slab'         => 'Roboto Slab, Latin-Ext',
-          'roboto-slab-cyr'     => 'Roboto Slab, Latin / Cyrillic-Ext',
-          'playfair-display'    => 'Playfair Display, Latin-Ext',
-          'playfair-display-cyr' => 'Playfair Display, Latin / Cyrillic',
-          'open-sans'           => 'Open Sans, Latin-Ext',
-          'open-sans-cyr'       => 'Open Sans, Latin / Cyrillic-Ext',
-          'pt-serif'            => 'PT Serif, Latin-Ext',
-          'pt-serif-cyr'        => 'PT Serif, Latin / Cyrillic-Ext',
-          'arial'               => 'Arial',
-          'georgia'             => 'Georgia',
-          'verdana'             => 'Verdana',
-          'tahoma'              => 'Tahoma'
-        )
-      );
-    }
-
-
+    ****************************************************************
     /*
     * @return array() of cat
     */

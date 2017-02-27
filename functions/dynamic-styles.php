@@ -30,33 +30,24 @@ if ( ! function_exists( 'hu_hex2rgb' ) ) {
 
 /*  Google fonts
 /* ------------------------------------ */
-if ( ! function_exists( 'hu_google_fonts' ) ) {
-
-  function hu_google_fonts () {
+if ( ! function_exists( 'hu_print_gfont_head_link' ) ) {
+  //@return void()
+  //hook : 'wp_head'
+  function hu_print_gfont_head_link () {
     if ( ! hu_is_checked('dynamic-styles') )
       return;
 
-    if ( hu_get_option( 'font' ) == 'titillium-web-ext' ) { echo '<link href="//fonts.googleapis.com/css?family=Titillium+Web:400,400italic,300italic,300,600&subset=latin,latin-ext" rel="stylesheet" type="text/css">'."\n"; }
-    if ( hu_get_option( 'font' ) == 'droid-serif' ) { echo '<link href="//fonts.googleapis.com/css?family=Droid+Serif:400,400italic,700" rel="stylesheet" type="text/css">'."\n"; }
-    if ( hu_get_option( 'font' ) == 'source-sans-pro' ) { echo '<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,300italic,300,400italic,600&subset=latin,latin-ext" rel="stylesheet" type="text/css">'."\n"; }
-    if ( hu_get_option( 'font' ) == 'lato' ) { echo '<link href="//fonts.googleapis.com/css?family=Lato:400,300,300italic,400italic,700" rel="stylesheet" type="text/css">'."\n"; }
-    if ( hu_get_option( 'font' ) == 'raleway' ) { echo '<link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">'."\n"; }
-    if ( hu_get_option( 'font' ) == 'ubuntu' ) { echo '<link href="//fonts.googleapis.com/css?family=Ubuntu:400,400italic,300italic,300,700&subset=latin,latin-ext" rel="stylesheet" type="text/css">'."\n"; }
-    if ( hu_get_option( 'font' ) == 'ubuntu-cyr' ) { echo '<link href="//fonts.googleapis.com/css?family=Ubuntu:400,400italic,300italic,300,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">'."\n"; }
-    if ( hu_get_option( 'font' ) == 'roboto-condensed' ) { echo '<link href="//fonts.googleapis.com/css?family=Roboto+Condensed:400,300italic,300,400italic,700&subset=latin,latin-ext" rel="stylesheet" type="text/css">'."\n"; }
-    if ( hu_get_option( 'font' ) == 'roboto-condensed-cyr' ) { echo '<link href="//fonts.googleapis.com/css?family=Roboto+Condensed:400,300italic,300,400italic,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">'."\n"; }
-    if ( hu_get_option( 'font' ) == 'roboto-slab' ) { echo '<link href="//fonts.googleapis.com/css?family=Roboto+Slab:400,300italic,300,400italic,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">'."\n"; }
-    if ( hu_get_option( 'font' ) == 'roboto-slab-cyr' ) { echo '<link href="//fonts.googleapis.com/css?family=Roboto+Slab:400,300italic,300,400italic,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">'."\n"; }
-    if ( hu_get_option( 'font' ) == 'playfair-display' ) { echo '<link href="//fonts.googleapis.com/css?family=Playfair+Display:400,400italic,700&subset=latin,latin-ext" rel="stylesheet" type="text/css">'."\n"; }
-    if ( hu_get_option( 'font' ) == 'playfair-display-cyr' ) { echo '<link href="//fonts.googleapis.com/css?family=Playfair+Display:400,400italic,700&subset=latin,cyrillic" rel="stylesheet" type="text/css">'."\n"; }
-    if ( hu_get_option( 'font' ) == 'open-sans' ) { echo '<link href="//fonts.googleapis.com/css?family=Open+Sans:400,400italic,300italic,300,600&subset=latin,latin-ext" rel="stylesheet" type="text/css">'."\n"; }
-    if ( hu_get_option( 'font' ) == 'open-sans-cyr' ) { echo '<link href="//fonts.googleapis.com/css?family=Open+Sans:400,400italic,300italic,300,600&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">'."\n"; }
-    if ( hu_get_option( 'font' ) == 'pt-serif' ) { echo '<link href="//fonts.googleapis.com/css?family=PT+Serif:400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">'."\n"; }
-    if ( hu_get_option( 'font' ) == 'pt-serif-cyr' ) { echo '<link href="//fonts.googleapis.com/css?family=PT+Serif:400,700,400italic&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">'."\n"; }
+    $user_font     = hu_get_option( 'font' );
+    $gfamily       = hu_get_fonts( array( 'font_id' => $user_font, 'request' => 'src' ) );//'Source+Sans+Pro:400,300italic,300,400italic,600&subset=latin,latin-ext',
+    //bail here if self hosted font (titilium) of web font
+    if ( ( empty( $gfamily ) || ! is_string( $gfamily ) ) )
+      return;
+
+    printf( '<link id="hu-user-gfont" href="//fonts.googleapis.com/css?family=%1$s" rel="stylesheet" type="text/css">', $gfamily );
   }
 
 }
-add_action( 'wp_head', 'hu_google_fonts', 2 );
+add_action( 'wp_head', 'hu_print_gfont_head_link', 2 );
 
 
 /*  Dynamic css output
@@ -74,61 +65,40 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
 
       //start computing style
       $styles   = array();
-      // google fonts
-      $google_font = hu_get_option( 'font' );
 
-      switch ( $google_font ) {
-        case 'titillium-web-ext'    : $styles[] = 'body { font-family: "Titillium Web", Arial, sans-serif; }';
-                                      break;
-        case 'droid-serif'          : $styles[] = 'body { font-family: "Droid Serif", serif; }';
-                                      break;
-        case 'source-sans-pro'      : $styles[] = 'body { font-family: "Source Sans Pro", Arial, sans-serif; }';
-                                      break;
-        case 'lato'                 : $styles[] = 'body { font-family: "Lato", Arial, sans-serif; }';
-                                      break;
-        case 'raleway'              : $styles[] = 'body { font-family: "Raleway", Arial, sans-serif; }';
-                                      break;
-        case 'ubunty'               :
-        case 'ubuntu-cyr'           : $styles[] = 'body { font-family: "Ubuntu", Arial, sans-serif; }';
-                                      break;
-        case 'roboto-condensed'     :
-        case 'roboto-condensed-cyr' : $styles[] = 'body { font-family: "Roboto Condensed", Arial, sans-serif; }';
-                                      break;
-        case 'roboto-slab'          :
-        case 'roboto-slab-cyr'      : $styles[] = 'body { font-family: "Roboto Slab", Arial, sans-serif; }';
-                                      break;
-        case 'playfair-display'     :
-        case 'playfair-display-cyr' : $styles[] = 'body { font-family: "Playfair Display", Arial, sans-serif; }';
-                                      break;
-        case 'open-sans'            :
-        case 'open-sans-cyr'        : $styles[] = 'body { font-family: "Open Sans", Arial, sans-serif; }';
-                                      break;
-        case 'pt-serif'             :
-        case 'pt-serif-cyr'         : $styles[] ='body { font-family: "PT Serif", serif; }';
-                                      break;
-        case 'arial'                : $styles[] = 'body { font-family: Arial, sans-serif; }';
-                                      break;
-        case 'georgia'              : $styles[] = 'body { font-family: Georgia, serif; }';
-                                      break;
-        case 'verdana'              : $styles[] = 'body { font-family: Verdana, sans-serif; }';
-                                      break;
-        case 'tahoma'               : $styles[] = 'body { font-family: Tahoma, sans-serif; }';
-                                      break;
+      // google / web fonts style
+      $user_font    = hu_get_option( 'font' );
+      $user_font_size = hu_get_option( 'body-font-size' );
+      $user_font_size = is_numeric( $user_font_size ) ? $user_font_size : '16';
+      //turn into rem
+      $remsize      = $user_font_size / 16;
+      $remsize      = number_format( (float)$remsize, 2, '.', '');
+      $family       = hu_get_fonts( array( 'font_id' => $user_font, 'request' => 'family' ) );//'"Raleway", Arial, sans-serif'
+      if ( ! empty( $family ) && is_string( $family ) ) {
+          $styles[]     = sprintf('body { font-family:%1$s;font-size:%2$srem }', $family, $remsize );
+      } else {
+          $styles[]     = sprintf('body { font-size:%1$srem; }', $remsize );
       }
+
+      //specific font size for menu items, also customized live
+      $styles[] = '@media only screen and (min-width: 720px) {
+        .nav > li { font-size:' . $remsize .'rem; }
+      }';
+      //sprintf('@media only screen and (min-width: 720px) { .nav > li { font-size:%1$srem; } }', $remsize );
 
       // container width
       if ( hu_get_option('container-width') != '1380' ) {
-        if ( hu_is_checked( 'boxed' ) ) {
-          $styles[] = '.boxed #wrapper, .container-inner { max-width: '.hu_get_option('container-width').'px; }';
-        }
-        else {
-          $styles[] = '.container-inner { max-width: '.hu_get_option('container-width').'px; }';
-        }
+          if ( hu_is_checked( 'boxed' ) ) {
+              $styles[] = '.boxed #wrapper, .container-inner { max-width: '.hu_get_option('container-width').'px; }';
+          }
+          else {
+              $styles[] = '.container-inner { max-width: '.hu_get_option('container-width').'px; }';
+          }
       }
 
       // sidebar padding
       if ( hu_get_option('sidebar-padding') != '30' ) {
-        $styles[]  = '.sidebar .widget { padding-left: '.hu_get_option('sidebar-padding').'px; padding-right: '.hu_get_option('sidebar-padding').'px; padding-top: '.hu_get_option('sidebar-padding').'px; }';
+          $styles[]  = '.sidebar .widget { padding-left: '.hu_get_option('sidebar-padding').'px; padding-right: '.hu_get_option('sidebar-padding').'px; padding-top: '.hu_get_option('sidebar-padding').'px; }';
       }
       // primary color
       if ( hu_get_option('color-1') != '#3b8dbd' ) {

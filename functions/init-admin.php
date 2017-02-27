@@ -439,3 +439,84 @@ function hu_custom_meta_boxes() {
     ot_register_meta_box( $post_format_video );
     ot_register_meta_box( $post_options );
 }
+
+
+if ( is_admin() && ! hu_is_customizing() ) {
+    add_action( 'after_setup_theme' , 'hu_add_editor_style' );
+    //@return void()
+    //hook : after_setup_theme
+    function hu_add_editor_style() {
+        $_stylesheets = array(
+            sprintf( '%1$sassets/admin/css/editor-style.css' , HU_BASE_URL ),
+            //hu_get_front_style_url(),
+            //get_stylesheet_uri()
+        );
+        $gfont_src = hu_maybe_add_gfonts_to_editor();
+        if ( apply_filters( 'hu_add_user_fonts_to_editor' , false != $gfont_src ) )
+          $_stylesheets = array_merge( $_stylesheets , $gfont_src );
+
+        add_editor_style( $_stylesheets );
+    }
+
+
+    /*
+    * @return css string
+    *
+    */
+    function hu_maybe_add_gfonts_to_editor() {
+      if ( ! hu_is_checked('dynamic-styles') )
+        return;
+
+      $user_font     = hu_get_option( 'font' );
+      $gfamily       = hu_get_fonts( array( 'font_id' => $user_font, 'request' => 'src' ) );//'Source+Sans+Pro:400,300italic,300,400italic,600&subset=latin,latin-ext',
+      //bail here if self hosted font (titilium) of web font
+      if ( ( empty( $gfamily ) || ! is_string( $gfamily ) ) )
+        return;
+
+      //Commas in a URL need to be encoded before the string can be passed to add_editor_style.
+      return array(
+        str_replace(
+          ',',
+          '%2C',
+          sprintf( '//fonts.googleapis.com/css?family=%s', $gfamily )
+        )
+      );
+    }
+}
+
+add_filter( 'tiny_mce_before_init'  , 'hu_user_defined_tinymce_css' );
+
+/**
+* Extend TinyMCE config with a setup function.
+* See http://www.tinymce.com/wiki.php/API3:event.tinymce.Editor.onInit
+* http://wordpress.stackexchange.com/questions/120831/how-to-add-custom-css-theme-option-to-tinymce
+* @package Customizr
+* @since Customizr 3.2.11
+*
+*/
+function hu_user_defined_tinymce_css( $init ) {
+  if ( ! apply_filters( 'hu_add_custom_fonts_to_editor' , true ) )
+    return $init;
+
+  if ( 'tinymce' != wp_default_editor() )
+    return $init;
+
+  //some plugins fire tiny mce editor in the customizer
+  //in this case, the CZR_resource class has to be loaded
+  // if ( ! class_exists('CZR_resources') || ! is_object(CZR_resources::$instance) ) {
+  //   CZR___::$instance -> czr_fn_req_once( 'inc/czr-init.php' );
+  //   new CZR_resources();
+  // }
+
+  // google / web fonts style
+  $user_font    = hu_get_option( 'font' );
+  $family       = hu_get_fonts( array( 'font_id' => $user_font, 'request' => 'family' ) );//'"Raleway", Arial, sans-serif'
+  $family       = ( empty( $family ) || ! is_string( $family ) ) ? "'Titillium Web', Arial, sans-serif" : $family;
+
+  //fonts
+  $_css = "body.mce-content-body{ font-family : {$family} };\n";
+
+  $init['content_style'] = trim( preg_replace('/\s+/', ' ', $_css ) );
+
+  return $init;
+}
