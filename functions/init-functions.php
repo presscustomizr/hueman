@@ -189,14 +189,16 @@ function hu_is_home() {
 
 
 /**
-* helper
+* helper ( can be already defined in hueman-addons)
 * Check if we are really on home, all cases covered
 * @return  bool
 */
-function hu_is_real_home() {
-  return ( is_home() && ( 'posts' == get_option( 'show_on_front' ) || '__nothing__' == get_option( 'show_on_front' ) ) )
-  || ( 0 == get_option( 'page_on_front' ) && 'page' == get_option( 'show_on_front' ) )//<= this is the case when the user want to display a page on home but did not pick a page yet
-  || is_front_page();
+if ( ! function_exists( 'hu_is_real_home') ) {
+  function hu_is_real_home() {
+    return ( is_home() && ( 'posts' == get_option( 'show_on_front' ) || '__nothing__' == get_option( 'show_on_front' ) ) )
+    || ( 0 == get_option( 'page_on_front' ) && 'page' == get_option( 'show_on_front' ) )//<= this is the case when the user want to display a page on home but did not pick a page yet
+    || is_front_page();
+  }
 }
 
 /**
