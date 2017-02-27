@@ -34,6 +34,7 @@ function hu_customize_preview_js() {
             'themeFolder'     => get_template_directory_uri(),
             'wpBuiltinSettings' => HU_customize::$instance -> hu_get_wp_builtin_settings(),
             'themeOptions'  => HU_THEME_OPTIONS,
+            'fonts' => array( 'src' => hu_get_fonts( array( 'all' => true, 'request' => 'src' ) ), 'family' => hu_get_fonts( array( 'all' => true, 'request' => 'family' ) ) ),
             //patch for old wp versions which don't trigger preview-ready signal => since WP 4.1
             'preview_ready_event_exists'   => version_compare( $wp_version, '4.1' , '>=' ),
             'blogname' => get_bloginfo('name'),
@@ -156,6 +157,36 @@ function hu_extend_postmessage_cb() {
                 },
                 blogdescription : function(to) {
                   $( '.site-description' ).text( to );
+                },
+                'font' : function( font_id ) {
+                    var gfontUrl        = ['//fonts.googleapis.com/css?family='],
+                        fontList = CZRPreviewParams.fonts,
+                        fontFamily, fontSrc;
+
+                    if ( fontList.family && fontList.src ) {
+                        fontSrc = false != fontList.src[font_id] ? fontList.src[font_id] : null;
+                        if ( ! _.isNull( fontSrc ) ) {
+                            gfontUrl.push( fontSrc );
+                            if ( 0 === $('link#gfontlink' ).length ) {
+                                $gfontlink = $('<link>' , {
+                                    id    : 'gfontlink' ,
+                                    href  : gfontUrl.join(''),
+                                    rel   : 'stylesheet',
+                                    type  : 'text/css'
+                                });
+
+                                $('link:last').after($gfontlink);
+                            }
+                            else {
+                                $('link#gfontlink' ).attr('href', gfontUrl.join('') );
+                            }
+                        }
+
+                        fontFamily = false != fontList.family[font_id] ? fontList.family[font_id] : null;
+                        if ( ! _.isNull( fontFamily ) ) {
+                            $('body').css( 'font-family', fontFamily );
+                        }
+                    }
                 },
                 'body-font-size' : function( to ) {
                   to = parseInt( to , 10);

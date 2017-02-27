@@ -225,6 +225,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'general_design_sec',
                 'type'      => 'select',
                 'choices'    => hu_get_fonts( array( 'all' => true, 'request' => 'title' ) ),
+                'transport'     => 'postMessage',
                 'notice'    => __( 'Select a font for your website' , 'hueman' )
           ),
           'body-font-size'      => array(
