@@ -91,7 +91,7 @@ function hu_customize_controls_js_css() {
             'css_attr' => HU_customize::$instance -> hu_get_controls_css_attr(),
             'i18n' => hu_get_czr_translated_strings(),
             'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('TC_DEV') && true === TC_DEV ),
-            'isThemeSwitchOn' => isset( $_GET['theme']),
+            'isThemeSwitchOn' => ! (bool)HU_IS_PRO,
             'themeSettingList' => HU_utils::$_theme_setting_list
         )
       )

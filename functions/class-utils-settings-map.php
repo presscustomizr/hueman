@@ -299,46 +299,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 //'transport'   => 'postMessage',
                 //'notice'        => __('Set background color and/or upload your own background image.', 'hueman')
           ),
-          'color-topbar' => array(
-                'default'     => '#26272b',
-                'control'     => 'WP_Customize_Color_Control',
-                'label'       => __( 'Topbar Background' , 'hueman' ),
-                'section'     => 'general_design_sec',
-                'type'        =>  'color' ,
-                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
-                'sanitize_js_callback' => 'maybe_hash_hex_color',
-                'transport'   => 'postMessage'
-          ),
-          'color-header' => array(
-                'default'     => '#33363b',
-                'control'     => 'WP_Customize_Color_Control',
-                'label'       => __( 'Header Background' , 'hueman' ),
-                'section'     => 'general_design_sec',
-                'type'        =>  'color' ,
-                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
-                'sanitize_js_callback' => 'maybe_hash_hex_color',
-                'transport'   => 'postMessage'
-          ),
-          'color-header-menu' => array(
-                'default'     => '#33363b',
-                'control'     => 'WP_Customize_Color_Control',
-                'label'       => __( 'Header Menu Background' , 'hueman' ),
-                'section'     => 'general_design_sec',
-                'type'        =>  'color' ,
-                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
-                'sanitize_js_callback' => 'maybe_hash_hex_color',
-                'transport'   => 'postMessage'
-          ),
-          'color-footer' => array(
-                'default'     => '#33363b',
-                'control'     => 'WP_Customize_Color_Control',
-                'label'       => __( 'Footer Background' , 'hueman' ),
-                'section'     => 'general_design_sec',
-                'type'        =>  'color' ,
-                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
-                'sanitize_js_callback' => 'maybe_hash_hex_color',
-                'transport'   => 'postMessage'
-          ),
           'image-border-radius'  =>  array(
                 'default'       => 0,
                 'control'       => 'HU_controls' ,
@@ -543,6 +503,36 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                     'section' => 'title_tagline',
                     'priority' => '15'
                 )
+          ),
+          'color-topbar' => array(
+                'default'     => '#26272b',
+                'control'     => 'WP_Customize_Color_Control',
+                'label'       => __( 'Topbar Background' , 'hueman' ),
+                'section'     => 'header_design_sec',
+                'type'        =>  'color' ,
+                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
+                'sanitize_js_callback' => 'maybe_hash_hex_color',
+                'transport'   => 'postMessage'
+          ),
+          'color-header' => array(
+                'default'     => '#33363b',
+                'control'     => 'WP_Customize_Color_Control',
+                'label'       => __( 'Header Background' , 'hueman' ),
+                'section'     => 'header_design_sec',
+                'type'        =>  'color' ,
+                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
+                'sanitize_js_callback' => 'maybe_hash_hex_color',
+                'transport'   => 'postMessage'
+          ),
+          'color-header-menu' => array(
+                'default'     => '#33363b',
+                'control'     => 'WP_Customize_Color_Control',
+                'label'       => __( 'Header Menu Background' , 'hueman' ),
+                'section'     => 'header_design_sec',
+                'type'        =>  'color' ,
+                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
+                'sanitize_js_callback' => 'maybe_hash_hex_color',
+                'transport'   => 'postMessage'
           ),
           'use-header-image' => array(
                 'default'   => 0,
@@ -982,6 +972,16 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'dst_width'  => false,
                 'dst_height'  => false,
                 'notice'    => __('Upload your custom logo image. Supported formats : .jpg, .png, .gif, svg, svgz' , 'hueman')
+          ),
+          'color-footer' => array(
+                'default'     => '#33363b',
+                'control'     => 'WP_Customize_Color_Control',
+                'label'       => __( 'Footer Background' , 'hueman' ),
+                'section'     => 'footer_design_sec',
+                'type'        =>  'color' ,
+                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
+                'sanitize_js_callback' => 'maybe_hash_hex_color',
+                'transport'   => 'postMessage'
           ),
           'copyright' => array(
                 'control'   => 'HU_controls',
