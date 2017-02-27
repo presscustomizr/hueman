@@ -113,7 +113,19 @@
           </div>
 
           <div class="grid one-half last">
-            <?php hu_print_social_links(); ?>
+            <?php if ( hu_has_social_links() ) : ?>
+              <?php hu_print_social_links(); ?>
+            <?php else : //if not customizing, display an empty p for design purposes ?>
+                <?php if ( ! hu_is_customizing() && is_user_logged_in() && current_user_can( 'edit_theme_options' ) ) : ?>
+                    <?php
+                      printf( '<p style="text-transform:none;text-align: right;">%1$s. <br/><a style="color: white;text-decoration:underline;" href="%2$s" title="%3$s">%3$s &raquo;</a></p>',
+                          __('You can set your social links here from the live customizer', 'hueman'),
+                          admin_url( 'customize.php?autofocus[section]=social_links_sec' ),
+                          __('Customize now', 'hueman')
+                      );
+                    ?>
+                <?php endif; ?>
+            <?php endif; ?>
           </div>
 
         </div><!--/.pad-->

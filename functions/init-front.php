@@ -226,7 +226,7 @@ if ( ! function_exists( 'hu_print_social_links' ) ) {
     if ( empty( $_social_items ) ) {
         if ( hu_is_customizing() ) {
             printf( '<ul class="social-links"><li style="font-size:0.9em;color:white"><span><i>%1$s</i></span></li></ul>',
-                __('You can set social links here from the live customizer')
+                __('You can set your social links here from the live customizer')
             );
         }
         return;
