@@ -919,7 +919,7 @@ box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
 .post-thumbnail { position: relative; margin-bottom: 1em; }
 .post-thumbnail img { display: block; width: 100%; height: auto; }
 
-.post-comments { background: #82b965; font-size: 0.75em; line-height: 1.66em; color: #fff; display: block; position: absolute; top: 10px; right: 0;
+.post-comments { background: #82b965; font-size: 0.75rem; line-height: 1.66rem; color: #fff; display: block; position: absolute; top: 10px; right: 0;
 -webkit-box-shadow: inset -1px 0 1px rgba(0,0,0,0.2);
 box-shadow: inset -1px 0 1px rgba(0,0,0,0.2); }
 .post-comments > span { display: block; position: relative; padding: 2px 7px; }
@@ -1445,18 +1445,18 @@ box-shadow: inset 0 1px 0 rgba(255,255,255,0.25); }
 .comment-tabs li.active a { color: #3b8dbd; border-bottom-color: #3b8dbd; }
 
 .commentlist, .pinglist { margin-bottom: 20px; }
-.commentlist li, .pinglist li { padding-left: 60px; font-size: 0.875em; line-height: 1.5714em; font-weight: 400; }
+.commentlist li, .pinglist li { padding-left: 60px; font-size: 0.875rem; line-height: 1.5714rem; font-weight: 400; }
 .commentlist .comment-body, .pinglist li { clear: both; position: relative; padding-bottom: 15px; }
 .commentlist .comment-author,
 .commentlist .comment-meta,
-.commentlist .comment-awaiting-moderation { font-size: 0.8125em; display: block; float: left; line-height: 1.5384em; }
+.commentlist .comment-awaiting-moderation { font-size: 0.8125rem; display: block; float: left; line-height: 1.5384rem; }
 .commentlist .comment-author { margin-right: 6px; }
-.commentlist .fn, .pinglist .ping-link { color: #444; font-size: 0.8125em; font-style: normal; font-weight: 600; }
+.commentlist .fn, .pinglist .ping-link { color: #444; font-size: 0.8125rem; font-style: normal; font-weight: 600; }
 .commentlist .says { display: none; }
 .commentlist .avatar { position: absolute; left: -60px; top: 0; width: 48px; height: 48px; -webkit-border-radius: 3px; border-radius: 3px; }
 .commentlist .comment-meta:before, .pinglist .ping-meta:before { color: #ccc; content: "\f017"; font-family: FontAwesome; font-size: 10px; margin-right: 3px; vertical-align: 4%; }
 .commentlist .comment-meta a, .pinglist .ping-meta { color: #aaa; }
-.commentlist .reply { font-size: 0.8125em; line-height: 1.231em; }
+.commentlist .reply { font-size: 0.8125rem; line-height: 1.231rem; }
 .commentlist .reply a { color: #aaa; }
 .commentlist .reply a:hover { color: #444; }
 .comment-awaiting-moderation { color: #3b8dbd; font-style: normal; }
