@@ -136,7 +136,7 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
                   api.section('themes').active.bind( function( active ) {
                         if ( ! _.has( serverControlParams, 'isThemeSwitchOn' ) || ! _.isEmpty( serverControlParams.isThemeSwitchOn ) )
                           return;
-                        api.section('themes').active(false);
+                        api.section('themes').active( serverControlParams.isThemeSwitchOn );
                         api.section('themes').active.callbacks = $.Callbacks();
                   });
             };

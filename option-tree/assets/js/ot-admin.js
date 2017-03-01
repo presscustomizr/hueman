@@ -1,6 +1,6 @@
 /**
  * Option Tree UI
- * 
+ *
  * Dependencies: jQuery, jQuery UI, ColorPicker
  *
  * @author Derek Herman (derek@valendesigns.com)
@@ -143,8 +143,8 @@
         if (agree) {
           var list = $(this).parents('ul');
           OT_UI.remove(this);
-          setTimeout( function() { 
-            OT_UI.update_ids(list); 
+          setTimeout( function() {
+            OT_UI.update_ids(list);
           }, 200 );
         }
         return false;
@@ -168,7 +168,7 @@
       });
     },
     init_activate_layout: function() {
-      $(document).on('click', '.option-tree-layout-activate', function() { 
+      $(document).on('click', '.option-tree-layout-activate', function() {
         var active = $(this).parents('.option-tree-setting').find('.open').text();
         $('.option-tree-layout-activate').removeClass('active');
         $(this).toggleClass('active');
@@ -186,12 +186,12 @@
       });
     },
     add: function(elm,type) {
-      var self = this, 
-          list = '', 
+      var self = this,
+          list = '',
           list_class = '',
-          name = '', 
-          post_id = 0, 
-          get_option = '', 
+          name = '',
+          post_id = 0,
+          get_option = '',
           settings = '';
       if ( type == 'the_contextual_help' ) {
         list = $(elm).parent().find('ul:last');
@@ -317,8 +317,8 @@
 
       while( match = regex.exec( condition ) ) {
         conditions.push({
-          'check': match[1], 
-          'rule':  match[2], 
+          'check': match[1],
+          'rule':  match[2],
           'value': match[3] || ''
         });
       }
@@ -360,7 +360,7 @@
               break;
             case 'contains':
               result = ( v1.indexOf(v2) !== -1 ? true : false );
-              break; 
+              break;
             case 'is':
               result = ( v1 == v2 );
               break;
@@ -382,7 +382,7 @@
               passed = ( passed && result );
               break;
           }
-          
+
         });
 
         if ( passed ) {
@@ -390,7 +390,7 @@
         } else {
           $(this).animate({opacity: 'hide' , height: 'hide'}, 200);
         }
-        
+
         delete passed;
 
       });
@@ -428,11 +428,11 @@
             title: $(this).attr('title'),
             button: {
               text: option_tree.upload_text
-            }, 
+            },
             multiple: false
           });
           window.ot_media_frame.on('select', function() {
-            var attachment = window.ot_media_frame.state().get('selection').first(), 
+            var attachment = window.ot_media_frame.state().get('selection').first(),
                 href = attachment.attributes.url,
                 attachment_id = attachment.attributes.id,
                 mime = attachment.attributes.mime,
@@ -449,19 +449,19 @@
           }).open();
         } else {
           var backup = window.send_to_editor,
-              intval = window.setInterval( 
+              intval = window.setInterval(
                 function() {
                   if ( $('#TB_iframeContent').length > 0 && $('#TB_iframeContent').attr('src').indexOf( "&field_id=" ) !== -1 ) {
                     $('#TB_iframeContent').contents().find('#tab-type_url').hide();
                   }
-                  $('#TB_iframeContent').contents().find('.savesend .button').val(option_tree.upload_text); 
+                  $('#TB_iframeContent').contents().find('.savesend .button').val(option_tree.upload_text);
                 }, 50);
           tb_show('', 'media-upload.php?post_id='+post_id+'&field_id='+field_id+'&type=image&TB_iframe=1');
           window.send_to_editor = function(html) {
             var href = $(html).find('img').attr('src');
             if ( typeof href == 'undefined') {
               href = $(html).attr('src');
-            } 
+            }
             if ( typeof href == 'undefined') {
               href = $(html).attr('href');
             }
@@ -534,7 +534,7 @@
           min: hidden.data("min"),
           max: hidden.data("max"),
           step: hidden.data("step"),
-          value: value, 
+          value: value,
           slide: function(event, ui) {
             hidden.add(helper).val(ui.value).trigger('change');
           },
@@ -548,9 +548,9 @@
       });
     },
     init_tabs: function() {
-      $(".wrap.settings-wrap .ui-tabs").tabs({ 
-        fx: { 
-          opacity: "toggle", 
+      $(".wrap.settings-wrap .ui-tabs").tabs({
+        fx: {
+          opacity: "toggle",
           duration: "fast"
         }
       });
@@ -617,7 +617,7 @@
           dataType: 'json',
           data: {
             action: 'ot_google_font',
-            family: input.val(), 
+            family: input.val(),
             field_id: input.attr('id')
           }
         }).done(function(response) {
@@ -635,7 +635,7 @@
             $clone = $el_clone.clone(true),
             $count = $group.length ? $group.length : 0;
         $clone.attr('class', 'type-google-font-group');
-        var replacer = function(index, elm) { 
+        var replacer = function(index, elm) {
           return elm.replace('%key%', $count);
         }
         $('select', $clone).each( function() {
@@ -659,7 +659,7 @@
       $('#'+field_id).wpColorPicker({
         change: function() {
           OT_UI.parse_condition();
-        }, 
+        },
         clear: function() {
           OT_UI.parse_condition();
         }
@@ -727,7 +727,7 @@
         editor.setTheme("ace/theme/chrome");
         editor.getSession().setMode("ace/mode/css");
         editor.setShowPrintMargin( false );
-    
+
         editor.getSession().setValue(this_textarea.val());
         editor.getSession().on('change', function(){
           this_textarea.val(editor.getSession().getValue());
@@ -744,7 +744,7 @@
         editor.setTheme("ace/theme/chrome");
         editor.getSession().setMode("ace/mode/javascript");
         editor.setShowPrintMargin( false );
-    
+
         editor.getSession().setValue(this_textarea.val());
         editor.getSession().on('change', function(){
           this_textarea.val(editor.getSession().getValue());
@@ -782,13 +782,13 @@
 
 /* Gallery */
 !function ($) {
-  
+
   ot_gallery = {
-      
+
     frame: function (elm) {
-      
+
       var selection = this.select(elm)
-      
+
       this._frame = wp.media({
         id:         'ot-gallery-frame'
       , frame:      'post'
@@ -798,7 +798,7 @@
       , multiple:   true
       , selection:  selection
       })
-      
+
       this._frame.on('update', function () {
         var controller = ot_gallery._frame.states.get('gallery-edit')
           , library = controller.get('library')
@@ -806,12 +806,12 @@
           , parent = $(elm).parents('.format-setting-inner')
           , input = parent.children('.ot-gallery-value')
           , shortcode = wp.media.gallery.shortcode( selection ).string().replace(/\"/g,"'")
-        
+
         input.attr('value', ids)
-                        
+
         if ( parent.children('.ot-gallery-list').length <= 0 )
           input.after('<ul class="ot-gallery-list" />')
-        
+
         $.ajax({
           type: 'POST',
           url: ajaxurl,
@@ -833,11 +833,11 @@
           }
         })
       })
-        
+
       return this._frame
-      
+
     }
-      
+
   , select: function (elm) {
       var input = $(elm).parents('.format-setting-inner').children('.ot-gallery-value')
         , ids = input.attr('value')
@@ -846,63 +846,63 @@
         , defaultPostId = wp.media.gallery.defaults.id
         , attachments
         , selection
-        
+
       // Bail if we didn't match the shortcode or all of the content.
       if ( ! shortcode )
         return
-      
+
       // Ignore the rest of the match object.
       shortcode = shortcode.shortcode
-      
+
       if ( _.isUndefined( shortcode.get('id') ) && ! _.isUndefined( defaultPostId ) )
         shortcode.set( 'id', defaultPostId )
-      
+
       if ( _.isUndefined( shortcode.get('ids') ) && ! input.hasClass('ot-gallery-shortcode') && ids )
         shortcode.set( 'ids', ids )
-      
+
       if ( _.isUndefined( shortcode.get('ids') ) )
         shortcode.set( 'ids', '0' )
-      
+
       attachments = wp.media.gallery.attachments( shortcode )
 
       selection = new wp.media.model.Selection( attachments.models, {
         props:    attachments.props.toJSON()
       , multiple: true
       })
-      
+
       selection.gallery = attachments.gallery
-    
+
       // Fetch the query's attachments, and then break ties from the query to allow for sorting.
       selection.more().done( function () {
         selection.props.set({ query: false })
         selection.unmirror()
         selection.props.unset('orderby')
       })
-      
+
       return selection
-      
+
     }
-    
+
   , open: function (elm) {
-      
+
       ot_gallery.frame(elm).open()
-      
+
     }
-  
+
   , remove: function (elm) {
-      
+
       if ( confirm( option_tree.confirm ) ) {
-        
+
         $(elm).parents('.format-setting-inner').children('.ot-gallery-value').attr('value', '');
         $(elm).parents('.format-setting-inner').children('.ot-gallery-list').remove();
         $(elm).next('.ot-gallery-edit').text( option_tree.create );
         $(elm).remove();
         OT_UI.parse_condition();
-        
+
       }
 
     }
-  
+
   }
 
   // Gallery delete
@@ -910,13 +910,13 @@
     e.preventDefault()
     ot_gallery.remove($(this))
   })
-  
+
   // Gallery edit
   $(document).on('click.ot_gallery.data-api', '.ot-gallery-edit', function (e) {
     e.preventDefault()
     ot_gallery.open($(this))
   })
-  
+
 }(window.jQuery);
 
 /*!
@@ -925,42 +925,42 @@
 !function ($) {
 
   $(document).on('ready', function () {
-    
+
     // Loop over the metaboxes
     $('.ot-metabox-wrapper').each( function() {
-    
+
       // Only if there is a tab option
       if ( $(this).find('.type-tab').length ) {
-        
+
         // Add .ot-metabox-panels
         $(this).find('.type-tab').parents('.ot-metabox-wrapper').wrapInner('<div class="ot-metabox-panels" />')
-        
+
         // Wrapp with .ot-metabox-tabs & add .ot-metabox-nav before .ot-metabox-panels
         $(this).find('.ot-metabox-panels').wrap('<div class="ot-metabox-tabs" />').before('<ul class="ot-metabox-nav" />')
-        
+
         // Loop over settings and build the tabs nav
         $(this).find('.format-settings').each( function() {
-      
+
           if ( $(this).find('.type-tab').length > 0 ) {
             var title = $(this).find('.type-tab').prev().find('label').text()
               , id = $(this).attr('id')
-  
-            // Add a class, hide & append nav item 
+
+            // Add a class, hide & append nav item
             $(this).addClass('is-panel').hide()
             $(this).parents('.ot-metabox-panels').prev('.ot-metabox-nav').append('<li><a href="#' + id + '">' + title + '</a></li>')
-            
+
           }
-          
+
         })
-        
+
         // Loop over the panels and wrap and ID them.
         $(this).find('.is-panel').each( function() {
           var id = $(this).attr('id')
-          
+
           $(this).add( $(this).nextUntil('.is-panel') ).wrapAll('<div id="' + id + '" class="tab-content" />')
-          
+
         })
-        
+
         // Create the tabs
         $(this).find('.ot-metabox-tabs').tabs({
           activate: function( event, ui ) {
@@ -973,10 +973,10 @@
             OT_UI.load_editors();
           }
         })
-        
+
         // Move the orphaned settings to the top
         $(this).find('.ot-metabox-panels > .format-settings').prependTo($(this))
-        
+
         // Remove a bunch of classes to stop style conflicts.
         $(this).find('.ot-metabox-tabs').removeClass('ui-widget ui-widget-content ui-corner-all')
         $(this).find('.ot-metabox-nav').removeClass('ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all')
@@ -984,11 +984,11 @@
         $(this).find('.ot-metabox-nav li').on('mouseenter mouseleave', function() { $(this).removeClass('ui-state-hover') })
 
       }
-    
+
     })
-     
+
   })
-  
+
 }(window.jQuery);
 
 /*!
@@ -997,120 +997,120 @@
 !function ($) {
 
   $(document).on('ready', function () {
-    
+
     // Loop over the theme options
     $('#option-tree-settings-api .inside').each( function() {
-    
+
       // Only if there is a tab option
       if ( $(this).find('.type-tab').length ) {
-        
+
         // Add .ot-theme-option-panels
         $(this).find('.type-tab').parents('.inside').wrapInner('<div class="ot-theme-option-panels" />')
-        
+
         // Wrap with .ot-theme-option-tabs & add .ot-theme-option-nav before .ot-theme-option-panels
         $(this).find('.ot-theme-option-panels').wrap('<div class="ot-theme-option-tabs" />').before('<ul class="ot-theme-option-nav" />')
-        
+
         // Loop over settings and build the tabs nav
         $(this).find('.format-settings').each( function() {
-      
+
           if ( $(this).find('.type-tab').length > 0 ) {
             var title = $(this).find('.type-tab').prev().find('.label').text()
               , id = $(this).attr('id')
-  
-            // Add a class, hide & append nav item 
+
+            // Add a class, hide & append nav item
             $(this).addClass('is-panel').hide()
             $(this).parents('.ot-theme-option-panels').prev('.ot-theme-option-nav').append('<li><a href="#' + id + '">' + title + '</a></li>')
-            
+
           } else {
-          
+
           }
-          
+
         })
-        
+
         // Loop over the panels and wrap and ID them.
         $(this).find('.is-panel').each( function() {
           var id = $(this).attr('id')
-          
+
           $(this).add( $(this).nextUntil('.is-panel') ).wrapAll('<div id="' + id + '" class="tab-content" />')
-          
+
         })
-        
+
         // Create the tabs
         $(this).find('.ot-theme-option-tabs').tabs({
           activate: function( event, ui ) {
             OT_UI.load_editors();
           }
         })
-        
+
         // Move the orphaned settings to the top
         $(this).find('.ot-theme-option-panels > .format-settings').prependTo($(this).find('.ot-theme-option-tabs'))
-      
+
       }
-    
+
     })
-     
+
   })
-  
+
 }(window.jQuery);
 
 /*!
  * Fixes the state of metabox radio buttons after a Drag & Drop event.
  */
 !function ($) {
-  
+
   $(document).on('ready', function () {
 
     // detect mousedown and store all checked radio buttons
     $('.hndle').on('mousedown', function () {
-      
-      // get parent element of .hndle selected. 
+
+      // get parent element of .hndle selected.
       // We only need to monitor radios insde the object that is being moved.
       var parent_id = $(this).closest('div').attr('id')
-      
-      // set live event listener for mouse up on the content .wrap 
+
+      // set live event listener for mouse up on the content .wrap
       // then give the dragged div time to settle before firing the reclick function
       $('.wrap').on('mouseup', function () {
-        
+
         var ot_checked_radios = {}
-        
+
         // loop over all checked radio buttons inside of parent element
         $('#' + parent_id + ' input[type="radio"]').each( function () {
-          
+
           // stores checked radio buttons
           if ( $(this).is(':checked') ) {
-            
+
             ot_checked_radios[$(this).attr('name')] = $(this).val()
-          
+
           }
-          
+
           // write to the object
           $(document).data('ot_checked_radios', ot_checked_radios)
-          
+
         })
-        
-        // restore all checked radio buttons 
+
+        // restore all checked radio buttons
         setTimeout( function () {
-      
+
           // get object of checked radio button names and values
           var checked = $(document).data('ot_checked_radios')
-          
+
           // step thru each object element and trigger a click on it's corresponding radio button
           for ( key in checked ) {
-            
+
             $('input[name="' + key + '"]').filter('[value="' + checked[key] + '"]').trigger('click')
-            
+
           }
-          
+
           $('.wrap').unbind('mouseup')
-          
+
         }, 50 )
-      
+
       })
-      
+
     })
-  
+
   })
-  
+
 }(window.jQuery);
 
 /*!
