@@ -410,6 +410,7 @@ function hu_extend_ctrl_dependencies() {
                         servi : [
                               'boxed',
                               'font',
+                              'body-font-size',
                               'container-width',
                               'sidebar-padding',
                               'color-1',

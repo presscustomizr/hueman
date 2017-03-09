@@ -514,7 +514,7 @@ function hu_user_defined_tinymce_css( $init ) {
   $family       = ( empty( $family ) || ! is_string( $family ) ) ? "'Titillium Web', Arial, sans-serif" : $family;
 
   //fonts
-  $_css = "body.mce-content-body{ font-family : {$family} };\n";
+  $_css = "body.mce-content-body{ font-family : {$family}; }\n";
 
   $init['content_style'] = trim( preg_replace('/\s+/', ' ', $_css ) );
 

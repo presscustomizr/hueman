@@ -1,4 +1,4 @@
-# Hueman v3.3.6
+# Hueman v3.3.7
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > Hueman is a mobile friendly WordPress theme for blogs, magazines and business websites. It's been designed to beautifully display pictures and text content, and engineered to be easy to use and fast. The Hueman theme helps you attract and retain more visitors, that's why it's already used by 70K+ active websites in the world and has received hundreds of five stars ratings.
@@ -73,6 +73,9 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 # Changelog
+= 3.3.7 March 8th 2017 =
+* fixed : drag resize image inserted into visual editor #415 
+
 = 3.3.6 March 1st 2017 =
 * fixed : bug on threaded comments font-size getting too small since latest update
 
