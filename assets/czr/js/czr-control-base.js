@@ -205,6 +205,8 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
                         .fail( function( error ) {
                               api.errorLog( 'Skope could not be instantiated : ' + error );
                               serverControlParams.isSkopOn = false;
+                        })
+                        .always( function() {
                               api.czr_isLoadingSkope( false );
                         });
                   if ( 'rejected' != api.czr_skopeReady.state() ) {
