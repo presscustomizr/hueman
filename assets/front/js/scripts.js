@@ -841,157 +841,168 @@ if (!Array.prototype.map) {
  *
  * =================================================== */
 ;(function ( $, window, document, undefined ) {
-  /*
-  * In order to handle a smooth scroll
-  * ( inspired by jquery.waypoints and smoothScroll.js )
-  * Maybe use this -> https://gist.github.com/paulirish/1579671
-  */
-  var czrParallaxRequestAnimationFrame = function(callback) {
-    var requestFn = ( czrapp && czrapp.requestAnimationFrame) ||
-      window.requestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
-      function( callback ) { window.setTimeout(callback, 1000 / 60); };
+        /*
+        * In order to handle a smooth scroll
+        * ( inspired by jquery.waypoints and smoothScroll.js )
+        * Maybe use this -> https://gist.github.com/paulirish/1579671
+        */
+        var czrParallaxRequestAnimationFrame = function(callback) {
+              var requestFn = ( czrapp && czrapp.requestAnimationFrame) ||
+                window.requestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                function( callback ) { window.setTimeout(callback, 1000 / 60); };
 
-    requestFn.call(window, callback);
-  };
+              requestFn.call(window, callback);
+        };
 
-  //defaults
-  var pluginName = 'czrParallax',
-      defaults = {
-        parallaxRatio : 0.5,
-        parallaxDirection : 1,
-        parallaxOverflowHidden : true,
-        oncustom : [],//list of event here
-        backgroundClass : 'image'
-      };
+        //defaults
+        var pluginName = 'czrParallax',
+            defaults = {
+                  parallaxRatio : 0.5,
+                  parallaxDirection : 1,
+                  parallaxOverflowHidden : true,
+                  oncustom : [],//list of event here
+                  backgroundClass : 'image',
+                  matchMedia : 'only screen and (max-width: 768px)'
+            };
 
-  function Plugin( element, options ) {
-    this.element = $(element);
-    this.options = $.extend( {}, defaults, options, this.parseElementDataOptions() ) ;
-    this._defaults = defaults;
-    this._name = pluginName;
-    this.init();
-  }
-
-  Plugin.prototype.parseElementDataOptions = function () {
-    return this.element.data();
-  };
-
-  //can access this.element and this.option
-  //@return void
-  Plugin.prototype.init = function () {
-    //cache some element
-    this.$_document   = $(document);
-    this.$_window     = czrapp ? czrapp.$_window : $(window);
-    this.doingAnimation = false;
-
-    this.initWaypoints();
-    this.stageParallaxElements();
-    this._bind_evt();
-  };
-
-  //@return void
-  //map custom events if any
-  Plugin.prototype._bind_evt = function() {
-    var self = this,
-        _customEvt = $.isArray(this.options.oncustom) ? this.options.oncustom : this.options.oncustom.split(' ');
-
-    _.bindAll( this, 'maybeParallaxMe', 'parallaxMe' );
-    /* TODO: custom events? */
-  };
-
-  Plugin.prototype.stageParallaxElements = function() {
-
-    this.element.css( 'position', this.element.hasClass( this.options.backgroundClass ) ? 'absolute' : 'relative' );
-    if ( this.options.parallaxOverflowHidden ){
-      var $_wrapper = this.element.closest( '.parallax-wrapper' );
-      if ( $_wrapper.length )
-        $_wrapper.css( 'overflow', 'hidden' );
-    }
-  };
-
-  Plugin.prototype.initWaypoints = function() {
-    var self = this;
-
-      this.way_start = new Waypoint({
-        element: self.element,
-        handler: function() {
-          self.maybeParallaxMe();
-          if ( ! self.element.hasClass('parallaxing') ){
-            self.$_window.on('scroll', self.maybeParallaxMe );
-            self.element.addClass('parallaxing');
-          }else{
-            self.element.removeClass('parallaxing');
-            self.$_window.off('scroll', self.maybeParallaxMe );
-            self.doingAnimation = false;
-            self.element.css('top', 0 );
-          }
+        function Plugin( element, options ) {
+              this.element = $(element);
+              this.options = $.extend( {}, defaults, options, this.parseElementDataOptions() ) ;
+              this._defaults = defaults;
+              this._name = pluginName;
+              this.init();
         }
-      });
 
-      this.way_stop = new Waypoint({
-        element: self.element,
-        handler: function() {
-          self.maybeParallaxMe();
-          if ( ! self.element.hasClass('parallaxing') ) {
-            self.$_window.on('scroll', self.maybeParallaxMe );
-            self.element.addClass('parallaxing');
-          }else {
-            self.element.removeClass('parallaxing');
-            self.$_window.off('scroll', self.maybeParallaxMe );
-            self.doingAnimation = false;
-          }
-        },
-        offset: function(){
-          //offset = this.context.innerHeight() - this.adapter.outerHeight();
-          //return - (  offset > 20 /* possible wrong h scrollbar */ ? offset : this.context.innerHeight() );
-          return - this.adapter.outerHeight();
-        }
-      });
-  };
+        Plugin.prototype.parseElementDataOptions = function () {
+              return this.element.data();
+        };
 
-  /*
-  * In order to handle a smooth scroll
-  */
-  Plugin.prototype.maybeParallaxMe = function() {
-      var self = this;
+        //can access this.element and this.option
+        //@return void
+        Plugin.prototype.init = function () {
+              //cache some element
+              this.$_document   = $(document);
+              this.$_window     = czrapp ? czrapp.$_window : $(window);
+              this.doingAnimation = false;
 
-      if ( !this.doingAnimation ) {
-        this.doingAnimation = true;
-        window.requestAnimationFrame(function() {
-          self.parallaxMe();
-          self.doingAnimation = false;
-        });
-      }
-  };
+              this.initWaypoints();
+              this.stageParallaxElements();
+              this._bind_evt();
+        };
 
-  Plugin.prototype.parallaxMe = function() {
-      //parallax only the current slide if in slider context?
-      /*
-      if ( ! ( this.element.hasClass( 'is-selected' ) || this.element.parent( '.is-selected' ).length ) )
-        return;
-      */
+        //@return void
+        //map custom events if any
+        Plugin.prototype._bind_evt = function() {
+              var self = this,
+                  _customEvt = $.isArray(this.options.oncustom) ? this.options.oncustom : this.options.oncustom.split(' ');
 
-      var ratio = this.options.parallaxRatio,
-          parallaxDirection = this.options.parallaxDirection,
+              _.bindAll( this, 'maybeParallaxMe', 'parallaxMe' );
+              /* TODO: custom events? */
+        };
 
-          value = ratio * parallaxDirection * ( this.$_document.scrollTop() - this.way_start.triggerPoint );
+        Plugin.prototype.stageParallaxElements = function() {
+              this.element.css( 'position', this.element.hasClass( this.options.backgroundClass ) ? 'absolute' : 'relative' );
+              if ( this.options.parallaxOverflowHidden ){
+                    var $_wrapper = this.element.closest( '.parallax-wrapper' );
+                    if ( $_wrapper.length )
+                      $_wrapper.css( 'overflow', 'hidden' );
+              }
+        };
 
-       this.element.css('top', parallaxDirection * value < 0 ? 0 : value );
-  };
+        Plugin.prototype.initWaypoints = function() {
+              var self = this;
+
+              this.way_start = new Waypoint({
+                    element: self.element,
+                    handler: function() {
+                          self.maybeParallaxMe();
+                          if ( ! self.element.hasClass('parallaxing') ){
+                                self.$_window.on('scroll', self.maybeParallaxMe );
+                                self.element.addClass('parallaxing');
+                          } else{
+                                self.element.removeClass('parallaxing');
+                                self.$_window.off('scroll', self.maybeParallaxMe );
+                                self.doingAnimation = false;
+                                self.element.css('top', 0 );
+                          }
+                    }
+              });
+
+              this.way_stop = new Waypoint({
+                    element: self.element,
+                    handler: function() {
+                          self.maybeParallaxMe();
+                          if ( ! self.element.hasClass('parallaxing') ) {
+                                self.$_window.on('scroll', self.maybeParallaxMe );
+                                self.element.addClass('parallaxing');
+                          }else {
+                                self.element.removeClass('parallaxing');
+                                self.$_window.off('scroll', self.maybeParallaxMe );
+                                self.doingAnimation = false;
+                          }
+                    },
+                    offset: function(){
+                          //offset = this.context.innerHeight() - this.adapter.outerHeight();
+                          //return - (  offset > 20 /* possible wrong h scrollbar */ ? offset : this.context.innerHeight() );
+                          return - this.adapter.outerHeight();
+                    }
+              });
+        };
+
+        /*
+        * In order to handle a smooth scroll
+        */
+        Plugin.prototype.maybeParallaxMe = function() {
+              var self = this;
+              //options.matchMedia is set to 'only screen and (max-width: 768px)' by default
+              //if a match is found, then reset the top position
+              if ( _.isFunction( window.matchMedia ) && matchMedia( self.options.matchMedia ).matches )
+                return this.setTopPosition();
+
+              if ( ! this.doingAnimation ) {
+                    this.doingAnimation = true;
+                    window.requestAnimationFrame(function() {
+                          self.parallaxMe();
+                          self.doingAnimation = false;
+                    });
+              }
+        };
+
+        //@see https://www.paulirish.com/2012/why-moving-elements-with-translate-is-better-than-posabs-topleft/
+        Plugin.prototype.setTopPosition = function( _top_ ) {
+              _top_ = _top_ || 0;
+              this.element.css({
+                    'transform' : 'translate3d(0px, ' + _top_  + 'px, .01px)',
+                    '-webkit-transform' : 'translate3d(0px, ' + _top_  + 'px, .01px)'
+                    //top: _top_
+              });
+        };
+
+        Plugin.prototype.parallaxMe = function() {
+              //parallax only the current slide if in slider context?
+              /*
+              if ( ! ( this.element.hasClass( 'is-selected' ) || this.element.parent( '.is-selected' ).length ) )
+                return;
+              */
+
+              var ratio = this.options.parallaxRatio,
+                  parallaxDirection = this.options.parallaxDirection,
+                  value = ratio * parallaxDirection * ( this.$_document.scrollTop() - this.way_start.triggerPoint );
+              this.setTopPosition( parallaxDirection * value < 0 ? 0 : value );
+        };
 
 
-  // prevents against multiple instantiations
-  $.fn[pluginName] = function ( options ) {
-      return this.each(function () {
-          if (!$.data(this, 'plugin_' + pluginName)) {
-              $.data(this, 'plugin_' + pluginName,
-              new Plugin( this, options ));
-          }
-      });
-  };
-
+        // prevents against multiple instantiations
+        $.fn[pluginName] = function ( options ) {
+            return this.each(function () {
+                if (!$.data(this, 'plugin_' + pluginName)) {
+                    $.data(this, 'plugin_' + pluginName,
+                    new Plugin( this, options ));
+                }
+            });
+        };
 })( jQuery, window, document );/* ===================================================
  * jqueryAnimateSvg.js v1.0.0
  * @dependency : Vivus.js (MIT licensed)
@@ -1069,6 +1080,55 @@ if (!Array.prototype.map) {
         window.cancelAnimationFrame = function(id) {
             clearTimeout(id);
         };
+}());/*! matchMedia() polyfill - Test a CSS media type/query in JS. Authors & copyright (c) 2012: Scott Jehl, Paul Irish, Nicholas Zakas, David Knight. Dual MIT/BSD license */
+
+window.matchMedia || (window.matchMedia = function() {
+    "use strict";
+
+    // For browsers that support matchMedium api such as IE 9 and webkit
+    var styleMedia = (window.styleMedia || window.media);
+
+    // For those that don't support matchMedium
+    if (!styleMedia) {
+        var style       = document.createElement('style'),
+            script      = document.getElementsByTagName('script')[0],
+            info        = null;
+
+        style.type  = 'text/css';
+        style.id    = 'matchmediajs-test';
+
+        if (!script) {
+          document.head.appendChild(style);
+        } else {
+          script.parentNode.insertBefore(style, script);
+        }
+
+        // 'style.currentStyle' is used by IE <= 8 and 'window.getComputedStyle' for all other browsers
+        info = ('getComputedStyle' in window) && window.getComputedStyle(style, null) || style.currentStyle;
+
+        styleMedia = {
+            matchMedium: function(media) {
+                var text = '@media ' + media + '{ #matchmediajs-test { width: 1px; } }';
+
+                // 'style.styleSheet' is used by IE <= 8 and 'style.textContent' for all other browsers
+                if (style.styleSheet) {
+                    style.styleSheet.cssText = text;
+                } else {
+                    style.textContent = text;
+                }
+
+                // Test if media query is true or false
+                return info.width === '1px';
+            }
+        };
+    }
+
+    return function(media) {
+        return {
+            matches: styleMedia.matchMedium(media || 'all'),
+            media: media || 'all'
+        };
+    };
 }());// Press Customizr version of Galambosi's SmoothScroll
 
 // SmoothScroll for websites v1.3.8 (Balazs Galambosi)
