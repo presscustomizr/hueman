@@ -638,6 +638,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 #header { background: #33363b; position: relative; padding-bottom: 60px; }
 #header .pad { padding-top: 30px; padding-bottom: 30px; }
 #header .container-inner { position: relative; }
+.mobile-title-logo-in-header { display: none;}
 
 .site-title { font-size: 2.625em; font-weight: 600; letter-spacing: -0.5px; float: left; line-height: 1.4285em; padding: 10px 0; }
 .site-title a { display: block; color: #fff; max-width: 100%; }

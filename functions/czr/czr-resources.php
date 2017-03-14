@@ -277,7 +277,7 @@ function hu_add_customize_preview_data() {
 function hu_extend_ctrl_dependencies() {
   $_header_img_notice = esc_js( sprintf( __( "When the %s, this element will not be displayed in your header.", 'hueman'),
       sprintf('<a href="%1$s" title="%2$s">%2$s</a>',
-        "javascript:wp.customize.section(\'header_design_sec\').focus();",
+        "javascript:wp.customize.section(\'header_image_sec\').focus();",
         __('header image is enabled', 'hueman')
       )
   ) );
@@ -289,7 +289,7 @@ function hu_extend_ctrl_dependencies() {
   ) );
   $_header_menu_notice = esc_js( sprintf( __( "The menu currently displayed in your header is a default page menu, you can disable it in the %s.", 'hueman'),
       sprintf('<a href="%1$s" title="%2$s">%2$s</a>',
-        "javascript:wp.customize.section(\'header_menu_sec\').focus();",
+        "javascript:wp.customize.section(\'header_design_sec\').focus();",
         __('Header Panel', 'hueman')
       )
   ) );

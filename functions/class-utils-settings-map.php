@@ -105,8 +105,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
 
         //HEADER
         'hu_header_design_sec',
+        'hu_header_image_sec',
         'hu_header_widget_sec',
-        'hu_header_menu_sec',
 
         //CONTENT
         //'hu_content_home_sec',
@@ -117,8 +117,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         'hu_sidebars_design_sec',
 
         //FOOTER
-        'hu_footer_design_sec',
-        'hu_footer_menu_sec'
+        'hu_footer_design_sec'
 
       );
 
@@ -490,7 +489,16 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                                    HEADER DESIGN SECTION
     ------------------------------------------------------------------------------------------------------*/
     function hu_header_design_sec() {
-      global $wp_version;
+      $nav_section_desc = "<br/>" . sprintf( __("You can create menus and set their locations %s." , "hueman"),
+          sprintf( '<strong><a href="%1$s" title="%3$s">%2$s</a><strong>',
+            "javascript:wp.customize.panel('nav_menus').focus();",
+            __("in the menu panel" , "hueman"),
+            __("create/edit menus", "hueman")
+          )
+      );
+
+      $header_nav_notice =  sprintf( '%1$s %2$s', __( 'The Hueman theme supports up to two menu locations in your header.', 'hueman' ), $nav_section_desc );
+
       return array(
           'site-description' => array(
                 'default'   => 1,
@@ -503,6 +511,14 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                     'section' => 'title_tagline',
                     'priority' => '15'
                 )
+          ),
+          'default-menu-header' => array(
+                'default'   => 0,
+                'control'   => 'HU_controls',
+                'label'     => __("Use a default page menu if no menu has been assigned.", 'hueman'),
+                'section'   => 'header_design_sec',
+                'type'      => 'checkbox',
+                'notice'    => $header_nav_notice
           ),
           'color-topbar' => array(
                 'default'     => '#26272b',
@@ -534,17 +550,36 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'sanitize_js_callback' => 'maybe_hash_hex_color',
                 'transport'   => 'postMessage'
           ),
-          'use-header-image' => array(
-                'default'   => 0,
+          'header_mobile_menu_layout' => array(
+                'default'   => 'main_menu',
                 'control'   => 'HU_controls',
-                'label'     => __( 'Use a header banner image' , 'hueman' ),
+                'label'     => __( 'Select the hamburger menu(s) to display for mobile devices', 'hueman'),
                 'section'   => 'header_design_sec',
-                'type'      => 'checkbox',
-                'notice'    => __('Upload a header image (supported formats : .jpg, .png, .gif, svg, svgz). This will disable header title/logo, site description, header ads widget' , 'hueman')
+                'type'      => 'select',
+                'choices'   => array(
+                    'main_menu' => __('Main Menu', 'hueman'),
+                    'top_menu'  => __('Top Menu', 'hueman'),
+                    'both_menus' => __( 'Top and main menus, logo centered')
+                )
           )
         );
     }
 
+    /*-----------------------------------------------------------------------------------------------------
+                                   HEADER IMAGE SECTION
+    ------------------------------------------------------------------------------------------------------*/
+    function hu_header_image_sec() {
+      return array(
+          'use-header-image' => array(
+                'default'   => 0,
+                'control'   => 'HU_controls',
+                'label'     => __( 'Use a header banner image' , 'hueman' ),
+                'section'   => 'header_image_sec',
+                'type'      => 'checkbox',
+                'notice'    => __('Upload a header image (supported formats : .jpg, .png, .gif, svg, svgz). This will disable header title/logo, site description, header ads widget' , 'hueman')
+          )
+      );
+    }
 
     /*-----------------------------------------------------------------------------------------------------
                                    Advertisement Widget SECTION
@@ -563,20 +598,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     }
 
 
-    /*-----------------------------------------------------------------------------------------------------
-                                   Header Menu SECTION
-    ------------------------------------------------------------------------------------------------------*/
-    function hu_header_menu_sec() {
-      return array(
-          'default-menu-header' => array(
-                'default'   => 0,
-                'control'   => 'HU_controls',
-                'label'     => __("Use a default page menu if no menu has been assigned.", 'hueman'),
-                'section'   => 'header_menu_sec',
-                'type'      => 'checkbox'
-          )
-      );
-    }
 
     /******************************************************************************************************
     *******************************************************************************************************
@@ -940,6 +961,13 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     ------------------------------------------------------------------------------------------------------*/
     function hu_footer_design_sec() {
       global $wp_version;
+      $nav_section_desc = "<br/>" . sprintf( __("You can create menus and set their locations %s." , "hueman"),
+          sprintf( '<strong><a href="%1$s" title="%3$s">%2$s</a><strong>',
+            "javascript:wp.customize.panel('nav_menus').focus();",
+            __("in the menu panel" , "hueman"),
+            __("create/edit menus", "hueman")
+          )
+      );
       return array(
           'footer-ads' => array(
                 'default'   => hu_user_started_before_version( '3.2.4' ) ? 1 : 0,
@@ -948,6 +976,14 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'footer_design_sec',
                 'type'      => 'checkbox',
                 'notice'    => __('This zone is located before the other footer widgets and takes 100% of the width. Very appropriate to display a Google Map or an advertisement banner.', 'hueman')
+          ),
+          'default-menu-footer' => array(
+                'default'   => 0,
+                'control'   => 'HU_controls',
+                'label'     => __("Use a default page menu if no menu has been assigned.", 'hueman'),
+                'section'   => 'footer_design_sec',
+                'type'      => 'checkbox',
+                'notice'    => $nav_section_desc
           ),
           'footer-widgets' => array(
                 'default'   => hu_user_started_before_version( '3.2.4' ) ? '0' : '3',
@@ -1002,23 +1038,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           ),
       );
     }
-
-
-    /*-----------------------------------------------------------------------------------------------------
-                                   Footer Menu SECTION
-    ------------------------------------------------------------------------------------------------------*/
-    function hu_footer_menu_sec() {
-      return array(
-          'default-menu-footer' => array(
-                'default'   => 0,
-                'control'   => 'HU_controls',
-                'label'     => __("Use a default page menu if no menu has been assigned.", 'hueman'),
-                'section'   => 'footer_menu_sec',
-                'type'      => 'checkbox'
-          )
-      );
-    }
-
 
 
     /******************************************************************************************************
@@ -1160,31 +1179,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     * hook : hu_add_section_map
     */
     function hu_popul_section_map( $_sections ) {
-      //For nav menus option
-      $locations      = get_registered_nav_menus();
-      $menus          = wp_get_nav_menus();
-      $num_locations  = count( array_keys( $locations ) );
-      global $wp_version;
-      $nav_section_desc =  __( 'Select which menu appears in each location.', 'hueman' );
-      //adapt the nav section description for v4.3 (menu in the customizer from now on)
-      if ( version_compare( $wp_version, '4.3', '<' ) ) {
-        $nav_section_desc .= "<br/>" . sprintf( __("You can create menus and set their locations %s." , "hueman"),
-          sprintf( '<strong><a href="%1$s" target="_blank" title="%3$s">%2$s</a></strong>',
-            admin_url('nav-menus.php'),
-            __("on the Menus screen in the Appearance section" , "hueman"),
-            __("create/edit menus", "hueman")
-          )
-        );
-      } else {
-        $nav_section_desc .= "<br/>" . sprintf( __("You can create menus and set their locations %s." , "hueman"),
-          sprintf( '<strong><a href="%1$s" title="%3$s">%2$s</a><strong>',
-            "javascript:wp.customize.panel('nav_menus').focus();",
-            __("in the menu panel" , "hueman"),
-            __("create/edit menus", "hueman")
-          )
-        );
-      }
-
       $_new_sections = array(
         /*---------------------------------------------------------------------------------------------
         -> PANEL : GENERAL
@@ -1213,20 +1207,19 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         -> PANEL : HEADER
         ----------------------------------------------------------------------------------------------*/
         'header_design_sec'         => array(
-              'title'    => __( "Header Design : banner image, ...", 'hueman' ),
+              'title'    => __( "Header Design : colors, mobile settings", 'hueman' ),
               'priority' => 10,
+              'panel'   => 'hu-header-panel'
+        ),
+        'header_image_sec'         => array(
+              'title'    => __( 'Header Image', 'hueman' ),
+              'priority' => 30,
               'panel'   => 'hu-header-panel'
         ),
         'header_widget_sec'         => array(
               'title'    => __( 'Header Advertisement Widget', 'hueman' ),
               'priority' => 20,
               'panel'   => 'hu-header-panel'
-        ),
-        'header_menu_sec'         => array(
-              'title'    => __( 'Header Menu', 'hueman' ),
-              'priority' => 30,
-              'panel'   => 'hu-header-panel',
-              'description'    => $nav_section_desc
         ),
 
         /*---------------------------------------------------------------------------------------------
@@ -1273,12 +1266,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
               'title'    => __( 'Footer Design : Logo, layout, ...', 'hueman' ),
               'priority' => 10,
               'panel'   => 'hu-footer-panel'
-        ),
-        'footer_menu_sec'         => array(
-              'title'    => __( 'Footer Menu', 'hueman' ),
-              'priority' => 20,
-              'panel'   => 'hu-footer-panel',
-              'description'    => $nav_section_desc
         ),
 
 

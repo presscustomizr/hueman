@@ -638,6 +638,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 #header { background: #33363b; position: relative; padding-bottom: 60px; }
 #header .pad { padding-top: 30px; padding-bottom: 30px; }
 #header .container-inner { position: relative; }
+.mobile-title-logo-in-header { display: none;}
 
 .site-title { font-size: 2.625em; font-weight: 600; letter-spacing: -0.5px; float: left; line-height: 1.4285em; padding: 10px 0; }
 .site-title a { display: block; color: #fff; max-width: 100%; }
@@ -2000,6 +2001,57 @@ li#wp-admin-bar-tc-hueman-help a {
 	-webkit-box-shadow: 1px 0 0 rgba(255,255,255,0.1);
 	box-shadow: 1px 0 0 rgba(255,255,255,0.1); }
 	.search-expand { left: 0; right: auto; top: 50px; width: 320px; }
+
+  #header .mobile-title-logo-in-header {
+    display: inline-block;
+    height: 46px;
+    min-width: 58%;
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+  #header .mobile-title-logo-in-header .site-title {
+    height: auto;
+    width: auto;
+    text-align: center;
+    z-index: 3;
+    overflow: hidden;
+    transform: translate(0, -50%);
+    transform: translate3d(0, -50%, 0);
+    top: 50%;
+    left: 10px;
+    position: absolute;
+  }
+  #header .mobile-title-logo-in-header .site-title a img {
+    max-height: 30px;
+  }
+  #header .mobile-title-logo-in-header .site-title a {
+    font-size: 0.6em;
+  }
+  .central-header-zone {
+    display: none;
+  }
+  .both-menus-mobile-on .central-header-zone {
+    display: block;
+  }
+
+  #nav-topbar {
+    display: none;
+  }
+  .top-menu-mobile-on #nav-topbar {
+    display: block;
+  }
+  #nav-header {
+    display: none;
+  }
+  .main-menu-mobile-on #nav-header {
+    display: block;
+  }
+
+  .both-menus-mobile-on #nav-topbar, .both-menus-mobile-on #nav-header {
+    display: block;
+  }
+
 
 	/* footer */
 	#footer-bottom .pad { padding-top: 50px; padding-bottom: 40px; }
