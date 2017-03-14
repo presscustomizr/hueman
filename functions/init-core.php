@@ -35,7 +35,7 @@ if( ! defined( 'HU_THEME_OPTIONS' ) ) define( 'HU_THEME_OPTIONS' , apply_filters
 if( ! defined( 'HU_OPT_AJAX_ACTION' ) ) define( 'HU_OPT_AJAX_ACTION' , 'hu_get_option' );
 
 //HU_IS_PRO
-if( ! defined( 'HU_IS_PRO' ) ) define( 'HU_IS_PRO' , file_exists( HU_BASE . 'functions/init-pro.php' ) && "hueman-pro" == sanitize_file_name( strtolower($hu_theme -> name) ) );
+if( ! defined( 'HU_IS_PRO' ) ) define( 'HU_IS_PRO' , file_exists( HU_BASE . 'addons/init-hueman-pro.php' ) && "hueman-pro" == sanitize_file_name( strtolower($hu_theme -> name) ) );
 
 //HU_WEBSITE is the home website of Hueman
 if( ! defined( 'HU_WEBSITE' ) )         define( 'HU_WEBSITE' , $hu_base_data['authoruri'] );
@@ -117,7 +117,7 @@ load_template( get_template_directory() . '/functions/init-retro-compat.php' );
 /* ------------------------------------------------------------------------- */
 // Load pro template file only if needed
 if ( HU_IS_PRO ) {
-  load_template( HU_BASE . 'functions/init-pro.php' );
+  load_template( HU_BASE . 'addons/init-hueman-pro.php' );
   new HU_init_pro();
 }
 

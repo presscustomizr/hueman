@@ -5,10 +5,8 @@
 /* ------------------------------------------------------------------------- */
 //@return bool
 function hu_isprevdem() {
-  $_active_theme = hu_get_raw_option( 'template' );
-  return apply_filters( 'hu_isprevdem', ( $_active_theme != strtolower(THEMENAME) && ! is_child_theme() ) );
+    return apply_filters( 'hu_isprevdem', hu_get_raw_option( 'template', null, false ) != get_stylesheet() && ! is_child_theme() && ! HU_IS_PRO  );
 }
-
 
 /****************************************************************************
 ****************************** HELPERS **************************************
@@ -142,33 +140,48 @@ function hu_user_started_before_version( $_ver ) {
 * @return bool
 */
 function hu_has_nav_menu( $_location ) {
-  $bool = false;
-  if ( has_nav_menu( $_location ) || ! in_array( $_location, array( 'header', 'footer') ) ) {
-    $bool = has_nav_menu( $_location );
-  } else {
-    switch ($_location) {
-      case 'footer':
-      case 'header':
-        $bool = hu_is_checked( "default-menu-{$_location}" );
-      break;
+    $bool = false;
+    if ( has_nav_menu( $_location ) || ! in_array( $_location, array( 'header', 'footer') ) ) {
+      $bool = has_nav_menu( $_location );
+    } else {
+      switch ($_location) {
+        case 'footer':
+        case 'header':
+          $bool = hu_is_checked( "default-menu-{$_location}" );
+        break;
+      }
     }
-  }
-  return apply_filters( 'hu_has_nav_menu', $bool, $_location );
+    return apply_filters( 'hu_has_nav_menu', $bool, $_location );
 }
 
 
 
 //@return an array of unfiltered options
 //=> all options or a single option val
-function hu_get_raw_option( $opt_name = null, $opt_group = null ) {
+function hu_get_raw_option( $opt_name = null, $opt_group = null, $from_cache = true ) {
     $alloptions = wp_cache_get( 'alloptions', 'options' );
-    $alloptions = maybe_unserialize($alloptions);
-    if ( ! is_null( $opt_group ) && isset($alloptions[$opt_group]) ) {
-      $alloptions = maybe_unserialize($alloptions[$opt_group]);
+    $alloptions = maybe_unserialize( $alloptions );
+    //is there any option group requested ?
+    if ( ! is_null( $opt_group ) && array_key_exists( $opt_group, $alloptions ) ) {
+      $alloptions = maybe_unserialize( $alloptions[ $opt_group ] );
     }
-    if ( is_null( $opt_name ) )
-      return $alloptions;
-    return isset( $alloptions[$opt_name] ) ? maybe_unserialize($alloptions[$opt_name]) : false;
+    //shall we return a specific option ?
+    if ( is_null( $opt_name ) ) {
+        return $alloptions;
+    } else {
+        $opt_value = array_key_exists( $opt_name, $alloptions ) ? maybe_unserialize( $alloptions[ $opt_name ] ) : false;//fallback on cache option val
+        //do we need to get the db value instead of the cached one ? <= might be safer with some user installs not properly handling the wp cache
+        //=> typically used to checked the template name for czr_fn_isprevdem()
+        if ( ! $from_cache ) {
+            global $wpdb;
+            //@see wp-includes/option.php : get_option()
+            $row = $wpdb->get_row( $wpdb->prepare( "SELECT option_value FROM $wpdb->options WHERE option_name = %s LIMIT 1", $opt_name ) );
+            if ( is_object( $row ) ) {
+                $opt_value = $row->option_value;
+            }
+        }
+        return $opt_value;
+    }
 }
 
 
@@ -183,8 +196,8 @@ function hu_get_raw_option( $opt_name = null, $opt_group = null ) {
 * @return  bool
 */
 function hu_is_home() {
-  //get info whether the front page is a list of last posts or a page
-  return is_home() || ( is_home() && ( 'posts' == get_option( 'show_on_front' ) || '__nothing__' == get_option( 'show_on_front' ) ) ) || is_front_page();
+    //get info whether the front page is a list of last posts or a page
+    return is_home() || ( is_home() && ( 'posts' == get_option( 'show_on_front' ) || '__nothing__' == get_option( 'show_on_front' ) ) ) || is_front_page();
 }
 
 
@@ -194,11 +207,11 @@ function hu_is_home() {
 * @return  bool
 */
 if ( ! function_exists( 'hu_is_real_home') ) {
-  function hu_is_real_home() {
-    return ( is_home() && ( 'posts' == get_option( 'show_on_front' ) || '__nothing__' == get_option( 'show_on_front' ) ) )
-    || ( 0 == get_option( 'page_on_front' ) && 'page' == get_option( 'show_on_front' ) )//<= this is the case when the user want to display a page on home but did not pick a page yet
-    || is_front_page();
-  }
+    function hu_is_real_home() {
+        return ( is_home() && ( 'posts' == get_option( 'show_on_front' ) || '__nothing__' == get_option( 'show_on_front' ) ) )
+        || ( 0 == get_option( 'page_on_front' ) && 'page' == get_option( 'show_on_front' ) )//<= this is the case when the user want to display a page on home but did not pick a page yet
+        || is_front_page();
+    }
 }
 
 /**
@@ -206,8 +219,8 @@ if ( ! function_exists( 'hu_is_real_home') ) {
 * @return  bool
 */
 function hu_is_home_empty() {
-  //check if the users has choosen the "no posts or page" option for home page
-  return ( is_home() || is_front_page() ) && '__nothing__' == get_option( 'show_on_front' );
+    //check if the users has choosen the "no posts or page" option for home page
+    return ( is_home() || is_front_page() ) && '__nothing__' == get_option( 'show_on_front' );
 }
 
 
@@ -217,7 +230,7 @@ function hu_is_home_empty() {
 * @return  bool
 */
 function hu_is_blogpage() {
-  return is_home() && ! is_front_page();
+    return is_home() && ! is_front_page();
 }
 
 /**
@@ -226,15 +239,15 @@ function hu_is_blogpage() {
 * @return  bool
 */
 function hu_is_post_list() {
-  global $wp_query;
+    global $wp_query;
 
-  return apply_filters( 'hu_is_post_list',
-    ( ! is_singular()
-    && ! is_404()
-    && ( is_search() && 0 != $wp_query -> post_count )
-    && ! hu_is_home_empty() )
-    || hu_is_blogpage() || is_home() || is_search() || is_archive()
-  );
+    return apply_filters( 'hu_is_post_list',
+      ( ! is_singular()
+      && ! is_404()
+      && ( is_search() && 0 != $wp_query -> post_count )
+      && ! hu_is_home_empty() )
+      || hu_is_blogpage() || is_home() || is_search() || is_archive()
+    );
 }
 
 /**
@@ -244,7 +257,7 @@ function hu_is_post_list() {
 * @return  bool
 */
 function hu_is_page() {
-  return is_page();
+    return is_page();
 }
 
 /**
@@ -254,7 +267,7 @@ function hu_is_page() {
 * @return  bool
 */
 function hu_is_single() {
-  return is_single();
+    return is_single();
 }
 
 /**
@@ -264,7 +277,7 @@ function hu_is_single() {
 * @return  bool
 */
 function hu_is_singular() {
-  return is_singular();
+    return is_singular();
 }
 
 /**
@@ -290,50 +303,49 @@ function hu_has_social_links() {
 * @return bool
 */
 function hu_is_ajax() {
+    /*
+    * wp_doing_ajax() introduced in 4.7.0
+    */
+    $wp_doing_ajax = ( function_exists('wp_doing_ajax') && wp_doing_ajax() ) || ( ( defined('DOING_AJAX') && 'DOING_AJAX' ) );
 
-  /*
-  * wp_doing_ajax() introduced in 4.7.0
-  */
-  $wp_doing_ajax = ( function_exists('wp_doing_ajax') && wp_doing_ajax() ) || ( ( defined('DOING_AJAX') && 'DOING_AJAX' ) );
+    /*
+    * https://core.trac.wordpress.org/ticket/25669#comment:19
+    * http://stackoverflow.com/questions/18260537/how-to-check-if-the-request-is-an-ajax-request-with-php
+    */
+    $_is_ajax      = $wp_doing_ajax || ( ! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
 
-  /*
-  * https://core.trac.wordpress.org/ticket/25669#comment:19
-  * http://stackoverflow.com/questions/18260537/how-to-check-if-the-request-is-an-ajax-request-with-php
-  */
-  $_is_ajax      = $wp_doing_ajax || ( ! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
-
-  return apply_filters( 'hu_is_ajax', $_is_ajax );
+    return apply_filters( 'hu_is_ajax', $_is_ajax );
 }
 
 /**
 * helper ensuring backward compatibility with the previous option system
 * @return img src string
 */
-function hu_get_img_src( $img ) {
-  if ( ! $img )
-    return;
+  function hu_get_img_src( $img ) {
+    if ( ! $img )
+      return;
 
-  $_image_src     = '';
-  $_width         = false;
-  $_height        = false;
-  $_attachment_id = '';
+    $_image_src     = '';
+    $_width         = false;
+    $_height        = false;
+    $_attachment_id = '';
 
-  //Get the img src
-  if ( is_numeric($img) ) {
-    $_attachment_id     = $img;
-    $_attachment_data   = apply_filters( "hu_attachment_img" , wp_get_attachment_image_src( $_attachment_id, 'full' ), $_attachment_id );
-    $_img_src           = $_attachment_data[0];
-    $_width             = ( isset($_attachment_data[1]) && $_attachment_data[1] > 1 ) ? $_attachment_data[1] : $_width;
-    $_height            = ( isset($_attachment_data[2]) && $_attachment_data[2] > 1 ) ? $_attachment_data[2] : $_height;
-  } else { //old treatment
-    //rebuild the img path : check if the full path is already saved in DB. If not, then rebuild it.
-    $upload_dir         = wp_upload_dir();
-    $_saved_path        = esc_url ( $img );
-    $_img_src           = ( false !== strpos( $_saved_path , '/wp-content/' ) ) ? $_saved_path : $upload_dir['baseurl'] . $_saved_path;
-  }
+    //Get the img src
+    if ( is_numeric($img) ) {
+      $_attachment_id     = $img;
+      $_attachment_data   = apply_filters( "hu_attachment_img" , wp_get_attachment_image_src( $_attachment_id, 'full' ), $_attachment_id );
+      $_img_src           = $_attachment_data[0];
+      $_width             = ( isset($_attachment_data[1]) && $_attachment_data[1] > 1 ) ? $_attachment_data[1] : $_width;
+      $_height            = ( isset($_attachment_data[2]) && $_attachment_data[2] > 1 ) ? $_attachment_data[2] : $_height;
+    } else { //old treatment
+      //rebuild the img path : check if the full path is already saved in DB. If not, then rebuild it.
+      $upload_dir         = wp_upload_dir();
+      $_saved_path        = esc_url ( $img );
+      $_img_src           = ( false !== strpos( $_saved_path , '/wp-content/' ) ) ? $_saved_path : $upload_dir['baseurl'] . $_saved_path;
+    }
 
-  //return img source + make ssl compliant
-  return is_ssl() ? str_replace('http://', 'https://', $_img_src) : $_img_src;
+    //return img source + make ssl compliant
+    return is_ssl() ? str_replace('http://', 'https://', $_img_src) : $_img_src;
 }
 
 
@@ -342,13 +354,13 @@ function hu_get_img_src( $img ) {
 * @return logo src string
 */
 function hu_get_img_src_from_option( $option_name ) {
-  $_img_option    = esc_attr( hu_get_option($option_name) );
-  if ( ! $_img_option )
-    $_src = false;
+    $_img_option    = esc_attr( hu_get_option($option_name) );
+    if ( ! $_img_option )
+      $_src = false;
 
-  $_src      = hu_get_img_src( $_img_option );
-  //hook
-  return apply_filters( "hu_img_src_from_option" , $_src, $option_name ) ;
+    $_src      = hu_get_img_src( $_img_option );
+    //hook
+    return apply_filters( "hu_img_src_from_option" , $_src, $option_name ) ;
 }
 
 
@@ -361,15 +373,15 @@ function hu_get_img_src_from_option( $option_name ) {
 * @echo html
 */
 function hu_the_post_thumbnail( $size = 'post-thumbnail', $attr = '', $placeholder = true ) {
-  $html = '';
-  $post = get_post();
-  if ( ! $post || ! has_post_thumbnail() ) {
-    if ( hu_is_checked('placeholder') && (bool)$placeholder ) {
-      $html = hu_get_placeholder_thumb( $size );
+    $html = '';
+    $post = get_post();
+    if ( ! $post || ! has_post_thumbnail() ) {
+      if ( hu_is_checked('placeholder') && (bool)$placeholder ) {
+        $html = hu_get_placeholder_thumb( $size );
+      }
+    } else {
+      $html = get_the_post_thumbnail( null, $size, $attr );
     }
-  } else {
-    $html = get_the_post_thumbnail( null, $size, $attr );
-  }
 
-  echo apply_filters( 'hu_post_thumbnail_html', $html, $size, $attr );
+    echo apply_filters( 'hu_post_thumbnail_html', $html, $size, $attr );
 }
