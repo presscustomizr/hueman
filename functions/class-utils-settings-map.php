@@ -553,13 +553,17 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           'header_mobile_menu_layout' => array(
                 'default'   => 'main_menu',
                 'control'   => 'HU_controls',
-                'label'     => __( 'Select the hamburger menu(s) to display for mobile devices', 'hueman'),
+                'label'     => __( 'Select the menu(s) to use for mobile devices', 'hueman'),
                 'section'   => 'header_design_sec',
                 'type'      => 'select',
                 'choices'   => array(
                     'main_menu' => __('Main Menu', 'hueman'),
                     'top_menu'  => __('Top Menu', 'hueman'),
                     'both_menus' => __( 'Top and main menus, logo centered')
+                ),
+                'notice'    => sprintf( '%1$s %2$s',
+                    __( 'When your visitors are using a smartphone or a tablet, menus are revealed on click on the hamburger button.' , 'hueman' ),
+                    $nav_section_desc
                 )
           )
         );

@@ -554,13 +554,13 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 /* ------------------------------------ */
 .nav-container { background: #888; z-index: 99; position: relative; }
 .nav-toggle { display: none; background: #777; cursor: pointer; float: right; height: 50px; width: 60px; color: #fff; text-align: center; }
-.nav-toggle i { font-size: 1.75rem; padding: 0.69rem 0; }
-.nav-text { display: none; float: right; font-size: 1em; line-height: 1.5em; padding: 13px 20px; }
+.nav-toggle i { font-size: 1.75rem; padding: 13px 0; }
+.nav-text { display: none; position: absolute;right:56px;font-size: 1em; line-height: 1.5em; padding: 13px 20px; }
 .nav li > a:after,
 .nav > li > a:after { font-family: FontAwesome; display: inline-block; }
 
 @media only screen and (min-width: 720px) {
-
+  #header .nav-container .nav { display: block!important}
   .nav-wrap { height: auto!important; }
   /* common */
   .nav { font-size: 0em; position: relative; }
@@ -596,12 +596,12 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 
 }
 @media only screen and (max-width: 719px) {
-
-  .nav { font-weight: 600; }
+  #header .nav-container .nav {display: none;}
+  .nav { font-weight: 400; }
   .nav-container { text-transform: none; }
   .nav-toggle,
   .nav-text { display: block; }
-  .nav-wrap { position: relative; float: left; width: 100%; height: 0; overflow: hidden; }
+  .nav-wrap { position: relative; float: left; width: 100%; overflow: hidden; }
   .nav-wrap.transition {
   -webkit-transition: height 0.35s ease;
   -moz-transition: height 0.35s ease;
@@ -626,7 +626,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
   .nav li.current-post-parent > a { color: #fff; }
   /* level 2 & 3 */
   .nav ul { display: block!important; margin-left: 40px; }
-  .nav ul li { font-size: 0.8125em; font-weight: 300; }
+  .nav ul li { font-size: 0.8125rem; font-weight: 300; }
   .nav ul li a { padding-top: 6px; padding-bottom: 6px; }
 
 }
@@ -725,6 +725,99 @@ box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 -1px 0 rgba(0,0,0,0.2), inse
 -webkit-box-shadow: inset 1px 0 0 rgba(255,255,255,0.05), -1px 0 0 rgba(0,0,0,0.2);
 box-shadow: inset 1px 0 0 rgba(255,255,255,0.05), -1px 0 0 rgba(0,0,0,0.2); }
 #nav-header .nav-text { color: #fff; color: rgba(255,255,255,0.7); }
+
+
+
+/* NEW BUTTON */
+*, *:after, *:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.ham-toggler-menu__span {
+    background: transparent;
+}
+.ham__navbar-toggler {
+    width: auto;
+    text-align: center;
+    height: 1.33em;
+    display: inline-block;
+    float: none;
+}
+.ham__navbar-toggler {
+    height: 50px;
+    width: 60px;
+    float: right;
+    position: relative;
+    text-align: center;
+    z-index: 10001;
+    border: none;
+    background: none;
+    margin: 0;
+    vertical-align: middle;
+    border-radius: 0;
+    cursor: pointer;
+    -webkit-transition: all 0.2s, 0.3s 0.2s;
+    transition: all 0.2s, 0.3s 0.2s;
+}
+.ham-toggler-menu__span {
+    display: block;
+    width: 1rem;
+    height: 1.5px;
+    position: relative;
+    top: 0;
+    vertical-align: bottom;
+    -webkit-transition: all ease 0.3s;
+    transition: all ease 0.3s;
+
+}
+.collapsed .ham-toggler-menu__span {
+    background: #fff;
+}
+.ham__navbar-toggler.collapsed .ham-toggler-menu__span:before {
+    top: -.375rem;
+    -webkit-transform: rotateZ(0);
+    -moz-transform: rotateZ(0);
+    -ms-transform: rotateZ(0);
+    transform: rotateZ(0);
+    background: #fff;
+}
+.ham__navbar-toggler .ham-toggler-menu__span:before {
+    -webkit-transform: rotateZ(-45deg);
+    -moz-transform: rotateZ(-45deg);
+    -ms-transform: rotateZ(-45deg);
+    transform: rotateZ(-45deg);
+    background: #fff;
+}
+.ham__navbar-toggler.collapsed .ham-toggler-menu__span:after {
+    top: .375rem;
+    -webkit-transform: rotateZ(0);
+    -moz-transform: rotateZ(0);
+    -ms-transform: rotateZ(0);
+    transform: rotateZ(0);
+        background: #fff;
+}
+.ham__navbar-toggler .ham-toggler-menu__span:after {
+    -webkit-transform: rotateZ(45deg);
+    -moz-transform: rotateZ(45deg);
+    -ms-transform: rotateZ(45deg);
+    transform: rotateZ(45deg);
+        background: #fff;
+}
+.ham-toggler-menu__span:before, .ham-toggler-menu__span:after {
+    position: absolute;
+    content: '';
+    display: inline-block;
+    width: inherit;
+    height: inherit;
+    transition: all ease .3s;
+    outline: .075rem solid transparent;
+    left: 0;
+}
+
+/* END NEW BUTTON */
+
+
 
 @media only screen and (min-width: 720px) {
 

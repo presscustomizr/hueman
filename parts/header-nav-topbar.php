@@ -1,5 +1,8 @@
+<?php
+  $mobile_menu_opt = hu_get_option( 'header_mobile_menu_layout' );
+?>
 <nav class="nav-container group" id="nav-topbar">
-  <?php if ( ! wp_is_mobile() || ( wp_is_mobile() && in_array( $mobile_menu_opt, array( 'top_menu', 'both_menus' ) ) ) ) : ?>
+  <?php if ( 'top_menu' == $mobile_menu_opt ) : ?>
     <div class="mobile-title-logo-in-header"><?php hu_print_logo_or_title();//gets the logo or the site title ?></div>
   <?php endif; ?>
   <div class="nav-toggle"><i class="fa fa-bars"></i></div>
@@ -18,7 +21,7 @@
     ?>
   </div>
 
-  <?php if ( apply_filters( 'hu_display_mobile_search', false ) ) : ?>
+  <?php if ( apply_filters( 'hu_display_mobile_search', 'both_menus' == $mobile_menu_opt ) ) : ?>
     <div class="container">
       <div class="container-inner">
         <div class="toggle-search"><i class="fa fa-search"></i></div>

@@ -171,12 +171,14 @@
 	.search-expand { left: 0; right: auto; top: 50px; width: 320px; }
 
   #header .mobile-title-logo-in-header {
-    display: inline-block;
-    height: 46px;
-    min-width: 58%;
+    display: block;
+    float: left;
+    height: 50px;
+    width: 70%;
     position: relative;
-    top: 0;
-    left: 0;
+  }
+  .both-menus-mobile-on .mobile-title-logo-in-header {
+    display: none!important;
   }
   #header .mobile-title-logo-in-header .site-title {
     height: auto;
@@ -187,14 +189,17 @@
     transform: translate(0, -50%);
     transform: translate3d(0, -50%, 0);
     top: 50%;
-    left: 10px;
+    left: 13px;
     position: absolute;
   }
   #header .mobile-title-logo-in-header .site-title a img {
-    max-height: 30px;
+    max-height: 45px;
+    max-width: 75%;
+    margin: inherit;
   }
   #header .mobile-title-logo-in-header .site-title a {
     font-size: 0.6em;
+    text-align: left;
   }
   .central-header-zone {
     display: none;
