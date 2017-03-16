@@ -216,10 +216,11 @@ if (!Array.prototype.map) {
  * Replace all img src placeholder in the $element by the real src on scroll window event
  * Bind a 'smartload' event on each transformed img
  *
- * Note : the data-src attr has to be pre-processed before the actual page load
+ * Note : the data-src (data-srcset) attr has to be pre-processed before the actual page load
  * Example of regex to pre-process img server side with php :
  * preg_replace_callback('#<img([^>]+?)src=[\'"]?([^\'"\s>]+)[\'"]?([^>]*)>#', 'regex_callback' , $_html)
  *
+ * (c) 2016 Nicolas Guillaume, Nice, France
  *
  * Example of gif 1px x 1px placeholder :
  * 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
@@ -227,6 +228,8 @@ if (!Array.prototype.map) {
  * inspired by the work of Luís Almeida
  * http://luis-almeida.github.com/unveil
  *
+ * Requires requestAnimationFrame polyfill:
+ * http://paulirish.com/2011/requestanimationframe-for-smart-animating/
  * =================================================== */
 ;(function ( $, window, document, undefined ) {
   //defaults
@@ -280,7 +283,6 @@ if (!Array.prototype.map) {
     if ( ! this.doingAnimation ) {
       this.doingAnimation = true;
       window.requestAnimationFrame(function() {
-        //self.parallaxMe();
         self._maybe_trigger_load( $_imgs , _evt );
         self.doingAnimation = false;
       });
@@ -841,21 +843,6 @@ if (!Array.prototype.map) {
  *
  * =================================================== */
 ;(function ( $, window, document, undefined ) {
-        /*
-        * In order to handle a smooth scroll
-        * ( inspired by jquery.waypoints and smoothScroll.js )
-        * Maybe use this -> https://gist.github.com/paulirish/1579671
-        */
-        var czrParallaxRequestAnimationFrame = function(callback) {
-              var requestFn = ( czrapp && czrapp.requestAnimationFrame) ||
-                window.requestAnimationFrame ||
-                window.mozRequestAnimationFrame ||
-                window.webkitRequestAnimationFrame ||
-                function( callback ) { window.setTimeout(callback, 1000 / 60); };
-
-              requestFn.call(window, callback);
-        };
-
         //defaults
         var pluginName = 'czrParallax',
             defaults = {
@@ -1006,7 +993,6 @@ if (!Array.prototype.map) {
 })( jQuery, window, document );/* ===================================================
  * jqueryAnimateSvg.js v1.0.0
  * @dependency : Vivus.js (MIT licensed)
- * @dependency : HUParams
  * ===================================================
  * (c) 2016 Nicolas Guillaume, Nice, France
  * Animates an svg icon with Vivus given its #id
@@ -1015,7 +1001,8 @@ if (!Array.prototype.map) {
   var pluginName = 'animateSvg',
       defaults = {
         filter_opacity : 0.8,
-        svg_opacity : 0.8
+        svg_opacity : 0.8,
+        animation_duration : 400
       },
       _drawSvgIcon = function(options) {
           var id = $(this).attr('id');
@@ -1035,7 +1022,7 @@ if (!Array.prototype.map) {
               return $('#' + id ).css('opacity', options.svg_opacity );
           };
           $.when( set_opacity() ).done( function() {
-              new Vivus( id, {type: 'delayed', duration: HUParams.vivusSvgSpeed || 400 } );
+              new Vivus( id, {type: 'delayed', duration: animation_duration } );
           });
       };
 
