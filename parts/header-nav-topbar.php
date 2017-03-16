@@ -15,7 +15,7 @@
             'menu_class'=>'nav container-inner group',
             'container'=>'',
             'menu_id' => '',
-            'fallback_cb'=> false
+            'fallback_cb'=> apply_filters( 'hu_topbar_menu_fallback_cb', '' )//set to 'hu_page_menu' on prevdem
         )
       );
     ?>

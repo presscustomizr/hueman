@@ -176,20 +176,14 @@ function hu_maybe_print_prevdem_widgets( $sidebars_widgets, $_zone_id ) {
 }
 
 /* ------------------------------------------------------------------------- *
- *  Nav Menu
+ *  Nav Menus => show and assign the page menu to topbar
 /* ------------------------------------------------------------------------- */
-add_filter('hu_has_nav_menu', 'hu_display_prevdem_footer_menu', 10, 2 );
-function hu_display_prevdem_footer_menu( $bool, $_location ) {
-    switch ($_location) {
-      case 'header':
-        $bool = true;
-      break;
-      case 'footer':
-        $bool = true;
-      break;
-    }
-    return $bool;
+add_filter( 'hu_has_nav_menu', '__return_true' );
+add_filter( 'hu_topbar_menu_fallback_cb', 'hu_set_topbarmenu_fallback_cb' );
+function hu_set_topbarmenu_fallback_cb() {
+  return 'hu_page_menu';
 }
+
 
 /* ------------------------------------------------------------------------- *
  *  Header and Footer Logo
@@ -198,6 +192,8 @@ add_filter('hu_display_header_logo', '__return_true');
 add_filter('hu_header_logo_src', 'hu_prevdem_logo' );
 add_filter('hu_footer_logo_src', 'hu_prevdem_logo' );
 function hu_prevdem_logo( $_src ) {
+  if ( hu_is_customizing() )
+    return $_src;
   $logo_path = 'assets/front/img/demo/logo/logo.png';
   if ( file_exists( HU_BASE . $logo_path ) )
     return get_template_directory_uri() . '/' . $logo_path;
@@ -263,6 +259,8 @@ function hu_prevdem_socials() {
 /* ------------------------------------------------------------------------- */
 add_filter('option_show_on_front', 'hu_prevdem_fp_content', 9999 );
 add_filter('pre_option_show_on_front', 'hu_prevdem_fp_content', 9999 );
-function hu_prevdem_fp_content() {
+function hu_prevdem_fp_content( $val ) {
+    if ( hu_is_customizing() )
+      return $val;
     return 'posts';
 }

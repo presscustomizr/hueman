@@ -5,7 +5,17 @@
 /* ------------------------------------------------------------------------- */
 //@return bool
 function hu_isprevdem() {
-    return apply_filters( 'hu_isprevdem', hu_get_raw_option( 'template', null, false ) != get_stylesheet() && ! is_child_theme() && ! HU_IS_PRO  );
+    global $wp_customize;
+    $is_dirty = false;
+    if ( is_object( $wp_customize ) && method_exists( $wp_customize, 'unsanitized_post_values' ) ) {
+        $real_cust            = $wp_customize -> unsanitized_post_values( array( 'exclude_changeset' => true ) );
+        $_preview_index       = array_key_exists( 'customize_messenger_channel' , $_POST ) ? $_POST['customize_messenger_channel'] : '';
+        $_is_first_preview    = false !== strpos( $_preview_index ,'-0' );
+        $_doing_ajax_partial  = array_key_exists( 'wp_customize_render_partials', $_POST );
+        //There might be cases when the unsanitized post values contains old widgets infos on initial preview load, giving a wrong dirtyness information
+        $is_dirty             = ( ! empty( $real_cust ) && ! $_is_first_preview ) || $_doing_ajax_partial;
+    }
+    return apply_filters( 'hu_isprevdem', ! $is_dirty && hu_get_raw_option( 'template', null, false ) != get_stylesheet() && ! is_child_theme() && ! HU_IS_PRO  );
 }
 
 /****************************************************************************
@@ -17,8 +27,8 @@ function hu_isprevdem() {
 * @since  3.3+
 */
 function hu_is_customize_left_panel() {
-  global $pagenow;
-  return is_admin() && isset( $pagenow ) && 'customize.php' == $pagenow;
+    global $pagenow;
+    return is_admin() && isset( $pagenow ) && 'customize.php' == $pagenow;
 }
 
 
@@ -28,7 +38,7 @@ function hu_is_customize_left_panel() {
 * @since  3.3+
 */
 function hu_is_customize_preview_frame() {
-  return is_customize_preview() || ( ! is_admin() && isset($_REQUEST['customize_messenger_channel']) );
+    return is_customize_preview() || ( ! is_admin() && isset($_REQUEST['customize_messenger_channel']) );
 }
 
 
@@ -41,8 +51,8 @@ function hu_is_customize_preview_frame() {
 * @since  3.3+
 */
 function hu_doing_customizer_ajax() {
-  $_is_ajaxing_from_customizer = isset( $_POST['customized'] ) || isset( $_POST['wp_customize'] );
-  return $_is_ajaxing_from_customizer && ( defined( 'DOING_AJAX' ) && DOING_AJAX );
+    $_is_ajaxing_from_customizer = isset( $_POST['customized'] ) || isset( $_POST['wp_customize'] );
+    return $_is_ajaxing_from_customizer && ( defined( 'DOING_AJAX' ) && DOING_AJAX );
 }
 
 
@@ -55,14 +65,14 @@ function hu_doing_customizer_ajax() {
 * @since  3.3+
 */
 function hu_is_customizing() {
-  //checks if is customizing : two contexts, admin and front (preview frame)
-  return hu_is_customize_left_panel() || hu_is_customize_preview_frame() || hu_doing_customizer_ajax();
+    //checks if is customizing : two contexts, admin and front (preview frame)
+    return hu_is_customize_left_panel() || hu_is_customize_preview_frame() || hu_doing_customizer_ajax();
 }
 
 
 //@return boolean
 function hu_is_partial_refreshed_on() {
-  return apply_filters( 'hu_partial_refresh_on', true );
+    return apply_filters( 'hu_partial_refresh_on', true );
 }
 
 
@@ -70,30 +80,30 @@ function hu_is_partial_refreshed_on() {
 //the old options used 'on' and 'off'
 //the new options use 1 and 0
 function hu_is_checked( $opt_name = '') {
-  $val = hu_get_option( $opt_name );
-  //cast to string if array
-  $val = is_array($val) ? $val[0]: $val;
-  return hu_booleanize_checkbox_val( $val );
+    $val = hu_get_option( $opt_name );
+    //cast to string if array
+    $val = is_array($val) ? $val[0]: $val;
+    return hu_booleanize_checkbox_val( $val );
 }
 
 function hu_booleanize_checkbox_val( $val ) {
-  if ( ! $val )
-    return;
-  switch ( (string) $val ) {
-    case 'off':
-    case '' :
-      return false;
-    case 'on':
-    case '1' :
-      return true;
-    default: return false;
-  }
+    if ( ! $val )
+      return;
+    switch ( (string) $val ) {
+      case 'off':
+      case '' :
+        return false;
+      case 'on':
+      case '1' :
+        return true;
+      default: return false;
+    }
 }
 
 //used in the customizer
 //replace wp checked() function
 function hu_checked( $val ) {
-  echo hu_is_checked( $val ) ? 'checked="checked"' : '';
+    echo hu_is_checked( $val ) ? 'checked="checked"' : '';
 }
 
 
@@ -104,39 +114,40 @@ function hu_checked( $val ) {
 *
 */
 function hu_user_started_before_version( $_ver ) {
-  if ( ! get_transient( 'started_using_hueman' ) )
-    return false;
-
-  $_trans = 'started_using_hueman';
-
-  if ( ! $_ver )
-    return false;
-
-  $_start_version_infos = explode('|', esc_attr( get_transient( $_trans ) ) );
-
-  if ( ! is_array( $_start_version_infos ) )
-    return false;
-
-  switch ( $_start_version_infos[0] ) {
-    //in this case we know exactly what was the starting version (most common case)
-    case 'with':
-      return version_compare( $_start_version_infos[1] , $_ver, '<' );
-    break;
-    //here the user started to use the theme before, we don't know when.
-    //but this was actually before this check was created
-    case 'before':
-      return true;
-    break;
-
-    default :
+    if ( ! get_transient( 'started_using_hueman' ) )
       return false;
-    break;
-  }
+
+    $_trans = 'started_using_hueman';
+
+    if ( ! $_ver )
+      return false;
+
+    $_start_version_infos = explode('|', esc_attr( get_transient( $_trans ) ) );
+
+    if ( ! is_array( $_start_version_infos ) )
+      return false;
+
+    switch ( $_start_version_infos[0] ) {
+      //in this case we know exactly what was the starting version (most common case)
+      case 'with':
+        return version_compare( $_start_version_infos[1] , $_ver, '<' );
+      break;
+      //here the user started to use the theme before, we don't know when.
+      //but this was actually before this check was created
+      case 'before':
+        return true;
+      break;
+
+      default :
+        return false;
+      break;
+    }
 }
 
 
 /**
 * Is there a menu assigned to a given location ?
+* @param $location string can be header, footer, topbar
 * @return bool
 */
 function hu_has_nav_menu( $_location ) {
