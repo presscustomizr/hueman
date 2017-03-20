@@ -2926,7 +2926,9 @@ body.czr-skop-loading #czr-skope-pane {
   top : 0;
 }
 body.czr-skop-loading #customize-preview {
-  opacity: 0!important;
+  /*opacity: 0!important;*/
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
 }
 
 /* Pure CSS loader */

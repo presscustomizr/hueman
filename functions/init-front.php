@@ -283,48 +283,48 @@ if ( ! function_exists( 'hu_render_header_image' ) ) {
 /*  Site name/logo and tagline callbacks
 /* ------------------------------------ */
 if ( ! function_exists( 'hu_print_logo_or_title' ) ) {
-  function hu_print_logo_or_title( $echo = true ) {
-    ob_start();
-    if ( hu_is_home() ) {
-      ?>
-        <h1 class="site-title"><?php hu_do_render_logo_site_tite() ?></h1>
-      <?php
-    } else {
-      ?>
-        <p class="site-title"><?php hu_do_render_logo_site_tite() ?></p>
-      <?php
+    function hu_print_logo_or_title( $echo = true ) {
+        ob_start();
+        if ( hu_is_home() ) {
+          ?>
+            <h1 class="site-title"><?php hu_do_render_logo_site_tite() ?></h1>
+          <?php
+        } else {
+          ?>
+            <p class="site-title"><?php hu_do_render_logo_site_tite() ?></p>
+          <?php
+        }
+        $html = ob_get_contents();
+        if ($html) ob_end_clean();
+        if ( $echo )
+          echo apply_filters('hu_logo_title', $html );
+        else
+          return apply_filters('hu_logo_title', $html );
     }
-    $html = ob_get_contents();
-    if ($html) ob_end_clean();
-    if ( $echo )
-      echo apply_filters('hu_logo_title', $html );
-    else
-      return apply_filters('hu_logo_title', $html );
-  }
 }
 
 if ( ! function_exists( 'hu_do_render_logo_site_tite' ) ) {
-  function hu_do_render_logo_site_tite() {
-      // Text or image?
-      // Since v3.2.4, uses the WP 'custom_logo' theme mod option. Set with a filter.
-      if ( apply_filters( 'hu_display_header_logo', hu_is_checked('display-header-logo') && false != hu_get_img_src_from_option( 'custom-logo' ) ) ) {
-          $logo_src = apply_filters( 'hu_header_logo_src' , hu_get_img_src_from_option( 'custom-logo' ) );
-          $logo_title = '<img src="'. $logo_src . '" alt="' .get_bloginfo('name'). '">';
-      } else {
-          $logo_title = get_bloginfo('name');
-      }
+    function hu_do_render_logo_site_tite() {
+        // Text or image?
+        // Since v3.2.4, uses the WP 'custom_logo' theme mod option. Set with a filter.
+        if ( apply_filters( 'hu_display_header_logo', hu_is_checked('display-header-logo') && false != hu_get_img_src_from_option( 'custom-logo' ) ) ) {
+            $logo_src = apply_filters( 'hu_header_logo_src' , hu_get_img_src_from_option( 'custom-logo' ) );
+            $logo_title = '<img src="'. $logo_src . '" alt="' .get_bloginfo('name'). '">';
+        } else {
+            $logo_title = get_bloginfo('name');
+        }
 
-      printf( '<a class="custom-logo-link" href="%1$s" rel="home">%2$s</a>',
-          home_url('/'),
-          $logo_title
-      );
-  }
+        printf( '<a class="custom-logo-link" href="%1$s" rel="home">%2$s</a>',
+            home_url('/'),
+            $logo_title
+        );
+    }
 }
 
 if ( ! function_exists( 'hu_render_blog_description' ) ) {
-  function hu_render_blog_description() {
-      echo bloginfo( 'description' );
-  }
+    function hu_render_blog_description() {
+        echo bloginfo( 'description' );
+    }
 }
 
 /*  Retro compat function for child theme users
