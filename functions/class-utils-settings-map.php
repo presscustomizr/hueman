@@ -564,6 +564,25 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'notice'    => sprintf( '%1$s %2$s',
                     __( 'When your visitors are using a smartphone or a tablet, menus are revealed on click on the hamburger button.' , 'hueman' ),
                     $nav_section_desc
+                ),
+                'ubq_section'   => array(
+                    'section' => 'menu_locations',
+                    'priority' => '100'
+                )
+          ),
+          'header_mobile_btn' => array(
+                'default'   => 'animated',
+                'control'   => 'HU_controls',
+                'label'     => __( 'Style of the mobile menu button', 'hueman'),
+                'section'   => 'header_design_sec',
+                'type'      => 'select',
+                'choices'   => array(
+                    'animated' => __('Animated', 'hueman'),
+                    'simple'  => __('Simple', 'hueman'),
+                ),
+                'ubq_section'   => array(
+                    'section' => 'menu_locations',
+                    'priority' => '110'
                 )
           )
         );

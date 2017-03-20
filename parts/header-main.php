@@ -15,7 +15,7 @@
 ?>
 <header id="header" class="<?php echo apply_filters( 'hu_header_classes', implode(' ', array( $mobile_menu_class ) ) ); ?>">
 
-  <?php if ( ( ! wp_is_mobile() && hu_has_nav_menu( 'topbar' ) ) || in_array( $mobile_menu_opt, array( 'top_menu', 'both_menus' ) ) ): ?>
+  <?php if ( hu_has_nav_menu( 'topbar' ) || in_array( $mobile_menu_opt, array( 'top_menu', 'both_menus' ) ) ): ?>
       <?php get_template_part('parts/header-nav-topbar'); ?>
   <?php endif; ?>
 
@@ -24,7 +24,7 @@
     <div class="container-inner">
 
       <?php if ( ! $_has_header_img || ! hu_is_checked( 'use-header-image' ) ) : ?>
-          <?php if ( ! wp_is_mobile() || (  wp_is_mobile() && 'both_menus' == $mobile_menu_opt ) ) : ?>
+
               <div class="group pad central-header-zone">
                 <?php hu_print_logo_or_title();//gets the logo or the site title ?>
                 <?php if ( hu_is_checked('site-description') ): ?><p class="site-description"><?php hu_render_blog_description() ?></p><?php endif; ?>
@@ -35,7 +35,7 @@
                   </div><!--/#header-ads-->
                 <?php endif; ?>
               </div>
-          <?php endif; ?>
+
 
       <?php else :  ?>
           <div id="header-image-wrap">

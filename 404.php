@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<?php hu_get_content( '404-tmpl'); ?>
+<?php hu_get_content( 'tmpl/404-tmpl'); ?>
 
 <?php get_sidebar(); ?>
 

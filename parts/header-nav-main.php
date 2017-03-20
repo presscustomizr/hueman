@@ -1,14 +1,17 @@
-<nav class="nav-container group" id="nav-header">
-  <?php if ( 'main_menu' == hu_get_option( 'header_mobile_menu_layout' ) ) : ?>
+<?php
+$mobile_menu_opt = hu_get_option( 'header_mobile_menu_layout' );
+$headernav_classes = array(
+    'nav-container',
+    'group',
+    'main_menu' == $mobile_menu_opt ? 'mobile-menu mobile-sticky' : '',
+    hu_has_nav_menu( 'topbar' ) ? '' : 'no-menu-assigned'
+);
+?>
+<nav class="<?php echo implode(' ', $headernav_classes ); ?>" id="nav-header">
+  <?php if ( 'main_menu' == $mobile_menu_opt ) : ?>
     <div class="mobile-title-logo-in-header"><?php hu_print_logo_or_title();//gets the logo or the site title ?></div>
   <?php endif; ?>
-  <?php if ( apply_filters('hu_old_hamburger', false ) ) : ?>
-    <div class="nav-toggle"><i class="fa fa-bars"></i></div>
-  <?php else : ?>
-    <div class="ham__navbar-toggler collapsed" aria-expanded="false">
-      <span class="ham-toggler-menu__span"></span>
-    </div>
-  <?php endif; ?>
+  <?php hu_print_mobile_btn(); ?>
   <div class="nav-text"><!-- put your mobile menu text here --></div>
   <div class="nav-wrap container">
     <?php

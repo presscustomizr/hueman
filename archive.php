@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<?php hu_get_content( 'archive-tmpl'); ?>
+<?php hu_get_content( 'tmpl/archive-tmpl'); ?>
 
 <?php get_sidebar(); ?>
 

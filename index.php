@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<?php hu_get_content( 'index-tmpl'); ?>
+<?php hu_get_content( 'tmpl/index-tmpl'); ?>
 
 <?php get_sidebar(); ?>
 

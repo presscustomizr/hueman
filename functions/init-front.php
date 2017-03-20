@@ -9,13 +9,13 @@
 if ( ! function_exists( 'hu_get_content') ) {
   //@return void()
   //Print the content based on the template string
-  function hu_get_content( $tmpl = 'index-tmpl' ) {
-    $tmpl = hu_is_authorized_tmpl( $tmpl ) ? $tmpl : 'index-tmpl';
+  function hu_get_content( $tmpl = 'tmpl/index-tmpl', $print = true ) {
+    $tmpl = hu_is_authorized_tmpl( $tmpl ) ? $tmpl : 'tmpl/index-tmpl';
     $seks = apply_filters(  'hu_content_sektions', array( 'wp' ) );
     //Are we good after filtering ?
     if ( ! is_array( $seks ) )
       return;
-
+    ob_start();
     ?>
       <?php do_action( '__before_content_section', $tmpl ); ?>
         <section class="content">
@@ -24,7 +24,7 @@ if ( ! function_exists( 'hu_get_content') ) {
             <?php
               foreach ( $seks as $_id ) {
                   if ( 'wp' == $_id )
-                    hu_get_template_part("tmpl/{$tmpl}");
+                    hu_get_template_part( $tmpl );
                   else
                     hu_print_sek( $_id );
               }
@@ -33,6 +33,12 @@ if ( ! function_exists( 'hu_get_content') ) {
         </section><!--/.content-->
       <?php do_action( '__after_content_section', $tmpl ); ?>
     <?php
+    $html = ob_get_contents();
+    if ($html) ob_end_clean();
+    if ( $print )
+      echo $html;
+    else
+      return $html;
   }
 }
 
@@ -57,6 +63,31 @@ if ( ! function_exists( 'hu_print_sek') ) {
   }
 }
 
+
+/*  Mobile Button
+/* ------------------------------------ */
+if ( ! function_exists( 'hu_print_mobile_btn' ) ) {
+    function hu_print_mobile_btn() {
+      ?>
+      <?php if ( apply_filters( 'hu_is_simple_mobile_menu_btn', 'simple' == hu_get_option( 'header_mobile_btn' ) ) ) : ?>
+        <div class="nav-toggle"><i class="fa fa-bars"></i></div>
+      <?php else : ?>
+        <!-- <div class="ham__navbar-toggler collapsed" aria-expanded="false">
+          <div class="ham__navbar-span-wrapper">
+            <span class="ham-toggler-menu__span"></span>
+          </div>
+        </div> -->
+        <div class="ham__navbar-toggler-two collapsed" title="Menu" aria-expanded="false">
+          <div class="ham__navbar-span-wrapper">
+            <span class="line line-1"></span>
+            <span class="line line-2"></span>
+            <span class="line line-3"></span>
+          </div>
+        </div>
+      <?php endif; ?>
+      <?php
+    }
+}
 
 
 /*  Layout class
@@ -284,16 +315,28 @@ if ( ! function_exists( 'hu_render_header_image' ) ) {
 /* ------------------------------------ */
 if ( ! function_exists( 'hu_print_logo_or_title' ) ) {
     function hu_print_logo_or_title( $echo = true ) {
-        ob_start();
-        if ( hu_is_home() ) {
-          ?>
-            <h1 class="site-title"><?php hu_do_render_logo_site_tite() ?></h1>
-          <?php
+        // Text or image?
+        // Since v3.2.4, uses the WP 'custom_logo' theme mod option. Set with a filter.
+        $is_image = false;
+        if ( apply_filters( 'hu_display_header_logo', hu_is_checked('display-header-logo') && false != hu_get_img_src_from_option( 'custom-logo' ) ) ) {
+            $logo_src = apply_filters( 'hu_header_logo_src' , hu_get_img_src_from_option( 'custom-logo' ) );
+            $logo_or_title = '<img src="'. $logo_src . '" alt="' . get_bloginfo('name'). '">';
+            $is_image = true;
         } else {
-          ?>
-            <p class="site-title"><?php hu_do_render_logo_site_tite() ?></p>
-          <?php
+            $logo_or_title = get_bloginfo( 'name' );
         }
+
+        ob_start();
+          if ( hu_is_home() ) {
+              printf( '<%1$s class="site-title">%2$s</%1$s>',
+                  $is_image ? 'p' : 'h1',
+                  hu_do_render_logo_site_tite( $logo_or_title, false )
+              );
+          } else {
+              ?>
+                <p class="site-title"><?php hu_do_render_logo_site_tite( $logo_or_title ) ?></p>
+              <?php
+          }
         $html = ob_get_contents();
         if ($html) ob_end_clean();
         if ( $echo )
@@ -304,22 +347,34 @@ if ( ! function_exists( 'hu_print_logo_or_title' ) ) {
 }
 
 if ( ! function_exists( 'hu_do_render_logo_site_tite' ) ) {
-    function hu_do_render_logo_site_tite() {
-        // Text or image?
-        // Since v3.2.4, uses the WP 'custom_logo' theme mod option. Set with a filter.
-        if ( apply_filters( 'hu_display_header_logo', hu_is_checked('display-header-logo') && false != hu_get_img_src_from_option( 'custom-logo' ) ) ) {
-            $logo_src = apply_filters( 'hu_header_logo_src' , hu_get_img_src_from_option( 'custom-logo' ) );
-            $logo_title = '<img src="'. $logo_src . '" alt="' .get_bloginfo('name'). '">';
-        } else {
-            $logo_title = get_bloginfo('name');
+    function hu_do_render_logo_site_tite( $logo_or_title = null, $echo = true ) {
+        //typically, logo_or_title is not provided when partially refreshed from the customizer
+        if ( is_null( $logo_or_title ) ) {
+            // Text or image?
+            // Since v3.2.4, uses the WP 'custom_logo' theme mod option. Set with a filter.
+            if ( apply_filters( 'hu_display_header_logo', hu_is_checked('display-header-logo') && false != hu_get_img_src_from_option( 'custom-logo' ) ) ) {
+                $logo_src = apply_filters( 'hu_header_logo_src' , hu_get_img_src_from_option( 'custom-logo' ) );
+                $logo_or_title = '<img src="'. $logo_src . '" alt="' . get_bloginfo('name'). '">';
+            } else {
+                $logo_or_title = get_bloginfo('name');
+            }
         }
-
-        printf( '<a class="custom-logo-link" href="%1$s" rel="home">%2$s</a>',
-            home_url('/'),
-            $logo_title
-        );
+        if ( $echo ) {
+            printf( '<a class="custom-logo-link" href="%1$s" rel="home" title="%3$s">%2$s</a>',
+                home_url('/'),
+                $logo_or_title,
+                sprintf( '%1$s | %2$s', get_bloginfo('name') , __('Home page', 'hueman') )
+            );
+        } else {
+            return sprintf( '<a class="custom-logo-link" href="%1$s" rel="home" title="%3$s">%2$s</a>',
+                home_url('/'),
+                $logo_or_title,
+                sprintf( '%1$s | %2$s', get_bloginfo('name') , __('Home page', 'hueman') )
+            );
+        }
     }
 }
+
 
 if ( ! function_exists( 'hu_render_blog_description' ) ) {
     function hu_render_blog_description() {
