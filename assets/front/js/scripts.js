@@ -3124,7 +3124,7 @@ var czrapp = czrapp || {};
                     if ( ! self._isMobile() ) {
                           self._adjustDesktopTopNavPaddingTop();
                     } else {
-                          $('.full-width.topbar-enabled #header').css( 'padding-top', 'inherit' );
+                          $('.full-width.topbar-enabled #header').css( 'padding-top', '' );
                     }
 
               } );//resize();
@@ -3389,9 +3389,11 @@ var czrapp = czrapp || {};
                     $(this).find('.nav').stop()[ ! expand ? 'slideUp' : 'slideDown' ]( {
                           duration : 350,
                           complete : function() {
+                                //makes it scrollable if not footer
+                                if ( 1 == $button.parent( '#nav-footer').length )
+                                  return;
                                 var _winHeight = 'undefined' === typeof window.innerHeight ? window.innerHeight : czrapp.$_window.height(),
                                     _visibleHeight = _winHeight - $navWrap.offset().top + czrapp.$_window.scrollTop();
-                                //makes it scrollable
                                 $navWrap.css( {
                                       'max-height' : expand ? _visibleHeight : '',
                                       'overflow' : 'auto'
