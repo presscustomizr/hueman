@@ -326,6 +326,18 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
                   _destroy();
             }
       };//toggleSkopeLoadPane
+
+
+      /*****************************************************************************
+      * REACT TO PREVIEW DEVICE SWITCH => send device to preview
+      *****************************************************************************/
+      api.bind( 'ready' , function() {
+          if ( ! api.previewedDevice )
+            return;
+          api.previewedDevice.bind( function( to ) {
+                api.previewer.send( 'previewed-device', api.previewedDevice() );
+          });
+      });
 })( wp.customize , jQuery, _);
 
 

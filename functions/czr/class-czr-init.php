@@ -354,7 +354,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
       //MOVE THE HEADER IMAGE CONTROL INTO THE HEADER DESIGN SECTION
       if ( is_object( $wp_customize -> get_control( 'header_image' ) ) ) {
-        $wp_customize -> get_control( 'header_image' ) -> section = 'header_design_sec';
+        $wp_customize -> get_control( 'header_image' ) -> section = 'header_image_sec';
         $wp_customize -> get_control( 'header_image' ) -> priority = 100;
       }
 
