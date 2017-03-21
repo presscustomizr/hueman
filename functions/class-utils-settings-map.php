@@ -490,10 +490,17 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     ------------------------------------------------------------------------------------------------------*/
     function hu_header_design_sec() {
       $nav_section_desc = "<br/>" . sprintf( __("You can create menus and set their locations %s." , "hueman"),
-          sprintf( '<strong><a href="%1$s" title="%3$s">%2$s</a><strong>',
-            "javascript:wp.customize.panel('nav_menus').focus();",
-            __("in the menu panel" , "hueman"),
-            __("create/edit menus", "hueman")
+          sprintf( '%1$s<strong><a class="jump-to-menu-panel" href="#" title="%3$s">%2$s</a><strong>',
+              sprintf( '<script type="text/javascript">%1$s</script>',
+                  "jQuery( function($) {
+                      $('.jump-to-menu-panel').click( function() {
+                          wp.customize.section('menu_locations').expanded( false );
+                          wp.customize.panel('nav_menus').focus();
+                      });
+                  });"
+              ),// "javascript:wp.customize.panel('nav_menus').focus();"
+              __("in the menu panel" , "hueman"),
+              __("create/edit menus", "hueman")
           )
       );
 
@@ -648,6 +655,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                                    CONTENT LAYOUT SECTION
     ------------------------------------------------------------------------------------------------------*/
     function hu_content_layout_sec() {
+      $layout_text = __('Columns layout for');
       return array(
           'layout-global' => array(
                 'default'   => 'col-3cm',
@@ -661,25 +669,33 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           'layout-home' => array(
                 'default'   => 'inherit',
                 'control'   => 'HU_Customize_Layout_Control',
-                'label'     => __('Home', 'hueman'),
+                'label'     => sprintf('%1$s : %2$s', $layout_text, __('Home', 'hueman') ),
                 'section'   => 'content_layout_sec',
                 'type'      => 'czr_layouts',//@todo create a radio-image type
                 'choices'   => $this -> hu_get_content_layout_choices(),
-                'notice'    => __('[ <strong>is_home</strong> ] Posts homepage layout' , 'hueman')
+                'notice'    => __('[ <strong>is_home</strong> ] Posts homepage layout' , 'hueman'),
+                'ubq_section'   => array(
+                    'section' => 'static_front_page',
+                    'priority' => '0'
+                )
           ),
           'layout-single' => array(
                 'default'   => 'inherit',
                 'control'   => 'HU_Customize_Layout_Control',
-                'label'     => __('Single', 'hueman'),
+                'label'     => sprintf('%1$s : %2$s', $layout_text, __('Single', 'hueman') ),
                 'section'   => 'content_layout_sec',
                 'type'      => 'czr_layouts',//@todo create a radio-image type
                 'choices'   => $this -> hu_get_content_layout_choices(),
-                'notice'    => __('[ <strong>is_single</strong> ] Single post layout - If a post has a set layout, it will override this.' , 'hueman')
+                'notice'    => __('[ <strong>is_single</strong> ] Single post layout - If a post has a set layout, it will override this.' , 'hueman'),
+                'ubq_section'   => array(
+                    'section' => 'content_single_sec',
+                    'priority' => '0'
+                )
           ),
           'layout-archive' => array(
                 'default'   => 'inherit',
                 'control'   => 'HU_Customize_Layout_Control',
-                'label'     => __('Archive', 'hueman'),
+                'label'     => sprintf('%1$s : %2$s', $layout_text, __('Archive', 'hueman') ),
                 'section'   => 'content_layout_sec',
                 'type'      => 'czr_layouts',//@todo create a radio-image type
                 'choices'   => $this -> hu_get_content_layout_choices(),
@@ -688,7 +704,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           'layout-archive-category' => array(
                 'default'   => 'inherit',
                 'control'   => 'HU_Customize_Layout_Control',
-                'label'     => __('Archive - Category', 'hueman'),
+                'label'     => sprintf('%1$s : %2$s', $layout_text, __('Archive - Category', 'hueman') ),
                 'section'   => 'content_layout_sec',
                 'type'      => 'czr_layouts',//@todo create a radio-image type
                 'choices'   => $this -> hu_get_content_layout_choices(),
@@ -697,7 +713,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           'layout-search' => array(
                 'default'   => 'inherit',
                 'control'   => 'HU_Customize_Layout_Control',
-                'label'     => __('Search', 'hueman'),
+                'label'     => sprintf('%1$s : %2$s', $layout_text, __('Search', 'hueman') ),
                 'section'   => 'content_layout_sec',
                 'type'      => 'czr_layouts',//@todo create a radio-image type
                 'choices'   => $this -> hu_get_content_layout_choices(),
@@ -706,7 +722,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           'layout-404' => array(
                 'default'   => 'inherit',
                 'control'   => 'HU_Customize_Layout_Control',
-                'label'     => __('Error 404', 'hueman'),
+                'label'     => sprintf('%1$s : %2$s', $layout_text, __('Error 404', 'hueman') ),
                 'section'   => 'content_layout_sec',
                 'type'      => 'czr_layouts',//@todo create a radio-image type
                 'choices'   => $this -> hu_get_content_layout_choices(),
@@ -715,7 +731,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           'layout-page' => array(
                 'default'   => 'inherit',
                 'control'   => 'HU_Customize_Layout_Control',
-                'label'     => __('Default Page', 'hueman'),
+                'label'     => sprintf('%1$s : %2$s', $layout_text, __('Default Page', 'hueman') ),
                 'section'   => 'content_layout_sec',
                 'type'      => 'czr_layouts',//@todo create a radio-image type
                 'choices'   => $this -> hu_get_content_layout_choices(),
@@ -985,10 +1001,17 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     function hu_footer_design_sec() {
       global $wp_version;
       $nav_section_desc = "<br/>" . sprintf( __("You can create menus and set their locations %s." , "hueman"),
-          sprintf( '<strong><a href="%1$s" title="%3$s">%2$s</a><strong>',
-            "javascript:wp.customize.panel('nav_menus').focus();",
-            __("in the menu panel" , "hueman"),
-            __("create/edit menus", "hueman")
+          sprintf( '%1$s<strong><a class="jump-to-menu-panel" href="#" title="%3$s">%2$s</a><strong>',
+              sprintf( '<script type="text/javascript">%1$s</script>',
+                  "jQuery( function($) {
+                      $('.jump-to-menu-panel').click( function() {
+                          wp.customize.section('menu_locations').expanded( false );
+                          wp.customize.panel('nav_menus').focus();
+                      });
+                  });"
+              ),// "javascript:wp.customize.panel('nav_menus').focus();"
+              __("in the menu panel" , "hueman"),
+              __("create/edit menus", "hueman")
           )
       );
       return array(
@@ -1249,7 +1272,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         -> PANEL : CONTENT
         ----------------------------------------------------------------------------------------------*/
         'content_layout_sec'         => array(
-              'title'    => __( 'Layout options for the main content', 'hueman' ),
+              'title'    => __( 'Column layout for the main content', 'hueman' ),
               'priority' => 10,
               'panel'   => 'hu-content-panel'
         ),

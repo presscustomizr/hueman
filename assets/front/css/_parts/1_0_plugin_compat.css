@@ -1,0 +1,48 @@
+/* ------------------------------------------------------------------------- *
+ *  Plugins
+/* ------------------------------------------------------------------------- */
+
+/*  plugin : wp-pagenavi
+/* ------------------------------------ */
+.wp-pagenavi { text-align: right; font-weight: 600; line-height: 1.25em; float: none; margin-right: -2px; text-align: center; }
+.wp-pagenavi a,
+.wp-pagenavi span { color: #aaa; font-size: 1em; padding: 7px 8px; display: inline; margin: 0 2px; }
+.wp-pagenavi span.pages { font-size: 1.0625em; font-weight: 300; display: block; margin-bottom: 1em!important; border: none!important; }
+.wp-pagenavi span.pages:before { content: "\f15c"; font-family: FontAwesome; margin-right: 6px; }
+.wp-pagenavi span.extend { border: none!important; border-bottom: 3px solid transparent; border-top: 1px solid transparent; }
+.wp-pagenavi a:hover,
+.wp-pagenavi a:active,
+.wp-pagenavi span.current { color: #444; }
+
+.wp-pagenavi a { color: #3b8dbd; border: none; border-bottom: 3px solid #ddd; border-top: 1px solid #f1f1f1; }
+.wp-pagenavi a:hover,
+.wp-pagenavi a:active,
+.wp-pagenavi span.current { background: none; border: none; border-bottom: 3px solid #3b8dbd; border-top: 1px solid #f1f1f1; }
+
+/*  plugin : contact form 7
+/* ------------------------------------ */
+.wpcf7 {  }
+.wpcf7 p { color: #222; font-weight: 600; margin: 0 0 12px;  width: 100%; float: left; position: relative; }
+.wpcf7 p span { font-weight: 400; color: #999; }
+.wpcf7 label { display: block; float: left; width: 20%; margin: 9px 0 0 12px; text-align: left; }
+.wpcf7 input[type="text"],
+.wpcf7 input[type="email"],
+.wpcf7 input[type="url"],
+.wpcf7 input[type="tel"],
+.wpcf7 input[type="number"],
+.wpcf7 select { display: block; float: left; padding: 10px; }
+.wpcf7 textarea { display: block; float: left; padding: 10px; width: 100%; }
+.wpcf7 input[type="text"],
+.wpcf7 input[type="email"],
+.wpcf7 input[type="url"],
+.wpcf7 input[type="tel"],
+.wpcf7 input[type="number"],
+.wpcf7 select,
+.wpcf7 textarea { background: #f5f5f5; margin-top: 12px; }
+.wpcf7 input[type="submit"] { font-size: 1.125em; }
+.wpcf7 div.wpcf7-validation-errors { border: none; margin: 0; padding: 0; }
+.wpcf7 div.wpcf7-mail-sent-ok,
+.wpcf7 div.wpcf7-mail-sent-ng { border: none; }
+.wpcf7 div.wpcf7-response-output { margin: 0; padding: 0; }
+.wpcf7 span.wpcf7-form-control-wrap { display: block; position: relative; }
+.wpcf7 span.wpcf7-not-valid-tip { background: #f2dede; border-color: #e3bfbf; color: #b94a48; padding: 4px 14px; font-size: 0.75em; line-height: 1.666em; position: absolute; left: 0; top: 12px; width: auto; right: 0; display: block; }

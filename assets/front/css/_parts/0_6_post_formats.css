@@ -1,0 +1,105 @@
+/* ------------------------------------------------------------------------- *
+ *  Post Formats
+/* ------------------------------------------------------------------------- */
+
+/*  post format : common
+/* ------------------------------------ */
+.post-format { position: relative; margin-bottom: 2em; }
+.post-format p { margin-bottom: 1em; }
+.post-format .format-container { background: #f1f1f1; padding-bottom: 10px; border-left: 3px solid #3b8dbd; }
+.post-format .format-container .fa,
+.post-format .format-container .fa { color: #ccc; font-size: 2.25em; float: right; margin: 0 0 20px 20px; }
+
+/*  post format : image
+/* ------------------------------------ */
+.format-image { }
+
+/*  post format : video
+/* ------------------------------------ */
+.format-video { }
+
+/*  post format : quote
+/* ------------------------------------ */
+.format-quote .post-format {  }
+.format-quote .post-format blockquote { font-size: 1.375em; font-weight: 400; line-height: 1.4em; font-style: italic; }
+.format-quote .post-format .quote-author { font-style: italic; }
+
+/*  post format : link
+/* ------------------------------------ */
+.format-link .post-format p { font-size: 1.375em; font-weight: 400; line-height: 1.4em; font-style: italic; }
+
+/*  post format : chat
+/* ------------------------------------ */
+.format-chat .post-format p { font-style: italic; }
+
+/*  post format : status
+/* ------------------------------------ */
+.format-status .post-title { display: none; }
+.single .format-status .entry { font-size: 1.5em; line-height: 1.4em; }
+
+/*  post format : aside
+/* ------------------------------------ */
+.format-aside .post-title { display: none; }
+
+/*  post format : gallery
+/* ------------------------------------ */
+.format-gallery .post-format .flexslider { overflow: visible; padding-bottom: 30px; margin-bottom: -20px; }
+.format-gallery .post-format .flexslider .slides { background: #262626; overflow: hidden; position: relative; }
+.format-gallery .post-format .flexslider .slides img { max-height: 405px; width: auto; max-width: 100%; -webkit-box-shadow: 0 0 30px rgba(0,0,0,0.6); box-shadow: 0 0 30px rgba(0,0,0,0.6); }
+.format-gallery .post-format .flexslider .flex-control-nav { bottom: 1px; }
+.format-gallery .post-format .flex-direction-nav a:before { color: #fff; }
+
+/*  post format : audio
+/* ------------------------------------ */
+.format-audio .post-format a,
+.format-audio .post-format i { font-size: 1em; line-height: 1.375em; }
+#page .format-audio .post-format img {
+-webkit-border-bottom-right-radius: 0; -webkit-border-bottom-left-radius: 0;
+border-bottom-right-radius: 0; border-bottom-left-radius: 0; }
+
+/* jplayer */
+.jp-interface { background-color: #444; }
+.jp-play-bar,
+.jp-volume-bar-value { background-color: #82b965; }
+.jp-progress { background-color: #262626; }
+.jp-volume-bar { border: 1px solid #262626; }
+.jp-seek-bar,
+.jp-volume-bar { background-color: #383838; }
+.jp-interface a { color: #bbb; text-shadow: 0 -1px 0 rgba(0,0,0,0.6); }
+.jp-interface a:hover { color: #eee; }
+.jp-progress-container,
+.jp-volume-bar-container { border-left: 1px solid #333; }
+.jp-audio,
+.jp-interface,
+.jp-progress,
+.jp-seek-bar { width: 100%; min-width: 100%; }
+.jp-interface { position: relative; overflow: hidden;
+-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(0,0,0,0.3);
+box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(0,0,0,0.3);  }
+.jp-interface .jp-controls { list-style-type: none; padding: 0; margin: 0; }
+.jp-interface .jp-controls li { display: inline; }
+.jp-interface .jp-controls a { position: absolute; }
+.jp-interface .jp-controls a i { display: block; }
+.jp-play, .jp-pause { width: 25px; height: 30px; z-index: 1; outline: none; margin: 12px 0 0 9px;}
+.jp-play, .jp-pause { top: 0; left: 0; }
+.jp-progress-container { margin-left: 34px; margin-right: 84px; height: 6px; padding: 20px 10px; }
+.jp-progress { overflow: hidden; }
+.jp-progress { height: 5px; padding: 1px;
+-webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+box-shadow: 0 1px 0 rgba(255,255,255,0.06); }
+.jp-seek-bar { width: 0px; height: 5px; cursor: pointer; -webkit-border-radius: 1px; border-radius: 1px; }
+.jp-play-bar { width: 0px; height: 5px; -webkit-border-radius: 1px; border-radius: 1px;
+-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+box-shadow: inset 0 1px 0 rgba(255,255,255,0.25); }
+.jp-volume-bar-container { width: 40px; height: 6px; padding: 20px 10px 20px 33px; position: absolute; top: 0; right: 0; }
+.jp-volume-bar { position: relative; overflow: hidden; width: 38px; height: 5px; cursor: pointer; -webkit-border-radius: 1px; border-radius: 1px;
+-webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+box-shadow: 0 1px 0 rgba(255,255,255,0.06); }
+.jp-volume-bar { top: 0; left: 0; }
+.jp-volume-bar-value { width: 0px; height: 5px; -webkit-border-radius: 1px; border-radius: 1px;
+-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+box-shadow: inset 0 1px 0 rgba(255,255,255,0.25); }
+.jp-mute, .jp-unmute { width: 17px; z-index: 1; outline: none; margin-top: 10px; }
+.jp-mute, .jp-unmute { top: 2px; right: 58px; }
+.jp-unmute { display: none; }
+.jp-jplayer { width:0px; height:0px; }

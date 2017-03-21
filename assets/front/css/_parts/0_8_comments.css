@@ -1,0 +1,103 @@
+/* ------------------------------------------------------------------------- *
+ *  Comments
+/* ------------------------------------------------------------------------- */
+/* woocommerce */
+.entry .woocommerce .woocommerce-tabs.wc-tabs-wrapper #comments { margin-top: 0;},
+/* end woocoommerce */
+#comments { margin-top: 20px; }
+#pinglist-container { display: none; }
+
+.comment-tabs { border-bottom: 2px solid #eee; margin-bottom: 20px; }
+
+/* woocommerce */
+.entry.woocommerce div.product .woocommerce-tabs ul.tabs { border-bottom: 2px solid #eee; margin-bottom: 20px; overflow: visible;  margin: 0; padding: 0; }
+.entry.woocommerce div.product .woocommerce-tabs ul.tabs::before {  border-bottom: none; }
+.entry.woocommerce div.product .woocommerce-tabs ul.tabs li { padding: 0; font-size: .88em; float: left; margin: 0 0 -2px; background: transparent !important; border: none!important; }
+.entry.woocommerce div.product .woocommerce-tabs ul.tabs li:after,
+.entry.woocommerce div.product .woocommerce-tabs ul.tabs li:before { content: none; }
+.entry.woocommerce div.product .woocommerce-tabs ul.tabs li a{ line-height: 1.55em; font-weight: 600; padding: 0 10px 10px; display: block; color: #aaa; border-bottom: 2px solid #eee; }
+.entry.woocommerce div.product .woocommerce-tabs ul.tabs li a:hover { color: #444; border-color: #ccc; }
+.entry.woocommerce div.product .woocommerce-tabs ul.tabs li.active a { color: #3b8dbd;  border-bottom-color: #3b8dbd; }
+.entry.woocommerce div.product .woocommerce-tabs ul.tabs li span { background-color: #eee; padding: 0 6px; margin-left: 8px; -webkit-border-radius: 4px; border-radius: 4px; }
+.entry.woocommerce div.product .woocommerce-tabs ul.tabs li i { margin-right: 6px; }
+/* end woocommerce */
+
+.comment-tabs li { float: left; margin-bottom: -2px; }
+.comment-tabs li a { font-weight: 600; padding: 0 10px 10px; display: block; color: #aaa; border-bottom: 2px solid #eee; }
+.comment-tabs li a:hover { color: #444; border-color: #ccc; }
+.comment-tabs li span { background-color: #eee; padding: 0 6px; margin-left: 8px; -webkit-border-radius: 4px; border-radius: 4px; }
+.comment-tabs li i { margin-right: 6px; }
+.comment-tabs li.active a { color: #3b8dbd; border-bottom-color: #3b8dbd; }
+
+.commentlist, .pinglist { margin-bottom: 20px; }
+.commentlist li, .pinglist li { padding-left: 60px; font-size: 0.875rem; line-height: 1.5714rem; font-weight: 400; }
+.commentlist .comment-body, .pinglist li { clear: both; position: relative; padding-bottom: 15px; }
+.commentlist .comment-author,
+.commentlist .comment-meta,
+.commentlist .comment-awaiting-moderation { font-size: 0.8125rem; display: block; float: left; line-height: 1.5384rem; }
+.commentlist .comment-author { margin-right: 6px; }
+.commentlist .fn, .pinglist .ping-link { color: #444; font-size: 0.8125rem; font-style: normal; font-weight: 600; }
+.commentlist .says { display: none; }
+.commentlist .avatar { position: absolute; left: -60px; top: 0; width: 48px; height: 48px; -webkit-border-radius: 3px; border-radius: 3px; }
+.commentlist .comment-meta:before, .pinglist .ping-meta:before { color: #ccc; content: "\f017"; font-family: FontAwesome; font-size: 10px; margin-right: 3px; vertical-align: 4%; }
+.commentlist .comment-meta a, .pinglist .ping-meta { color: #aaa; }
+.commentlist .reply { font-size: 0.8125rem; line-height: 1.231rem; }
+.commentlist .reply a { color: #aaa; }
+.commentlist .reply a:hover { color: #444; }
+.comment-awaiting-moderation { color: #3b8dbd; font-style: normal; }
+
+/* pings */
+.pinglist li { padding-left: 0; }
+
+/* comment text */
+.commentlist .comment-body p { margin-bottom: 8px; color: #777; clear: both; }
+.commentlist .comment-body strong { font-weight: bold; }
+.commentlist .comment-body em { font-style: italic; }
+.commentlist .comment-body ol li { list-style: decimal; margin-left: 2em; padding: 0; }
+.commentlist .comment-body ul li { list-style: square; margin-left: 2em; padding: 0; }
+
+/* post author & admin comment */
+.commentlist li.bypostauthor > .comment-body:after,
+.commentlist li.comment-author-admin > .comment-body:after { background: #3b8dbd; display: block; position: absolute; content: "\f040"; color: #fff; line-height: 12px; width: 12px; font-style: normal; font-family: FontAwesome; text-align: center; }
+.commentlist li.comment-author-admin > .comment-body:after { content: "\f005"; /* star for admin */ }
+.commentlist li.bypostauthor > .comment-body:after,
+.commentlist li.comment-author-admin > .comment-body:after { top: 32px; left: -28px; font-size: 10px; padding: 2px; -webkit-border-radius: 3px; border-radius: 3px; }
+.commentlist li li.bypostauthor > .comment-body:after,
+.commentlist li li.comment-author-admin > .comment-body:after { top: 22px; left: -26px; font-size: 8px; padding: 1px; -webkit-border-radius: 2px; border-radius: 2px; }
+
+/* child comment */
+.commentlist li ul {  }
+.commentlist li li { padding-left: 48px; margin: 0; }
+.commentlist li li .avatar { width: 36px; height: 36px; left: -48px; top: 0; }
+.commentlist li li .comment-meta { left: 70px; }
+
+/*  comments : nav
+/* ------------------------------------ */
+.comments-nav { margin-bottom: 20px; }
+.comments-nav a { font-weight: 600; }
+.comments-nav .nav-previous { float: left; }
+.comments-nav .nav-next { float: right;  }
+
+/*  comments : form
+/* ------------------------------------ */
+.logged-in-as,
+.comment-notes,
+.form-allowed-tags { display: none; }
+#respond { position: relative; }
+#reply-title { margin-bottom: 20px; }
+li #reply-title { font-size: 0; margin: 0!important; padding: 0; height: 0; border-top: 0; }
+#cancel-comment-reply-link { color: #999; display: block; position: absolute; bottom: 26px; right: 20px; font-size: 0.75em; }
+#cancel-comment-reply-link:hover { color: #777; }
+#commentform { background: #f1f1f1; padding: 10px 20px 20px; margin-bottom: 15px; -webkit-border-radius: 2px; border-radius: 2px; }
+#commentform p.comment-form-author { width: 48%; float: left; }
+#commentform p.comment-form-email { width: 48%; float: right; }
+#commentform p.comment-form-url,
+#commentform p.comment-form-comment { clear: both; }
+#commentform label { padding: 6px 0; font-weight: 600; display: block; }
+#commentform input[type="text"],
+#commentform textarea { max-width: 100%; width: 100%; }
+#commentform textarea { height: 100px; }
+#commentform p.form-submit { margin-top: 10px; }
+.logged-in #reply-title { margin-bottom: 20px; }
+.logged-in #commentform p.comment-form-comment { margin-top: 10px; }
+.logged-in #commentform p.comment-form-comment label { display: none; }

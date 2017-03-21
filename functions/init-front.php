@@ -47,7 +47,7 @@ if ( ! function_exists( 'hu_get_content') ) {
 function hu_is_authorized_tmpl( $tmpl ) {
     $ct_map = apply_filters(
         'hu_content_map',
-        array( 'index-tmpl', 'archive-tmpl', 'page-tmpl', 'single-tmpl', 'search-tmpl', '404-tmpl' )
+        array( 'tmpl/index-tmpl', 'tmpl/archive-tmpl', 'tmpl/page-tmpl', 'tmpl/single-tmpl', 'tmpl/search-tmpl', 'tmpl/404-tmpl' )
     );
     //Are we good after filtering ?
     if ( ! is_array( $ct_map ) || ! is_string( $tmpl ) )
@@ -99,36 +99,36 @@ if ( ! function_exists( 'hu_layout_class' ) ) {
     // Default layout
     $layout = 'col-3cm';
     $has_post_meta = false;
+        /* if ( is_array(hu_is_real_home()) )
+      array_walk_recursive(hu_is_real_home(), function(&$v) { $v = htmlspecialchars($v); }); */
 
     // Check for page/post specific layout
-    if ( is_page() || is_single() ) {
-      // Reset post data
-      wp_reset_postdata();
-      global $post;
-      // Get meta
-      $meta = get_post_meta($post->ID,'_layout',true);
-      // Get if set and not set to inherit
-      if ( isset($meta) && !empty($meta) && $meta != 'inherit' ) {
-        $layout = $meta;
-        $has_post_meta = true;
-      }
-      // Else check for page-global / single-global
-      elseif ( is_single() && ( hu_get_option('layout-single') !='inherit' ) ) $layout = hu_get_option( 'layout-single' );
-      elseif ( is_page() && ( hu_get_option('layout-page') !='inherit' ) ) $layout = hu_get_option( 'layout-page' );
-      // Else get global option
-      else $layout = hu_get_option( 'layout-global' );
+    if ( ! hu_is_real_home() && ( is_page() || is_single() ) ) {
+        // Reset post data
+        wp_reset_postdata();
+        global $post;
+        // Get meta
+        $meta = get_post_meta($post->ID,'_layout',true);
+        // Get if set and not set to inherit
+        if ( isset($meta) && !empty($meta) && $meta != 'inherit' ) {
+          $layout = $meta;
+          $has_post_meta = true;
+        }
+        // Else check for page-global / single-global
+        elseif ( is_single() && ( hu_get_option('layout-single') !='inherit' ) ) $layout = hu_get_option( 'layout-single' );
+        elseif ( is_page() && ( hu_get_option('layout-page') !='inherit' ) ) $layout = hu_get_option( 'layout-page' );
+        // Else get global option
+        else $layout = hu_get_option( 'layout-global' );
     }
-
     // Set layout based on page
-    elseif ( is_home() && ( hu_get_option('layout-home') !='inherit' ) ) $layout = hu_get_option( 'layout-home' );
-    elseif ( is_category() && ( hu_get_option('layout-archive-category') !='inherit' ) ) $layout = hu_get_option( 'layout-archive-category' );
-    elseif ( is_archive() && ( hu_get_option('layout-archive') !='inherit' ) ) $layout = hu_get_option( 'layout-archive' );
-    elseif ( is_search() && ( hu_get_option('layout-search') !='inherit' ) ) $layout = hu_get_option( 'layout-search' );
-    elseif ( is_404() && ( hu_get_option('layout-404') !='inherit' ) ) $layout = hu_get_option( 'layout-404' );
+    elseif ( hu_is_real_home() && ( hu_get_option('layout-home') != 'inherit' ) ) $layout = hu_get_option( 'layout-home' );
+    elseif ( is_category() && ( hu_get_option('layout-archive-category') != 'inherit' ) ) $layout = hu_get_option( 'layout-archive-category' );
+    elseif ( is_archive() && ( hu_get_option('layout-archive') != 'inherit' ) ) $layout = hu_get_option( 'layout-archive' );
+    elseif ( is_search() && ( hu_get_option('layout-search') != 'inherit' ) ) $layout = hu_get_option( 'layout-search' );
+    elseif ( is_404() && ( hu_get_option('layout-404') != 'inherit' ) ) $layout = hu_get_option( 'layout-404' );
 
     // Global option
     else $layout = hu_get_option('layout-global' );
-
     // Return layout class
     return apply_filters( 'hu_layout_class', $layout, $has_post_meta );
   }

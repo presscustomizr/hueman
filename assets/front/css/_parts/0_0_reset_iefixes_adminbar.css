@@ -1,0 +1,80 @@
+
+/* ------------------------------------------------------------------------- */
+
+/* ------------------------------------------------------------------------- *
+ *  Reset - http://meyerweb.com/eric/tools/css/reset/ v2.0 | 20110126
+ * ------------------------------------------------------------------------- */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
+pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s,
+samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside,
+canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby,
+section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+ol, ul { list-style: none; }
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
+table { border-collapse: collapse; border-spacing: 0; }
+
+/* ------------------------------------------------------------------------- *
+ *  IE Fixes
+/* ------------------------------------------------------------------------- */
+body.ie8,
+.ie8.single .related-posts .post-title,
+.ie8 .s1 .alx-posts .post-item-title,
+.ie8 #footer .alx-posts .post-item-title { font-weight: 400; }
+
+.ie8 .author-bio .bio-avatar:after,
+.ie8 .commentlist li.bypostauthor > .comment-body:after { display: none; }
+
+.ie8 .nav li > a:after { content: ""!important; }
+.ie8 .nav > li > a:after { content: ""!important; }
+.ie8 #nav-topbar .nav > li > a:hover,
+.ie8 #nav-topbar .nav > li:hover > a,
+.ie8 #nav-header .nav > li > a:hover,
+.ie8 #nav-header .nav > li:hover > a,
+.ie8 .toggle-search:hover,
+.ie8 .toggle-search.active,
+.ie8 .search-expand-inner { background: url(../img/opacity-10.png); }
+.ie8 .thumb-icon,
+.ie8 .image-caption,
+.ie8 .page-image-text .description i,
+.ie8 .flex-direction-nav a { background: url(../img/ie/opacity-70.png); }
+.ie8 .entry .gallery .gallery-caption { background: url(../img/ie/opacity-80-light.png); }
+
+/* ADMIN BAR
+    -------------------------------------------------- */
+#wp-admin-bar-tc-hueman-help .ab-item:before, li#wp-admin-bar-tc-hueman-help a:before {
+  font-family: 'FontAwesome';
+  speak: none;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  font-style: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f1cd";
+  color: #FFF;
+  padding-right: 0px;
+  top: 2px;
+  position: relative;
+}
+
+
+li#wp-admin-bar-tc-hueman-help a {
+  color: #FFF!important;
+  text-decoration: none;
+  background-color: #82b965;
+  -webkit-transition: background .1s linear;
+  -moz-transition: background .1s linear;
+  -ms-transition: background .1s linear;
+  -o-transition: background .1s linear;
+  transition: background .1s linear;
+}
+
+
+.ab-top-menu>li#wp-admin-bar-tc-hueman-help:hover>.ab-item {
+  color: #FFF;
+  background: #6B9C51;
+}

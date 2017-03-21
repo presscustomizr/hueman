@@ -1,0 +1,20 @@
+/* ------------------------------------------------------------------------- *
+ *  Shortcodes
+/* ------------------------------------------------------------------------- */
+
+/*  shortcode : dropcap
+/* ------------------------------------ */
+.dropcap { color: #444; display: block; float: left; font-size: 5.875em; line-height: 0.9em; font-weight: 600; margin: 0 10px 0 0; }
+
+/*  shortcode : pullquotes
+/* ------------------------------------ */
+.pullquote-left { color: #444; border-left: 6px solid #eee; float: left; margin: 0.78em 1em 0.78em 0; padding: 0 0 0 20px; font-weight: 600; width: 40%; }
+.pullquote-right { color: #444; border-right: 6px solid #eee; float: right; margin: 0.78em 0 0.78em 1em; padding: 0 20px 0 0; font-weight: 600; width: 40%; }
+
+/*  shortcode : highlights
+/* ------------------------------------ */
+.highlight { color: #222; border-bottom: 1px dotted #222; }
+
+/*  shortcode : hr
+/* ------------------------------------ */
+hr, .hr { border: 0; background: #eee; border-bottom: 2px solid #eee; height: 1px; margin: 30px 0; }

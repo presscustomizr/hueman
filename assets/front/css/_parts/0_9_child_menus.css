@@ -1,0 +1,47 @@
+/* ------------------------------------------------------------------------- *
+ *  Child Menu
+/* ------------------------------------------------------------------------- */
+.child-menu { zoom: 1; position: relative; padding: 0 0 20px; }
+.child-menu a { color: #777; font-weight: 600; display: block; padding: 0 44px; }
+.child-menu a:hover { color: #3b8dbd; }
+.child-menu .current_page_item > a { background: #fff; color: #3b8dbd; }
+
+/* show only current page items */
+.child-menu > li { display: none; }
+.child-menu > li.current_page_item,
+.child-menu > li.current_page_parent,
+.child-menu > li.current_page_ancestor { display: block; }
+.child-menu > li.current_page_item > ul ul,
+.child-menu > li.current_page_parent > ul ul,
+.child-menu > li.current_page_ancestor > ul ul { display: none; }
+.child-menu > li ul li.current_page_item ul,
+.child-menu > li ul li.current_page_parent ul,
+.child-menu > li ul li.current_page_ancestor ul { display: block; }
+
+/* level 1 */
+.child-menu > li > a { font-size: 1.25em; display: block; padding: 20px 30px; }
+
+/* level 2 */
+.child-menu > li > ul { background: #e9e9e9; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; padding: 10px 0 10px 10px; }
+.child-menu > li > ul > li > a { font-size: 0.9375em; background: #f0f0f0; border-bottom: 1px solid #ddd; border-left: 1px solid #ddd; padding: 11px 20px;
+-webkit-box-shadow: inset 0 1px 0 #f9f9f9;
+box-shadow: inset 0 1px 0 #f9f9f9; }
+.child-menu > li > ul > li > a:before { font-family: FontAwesome; content: "\f055"; font-weight: normal; font-size: 18px; margin-right: 8px; }
+
+/* level 3 */
+.child-menu > li ul ul { background: #f0f0f0; border-bottom: 1px solid #ddd; border-top: 3px solid #ebebeb; border-left: 1px solid #ddd; padding: 6px 0; }
+.child-menu > li ul ul a { font-size: 0.9375em; font-weight: 300; padding-top: 7px; padding-bottom: 7px; margin-bottom: 1px; }
+.child-menu > li ul ul a:hover { background: #e9e9e9;
+-webkit-box-shadow: inset 0 1px 0 rgba(0,0,0,0.04);
+box-shadow: inset 0 1px 0 rgba(0,0,0,0.04); }
+.child-menu > li ul ul li.current_page_item > a { background: #fff;
+-webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+box-shadow: 0 1px 0 rgba(0,0,0,0.04); }
+
+/* child menu for dual/right fix */
+.col-2cl .child-menu > li > ul,
+.col-3cr .child-menu > li > ul { padding-left: 0; padding-right: 10px; }
+.col-2cl .child-menu > li > ul > li > a,
+.col-3cr .child-menu > li > ul > li > a { border-left: 0; border-right: 1px solid #ddd; }
+.col-2cl .child-menu > li ul ul,
+.col-3cr .child-menu > li ul ul { border-left: 0; border-right: 1px solid #ddd; }
