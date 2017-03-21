@@ -82,6 +82,23 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 ## Changelog
+= 3.3.8 March 21st 2017 =
+* fixed : don't wrap logo in h1 tag
+* fixed : home layout not applied if static home page choosen
+* fixed : prevdem mode should be turned off when user starts customizing
+* fixed : user defined WP core settings like show_on_front should be preserved if customizing in prevdem mode
+* added match Media polyfill
+* updated the parallax jquery plugin => added a matchMedia option set to 'only screen and (max-width: 768px)' by default
+* added tmpl parts/header-nav-main.php
+* added new hamburger menu markup, css + js
+* improved : mobile menu slide up down using jQuery built-in methods
+* improved : display a default page menu for topbar in prevdem mode
+* improved : use the real template path in function hu_get_content()
+* improved : only dispay the social link notice if user is_super_admin()
+* added : utility hu_print_mobile_btn() used to render the mobile buttons in the header
+* added : animated mobile menu button
+* added : mobile menu style customizer option
+
 = 3.3.7 March 8th 2017 =
 * fixed : drag resize image inserted into visual editor #415 
 

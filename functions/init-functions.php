@@ -365,7 +365,7 @@ function hu_is_ajax() {
 * @return logo src string
 */
 function hu_get_img_src_from_option( $option_name ) {
-    $_img_option    = esc_attr( hu_get_option($option_name) );
+    $_img_option    = esc_attr( hu_get_option( $option_name ) );
     if ( ! $_img_option )
       $_src = false;
 

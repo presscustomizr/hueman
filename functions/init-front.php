@@ -318,7 +318,7 @@ if ( ! function_exists( 'hu_print_logo_or_title' ) ) {
         // Text or image?
         // Since v3.2.4, uses the WP 'custom_logo' theme mod option. Set with a filter.
         $is_image = false;
-        if ( apply_filters( 'hu_display_header_logo', hu_is_checked('display-header-logo') && false != hu_get_img_src_from_option( 'custom-logo' ) ) ) {
+        if ( false != hu_get_img_src_from_option( 'custom-logo' ) && apply_filters( 'hu_display_header_logo', hu_is_checked('display-header-logo') ) ) {
             $logo_src = apply_filters( 'hu_header_logo_src' , hu_get_img_src_from_option( 'custom-logo' ) );
             $logo_or_title = '<img src="'. $logo_src . '" alt="' . get_bloginfo('name'). '">';
             $is_image = true;
@@ -353,7 +353,7 @@ if ( ! function_exists( 'hu_do_render_logo_site_tite' ) ) {
         if ( is_null( $logo_or_title ) ) {
             // Text or image?
             // Since v3.2.4, uses the WP 'custom_logo' theme mod option. Set with a filter.
-            if ( apply_filters( 'hu_display_header_logo', hu_is_checked('display-header-logo') && false != hu_get_img_src_from_option( 'custom-logo' ) ) ) {
+            if ( false != hu_get_img_src_from_option( 'custom-logo' ) && apply_filters( 'hu_display_header_logo', hu_is_checked('display-header-logo') ) ) {
                 $logo_src = apply_filters( 'hu_header_logo_src' , hu_get_img_src_from_option( 'custom-logo' ) );
                 $logo_or_title = '<img src="'. $logo_src . '" alt="' . get_bloginfo('name'). '">';
             } else {
