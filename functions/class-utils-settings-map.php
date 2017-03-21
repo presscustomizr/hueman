@@ -201,14 +201,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     ------------------------------------------------------------------------------------------------------*/
     function hu_general_design_sec( $get_default = null ) {
       return array(
-          'dynamic-styles' => array(
-                'default'   => 1,
-                'control'   => 'HU_controls',
-                'label'     => __('Dynamic Styles', 'hueman'),
-                'section'   => 'general_design_sec',
-                'type'      => 'checkbox',
-                'notice'    => __( 'Turn on to use the styling options below' , 'hueman' )
-          ),
           'boxed' => array(
                 'default'   => 0,
                 'control'   => 'HU_controls',

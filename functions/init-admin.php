@@ -464,9 +464,6 @@ if ( is_admin() && ! hu_is_customizing() ) {
     *
     */
     function hu_maybe_add_gfonts_to_editor() {
-      if ( ! hu_is_checked('dynamic-styles') )
-        return;
-
       $user_font     = hu_get_option( 'font' );
       $gfamily       = hu_get_fonts( array( 'font_id' => $user_font, 'request' => 'src' ) );//'Source+Sans+Pro:400,300italic,300,400italic,600&subset=latin,latin-ext',
       //bail here if self hosted font (titilium) of web font

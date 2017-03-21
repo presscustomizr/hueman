@@ -406,27 +406,6 @@ function hu_extend_ctrl_dependencies() {
                         }//actions()
                   },
                   {
-                        dominus : 'dynamic-styles',
-                        servi : [
-                              'boxed',
-                              'font',
-                              'body-font-size',
-                              'container-width',
-                              'sidebar-padding',
-                              'color-1',
-                              'color-2',
-                              'color-topbar',
-                              'color-header',
-                              'color-header-menu',
-                              'image-border-radius',
-                              'body-background',
-                              'color-footer'
-                        ],
-                        visibility : function ( to ) {
-                              return _is_checked(to);
-                        }
-                  },
-                  {
                         dominus : 'blog-heading-enabled',
                         servi : [ 'blog-heading', 'blog-subheading' ],
                         visibility : function ( to ) {

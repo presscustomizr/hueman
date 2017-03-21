@@ -510,36 +510,48 @@ var czrapp = czrapp || {};
                     //Or if we are scrolling down
                     if ( ! $menu_wrapper.length )
                       return;
-                    if ( self.scrollPosition >= self.stickyHeaderThreshold || 'up' != self.scrollDirection )
+
+                    if ( self.scrollPosition >= self.stickyHeaderThreshold )
                       return;
 
                     if ( ! self._isMobile() ) {
                         self._adjustDesktopTopNavPaddingTop();
                     }
 
+                    //Always add this class => make sure the transition is smooth
+                    czrapp.$_header.addClass( 'fixed-header-on' );
                     $menu_wrapper.addClass('fast');
-                    self._animate( { direction : 'down', silent : true } ).done( function() {
+                    self._animate( { direction : 'down', force : true, fast : true } ).done( function() {
                           self.stickyHeaderAnimating = true;
                           ( function() {
                                 return $.Deferred( function() {
                                     var dfd = this;
                                     _.delay( function() {
-                                        if ( 'up' == self.scrollDirection && self.scrollPosition < 10) {
-                                              $menu_wrapper.css({
-                                                    '-webkit-transform': '',   /* Safari and Chrome */
-                                                    '-moz-transform': '',       /* Firefox */
-                                                    '-ms-transform': '',        /* IE 9 */
-                                                    '-o-transform': '',         /* Opera */
-                                                    transform: ''
-                                              });
-                                        }
-                                        self.stickyMenuDown = true;
-                                        self.stickyHeaderAnimating = false;
-                                        dfd.resolve();
-                                    }, 50 );
+                                          if ( 'up' == self.scrollDirection && self.scrollPosition < 10) {
+                                                $menu_wrapper.css({
+                                                      '-webkit-transform': '',   /* Safari and Chrome */
+                                                      '-moz-transform': '',       /* Firefox */
+                                                      '-ms-transform': '',        /* IE 9 */
+                                                      '-o-transform': '',         /* Opera */
+                                                      transform: ''
+                                                });
+                                          }
+                                          self.stickyMenuDown = true;
+                                          self.stickyHeaderAnimating = false;
+                                          dfd.resolve();
+                                    }, 10 );
                                 }).promise();
                           } )().done( function() {
                                 $menu_wrapper.removeClass('fast');
+                                // if ( 'up' == self.scrollDirection && self.scrollPosition < 10) {
+                                //       $menu_wrapper.css({
+                                //             '-webkit-transform': '',   /* Safari and Chrome */
+                                //             '-moz-transform': '',       /* Firefox */
+                                //             '-ms-transform': '',        /* IE 9 */
+                                //             '-o-transform': '',         /* Opera */
+                                //             transform: ''
+                                //       });
+                                // }
                                 if ( self._isMobile() ) {
                                       czrapp.$_header.removeClass( 'fixed-header-on' );
                                 }
@@ -547,7 +559,6 @@ var czrapp = czrapp || {};
                     });
               };
 
-              //czrapp.bind( 'header-animation-done', _mayBeresetTopPosition );
               //czrapp.bind( 'page-scrolled-top', _mayBeresetTopPosition );
               czrapp.bind( 'scrolling-finished', _mayBeresetTopPosition );
 
@@ -590,7 +601,12 @@ var czrapp = czrapp || {};
               /*-----------------------------------------------------
               * RESIZE EVENT
               ------------------------------------------------------*/
+
               czrapp.$_window.resize( function( ev ) {
+                    //Always bail if is scrolling => resize events can be triggered on when scrolling on mobile devices, whitout actually resizing the screen
+                    if ( self.isCrolling )
+                      return;
+
                     self._setStickySelector();
                     //re-cache menu wrapper
                     self.menuWrapper = czrapp.$_header.find( self.currentStickySelector );
@@ -609,56 +625,97 @@ var czrapp = czrapp || {};
                           $('.full-width.topbar-enabled #header').css( 'padding-top', '' );
                     }
 
+                    //if the menu is expanded let's collapse it
+                    //is the menu expanded ?
+                    var $navWrap = self.menuWrapper.find('.nav-wrap');
+                    if ( 1 == $navWrap.length && $navWrap.hasClass( 'expanded' ) ) {
+                          self._toggleMobileMenu( {
+                                navWrap : $navWrap,//$ element
+                                expand : false
+                          });
+                    }
+
               } );//resize();
 
               /*-----------------------------------------------------
               * SCROLL EVENT
               ------------------------------------------------------*/
               czrapp.$_window.scroll( function() {
+                    self.previousScrollPosition = self.scrollPosition || czrapp.$_window.scrollTop();
+                    self.scrollPosition = czrapp.$_window.scrollTop();
+
                     //handle scrolling classes
-                    czrapp.$_body.toggleClass( 'is-scrolled', self.scrollPosition > 10 );
-                    if ( self.scrollPosition <= 10 ) {
-                          czrapp.trigger( 'page-scrolled-top', {} );
+                    czrapp.$_body.toggleClass( 'is-scrolled', self.scrollPosition > 100 );
+                    if ( self.scrollPosition <= 50 ) {
+                        czrapp.trigger( 'page-scrolled-top', {} );
                     }
 
+                    var _maybeStickify = function() {
+                          //Fire if we have a candidate with a menu wrapper inside it
+                          if ( self._hasStickyCandidate() && 1 == self.menuWrapper.length ) {
+
+                                //If the page is freshly loaded, let's wait a few milliseconds
+                                if ( _.isUndefined( self.stickyMenuDown ) ) {
+                                      czrapp.$_header.css( 'height' , czrapp.$_header.height() );
+                                      _.delay( function() {
+                                            self._stickifyHeader();
+                                      }, 200 );
+                                } else {
+                                      self._stickifyHeader();
+                                }
+                                //self._stickifyHeader();
+                          }
+                    };
+
                     czrapp.$_body.addClass('is-scrolling');
+                    self.isCrolling = true;
                     clearTimeout( $.data( this, 'scrollTimer') );
-                    $.data(this, 'scrollTimer', setTimeout(function() {
+                    $.data( this, 'scrollTimer', setTimeout(function() {
                           czrapp.$_body.removeClass('is-scrolling');
+                          self.isCrolling = false;
+                          self.previousScrollPosition = self.scrollPosition || czrapp.$_window.scrollTop();
+                          self.scrollPosition = czrapp.$_window.scrollTop();
                           czrapp.trigger( 'scrolling-finished' );
                     }, 250));
 
-                    self.scrollDirection = self.scrollPosition <= czrapp.$_window.scrollTop() ? 'down' : 'up';
-                    self.scrollPosition = czrapp.$_window.scrollTop();
 
-                    //Fire if we have a candidate with a menu wrapper inside it
-                    if ( self._hasStickyCandidate() && 1 == self.menuWrapper.length ) {
+                    if ( _.isUndefined( self.stickyTimer ) || 'resolved' == self.stickyTimer.state() ) {
+                          self.stickyTimer = $.Deferred();
+                          ( function() {
+                                return $.Deferred( function() {
+                                      var dfd = this;
+                                      _.delay( function() {
+                                            dfd.resolve();
+                                      }, 50 );
+                                }).promise();
+                          })().done( function() {
+                                self.scrollDirection = self.scrollPosition >= self.previousScrollPosition ? 'down' : 'up';
+                                if ( 'up' == self.scrollDirection && ( Math.abs( self.scrollPosition - self.previousScrollPosition ) > 1 ) )
+                                  _maybeStickify();
+                                else if ( 'down' == self.scrollDirection && ( Math.abs( self.scrollPosition - self.previousScrollPosition ) > 1 ) )
+                                  _maybeStickify();
 
-                          //If the page is freshly loaded, let's wait a few milliseconds
-                          if ( _.isUndefined( self.stickyMenuDown ) ) {
-                                czrapp.$_header.css( 'height' , czrapp.$_header.height() );
-                                _.delay( function() {
-                                      self._stickifyHeader();
-                                }, 200 );
-                          } else {
-                                self._stickifyHeader();
-                          }
-                          //self._stickifyHeader();
+                                self.stickyTimer.resolve();
+                          });
                     }
+
+                    self.scrollDirection = self.scrollPosition >= self.previousScrollPosition ? 'down' : 'up';
               });
         },//stickify
 
 
 
         //Privates
+        //Fired on each scroll event
         _stickifyHeader : function() {
               var self = this, $menu_wrapper;
               self.stickyMenuDown = _.isUndefined( self.stickyMenuDown ) ? false : self.stickyMenuDown;
               self.stickyHeaderAnimating = _.isUndefined( self.stickyHeaderAnimating ) ? false : self.stickyHeaderAnimating;
 
               $menu_wrapper = self.menuWrapper;
-              if ( ! $menu_wrapper.length ) {
-                    czrapp.consoleLog( '_stickifyHeader : no menu wrapper to animate.' );
+
+              if ( ! $menu_wrapper.length || self.stickyHeaderAnimating ) {
+                    //czrapp.consoleLog( '_stickifyHeader : no menu wrapper to animate.' );
                     return;
               }
 
@@ -703,13 +760,14 @@ var czrapp = czrapp || {};
               }
         },
 
-        //args = { direction : up / down , silent : false, menu_wrapper : $ element }
+        //args = { direction : up / down , force : false, menu_wrapper : $ element, fast : false }
         _animate : function( args ) {
               args = _.extend(
                     {
                           direction : 'down',
-                          silent : false,
-                          menu_wrapper : {}
+                          force : false,
+                          menu_wrapper : {},
+                          fast : false
                     },
                     args || {}
               );
@@ -718,10 +776,12 @@ var czrapp = czrapp || {};
                   $menu_wrapper = ! args.menu_wrapper.length ? czrapp.$_header.find( self.currentStickySelector ) : args.menu_wrapper;
 
               //Bail here if we are still animating or if we don't have a menu element
-              if ( self.stickyHeaderAnimating || ! $menu_wrapper.length ) {
+              if ( ! $menu_wrapper.length )
+                return;
+
+              if ( ! args.force && self.stickyHeaderAnimating ) {
                     return dfd.resolve().promise();
               }
-
 
               var _do = function() {
                     var translateYUp = $menu_wrapper.outerHeight(),
@@ -738,28 +798,25 @@ var czrapp = czrapp || {};
                           translateYUp = translateYUp + czrapp.$_wpadminbar.outerHeight();
                           translateYDown = translateYDown + czrapp.$_wpadminbar.outerHeight();
                     }
-                    _translate = 'up' == args.direction ? 'translate(0px, -' + translateYUp + 'px' : 'translate(0px, -' + translateYDown + 'px)';
+                    _translate = 'up' == args.direction ? 'translate(0px, -' + translateYUp + 'px)' : 'translate(0px, -' + translateYDown + 'px)';
                     self.stickyHeaderAnimating = self.scrollDirection;
                     self.stickyHeaderAnimationDirection = args.direction;
                     $menu_wrapper.toggleClass( 'sticky-visible', 'down' == args.direction );
 
                     $menu_wrapper.css({
                           //transform: 'up' == args.direction ? 'translate3d(0px, -' + _height + 'px, 0px)' : 'translate3d(0px, 0px, 0px)'
-                          transform: _translate,
-                          '-o-transform': _translate,         /* Opera */
-                          '-ms-transform': _translate,        /* IE 9 */
+                          '-webkit-transform': _translate,   /* Safari and Chrome */
                           '-moz-transform': _translate,       /* Firefox */
-                          '-webkit-transform': _translate   /* Safari and Chrome */
+                          '-ms-transform': _translate,        /* IE 9 */
+                          '-o-transform': _translate,         /* Opera */
+                          transform: _translate
                     });
 
                     _.delay( function() {
                           //Say it ain't so
                           self.stickyHeaderAnimating = false;
-                          if ( ! args.silent ) {
-                              czrapp.trigger( 'header-animation-done', { menu_wrapper : $menu_wrapper } );
-                          }
                           dfd.resolve();
-                    }, 350 );
+                    }, args.fast ? 100 : 350 );
               };//_do
 
               _.delay( function() {
@@ -880,6 +937,13 @@ var czrapp = czrapp || {};
                                       'max-height' : expand ? _visibleHeight : '',
                                       'overflow' : 'auto'
                                 });
+                                //Make sure we reset the height of the header
+                                // if ( ! expand ) {
+                                //     czrapp.$_header.css( 'height' , '' );
+                                //     if ( self._hasStickyCandidate() ) {
+                                //           czrapp.$_header.css( 'height' , czrapp.$_header.height() );
+                                //     }
+                                // }
                                 dfd.resolve();
                           }
                     } );
