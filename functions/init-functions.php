@@ -21,6 +21,17 @@ function hu_isprevdem() {
 /****************************************************************************
 ****************************** HELPERS **************************************
 *****************************************************************************/
+//Use to generate unique menu id attribute data-menu-id
+//=> is used in the front js app to populate the collection
+//the css # id could not be used because historically not unique in the theme
+function hu_get_menu_id( $location = 'menu' ) {
+      if ( ! isset( $GLOBALS['menu_id'] ) )
+        $GLOBALS['menu_id'] = 0;
+
+      $GLOBALS['menu_id'] = $GLOBALS['menu_id'] + 1;
+      return $location . '-' . $GLOBALS['menu_id'];
+}
+
 /**
 * Is the customizer left panel being displayed ?
 * @return  boolean

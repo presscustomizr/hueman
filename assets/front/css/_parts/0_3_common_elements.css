@@ -222,12 +222,12 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 .ham__navbar-toggler-two .ham__navbar-span-wrapper {
     padding: 0 20px;
     height: 12px;
-    margin: 19px 7px;
+    margin: 19px 5px;
     position: relative;
 }
 .ham__navbar-toggler-two .line {
   display: block;
-  background: #e6e6e6;
+  background: #cecece;
   width: 20px;
   height: 1.5px;
   position: absolute;
@@ -247,7 +247,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 .ham__navbar-toggler-two .line.line-1 {top: 0;}
 .ham__navbar-toggler-two .line.line-2 {top: 50%;}
 .ham__navbar-toggler-two .line.line-3 {top: 100%;}
-.ham__navbar-toggler-two.hovering .line-1, .ham__navbar-toggler-two.focusing .line-1 {
+/*.ham__navbar-toggler-two.hovering .line-1, .ham__navbar-toggler-two.focusing .line-1 {
    -webkit-transform: translateY(-1px);
   -moz-transform: translateY(-1px);
   transform: translateY(-1px);
@@ -256,19 +256,29 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
   -webkit-transform: translateY(1px);
   -moz-transform: translateY(1px);
   transform: translateY(1px);
+}*/
+
+.ham__navbar-toggler-two.hovering .line {
+  -webkit-transform: translateX(-3px);
+  -moz-transform: translateX(-3px);
+  transform: translateX(-3px);
+  width: 26px;
 }
+
 .ham__navbar-toggler-two.active .line-1 {
-  -webkit-transform: translateY(6px) translateX(0) rotate(45deg);
-  -moz-transform: translateY(6px) translateX(0) rotate(45deg);
-  transform: translateY(6px) translateX(0) rotate(45deg);
+  -webkit-transform: translateY(6px) translateX(-3px) rotate(45deg);
+  -moz-transform: translateY(6px) translateX(-3px) rotate(45deg);
+  transform: translateY(6px) translateX(-3px) rotate(45deg);
+  width: 28px;
 }
 .ham__navbar-toggler-two.active .line-2 {
   opacity: 0;
 }
 .ham__navbar-toggler-two.active .line-3 {
-  -webkit-transform: translateY(-6px) translateX(0) rotate(-45deg);
-  -moz-transform: translateY(-6px) translateX(0) rotate(-45deg);
-  transform: translateY(-6px) translateX(0) rotate(-45deg);
+  -webkit-transform: translateY(-6px) translateX(-3px) rotate(-45deg);
+  -moz-transform: translateY(-6px) translateX(-3px) rotate(-45deg);
+  transform: translateY(-6px) translateX(-3px) rotate(-45deg);
+  width: 28px;
 }
 .ham__navbar-toggler-two.hovering .line, .ham__navbar-toggler-two.focusing .line, .ham__navbar-toggler-two.active .line {
   background: #fff;

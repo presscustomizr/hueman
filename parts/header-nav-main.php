@@ -3,14 +3,11 @@ $mobile_menu_opt = hu_get_option( 'header_mobile_menu_layout' );
 $headernav_classes = array(
     'nav-container',
     'group',
-    'main_menu' == $mobile_menu_opt ? 'mobile-menu mobile-sticky' : '',
-    hu_has_nav_menu( 'topbar' ) ? '' : 'no-menu-assigned'
+    'desktop-menu',
+    hu_has_nav_menu( 'header' ) ? '' : 'no-menu-assigned'
 );
 ?>
-<nav class="<?php echo implode(' ', $headernav_classes ); ?>" id="nav-header">
-  <?php if ( 'main_menu' == $mobile_menu_opt ) : ?>
-    <div class="mobile-title-logo-in-header"><?php hu_print_logo_or_title();//gets the logo or the site title ?></div>
-  <?php endif; ?>
+<nav class="<?php echo implode(' ', $headernav_classes ); ?>" id="nav-header" data-menu-id="<?php echo hu_get_menu_id( 'header'); ?>">
   <?php hu_print_mobile_btn(); ?>
   <div class="nav-text"><!-- put your mobile menu text here --></div>
   <div class="nav-wrap container">
