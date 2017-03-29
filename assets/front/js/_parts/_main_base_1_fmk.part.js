@@ -338,39 +338,39 @@ czrapp.methods = {};
           return this;
         },
 
-        link: function() { // values*
-          var set = this.set;
-          $.each( arguments, function() {
-            this.bind( set );
-          });
-          return this;
-        },
+        // link: function() { // values*
+        //   var set = this.set;
+        //   $.each( arguments, function() {
+        //     this.bind( set );
+        //   });
+        //   return this;
+        // },
 
-        unlink: function() { // values*
-          var set = this.set;
-          $.each( arguments, function() {
-            this.unbind( set );
-          });
-          return this;
-        },
+        // unlink: function() { // values*
+        //   var set = this.set;
+        //   $.each( arguments, function() {
+        //     this.unbind( set );
+        //   });
+        //   return this;
+        // },
 
-        sync: function() { // values*
-          var that = this;
-          $.each( arguments, function() {
-            that.link( this );
-            this.link( that );
-          });
-          return this;
-        },
+        // sync: function() { // values*
+        //   var that = this;
+        //   $.each( arguments, function() {
+        //     that.link( this );
+        //     this.link( that );
+        //   });
+        //   return this;
+        // },
 
-        unsync: function() { // values*
-          var that = this;
-          $.each( arguments, function() {
-            that.unlink( this );
-            this.unlink( that );
-          });
-          return this;
-        }
+        // unsync: function() { // values*
+        //   var that = this;
+        //   $.each( arguments, function() {
+        //     that.unlink( this );
+        //     this.unlink( that );
+        //   });
+        //   return this;
+        // }
       });
 
       /**

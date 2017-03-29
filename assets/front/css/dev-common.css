@@ -382,7 +382,7 @@ h1, h2, h3, h4, h5, h6 { color: #444; font-weight: 600; -ms-word-wrap: break-wor
 #wrapper { min-width: 1024px; height: 100%; }
 .container { padding: 0 20px; }
 .container-inner { max-width: 1380px; min-width: 1380px; width: 100%; margin: 0 auto; }
-.main { background-color: #fff!important; position: relative; }
+.main { background-color: #fff!important; position: relative; overflow: hidden; }
 .main-inner { position: relative; min-height: 600px; /* instead of sticky footer */ }
 .content { width: 100%; position: relative; }
 .pad { padding: 30px 30px 20px; }
@@ -430,7 +430,21 @@ box-shadow: 6px 0 0 rgba(0,0,0,0.04), -6px 0 0 rgba(0,0,0,0.04); }
 
 /*  base : sidebar
 /* ------------------------------------ */
-.sidebar { padding-bottom: 20px; position: relative; z-index: 2; }
+.sidebar {
+  padding-bottom: 20px;
+  position: relative;
+  z-index: 2;
+  -webkit-transform: translate3d(0,0,0);
+  -moz-transform: translate3d(0,0,0);
+  -o-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);/* @see => https://stanko.github.io/ios-safari-scoll-position-fixed/ */
+}
+.sidebar .sidebar-content {
+  -webkit-transform: translate3d(0,0,0);
+  -moz-transform: translate3d(0,0,0);
+  -o-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);/* @see => https://stanko.github.io/ios-safari-scoll-position-fixed/ */
+}
 .sidebar .pad { padding-left: 20px; padding-right: 20px; }
 .sidebar-top { padding: 15px 30px; }
 .sidebar-top p { float: left; color: #fff; color: rgba(255,255,255,0.8); font-size: 1rem; font-weight: 600; text-transform: uppercase; line-height: 1.5rem; padding: 3px 0; }
@@ -438,19 +452,111 @@ box-shadow: 6px 0 0 rgba(0,0,0,0.04), -6px 0 0 rgba(0,0,0,0.04); }
 -webkit-box-shadow: inset 0 -1px 0 rgba(255,255,255,0.1);
 box-shadow: inset 0 -1px 0 rgba(255,255,255,0.1); }
 .sidebar-toggle i { font-size: 38px; color: #fff; padding: 10px 0; }
-.s1-expand .s1,
-.s2-expand .s2 {-moz-transition: width .2s ease; -webkit-transition: width .2s ease; transition: width .2s ease; }
+.sidebar.expanding, .sidebar.collapsing {
+    background: #f0f0f0;
+    -moz-transition: width, -moz-transform, .35s ease;
+    -webkit-transition: width, -webkit-transform, .35s ease;
+    -o-transition: width, -o-transform, .35s ease;
+    transition: width, transform, .35s ease;
+    z-index: 10;
+}
+.sidebar.expanded .sidebar-content, .sidebar.collapsed .sidebar-content, .sidebar.collapsing .sidebar-content {
+    -moz-transition: opacity .35s ease;
+    -webkit-transition: opacity .35s ease;
+    -o-transition: opacity .35s ease;
+    transition: opacity .35s ease;
+}
 
+.sidebar.expanded {
+  overflow: hidden;
+}
+.sidebar.expanded .sidebar-content {
+    overflow: auto;
+}
+
+.sidebar.expanding .sidebar-content {
+  /*opacity:1!important;*/
+  display:block!important;
+}
+.sidebar.collapsing .sidebar-content {
+  opacity:0!important;
+}
 /* toggle icon */
-.icon-sidebar-toggle:before { font-family: FontAwesome; }
-.col-2cl .s1 .icon-sidebar-toggle:before,
-.col-3cl .s1 .icon-sidebar-toggle:before,
-.col-3cm .s2 .icon-sidebar-toggle:before,
-.col-3cl .s2 .icon-sidebar-toggle:before { content: "\f100"; }
-.col-2cr .s1 .icon-sidebar-toggle:before,
-.col-3cm .s1 .icon-sidebar-toggle:before,
-.col-3cr .s1 .icon-sidebar-toggle:before,
-.col-3cr .s2 .icon-sidebar-toggle:before { content: "\f101"; }
+.icon-sidebar-toggle:before {
+  font-family: FontAwesome;
+}
+.icon-sidebar-toggle {  opacity: 0;/* <= revealed with js */ }
+.collapsed .icon-sidebar-toggle {  opacity: 1; }
+.icon-sidebar-toggle {
+  font-family: FontAwesome;
+  -webkit-transition: -webkit-transform, opacity, .25s ease;
+  -moz-transition: -moz-transform, opacity, .25s ease;
+  -o-transition: -o-transform, opacity, .25s ease;
+  transition: transform, opacity, .25s ease;
+  position: relative;
+}
+
+
+/* the position is set server side depending on the choosen layout */
+.sidebar[data-position="right"] .icon-sidebar-toggle:before,
+.sidebar[data-position="middle-right"] .icon-sidebar-toggle:before {content: "\f100";}
+.sidebar[data-position="left"] .icon-sidebar-toggle:before,
+.sidebar[data-position="middle-left"] .icon-sidebar-toggle:before {content: "\f101";}
+
+.sidebar[data-position="right"].collapsed .hovering .icon-sidebar-toggle,
+.sidebar[data-position="middle-right"].collapsed .hovering .icon-sidebar-toggle,
+.sidebar[data-position="left"].expanded .hovering .icon-sidebar-toggle,
+.sidebar[data-position="middle-left"].expanded .hovering .icon-sidebar-toggle {
+  -webkit-transform: translateX(-3px);
+  -moz-transform: translateX(-3px);
+  -o-transform: translateX(-3px);
+  transform: translateX(-3px);
+}
+.sidebar[data-position="left"].collapsed .hovering .icon-sidebar-toggle,
+.sidebar[data-position="middle-left"].collapsed .hovering .icon-sidebar-toggle,
+.sidebar[data-position="right"].expanded .hovering .icon-sidebar-toggle,
+.sidebar[data-position="middle-right"].expanded .hovering .icon-sidebar-toggle {
+  -webkit-transform: translateX(3px);
+  -moz-transform: translateX(3px);
+  -o-transform: translateX(3px);
+  transform: translateX(3px);
+}
+
+
+/*stickify */
+.main .sidebar.sticky {
+  position: fixed;
+  top: 0;
+/*  margin-right: 0!important;
+  margin-left:0!important;*/
+  padding-bottom: 0;
+  -webkit-transform: translate3d(0,0,0);
+  -moz-transform: translate3d(0,0,0);
+  -o-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);/* @see => https://stanko.github.io/ios-safari-scoll-position-fixed/ */
+}
+.sidebar.sticky .sidebar-content, .sidebar.sticky .sidebar-toggle {
+  -webkit-transition: -webkit-transform 0.30s ease-in-out;
+  -moz-transition: -moz-transform 0.30s ease-in-out;
+  -o-transition: -o-transform 0.30s ease-in-out;
+  transition: transform 0.30s ease-in-out;
+}
+
+/*.col-2cr .s1.sticky-sidebar,
+.col-3cm .s1.sticky-sidebar,
+.col-3cr .s1.sticky-sidebar,
+.col-3cr .s2.sticky-sidebar {
+  position: fixed;
+}
+.col-2cl .s1.sticky-sidebar,
+.col-3cl .s1.sticky-sidebar,
+.col-3cm .s2.sticky-sidebar,
+.col-3cl .s2.sticky-sidebar {
+  position: fixed;
+  right: 0px;
+  margin-right: 0;
+}
+*/
 
 /* sidebar primary */
 .s1 { width: 340px; z-index: 2; }
@@ -727,6 +833,8 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
   border-radius: 5px;
   background-clip: padding-box;
   -webkit-transition: all ease 0.35s;
+  -moz-transition: all ease 0.35s;
+  -o-transition: all ease 0.35s;
   transition: all ease 0.35s;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -854,7 +962,8 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 }/* ------------------------------------------------------------------------- *
  *  Section: Header
 /* ------------------------------------------------------------------------- */
-#header { background: #33363b; position: relative; padding-bottom: 60px; }
+#header { background: #33363b; position: relative; padding-bottom: 60px;}
+/*.is-scrolling #header{z-index: 100; }*/
 #header .pad { padding-top: 30px; padding-bottom: 30px; }
 #header .container-inner { position: relative; }
 .mobile-title-logo-in-header { display: none;}
@@ -1082,7 +1191,10 @@ box-shadow: inset 1px 0 0 rgba(255,255,255,0.05), -1px 0 0 rgba(0,0,0,0.2); }
   #nav-header .nav li.current_page_item > a,
   #nav-header .nav li.current-menu-item > a,
   #nav-header .nav li.current-post-parent > a { text-decoration: underline; color: #fff; }
-
+  #header-image-wrap {
+    position: relative;
+    top: 50px;
+  }
 }/* ------------------------------------------------------------------------- *
  *  Section: Page
 /* ------------------------------------------------------------------------- */

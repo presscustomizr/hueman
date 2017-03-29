@@ -239,6 +239,8 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
   border-radius: 5px;
   background-clip: padding-box;
   -webkit-transition: all ease 0.35s;
+  -moz-transition: all ease 0.35s;
+  -o-transition: all ease 0.35s;
   transition: all ease 0.35s;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;

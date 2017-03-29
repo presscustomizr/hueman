@@ -406,7 +406,7 @@ if ( is_user_logged_in() && current_user_can( 'edit_theme_options' ) ) {
 /* Backward compatibility. Typically useful for users of child themes using old function names. */
 if ( ! function_exists('alx_layout_class') ) {
   function alx_layout_class() {
-    return hu_layout_class();
+    return hu_get_layout_class();
   }
 }
 

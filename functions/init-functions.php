@@ -32,6 +32,29 @@ function hu_get_menu_id( $location = 'menu' ) {
       return $location . '-' . $GLOBALS['menu_id'];
 }
 
+//@return the position of the sidebar as a string, depending on the choosen layout
+//=> is used to write an html attribute, used by the front end js
+function hu_get_sidebar_position( $sidebar = 's1' ) {
+      $layout = hu_get_layout_class();
+      $position_map = array(
+          's1' => array(
+              'col-2cl' => 'right',
+              'col-3cl' => 'right',
+              'col-3cm' => 'left',
+              'col-3cr' => 'left',
+          ),
+          's2' => array(
+              'col-2cr' => 'right',
+              'col-3cm' => 'right',
+              'col-3cr' => 'middle-left',
+              'col-3cl' => 'middle-right',
+          )
+      );
+      if ( ! array_key_exists( $sidebar, $position_map ) )
+        return 'left';
+      return array_key_exists( $layout, $position_map[ $sidebar ] ) ? $position_map[ $sidebar ][ $layout ] : 'left';
+}
+
 /**
 * Is the customizer left panel being displayed ?
 * @return  boolean

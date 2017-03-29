@@ -78,7 +78,7 @@ var czrapp = czrapp || {};
                             'widgetTabs',
                             'commentTabs',
                             'tableStyle',
-                            'sidebarCollapse',
+                            'sidebarLife',
                             'dropdownMenu',
                             'mobileMenu'
                       ]
@@ -112,4 +112,3 @@ var czrapp = czrapp || {};
             czrapp.trigger( 'czrapp-ready');
       });
 })( czrapp, jQuery, _ );
-

@@ -19,7 +19,7 @@ var czrapp = czrapp || {};
                     var $container      = $(this),
                         is_scrollable   = _.isString( $(this).attr( 'data-menu-scrollable' ) ) && "false" == $(this).attr( 'data-menu-scrollable' ) ? false : true,
                         _id             = $container.attr( 'data-menu-id' ),
-                        ctor            = czrapp.Value.extend( self.MobileCTOR );
+                        ctor;
 
                     if ( self.mobileMenu.has( _id ) )
                       return;
@@ -33,6 +33,7 @@ var czrapp = czrapp || {};
                     if ( 1 != $button.length ) {
                           czrapp.errorLog( 'Mobile menu : misssing container for menu-id : ' + _id );
                     }
+                    ctor = czrapp.Value.extend( self.MobileCTOR );
                     //do instantiate
                     self.mobileMenu.add( _id, new ctor( _id, {
                           container : $container,

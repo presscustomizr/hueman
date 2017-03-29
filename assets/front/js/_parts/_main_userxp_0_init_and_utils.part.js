@@ -41,10 +41,10 @@ var czrapp = czrapp || {};
                   clearTimeout( $.data( this, 'resizeTimer') );
                   $.data( this, 'resizeTimer', setTimeout(function() {
                         self.isResizing( false );
-                  }, 10 ) );
+                  }, 50 ) );
             });
 
-            //"real" horizontal resize reaction
+            //"real" horizontal resize reaction : refreshed every 50 ms
             self.isResizing.bind( function( is_resizing ) {
                   czrapp.$_body.toggleClass( 'is-resizing', is_resizing );
             });
@@ -71,7 +71,7 @@ var czrapp = czrapp || {};
             });
 
 
-            //BROWSER LAYER
+            //BROWSER LAYER : RESIZE AND SCROLL
             //listen to user DOM actions
             czrapp.$_window.resize( function( ev ) { self.windowWidth( czrapp.$_window.width() ); } );
             czrapp.$_window.scroll( function() {

@@ -95,28 +95,6 @@ var czrapp = czrapp || {};
         },
 
 
-        /*  Sidebar collapse
-        /* ------------------------------------ */
-        sidebarCollapse : function() {
-              $('body').addClass('s1-collapse');
-              $('body').addClass('s2-collapse');
-
-              $('.s1 .sidebar-toggle').click( function(){
-                    $('body').toggleClass('s1-collapse').toggleClass('s1-expand');
-                    if ($('body').is('.s2-expand')) {
-                          $('body').toggleClass('s2-expand').toggleClass('s2-collapse');
-                    }
-              });
-              $('.s2 .sidebar-toggle').click( function(){
-                    $('body').toggleClass('s2-collapse').toggleClass('s2-expand');
-                    if ($('body').is('.s1-expand')) {
-                          $('body').toggleClass('s1-expand').toggleClass('s1-collapse');
-                    }
-              });
-        },
-
-
-
         /*  Dropdown menu animation
         /* ------------------------------------ */
         dropdownMenu : function() {

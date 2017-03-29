@@ -238,7 +238,7 @@ add_action( 'widgets_init' , 'hu_maybe_register_custom_widget_zones' );
 function hu_get_available_widget_loc() {
   $_available       = array();
   $_footer_widgets  = intval ( hu_get_option('footer-widgets') );
-  $layout           = hu_layout_class();
+  $layout           = hu_get_layout_class();
 
   if ( hu_is_checked('header-ads') )
     $_available[] = 'header-ads';

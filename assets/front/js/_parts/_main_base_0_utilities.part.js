@@ -30,7 +30,7 @@ var czrapp = czrapp || {};
                   }).promise();
                 },
                 _print = function() {
-                      $('#bulklog').prepend('<p>' + czrapp._prettyfy( { consoleArguments : [ log ] } ) + '</p>');
+                      $('#bulklog').prepend('<p>' + czrapp._prettyfy( { consoleArguments : [ log ], prettyfy : false } ) + '</p>');
                 };
 
             if ( 1 != $('#bulk-log').length ) {
@@ -56,7 +56,8 @@ var czrapp = czrapp || {};
             var _defaults = {
                   bgCol : '#5ed1f5',
                   textCol : '#000',
-                  consoleArguments : []
+                  consoleArguments : [],
+                  prettyfy : true
             };
             args = _.extend( _defaults, args );
 
@@ -69,10 +70,13 @@ var czrapp = czrapp || {};
             } else {
                   _toArr = _toArr.join(' ');
             }
-            return [
-                  '%c ' + czrapp._truncate( _toArr ),
-                  [ 'background:' + args.bgCol, 'color:' + args.textCol, 'display: block;' ].join(';')
-            ];
+            if ( args.prettyfy )
+              return [
+                    '%c ' + czrapp._truncate( _toArr ),
+                    [ 'background:' + args.bgCol, 'color:' + args.textCol, 'display: block;' ].join(';')
+              ];
+            else
+              return czrapp._truncate( _toArr );
       };
 
       //Dev mode aware and IE compatible api.consoleLog()

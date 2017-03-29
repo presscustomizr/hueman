@@ -37,15 +37,12 @@ var czrapp = czrapp || {};
                       }
               });
 
-              //react to scroll position
+              //animate based on scroll position
               this.scrollPosition.bind( function( to, from ) {
-                    //Set scroll direction now
                     //Set up only when scroll up is significant => avoid revealing the menu for minor scroll up actions on mobile devices
-                    if ( to >= from ) {
-                          self.stickyMenuDown( false );
-                    } else if ( Math.abs( to - from ) > 5 ) {
-                          self.stickyMenuDown( true );
-                    }
+                    if ( Math.abs( to - from ) <= 5 )
+                      return;
+                    self.stickyMenuDown( to < from );
               });
 
 
@@ -87,11 +84,11 @@ var czrapp = czrapp || {};
 
 
               /*-----------------------------------------------------
-              * (real) RESIZE EVENT
+              * (real) RESIZE EVENT : refreshed every 50 ms
               ------------------------------------------------------*/
               self.isResizing.bind( function( is_resizing ) {
-                    if ( ! is_resizing )
-                      return;
+                    // if ( ! is_resizing )
+                    //   return;
                     //reset the current sticky selector
                     self._setStickySelector();
 
@@ -255,8 +252,8 @@ var czrapp = czrapp || {};
                     //     position: absolute;
                     // }
                     if ( _.isFunction( window.matchMedia ) && matchMedia( 'screen and (max-width: 600px)' ).matches && 1 == czrapp.$_wpadminbar.length ) {
-                          translateYUp = translateYUp + czrapp.$_wpadminbar.outerHeight();
-                          translateYDown = translateYDown + czrapp.$_wpadminbar.outerHeight();
+                          //translateYUp = translateYUp + czrapp.$_wpadminbar.outerHeight();
+                          translateYDown = translateYDown - $menu_wrapper.outerHeight();
                     }
                     _translate = 'up' == args.direction ? 'translate(0px, -' + translateYUp + 'px)' : 'translate(0px, -' + translateYDown + 'px)';
                     self.stickyHeaderAnimating( true );

@@ -18,6 +18,8 @@ var czrapp = czrapp || {};
                         $_body           : $('body'),
                         $_header         : $('#header'),
                         $_wpadminbar     : $('#wpadminbar'),
+                        $_mainWrapper    : $('.main', '#wrapper'),
+                        $_mainContent    : $('.main', '#wrapper').find('.content'),
 
                         //various properties definition
                         is_responsive    : self.isResponsive(),//store the initial responsive state of the window
@@ -76,10 +78,6 @@ var czrapp = czrapp || {};
                   return czrapp.$_body.hasClass('logged-in') || 0 !== czrapp.$_wpadminbar.length;
             },
 
-            isCustomizing    : function() {
-                  return czrapp.$_body.hasClass('is-customizing');
-            },
-
             isSelectorAllowed : function( $_el, skip_selectors, requested_sel_type ) {
                   var sel_type = 'ids' == requested_sel_type ? 'id' : 'class',
                   _selsToSkip   = skip_selectors[requested_sel_type];
@@ -112,7 +110,7 @@ var czrapp = czrapp || {};
             },
 
             _isCustomizing : function() {
-                  return 'undefined' !== typeof wp && 'undefined' !== typeof wp.customize;
+                  return czrapp.$_body.hasClass('is-customizing') || ( 'undefined' !== typeof wp && 'undefined' !== typeof wp.customize );
             },
 
             //Helpers

@@ -32,7 +32,7 @@
       <?php get_template_part('parts/header-nav-mobile'); ?>
   <?php endif; ?>
 
-  <?php if ( $display_top_nav ): ?>
+  <?php if ( true == true ) : //$display_top_nav ): ?>
       <?php get_template_part( 'parts/header-nav-topbar' ); ?>
   <?php endif; ?>
 
@@ -59,7 +59,7 @@
           </div>
       <?php endif; ?>
 
-      <?php if ( $display_header_nav ) : ?>
+      <?php if ( true == true ) : //$display_header_nav ) : ?>
         <?php get_template_part('parts/header-nav-main'); ?>
       <?php endif; ?>
 
