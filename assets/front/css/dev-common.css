@@ -382,9 +382,18 @@ h1, h2, h3, h4, h5, h6 { color: #444; font-weight: 600; -ms-word-wrap: break-wor
 #wrapper { min-width: 1024px; height: 100%; }
 .container { padding: 0 20px; }
 .container-inner { max-width: 1380px; min-width: 1380px; width: 100%; margin: 0 auto; }
-.main { background-color: #fff!important; position: relative; overflow: hidden; }
+.main { background-color: #fff!important; position: relative; }
+.sidebar-expanding .main, .sidebar-collapsing .main { overflow: hidden;}
+
 .main-inner { position: relative; min-height: 600px; /* instead of sticky footer */ }
-.content { width: 100%; position: relative; }
+.content {
+  width: 100%;
+  position: relative;
+  -moz-transition: -moz-transform, .35s ease;
+  -webkit-transition: -webkit-transform, .35s ease;
+  -o-transition: -o-transform, .35s ease;
+  transition: transform, .35s ease;
+}
 .pad { padding: 30px 30px 20px; }
 
 /* boxed */
@@ -439,11 +448,12 @@ box-shadow: 6px 0 0 rgba(0,0,0,0.04), -6px 0 0 rgba(0,0,0,0.04); }
   -o-transform: translate3d(0,0,0);
   transform: translate3d(0,0,0);/* @see => https://stanko.github.io/ios-safari-scoll-position-fixed/ */
 }
-.sidebar .sidebar-content {
+.sidebar .sidebar-content, .sidebar .sidebar-toggle {
   -webkit-transform: translate3d(0,0,0);
   -moz-transform: translate3d(0,0,0);
   -o-transform: translate3d(0,0,0);
   transform: translate3d(0,0,0);/* @see => https://stanko.github.io/ios-safari-scoll-position-fixed/ */
+  background: #f0f0f0;
 }
 .sidebar .pad { padding-left: 20px; padding-right: 20px; }
 .sidebar-top { padding: 15px 30px; }
@@ -452,6 +462,7 @@ box-shadow: 6px 0 0 rgba(0,0,0,0.04), -6px 0 0 rgba(0,0,0,0.04); }
 -webkit-box-shadow: inset 0 -1px 0 rgba(255,255,255,0.1);
 box-shadow: inset 0 -1px 0 rgba(255,255,255,0.1); }
 .sidebar-toggle i { font-size: 38px; color: #fff; padding: 10px 0; }
+
 .sidebar.expanding, .sidebar.collapsing {
     background: #f0f0f0;
     -moz-transition: width, -moz-transform, .35s ease;
@@ -461,10 +472,10 @@ box-shadow: inset 0 -1px 0 rgba(255,255,255,0.1); }
     z-index: 10;
 }
 .sidebar.expanded .sidebar-content, .sidebar.collapsed .sidebar-content, .sidebar.collapsing .sidebar-content {
-    -moz-transition: opacity .35s ease;
-    -webkit-transition: opacity .35s ease;
-    -o-transition: opacity .35s ease;
-    transition: opacity .35s ease;
+    -moz-transition: opacity, -moz-transform, .35s ease;
+    -webkit-transition: opacity, -webkit-transform, .35s ease;
+    -o-transition: opacity, -o-transform, .35s ease;
+    transition: opacity, transform, .35s ease;
 }
 
 .sidebar.expanded {
@@ -535,7 +546,7 @@ box-shadow: inset 0 -1px 0 rgba(255,255,255,0.1); }
   -o-transform: translate3d(0,0,0);
   transform: translate3d(0,0,0);/* @see => https://stanko.github.io/ios-safari-scoll-position-fixed/ */
 }
-.sidebar.sticky .sidebar-content, .sidebar.sticky .sidebar-toggle {
+.sidebar .sidebar-content, .sidebar .sidebar-toggle {
   -webkit-transition: -webkit-transform 0.30s ease-in-out;
   -moz-transition: -moz-transform 0.30s ease-in-out;
   -o-transition: -o-transform 0.30s ease-in-out;
@@ -1117,7 +1128,7 @@ box-shadow: inset 1px 0 0 rgba(255,255,255,0.05), -1px 0 0 rgba(0,0,0,0.2); }
 
 /*  header : STICKY MENUS
 /* ------------------------------------ */
-.is-scrolled #nav-header.nav-container, .is-scrolled #nav-topbar.nav-container {
+.is-scrolled .mobile-sticky, .is-scrolled .desktop-sticky {
     background-color: rgba(51, 54, 59, 0.9);
 }
 .mobile-menu {

@@ -1755,8 +1755,12 @@ body .select2-container {
   outline: none;
 }
 
-
-
+/* Old SELECT2
+* https://github.com/presscustomizr/themes-customizer-fmk/issues/30
+*/
+body .select2-drop {
+  z-index: 1000000;
+}
 
 
 /* SPECIFIC INPUT STYLE */

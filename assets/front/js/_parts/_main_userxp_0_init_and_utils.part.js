@@ -73,8 +73,8 @@ var czrapp = czrapp || {};
 
             //BROWSER LAYER : RESIZE AND SCROLL
             //listen to user DOM actions
-            czrapp.$_window.resize( function( ev ) { self.windowWidth( czrapp.$_window.width() ); } );
-            czrapp.$_window.scroll( function() {
+            czrapp.$_window.resize( _.throttle( function( ev ) { self.windowWidth( czrapp.$_window.width() ); }, 10 ) );
+            czrapp.$_window.scroll( _.throttle( function() {
                   self.isScrolling( true );
                   //self.previousScrollPosition = self.scrollPosition() || czrapp.$_window.scrollTop();
                   self.scrollPosition( czrapp.$_window.scrollTop() );
@@ -82,7 +82,7 @@ var czrapp = czrapp || {};
                   $.data( this, 'scrollTimer', setTimeout(function() {
                         self.isScrolling( false );
                   }, 100 ) );
-            });
+            }, 10 ) );
       }
   };//_methods{}
 
