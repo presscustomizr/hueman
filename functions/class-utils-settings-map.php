@@ -256,7 +256,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'notice'    => __( 'Change left and right sidebars padding' , 'hueman')
           ),
           'color-1' => array(
-                'default'     => '#3b8dbd',
+                'default'     => hu_user_started_before_version( '3.3.8' ) ? '#3b8dbd' : '#16cfc1',
                 'control'     => 'WP_Customize_Color_Control',
                 'label'       => __( 'Primary Color' , 'hueman' ),
                 'section'     => 'general_design_sec',
@@ -266,7 +266,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 //'transport'   => 'postMessage'
           ),
           'color-2' => array(
-                'default'     => '#82b965',
+                'default'     =>  hu_user_started_before_version( '3.3.8' ) ? '#82b965' : '#efb93f',
                 'control'     => 'WP_Customize_Color_Control',
                 'label'       => __( 'Secondary Color' , 'hueman' ),
                 'section'     => 'general_design_sec',
@@ -520,7 +520,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'notice'    => $header_nav_notice
           ),
           'color-topbar' => array(
-                'default'     => '#26272b',
+                'default'     => hu_user_started_before_version( '3.3.8' ) ? '#26272b' : '#121d30',
                 'control'     => 'WP_Customize_Color_Control',
                 'label'       => __( 'Topbar Background' , 'hueman' ),
                 'section'     => 'header_design_sec',
@@ -530,7 +530,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'transport'   => 'postMessage'
           ),
           'color-header' => array(
-                'default'     => '#33363b',
+                'default'     => hu_user_started_before_version( '3.3.8' ) ? '#33363b' : '#454e5c',
                 'control'     => 'WP_Customize_Color_Control',
                 'label'       => __( 'Header Background' , 'hueman' ),
                 'section'     => 'header_design_sec',
@@ -540,7 +540,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'transport'   => 'postMessage'
           ),
           'color-header-menu' => array(
-                'default'     => '#33363b',
+                'default'     => hu_user_started_before_version( '3.3.8' ) ? '#33363b' : '#454e5c',
                 'control'     => 'WP_Customize_Color_Control',
                 'label'       => __( 'Header Menu Background' , 'hueman' ),
                 'section'     => 'header_design_sec',
@@ -556,9 +556,9 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'header_design_sec',
                 'type'      => 'select',
                 'choices'   => array(
-                    'main_menu' => __('Main Menu', 'hueman'),
-                    'top_menu'  => __('Top Menu', 'hueman'),
-                    'both_menus' => __( 'Top and main menus, logo centered')
+                    'main_menu' => __('Header Menu', 'hueman'),
+                    'top_menu'  => __('Topbar Menu', 'hueman'),
+                    'both_menus' => __( 'Topbar and header menus, logo centered')
                 ),
                 'notice'    => sprintf( '%1$s %2$s',
                     __( 'When your visitors are using a smartphone or a tablet, menus are revealed on click on the hamburger button.' , 'hueman' ),
@@ -1010,6 +1010,14 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'sidebars_design_sec',
                 'type'      => 'checkbox',
                 'notice'    => __('Display boxes at the top of the sidebars' , 'hueman')
+          ),
+          'sidebar-sticky' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __('Make sidebars sticky on scroll', 'hueman'),
+                'section'   => 'sidebars_design_sec',
+                'type'      => 'checkbox',
+                'notice'    => __("Glues your website's sidebars on top of the page, making them permanently visible when scrolling up and down. Useful when a sidebar is too tall or too short compared to the rest of the content." , 'hueman')
           ),
           'mobile-sidebar-hide' => array(
                 'default'   => '1',

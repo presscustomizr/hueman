@@ -46,15 +46,15 @@ if ( ! function_exists( 'hu_print_gfont_head_link' ) ) {
 }
 add_action( 'wp_head', 'hu_print_gfont_head_link', 2 );
 
-
+add_action( 'wp_head', 'hu_dynamic_css', 100 );
 /*  Dynamic css output
 /* ------------------------------------ */
 if ( ! function_exists( 'hu_dynamic_css' ) ) {
 
   function hu_dynamic_css() {
       // rgb values
-      $color_1 = hu_get_option('color-1');
-      $color_1_rgb = hu_hex2rgb($color_1);
+      // $color_1 = hu_get_option('color-1');
+      // $color_1_rgb = hu_hex2rgb($color_1);
 
       $glue    = hu_is_checked('minified-css') ? '' : "\n";
 
@@ -95,142 +95,79 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
       if ( hu_get_option('sidebar-padding') != '30' ) {
           $styles[]  = '.sidebar .widget { padding-left: '.hu_get_option('sidebar-padding').'px; padding-right: '.hu_get_option('sidebar-padding').'px; padding-top: '.hu_get_option('sidebar-padding').'px; }';
       }
+
+
       // primary color
-      if ( hu_get_option('color-1') != '#3b8dbd' ) {
-        $styles[]  = '::selection { background-color: '.hu_get_option('color-1').'; }
-::-moz-selection { background-color: '.hu_get_option('color-1').'; }';
+      $prim_color = hu_get_option('color-1');
+      $def_prim_col = hu_user_started_before_version( '3.3.8' ) ? '#3b8dbd' : '#16cfc1';
+      if ( $prim_color != $def_prim_col ) {
+          $styles = array_merge( $styles, hu_get_primary_color_style() );
+      }
 
-        $_primary_color_color_prop_selectors = array(
-          'a',
-          '.themeform label .required',
-          '#flexslider-featured .flex-direction-nav .flex-next:hover',
-          '#flexslider-featured .flex-direction-nav .flex-prev:hover',
-          '.post-hover:hover .post-title a',
-          '.post-title a:hover',
-          '.s1 .post-nav li a:hover i',
-          '.content .post-nav li a:hover i',
-          '.post-related a:hover',
-          '.s1 .widget_rss ul li a',
-          '#footer .widget_rss ul li a',
-          '.s1 .widget_calendar a',
-          '#footer .widget_calendar a',
-          '.s1 .alx-tab .tab-item-category a',
-          '.s1 .alx-posts .post-item-category a',
-          '.s1 .alx-tab li:hover .tab-item-title a',
-          '.s1 .alx-tab li:hover .tab-item-comment a',
-          '.s1 .alx-posts li:hover .post-item-title a',
-          '#footer .alx-tab .tab-item-category a',
-          '#footer .alx-posts .post-item-category a',
-          '#footer .alx-tab li:hover .tab-item-title a',
-          '#footer .alx-tab li:hover .tab-item-comment a',
-          '#footer .alx-posts li:hover .post-item-title a',
-          '.comment-tabs li.active a',
-          '.comment-awaiting-moderation',
-          '.child-menu a:hover',
-          '.child-menu .current_page_item > a',
-          '.wp-pagenavi a'
-        );
 
-        $_primary_color_color_prop_selectors = implode( ",{$glue}", apply_filters( 'hu_dynamic_primary_color_color_prop_selectors', $_primary_color_color_prop_selectors ) );
-        $styles[] = $_primary_color_color_prop_selectors ? $_primary_color_color_prop_selectors . '{ color: '.hu_get_option('color-1').'; }'."{$glue}" : '';
-
-        $_primary_color_background_color_prop_selectors = array(
-          '.themeform input[type="submit"]',
-          '.themeform button[type="submit"]',
-          '.s1 .sidebar-top',
-          '.s1 .sidebar-toggle',
-          '#flexslider-featured .flex-control-nav li a.flex-active',
-          '.post-tags a:hover',
-          '.s1 .widget_calendar caption',
-          '#footer .widget_calendar caption',
-          '.author-bio .bio-avatar:after',
-          '.commentlist li.bypostauthor > .comment-body:after',
-          '.commentlist li.comment-author-admin > .comment-body:after'
-        );
-
-        $_primary_color_background_color_prop_selectors = implode( ",{$glue}", apply_filters( 'hu_dynamic_primary_color_background_color_prop_selectors', $_primary_color_background_color_prop_selectors ) );
-        $styles[] = $_primary_color_background_color_prop_selectors ? $_primary_color_background_color_prop_selectors . '{ background-color: '.hu_get_option('color-1').'; }'."{$glue}" : '';
-
-        $styles[] ='.post-format .format-container { border-color: '.hu_get_option('color-1').'; }';
-
-        $_primary_color_border_bottom_color_prop_selectors = array(
-          '.s1 .alx-tabs-nav li.active a',
-          '#footer .alx-tabs-nav li.active a',
-          '.comment-tabs li.active a',
-          '.wp-pagenavi a:hover',
-          '.wp-pagenavi a:active',
-          '.wp-pagenavi span.current'
-        );
-
-        $_primary_color_border_bottom_color_prop_selectors = implode( ",{$glue}", apply_filters( 'hu_dynamic_primary_color_border_bottom_color_prop_selectors', $_primary_color_border_bottom_color_prop_selectors ) );
-        $styles[] = $_primary_color_border_bottom_color_prop_selectors ? $_primary_color_border_bottom_color_prop_selectors . '{ border-bottom-color: '.hu_get_option('color-1').'!important; }'."{$glue}" : '';
-
-      }//end primary color
-
+      $second_color = hu_get_option('color-2');
+      $def_second_col = hu_user_started_before_version( '3.3.8' ) ? '#82b965' : '#efb93f';
       // secondary color
-      if ( hu_get_option('color-2') != '#82b965' ) {
-        $styles[] = '.s2 .post-nav li a:hover i,
-.s2 .widget_rss ul li a,
-.s2 .widget_calendar a,
-.s2 .alx-tab .tab-item-category a,
-.s2 .alx-posts .post-item-category a,
-.s2 .alx-tab li:hover .tab-item-title a,
-.s2 .alx-tab li:hover .tab-item-comment a,
-.s2 .alx-posts li:hover .post-item-title a { color: '.hu_get_option('color-2').'; }
-';
-      $_secondary_color_background_color_prop_selectors = array(
-        '.s2 .sidebar-top',
-        '.s2 .sidebar-toggle',
-        '.post-comments',
-        '.jp-play-bar',
-        '.jp-volume-bar-value',
-        '.s2 .widget_calendar caption'
-    );
-
-    $_secondary_color_background_color_prop_selectors = implode( ",{$glue}", apply_filters( 'hu_dynamic_secondary_color_background_color_prop_selectors', $_secondary_color_background_color_prop_selectors ) );
-    $styles[] = $_secondary_color_background_color_prop_selectors ? $_secondary_color_background_color_prop_selectors . '{ background-color: '.hu_get_option('color-2').'; }'."{$glue}" : '';
-
-    $styles[] ='.s2 .alx-tabs-nav li.active a { border-bottom-color: '.hu_get_option('color-2').'; }
-.post-comments span:before { border-right-color: '.hu_get_option('color-2').'; }
-        ';
+      if ( $second_color != $def_second_col ) {
+          $styles = array_merge( $styles, hu_get_second_color_style() );
       }
+
+
       // topbar color
-      if ( hu_get_option('color-topbar') != '#26272b' ) {
+      $tb_color = hu_get_option('color-topbar');
+      $def_tb_col = hu_user_started_before_version( '3.3.8' ) ? '#26272b' : '#121d30';
+      if ( $tb_color != $def_tb_col ) {
         $styles[] = '.search-expand,
-#nav-topbar.nav-container { background-color: '.hu_get_option('color-topbar').'; }
+#nav-topbar.nav-container { background-color: '.$tb_color.'; }
 @media only screen and (min-width: 720px) {
-  #nav-topbar .nav ul { background-color: '.hu_get_option('color-topbar').'; }
+  #nav-topbar .nav ul { background-color: '.$tb_color.'; }
 }
         ';
       }
+
+
       // header color
-      if ( hu_get_option('color-header') != '#33363b' ) {
-        $styles[] = '#header { background-color: '.hu_get_option('color-header').'; }
+      $h_color = hu_get_option('color-header');
+      $def_h_col = hu_user_started_before_version( '3.3.8' ) ? '#33363b' : '#454e5c';
+      if ( $h_color != $def_h_col ) {
+        $styles[] = '#header { background-color: '.$h_color.'; }
 @media only screen and (min-width: 720px) {
-  #nav-header .nav ul { background-color: '.hu_get_option('color-header').'; }
+  #nav-header .nav ul { background-color: '.$h_color.'; }
 }
         ';
       }
+
+
       // header menu color
-      if ( hu_get_option('color-header-menu') != '' ) {
-        $styles[] = '#nav-header.nav-container { background-color: '.hu_get_option('color-header-menu').'; }
+      $hm_color = hu_get_option('color-header-menu');
+      $def_hm_col = hu_user_started_before_version( '3.3.8' ) ? '#33363b' : '#454e5c';
+      if ( $hm_color != $def_hm_col ) {
+        $styles[] = '#nav-header.nav-container { background-color: '.$hm_color.'; }
 @media only screen and (min-width: 720px) {
-  #nav-header .nav ul { background-color: '.hu_get_option('color-header-menu').'; }
+  #nav-header .nav ul { background-color: '.$hm_color.'; }
 }
         ';
       }
+
+
       // footer color
       if ( hu_get_option('color-footer') != '#33363b' ) {
         $styles[] = '#footer-bottom { background-color: '.hu_get_option('color-footer').'; }';
       }
+
+
       // header logo max-height
       if ( hu_get_option('logo-max-height') != '60' ) {
         $styles[] = '.site-title a img { max-height: '.hu_get_option('logo-max-height').'px; }';
       }
+
+
       // image border radius
       if ( hu_get_option('image-border-radius') != '0' ) {
         $styles[] = 'img { -webkit-border-radius: '.hu_get_option('image-border-radius').'px; border-radius: '.hu_get_option('image-border-radius').'px; }';
       }
+
+
       // // body background (old)
       // if ( hu_get_option('body-background') != '#eaeaea' ) {
       //  $styles .= 'body { background-color: '.hu_get_option('body-background').'; }';
@@ -271,7 +208,7 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
         return;
 
       // start output
-      $_p_styles   = array( '<style type="text/css">' );
+      $_p_styles   = array( '<style type="text/css" id="hu-dynamic-style">' );
       $_p_styles[] = '/* Dynamic CSS: For no styles in head, copy and put the css below in your child theme\'s style.css, disable dynamic styles */';
       $_p_styles[] = implode( "{$glue}", $styles );
       $_p_styles[] = '</style>'."\n";
@@ -282,4 +219,114 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
     }
 
 }
-add_action( 'wp_head', 'hu_dynamic_css', 100 );
+
+
+
+/* ------------------------------------------------------------------------- *
+ *  Dynamic styles Helpers
+/* ------------------------------------------------------------------------- */
+function hu_get_primary_color_style() {
+      $glue    = hu_is_checked('minified-css') ? '' : "\n";
+      $styles = array();
+      $prim_color = hu_get_option('color-1');
+      $styles[]  = '::selection { background-color: '.$prim_color.'; }
+::-moz-selection { background-color: '.$prim_color.'; }';
+
+      $_primary_color_color_prop_selectors = array(
+          'a',
+          '.themeform label .required',
+          '#flexslider-featured .flex-direction-nav .flex-next:hover',
+          '#flexslider-featured .flex-direction-nav .flex-prev:hover',
+          '.post-hover:hover .post-title a',
+          '.post-title a:hover',
+          '.s1 .post-nav li a:hover i',
+          '.content .post-nav li a:hover i',
+          '.post-related a:hover',
+          '.s1 .widget_rss ul li a',
+          '#footer .widget_rss ul li a',
+          '.s1 .widget_calendar a',
+          '#footer .widget_calendar a',
+          '.s1 .alx-tab .tab-item-category a',
+          '.s1 .alx-posts .post-item-category a',
+          '.s1 .alx-tab li:hover .tab-item-title a',
+          '.s1 .alx-tab li:hover .tab-item-comment a',
+          '.s1 .alx-posts li:hover .post-item-title a',
+          '#footer .alx-tab .tab-item-category a',
+          '#footer .alx-posts .post-item-category a',
+          '#footer .alx-tab li:hover .tab-item-title a',
+          '#footer .alx-tab li:hover .tab-item-comment a',
+          '#footer .alx-posts li:hover .post-item-title a',
+          '.comment-tabs li.active a',
+          '.comment-awaiting-moderation',
+          '.child-menu a:hover',
+          '.child-menu .current_page_item > a',
+          '.wp-pagenavi a'
+      );
+
+      $_primary_color_color_prop_selectors = implode( ",{$glue}", apply_filters( 'hu_dynamic_primary_color_color_prop_selectors', $_primary_color_color_prop_selectors ) );
+      $styles[] = $_primary_color_color_prop_selectors ? $_primary_color_color_prop_selectors . '{ color: '.$prim_color.'; }'."{$glue}" : '';
+
+      $_primary_color_background_color_prop_selectors = array(
+          '.themeform input[type="submit"]',
+          '.themeform button[type="submit"]',
+          '.s1 .sidebar-top',
+          '.s1 .sidebar-toggle',
+          '#flexslider-featured .flex-control-nav li a.flex-active',
+          '.post-tags a:hover',
+          '.s1 .widget_calendar caption',
+          '#footer .widget_calendar caption',
+          '.author-bio .bio-avatar:after',
+          '.commentlist li.bypostauthor > .comment-body:after',
+          '.commentlist li.comment-author-admin > .comment-body:after'
+      );
+
+      $_primary_color_background_color_prop_selectors = implode( ",{$glue}", apply_filters( 'hu_dynamic_primary_color_background_color_prop_selectors', $_primary_color_background_color_prop_selectors ) );
+      $styles[] = $_primary_color_background_color_prop_selectors ? $_primary_color_background_color_prop_selectors . '{ background-color: '.$prim_color.'; }'."{$glue}" : '';
+
+      $styles[] ='.post-format .format-container { border-color: '.$prim_color.'; }';
+
+      $_primary_color_border_bottom_color_prop_selectors = array(
+          '.s1 .alx-tabs-nav li.active a',
+          '#footer .alx-tabs-nav li.active a',
+          '.comment-tabs li.active a',
+          '.wp-pagenavi a:hover',
+          '.wp-pagenavi a:active',
+          '.wp-pagenavi span.current'
+      );
+
+      $_primary_color_border_bottom_color_prop_selectors = implode( ",{$glue}", apply_filters( 'hu_dynamic_primary_color_border_bottom_color_prop_selectors', $_primary_color_border_bottom_color_prop_selectors ) );
+      $styles[] = $_primary_color_border_bottom_color_prop_selectors ? $_primary_color_border_bottom_color_prop_selectors . '{ border-bottom-color: '.$prim_color.'!important; }'."{$glue}" : '';
+
+      return $styles;
+}//hu_get_primary_color_style
+
+
+function hu_get_second_color_style() {
+    $glue    = hu_is_checked('minified-css') ? '' : "\n";
+    $styles = array();
+    $styles[] = '.s2 .post-nav li a:hover i,
+.s2 .widget_rss ul li a,
+.s2 .widget_calendar a,
+.s2 .alx-tab .tab-item-category a,
+.s2 .alx-posts .post-item-category a,
+.s2 .alx-tab li:hover .tab-item-title a,
+.s2 .alx-tab li:hover .tab-item-comment a,
+.s2 .alx-posts li:hover .post-item-title a { color: '.hu_get_option('color-2').'; }
+';
+    $_secondary_color_background_color_prop_selectors = array(
+      '.s2 .sidebar-top',
+      '.s2 .sidebar-toggle',
+      '.post-comments',
+      '.jp-play-bar',
+      '.jp-volume-bar-value',
+      '.s2 .widget_calendar caption'
+  );
+
+  $_secondary_color_background_color_prop_selectors = implode( ",{$glue}", apply_filters( 'hu_dynamic_secondary_color_background_color_prop_selectors', $_secondary_color_background_color_prop_selectors ) );
+  $styles[] = $_secondary_color_background_color_prop_selectors ? $_secondary_color_background_color_prop_selectors . '{ background-color: '.hu_get_option('color-2').'; }'."{$glue}" : '';
+
+  $styles[] ='.s2 .alx-tabs-nav li.active a { border-bottom-color: '.hu_get_option('color-2').'; }
+.post-comments span:before { border-right-color: '.hu_get_option('color-2').'; }
+      ';
+    return $styles;
+}//hu_get_second_color_style

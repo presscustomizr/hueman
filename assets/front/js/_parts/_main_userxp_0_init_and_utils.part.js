@@ -83,6 +83,7 @@ var czrapp = czrapp || {};
                         self.isScrolling( false );
                   }, 100 ) );
             }, 10 ) );
+
       }
   };//_methods{}
 

@@ -887,6 +887,7 @@ if ( ! function_exists( 'hu_scripts' ) ) {
               )),
               'goldenRatio'         => apply_filters( 'hu_grid_golden_ratio' , 1.618 ),
               'gridGoldenRatioLimit' => apply_filters( 'hu_grid_golden_ratio_limit' , 350),
+              'isSidebarSticky' => hu_is_checked('sidebar-sticky'),
               'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('TC_DEV') && true === TC_DEV )
             )
         )//end of filter

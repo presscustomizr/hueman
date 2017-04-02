@@ -232,167 +232,168 @@ if (!Array.prototype.map) {
  * http://paulirish.com/2011/requestanimationframe-for-smart-animating/
  * =================================================== */
 ;(function ( $, window, document, undefined ) {
-  //defaults
-  var pluginName = 'imgSmartLoad',
-      defaults = {
-        load_all_images_on_first_scroll : false,
-        attribute : [ 'data-src', 'data-srcset', 'data-sizes' ],
-        excludeImg : '',
-        threshold : 200,
-        fadeIn_options : { duration : 400 },
-        delaySmartLoadEvent : 0
+      //defaults
+      var pluginName = 'imgSmartLoad',
+          defaults = {
+                load_all_images_on_first_scroll : false,
+                attribute : [ 'data-src', 'data-srcset', 'data-sizes' ],
+                excludeImg : '',
+                threshold : 200,
+                fadeIn_options : { duration : 400 },
+                delaySmartLoadEvent : 0
+          };
+
+
+      function Plugin( element, options ) {
+            this.element = element;
+            this.options = $.extend( {}, defaults, options) ;
+            this._defaults = defaults;
+            this._name = pluginName;
+            this.init();
+      }
+
+
+      //can access this.element and this.option
+      Plugin.prototype.init = function () {
+            var self        = this,
+                $_imgs   = $( 'img[' + this.options.attribute[0] + ']:not('+ this.options.excludeImg.join() +')' , this.element );
+
+            this.increment  = 1;//used to wait a little bit after the first user scroll actions to trigger the timer
+            this.timer      = 0;
+
+            //attach action to the load event
+            $_imgs.bind( 'load_img', {}, function() { self._load_img(this); });
+
+            $(window).scroll( function( _evt ) { self._better_scroll_event_handler( $_imgs, _evt ); } );
+            $(window).resize( _.debounce( function( _evt ) { self._maybe_trigger_load( $_imgs, _evt ); }, 100 ) );
+            //on load
+            this._maybe_trigger_load( $_imgs );
       };
 
 
-  function Plugin( element, options ) {
-    this.element = element;
-    this.options = $.extend( {}, defaults, options) ;
-    this._defaults = defaults;
-    this._name = pluginName;
-    this.init();
-  }
+      /*
+      * @param : array of $img
+      * @param : current event
+      * @return : void
+      * scroll event performance enhancer => avoid browser stack if too much scrolls
+      */
+      Plugin.prototype._better_scroll_event_handler = function( $_imgs , _evt ) {
+            var self = this;
+            if ( ! this.doingAnimation ) {
+                  this.doingAnimation = true;
+                  window.requestAnimationFrame(function() {
+                        self._maybe_trigger_load( $_imgs , _evt );
+                        self.doingAnimation = false;
+                  });
+            }
+      };
 
 
-  //can access this.element and this.option
-  Plugin.prototype.init = function () {
-    var self        = this,
-        $_imgs   = $( 'img[' + this.options.attribute[0] + ']:not('+ this.options.excludeImg.join() +')' , this.element );
-
-    this.increment  = 1;//used to wait a little bit after the first user scroll actions to trigger the timer
-    this.timer      = 0;
-
-    //attach action to the load event
-    $_imgs.bind( 'load_img', {}, function() { self._load_img(this); });
-
-    $(window).scroll( function( _evt ) { self._better_scroll_event_handler( $_imgs, _evt ); });
-    $(window).resize( function( _evt ) { self._maybe_trigger_load( $_imgs, _evt ); });
-    //on load
-    this._maybe_trigger_load( $_imgs );
-  };
+      /*
+      * @param : array of $img
+      * @param : current event
+      * @return : void
+      */
+      Plugin.prototype._maybe_trigger_load = function( $_imgs , _evt ) {
+            var self = this;
+                //get the visible images list
+                _visible_list = $_imgs.filter( function( ind, _img ) { return self._is_visible( _img ,  _evt ); } );
+            //trigger load_img event for visible images
+            _visible_list.map( function( ind, _img ) { $(_img).trigger( 'load_img' );  } );
+      };
 
 
-  /*
-  * @param : array of $img
-  * @param : current event
-  * @return : void
-  * scroll event performance enhancer => avoid browser stack if too much scrolls
-  */
-  Plugin.prototype._better_scroll_event_handler = function( $_imgs , _evt ) {
-    var self = this;
+      /*
+      * @param single $img object
+      * @param : current event
+      * @return bool
+      * helper to check if an image is the visible ( viewport + custom option threshold)
+      */
+      Plugin.prototype._is_visible = function( _img, _evt ) {
+            var $_img       = $(_img),
+                wt = $(window).scrollTop(),
+                wb = wt + $(window).height(),
+                it  = $_img.offset().top,
+                ib  = it + $_img.height(),
+                th = this.options.threshold;
 
-    if ( ! this.doingAnimation ) {
-      this.doingAnimation = true;
-      window.requestAnimationFrame(function() {
-        self._maybe_trigger_load( $_imgs , _evt );
-        self.doingAnimation = false;
-      });
-    }
-  };
+            //force all images to visible if first scroll option enabled
+            if ( _evt && 'scroll' == _evt.type && this.options.load_all_images_on_first_scroll )
+              return true;
 
-
-  /*
-  * @param : array of $img
-  * @param : current event
-  * @return : void
-  */
-  Plugin.prototype._maybe_trigger_load = function( $_imgs , _evt ) {
-    var self = this;
-        //get the visible images list
-        _visible_list = $_imgs.filter( function( ind, _img ) { return self._is_visible( _img ,  _evt ); } );
-    //trigger load_img event for visible images
-    _visible_list.map( function( ind, _img ) { $(_img).trigger( 'load_img' );  } );
-  };
+            return ib >= wt - th && it <= wb + th;
+      };
 
 
-  /*
-  * @param single $img object
-  * @param : current event
-  * @return bool
-  * helper to check if an image is the visible ( viewport + custom option threshold)
-  */
-  Plugin.prototype._is_visible = function( _img, _evt ) {
-    var $_img       = $(_img),
-        wt = $(window).scrollTop(),
-        wb = wt + $(window).height(),
-        it  = $_img.offset().top,
-        ib  = it + $_img.height(),
-        th = this.options.threshold;
+      /*
+      * @param single $img object
+      * @return void
+      * replace src place holder by data-src attr val which should include the real src
+      */
+      Plugin.prototype._load_img = function( _img ) {
+            var $_img    = $(_img),
+                _src     = $_img.attr( this.options.attribute[0] ),
+                _src_set = $_img.attr( this.options.attribute[1] ),
+                _sizes   = $_img.attr( this.options.attribute[2] ),
+                self = this;
 
-    //force all images to visible if first scroll option enabled
-    if ( _evt && 'scroll' == _evt.type && this.options.load_all_images_on_first_scroll )
-      return true;
+            $_img.parent().addClass('smart-loading');
 
-    return ib >= wt - th && it <= wb + th;
-  };
+            $_img.unbind('load_img')
+                  .hide()
+                  //https://api.jquery.com/removeAttr/
+                  //An attribute to remove; as of version 1.7, it can be a space-separated list of attributes.
+                  //minimum supported wp version (3.4+) embeds jQuery 1.7.2
+                  .removeAttr( this.options.attribute.join(' ') )
+                  .attr( 'sizes' , _sizes )
+                  .attr( 'srcset' , _src_set )
+                  .attr('src', _src )
+                  .load( function () {
+                        //prevent executing this twice on an already smartloaded img
+                        if ( ! $_img.hasClass('tc-smart-loaded') ) {
+                              $_img.fadeIn(self.options.fadeIn_options).addClass('tc-smart-loaded');
+                        }
 
+                        //Following would be executed twice if needed, as some browsers at the
+                        //first execution of the load callback might still have not actually loaded the img
 
-  /*
-  * @param single $img object
-  * @return void
-  * replace src place holder by data-src attr val which should include the real src
-  */
-  Plugin.prototype._load_img = function( _img ) {
-    var $_img    = $(_img),
-        _src     = $_img.attr( this.options.attribute[0] ),
-        _src_set = $_img.attr( this.options.attribute[1] ),
-        _sizes   = $_img.attr( this.options.attribute[2] ),
-        self = this;
+                        //jetpack's photon commpability (seems to be unneeded since jetpack 3.9.1)
+                        //Honestly to me this makes no really sense but photon does it.
+                        //Basically photon recalculates the image dimension and sets its
+                        //width/height attribute once the image is smartloaded. Given the fact that those attributes are "needed" by the browser to assign the images a certain space so that when loaded the page doesn't "grow" it's height .. what's the point doing it so late?
+                        if ( ( 'undefined' !== typeof $_img.attr('data-tcjp-recalc-dims')  ) && ( false !== $_img.attr('data-tcjp-recalc-dims') ) ) {
+                              var _width  = $_img.originalWidth();
+                                  _height = $_img.originalHeight();
 
-    $_img.parent().addClass('smart-loading');
+                              if ( 2 != _.size( _.filter( [ _width, _height ], function(num){ return _.isNumber( parseInt(num, 10) ) && num > 1; } ) ) )
+                                return;
 
-    $_img.unbind('load_img')
-    .hide()
-    //https://api.jquery.com/removeAttr/
-    //An attribute to remove; as of version 1.7, it can be a space-separated list of attributes.
-    //minimum supported wp version (3.4+) embeds jQuery 1.7.2
-    .removeAttr( this.options.attribute.join(' ') )
-    .attr( 'sizes' , _sizes )
-    .attr( 'srcset' , _src_set )
-    .attr('src', _src )
-    .load( function () {
-      //prevent executing this twice on an already smartloaded img
-      if ( ! $_img.hasClass('tc-smart-loaded') )
-        $_img.fadeIn(self.options.fadeIn_options).addClass('tc-smart-loaded');
+                              //From photon.js: Modify given image's markup so that devicepx-jetpack.js will act on the image and it won't be reprocessed by this script.
+                              $_img.removeAttr( 'data-tcjp-recalc-dims scale' );
 
-      //Following would be executed twice if needed, as some browsers at the
-      //first execution of the load callback might still have not actually loaded the img
+                              $_img.attr( 'width', _width );
+                              $_img.attr( 'height', _height );
+                        }
 
-      //jetpack's photon commpability (seems to be unneeded since jetpack 3.9.1)
-      //Honestly to me this makes no really sense but photon does it.
-      //Basically photon recalculates the image dimension and sets its
-      //width/height attribute once the image is smartloaded. Given the fact that those attributes are "needed" by the browser to assign the images a certain space so that when loaded the page doesn't "grow" it's height .. what's the point doing it so late?
-      if ( ( 'undefined' !== typeof $_img.attr('data-tcjp-recalc-dims')  ) && ( false !== $_img.attr('data-tcjp-recalc-dims') ) ) {
-        var _width  = $_img.originalWidth();
-            _height = $_img.originalHeight();
-
-        if ( 2 != _.size( _.filter( [ _width, _height ], function(num){ return _.isNumber( parseInt(num, 10) ) && num > 1; } ) ) )
-          return;
-
-        //From photon.js: Modify given image's markup so that devicepx-jetpack.js will act on the image and it won't be reprocessed by this script.
-        $_img.removeAttr( 'data-tcjp-recalc-dims scale' );
-
-        $_img.attr( 'width', _width );
-        $_img.attr( 'height', _height );
-      }
-
-      $_img.trigger('smartload');
-    });//<= create a load() fn
-    //http://stackoverflow.com/questions/1948672/how-to-tell-if-an-image-is-loaded-or-cached-in-jquery
-    if ( $_img[0].complete )
-      $_img.load();
-    $_img.parent().removeClass('smart-loading');
-  };
+                        $_img.trigger('smartload');
+                  });//<= create a load() fn
+            //http://stackoverflow.com/questions/1948672/how-to-tell-if-an-image-is-loaded-or-cached-in-jquery
+            if ( $_img[0].complete ) {
+                  $_img.load();
+            }
+            $_img.parent().removeClass('smart-loading');
+      };
 
 
-  // prevents against multiple instantiations
-  $.fn[pluginName] = function ( options ) {
-    return this.each(function () {
-        if (!$.data(this, 'plugin_' + pluginName)) {
-            $.data(this, 'plugin_' + pluginName,
-            new Plugin( this, options ));
-        }
-    });
-  };
+      // prevents against multiple instantiations
+      $.fn[pluginName] = function ( options ) {
+            return this.each(function () {
+                  if (!$.data(this, 'plugin_' + pluginName)) {
+                        $.data(this, 'plugin_' + pluginName,
+                        new Plugin( this, options ));
+                  }
+            });
+      };
 })( jQuery, window, document );
 //Target the first letter of the first element found in the wrapper
 ;(function ( $, window, document, undefined ) {
@@ -3680,6 +3681,7 @@ var czrapp = czrapp || {};
                         self.isScrolling( false );
                   }, 100 ) );
             }, 10 ) );
+
       }
   };//_methods{}
 
@@ -4163,7 +4165,7 @@ var czrapp = czrapp || {};
         //What does sidebarLife ?
         //Its job is to listen to both user actions and czrapp events and react :
         //1) toggle sidebar expansion/collapse on user click, on resize
-        //2) make sidebars stick on scroll on user scroll
+        //2) make sidebars stick on user scroll
         //3) translate vertically when czrapp sticky menu (desktop or mobile) gets animated
         //
         //For performance reasons, the scroll event is bound with a minimal and throttled ( 10 ms ) function that does extremely simple maths.
@@ -4183,6 +4185,11 @@ var czrapp = czrapp || {};
         //
         //Browser Hack : transitionning to a fixed position is not well handled by ios devices @see => https://stanko.github.io/ios-safari-scoll-position-fixed/ */
         //That's why we add the translateZ(0px) dynamically in js and statically in the css
+        //
+        // We can stickify if :
+        // the user option is checked : 'sidebar-sticky'
+        // we have a mainWrapper and a mainContent container. //$('.main', '#wrapper') && $('.main', '#wrapper').find('.content')
+        // the viewport is wider than 480px
         sidebarLife : function() {
               var self = this;
               self.sidebars = new czrapp.Values();
@@ -4231,6 +4238,8 @@ var czrapp = czrapp || {};
               //Listen to sticky menu => translate the sb vertically
               //=> we listen to animating instead of stickyMenuDown which returns a promise when animation is done, with a 350ms delay
               czrapp.ready.then( function() {
+                    if ( _.isUndefined( HUParams.isSidebarSticky ) || ! HUParams.isSidebarSticky  )
+                      return;
                     czrapp.userXP.stickyHeaderAnimating.bind( function( animating ) {
                           self.sidebars.each( function( _sb_ ) {
                                 _sb_._translateSbContent( czrapp.userXP.stickyMenuDown() );
@@ -4376,15 +4385,19 @@ var czrapp = czrapp || {};
                     //MAX COLUMN HEIGHT REACT
                     //=> refresh the stickyness state here with new maths
                     sb.maxColumnHeight.bind( function() {
-                          sb._setStickyness();
+                          if ( sb._isStickyfiable() ) {
+                                sb._setStickyness();
+                          }
                     });
 
                     /////////////////////////////////////////////////////////////////////////
                     /// BROWSER EVENTS
                     //Set the stickyness state on scroll
-                    czrapp.$_window.scroll( _.throttle( function() {
-                          sb._setStickyness();
-                    }, 10 ) );//window.scroll() throttled
+                    if ( sb._isStickyfiable() ) {
+                          czrapp.$_window.scroll( _.throttle( function() {
+                                sb._setStickyness();
+                          }, 10 ) );//window.scroll() throttled
+                    }
 
                     //RESIZE
                     //Collapse on resize
@@ -4440,6 +4453,8 @@ var czrapp = czrapp || {};
               //@param stickyness : top, between, bottom
               _stickify : function( stickyness ) {
                     var sb = this;
+                    if ( ! sb._isStickyfiable() )
+                      return;
                     stickyness = stickyness ||  sb.stickyness();
 
                     //update the max column height
@@ -4801,11 +4816,15 @@ var czrapp = czrapp || {};
                     return _.isFunction( window.matchMedia ) && matchMedia( 'only screen and (min-width: 480px) and (max-width: 1200px)' ).matches;
               },
 
-              //we can stickify if :
-              //1) we have a mainWrapper and a mainContent container. //$('.main', '#wrapper') && $('.main', '#wrapper').find('.content')
-              //2) the view port is wider than 480px
+              // We can stickify if :
+              // the user option is checked
+              // we have a mainWrapper and a mainContent container. //$('.main', '#wrapper') && $('.main', '#wrapper').find('.content')
+              // the viewport is wider than 480px
               _isStickyfiable : function() {
-                    return 1 == czrapp.$_mainWrapper.length && 1 == czrapp.$_mainContent.length && _.isFunction( window.matchMedia ) && matchMedia( 'only screen and (min-width: 480px)' ).matches;
+                    return HUParams.isSidebarSticky &&
+                    1 == czrapp.$_mainWrapper.length &&
+                    1 == czrapp.$_mainContent.length &&
+                    _.isFunction( window.matchMedia ) && matchMedia( 'only screen and (min-width: 480px)' ).matches;
               }
         },//SidebarCTOR
 

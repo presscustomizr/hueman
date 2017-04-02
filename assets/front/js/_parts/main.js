@@ -1162,6 +1162,7 @@ var czrapp = czrapp || {};
                         self.isScrolling( false );
                   }, 100 ) );
             }, 10 ) );
+
       }
   };//_methods{}
 
@@ -1645,7 +1646,7 @@ var czrapp = czrapp || {};
         //What does sidebarLife ?
         //Its job is to listen to both user actions and czrapp events and react :
         //1) toggle sidebar expansion/collapse on user click, on resize
-        //2) make sidebars stick on scroll on user scroll
+        //2) make sidebars stick on user scroll
         //3) translate vertically when czrapp sticky menu (desktop or mobile) gets animated
         //
         //For performance reasons, the scroll event is bound with a minimal and throttled ( 10 ms ) function that does extremely simple maths.
@@ -1665,6 +1666,11 @@ var czrapp = czrapp || {};
         //
         //Browser Hack : transitionning to a fixed position is not well handled by ios devices @see => https://stanko.github.io/ios-safari-scoll-position-fixed/ */
         //That's why we add the translateZ(0px) dynamically in js and statically in the css
+        //
+        // We can stickify if :
+        // the user option is checked : 'sidebar-sticky'
+        // we have a mainWrapper and a mainContent container. //$('.main', '#wrapper') && $('.main', '#wrapper').find('.content')
+        // the viewport is wider than 480px
         sidebarLife : function() {
               var self = this;
               self.sidebars = new czrapp.Values();
@@ -1713,6 +1719,8 @@ var czrapp = czrapp || {};
               //Listen to sticky menu => translate the sb vertically
               //=> we listen to animating instead of stickyMenuDown which returns a promise when animation is done, with a 350ms delay
               czrapp.ready.then( function() {
+                    if ( _.isUndefined( HUParams.isSidebarSticky ) || ! HUParams.isSidebarSticky  )
+                      return;
                     czrapp.userXP.stickyHeaderAnimating.bind( function( animating ) {
                           self.sidebars.each( function( _sb_ ) {
                                 _sb_._translateSbContent( czrapp.userXP.stickyMenuDown() );
@@ -1858,15 +1866,19 @@ var czrapp = czrapp || {};
                     //MAX COLUMN HEIGHT REACT
                     //=> refresh the stickyness state here with new maths
                     sb.maxColumnHeight.bind( function() {
-                          sb._setStickyness();
+                          if ( sb._isStickyfiable() ) {
+                                sb._setStickyness();
+                          }
                     });
 
                     /////////////////////////////////////////////////////////////////////////
                     /// BROWSER EVENTS
                     //Set the stickyness state on scroll
-                    czrapp.$_window.scroll( _.throttle( function() {
-                          sb._setStickyness();
-                    }, 10 ) );//window.scroll() throttled
+                    if ( sb._isStickyfiable() ) {
+                          czrapp.$_window.scroll( _.throttle( function() {
+                                sb._setStickyness();
+                          }, 10 ) );//window.scroll() throttled
+                    }
 
                     //RESIZE
                     //Collapse on resize
@@ -1922,6 +1934,8 @@ var czrapp = czrapp || {};
               //@param stickyness : top, between, bottom
               _stickify : function( stickyness ) {
                     var sb = this;
+                    if ( ! sb._isStickyfiable() )
+                      return;
                     stickyness = stickyness ||  sb.stickyness();
 
                     //update the max column height
@@ -2283,11 +2297,15 @@ var czrapp = czrapp || {};
                     return _.isFunction( window.matchMedia ) && matchMedia( 'only screen and (min-width: 480px) and (max-width: 1200px)' ).matches;
               },
 
-              //we can stickify if :
-              //1) we have a mainWrapper and a mainContent container. //$('.main', '#wrapper') && $('.main', '#wrapper').find('.content')
-              //2) the view port is wider than 480px
+              // We can stickify if :
+              // the user option is checked
+              // we have a mainWrapper and a mainContent container. //$('.main', '#wrapper') && $('.main', '#wrapper').find('.content')
+              // the viewport is wider than 480px
               _isStickyfiable : function() {
-                    return 1 == czrapp.$_mainWrapper.length && 1 == czrapp.$_mainContent.length && _.isFunction( window.matchMedia ) && matchMedia( 'only screen and (min-width: 480px)' ).matches;
+                    return HUParams.isSidebarSticky &&
+                    1 == czrapp.$_mainWrapper.length &&
+                    1 == czrapp.$_mainContent.length &&
+                    _.isFunction( window.matchMedia ) && matchMedia( 'only screen and (min-width: 480px)' ).matches;
               }
         },//SidebarCTOR
 
