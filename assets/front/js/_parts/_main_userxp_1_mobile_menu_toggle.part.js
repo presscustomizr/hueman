@@ -18,30 +18,33 @@ var czrapp = czrapp || {};
 
                     var $container      = $(this),
                         is_scrollable   = _.isString( $(this).attr( 'data-menu-scrollable' ) ) && "false" == $(this).attr( 'data-menu-scrollable' ) ? false : true,
-                        _id             = $container.attr( 'data-menu-id' ),
+                        _candidateId    = $container.attr( 'data-menu-id' ),
                         ctor;
 
-                    if ( self.mobileMenu.has( _id ) )
+                    if ( self.mobileMenu.has( _candidateId ) )
                       return;
 
                     var $navWrap = $container.find( '.nav-wrap' );
-                    if ( 1 != $navWrap.length ) {
-                          czrapp.errorLog( 'Mobile menu : misssing .nav-wrap for menu-id : ' + _id );
-                    }
+                    // if ( 1 != $navWrap.length ) {
+                    //       czrapp.errorLog( 'Mobile menu : misssing .nav-wrap for menu-id : ' + _candidateId );
+                    // }
                     var button_selectors = '.nav-toggle, .ham__navbar-toggler, .ham__navbar-toggler-two',
                         $button = $container.find( button_selectors );
-                    if ( 1 != $button.length ) {
-                          czrapp.errorLog( 'Mobile menu : misssing container for menu-id : ' + _id );
+                    // if ( 1 != $button.length ) {
+                    //       czrapp.errorLog( 'Mobile menu : misssing container for menu-id : ' + _candidateId );
+                    // }
+                    //A mobile menu candidate should have a wrapper an a button selector
+                    if ( 1 == $navWrap.length && 1 == $button.length ) {
+                          ctor = czrapp.Value.extend( self.MobileCTOR );
+                          //do instantiate
+                          self.mobileMenu.add( _candidateId, new ctor( _candidateId, {
+                                container : $container,
+                                menu_wrapper : $navWrap,
+                                button : $button,
+                                button_selectors : button_selectors,
+                                is_scrollable : is_scrollable
+                          }));
                     }
-                    ctor = czrapp.Value.extend( self.MobileCTOR );
-                    //do instantiate
-                    self.mobileMenu.add( _id, new ctor( _id, {
-                          container : $container,
-                          menu_wrapper : $navWrap,
-                          button : $button,
-                          button_selectors : button_selectors,
-                          is_scrollable : is_scrollable
-                    }));
               });
         },
 

@@ -7,7 +7,7 @@
   background: white;
   padding: 7%;
   text-align: center;
-  border: 3px dotted #82b965;
+  border: 3px dotted #efb93f;
   font-size: 0.875em;
 }
 .hu-placeholder-widget .zone-name {
@@ -108,8 +108,8 @@
 .widget_rss ul li cite { color: #999; }
 
 .s1 .widget_rss ul li a,
-#footer .widget_rss ul li a { color: #3b8dbd; }
-.s2 .widget_rss ul li a { color: #82b965; }
+#footer .widget_rss ul li a { color: #16cfc1; }
+.s2 .widget_rss ul li a { color: #efb93f; }
 
 /*  widget : search
 /* ------------------------------------ */
@@ -136,11 +136,11 @@
 .widget_calendar .pad { padding: 0!important; }
 
 .s1 .widget_calendar a,
-#footer .widget_calendar a { color: #3b8dbd; }
+#footer .widget_calendar a { color: #16cfc1; }
 .s1 .widget_calendar caption,
-#footer .widget_calendar caption{ background: #3b8dbd; }
-.s2 .widget_calendar a { color: #82b965; }
-.s2 .widget_calendar caption { background: #82b965; }
+#footer .widget_calendar caption{ background: #16cfc1; }
+.s2 .widget_calendar a { color: #efb93f; }
+.s2 .widget_calendar caption { background: #efb93f; }
 
 /*  custom widget : alxtabs / alxposts
 /* ------------------------------------ */
@@ -159,8 +159,8 @@
 #footer .alx-tabs-nav li a:hover { border-bottom-color: #ddd; }
 
 .s1 .alx-tabs-nav li.active a,
-#footer .alx-tabs-nav li.active a { border-bottom-color: #3b8dbd; }
-.s2 .alx-tabs-nav li.active a { border-bottom-color: #82b965; }
+#footer .alx-tabs-nav li.active a { border-bottom-color: #16cfc1; }
+.s2 .alx-tabs-nav li.active a { border-bottom-color: #efb93f; }
 
 .alx-tab li,
 .alx-posts li { font-weight: 400; line-height: 1.4em; overflow: hidden; }
@@ -203,12 +203,12 @@
 #footer .alx-posts .post-item-category a,
 #footer .alx-tab li:hover .tab-item-title a,
 #footer .alx-tab li:hover .tab-item-comment a,
-#footer .alx-posts li:hover .post-item-title a { color: #3b8dbd; }
+#footer .alx-posts li:hover .post-item-title a { color: #16cfc1; }
 .s2 .alx-tab .tab-item-category a,
 .s2 .alx-posts .post-item-category a,
 .s2 .alx-tab li:hover .tab-item-title a,
 .s2 .alx-tab li:hover .tab-item-comment a,
-.s2 .alx-posts li:hover .post-item-title a { color: #82b965; }
+.s2 .alx-posts li:hover .post-item-title a { color: #efb93f; }
 
 .alx-posts .post-item-thumbnail { margin-bottom: 10px; }
 .alx-posts .post-item-title { font-size: 1em; line-height: 1.5em; }

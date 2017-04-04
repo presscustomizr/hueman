@@ -351,7 +351,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
   .nav li a { line-height: 1.6em; display: block; padding: 8px 20px; }
   .nav li li a { padding-left: 15px; padding-right: 15px; }
   /* dropdown arrows */
-  .nav li > a:after { content: '\f0d7'; opacity: 0.5; margin-left: 6px; }
+  .nav li > a:after { content: '\f0d7'; opacity: 0.1; margin-left: 6px; }
   .nav > li > a:after { content: '\f0d7'; font-size: 14px; }
   .nav li > a:only-child:after { content: ''; }
   /* level 1 */

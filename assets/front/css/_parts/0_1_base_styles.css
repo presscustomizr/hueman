@@ -3,9 +3,9 @@
 /* ------------------------------------------------------------------------- */
 html { -webkit-font-smoothing: antialiased; /* safari font rendering issue fix */ }
 body { background: #eaeaea; font-size: 1rem; line-height: 1.5em; color: #666; font-weight: 300; }
-::selection { background: #3b8dbd; color: #fff; }
-::-moz-selection { background: #3b8dbd; color: #fff; }
-a { color: #3b8dbd; text-decoration: none; outline: 0; }
+::selection { background: #16cfc1; color: #fff; }
+::-moz-selection { background: #16cfc1; color: #fff; }
+a { color: #16cfc1; text-decoration: none; outline: 0; }
 a:hover { color: #444; }
 img { max-width: 100%; height: auto; }
 a,
@@ -141,10 +141,10 @@ input, textarea, button, select, label { font-family: inherit; }
 .themeform input[type="number"]:focus,
 .themeform select:focus,
 .themeform textarea:focus { border-color: #ccc; color: #444; -webkit-box-shadow: 0 0 3px rgba(0,0,0,0.1); box-shadow: 0 0 3px rgba(0,0,0,0.1); }
-.themeform label .required { color: #3b8dbd; }
+.themeform label .required { color: #16cfc1; }
 
 .themeform input[type="submit"],
-.themeform button[type="submit"] { background: #3b8dbd; color: #fff; padding: 8px 14px; font-weight: 600; display: inline-block; border: none; cursor: pointer; -webkit-border-radius: 3px; border-radius: 3px; }
+.themeform button[type="submit"] { background: #16cfc1; color: #fff; padding: 8px 14px; font-weight: 600; display: inline-block; border: none; cursor: pointer; -webkit-border-radius: 3px; border-radius: 3px; }
 
 /* woocommerce */
 /* secondary color for the normal buttons */
@@ -152,14 +152,14 @@ input, textarea, button, select, label { font-family: inherit; }
 .themeform .woocommerce #respond input#submit,
 .themeform .woocommerce a.button,
 .themeform .woocommerce button.button,
-.themeform .woocommerce input.button { background: #82b965; color: #fff; padding: 8px 14px; font-weight: 600; display: inline-block; border: none; cursor: pointer; -webkit-border-radius: 3px; border-radius: 3px;
+.themeform .woocommerce input.button { background: #efb93f; color: #fff; padding: 8px 14px; font-weight: 600; display: inline-block; border: none; cursor: pointer; -webkit-border-radius: 3px; border-radius: 3px;
 }
 
 /* primary color for the important buttons (Buy) */
 .themeform .woocommerce #respond input#submit.alt,
 .themeform .woocommerce a.button.alt,
 .themeform .woocommerce button.button.alt,
-.themeform .woocommerce input.button.alt { background: #3b8dbd; }
+.themeform .woocommerce input.button.alt { background: #16cfc1; }
 /* end woocommerce */
 
 /* woocommerce: background and color on hover */

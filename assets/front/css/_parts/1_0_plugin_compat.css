@@ -14,10 +14,10 @@
 .wp-pagenavi a:active,
 .wp-pagenavi span.current { color: #444; }
 
-.wp-pagenavi a { color: #3b8dbd; border: none; border-bottom: 3px solid #ddd; border-top: 1px solid #f1f1f1; }
+.wp-pagenavi a { color: #16cfc1; border: none; border-bottom: 3px solid #ddd; border-top: 1px solid #f1f1f1; }
 .wp-pagenavi a:hover,
 .wp-pagenavi a:active,
-.wp-pagenavi span.current { background: none; border: none; border-bottom: 3px solid #3b8dbd; border-top: 1px solid #f1f1f1; }
+.wp-pagenavi span.current { background: none; border: none; border-bottom: 3px solid #16cfc1; border-top: 1px solid #f1f1f1; }
 
 /*  plugin : contact form 7
 /* ------------------------------------ */

@@ -14,25 +14,24 @@
     $_has_header_img = false != $_header_img_src && ! empty( $_header_img_src );
 
     //WHEN DO WE DISPLAY THE REGULAR TOP NAV
-    //1) when is not mobile
-    //2) when is mobile and both_menus
-    $display_top_nav = ! wp_is_mobile() || ( wp_is_mobile() && 'both_menus' == $mobile_menu_opt );
-    // if ( wp_is_mobile() && 'both_menus' == $mobile_menu_opt ) {
-    //     $display_top_nav = true;
-    // }
-    //hu_has_nav_menu( 'topbar' ) || in_array( $mobile_menu_opt, array( 'top_menu', 'both_menus' )
+    //=> when there's a topbar menu assigned or when the default page menu option "default-menu-header" is checked ( not for multisite @see issue on github )
+    $top_nav_fb = apply_filters( 'hu_topbar_menu_fallback_cb', ( ! is_multisite() && hu_is_checked( "default-menu-header" ) ) ? 'hu_page_menu' : '' );
+    $display_top_nav = hu_has_nav_menu( 'topbar' ) || ! empty( $top_nav_fb );
 
-    $display_header_nav = ! wp_is_mobile() || ( wp_is_mobile() && 'both_menus' == $mobile_menu_opt );
+    //WHEN DO WE DISPLAY THE HEADER NAW ?
+    // => when there's a header menu assigned or when the fallback callback function is set ( with a filter, used in prevdem scenario typically )
+    $header_nav_fb = apply_filters( 'hu_header_menu_fallback_cb', '' );
+    $display_header_nav = hu_has_nav_menu( 'header' ) || ! empty( $header_nav_fb );
     //( ! wp_is_mobile() && hu_has_nav_menu( 'header' ) ) || in_array( $mobile_menu_opt, array( 'main_menu', 'both_menus' ) )
 
 
 ?>
 <header id="header" class="<?php echo apply_filters( 'hu_header_classes', implode(' ', array( $mobile_menu_class ) ) ); ?>">
-  <?php if ( wp_is_mobile() || ( ! wp_is_mobile() && 'both_menus' != $mobile_menu_opt ) ) : ?>
+  <?php if ( 'both_menus' != $mobile_menu_opt ) : //if both menus is the user option, we won't use the mobile navigation ?>
       <?php get_template_part('parts/header-nav-mobile'); ?>
   <?php endif; ?>
 
-  <?php if ( true == true ) : //$display_top_nav ): ?>
+  <?php if ( $display_top_nav ) : //$display_top_nav ): ?>
       <?php get_template_part( 'parts/header-nav-topbar' ); ?>
   <?php endif; ?>
 
@@ -59,7 +58,7 @@
           </div>
       <?php endif; ?>
 
-      <?php if ( true == true ) : //$display_header_nav ) : ?>
+      <?php if ( $display_header_nav ) : //$display_header_nav ) : ?>
         <?php get_template_part('parts/header-nav-main'); ?>
       <?php endif; ?>
 

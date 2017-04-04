@@ -201,14 +201,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     ------------------------------------------------------------------------------------------------------*/
     function hu_general_design_sec( $get_default = null ) {
       return array(
-          'boxed' => array(
-                'default'   => 0,
-                'control'   => 'HU_controls',
-                'label'     => __('Boxed Layout', 'hueman'),
-                'section'   => 'general_design_sec',
-                'type'      => 'checkbox',
-                'notice'    => __( 'Use a boxed layout' , 'hueman' )
-          ),
           'font' => array(
                 'default'   => 'source-sans-pro',
                 'control'   => 'HU_controls',
@@ -253,7 +245,11 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                   '30'          => __( '30px padding for widgets' , 'hueman' ),
                   '20'          => __( '20px padding for widgets' , 'hueman' ),
                 ),
-                'notice'    => __( 'Change left and right sidebars padding' , 'hueman')
+                'notice'    => __( 'Change left and right sidebars padding' , 'hueman'),
+                'ubq_section'   => array(
+                    'section' => 'sidebars_design_sec',
+                    'priority' => '50'
+                )
           ),
           'color-1' => array(
                 'default'     => hu_user_started_before_version( '3.3.8' ) ? '#3b8dbd' : '#16cfc1',
@@ -262,7 +258,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'     => 'general_design_sec',
                 'type'        =>  'color' ,
                 'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
-                'sanitize_js_callback' => 'maybe_hash_hex_color',
+                'sanitize_js_callback' => 'maybe_hash_hex_color'
                 //'transport'   => 'postMessage'
           ),
           'color-2' => array(
@@ -272,7 +268,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'     => 'general_design_sec',
                 'type'        =>  'color' ,
                 'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
-                'sanitize_js_callback' => 'maybe_hash_hex_color',
+                'sanitize_js_callback' => 'maybe_hash_hex_color'
                 //'transport'   => 'postMessage'
           ),
           'body-background' => array(
@@ -320,6 +316,14 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'type'          => 'checkbox' ,
                 'notice'    => __( 'This will be applied to the links included in post or page content only.' , 'hueman' ),
                 //'transport'     => 'postMessage'
+          ),
+          'boxed' => array(
+                'default'   => 0,
+                'control'   => 'HU_controls',
+                'label'     => __('Boxed Layout', 'hueman'),
+                'section'   => 'general_design_sec',
+                'type'      => 'checkbox',
+                'notice'    => __( 'Use a boxed layout' , 'hueman' )
           )
       );
     }
@@ -512,12 +516,16 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 )
           ),
           'default-menu-header' => array(
-                'default'   => 0,
+                'default'   => hu_user_started_before_version( '3.3.8' ) ? 0 : 1,
                 'control'   => 'HU_controls',
-                'label'     => __("Use a default page menu if no menu has been assigned.", 'hueman'),
+                'label'     => __("Topbar menu", 'hueman') . ' : ' . __("Use a default page menu if no menu has been assigned.", 'hueman'),
                 'section'   => 'header_design_sec',
                 'type'      => 'checkbox',
-                'notice'    => $header_nav_notice
+                'notice'    => $header_nav_notice,
+                'ubq_section'   => array(
+                    'section' => 'menu_locations',
+                    'priority' => '0'
+                )
           ),
           'color-topbar' => array(
                 'default'     => hu_user_started_before_version( '3.3.8' ) ? '#26272b' : '#121d30',
@@ -1025,6 +1033,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'     => __('Mobile Sidebar Content', 'hueman'),
                 'section'   => 'sidebars_design_sec',
                 'type'      => 'select',//@todo create a radio type
+                'priority'  => 100,
                 'choices' => array(
                   '1'           => __( 'Display both sidebars' , 'hueman' ),
                   's1'          => __( 'Hide primary sidebar' , 'hueman' ),

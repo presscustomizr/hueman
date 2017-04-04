@@ -11,7 +11,7 @@ var czrapp = czrapp || {};
         ------------------------------------------------------*/
         stickify : function() {
               var self = this;
-              this.menuWrapper            = false;
+              this.stickyMenuWrapper      = false;
               this.stickyMenuDown         = new czrapp.Value( '_not_set_' );
               this.stickyHeaderThreshold  = 50;
               this.currentStickySelector  = new czrapp.Value( '' );//<= will be set on init and on resize
@@ -20,25 +20,38 @@ var czrapp = czrapp || {};
 
               //// SETUP LISTENERS ////
               //react to current sticky selector
+              //will be set on init and reset on resize
               this.currentStickySelector.bind( function( to, from ) {
-                      if ( ! _.isEmpty( to ) ) {
-                            //cache the menu wrapper now
-                            self.menuWrapper = czrapp.$_header.find( to );
-                            self.hasStickyCandidate( 1 == self.menuWrapper.length );
-                            //make sure we have the transition class in any cases
-                            // + Always set the header height on dom ready
-                            //=> will prevent any wrong value being assigned if menu is expanded before scrolling
-                            czrapp.$_header.css( { 'height' : czrapp.$_header.height() }).addClass( 'fixed-header-on' );
-                      } else {
-                            czrapp.$_header.css( { 'height' : '' }).removeClass( 'fixed-header-on' );
-                            self.stickyMenuDown( false );
-                            self.menuWrapper = false;
-                            self.hasStickyCandidate( false );
-                      }
+                    var _reset = function() {
+                          czrapp.$_header.css( { 'height' : '' }).removeClass( 'fixed-header-on' );
+                          self.stickyMenuDown( false );
+                          self.stickyMenuWrapper = false;
+                          self.hasStickyCandidate( false );
+                    };
+
+                    if ( ! _.isEmpty( to ) ) {
+                          self.hasStickyCandidate( 1 == czrapp.$_header.find( to ).length );
+                          //Does this selector actually exists ?
+                          if ( ! self.hasStickyCandidate() ) {
+                                _reset();
+                          } else {
+                                //cache the menu wrapper now
+                                self.stickyMenuWrapper = czrapp.$_header.find( to );
+                                //make sure we have the transition class in any cases
+                                // + Always set the header height on dom ready
+                                //=> will prevent any wrong value being assigned if menu is expanded before scrolling
+                                czrapp.$_header.css( { 'height' : czrapp.$_header.height() }).addClass( 'fixed-header-on' );
+                          }
+                    } else {
+                          _reset();
+                    }
               });
 
-              //animate based on scroll position
+              //Animate based on scroll position.
+              //Must have a sticky candidate
               this.scrollPosition.bind( function( to, from ) {
+                    if ( ! self.hasStickyCandidate() )
+                      return;
                     //Set up only when scroll up is significant => avoid revealing the menu for minor scroll up actions on mobile devices
                     if ( Math.abs( to - from ) <= 5 )
                       return;
@@ -47,13 +60,17 @@ var czrapp = czrapp || {};
 
 
               //czrapp.bind( 'page-scrolled-top', _mayBeresetTopPosition );
-              czrapp.bind( 'scrolling-finished', function() {
+              var _maybeResetTop = function() {
                     if ( 'up' == self.scrollDirection() )
-                      self._mayBeresetTopPosition();
-              });
+                        self._mayBeresetTopPosition();
+              };
+              czrapp.bind( 'scrolling-finished', _maybeResetTop );//react on scrolling finished <=> after the timer
+              czrapp.bind( 'topbar-collapsed', _maybeResetTop );//react on topbar collapsed, @see topNavToLife
 
               //animate : make sure we don't hide the menu when too close from top
               self.stickyMenuDown.validate = function( value ) {
+                    if ( ! self.hasStickyCandidate() )
+                      return false;
                     if ( self.scrollPosition() < self.stickyHeaderThreshold && ! value ) {
                           if ( ! self.isScrolling() ) {
                                 //print a message when attempt to programmatically hide the menu
@@ -66,7 +83,7 @@ var czrapp = czrapp || {};
               };
 
               self.stickyMenuDown.bind( function( to, from, args ){
-                    if ( ! _.isBoolean( to ) ) {
+                    if ( ! _.isBoolean( to ) || ! self.hasStickyCandidate() ) {
                           return $.Deferred( function() { return this.resolve().promise(); } );
                     }
 
@@ -74,7 +91,7 @@ var czrapp = czrapp || {};
                           {
                                 direction : to ? 'down' : 'up',
                                 force : false,
-                                menu_wrapper : self.menuWrapper,
+                                menu_wrapper : self.stickyMenuWrapper,
                                 fast : false
                           },
                           args || {}
@@ -92,12 +109,18 @@ var czrapp = czrapp || {};
                     //reset the current sticky selector
                     self._setStickySelector();
 
-                    self.stickyMenuDown( self.scrollPosition() < self.stickyHeaderThreshold ,  { fast : true } ).done( function() {
-                          czrapp.$_header.css( 'height' , '' ).removeClass( 'fixed-header-on' );
-                          if ( self.hasStickyCandidate() ) {
-                                czrapp.$_header.css( 'height' , czrapp.$_header.height() ).addClass( 'fixed-header-on' );
-                          }
-                    });
+                    if ( self.hasStickyCandidate() ) {
+                          self.stickyMenuDown( self.scrollPosition() < self.stickyHeaderThreshold ,  { fast : true } ).done( function() {
+                                czrapp.$_header.css( 'height' , '' ).removeClass( 'fixed-header-on' );
+                                if ( self.hasStickyCandidate() ) {
+                                      czrapp.$_header.css( 'height' , czrapp.$_header.height() ).addClass( 'fixed-header-on' );
+                                }
+                          });
+                    } else {
+                          self.stickyMenuDown( false ).done( function() {
+                                $('#header').css( 'padding-top', '' );
+                          });
+                    }
 
                     //Adjust padding top if desktop sticky
                     if ( ! self._isMobile() ) {
@@ -119,7 +142,7 @@ var czrapp = czrapp || {};
 
               //set fixed-header-on if is desktop because menu is already set to fixed position, we want to have the animation from the start
               // + Adjust padding top if desktop sticky
-              if ( ! self._isMobile() ) {
+              if ( ! self._isMobile() && self.hasStickyCandidate() ) {
                     self._adjustDesktopTopNavPaddingTop();
               }
 
@@ -157,10 +180,10 @@ var czrapp = czrapp || {};
         //This is specific to Hueman
         _adjustDesktopTopNavPaddingTop : function() {
               var self = this;
-              if ( self._isMobile() )
-                  return;
-              if ( self.hasStickyCandidate() ) {
+              if ( ! self._isMobile() && self.hasStickyCandidate() ) {
                     $('.full-width.topbar-enabled #header').css( 'padding-top', czrapp.$_header.find( self.currentStickySelector() ).outerHeight() );
+              } else {
+                    $('#header').css( 'padding-top', '' );
               }
         },
 
@@ -170,7 +193,7 @@ var czrapp = czrapp || {};
         //Fired on each 'scrolling-finished' <=> user has not scrolled during 250 ms
         //+ 'up' == self.scrollDirection()
         _mayBeresetTopPosition : function() {
-              var  self = this, $menu_wrapper = self.menuWrapper;
+              var  self = this, $menu_wrapper = self.stickyMenuWrapper;
               //Bail if we are scrolling up
               if ( 'up' != self.scrollDirection() )
                 return;

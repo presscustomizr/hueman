@@ -25,10 +25,11 @@ var czrapp = czrapp || {};
                   if ( self.dom_ready && _.isArray( self.dom_ready ) ) {
                         czrapp.status = czrapp.status || [];
                         _.each( self.dom_ready , function( _m_ ) {
-                              if ( ! _.isFunction( self[_m_]) )
-                                return;
-
-                              try{ self[_m_](); } catch( er ){
+                              if ( ! _.isFunction( self[_m_]) ) {
+                                    czrapp.status.push( 'Method ' + _m_ + ' was not found and could not be fired on DOM ready.');
+                                    return;
+                              }
+                              try { self[_m_](); } catch( er ){
                                     czrapp.status.push( [ 'NOK', self.id + '::' + _m_, _.isString( er ) ? czrapp._truncate( er ) : er ].join( ' => ') );
                                     return;
                               }
@@ -73,14 +74,15 @@ var czrapp = czrapp || {};
                             'stickify',
                             'outline',
                             'smoothScroll',
-                            'toggleHeaderSearch',
+                            'headerSearchToLife',
                             'scrollToTop',
                             'widgetTabs',
                             'commentTabs',
                             'tableStyle',
-                            'sidebarLife',
+                            'sidebarToLife',
                             'dropdownMenu',
-                            'mobileMenu'
+                            'mobileMenu',
+                            'topNavToLife'
                       ]
                 }
       };//map

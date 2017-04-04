@@ -176,13 +176,28 @@ function hu_maybe_print_prevdem_widgets( $sidebars_widgets, $_zone_id ) {
 }
 
 /* ------------------------------------------------------------------------- *
- *  Nav Menus => show and assign the page menu to topbar
+ *  Nav Menus =>
+ *  Header : assign page menu
+ *  Topnav : show and assign the page menu to topbar
 /* ------------------------------------------------------------------------- */
-add_filter( 'hu_has_nav_menu', '__return_true' );
+add_filter( 'hu_has_nav_menu', 'hu_set_pd_menu' );
+function hu_set_pd_menu( $location ) {
+    switch( $location ) {
+        case 'footer' :
+        case 'topbar' :
+            return true;
+        break;
+        case 'header' :
+            return has_nav_menu( $location );
+        break;
+    }
+}
+add_filter( 'hu_opt_default-menu-header', '__return_true' );
 add_filter( 'hu_topbar_menu_fallback_cb', 'hu_set_topbarmenu_fallback_cb' );
 function hu_set_topbarmenu_fallback_cb() {
   return 'hu_page_menu';
 }
+
 
 
 /* ------------------------------------------------------------------------- *

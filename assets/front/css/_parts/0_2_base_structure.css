@@ -198,17 +198,17 @@ box-shadow: inset 0 -1px 0 rgba(255,255,255,0.1); }
 .s1 { width: 340px; z-index: 2; }
 .s1:hover { z-index: 98; /* social icons tooltip above header nav */ }
 .s1 .sidebar-top,
-.s1 .sidebar-toggle { background: #3b8dbd; }
+.s1 .sidebar-toggle { background: #16cfc1; }
 @media only screen and (min-width: 479px) and (max-width: 960px) {
   .s1 .sidebar-top { background: none!important; border-bottom: 1px solid #ddd; }
   .s1 .sidebar-top p { color: #666; }
-  .s1 .sidebar-top .social-links .social-tooltip { color: #666; }
+  .s1 .sidebar-top .social-links .social-tooltip { color: #666!important; }
 }
 
 /* sidebar secondary */
 .s2 { width: 260px; z-index: 1; }
 .s2 .sidebar-top,
-.s2 .sidebar-toggle { background: #82b965; }
+.s2 .sidebar-toggle { background: #efb93f; }
 @media only screen and (min-width: 479px) and (max-width: 1200px) {
   .s2 .sidebar-top { background: none!important; border-bottom: 1px solid #ddd; }
   .s2 .sidebar-top p { color: #666; }

@@ -100,12 +100,9 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
 
             <div class="about-text tc-welcome">
               <?php
-                printf( '<p>%1$s %2$s</p> <p>%3$s</p><p>%4$s. <strong>%5$s</strong></p>',
+                printf( '<p>%1$s %2$s</p> <p>%3$s. <strong>%4$s</strong></p>',
                   __( "Thank you for using the Hueman WordPress theme for your website.", 'hueman' ),
                   sprintf( __( "Hueman %s has more features, is safer and more stable than ever to help you designing an awesome webdesign.", 'hueman' ), HUEMAN_VER ),
-                  sprintf( __( "Since version 3.0+, all the options have been moved to the %s, allowing you to design your website safely and in live preview before publishing the changes. If you just upgraded from a lower version, you'll be able to find all your previous settings in the customizer." , "hueman" ),
-                    sprintf('<a href="%1$s">%2$s</a>', admin_url('customize.php'), __('customizer panel', 'hueman') )
-                  ),
                   sprintf( __( "For more informations about this new version of the theme, %s or check the changelog below", "hueman" ),
                     sprintf('<a href="%1$s" target="_blank">%2$s</a>', HU_WEBSITE . "/category/hueman-releases/", __( "read the latest release notes" , "hueman" ) )
                   ),

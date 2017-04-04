@@ -3,8 +3,8 @@
 /* ------------------------------------------------------------------------- */
 .child-menu { zoom: 1; position: relative; padding: 0 0 20px; }
 .child-menu a { color: #777; font-weight: 600; display: block; padding: 0 44px; }
-.child-menu a:hover { color: #3b8dbd; }
-.child-menu .current_page_item > a { background: #fff; color: #3b8dbd; }
+.child-menu a:hover { color: #16cfc1; }
+.child-menu .current_page_item > a { background: #fff; color: #16cfc1; }
 
 /* show only current page items */
 .child-menu > li { display: none; }

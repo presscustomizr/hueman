@@ -17,7 +17,7 @@
 .entry.woocommerce div.product .woocommerce-tabs ul.tabs li:before { content: none; }
 .entry.woocommerce div.product .woocommerce-tabs ul.tabs li a{ line-height: 1.55em; font-weight: 600; padding: 0 10px 10px; display: block; color: #aaa; border-bottom: 2px solid #eee; }
 .entry.woocommerce div.product .woocommerce-tabs ul.tabs li a:hover { color: #444; border-color: #ccc; }
-.entry.woocommerce div.product .woocommerce-tabs ul.tabs li.active a { color: #3b8dbd;  border-bottom-color: #3b8dbd; }
+.entry.woocommerce div.product .woocommerce-tabs ul.tabs li.active a { color: #16cfc1;  border-bottom-color: #16cfc1; }
 .entry.woocommerce div.product .woocommerce-tabs ul.tabs li span { background-color: #eee; padding: 0 6px; margin-left: 8px; -webkit-border-radius: 4px; border-radius: 4px; }
 .entry.woocommerce div.product .woocommerce-tabs ul.tabs li i { margin-right: 6px; }
 /* end woocommerce */
@@ -27,7 +27,7 @@
 .comment-tabs li a:hover { color: #444; border-color: #ccc; }
 .comment-tabs li span { background-color: #eee; padding: 0 6px; margin-left: 8px; -webkit-border-radius: 4px; border-radius: 4px; }
 .comment-tabs li i { margin-right: 6px; }
-.comment-tabs li.active a { color: #3b8dbd; border-bottom-color: #3b8dbd; }
+.comment-tabs li.active a { color: #16cfc1; border-bottom-color: #16cfc1; }
 
 .commentlist, .pinglist { margin-bottom: 20px; }
 .commentlist li, .pinglist li { padding-left: 60px; font-size: 0.875rem; line-height: 1.5714rem; font-weight: 400; }
@@ -44,7 +44,7 @@
 .commentlist .reply { font-size: 0.8125rem; line-height: 1.231rem; }
 .commentlist .reply a { color: #aaa; }
 .commentlist .reply a:hover { color: #444; }
-.comment-awaiting-moderation { color: #3b8dbd; font-style: normal; }
+.comment-awaiting-moderation { color: #16cfc1; font-style: normal; }
 
 /* pings */
 .pinglist li { padding-left: 0; }
@@ -58,7 +58,7 @@
 
 /* post author & admin comment */
 .commentlist li.bypostauthor > .comment-body:after,
-.commentlist li.comment-author-admin > .comment-body:after { background: #3b8dbd; display: block; position: absolute; content: "\f040"; color: #fff; line-height: 12px; width: 12px; font-style: normal; font-family: FontAwesome; text-align: center; }
+.commentlist li.comment-author-admin > .comment-body:after { background: #16cfc1; display: block; position: absolute; content: "\f040"; color: #fff; line-height: 12px; width: 12px; font-style: normal; font-family: FontAwesome; text-align: center; }
 .commentlist li.comment-author-admin > .comment-body:after { content: "\f005"; /* star for admin */ }
 .commentlist li.bypostauthor > .comment-body:after,
 .commentlist li.comment-author-admin > .comment-body:after { top: 32px; left: -28px; font-size: 10px; padding: 2px; -webkit-border-radius: 3px; border-radius: 3px; }

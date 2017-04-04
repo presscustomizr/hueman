@@ -186,13 +186,15 @@ function hu_user_started_before_version( $_ver ) {
 */
 function hu_has_nav_menu( $_location ) {
     $bool = false;
-    if ( has_nav_menu( $_location ) || ! in_array( $_location, array( 'header', 'footer') ) ) {
+    if ( has_nav_menu( $_location ) || ! in_array( $_location, array( 'topbar', 'footer') ) ) {
       $bool = has_nav_menu( $_location );
     } else {
       switch ($_location) {
         case 'footer':
-        case 'header':
-          $bool = hu_is_checked( "default-menu-{$_location}" );
+          $bool = hu_is_checked( "default-menu-footer" );
+        break;
+        case 'topbar':
+          $bool = hu_is_checked( "default-menu-header" );
         break;
       }
     }

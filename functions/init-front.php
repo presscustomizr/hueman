@@ -130,11 +130,15 @@ if ( ! function_exists( 'hu_get_layout_class' ) ) {
     // Global option
     else $layout = hu_get_option('layout-global' );
     // Return layout class
-    return apply_filters( 'hu_get_layout_class', $layout, $has_post_meta );
+    return apply_filters( 'hu_layout_class', $layout, $has_post_meta );
   }
 
 }
 
+//for retro compat
+function hu_layout_class() {
+  return hu_get_layout_class();
+}
 
 
 
