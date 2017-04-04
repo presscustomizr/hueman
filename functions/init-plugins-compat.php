@@ -201,9 +201,11 @@ function hu_set_woocommerce_compat() {
                   if ( isset($product) ) :
                     $review_enabled = get_option( 'woocommerce_enable_review_rating' ) !== 'no';
                     $review_count   = $review_enabled ? $product->get_review_count() : '';
+                    $product_id     = method_exists( $product, 'get_id' ) ? $product->get_id() : $product->id;
+                    $categories     = function_exists( 'wc_get_product_category_list' ) ? wc_get_product_category_list( $product_id, '<span>/</span>' ) : $product->get_categories( '<span>/</span>' );
           ?>
             <ul class="meta-single group">
-              <li class="category category_products"><?php echo $product->get_categories( '<span>/</span>' ); ?></li>
+              <li class="category category_products"><?php echo $categories ?></li>
               <?php if ( comments_open() && ( hu_is_checked( 'comment-count' ) ) && $review_enabled ): ?>
                 <li class="comments rewiews"><a href="#reviews" class="woocommerce-review-link" rel="nofollow"><i class="fa fa-star-o"></i><?php echo $review_count ? '<span itemprop="reviewCount" class="count">'.$review_count.'</span>' : '' ?></a></li>
               <?php endif /*comments_open*/ ?>
@@ -247,11 +249,13 @@ function hu_set_woocommerce_compat() {
     function hu_wc_reviews_tab_title( $title ) {
       if ( apply_filters( 'hu_wc_experimental_reviews_tab_title', true ) ) {
         global $product;
-        $review_count         = isset( $product ) ? $product->get_review_count() : '';
-        $review_count_search  = !empty($review_count) ? "($review_count)" : '';
-        $review_count_replace = !empty($review_count) ? "<span>$review_count</span>" : '';
+        if ( isset( $product ) ) {
+          $review_count         = isset( $product ) ? $product->get_review_count() : '';
+          $review_count_search  = !empty($review_count) ? "($review_count)" : '';
+          $review_count_replace = !empty($review_count) ? "<span>$review_count</span>" : '';
 
-        $title                = trim( str_replace($review_count_search, '', $title) ) . $review_count_replace;
+          $title                = trim( str_replace($review_count_search, '', $title) ) . $review_count_replace;
+        }
       }
       return '<i class="fa fa-star"></i>' . $title;
     }
