@@ -15,7 +15,9 @@
 	/* s2 general */
   .s2.collapsed {
     width: 50px;
-    /*position: absolute;*/
+    -webkit-box-shadow: none!important;
+    -moz-box-shadow: none!important;
+    box-shadow: none!important;
   }
 
 	/*.s2 .sidebar-content { display: none; float: left; width: 100%; }*/
@@ -86,6 +88,9 @@
 	/* s1 general */
 	.s1.collapsed {
     width: 50px;
+    -webkit-box-shadow: none!important;
+    -moz-box-shadow: none!important;
+    box-shadow: none!important;
     /*position: absolute;*/
   }
 	.s1.collapsed .sidebar-content { opacity:0; display:none; float: left; width: 100%; }

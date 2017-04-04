@@ -104,11 +104,12 @@ var czrapp = czrapp || {};
             },
 
 
-
+            //@return bool
             _isMobile : function() {
                   return ( _.isFunction( window.matchMedia ) && matchMedia( 'only screen and (max-width: 720px)' ).matches ) || ( this._isCustomizing() && 'desktop' != this.previewDevice() );
             },
 
+            //@return bool
             _isCustomizing : function() {
                   return czrapp.$_body.hasClass('is-customizing') || ( 'undefined' !== typeof wp && 'undefined' !== typeof wp.customize );
             },

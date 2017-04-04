@@ -23,15 +23,11 @@ $fallback_cb = '';
 
 switch( $mobile_menu_opt ) {
     case 'main_menu' :
-        if ( is_multisite() ) {
-            $fallback_cb = '';
-        } else {
-            $fallback_cb = hu_is_checked( "default-menu-header" ) ? 'hu_page_menu' : '';
-        }
+        $fallback_cb = apply_filters( 'hu_header_menu_fallback_cb', '' );
     break;
 
     case 'top_menu' :
-        $fallback_cb = apply_filters( 'hu_topbar_menu_fallback_cb', '' );//set to 'hu_page_menu' on prevdem
+        $fallback_cb = apply_filters( 'hu_topbar_menu_fallback_cb', ( ! is_multisite() && hu_is_checked( "default-menu-header" ) ) ? 'hu_page_menu' : '' );//set to 'hu_page_menu' on prevdem
     break;
 }
 

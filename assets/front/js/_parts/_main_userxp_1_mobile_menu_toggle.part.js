@@ -76,13 +76,16 @@ var czrapp = czrapp || {};
                     mobMenu.bind( function( state ) {
                           return $.Deferred( function() {
                                 var dfd = this;
-                                mobMenu._toggleMobileMenu()
-                                      .done( function( state ){
-                                            //remove classes that modify the appearance of the button
-                                            //=> needed for mobile devices because the focus is not automatically removed
-                                            mobMenu.button.toggleClass( 'hovering', 'expanded' == state ).toggleClass( 'focusing', 'expanded' == state );
-                                            dfd.resolve();
-                                      });
+                                //Always close the search bar before doing anything else
+                                czrapp.userXP.headerSearchExpanded( false ).done( function() {
+                                      mobMenu._toggleMobileMenu()
+                                            .done( function( state ){
+                                                  //remove classes that modify the appearance of the button
+                                                  //=> needed for mobile devices because the focus is not automatically removed
+                                                  mobMenu.button.toggleClass( 'hovering', 'expanded' == state ).toggleClass( 'focusing', 'expanded' == state );
+                                                  dfd.resolve();
+                                            });
+                                });
                           }).promise();
                     }, { deferred : true } );
 
@@ -128,6 +131,7 @@ var czrapp = czrapp || {};
               },
 
               //@return dfd promise()
+              //react on mobMenu( 'collapsed' or 'expanded' )
               _toggleMobileMenu : function()  {
                     var mobMenu = this,
                         expand = 'expanded' == mobMenu(),
@@ -142,7 +146,7 @@ var czrapp = czrapp || {};
                     $.when( mobMenu.menu_wrapper.toggleClass( 'expanded', expand ) ).done( function() {
                           var $navWrap = $(this);
                           $navWrap.find('.nav').stop()[ ! expand ? 'slideUp' : 'slideDown' ]( {
-                                duration : 350,
+                                duration : 300,
                                 complete : function() {
                                       //makes it scrollable ( currently true for all menu but the footer )
                                       //scrollable is set in the DOM with data-menu-scrollable
