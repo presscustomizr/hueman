@@ -32,7 +32,7 @@ var czrapp = czrapp || {};
         //That's why we add the translateZ(0px) dynamically in js and statically in the css
         //
         // We can stickify if :
-        // the user option is checked : 'sidebar-sticky'
+        // the user option is checked : 'desktop-sticky-sb'
         // we have a mainWrapper and a mainContent container. //$('.main', '#wrapper') && $('.main', '#wrapper').find('.content')
         // the viewport is wider than 480px
         //
@@ -85,9 +85,9 @@ var czrapp = czrapp || {};
               //Listen to sticky menu => translate the sb vertically
               //=> we listen to animating instead of stickyMenuDown which returns a promise when animation is done, with a 350ms delay
               czrapp.ready.then( function() {
-                    if ( _.isUndefined( HUParams.isSidebarSticky ) || ! HUParams.isSidebarSticky  )
-                      return;
                     czrapp.userXP.stickyHeaderAnimating.bind( function( animating ) {
+                          if ( ! self._isStickyOptionOn() )
+                              return;
                           self.sidebars.each( function( _sb_ ) {
                                 _sb_._translateSbContent( czrapp.userXP.stickyMenuDown() );
                           });
@@ -128,7 +128,7 @@ var czrapp = czrapp || {};
                     //store the animation state
                     sb.animating = new czrapp.Value( false );
                     //store the styckifiability : updated on resize
-                    //=> depends of HUParams.isSidebarSticky, existence of content wrapper, and media width should be > 480px
+                    //=> depends of self._isStickyOptionOn(), existence of content wrapper, and media width should be > 480px
                     sb.isStickyfiable = new czrapp.Value( sb._isStickyfiable() );
                     //store the max column height
                     //=> will be updated on dom ready (now), resize, stickify, sidebar expansion
@@ -252,7 +252,7 @@ var czrapp = czrapp || {};
                     /// SCROLL
                     //Set the stickyness state on scroll
                     //=> only if the user option is checked to not add another scroll listener for nothing
-                    if ( HUParams.isSidebarSticky ) {
+                    if ( czrapp.userXP._isStickyOptionOn() ) {
                           czrapp.$_window.scroll( _.throttle( function() {
                                 if ( sb.isStickyfiable() ) {
                                       sb._setStickyness();
@@ -510,27 +510,27 @@ var czrapp = czrapp || {};
 
 
                                 //PUSH THE CONTENT ON THE LEFT OR ON THE RIGHT
-                                ( function() {
-                                      return $.Deferred( function() {
-                                            var _dfd = this,
-                                                _pushDirection = -1 == sb.position.indexOf( 'right' ) ? 'right' : 'left';
-                                            //Make sure the content column looks good when pushed left or right
-                                            czrapp.$_mainContent.css({ width: expanded ? 'calc( 100% - ' + ( Math.abs( _transX ) - 1 ) + 'px )' : ''} );
-                                            czrapp.$_mainContent.css( 'padding-' + _pushDirection , expanded ? ( Math.abs( _transX ) - 1 ) : '' );
-                                            _.delay( function() {
-                                                  _dfd.resolve();
-                                            }, 350 );//transition: transform, .35s ease;
-                                      }).promise();
-                                } )().done( function() {
-                                      //update the max column height
-                                      sb.maxColumnHeight( sb._getMaxColumnHeight() );
+                                // ( function() {
+                                //       return $.Deferred( function() {
+                                //             var _dfd = this,
+                                //                 _pushDirection = -1 == sb.position.indexOf( 'right' ) ? 'right' : 'left';
+                                //             //Make sure the content column looks good when pushed left or right
+                                //             czrapp.$_mainContent.css({ width: expanded ? 'calc( 100% - ' + ( Math.abs( _transX ) - 1 ) + 'px )' : ''} );
+                                //             czrapp.$_mainContent.css( 'padding-' + _pushDirection , expanded ? ( Math.abs( _transX ) - 1 ) : '' );
+                                //             _.delay( function() {
+                                //                   _dfd.resolve();
+                                //             }, 350 );//transition: transform, .35s ease;
+                                //       }).promise();
+                                // } )().done( function() {
+                                //       //update the max column height
+                                //       sb.maxColumnHeight( sb._getMaxColumnHeight() );
 
-                                      //adjust offset top if expanded when sticky and close to bottom:
-                                      if ( sb.isStickyfiable() ) {
-                                            sb._setStickyness();
-                                      }
-                                      _dfd_.resolve();
-                                });
+                                //       //adjust offset top if expanded when sticky and close to bottom:
+                                //       if ( sb.isStickyfiable() ) {
+                                //             sb._setStickyness();
+                                //       }
+                                //       _dfd_.resolve();
+                                // });
                           });
                     }).promise();
               },//toggleSidebar
@@ -713,12 +713,25 @@ var czrapp = czrapp || {};
               // the viewport is wider than 480px
               // @return bool
               _isStickyfiable : function() {
-                    return HUParams.isSidebarSticky &&
+                    return czrapp.userXP._isStickyOptionOn() &&
                     1 == czrapp.$_mainWrapper.length &&
                     1 == czrapp.$_mainContent.length &&
                     _.isFunction( window.matchMedia ) && matchMedia( 'only screen and (min-width: 480px)' ).matches;
               }
         },//SidebarCTOR
+
+
+        //@return bool
+        //HUParams.sbStickyUserSettings = { desktop : bool, mobile : bool }
+        _isStickyOptionOn : function() {
+              var _dbOpt;
+              if ( HUParams.sbStickyUserSettings && _.isObject( HUParams.sbStickyUserSettings ) ) {
+                    _dbOpt = _.extend( { desktop : false, mobile : false }, HUParams.sbStickyUserSettings );
+                    return czrapp.userXP._isMobile() ? ( _dbOpt.mobile || false ) : ( _dbOpt.desktop || false );
+              } else {
+                    return false;
+              }
+        }
 
   };//_methods{}
 

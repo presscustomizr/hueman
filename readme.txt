@@ -73,11 +73,11 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 # Changelog
-= 3.3.8 March 21st 2017 =
-* fixed : don't wrap logo in h1 tag
+= 3.3.8 April 5th 2017 =
 * fixed : home layout not applied if static home page choosen
 * fixed : prevdem mode should be turned off when user starts customizing
 * fixed : user defined WP core settings like show_on_front should be preserved if customizing in prevdem mode
+* fixed : don't wrap logo in h1 tag
 * added match Media polyfill
 * updated the parallax jquery plugin => added a matchMedia option set to 'only screen and (max-width: 768px)' by default
 * added tmpl parts/header-nav-main.php
@@ -89,6 +89,7 @@ See headers of files for further details.
 * added : utility hu_print_mobile_btn() used to render the mobile buttons in the header
 * added : animated mobile menu button
 * added : mobile menu style customizer option
+* removed : dynamic style option. Dynamic style is now applied for each option as soon as the user change the option to a value different than default.
 
 = 3.3.7 March 8th 2017 =
 * fixed : drag resize image inserted into visual editor #415 

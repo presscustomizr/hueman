@@ -59,7 +59,6 @@ if ( ! class_exists( 'HU_utils' ) ) :
     function hu_init_properties() {
       //all theme options start by "hu_" by convention
       //$this -> hu_options_prefixes = apply_filters('hu_options_prefixes', array('hu_') );
-
       $this -> is_customizing   = hu_is_customizing();
       $this -> db_options       = false === get_option( HU_THEME_OPTIONS ) ? array() : (array)get_option( HU_THEME_OPTIONS );
       $this -> default_options  = $this -> hu_get_default_options();
@@ -68,12 +67,14 @@ if ( ! class_exists( 'HU_utils' ) ) :
       //What was the theme version when the user started to use Hueman?
       //new install = no options yet
       //very high duration transient, this transient could actually be an option but as per the wordpress.org themes guidelines, only one option is allowed for the theme settings
-      if ( 1 >= count( $this -> db_options ) || ! esc_attr( get_transient( $_trans ) ) ) {
-        set_transient(
-          $_trans,
-          sprintf('%s|%s' , 1 >= count( $this -> db_options ) ? 'with' : 'before', HUEMAN_VER ),
-          60*60*24*3650
-        );
+      if ( ! hu_isprevdem() ) {
+            if ( ! esc_attr( get_transient( $_trans ) ) ) {
+                set_transient(
+                    $_trans,
+                    sprintf('%s|%s' , count( $this -> db_options ) >= 1 ? 'before' : 'with' , HUEMAN_VER ),
+                    60*60*24*3650
+                );
+            }
       }
     }
 

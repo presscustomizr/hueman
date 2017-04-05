@@ -148,33 +148,33 @@ function hu_checked( $val ) {
 *
 */
 function hu_user_started_before_version( $_ver ) {
-    if ( ! get_transient( 'started_using_hueman' ) )
-      return false;
-
     $_trans = 'started_using_hueman';
-
-    if ( ! $_ver )
+    //the transient is set in HU_utils::hu_init_properties()
+    if ( ! get_transient( $_trans ) )
       return false;
 
-    $_start_version_infos = explode('|', esc_attr( get_transient( $_trans ) ) );
+    if ( ! is_string( $_ver ) )
+      return false;
+
+    $_start_version_infos = explode( '|', esc_attr( get_transient( $_trans ) ) );
 
     if ( ! is_array( $_start_version_infos ) )
       return false;
 
     switch ( $_start_version_infos[0] ) {
-      //in this case we know exactly what was the starting version (most common case)
-      case 'with':
-        return version_compare( $_start_version_infos[1] , $_ver, '<' );
-      break;
-      //here the user started to use the theme before, we don't know when.
-      //but this was actually before this check was created
-      case 'before':
-        return true;
-      break;
+        //in this case we know exactly what was the starting version (most common case)
+        case 'with':
+            return version_compare( $_start_version_infos[1] , $_ver, '<' );
+        break;
+        //here the user started to use the theme before, we don't know when.
+        //but this was actually before this check was created
+        case 'before':
+            return true;
+        break;
 
-      default :
-        return false;
-      break;
+        default :
+            return false;
+        break;
     }
 }
 
@@ -431,4 +431,14 @@ function hu_the_post_thumbnail( $size = 'post-thumbnail', $attr = '', $placehold
     }
 
     echo apply_filters( 'hu_post_thumbnail_html', $html, $size, $attr );
+}
+
+/**
+ * adds sanitization callback funtion : colors
+ */
+function hu_sanitize_hex_color( $color ) {
+  if ( $unhashed = sanitize_hex_color_no_hash( $color ) )
+    return '#' . $unhashed;
+
+  return $color;
 }

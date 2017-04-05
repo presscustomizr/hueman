@@ -479,8 +479,8 @@ if (!Array.prototype.map) {
     * @return boolean
     */
     Plugin.prototype._is_selector_allowed = function( requested_sel_type ) {
-      if ( czrapp )
-        return czrapp.isSelectorAllowed( this.$_el, this.options.skipSelectors, requested_sel_type);
+      if ( czrapp && czrapp.userXP && czrapp.userXP.isSelectorAllowed )
+        return czrapp.userXP.isSelectorAllowed( this.$_el, this.options.skipSelectors, requested_sel_type);
 
       var sel_type = 'ids' == requested_sel_type ? 'id' : 'class',
           _selsToSkip   = this.options.skipSelectors[requested_sel_type];
@@ -3470,11 +3470,12 @@ var czrapp = czrapp || {};
             },
 
 
-
+            //@return bool
             _isMobile : function() {
                   return ( _.isFunction( window.matchMedia ) && matchMedia( 'only screen and (max-width: 720px)' ).matches ) || ( this._isCustomizing() && 'desktop' != this.previewDevice() );
             },
 
+            //@return bool
             _isCustomizing : function() {
                   return czrapp.$_body.hasClass('is-customizing') || ( 'undefined' !== typeof wp && 'undefined' !== typeof wp.customize );
             },
@@ -3766,13 +3767,16 @@ var czrapp = czrapp || {};
                     mobMenu.bind( function( state ) {
                           return $.Deferred( function() {
                                 var dfd = this;
-                                mobMenu._toggleMobileMenu()
-                                      .done( function( state ){
-                                            //remove classes that modify the appearance of the button
-                                            //=> needed for mobile devices because the focus is not automatically removed
-                                            mobMenu.button.toggleClass( 'hovering', 'expanded' == state ).toggleClass( 'focusing', 'expanded' == state );
-                                            dfd.resolve();
-                                      });
+                                //Always close the search bar before doing anything else
+                                czrapp.userXP.headerSearchExpanded( false ).done( function() {
+                                      mobMenu._toggleMobileMenu()
+                                            .done( function( state ){
+                                                  //remove classes that modify the appearance of the button
+                                                  //=> needed for mobile devices because the focus is not automatically removed
+                                                  mobMenu.button.toggleClass( 'hovering', 'expanded' == state ).toggleClass( 'focusing', 'expanded' == state );
+                                                  dfd.resolve();
+                                            });
+                                });
                           }).promise();
                     }, { deferred : true } );
 
@@ -3818,6 +3822,7 @@ var czrapp = czrapp || {};
               },
 
               //@return dfd promise()
+              //react on mobMenu( 'collapsed' or 'expanded' )
               _toggleMobileMenu : function()  {
                     var mobMenu = this,
                         expand = 'expanded' == mobMenu(),
@@ -3832,7 +3837,7 @@ var czrapp = czrapp || {};
                     $.when( mobMenu.menu_wrapper.toggleClass( 'expanded', expand ) ).done( function() {
                           var $navWrap = $(this);
                           $navWrap.find('.nav').stop()[ ! expand ? 'slideUp' : 'slideDown' ]( {
-                                duration : 350,
+                                duration : 300,
                                 complete : function() {
                                       //makes it scrollable ( currently true for all menu but the footer )
                                       //scrollable is set in the DOM with data-menu-scrollable
@@ -4213,7 +4218,7 @@ var czrapp = czrapp || {};
         //That's why we add the translateZ(0px) dynamically in js and statically in the css
         //
         // We can stickify if :
-        // the user option is checked : 'sidebar-sticky'
+        // the user option is checked : 'desktop-sticky-sb'
         // we have a mainWrapper and a mainContent container. //$('.main', '#wrapper') && $('.main', '#wrapper').find('.content')
         // the viewport is wider than 480px
         //
@@ -4266,9 +4271,9 @@ var czrapp = czrapp || {};
               //Listen to sticky menu => translate the sb vertically
               //=> we listen to animating instead of stickyMenuDown which returns a promise when animation is done, with a 350ms delay
               czrapp.ready.then( function() {
-                    if ( _.isUndefined( HUParams.isSidebarSticky ) || ! HUParams.isSidebarSticky  )
-                      return;
                     czrapp.userXP.stickyHeaderAnimating.bind( function( animating ) {
+                          if ( ! self._isStickyOptionOn() )
+                              return;
                           self.sidebars.each( function( _sb_ ) {
                                 _sb_._translateSbContent( czrapp.userXP.stickyMenuDown() );
                           });
@@ -4309,7 +4314,7 @@ var czrapp = czrapp || {};
                     //store the animation state
                     sb.animating = new czrapp.Value( false );
                     //store the styckifiability : updated on resize
-                    //=> depends of HUParams.isSidebarSticky, existence of content wrapper, and media width should be > 480px
+                    //=> depends of self._isStickyOptionOn(), existence of content wrapper, and media width should be > 480px
                     sb.isStickyfiable = new czrapp.Value( sb._isStickyfiable() );
                     //store the max column height
                     //=> will be updated on dom ready (now), resize, stickify, sidebar expansion
@@ -4433,7 +4438,7 @@ var czrapp = czrapp || {};
                     /// SCROLL
                     //Set the stickyness state on scroll
                     //=> only if the user option is checked to not add another scroll listener for nothing
-                    if ( HUParams.isSidebarSticky ) {
+                    if ( czrapp.userXP._isStickyOptionOn() ) {
                           czrapp.$_window.scroll( _.throttle( function() {
                                 if ( sb.isStickyfiable() ) {
                                       sb._setStickyness();
@@ -4691,27 +4696,27 @@ var czrapp = czrapp || {};
 
 
                                 //PUSH THE CONTENT ON THE LEFT OR ON THE RIGHT
-                                ( function() {
-                                      return $.Deferred( function() {
-                                            var _dfd = this,
-                                                _pushDirection = -1 == sb.position.indexOf( 'right' ) ? 'right' : 'left';
-                                            //Make sure the content column looks good when pushed left or right
-                                            czrapp.$_mainContent.css({ width: expanded ? 'calc( 100% - ' + ( Math.abs( _transX ) - 1 ) + 'px )' : ''} );
-                                            czrapp.$_mainContent.css( 'padding-' + _pushDirection , expanded ? ( Math.abs( _transX ) - 1 ) : '' );
-                                            _.delay( function() {
-                                                  _dfd.resolve();
-                                            }, 350 );//transition: transform, .35s ease;
-                                      }).promise();
-                                } )().done( function() {
-                                      //update the max column height
-                                      sb.maxColumnHeight( sb._getMaxColumnHeight() );
+                                // ( function() {
+                                //       return $.Deferred( function() {
+                                //             var _dfd = this,
+                                //                 _pushDirection = -1 == sb.position.indexOf( 'right' ) ? 'right' : 'left';
+                                //             //Make sure the content column looks good when pushed left or right
+                                //             czrapp.$_mainContent.css({ width: expanded ? 'calc( 100% - ' + ( Math.abs( _transX ) - 1 ) + 'px )' : ''} );
+                                //             czrapp.$_mainContent.css( 'padding-' + _pushDirection , expanded ? ( Math.abs( _transX ) - 1 ) : '' );
+                                //             _.delay( function() {
+                                //                   _dfd.resolve();
+                                //             }, 350 );//transition: transform, .35s ease;
+                                //       }).promise();
+                                // } )().done( function() {
+                                //       //update the max column height
+                                //       sb.maxColumnHeight( sb._getMaxColumnHeight() );
 
-                                      //adjust offset top if expanded when sticky and close to bottom:
-                                      if ( sb.isStickyfiable() ) {
-                                            sb._setStickyness();
-                                      }
-                                      _dfd_.resolve();
-                                });
+                                //       //adjust offset top if expanded when sticky and close to bottom:
+                                //       if ( sb.isStickyfiable() ) {
+                                //             sb._setStickyness();
+                                //       }
+                                //       _dfd_.resolve();
+                                // });
                           });
                     }).promise();
               },//toggleSidebar
@@ -4894,12 +4899,25 @@ var czrapp = czrapp || {};
               // the viewport is wider than 480px
               // @return bool
               _isStickyfiable : function() {
-                    return HUParams.isSidebarSticky &&
+                    return czrapp.userXP._isStickyOptionOn() &&
                     1 == czrapp.$_mainWrapper.length &&
                     1 == czrapp.$_mainContent.length &&
                     _.isFunction( window.matchMedia ) && matchMedia( 'only screen and (min-width: 480px)' ).matches;
               }
         },//SidebarCTOR
+
+
+        //@return bool
+        //HUParams.sbStickyUserSettings = { desktop : bool, mobile : bool }
+        _isStickyOptionOn : function() {
+              var _dbOpt;
+              if ( HUParams.sbStickyUserSettings && _.isObject( HUParams.sbStickyUserSettings ) ) {
+                    _dbOpt = _.extend( { desktop : false, mobile : false }, HUParams.sbStickyUserSettings );
+                    return czrapp.userXP._isMobile() ? ( _dbOpt.mobile || false ) : ( _dbOpt.desktop || false );
+              } else {
+                    return false;
+              }
+        }
 
   };//_methods{}
 
@@ -4939,9 +4957,10 @@ var czrapp = czrapp || {};
                 return;
 
               //Shall we reveal the toggle arrow ?
+              // If not mobile :
               //=> on init, on resize and each time the menu is expanded remotely by the app
               var _mayBeToggleArrow = function( force ) {
-                    $( _sel, $topbar ).css( { display : ( $topbarNavWrap.height() > 60 || force ) ? 'inline-block' : '' } );
+                    $( _sel, $topbar ).css( { display : ( ( $topbarNavWrap.height() > 60 || force ) && ! czrapp.userXP._isMobile() ) ? 'inline-block' : '' } );
               };
 
               //reveal arrow on init, on resize
@@ -4968,7 +4987,8 @@ var czrapp = czrapp || {};
                                       $( _sel, $topbar ).find('i[data-toggle="' + ( exp ? 'down' : 'up' ) + '"]').css( { opacity : 0 });
 
                                       $topbar.css({
-                                            'height' : exp ? _expandHeight + 'px' : '50px'
+                                            height : exp ? _expandHeight + 'px' : '50px',
+                                            overflow : exp ? 'visible' : ''
                                       });
                                       _.delay( function() {
                                             $( _sel, $topbar ).find('i[data-toggle="' + ( exp ? 'down' : 'up' ) + '"]').css( { display :'none' });
@@ -5067,6 +5087,13 @@ var czrapp = czrapp || {};
               czrapp.userXP.windowWidth.bind( function() {
                     self.headerSearchExpanded( false );
               });
+
+              //collapse on menu animation
+              if ( czrapp.userXP.stickyHeaderAnimating ) {
+                    czrapp.userXP.stickyHeaderAnimating.bind( function( animating ) {
+                          self.headerSearchExpanded( false );
+                    });
+              }
         },//toggleHeaderSearch
 
 
@@ -5136,41 +5163,53 @@ var czrapp = czrapp || {};
         /* ------------------------------------ */
         dropdownMenu : function() {
               var self = this,
-                  $topbar = $('#nav-topbar.desktop-sticky');
+                  $topbar = $('#nav-topbar.desktop-sticky'),
+                  _isHoveringInTopBar = false;
 
+              //We the topnav is collapsed, some menu items may be hidden because of the fixed height and overflow hidden
+              //let's expand the topnav if not already manually expanded by the user.
+              //As long as we are hovering, it won't collapse.
+              //After 1 second without hovering in, it will collapse
+              $('#nav-topbar.desktop-sticky').hover(
+                    function() {
+                          if ( czrapp.userXP.topNavExpanded() || czrapp.userXP._isMobile() )
+                            return;
+                          _isHoveringInTopBar = true;
+                          $topbar.css( {
+                                overflow : 'visible',
+                                height : 1 == $topbar.find('.nav-wrap').length ? $topbar.find('.nav-wrap').height() : 'auto'
+                          });
+                    },
+                    function() {
+                          if ( czrapp.userXP.topNavExpanded() || czrapp.userXP._isMobile() )
+                            return;
+                          _isHoveringInTopBar = false;
+                          _.delay( function() {
+                                if ( _isHoveringInTopBar )
+                                  return;
+                                if ( ! czrapp.userXP.topNavExpanded() && ! czrapp.userXP.headerSearchExpanded() ) {
+                                      $topbar.css( { overflow : '', height : '' } );
+                                      //after height animation, we might be on top here, so let's trigger this event, listened to by the sticky menu to ajust padding top
+                                      _.delay( function() {
+                                            czrapp.trigger('topbar-collapsed');
+                                      }, 400 );
+                                }
+                          }, 1000 );
+                    }
+              );
               $('.nav ul.sub-menu').hide();
               $('.nav li').hover(
                     function() {
-                          var _isTopBarMenu = 1 == $(this).parents('.desktop-sticky').length && 'nav-topbar' == $(this).parents('.desktop-sticky').attr('id'),
-                              _hasChildren = $(this).children('ul.sub-menu').length >= 1,
-                              $el = $(this);
-                          if ( _isTopBarMenu && _hasChildren ) {
-                                if ( ! czrapp.userXP.topNavExpanded() ) {
-                                      $.when( $topbar.css( {
-                                            overflow : 'visible',
-                                            height : 1 == $topbar.find('.nav-wrap').length ? $topbar.find('.nav-wrap').height() : 'auto'
-                                      }) ).done( function() {
-                                            $el.children('ul.sub-menu').stop().slideDown('fast');
-                                      });
-                                      $el.children('ul.sub-menu').stop().slideDown('fast');
-                                } else {
-                                      $.when( $topbar.css( { overflow : 'visible' } ) ).done( function() {
-                                            $el.children('ul.sub-menu').stop().slideDown('fast');
-                                      });
-                                }
-                          } else {
-                                $el.children('ul.sub-menu').stop().slideDown('fast');
-                          }
+                          if ( czrapp.userXP._isMobile() )
+                            return;
+                          $(this).children('ul.sub-menu').stop().slideDown('fast').css( 'opacity', 1 );
                     },
                     function() {
-                          $(this).children('ul.sub-menu').stop().slideUp( {
+                          if ( czrapp.userXP._isMobile() )
+                            return;
+                          $(this).children('ul.sub-menu').stop().css( 'opacity', '' ).slideUp( {
                                 duration : 'fast',
                                 complete : function() {
-                                      if ( ! czrapp.userXP.topNavExpanded() ) {
-                                            $topbar.css( { overflow : '', height : '' } );
-                                      } else {
-                                            $topbar.css( { overflow : '' } );
-                                      }
                                       $(this).hide();
                                 }
                           });

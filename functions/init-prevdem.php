@@ -3,6 +3,50 @@
  *  This file is loaded when hu_isprevdem() === true
 /* ------------------------------------------------------------------------- */
 /* ------------------------------------------------------------------------- *
+ *  Smart Loading
+/* ------------------------------------------------------------------------- */
+add_filter( 'hu_opt_smart_load_img', '__return_true' );
+
+/* ------------------------------------------------------------------------- *
+ *  Colors
+/* ------------------------------------------------------------------------- */
+add_action( 'wp', 'hu_set_color_filters');
+function hu_set_color_filters() {
+    $colors = array(
+        'color-topbar',
+        'color-header',
+        'color-header-menu',
+        'color-mobile-menu',
+        'color-1',
+        'color-2'
+    );
+    foreach ( $colors as $opt ) {
+        add_filter( "hu_opt_{$opt}", 'hu_set_color' );
+    }
+}
+
+function hu_set_color( $color ) {
+    switch ( current_filter() ) {
+        case 'hu_opt_color-topbar':
+          return '#121d30';//since v3.3.8
+          break;
+        case 'hu_opt_color-header':
+        case 'hu_opt_color-header-menu':
+        case 'hu_opt_color-mobile-menu':
+          return '#454e5c';//since v3.3.8
+          break;
+        case 'hu_opt_color-1':
+          return '#16cfc1';//since v3.3.8
+          break;
+        case 'hu_opt_color-2':
+          return '#efb93f';//since v3.3.8
+          break;
+    }
+    return $color;
+}
+
+
+/* ------------------------------------------------------------------------- *
  *  Footer Widgets
 /* ------------------------------------------------------------------------- */
 //print demo widgets in the footer

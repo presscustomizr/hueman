@@ -7,7 +7,7 @@
 /* ------------------------------------ */
 if ( ! function_exists( 'hu_hex2rgb' ) ) {
 
-  function hu_hex2rgb( $hex, $array=false ) {
+  function hu_hex2rgb( $hex, $array = false ) {
     $hex = str_replace("#", "", $hex);
 
     if ( strlen($hex) == 3 ) {
@@ -99,14 +99,14 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
 
 
       // primary color
-      $prim_color = hu_get_option('color-1');
+      $prim_color = hu_sanitize_hex_color( hu_get_option('color-1') );
       //$def_prim_col = hu_user_started_before_version( '3.3.8' ) ? '#3b8dbd' : '#16cfc1';
       if ( $prim_color != '#16cfc1' ) {
           $styles = array_merge( $styles, hu_get_primary_color_style() );
       }
 
 
-      $second_color = hu_get_option('color-2');
+      $second_color = hu_sanitize_hex_color( hu_get_option('color-2') );
       //$def_second_col = hu_user_started_before_version( '3.3.8' ) ? '#82b965' : '#efb93f';
       // secondary color
       if ( $second_color != '#efb93f' ) {
@@ -115,11 +115,12 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
 
 
       // topbar color
-      $tb_color = hu_get_option('color-topbar');
+      $tb_color = hu_sanitize_hex_color( hu_get_option('color-topbar') );
       //$def_tb_col = hu_user_started_before_version( '3.3.8' ) ? '#26272b' : '#121d30';
       if ( $tb_color != '#121d30' ) {
+        $tb_color_rgba = 'rgba(' . hu_hex2rgb( $tb_color ) . ',0.8)';
         $styles[] = '.search-expand,
-#nav-topbar.nav-container, .topbar-toggle-down { background-color: '.$tb_color.'; }
+#nav-topbar.nav-container { background-color: '.$tb_color.'; background-color: '.$tb_color_rgba.' }
 @media only screen and (min-width: 720px) {
   #nav-topbar .nav ul { background-color: '.$tb_color.'; }
 }
@@ -128,7 +129,7 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
 
 
       // header color
-      $h_color = hu_get_option('color-header');
+      $h_color = hu_sanitize_hex_color( hu_get_option('color-header') );
       //$def_h_col = hu_user_started_before_version( '3.3.8' ) ? '#33363b' : '#454e5c';
       if ( $h_color != '#454e5c' ) {
         $styles[] = '#header { background-color: '.$h_color.'; }
@@ -139,8 +140,15 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
       }
 
 
+      // Mobile menu color
+      $mm_color = hu_sanitize_hex_color( hu_get_option('color-mobile-menu') );
+      if ( $mm_color != '#454e5c' ) {
+        $styles[] = '#header .nav-container.mobile-sticky { background-color: '.$mm_color.'; }';
+      }
+
+
       // header menu color
-      $hm_color = hu_get_option('color-header-menu');
+      $hm_color = hu_sanitize_hex_color( hu_get_option('color-header-menu') );
       //$def_hm_col = hu_user_started_before_version( '3.3.8' ) ? '#33363b' : '#454e5c';
       if ( $hm_color != '#454e5c' ) {
         $styles[] = '#nav-header.nav-container { background-color: '.$hm_color.'; }
@@ -152,7 +160,7 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
 
 
       // footer color
-      if ( hu_get_option('color-footer') != '#33363b' ) {
+      if ( hu_sanitize_hex_color( hu_get_option('color-footer') ) != '#33363b' ) {
         $styles[] = '#footer-bottom { background-color: '.hu_get_option('color-footer').'; }';
       }
 

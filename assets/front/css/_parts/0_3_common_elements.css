@@ -351,8 +351,8 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
   .nav li a { line-height: 1.6em; display: block; padding: 8px 20px; }
   .nav li li a { padding-left: 15px; padding-right: 15px; }
   /* dropdown arrows */
-  .nav li > a:after { content: '\f0d7'; opacity: 0.1; margin-left: 6px; }
-  .nav > li > a:after { content: '\f0d7'; font-size: 14px; }
+  .nav li > a:after { content: '\f0d7'; opacity: 0.1; margin-left: 6px; font-size: 0.6rem; }
+  .nav > li > a:after { content: '\f0d7'; font-size: 0.6rem; }
   .nav li > a:only-child:after { content: ''; }
   /* level 1 */
   .nav > li { font-size: 0.9375em; }
@@ -362,7 +362,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
   .nav li.current-post-parent > a { color: #fff; }
   /* level 2 & 3 */
   .nav ul { display: block!important; margin-left: 40px; }
-  .nav ul li { font-size: 0.8125rem; font-weight: 300; }
+  .nav ul li { font-size: 0.85rem; font-weight: 300; }
   .nav ul li a { padding-top: 6px; padding-bottom: 6px; }
 
 }

@@ -261,7 +261,7 @@ if ( ! function_exists( 'hu_print_social_links' ) ) {
     if ( empty( $_social_items ) ) {
         if ( hu_is_customizing() ) {
             printf( '<ul class="social-links"><li style="font-size:0.9em;color:white"><span><i>%1$s</i></span></li></ul>',
-                __('You can set your social links here from the live customizer')
+                __('You can set your social links here from the live customizer', 'hueman')
             );
         }
         return;
@@ -354,7 +354,7 @@ if ( ! function_exists( 'hu_print_logo_or_title' ) ) {
 if ( ! function_exists( 'hu_do_render_logo_site_tite' ) ) {
     function hu_do_render_logo_site_tite( $logo_or_title = null, $echo = true ) {
         //typically, logo_or_title is not provided when partially refreshed from the customizer
-        if ( is_null( $logo_or_title ) ) {
+        if ( is_null( $logo_or_title ) || hu_is_ajax() ) {
             // Text or image?
             // Since v3.2.4, uses the WP 'custom_logo' theme mod option. Set with a filter.
             if ( false != hu_get_img_src_from_option( 'custom-logo' ) && apply_filters( 'hu_display_header_logo', hu_is_checked('display-header-logo') ) ) {
@@ -891,8 +891,8 @@ if ( ! function_exists( 'hu_scripts' ) ) {
               )),
               'goldenRatio'         => apply_filters( 'hu_grid_golden_ratio' , 1.618 ),
               'gridGoldenRatioLimit' => apply_filters( 'hu_grid_golden_ratio_limit' , 350),
-              'isSidebarSticky' => hu_is_checked('sidebar-sticky'),
-              'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('TC_DEV') && true === TC_DEV )
+              'sbStickyUserSettings' => array( 'desktop' => hu_is_checked('desktop-sticky-sb'), 'mobile' => hu_is_checked('mobile-sticky-sb') ),
+              'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('CZR_DEV') && true === CZR_DEV )
             )
         )//end of filter
        );

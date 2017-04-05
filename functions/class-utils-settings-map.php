@@ -534,8 +534,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'     => 'header_design_sec',
                 'type'        =>  'color' ,
                 'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
-                'sanitize_js_callback' => 'maybe_hash_hex_color',
-                'transport'   => 'postMessage'
+                'sanitize_js_callback' => 'maybe_hash_hex_color'
+                //'transport'   => 'postMessage'
           ),
           'color-header' => array(
                 'default'     => hu_user_started_before_version( '3.3.8' ) ? '#33363b' : '#454e5c',
@@ -557,8 +557,18 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'sanitize_js_callback' => 'maybe_hash_hex_color',
                 'transport'   => 'postMessage'
           ),
+          'color-mobile-menu' => array(
+                'default'     => hu_user_started_before_version( '3.3.8' ) ? '#33363b' : '#454e5c',
+                'control'     => 'WP_Customize_Color_Control',
+                'label'       => __( 'Mobile Menu Background' , 'hueman' ),
+                'section'     => 'header_design_sec',
+                'type'        =>  'color' ,
+                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
+                'sanitize_js_callback' => 'maybe_hash_hex_color',
+                //'transport'   => 'postMessage'
+          ),
           'header_mobile_menu_layout' => array(
-                'default'   => 'main_menu',
+                'default'   => hu_user_started_before_version( '3.3.8' ) ? 'main_menu' : 'top_menu',
                 'control'   => 'HU_controls',
                 'label'     => __( 'Select the menu(s) to use for mobile devices', 'hueman'),
                 'section'   => 'header_design_sec',
@@ -566,7 +576,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'choices'   => array(
                     'main_menu' => __('Header Menu', 'hueman'),
                     'top_menu'  => __('Topbar Menu', 'hueman'),
-                    'both_menus' => __( 'Topbar and header menus, logo centered')
+                    'both_menus' => __( 'Topbar and header menus, logo centered', 'hueman')
                 ),
                 'notice'    => sprintf( '%1$s %2$s',
                     __( 'When your visitors are using a smartphone or a tablet, menus are revealed on click on the hamburger button.' , 'hueman' ),
@@ -655,7 +665,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                                    CONTENT LAYOUT SECTION
     ------------------------------------------------------------------------------------------------------*/
     function hu_content_layout_sec() {
-      $layout_text = __('Columns layout for');
+      $layout_text = __('Columns layout for', 'hueman');
       return array(
           'layout-global' => array(
                 'default'   => 'col-3cm',
@@ -1019,13 +1029,21 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'type'      => 'checkbox',
                 'notice'    => __('Display boxes at the top of the sidebars' , 'hueman')
           ),
-          'sidebar-sticky' => array(
+          'desktop-sticky-sb' => array(
                 'default'   => 1,
                 'control'   => 'HU_controls',
-                'label'     => __('Make sidebars sticky on scroll', 'hueman'),
+                'label'     => sprintf( '%1$s : %2$s', __('Desktop devices', 'hueman' ) , __('make sidebars sticky on scroll', 'hueman') ),
                 'section'   => 'sidebars_design_sec',
                 'type'      => 'checkbox',
                 'notice'    => __("Glues your website's sidebars on top of the page, making them permanently visible when scrolling up and down. Useful when a sidebar is too tall or too short compared to the rest of the content." , 'hueman')
+          ),
+          'mobile-sticky-sb' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => sprintf( '%1$s : %2$s', __('Mobile devices', 'hueman' ) , __('make sidebars sticky on scroll', 'hueman') ),
+                'section'   => 'sidebars_design_sec',
+                'type'      => 'checkbox',
+                //'notice'    => __("Glues your website's sidebars on top of the page, making them permanently visible when scrolling up and down. Useful when a sidebar is too tall or too short compared to the rest of the content." , 'hueman')
           ),
           'mobile-sidebar-hide' => array(
                 'default'   => '1',
