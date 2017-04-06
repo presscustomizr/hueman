@@ -442,3 +442,18 @@ function hu_sanitize_hex_color( $color ) {
 
   return $color;
 }
+
+//@return bool
+//WHEN DO WE DISPLAY THE REGULAR TOP NAV ?
+//=> when there's a topbar menu assigned or when the default page menu option "default-menu-header" is checked ( not for multisite @see issue on github )
+function hu_is_topbar_displayed() {
+  $top_nav_fb = apply_filters( 'hu_topbar_menu_fallback_cb', ( ! is_multisite() && hu_is_checked( "default-menu-header" ) ) ? 'hu_page_menu' : '' );
+  return hu_has_nav_menu( 'topbar' ) || ! empty( $top_nav_fb );
+}
+
+//WHEN DO WE DISPLAY THE HEADER NAV ?
+// => when there's a header menu assigned or when the fallback callback function is set ( with a filter, used in prevdem scenario typically )
+function hu_is_header_nav_displayed() {
+  $header_nav_fb = apply_filters( 'hu_header_menu_fallback_cb', '' );
+  return hu_has_nav_menu( 'header' ) || ! empty( $header_nav_fb );
+}

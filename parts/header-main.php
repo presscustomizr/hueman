@@ -15,23 +15,27 @@
 
     //WHEN DO WE DISPLAY THE REGULAR TOP NAV
     //=> when there's a topbar menu assigned or when the default page menu option "default-menu-header" is checked ( not for multisite @see issue on github )
-    $top_nav_fb = apply_filters( 'hu_topbar_menu_fallback_cb', ( ! is_multisite() && hu_is_checked( "default-menu-header" ) ) ? 'hu_page_menu' : '' );
-    $display_top_nav = hu_has_nav_menu( 'topbar' ) || ! empty( $top_nav_fb );
+    //@see hu_is_topbar_displayed() in init-functions.php
 
-    //WHEN DO WE DISPLAY THE HEADER NAW ?
+    //WHEN DO WE DISPLAY THE HEADER NAV ?
     // => when there's a header menu assigned or when the fallback callback function is set ( with a filter, used in prevdem scenario typically )
-    $header_nav_fb = apply_filters( 'hu_header_menu_fallback_cb', '' );
-    $display_header_nav = hu_has_nav_menu( 'header' ) || ! empty( $header_nav_fb );
+    //@see hu_is_header_nav_displayed() in init-functions.php
     //( ! wp_is_mobile() && hu_has_nav_menu( 'header' ) ) || in_array( $mobile_menu_opt, array( 'main_menu', 'both_menus' ) )
 
+    //HEADER CSS CLASSES
+    $header_classes = array(
+        $mobile_menu_class,
+        hu_is_checked( 'header-ads-desktop' ) ? 'header-ads-desktop' : '',
+        hu_is_checked( 'header-ads-mobile' ) ? 'header-ads-mobile' : ''
+    );
 
 ?>
-<header id="header" class="<?php echo apply_filters( 'hu_header_classes', implode(' ', array( $mobile_menu_class ) ) ); ?>">
+<header id="header" class="<?php echo apply_filters( 'hu_header_classes', implode(' ', $header_classes ) ); ?>">
   <?php if ( 'both_menus' != $mobile_menu_opt ) : //if both menus is the user option, we won't use the mobile navigation ?>
       <?php get_template_part('parts/header-nav-mobile'); ?>
   <?php endif; ?>
 
-  <?php if ( $display_top_nav ) : //$display_top_nav ): ?>
+  <?php if ( hu_is_topbar_displayed() ) : ?>
       <?php get_template_part( 'parts/header-nav-topbar' ); ?>
   <?php endif; ?>
 
@@ -42,13 +46,17 @@
       <?php if ( ! $_has_header_img || ! hu_is_checked( 'use-header-image' ) ) : ?>
 
               <div class="group pad central-header-zone">
-                <?php hu_print_logo_or_title();//gets the logo or the site title ?>
-                <?php if ( hu_is_checked('site-description') ): ?><p class="site-description"><?php hu_render_blog_description() ?></p><?php endif; ?>
+                <div class="logo-tagline-group">
+                    <?php hu_print_logo_or_title();//gets the logo or the site title ?>
+                    <?php if ( hu_is_checked('site-description') ) : ?>
+                        <p class="site-description"><?php hu_render_blog_description() ?></p>
+                    <?php endif; ?>
+                </div>
 
-                <?php if ( hu_is_checked('header-ads') && ! wp_is_mobile() ) : ?>
-                  <div id="header-widgets">
-                    <?php hu_print_widgets_in_location( 'header-ads' ); ?>
-                  </div><!--/#header-ads-->
+                <?php if ( hu_is_checked('header-ads') ) : ?>
+                    <div id="header-widgets">
+                        <?php hu_print_widgets_in_location( 'header-ads' ); ?>
+                    </div><!--/#header-ads-->
                 <?php endif; ?>
               </div>
 
@@ -58,8 +66,8 @@
           </div>
       <?php endif; ?>
 
-      <?php if ( $display_header_nav ) : //$display_header_nav ) : ?>
-        <?php get_template_part('parts/header-nav-main'); ?>
+      <?php if ( hu_is_header_nav_displayed() ) : ?>
+          <?php get_template_part('parts/header-nav-main'); ?>
       <?php endif; ?>
 
     </div><!--/.container-inner-->

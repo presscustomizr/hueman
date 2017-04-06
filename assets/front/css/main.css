@@ -994,7 +994,8 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 .site-description { font-size: 1em; font-style: italic; color: #fff; color: rgba(255,255,255,0.5); float: left; margin-left: 20px; line-height: 60px; padding: 10px 0; }
 .site-image { display: block; margin: 0 auto; max-height: 400px; }
 
-#header-widgets { float: right; }
+/* Header Widget Zone Common */
+#header-widgets{ display: none;}
 /*#header-widgets h3 { display: none; }*/
 #header-widgets img { display: block; }
 
@@ -1078,10 +1079,16 @@ box-shadow: inset 1px 0 0 rgba(255,255,255,0.06); }
 
 @media only screen and (min-width: 720px) {
   /* fixed nav */
-  .full-width.topbar-enabled #header { padding-top: 50px; }
-/*  .full-width #nav-topbar.nav-container { position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 999; max-height: 50px; overflow: hidden;}*/
+  /*  .full-width #nav-topbar.nav-container { position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 999; max-height: 50px; overflow: hidden;}*/
+
+  /*.full-width.topbar-enabled #header { padding-top: 50px; }
   .full-width #nav-topbar.nav-container { position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 999;}
-  .full-width.admin-bar #nav-topbar.nav-container { top: 32px;  }
+  .full-width.admin-bar #nav-topbar.nav-container { top: 32px;  }*/
+
+  /*.header-desktop-sticky.topbar-enabled #header { padding-top: 50px; }
+  .header-desktop-sticky #nav-topbar.nav-container { position: fixed; top: 0; left: 0; right: 0; z-index: 999;}
+  .header-desktop-sticky.admin-bar #nav-topbar.nav-container { top: 32px;  }
+  .full-width #nav-topbar.nav-container { width : 100%;}*/
 
   /* common */
   #nav-topbar .nav {  }
@@ -1116,7 +1123,12 @@ box-shadow: inset 1px 0 0 rgba(255,255,255,0.06); }
     -o-transition: opacity 0.3s ease-in-out;
     transition: opacity 0.3s ease-in-out;
   }
+
+  /* HEADER WIDGET ZONE*/
+  .header-ads-desktop #header-widgets { float: right; display: block; }
 }
+
+
 @media only screen and (max-width: 719px) {
   #header { z-index : 9999 }
   /* common */
@@ -1128,6 +1140,13 @@ box-shadow: inset 1px 0 0 rgba(255,255,255,0.06); }
   #nav-topbar .nav li.current-menu-item > a,
   #nav-topbar .nav li.current-post-parent > a { background: rgba(0,0,0,0.15); color: #fff; }
 
+  /* HEADER WIDGET ZONE*/
+  .header-ads-mobile #header-widgets { float:none; display: block; text-align: center; top: 50px; position: relative;}
+  .both-menus-mobile-on.header-ads-mobile #header-widgets{ top: 0;}
+
+  /* LOGO AND TAGLINE GROUP */
+  #header .logo-tagline-group{display: none;}
+  #header.both-menus-mobile-on .logo-tagline-group{display: block;}
 }
 
 
@@ -1175,8 +1194,8 @@ box-shadow: inset 1px 0 0 rgba(255,255,255,0.06); }
     transform: translateY(-50%);
     position: absolute;
   }
-  .central-header-zone { display: none;}
-  .both-menus-mobile-on .central-header-zone { display: block;}
+/*  .central-header-zone { display: none;}
+  .both-menus-mobile-on .central-header-zone { display: block;}*/
 
 /*  #nav-topbar { display: none;}
   .top-menu-mobile-on #nav-topbar { display: block;  }
@@ -1240,14 +1259,14 @@ box-shadow: inset 1px 0 0 rgba(255,255,255,0.05), -1px 0 0 rgba(0,0,0,0.2); }
   }
 }
 @media only screen and (min-width: 720px) {
-  .fixed-header-on .desktop-sticky {
-    position: fixed;
-    width: 100%;
-    /*-webkit-transition: -webkit-transform 0.35s ease-in-out,background-color 0.4s ease-in-out;
-    -moz-transition: -moz-transform 0.35s ease-in-out,background-color 0.4s ease-in-out;
-    -o-transition: -o-transform 0.35s ease-in-out,background-color 0.4s ease-in-out;
-    transition: -webkit-transform 0.35s ease-in-out,-moz-transform 0.35s ease-in-out,-o-transform 0.35s ease-in-out,transform 0.35s ease-in-out,background-color 0.4s ease-in-out;*/
-  }
+  .header-desktop-sticky.topbar-enabled #header { padding-top: 50px; }
+  .header-desktop-sticky #nav-topbar.nav-container { position: fixed; z-index: 999; top: 0;}
+  .header-desktop-sticky.admin-bar #nav-topbar.nav-container { top: 32px;  }
+
+  .full-width #nav-topbar.nav-container { width : 100%; top: 0; left: 0; right: 0; }
+  .fixed-header-on .desktop-sticky { position: fixed; }
+  .full-width .fixed-header-on .desktop-sticky { width: 100%; }
+  .boxed .fixed-header-on .desktop-sticky { width: 1380px; }
   .fixed-header-on .topbar-toggle-down {
     -webkit-transition:background-color 0.4s ease-in-out;
     -moz-transition: background-color 0.4s ease-in-out;

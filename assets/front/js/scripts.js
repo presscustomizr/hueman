@@ -4026,15 +4026,21 @@ var czrapp = czrapp || {};
         _setStickySelector : function() {
               var self = this,
                   stickyCandidatesMap = {
-                        'only screen and (max-width: 719px)' : 'mobile-sticky',
-                        'only screen and (min-width: 720px)' : 'desktop-sticky'
+                        'only screen and (max-width: 719px)' : {
+                              selector : 'mobile-sticky',
+                              isOn : HUParams.sbStickyUserSettings && HUParams.menuStickyUserSettings.mobile
+                        },
+                        'only screen and (min-width: 720px)' : {
+                              selector : 'desktop-sticky',
+                              isOn : HUParams.sbStickyUserSettings && HUParams.menuStickyUserSettings.desktop
+                        },
                   },
                   _match_ = false;
 
               // self.currentStickySelector = self.currentStickySelector || new czrapp.Value('');
-              _.each( stickyCandidatesMap, function( _selector, _layout ) {
-                    if ( _.isFunction( window.matchMedia ) && matchMedia( _layout ).matches ) {
-                          _match_ = [ '.nav-container', _selector ].join('.');
+              _.each( stickyCandidatesMap, function( _params, _layout ) {
+                    if ( _.isFunction( window.matchMedia ) && matchMedia( _layout ).matches && _params.isOn ) {
+                          _match_ = [ '.nav-container', _params.selector ].join('.');
                     }
               });
               self.currentStickySelector( _match_ );
@@ -4962,10 +4968,18 @@ var czrapp = czrapp || {};
               var _mayBeToggleArrow = function( force ) {
                     $( _sel, $topbar ).css( { display : ( ( $topbarNavWrap.height() > 60 || force ) && ! czrapp.userXP._isMobile() ) ? 'inline-block' : '' } );
               };
+              var _updateMaxWidth = function() {
+                    $topbar.css( { 'max-width' : czrapp.$_window.width() } );
+              };
 
               //reveal arrow on init, on resize
+              //update max width on init, on resize
               _mayBeToggleArrow();
+              _updateMaxWidth();
               czrapp.userXP.windowWidth.bind( function() {
+                    //always update the max-width on resize
+                    _updateMaxWidth();
+                    //always update the toglle arraow on resize
                     _mayBeToggleArrow();
                     czrapp.userXP.topNavExpanded( false );
               });

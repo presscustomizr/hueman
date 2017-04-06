@@ -82,12 +82,18 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
       //sprintf('@media only screen and (min-width: 720px) { .nav > li { font-size:%1$srem; } }', $remsize );
 
       // container width
-      if ( hu_get_option('container-width') != '1380' ) {
+      $container_width = hu_get_option('container-width');
+      if ( $container_width != '1380' ) {
           if ( hu_is_checked( 'boxed' ) ) {
-              $styles[] = '.boxed #wrapper, .container-inner { max-width: '.hu_get_option('container-width').'px; }';
+              $styles[] = '.boxed #wrapper, .container-inner { max-width: '.$container_width.'px; }';
+              $styles[] = '@media only screen and (min-width: 720px) {
+                .boxed .fixed-header-on .desktop-sticky {
+                  width: ' . $container_width .'px;
+                }
+              }';
           }
           else {
-              $styles[] = '.container-inner { max-width: '.hu_get_option('container-width').'px; }';
+              $styles[] = '.container-inner { max-width: '.$container_width.'px; }';
           }
       }
 

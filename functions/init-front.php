@@ -692,6 +692,8 @@ if ( ! function_exists( 'hu_body_class' ) ) {
     if ( hu_get_option( 'mobile-sidebar-hide' ) == 's2' ) { $classes[] = 'mobile-sidebar-hide-s2'; }
     if ( hu_get_option( 'mobile-sidebar-hide' ) == 's1-s2' ) { $classes[] = 'mobile-sidebar-hide'; }
     if ( wp_is_mobile() ) { $classes[] = 'wp-is-mobile'; };
+    if ( hu_is_checked( 'header-desktop-sticky' ) ) { $classes[] = 'header-desktop-sticky'; }
+    if ( hu_is_checked( 'header-mobile-sticky' ) ) { $classes[] = 'header-mobile-sticky'; }
     return $classes;
   }
 }
@@ -892,6 +894,7 @@ if ( ! function_exists( 'hu_scripts' ) ) {
               'goldenRatio'         => apply_filters( 'hu_grid_golden_ratio' , 1.618 ),
               'gridGoldenRatioLimit' => apply_filters( 'hu_grid_golden_ratio_limit' , 350),
               'sbStickyUserSettings' => array( 'desktop' => hu_is_checked('desktop-sticky-sb'), 'mobile' => hu_is_checked('mobile-sticky-sb') ),
+              'menuStickyUserSettings' => array( 'desktop' => hu_is_checked('header-desktop-sticky'), 'mobile' => hu_is_checked('header-mobile-sticky') ),
               'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('CZR_DEV') && true === CZR_DEV )
             )
         )//end of filter

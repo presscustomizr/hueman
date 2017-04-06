@@ -237,8 +237,9 @@ function hu_set_pd_menu( $location ) {
     }
 }
 add_filter( 'hu_opt_default-menu-header', '__return_true' );
-add_filter( 'hu_topbar_menu_fallback_cb', 'hu_set_topbarmenu_fallback_cb' );
-function hu_set_topbarmenu_fallback_cb() {
+add_filter( 'hu_mobile_menu_fallback_cb', 'hu_set_fb_page_menu');
+add_filter( 'hu_topbar_menu_fallback_cb', 'hu_set_fb_page_menu' );
+function hu_set_fb_page_menu() {
   return 'hu_page_menu';
 }
 

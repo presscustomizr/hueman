@@ -162,15 +162,21 @@ var czrapp = czrapp || {};
         _setStickySelector : function() {
               var self = this,
                   stickyCandidatesMap = {
-                        'only screen and (max-width: 719px)' : 'mobile-sticky',
-                        'only screen and (min-width: 720px)' : 'desktop-sticky'
+                        'only screen and (max-width: 719px)' : {
+                              selector : 'mobile-sticky',
+                              isOn : HUParams.sbStickyUserSettings && HUParams.menuStickyUserSettings.mobile
+                        },
+                        'only screen and (min-width: 720px)' : {
+                              selector : 'desktop-sticky',
+                              isOn : HUParams.sbStickyUserSettings && HUParams.menuStickyUserSettings.desktop
+                        },
                   },
                   _match_ = false;
 
               // self.currentStickySelector = self.currentStickySelector || new czrapp.Value('');
-              _.each( stickyCandidatesMap, function( _selector, _layout ) {
-                    if ( _.isFunction( window.matchMedia ) && matchMedia( _layout ).matches ) {
-                          _match_ = [ '.nav-container', _selector ].join('.');
+              _.each( stickyCandidatesMap, function( _params, _layout ) {
+                    if ( _.isFunction( window.matchMedia ) && matchMedia( _layout ).matches && _params.isOn ) {
+                          _match_ = [ '.nav-container', _params.selector ].join('.');
                     }
               });
               self.currentStickySelector( _match_ );

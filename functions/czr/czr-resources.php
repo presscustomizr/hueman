@@ -439,6 +439,16 @@ function hu_extend_ctrl_dependencies() {
                         visibility : function ( to ) {
                               return _is_checked( to );
                         }
+                  },
+                  {
+                        dominus : 'header-ads',
+                        servi : [
+                              'header-ads-desktop',
+                              'header-ads-mobile'
+                        ],
+                        visibility : function ( to ) {
+                              return _is_checked(to);
+                        }
                   }
             ]//dominiDeps {}
       );//_.extend()

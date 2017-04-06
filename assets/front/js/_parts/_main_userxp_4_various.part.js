@@ -36,10 +36,18 @@ var czrapp = czrapp || {};
               var _mayBeToggleArrow = function( force ) {
                     $( _sel, $topbar ).css( { display : ( ( $topbarNavWrap.height() > 60 || force ) && ! czrapp.userXP._isMobile() ) ? 'inline-block' : '' } );
               };
+              var _updateMaxWidth = function() {
+                    $topbar.css( { 'max-width' : czrapp.$_window.width() } );
+              };
 
               //reveal arrow on init, on resize
+              //update max width on init, on resize
               _mayBeToggleArrow();
+              _updateMaxWidth();
               czrapp.userXP.windowWidth.bind( function() {
+                    //always update the max-width on resize
+                    _updateMaxWidth();
+                    //always update the toglle arraow on resize
                     _mayBeToggleArrow();
                     czrapp.userXP.topNavExpanded( false );
               });

@@ -107,6 +107,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         'hu_header_design_sec',
         'hu_header_image_sec',
         'hu_header_widget_sec',
+        'hu_header_menus_sec',
 
         //CONTENT
         //'hu_content_home_sec',
@@ -485,23 +486,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                                    HEADER DESIGN SECTION
     ------------------------------------------------------------------------------------------------------*/
     function hu_header_design_sec() {
-      $nav_section_desc = "<br/>" . sprintf( __("You can create menus and set their locations %s." , "hueman"),
-          sprintf( '%1$s<strong><a class="jump-to-menu-panel" href="#" title="%3$s">%2$s</a><strong>',
-              sprintf( '<script type="text/javascript">%1$s</script>',
-                  "jQuery( function($) {
-                      $('.jump-to-menu-panel').click( function() {
-                          wp.customize.section('menu_locations').expanded( false );
-                          wp.customize.panel('nav_menus').focus();
-                      });
-                  });"
-              ),// "javascript:wp.customize.panel('nav_menus').focus();"
-              __("in the menu panel" , "hueman"),
-              __("create/edit menus", "hueman")
-          )
-      );
-
-      $header_nav_notice =  sprintf( '%1$s %2$s', __( 'The Hueman theme supports up to two menu locations in your header.', 'hueman' ), $nav_section_desc );
-
       return array(
           'site-description' => array(
                 'default'   => 1,
@@ -513,18 +497,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'ubq_section'   => array(
                     'section' => 'title_tagline',
                     'priority' => '15'
-                )
-          ),
-          'default-menu-header' => array(
-                'default'   => hu_user_started_before_version( '3.3.8' ) ? 0 : 1,
-                'control'   => 'HU_controls',
-                'label'     => __("Topbar menu", 'hueman') . ' : ' . __("Use a default page menu if no menu has been assigned.", 'hueman'),
-                'section'   => 'header_design_sec',
-                'type'      => 'checkbox',
-                'notice'    => $header_nav_notice,
-                'ubq_section'   => array(
-                    'section' => 'menu_locations',
-                    'priority' => '0'
                 )
           ),
           'color-topbar' => array(
@@ -566,41 +538,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
                 'sanitize_js_callback' => 'maybe_hash_hex_color',
                 //'transport'   => 'postMessage'
-          ),
-          'header_mobile_menu_layout' => array(
-                'default'   => hu_user_started_before_version( '3.3.8' ) ? 'main_menu' : 'top_menu',
-                'control'   => 'HU_controls',
-                'label'     => __( 'Select the menu(s) to use for mobile devices', 'hueman'),
-                'section'   => 'header_design_sec',
-                'type'      => 'select',
-                'choices'   => array(
-                    'main_menu' => __('Header Menu', 'hueman'),
-                    'top_menu'  => __('Topbar Menu', 'hueman'),
-                    'both_menus' => __( 'Topbar and header menus, logo centered', 'hueman')
-                ),
-                'notice'    => sprintf( '%1$s %2$s',
-                    __( 'When your visitors are using a smartphone or a tablet, menus are revealed on click on the hamburger button.' , 'hueman' ),
-                    $nav_section_desc
-                ),
-                'ubq_section'   => array(
-                    'section' => 'menu_locations',
-                    'priority' => '100'
-                )
-          ),
-          'header_mobile_btn' => array(
-                'default'   => 'animated',
-                'control'   => 'HU_controls',
-                'label'     => __( 'Style of the mobile menu button', 'hueman'),
-                'section'   => 'header_design_sec',
-                'type'      => 'select',
-                'choices'   => array(
-                    'animated' => __('Animated', 'hueman'),
-                    'simple'  => __('Simple', 'hueman'),
-                ),
-                'ubq_section'   => array(
-                    'section' => 'menu_locations',
-                    'priority' => '110'
-                )
           )
         );
     }
@@ -633,6 +570,118 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'header_widget_sec',
                 'type'      => 'checkbox',
                 'notice'    => __( 'Header widget area, perfect to insert advertisements. Note : this feature is not available when a header image is being displayed.' , 'hueman')
+          ),
+          'header-ads-desktop' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __("Display the header widget zone on desktop devices", 'hueman'),
+                'section'   => 'header_widget_sec',
+                'type'      => 'checkbox',
+                'notice'    => __( 'This will display your widget zone on devices with a width greater than 720 pixels : laptops and desktops.' , 'hueman')
+          ),
+          'header-ads-mobile' => array(
+                'default'   => 0,
+                'control'   => 'HU_controls',
+                'label'     => __("Display the header widget zone on mobile devices", 'hueman'),
+                'section'   => 'header_widget_sec',
+                'type'      => 'checkbox',
+                'notice'    => __( 'This will display your widget zone on devices with a width smaller than 720 pixels : tablets, smartphones.' , 'hueman')
+          )
+
+      );
+    }
+
+
+    /*-----------------------------------------------------------------------------------------------------
+                                   Advertisement Widget SECTION
+    ------------------------------------------------------------------------------------------------------*/
+    function hu_header_menus_sec() {
+      $nav_section_desc = "<br/>" . sprintf( __("You can create menus and set their locations %s." , "hueman"),
+          sprintf( '%1$s<strong><a class="jump-to-menu-panel" href="#" title="%3$s">%2$s</a><strong>',
+              sprintf( '<script type="text/javascript">%1$s</script>',
+                  "jQuery( function($) {
+                      $('.jump-to-menu-panel').click( function() {
+                          wp.customize.section('menu_locations').expanded( false );
+                          wp.customize.panel('nav_menus').focus();
+                      });
+                  });"
+              ),// "javascript:wp.customize.panel('nav_menus').focus();"
+              __("in the menu panel" , "hueman"),
+              __("create/edit menus", "hueman")
+          )
+      );
+
+      $header_nav_notice =  sprintf( '%1$s %2$s', __( 'The Hueman theme supports up to two menu locations in your header.', 'hueman' ), $nav_section_desc );
+      return array(
+          'default-menu-header' => array(
+                'default'   => hu_user_started_before_version( '3.3.8' ) ? 0 : 1,
+                'control'   => 'HU_controls',
+                'label'     => __("Topbar menu", 'hueman') . ' : ' . __("Use a default page menu if no menu has been assigned.", 'hueman'),
+                'section'   => 'header_menus_sec',
+                'type'      => 'checkbox',
+                'notice'    => $header_nav_notice,
+                'ubq_section'   => array(
+                    'section' => 'menu_locations',
+                    'priority' => '90'
+                )
+          ),
+          'header-desktop-sticky' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => sprintf( '%1$s : %2$s', __('Desktop devices', 'hueman' ) , __('make the top menu stick to the top on scroll', 'hueman') ),
+                'section'   => 'header_menus_sec',
+                'type'      => 'checkbox',
+                'ubq_section'   => array(
+                    'section' => 'menu_locations',
+                    'priority' => '120'
+                )
+          ),
+
+          'header-mobile-sticky' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => sprintf( '%1$s : %2$s', __('Mobile devices', 'hueman' ) , __('make the mobile menu stick to the top on scroll', 'hueman') ),
+                'section'   => 'header_menus_sec',
+                'type'      => 'checkbox',
+                'ubq_section'   => array(
+                    'section' => 'menu_locations',
+                    'priority' => '130'
+                )
+          ),
+          'header_mobile_menu_layout' => array(
+                'default'   => hu_user_started_before_version( '3.3.8' ) ? 'main_menu' : 'top_menu',
+                'control'   => 'HU_controls',
+                'label'     => __( 'Select the menu(s) to use for mobile devices', 'hueman'),
+                'section'   => 'header_menus_sec',
+                'type'      => 'select',
+                'choices'   => array(
+                    'main_menu' => __('Header Menu', 'hueman'),
+                    'top_menu'  => __('Topbar Menu', 'hueman'),
+                    'both_menus' => __( 'Topbar and header menus, logo centered', 'hueman')
+                ),
+                'notice'    => sprintf( '%1$s %2$s',
+                    __( 'When your visitors are using a smartphone or a tablet, the header becomes a top bar, where menu(s) are revealed when clicking on the hamburger button. This option let you choose which menu(s) will be displayed.' , 'hueman' ),
+                    $nav_section_desc
+                ),
+                'ubq_section'   => array(
+                    'section' => 'menu_locations',
+                    'priority' => '100'
+                )
+          ),
+          'header_mobile_btn' => array(
+                'default'   => 'animated',
+                'control'   => 'HU_controls',
+                'label'     => __( 'Style of the mobile menu button', 'hueman'),
+                'section'   => 'header_menus_sec',
+                'type'      => 'select',
+                'choices'   => array(
+                    'animated' => __('Animated', 'hueman'),
+                    'simple'  => __('Simple', 'hueman'),
+                ),
+                'ubq_section'   => array(
+                    'section' => 'menu_locations',
+                    'priority' => '110'
+                )
           )
       );
     }
@@ -1328,7 +1377,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         -> PANEL : HEADER
         ----------------------------------------------------------------------------------------------*/
         'header_design_sec'         => array(
-              'title'    => __( "Header Design : colors, mobile settings", 'hueman' ),
+              'title'    => __( "Header Design : colors and others", 'hueman' ),
               'priority' => 10,
               'panel'   => 'hu-header-panel'
         ),
@@ -1340,6 +1389,11 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         'header_widget_sec'         => array(
               'title'    => __( 'Header Advertisement Widget', 'hueman' ),
               'priority' => 20,
+              'panel'   => 'hu-header-panel'
+        ),
+        'header_menus_sec'          => array(
+              'title'    => __( 'Header Menus : mobile settings, scroll behaviour', 'hueman' ),
+              'priority' => 40,
               'panel'   => 'hu-header-panel'
         ),
 
