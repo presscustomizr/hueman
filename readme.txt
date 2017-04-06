@@ -1,4 +1,4 @@
-# Hueman v3.3.8
+# Hueman v3.3.9
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > Hueman is a mobile friendly WordPress theme for blogs, magazines and business websites. It's been designed to beautifully display pictures and text content, and engineered to be easy to use and fast. The Hueman theme helps you attract and retain more visitors, that's why it's already used by 70K+ active websites in the world and has received hundreds of five stars ratings.
@@ -73,6 +73,16 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 # Changelog
+= 3.3.9 April 6th 2017 =
+* fixed : update flexslider to the latest version #427
+* fixed : topbar width when global layout is boxed
+* fixed : the topbar menu should be the page menu if not set in preview demo mode
+* added : a new section header menus in the customizer
+* added : 2 new options to enable sticky menu on desktop and on mobile
+* added : 2 utility boolean functions hu_is_topbar_displayed() and hu_is_header_nav_displayed()
+* added : 2 new options to control the visibility of the header widget zone
+* Imp: avoid woocommerce3.0 warnings on use of deprecated functions
+
 = 3.3.8 April 5th 2017 =
 * fixed : home layout not applied if static home page choosen
 * fixed : prevdem mode should be turned off when user starts customizing
