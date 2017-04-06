@@ -90,6 +90,7 @@
 						clearInterval(checkforloaded);
 						$('#flexslider-<?php echo the_ID(); ?>').flexslider({
 							animation: '<?php echo wp_is_mobile() ? "slide" : "fade"; ?>',
+              rtl: <?php echo json_encode( is_rtl() ) ?>,
 							slideshow: true,
 							directionNav: true,
 							controlNav: true,

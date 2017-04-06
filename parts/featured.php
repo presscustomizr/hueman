@@ -40,6 +40,7 @@ $featured = new WP_Query(
 						pauseOnHover: true,
 						animationSpeed: 400,
 						smoothHeight: true,
+            rtl: <?php echo json_encode( is_rtl() ) ?>,
 						touch: <?php echo apply_filters('hu_flexslider_touch_support' , true); ?>,
 						slideshow: <?php echo hu_is_checked('featured-slideshow') ? 'true' : 'false'; ?>,
 						slideshowSpeed: <?php echo hu_get_option('featured-slideshow-speed', 5000); ?>,
