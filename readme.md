@@ -90,6 +90,7 @@ See headers of files for further details.
 * added : 2 new options to enable sticky menu on desktop and on mobile
 * added : 2 utility boolean functions hu_is_topbar_displayed() and hu_is_header_nav_displayed()
 * added : 2 new options to control the visibility of the header widget zone
+* added : a search bar in the mobile menu
 * Imp: avoid woocommerce3.0 warnings on use of deprecated functions
 
 = 3.3.8 April 5th 2017 =

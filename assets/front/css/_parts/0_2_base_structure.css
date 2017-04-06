@@ -72,6 +72,10 @@ box-shadow: 6px 0 0 rgba(0,0,0,0.04), -6px 0 0 rgba(0,0,0,0.04); }
   -moz-transform: translate3d(0,0,0);
   -o-transform: translate3d(0,0,0);
   transform: translate3d(0,0,0);/* @see => https://stanko.github.io/ios-safari-scoll-position-fixed/ */
+  -moz-transition: height .4s ease-in-out;
+  -webkit-transition: height .4s ease-in-out;
+  -o-transition: height .4s ease-in-out;
+  transition: height .4s ease-in-out;
 }
 .sidebar .sidebar-content, .sidebar .sidebar-toggle {
   -webkit-transform: translate3d(0,0,0);
