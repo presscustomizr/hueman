@@ -16,6 +16,9 @@ function hu_set_plugins_supported() {
   add_theme_support( 'uris' );///Ultimate Responsive Image Slider
   add_theme_support( 'the-events-calendar' );///Ultimate Responsive Image Slider
   add_theme_support( 'woocommerce' );///WooCoomerce
+  add_theme_support( 'wc-product-gallery-zoom' );
+  add_theme_support( 'wc-product-gallery-lightbox' );
+  add_theme_support( 'wc-product-gallery-slider' );
   add_theme_support( 'wp-pagenavi' );///WP PageNavi
 }
 
