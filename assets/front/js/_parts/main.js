@@ -1721,7 +1721,7 @@ var czrapp = czrapp || {};
               //=> will be updated on dom ready (now), resize, stickify, sidebar expansion
               self.maxColumnHeight = new czrapp.Value( self._getMaxColumnHeight() );
               //=> refresh the stickyness state here with new maths
-              self.maxColumnHeight.bind( function() {
+              self.maxColumnHeight.bind( function(to) {
                     self.sidebars.each( function( _sb_ ) {
                           if ( _sb_.isStickyfiable() ) {
                                 _sb_._setStickyness();
@@ -1773,12 +1773,19 @@ var czrapp = czrapp || {};
                     }, 10 ) );//window.scroll() throttled
               }
 
-              //SLOW THROTTLED SCROLL LISTENER TO SET THE MAX COLUMS HEIGHT
+              //SLOW THROTTLED SCROLL LISTENER TO SET THE MAX COLUMS HEIGHT AND STICKIFY WHEN EXPANDED
               //Whithout this listener, the max column height might not be refreshed on time ( )
               //=> Adresses the potential problems of
               czrapp.$_window.scroll( _.throttle( function() {
                     czrapp.userXP.maxColumnHeight( czrapp.userXP._getMaxColumnHeight() );
-              }, 20 ) );//window.scroll() throttled
+
+                    //always refresh live when expanded
+                    self.sidebars.each( function( _sb_ ) {
+                          if ( _sb_.isStickyfiable() && 'expanded' == _sb_() ) {
+                                _sb_._stickify();
+                          }
+                    });
+              }, 300 ) );//window.scroll() throttled
 
               //RESIZE
               //Collapse on resize
@@ -1851,8 +1858,7 @@ var czrapp = czrapp || {};
               //loop on the sb instances to get their container height
               //skip the sb sticky and expanded => those will inherit the height of the content or the other sb
               czrapp.userXP.sidebars.each( function( _sb_ ) {
-                    var sbRealHeight = _sb_.container.find('.sidebar-content').height() + _sb_.container.find('.sidebar-toggle').height();
-                    _hs.push( sbRealHeight );
+                    _hs.push( _sb_._getVisibleHeight() );
               });
               $('.content', '#wrapper .main').each( function() {
                     if ( 1 == $(this).length )
@@ -1990,7 +1996,19 @@ var czrapp = czrapp || {};
                           _stckness[ sb.id ] = to;
                           czrapp.userXP.sidebars.stickyness( _stckness );
 
-                          sb._stickify( to  );
+                          //skip the sticky state 'between' if the sb is the highest column
+                          var _state = to;
+                          if ( sb._isHighestColumn() && 'between' == _state ) {
+                                switch( from ) {
+                                      case 'top' :
+                                          _state = 'bottom';
+                                      break;
+                                      case 'bottom' :
+                                          _state = 'top';
+                                      break;
+                                }
+                          }
+                          sb._stickify( _state );
                     });
 
                     //STICKYFIABILITY REACT
@@ -2060,8 +2078,7 @@ var czrapp = czrapp || {};
                     // For contentBottomToTop, we use the maximum column height value
                     // => we can be in a collapsed scenario where a sidebar's height will become higher than the content column height when expanded.
                     var contentBottomToTop  = czrapp.$_mainWrapper.offset().top + czrapp.userXP.maxColumnHeight(),
-                        expanded            = 'expanded' == sb(),
-                        sbRealHeight        = sb.container.find('.sidebar-content').height() + sb.container.find('.sidebar-toggle').height();
+                        expanded            = 'expanded' == sb();
 
                     switch( stickyness ) {
                           case 'top' :
@@ -2080,7 +2097,7 @@ var czrapp = czrapp || {};
                                       position : 'fixed',
                                       top : '0px',
                                       //'min-height' : expanded ? czrapp.$_window.height() : '',
-                                      height : expanded ? Math.max( sbRealHeight, czrapp.$_window.height() ) + 'px' : '',
+                                      height : expanded ? Math.max( sb._getInnerHeight(), czrapp.$_window.height() ) + 'px' : '',
                                       left : sb._getStickyXOffset(),//<= depdendant of the sidebar position : left, middle-left, middle-right, right
                                       // 'margin-left' : 0,
                                       // 'margin-right' : 0,
@@ -2094,7 +2111,9 @@ var czrapp = czrapp || {};
                           case 'bottom' :
                                 sb._resetStickyness();//remove sticky class and dynamic style
                                 //the top value can be negative in this case, if the sidebar is content is higher than the sidebar which is higher than the viewport
-                                sb.container.offset( { top: contentBottomToTop - sb.container.outerHeight() } );
+                                if ( ! sb._isHighestColumn() ) {
+                                      sb.container.offset( { top: contentBottomToTop - sb.container.outerHeight() } );
+                                }
                                 //console.log('THREE : scrollTop > stopStickingY');
                           break;
                     }//switch()
@@ -2303,8 +2322,11 @@ var czrapp = czrapp || {};
               },
 
               //translate content vertically to follow the sticky menu animation
+              //skip if this sidebar is the highest column
               //@return void()
               _translateSbContent : function( stickyMenuDown ) {
+                    if ( this._isHighestColumn() )
+                      return;
                     stickyMenuDown = stickyMenuDown || czrapp.userXP.stickyMenuDown();
                     var sb = this,
                         translateYUp = 0,
@@ -2405,17 +2427,16 @@ var czrapp = czrapp || {};
                     var sb = this,
                         _winHeight = czrapp.$_window.height(),
                         _contentBottomToTop = czrapp.$_mainWrapper.offset().top + czrapp.$_mainWrapper.find('.content').outerHeight() - sb.container.offset().top,
-                        _sbRealHeight = this.container.find('.sidebar-content').height() + this.container.find('.sidebar-toggle').height(),
                         _maxColHeight = czrapp.userXP.maxColumnHeight();
                     // //When the sidebar is sticky and expanded
                     if ( 'between' == sb.stickyness() ) {
                           //if sticky and close to bottom we want the height to be the part that we see from top to bottom of the viewport
-                          return _contentBottomToTop < _winHeight ? _contentBottomToTop : Math.max( _winHeight, _sbRealHeight );
+                          return _contentBottomToTop < _winHeight ? _contentBottomToTop : Math.max( _winHeight, sb._getInnerHeight() );
                     } else {
                           //return _winHeight > _sbHeight ? _winHeight : _sbHeight;
                           //if not sticky, then make sure we are not smaller than the viewport's height
                           //return Math.max( _winHeight, _sbHeight > _maxColHeight ? _maxColHeight : _sbHeight );
-                          return Math.max( _winHeight, _sbRealHeight > _maxColHeight ? _maxColHeight : _sbRealHeight );
+                          return Math.max( _winHeight, sb._getInnerHeight() > _maxColHeight ? _maxColHeight : sb._getInnerHeight() );
                     }
                     //return Math.max( _winHeight, _sbHeight > _maxColHeight ? _maxColHeight : _sbHeight );
 
@@ -2437,6 +2458,21 @@ var czrapp = czrapp || {};
                     1 == czrapp.$_mainWrapper.length &&
                     1 == czrapp.$_mainContent.length &&
                     _.isFunction( window.matchMedia ) && matchMedia( 'only screen and (min-width: 480px)' ).matches;
+              },
+
+              //@return bool
+              _isHighestColumn : function() {
+                    return czrapp.userXP.maxColumnHeight() == this._getInnerHeight();
+              },
+
+              //@return number
+              _getInnerHeight : function() {
+                    return this.container.find('.sidebar-content').height() + this.container.find('.sidebar-toggle').height();
+              },
+
+              //@return number
+              _getVisibleHeight : function() {
+                    return 'expanded' == this() ? this._getInnerHeight() : this.container.height();
               }
         }//SidebarCTOR
   };//_methods{}
