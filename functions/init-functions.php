@@ -21,6 +21,23 @@ function hu_isprevdem() {
 /****************************************************************************
 ****************************** HELPERS **************************************
 *****************************************************************************/
+/**
+* Returns the "real" queried post ID or if !isset, get_the_ID()
+* Checks some contextual booleans
+*
+*/
+function hu_get_id()  {
+    if ( in_the_loop() ) {
+        $_id            = get_the_ID();
+    } else {
+        global $post;
+        $queried_object   = get_queried_object();
+        $_id            = ( ! empty ( $post ) && isset($post -> ID) ) ? $post -> ID : null;
+        $_id            = ( isset ($queried_object -> ID) ) ? $queried_object -> ID : $_id;
+    }
+    return ( is_404() || is_search() || is_archive() ) ? null : $_id;
+}
+
 //Use to generate unique menu id attribute data-menu-id
 //=> is used in the front js app to populate the collection
 //the css # id could not be used because historically not unique in the theme

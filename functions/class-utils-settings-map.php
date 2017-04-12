@@ -1017,7 +1017,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           'post-nav' => array(
                 'default'   => 's1',
                 'control'   => 'HU_controls',
-                'label'     => __("Single - Post Navigation", 'hueman'),
+                'label'     => __("Post navigation in single posts", 'hueman'),
                 'section'   => 'content_single_sec',
                 'type'      => 'select',
                 'choices' => array(
@@ -1027,7 +1027,11 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                   'content'     => __( 'Below content' , 'hueman' )
                 ),
                 'notice'    => __( 'Display links to the next and previous article' , 'hueman'),
-                'active_callback' => function_exists('HU_AD') ? 'hu_is_single' : ''//enabled when hueman-addons is enabled
+                'active_callback' => function_exists('HU_AD') ? 'hu_is_single' : '',//enabled when hueman-addons is enabled
+                'ubq_section'   => array(
+                    'section' => 'sidebars_design_sec',
+                    'priority' => '2'
+                )
           )
         );
     }
@@ -1076,7 +1080,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'     => __('Sidebar Top Boxes', 'hueman'),
                 'section'   => 'sidebars_design_sec',
                 'type'      => 'checkbox',
-                'notice'    => __('Display boxes at the top of the sidebars' , 'hueman')
+                'notice'    => __('Display boxes at the top of the sidebars' , 'hueman'),
+                'priority'  => 1
           ),
           'desktop-sticky-sb' => array(
                 'default'   => 1,

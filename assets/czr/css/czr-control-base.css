@@ -1396,6 +1396,11 @@ section .czr-sub-set:first-child {
 .czr_slide_module .slide-title {
   padding-left: 5px;
 }
+
+.slide-mod-skope-notice {
+  padding: 3%;
+  background: rgba(116, 210, 116, 0.42)
+}
 .in-sub-panel #czr-donate-customizer,
  .in-sub-panel .czr-cta-wrap {
    left: -450px;
@@ -2671,7 +2676,7 @@ h2.czr-current-skope-title {
 }
 .czr-scope-switcher .active, .czr-scope-switcher .czr-scope:hover {
   opacity: 1;
-  /*border-bottom: 2px solid #52ff3f;*/
+  /*border-bottom: 2px solid #59b15c;*/
 }
 .czr-skopes-wrapper {
     overflow: hidden;
@@ -2802,7 +2807,7 @@ h2.czr-current-skope-title {
 
 /* DIALOG BOX REACTIONS */
 .active .czr-scope-switch {
-  color: #52ff3f;
+  color: #59b15c;
   cursor:inherit;
 }
 
@@ -2821,7 +2826,7 @@ h2.czr-current-skope-title {
 }
 
 .is_winner .czr-scope-winner {
-  color: #52ff3f;
+  color: #59b15c;
   font-size: 14px;
   position: absolute;
   bottom: 2px;
@@ -3132,7 +3137,13 @@ body.czr-resetting-skope #czr-skope-pane .czr-spinner-wrapper {
 
 /* CONTROL INFOS */
 .customize-control .czr-skope-notice {
-  color: #0029ff;
+  color: #3a3a3a;
+  font-family: Verdana, 'DejaVu Sans', 'Bitstream Vera Sans', 'Geneva', sans-serif;
+  font-size: 10px;
+  line-height: 1.5em;
+  font-style: normal;
+  border-left: 3px solid rgba(99, 99, 99, 0.36);
+  padding-left: 5px;
 }
 
 .czr-toggle-notice {
@@ -3146,7 +3157,7 @@ body.czr-resetting-skope #czr-skope-pane .czr-spinner-wrapper {
   display: none;
 }
 .czr-notice-visible .czr-toggle-notice, .czr-toggle-notice:hover {
-  color: #0029ff;
+  color: rgba(0, 0, 0, 0.67);
 }
 
 

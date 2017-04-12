@@ -383,7 +383,7 @@ if ( ! function_exists( 'hu_do_render_logo_site_tite' ) ) {
 
 if ( ! function_exists( 'hu_render_blog_description' ) ) {
     function hu_render_blog_description() {
-        echo bloginfo( 'description' );
+        echo get_bloginfo( 'description' );
     }
 }
 
