@@ -1197,6 +1197,7 @@ box-shadow: inset 1px 0 0 rgba(255,255,255,0.06); }
     -o-transform: translateY(-50%);
     transform: translateY(-50%);
     position: absolute;
+    color: #fff;
   }
 /*  .central-header-zone { display: none;}
   .both-menus-mobile-on .central-header-zone { display: block;}*/

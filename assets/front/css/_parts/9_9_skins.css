@@ -1,0 +1,89 @@
+/* ------------------------------------------------------------------------- *
+ *  Light Skin
+/* ------------------------------------------------------------------------- */
+@media only screen and (min-width: 720px) {
+  .pro-light #nav-header .nav li a {
+      color: #202020;
+  }
+}
+@media only screen and (min-width: 720px) {
+  .pro-light #nav-header .nav li.current-menu-ancestor>a, .pro-light #nav-header .nav li.current-menu-item>a, .pro-light #nav-header .nav li.current-post-parent>a, .pro-light #nav-header .nav li.current_page_item>a, #nav-header .nav li:hover>a, .pro-light #nav-header .nav li>a:hover {
+      color: #000;
+  }
+}
+.pro-light #nav-header.nav-container {
+    background-color: #ffffff;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+/* TOPBAR */
+@media only screen and (min-width: 720px) {
+  .pro-light #nav-topbar .nav li a {
+      color: #202020;
+  }
+}
+.is-scrolled.pro-light #header .nav-container.desktop-sticky, .is-scrolled.pro-light #header .nav-container.mobile-sticky, .is-scrolled.pro-light #header .search-expand {
+    background-color: rgba(255, 255, 255, 0.95);
+}
+@media only screen and (min-width: 720px) {
+  .pro-light #nav-topbar .nav li.current-menu-ancestor>a, .pro-light #nav-topbar .nav li.current-menu-item>a, .pro-light #nav-topbar .nav li.current-post-parent>a, .pro-light #nav-topbar .nav li.current_page_item>a, #nav-topbar .nav li:hover>a, .pro-light #nav-topbar .nav li>a:hover {
+      color: #000;
+  }
+}
+
+
+/* SEARCH BAR */
+.pro-light .toggle-search {
+    color: #202020;
+    -webkit-box-shadow: -1px 0 0 rgba(0, 0, 0, 0.1);
+    box-shadow: -1px 0 0 rgba(0, 0, 0, 0.1);
+}
+
+
+/* COMMENTS*/
+.pro-light .post-comments {
+  color: #202020;
+}
+.pro-light .post-comments:hover {
+    color: #000!important;
+}
+.pro-light i.fa.fa-comments-o {
+    color: #000;
+}
+
+.pro-light #commentform {
+    background: #f7f8f9;
+}
+.pro-light .themeform button[type=submit], .themeform input[type=submit] {
+  color: #202020;
+}
+/* MAIN */
+/*Background*/
+.pro-light .col-3cm .main-inner {
+background:none;
+}
+.pro-light .col-2cl .main-inner {
+    background: none;
+}
+.pro-light .sidebar-top p {
+color: #202020;
+}
+.pro-light .sidebar .sidebar-content, .sidebar .sidebar-toggle {
+background:#fff;
+}
+
+.pro-light .social-links .social-tooltip {
+  color: #202020!important;
+}
+.pro-light .social-links .social-tooltip:hover {
+  color: #000!important;
+}
+/* FLEXSLIDER*/
+.pro-light #flexslider-featured .flex-control-nav li a.flex-active {
+    background: #000;
+}
+/* #FOOTER */
+.pro-light #footer-bottom #back-to-top {
+    background: #f7f8f9;
+}

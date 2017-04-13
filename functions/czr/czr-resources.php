@@ -273,7 +273,7 @@ function hu_add_customize_preview_data() {
 
 
 
-//hook : 'customize_controls_enqueue_scripts':10
+//hook : 'customize_controls_print_footer_scripts':10
 function hu_extend_ctrl_dependencies() {
   $_header_img_notice = esc_js( sprintf( __( "When the %s, this element will not be displayed in your header.", 'hueman'),
       sprintf('<a href="%1$s" title="%2$s">%2$s</a>',
