@@ -1421,6 +1421,68 @@ section .czr-sub-set:first-child {
   background: rgba(116, 210, 116, 0.42);
   float: left;
 }
+
+.modopts-top-buttons {
+  width: 100%;
+  float: left;
+  margin-bottom: 4%;
+  text-align: center;
+}
+
+.item-bottom-buttons {
+  width: 100%;
+  float: left;
+  padding: 1% 0;
+}
+.item-bottom-btn, .modopt-top-btn {
+  width: 47%;
+  margin-right: 2%;
+  padding: 1% 0;
+  opacity: 1;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  border-width: 1px;
+  -webkit-appearance: none;
+  -webkit-border-radius: 3px;
+  border-radius: 4px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  opacity: 1;
+}
+.item-bottom-btn {
+  background: #ababab;
+}
+.modopt-top-btn {
+  background: rgba(171, 171, 171, 0.5);
+}
+.item-bottom-btn:hover {
+  background: #848484;
+}
+.modopt-top-btn:hover {
+  background:rgba(41, 41, 41, 0.53);
+}
+
+.item-bottom-btn[disabled], .modopt-top-btn[disabled], .item-bottom-btn[disabled]:hover, .modopt-top-btn[disabled]:hover {
+    opacity: 0.4;
+    cursor: default;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    /*border: none!important;*/
+    background: inherit;
+}
+
+/* Underline skope switch text in control notices and in the main skope switcher title */
+.slide-mod-skope-notice .czr-skope-switch {
+  cursor: pointer;
+  text-decoration: underline;
+}
 .in-sub-panel #czr-donate-customizer,
  .in-sub-panel .czr-cta-wrap {
    left: -450px;

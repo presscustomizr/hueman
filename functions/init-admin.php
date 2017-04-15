@@ -60,16 +60,15 @@ function hu_add_help_button() {
 }
 
 
-
 /* ------------------------------------------------------------------------- *
  *  Loads Required Plugin Class and Setup
 /* ------------------------------------------------------------------------- */
-if ( is_admin() && ! hu_is_customizing() ) {
-  /**
-  * Include the TGM_Plugin_Activation class.
-  */
-  load_template( get_template_directory() . '/functions/admin/class-tgm-plugin-activation.php' );
-  add_action( 'tgmpa_register', 'hu_register_required_plugins' );
+if ( ! HU_IS_PRO_ADDONS && ! HU_IS_PRO && is_admin() && ! hu_is_customizing() ) {
+    /**
+    * Include the TGM_Plugin_Activation class.
+    */
+    load_template( get_template_directory() . '/functions/admin/class-tgm-plugin-activation.php' );
+    add_action( 'tgmpa_register', 'hu_register_required_plugins' );
 }
 
 

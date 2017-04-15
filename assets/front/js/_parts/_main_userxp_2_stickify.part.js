@@ -259,9 +259,9 @@ var czrapp = czrapp || {};
                   _startPosition = self.scrollPosition(),
                   _endPosition = _startPosition;
 
-              //Bail here if we are still animating or if we don't have a menu element
+              //Bail here if  we don't have a menu element
               if ( ! $menu_wrapper.length )
-                return;
+                return dfd.resolve().promise();
 
               if ( ! czrapp.$_header.hasClass( 'fixed-header-on' ) ) {
                     czrapp.$_header.addClass( 'fixed-header-on' );

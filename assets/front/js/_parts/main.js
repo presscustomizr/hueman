@@ -1604,9 +1604,9 @@ var czrapp = czrapp || {};
                   _startPosition = self.scrollPosition(),
                   _endPosition = _startPosition;
 
-              //Bail here if we are still animating or if we don't have a menu element
+              //Bail here if  we don't have a menu element
               if ( ! $menu_wrapper.length )
-                return;
+                return dfd.resolve().promise();
 
               if ( ! czrapp.$_header.hasClass( 'fixed-header-on' ) ) {
                     czrapp.$_header.addClass( 'fixed-header-on' );
@@ -2804,6 +2804,7 @@ var czrapp = czrapp || {};
       czrapp.Root           = czrapp.Class.extend( {
             initialize : function( options ) {
                   $.extend( this, options || {} );
+                  this.isReady = $.Deferred();
             },
 
             //On DOM ready, fires the methods passed to the constructor
@@ -2823,6 +2824,7 @@ var czrapp = czrapp || {};
                               }
                         });
                   }
+                  this.isReady.resolve();
             }
       });
 
@@ -2831,7 +2833,6 @@ var czrapp = czrapp || {};
       czrapp.ready          = $.Deferred();
 
       czrapp.bind( 'czrapp-ready', function() {
-            czrapp.consoleLog('front js ready');
             czrapp.ready.resolve();
       });
 
@@ -2876,29 +2877,93 @@ var czrapp = czrapp || {};
       };//map
 
       //Instantiates
-      _.each( appMap, function( params, name ) {
-            if ( _.isObject( params ) ) {
-                  try { czrapp[ name ] = new params.ctor( { id : name, dom_ready : params.ready || [] } ); }
+      var _instantiate = function( newMap, previousMap, isInitial ) {
+            if ( ! _.isObject( newMap ) )
+              return;
+            _.each( newMap, function( params, name ) {
+                  //skip if already instantiated or invalid params
+                  if ( czrapp[ name ] || ! _.isObject( params ) )
+                    return;
+
+                  params = _.extend(
+                        {
+                              ctor : {},//should extend czrapp.Base with custom methods
+                              ready : [],//a list of method to execute on dom ready,
+                              options : {}//can be used to pass a set of initial params to set to the constructors
+                        },
+                        params
+                  );
+
+                  //the constructor has 2 mandatory params : id and dom_ready methods
+                  var ctorOptions = _.extend(
+                      {
+                          id : name,
+                          dom_ready : params.ready || []
+                      },
+                      params.options
+                  );
+
+                  try { czrapp[ name ] = new params.ctor( ctorOptions ); }
                   catch( er ) {
                         czrapp.errorLog( 'Error when loading ' + name + ' | ' + er );
                   }
-            }
-      });
-
-
-      //Fire on DOM ready
-      $(function ($) {
-            _.each( appMap, function( params, name ) {
-                  if ( _.isObject( czrapp[ name ] ) && _.isFunction( czrapp[ name ].ready ) ) {
-                        czrapp[ name ].ready();
-                  }
             });
-            czrapp.status = czrapp.status || 'OK';
-            if ( _.isArray( czrapp.status ) ) {
-                  _.each( czrapp.status, function( error ) {
-                        czrapp.errorLog( error );
+
+            //Fire on DOM ready
+            $(function ($) {
+                  _.each( newMap, function( params, name ) {
+                        //bail if already fired
+                        if ( czrapp[ name ] && czrapp[ name ].isReady && 'resolved' == czrapp[ name ].isReady.state() )
+                          return;
+                        if ( _.isObject( czrapp[ name ] ) && _.isFunction( czrapp[ name ].ready ) ) {
+                              czrapp[ name ].ready();
+                        }
                   });
-            }
-            czrapp.trigger( 'czrapp-ready');
-      });
+                  czrapp.status = czrapp.status || 'OK';
+                  if ( _.isArray( czrapp.status ) ) {
+                        _.each( czrapp.status, function( error ) {
+                              czrapp.errorLog( error );
+                        });
+                  }
+                  //trigger czrapp-ready when the default map has been instantiated
+                  if ( isInitial )
+                    czrapp.trigger( 'czrapp-ready' );
+                  else
+                    czrapp.trigger( 'czrapp-updated' );
+            });
+      };//_instantiate()
+
+      //instantiates the default map
+      //@param : new map, previous map, isInitial bool
+      _instantiate( appMap, null, true );
+
+      //instantiate additional classes on demand
+      //EXAMPLE IN THE PRO HEADER SLIDER PHP TMPL :
+      //instantiate on first run, then on the following runs, call fire statically
+      // var _do = function() {
+      //       if ( czrapp.proHeaderSlid ) {
+      //             czrapp.proHeaderSlid.fire( args );
+      //       } else {
+      //             var _map = $.extend( true, {}, czrapp.customMap() );
+      //             _map = $.extend( _map, {
+      //                   proHeaderSlid : {
+      //                         ctor : czrapp.Base.extend( czrapp.methods.ProHeaderSlid ),
+      //                         ready : [ 'fire' ],
+      //                         options : args
+      //                   }
+      //             });
+      //             //this is listened to in xfire.js
+      //             czrapp.customMap( _map );
+      //       }
+      // };
+      // if ( ! _.isUndefined( czrapp ) && czrapp.ready ) {
+      //       if ( 'resolved' == czrapp.ready.state() ) {
+      //             _do();
+      //       } else {
+      //             czrapp.ready.done( _do );
+      //       }
+      // }
+      czrapp.customMap = new czrapp.Value( {} );
+      czrapp.customMap.bind( _instantiate );//<=THE CUSTOM MAP IS LISTENED TO HERE
+
 })( czrapp, jQuery, _ );

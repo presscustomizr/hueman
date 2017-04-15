@@ -36,6 +36,8 @@ if( ! defined( 'HU_OPT_AJAX_ACTION' ) ) define( 'HU_OPT_AJAX_ACTION' , 'hu_get_o
 
 //HU_IS_PRO
 if( ! defined( 'HU_IS_PRO' ) ) define( 'HU_IS_PRO' , file_exists( HU_BASE . 'addons/init-hueman-pro.php' ) && "hueman-pro" == sanitize_file_name( strtolower($hu_theme -> name) ) );
+//HU_IS_PRO_ADDONS
+if( ! defined( 'HU_IS_PRO_ADDONS' ) ) define( 'HU_IS_PRO_ADDONS' , ! HU_IS_PRO && class_exists( 'HU_AD' ) );
 
 //HU_WEBSITE is the home website of Hueman
 if( ! defined( 'HU_WEBSITE' ) )         define( 'HU_WEBSITE' , $hu_base_data['authoruri'] );
