@@ -15,12 +15,12 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 /*
 The main css stylesheet of the Hueman theme is located in /assets/front/css/main.css.
 
-The main reason why the main stylesheet of the Hueman theme has been moved to another place is : minification.
+The main reason why the main stylesheet of the Hueman theme has been moved to another place is minification.
 Minification is a technique to compress a css file and therefore improve speed (page load time) of your website.
 
 This style.css file provides details about the Theme (in the form of comments above) that is read by WordPress, and therefore cannot be minified.
 
-Note : You can load the not minified stylesheet if you uncheck the option in the customizer > Global Settings > performances
+Note : You can load the not minified stylesheet if you uncheck the option in the customizer > Advanced Options > performances
 */
 
 

@@ -2926,10 +2926,7 @@ var czrapp = czrapp || {};
                         });
                   }
                   //trigger czrapp-ready when the default map has been instantiated
-                  if ( isInitial )
-                    czrapp.trigger( 'czrapp-ready' );
-                  else
-                    czrapp.trigger( 'czrapp-updated' );
+                  czrapp.trigger( isInitial ? 'czrapp-ready' : 'czrapp-updated' );
             });
       };//_instantiate()
 
