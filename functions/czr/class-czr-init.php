@@ -187,7 +187,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
         ) );
         $wp_customize->selective_refresh->add_partial( 'site_description', array(
             'selector' => '.site-description',
-            'settings' => array( 'blodescription' ),
+            'settings' => array( 'blogdescription' ),
             'render_callback' => 'hu_render_blog_description',
         ) );
     }
