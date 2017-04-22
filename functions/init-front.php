@@ -419,16 +419,15 @@ if ( ! function_exists( 'hu_get_page_title' ) ) {
 /* ------------------------------------ */
 if ( ! function_exists( 'hu_get_search_title' ) ) {
   function hu_get_search_title() {
-    global $wp_query;
-    ?>
-      <?php if ( have_posts() ): ?><i class="fa fa-search"></i><?php endif; ?>
-      <?php if ( ! have_posts() ): ?><i class="fa fa-exclamation-circle"></i><?php endif; ?>
-    <?php
+      global $wp_query;
+
       $search_results = $wp_query -> found_posts;
+      $icon           = have_posts() ? '<i class="fa fa-search"></i> ' : '<i class="fa fa-exclamation-circle"></i> ';
+
       if ( 1 == $search_results ) {
-          return sprintf( '%1$s %2$s', $search_results, __('Search result','hueman') );
+          return sprintf( '%1$s%2$s %3$s', $icon, $search_results, __('Search result','hueman') );
       } else {
-          return sprintf( '%1$s %2$s', $search_results, __('Search results','hueman') );
+          return sprintf( '%1$s%2$s %3$s', $icon, $search_results, __('Search results','hueman') );
       }
   }
 }
