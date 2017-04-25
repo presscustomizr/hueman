@@ -62,7 +62,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
       $this -> is_customizing   = hu_is_customizing();
       $this -> db_options       = false === get_option( HU_THEME_OPTIONS ) ? array() : (array)get_option( HU_THEME_OPTIONS );
       $this -> default_options  = $this -> hu_get_default_options();
-      $_trans                   = 'started_using_hueman';
+      $_trans                   = HU_IS_PRO ? 'started_using_hueman_pro' : 'started_using_hueman';
 
       //What was the theme version when the user started to use Hueman?
       //new install = no options yet

@@ -673,7 +673,62 @@ span.czr-panel-subtitle {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-}/*******************************************************************
+}
+
+
+/* GOPRO SECTION STYLE */
+#customize-controls .control-section-hu-customize-section-pro .accordion-section-title:hover,
+#customize-controls .control-section-hu-customize-section-pro .accordion-section-title:focus {
+  background-color: #fff;
+}
+#customize-theme-controls .control-section-hu-customize-section-pro .accordion-section-title:after {
+  content: none;
+}
+#accordion-section-go_pro_sec .accordion-section-title {
+  margin: 0 0 15px;
+}
+.control-section-hu-customize-section-pro .accordion-section-title .button {
+  font-size: 15px;
+  line-height: 24px;
+  height: 30px;
+  padding: 1px 20px;
+  display: inline-block;
+  color: #fff;
+  background: #f0ad4e;
+  border: 1px solid #eea236;
+  -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  border-radius: 3px;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-top:  -4px;
+  font-weight: 400;
+  margin-left: 8px;
+
+}
+.control-section-hu-customize-section-pro .accordion-section-title .button:hover {
+    color: #fff;
+    background: #ed9c28;
+    border-color: #d58512;
+}
+
+.rtl .control-section-hu-customize-section-pro .accordion-section-title .button {
+  margin-left:  0;
+  margin-right: 8px;
+}
+
+/* END GO PRO SECTION STYLE *//*******************************************************************
 * DYNAMIC CONTROLS : sidebars, socials, ...
 ********************************************************************/
 .czr-open-pre-add-new {

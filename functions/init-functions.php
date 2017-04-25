@@ -165,7 +165,7 @@ function hu_checked( $val ) {
 *
 */
 function hu_user_started_before_version( $_ver ) {
-    $_trans = 'started_using_hueman';
+    $_trans = HU_IS_PRO ? 'started_using_hueman_pro' : 'started_using_hueman';
     //the transient is set in HU_utils::hu_init_properties()
     if ( ! get_transient( $_trans ) )
       return false;
