@@ -52,7 +52,7 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
                       return string.length > 150 ? string.substr( 0, 149 ) : string;
                 };
             if ( ! _.isEmpty( _.filter( _toArr, function( it ) { return ! _.isString( it ); } ) ) ) {
-                  _toArr =  JSON.stringify( _toArr );
+                  _toArr =  JSON.stringify( _toArr.join(' ') );
             } else {
                   _toArr = _toArr.join(' ');
             }
@@ -66,7 +66,6 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
               return;
             if ( ( _.isUndefined( console ) && typeof window.console.log != 'function' ) )
               return;
-
             console.log.apply( console, _prettyPrintLog( { consoleArguments : arguments } ) );
       };
 
@@ -338,6 +337,48 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
                 });
           }
       });
+
+      /*****************************************************************************
+      * ADD PRO BEFORE SPECIFIC SECTIONS AND PANELS
+      *****************************************************************************/
+      if ( serverControlParams.isPro ) {
+            _.each( [ 'tc_font_customizer_settings', 'header_image_sec', 'content_blog_sec', 'static_front_page' ], function( _secId ) {
+                  _.delay( function() {
+                      api.section.when( _secId, function( _sec_ ) {
+                            if ( 1 >= _sec_.headContainer.length ) {
+                                _sec_.headContainer.find('.accordion-section-title').prepend( '<span class="pro-title-block">Pro</span>' );
+                            }
+                      });
+                  }, 1000 );
+            });
+            _.each( ['hu-header-panel', 'hu-content-panel' ], function( _secId ) {
+                  api.panel.when( _secId, function( _sec_ ) {
+                        if ( 1 >= _sec_.headContainer.length ) {
+                            _sec_.headContainer.find('.accordion-section-title').prepend( '<span class="pro-title-block">Pro</span>' );
+                        }
+                  });
+            });
+      }
+
+
+      /*****************************************************************************
+      * ADD PRO BEFORE SPECIFIC SECTIONS AND PANELS
+      *****************************************************************************/
+      if ( ! serverControlParams.isPro && _.isFunction( api.Section ) ) {
+            proSectionConstructor = api.Section.extend( {
+                  active : true,
+                  attachEvents: function () {},
+                  isContextuallyActive: function () {
+                    return this.active();
+                  },
+                  _toggleActive: function(){ return true; },
+
+            } );
+
+            $.extend( api.sectionConstructor, {
+                  'hu-customize-section-pro' : proSectionConstructor
+            });
+      }
 })( wp.customize , jQuery, _);
 
 
@@ -357,8 +398,8 @@ var CZRSkopeBaseMths = CZRSkopeBaseMths || {};
                 self.skope_colors = {
                       global : 'rgb(255, 255, 255)',
                       special_group : 'rgba(173, 213, 247, 0.55)',
-                      group  : 'rgba(173, 213, 247, 0.55)',
-                      local  : 'rgba(78, 122, 199, 0.35)'
+                      group  : 'rgba(39, 59, 88, 0.12)',// 'rgba(173, 213, 247, 0.55)',
+                      local  : 'rgba(39, 59, 88, 0.28)'// 'rgba(78, 122, 199, 0.35)'
                 };
                 api.czr_isPreviewerSkopeAware   = $.Deferred();
                 api.czr_initialSkopeCollectionPopulated = $.Deferred();
@@ -3267,6 +3308,7 @@ $.extend( CZRSkopeSaveMths, {
                       opt_name : null
                 },
                 invalidSettings = [],
+                settingInvalidities = [],
                 modifiedWhileSaving = {},
                 invalidControls,
                 submit_dfd = $.Deferred();
@@ -6517,6 +6559,10 @@ $.extend( CZRItemMths , {
             if ( item.module.isMultiItem() ) {
                   item.viewState.callbacks.add( function( to, from ) {
                         var _isExpanded = -1 !== to.indexOf( 'expanded' );
+                        if ( module.hasModOpt() && _isExpanded ) {
+                              api.czr_ModOptVisible( false );
+                        }
+
                         if ( _isExpanded ) {
                               if ( _.isObject( item.contentContainer ) && false !== item.contentContainer.length ) {
                                     item.toggleItemExpansion(to, from );
@@ -6717,7 +6763,8 @@ $.extend( CZRModOptMths , {
             var ctrl = modOpt.module.control;
             modOpt.set( _initial_model );
             api.czr_ModOptVisible = new api.Value( false );
-            api.czr_ModOptVisible.bind( function( visible ) {
+            api.czr_ModOptVisible.bind( function( visible, from, args ) {
+                  args = args || {};
                   if ( visible ) {
                         modOpt.module.closeRemoveDialogs().closeAllItems();
 
@@ -6727,6 +6774,13 @@ $.extend( CZRModOptMths , {
                                     api.CZR_Helpers.setupInputCollectionFromDOM.call( modOpt ).toggleModPanelView( visible );
                               } catch(e) {
                                     api.consoleLog(e);
+                              }
+                              if ( args.module && args.focus ) {
+                                    _.delay( function() {
+                                          if ( _.isNull(  args.module.czr_ModOpt.container ) || ! args.module.czr_ModOpt.container.find('[data-tab-id="' + args.focus + '"] a').length )
+                                            return;
+                                          args.module.czr_ModOpt.container.find('[data-tab-id="' + args.focus + '"] a').trigger('click');
+                                    }, 200 );
                               }
                         });
 
@@ -6898,6 +6952,7 @@ $.extend( CZRModuleMths, {
 
             } );
             module.embedded = $.Deferred();
+            module.itemsWrapper = '';//will store the $ item container
             if ( ! module.isInSektion() ) {
                   module.container = $( module.control.selector );
                   module.embedded.resolve();
@@ -7096,12 +7151,12 @@ $.extend( CZRModuleMths, {
                   module        : { items : $.extend( true, {}, module().items ) , modOpt : module.hasModOpt() ?  $.extend( true, {}, module().modOpt ): {} },
                   input_parent_id : args.input_parent_id,//<= can be the mod opt or the item
                   input_id      : args.input_id,
-                  value         : args.to
+                  value         : args.to,
+                  isPartialRefresh : args.isPartialRefresh//<= let us know if it is a full wrapper refresh or a single input update ( true when fired from sendModuleInputsToPreview )
             });
             module.trigger( 'input_sent', { input : args.to , dom_el: module.container } );
       },
-      sendModuleInputsToPreview : function() {
-            console.log('SEND MODULE INPUTS TO PREVIEW');
+      sendModuleInputsToPreview : function( args ) {
             var module = this,
                 _sendInputData = function() {
                       var inputParent = this,//this is the input parent : item or modOpt
@@ -7113,7 +7168,8 @@ $.extend( CZRModuleMths, {
                                   input_id : inputId,
                                   input_parent_id : inputParent.id,
                                   to : inputVal,
-                                  from : null
+                                  from : null,
+                                  isPartialRefresh : args.isPartialRefresh
                             });
                       });
                 };
@@ -7552,6 +7608,8 @@ $.extend( CZRDynModuleMths, {
               $.extend( module, {
                   itemPreAddEl : ''//is specific for each crud module
               } );
+
+              module.preItemsWrapper = '';//will store the pre items wrapper
               module.itemAddedMessage = serverControlParams.i18n.successMessage;
               module.userEventMap = new api.Value( [
                     {
@@ -7573,7 +7631,8 @@ $.extend( CZRDynModuleMths, {
               module.setupDOMListeners( module.userEventMap() , { dom_el : module.container } );
               module.preItem = new api.Value( module.getDefaultItemModel() );
               module.preItemEmbedded = $.Deferred();//was module.czr_preItem.create('item_content');
-              module.preItemEmbedded.done( function() {
+              module.preItemEmbedded.done( function( $preWrapper ) {
+                    module.preItemsWrapper = $preWrapper;
                     module.setupPreItemInputCollection();
               });
               module.preItemExpanded = new api.Value(false);
@@ -7607,27 +7666,37 @@ $.extend( CZRDynModuleMths, {
                   collapsePreItem = function() {
                         module.preItemExpanded.set(false);
                         module._resetPreItemInputs();
-                        module.toggleSuccessMessage('off');
-                  };
+                  },
+                  dfd = $.Deferred();
 
               if ( _.isEmpty(item) || ! _.isObject(item) ) {
-                throw new Error('addItem : an item should be an object and not empty. In : ' + module.id +'. Aborted.' );
+                    api.errorLog( 'addItem : an item should be an object and not empty. In : ' + module.id +'. Aborted.' );
+                    return dfd.resolve().promise();
               }
-              collapsePreItem = _.debounce( collapsePreItem, 2000 );
+              collapsePreItem = _.debounce( collapsePreItem, 200 );
               module.instantiateItem( item, true ).ready(); //true == Added by user
+              ( function() {
+                    return $.Deferred( function() {
+                          var _dfd_ = this;
+                          module.czr_Item( item.id ).isReady.then( function() {
+                                collapsePreItem();
 
-              module.czr_Item( item.id ).isReady.then( function() {
-                    module.toggleSuccessMessage('on');
-                    collapsePreItem();
-
-                    module.trigger('item-added', item );
-                    if ( 'postMessage' == api(module.control.id).transport && _.has( obj, 'dom_event') && ! _.has( obj.dom_event, 'isTrigger' ) && ! api.CZR_Helpers.hasPartRefresh( module.control.id ) ) {
-                      module.control.previewer.refresh();
-                    }
+                                module.trigger('item-added', item );
+                                if ( 'postMessage' == api(module.control.id).transport && _.has( obj, 'dom_event') && ! _.has( obj.dom_event, 'isTrigger' ) && ! api.CZR_Helpers.hasPartRefresh( module.control.id ) ) {
+                                  module.control.previewer.refresh().done( function() {
+                                        _dfd_.resolve();
+                                  });
+                                } else {
+                                        _dfd_.resolve();
+                                }
+                          });
+                    }).promise();
+              })().done( function() {
+                      module.czr_Item( item.id ).viewState( 'expanded' );
+              }).always( function() {
+                      dfd.resolve();
               });
-
-
-
+              return dfd.promise();
       },
 
       _resetPreItemInputs : function() {
@@ -7658,7 +7727,7 @@ $.extend( CZRDynModuleMths, {
 
               var $_pre_add_el = $('.' + module.control.css_attr.pre_add_item_content, module.container );
               $_pre_add_el.prepend( pre_add_template() );
-              module.preItemEmbedded.resolve();
+              module.preItemEmbedded.resolve( $_pre_add_el );
       },
       _getPreItemView : function() {
               var module = this;
@@ -8795,7 +8864,7 @@ $.extend( CZRBaseControlMths, {
                               if ( ! control.czr_Module( _mod_.id ) )
                                 return;
 
-                              control.czr_Module( _mod_.id ).sendModuleInputsToPreview();
+                              control.czr_Module( _mod_.id ).sendModuleInputsToPreview( { isPartialRefresh : true } );
                         });
                   }
             });

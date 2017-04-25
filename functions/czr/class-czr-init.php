@@ -140,11 +140,12 @@ if ( ! class_exists( 'HU_customize' ) ) :
         'panels/class-panels.php',
 
         'sections/class-widgets-section.php',
+        'sections/class-pro-section.php',
 
         'settings/class-settings.php'
       );
       foreach ($_classes as $_path) {
-        locate_template( 'functions/czr/' . $_path , $load = true, $require_once = true );
+          locate_template( 'functions/czr/' . $_path , $load = true, $require_once = true );
       }
 
       //Registered types are eligible to be rendered via JS and created dynamically.
@@ -153,6 +154,10 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
       if ( class_exists('HU_Customize_Panels') )
         $manager -> register_panel_type( 'HU_Customize_Panels');
+
+      if ( ! HU_IS_PRO && class_exists('HU_Customize_Section_Pro') ) {
+        $manager -> register_section_type( 'HU_Customize_Section_Pro');
+      }
     }
 
 
@@ -562,7 +567,9 @@ if ( ! class_exists( 'HU_customize' ) ) :
                 'panel',
                 'theme_supports',
                 'type',
-                'active_callback'
+                'active_callback',
+                'pro_text',
+                'pro_url'
           ),
           'settings' => array(
                 'default'     =>  null,

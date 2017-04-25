@@ -123,20 +123,21 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
       );
 
       foreach ( $_settings_sections as $_section_cb ) {
-        if ( ! method_exists( $this , $_section_cb ) )
-          continue;
-        //applies a filter to each section settings map => allows plugins (hueman addons for ex.) to add/remove settings
-        //each section map takes one boolean param : $get_default
-        $_section_map = apply_filters(
-          $_section_cb,
-          call_user_func_array( array( $this, $_section_cb ), array( $get_default ) )
-        );
+          if ( ! method_exists( $this , $_section_cb ) )
+            continue;
+          //applies a filter to each section settings map => allows plugins (hueman addons for ex.) to add/remove settings
+          //each section map takes one boolean param : $get_default
+          $_section_map = apply_filters(
+            $_section_cb,
+            call_user_func_array( array( $this, $_section_cb ), array( $get_default ) )
+          );
 
-        if ( ! is_array( $_section_map) )
-          continue;
+          if ( ! is_array( $_section_map) )
+            continue;
 
-        $_new_map = array_merge( $_new_map, $_section_map );
+          $_new_map = array_merge( $_new_map, $_section_map );
       }//foreach
+
       return array_merge( $_map, $_new_map );
     }
 
@@ -1237,8 +1238,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     ------------------------------------------------------------------------------------------------------*/
 
 
-
-
     /***************************************************************
     * POPULATE PANELS
     ***************************************************************/
@@ -1487,6 +1486,24 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         )
 
       );
+
+      if ( ! HU_IS_PRO ) {
+          //GO PRO SECTION
+          $_sections = array_merge(
+              array(
+                  'go_pro_sec'   => array(
+                      'title'         => esc_html__( 'Upgrade to Hueman Pro', 'hueman' ),
+                      'pro_text'      => esc_html__( 'Go Pro', 'hueman' ),
+                      'pro_url'       => esc_url( 'presscustomizr.com/hueman-pro' ),
+                      'priority'      => 0,
+                      'section_class' => 'HU_Customize_Section_Pro',
+                      'active_callback' => array( $this, 'hu_pro_section_active_cb' )
+                  )
+              ),
+              $_sections
+          );
+      }
+
       return array_merge( $_sections, $_new_sections );
     }
 
@@ -1685,7 +1702,13 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     }
 
 
-
+    /**
+    * active callback of section 'hueman_go_pro'
+    * @return  bool
+    */
+    function hu_pro_section_active_cb() {
+        return ! hu_isprevdem();
+    }
 
 
 
