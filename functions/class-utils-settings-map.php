@@ -1097,7 +1097,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'priority'  => 1
           ),
           'desktop-sticky-sb' => array(
-                'default'   => 1,
+                'default'   => hu_user_started_before_version( '3.3.9' ) ? 1 : 0,
                 'control'   => 'HU_controls',
                 'label'     => sprintf( '%1$s : %2$s', __('Desktop devices', 'hueman' ) , __('make sidebars sticky on scroll', 'hueman') ),
                 'section'   => 'sidebars_design_sec',
@@ -1105,7 +1105,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'notice'    => __("Glues your website's sidebars on top of the page, making them permanently visible when scrolling up and down. Useful when a sidebar is too tall or too short compared to the rest of the content." , 'hueman')
           ),
           'mobile-sticky-sb' => array(
-                'default'   => 1,
+                'default'   => hu_user_started_before_version( '3.3.9' ) ? 1 : 0,
                 'control'   => 'HU_controls',
                 'label'     => sprintf( '%1$s : %2$s', __('Mobile devices', 'hueman' ) , __('make sidebars sticky on scroll', 'hueman') ),
                 'section'   => 'sidebars_design_sec',
@@ -1494,7 +1494,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                   'go_pro_sec'   => array(
                       'title'         => esc_html__( 'Upgrade to Hueman Pro', 'hueman' ),
                       'pro_text'      => esc_html__( 'Go Pro', 'hueman' ),
-                      'pro_url'       => esc_url( 'presscustomizr.com/hueman-pro' ),
+                      'pro_url'       => esc_url( 'presscustomizr.com/hueman-pro?ref=c' ),
                       'priority'      => 0,
                       'section_class' => 'HU_Customize_Section_Pro',
                       'active_callback' => array( $this, 'hu_pro_section_active_cb' )

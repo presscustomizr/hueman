@@ -892,7 +892,7 @@ if ( ! function_exists( 'hu_scripts' ) ) {
               )),
               'goldenRatio'         => apply_filters( 'hu_grid_golden_ratio' , 1.618 ),
               'gridGoldenRatioLimit' => apply_filters( 'hu_grid_golden_ratio_limit' , 350),
-              'sbStickyUserSettings' => array( 'desktop' => hu_is_checked('desktop-sticky-sb'), 'mobile' => hu_is_checked('mobile-sticky-sb') ),
+              'sbStickyUserSettings' => array( 'desktop' => hu_is_checked('desktop-sticky-sb'), 'mobile' => hu_is_checked('mobile-sticky-sb') && wp_is_moble() ),
               'menuStickyUserSettings' => array( 'desktop' => hu_is_checked('header-desktop-sticky'), 'mobile' => hu_is_checked('header-mobile-sticky') ),
               'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('CZR_DEV') && true === CZR_DEV )
             )

@@ -162,14 +162,16 @@ function hu_checked( $val ) {
 /**
 * Returns a boolean
 * check if user started to use the theme before ( strictly < ) the requested version
-*
+* @param $_ver : string free version
+* @param $_pro_ver : string pro version
 */
-function hu_user_started_before_version( $_ver ) {
+function hu_user_started_before_version( $_ver, $_pro_ver = null ) {
     $_trans = HU_IS_PRO ? 'started_using_hueman_pro' : 'started_using_hueman';
     //the transient is set in HU_utils::hu_init_properties()
     if ( ! get_transient( $_trans ) )
       return false;
 
+    $_ver   = HU_IS_PRO ? $_pro_ver : $_ver;
     if ( ! is_string( $_ver ) )
       return false;
 
@@ -181,7 +183,7 @@ function hu_user_started_before_version( $_ver ) {
     switch ( $_start_version_infos[0] ) {
         //in this case we know exactly what was the starting version (most common case)
         case 'with':
-            return version_compare( $_start_version_infos[1] , $_ver, '<' );
+            return isset( $_start_version_infos[1] ) ? version_compare( $_start_version_infos[1] , $_ver, '<' ) : true;
         break;
         //here the user started to use the theme before, we don't know when.
         //but this was actually before this check was created
