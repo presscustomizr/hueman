@@ -34,8 +34,8 @@ $fallback_cb = apply_filters( 'hu_topbar_menu_fallback_cb', $fallback_cb );//set
       );
     ?>
   </div>
-  <?php if ( apply_filters( 'hu_display_mobile_search', ( 'both_menus' == $mobile_menu_opt || ! wp_is_mobile() ) && ( hu_has_nav_menu( 'topbar' ) || ! empty( $fallback_cb ) ) ) ) : ?>
-    <div id="header-search" class="container">
+  <?php if ( apply_filters( 'hu_display_topnav_search', ( 'both_menus' == $mobile_menu_opt || ! wp_is_mobile() ) && ( hu_has_nav_menu( 'topbar' ) || ! empty( $fallback_cb ) ) ) ) : ?>
+    <div id="topbar-header-search" class="container">
       <div class="container-inner">
         <div class="toggle-search"><i class="fa fa-search"></i></div>
         <div class="search-expand">

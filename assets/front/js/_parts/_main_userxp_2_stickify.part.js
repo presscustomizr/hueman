@@ -164,11 +164,11 @@ var czrapp = czrapp || {};
                   stickyCandidatesMap = {
                         'only screen and (max-width: 719px)' : {
                               selector : 'mobile-sticky',
-                              isOn : HUParams.sbStickyUserSettings && HUParams.menuStickyUserSettings.mobile
+                              isOn : HUParams.sbStickyUserSettings && 'stick_up' == HUParams.menuStickyUserSettings.mobile
                         },
                         'only screen and (min-width: 720px)' : {
                               selector : 'desktop-sticky',
-                              isOn : HUParams.sbStickyUserSettings && HUParams.menuStickyUserSettings.desktop
+                              isOn : HUParams.sbStickyUserSettings && 'stick_up' == HUParams.menuStickyUserSettings.desktop
                         },
                   },
                   _match_ = false;

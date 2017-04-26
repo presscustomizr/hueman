@@ -23,4 +23,15 @@ $headernav_classes = array(
       );
     ?>
   </div>
+
+   <?php if ( apply_filters( 'hu_display_topnav_search', ( 'both_menus' == $mobile_menu_opt || ! wp_is_mobile() ) && ( hu_has_nav_menu( 'header' ) || ! empty( $fallback_cb ) ) ) ) : ?>
+    <div id="main-header-search" class="container">
+      <div class="container-inner">
+        <div class="toggle-search"><i class="fa fa-search"></i></div>
+        <div class="search-expand">
+          <div class="search-expand-inner"><?php get_search_form(); ?></div>
+        </div>
+      </div><!--/.container-inner-->
+    </div><!--/.container-->
+  <?php endif; ?>
 </nav><!--/#nav-header-->

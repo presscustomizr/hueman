@@ -133,13 +133,13 @@ function hu_is_partial_refreshed_on() {
 function hu_is_checked( $opt_name = '') {
     $val = hu_get_option( $opt_name );
     //cast to string if array
-    $val = is_array($val) ? $val[0]: $val;
+    $val = is_array($val) ? $val[0] : $val;
     return hu_booleanize_checkbox_val( $val );
 }
 
 function hu_booleanize_checkbox_val( $val ) {
     if ( ! $val )
-      return;
+      return false;
     switch ( (string) $val ) {
       case 'off':
       case '' :
@@ -147,7 +147,7 @@ function hu_booleanize_checkbox_val( $val ) {
       case 'on':
       case '1' :
         return true;
-      default: return false;
+      default : return false;
     }
 }
 

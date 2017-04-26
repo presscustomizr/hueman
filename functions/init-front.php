@@ -691,8 +691,18 @@ if ( ! function_exists( 'hu_body_class' ) ) {
     if ( hu_get_option( 'mobile-sidebar-hide' ) == 's2' ) { $classes[] = 'mobile-sidebar-hide-s2'; }
     if ( hu_get_option( 'mobile-sidebar-hide' ) == 's1-s2' ) { $classes[] = 'mobile-sidebar-hide'; }
     if ( wp_is_mobile() ) { $classes[] = 'wp-is-mobile'; };
-    if ( hu_is_checked( 'header-desktop-sticky' ) ) { $classes[] = 'header-desktop-sticky'; }
-    if ( hu_is_checked( 'header-mobile-sticky' ) ) { $classes[] = 'header-mobile-sticky'; }
+
+    //Stickyness of menus
+    //=> hu_normalize_stick_menu_opt() is used to ensure retro compat with the previously boolean option type
+    $desktop_sticky = hu_normalize_stick_menu_opt( hu_get_option('header-desktop-sticky') );
+    $mobile_sticky = hu_normalize_stick_menu_opt( hu_get_option('header-mobile-sticky') );
+    //desktop class
+    if ( 'stick_up' == $desktop_sticky ) { $classes[] = 'header-desktop-sticky-up'; }
+    else if ( 'stick_always' == $desktop_sticky ) { $classes[] = 'header-desktop-sticky-always'; }
+    //mobile class
+    if ( 'stick_up' == $mobile_sticky ) { $classes[] = 'header-mobile-sticky-up'; }
+    else if ( 'stick_always' == $mobile_sticky ) { $classes[] = 'header-mobile-sticky-always'; }
+
     return $classes;
   }
 }
@@ -892,17 +902,37 @@ if ( ! function_exists( 'hu_scripts' ) ) {
               )),
               'goldenRatio'         => apply_filters( 'hu_grid_golden_ratio' , 1.618 ),
               'gridGoldenRatioLimit' => apply_filters( 'hu_grid_golden_ratio_limit' , 350),
-              'sbStickyUserSettings' => array( 'desktop' => hu_is_checked('desktop-sticky-sb'), 'mobile' => hu_is_checked('mobile-sticky-sb') && wp_is_moble() ),
-              'menuStickyUserSettings' => array( 'desktop' => hu_is_checked('header-desktop-sticky'), 'mobile' => hu_is_checked('header-mobile-sticky') ),
+              'sbStickyUserSettings' => array( 'desktop' => hu_is_checked('desktop-sticky-sb'), 'mobile' => hu_is_checked('mobile-sticky-sb') && wp_is_mobile() ),
+              'menuStickyUserSettings' => array(
+                  'desktop' => hu_normalize_stick_menu_opt( hu_get_option('header-desktop-sticky') ),
+                  'mobile'  => hu_normalize_stick_menu_opt( hu_get_option('header-mobile-sticky') )
+              ),
               'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('CZR_DEV') && true === CZR_DEV )
             )
         )//end of filter
-       );
-
-
+       );//wp_localize_script()
   }//function
 }
 add_action( 'wp_enqueue_scripts', 'hu_scripts' );
+
+/* ------------------------------------------------------------------------- *
+ *  Helper for header and mobile sticky setting
+ *  => previously set with a checkbox. Since v3.3.10 the option is a string set with a select input type
+/* ------------------------------------------------------------------------- */
+function hu_normalize_stick_menu_opt( $opt_val = 'stick_up' ) {
+    //since v3.3.10, the option should be a string among those : 'no_stick', 'stick_up', 'stick_always'
+    //before, the option could be : booleans : true, false, numeric : 1, 0, or strings '1', '0'
+    //if the current value is a string longer than 1, then nothing to worry about.
+    //if not, then we have to apply the following correspondance mapping :
+    // [ true or 1 or '1' <=> hu_is_checked( $opt_val ) ] => 'stick_up'
+    //else
+    //'no_stick'
+    if ( is_string( $opt_val ) && 1 < strlen( $opt_val ) ) {
+        return $opt_val;
+    } else {
+        return hu_booleanize_checkbox_val( $opt_val ) ? 'stick_up' : 'no_stick';
+    }
+}
 
 
 /*  Enqueue css

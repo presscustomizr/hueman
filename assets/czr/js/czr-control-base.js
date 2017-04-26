@@ -196,6 +196,20 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
                   api.czr_skopeReset  = new api.CZR_skopeReset();
 
                   api.trigger('czr-skope-started');
+                  var _toggleTopFailureNote = function() {
+                        api.czr_skopeBase.toggleTopNote( true, {
+                              title : serverControlParams.i18n.skope['There was a problem when trying to load the customizer.'],
+                              message : [
+                                    serverControlParams.i18n.skope['Please refer to'],
+                                    '<a href="http://docs.presscustomizr.com/article/285-there-was-a-problem-when-trying-to-load-the-customizer" target="_blank">',
+                                    serverControlParams.i18n.skope['this documentation page'],
+                                    '</a>',
+                                    serverControlParams.i18n.skope['to understand how to fix the problem.']
+                              ].join(' '),
+                              selfCloseAfter : 40000
+                        });
+                  };
+
 
                   api.czr_skopeReady
                         .done( function() {
@@ -203,6 +217,7 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
                         })
                         .fail( function( error ) {
                               api.errorLog( 'Skope could not be instantiated : ' + error );
+                              _toggleTopFailureNote();
                               serverControlParams.isSkopOn = false;
                         })
                         .always( function() {
@@ -211,25 +226,11 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
                   if ( 'rejected' != api.czr_skopeReady.state() ) {
                         setTimeout( function() {
                             if ( 'pending' == api.czr_skopeReady.state() )  {
-                                  api.czr_skopeBase.toggleTopNote( true, {
-                                        title : serverControlParams.i18n.skope['There was a problem when trying to load the customizer.'],
-                                        message : [
-                                              serverControlParams.i18n.skope['Please open your'],
-                                              '<a href="http://docs.presscustomizr.com/article/272-inspect-your-webpages-in-your-browser-with-the-development-tools" target="_blank">',
-                                              serverControlParams.i18n.skope['browser debug tool'],
-                                              '</a>',
-                                              ',',
-                                              serverControlParams.i18n.skope['and report any error message (in red) printed in the javascript console in the'],
-                                              '<a href="https://wordpress.org/support/theme/hueman" target="_blank">',
-                                              serverControlParams.i18n.skope['Hueman theme forum'],
-                                              '</a>.'
-                                        ].join(' '),
-                                        selfCloseAfter : 40000
-                                  });
+                                  _toggleTopFailureNote();
 
                                   api.czr_isLoadingSkope( false );
                             }
-                        }, 30000);
+                        }, 40000);
                   }
             }
             if ( serverControlParams.isChangeSetOn ) {
@@ -376,7 +377,7 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
             } );
 
             $.extend( api.sectionConstructor, {
-                  'hu-customize-section-pro' : proSectionConstructor
+                  'czr-customize-section-pro' : proSectionConstructor
             });
       }
 })( wp.customize , jQuery, _);
@@ -425,11 +426,15 @@ var CZRSkopeBaseMths = CZRSkopeBaseMths || {};
                       }
                 });
                 api.previewer.bind( 'czr-skopes-synced', function( data ) {
-                      if ( ! serverControlParams.isSkopOn || 'rejected' == api.czr_skopeReady.state() )
-                        return;
+                      if ( ! serverControlParams.isSkopOn || 'rejected' == api.czr_skopeReady.state() ) {
+                            return;
+                      }
                       var preview = this,
                           previousSkopeCollection = api.czr_currentSkopesCollection();
                       if ( ! _.has( data, 'czr_skopes') ) {
+                            if ( 'resolved' != api.czr_skopeReady.state() ) {
+                                  api.czr_skopeReady.reject();
+                            }
                             api.errorLog( "On 'czr-skopes-synced' : missing skopes in the server data" );
                             return;
                       }
@@ -1299,13 +1304,21 @@ $.extend( CZRSkopeBaseMths, {
     getActiveSkopeId : function( _current_skope_collection ) {
           _current_skope_collection = _current_skope_collection || api.czr_currentSkopesCollection();
 
-          var _currentSkopeLevel = ( ! _.isEmpty( api.czr_activeSkopeId() ) && api.czr_skope.has( api.czr_activeSkopeId() ) ) ? api.czr_skope( api.czr_activeSkopeId() )().skope : serverControlParams.isLocalSkope ? 'local' : 'global',
-              _newSkopeCandidate = _.findWhere( _current_skope_collection, { skope : _currentSkopeLevel } );
+          var _currentSkopeLevel, _newSkopeCandidate, _skpId;
+          if ( ! _.isEmpty( api.czr_activeSkopeId() ) && api.czr_skope.has( api.czr_activeSkopeId() ) ) {
+                _currentSkopeLevel = api.czr_skope( api.czr_activeSkopeId() )().skope;
+          } else if ( serverControlParams.isLocalSkope ) {
+                _currentSkopeLevel = 'local';
+          } else {
+                _currentSkopeLevel = 'global';
+          }
+
+          _newSkopeCandidate = _.findWhere( _current_skope_collection, { skope : _currentSkopeLevel } );
 
           _skpId = ! _.isUndefined( _newSkopeCandidate ) ? _newSkopeCandidate.id : _.findWhere( _current_skope_collection, { skope : 'global' } ).id;
 
           if ( _.isUndefined( _skpId ) ) {
-            throw new Error( 'No default skope was found in getActiveSkopeId ', _current_skope_collection );
+                throw new Error( 'No default skope was found in getActiveSkopeId ', _current_skope_collection );
           }
           return _skpId;
     },
@@ -1999,7 +2012,7 @@ $.extend( CZRSkopeBaseMths, {
           var self = this, dfd = $.Deferred();
           if ( ! _.isUndefined(from) && api.czr_skope.has(from) )
             api.czr_skope(from).active(false);
-          else if ( ! _.isUndefined(from) )
+          else if ( ! _.isUndefined( from ) )
             throw new Error('listenToActiveSkope : previous scope does not exist in the collection', from );
 
           if ( ! _.isUndefined(to) && api.czr_skope.has(to) )
@@ -2076,11 +2089,16 @@ $.extend( CZRSkopeBaseMths, {
                             throw new Error( 'Fail to process silent updates in _debouncedProcessSilentUpdates');
                       })
                       .done( function( _updatedSetIds ) {
-                            api.previewer.refresh()
-                                  .always( function() {
-                                        dfd.resolve( _updatedSetIds );
-                                        api.state( 'switching-skope' )( false );
-                                  });
+                            if ( _.isUndefined( from ) && api.czr_skope.has( to ) && 'global' == api.czr_skope( to )().skope ) {
+                                  dfd.resolve( _updatedSetIds );
+                                  api.state( 'switching-skope' )( false );
+                            } else {
+                                  api.previewer.refresh()
+                                        .always( function() {
+                                              dfd.resolve( _updatedSetIds );
+                                              api.state( 'switching-skope' )( false );
+                                        });
+                            }
                       });
           };
           if ( _.has(api, 'czr_isModuleExpanded') && false !== api.czr_isModuleExpanded() ) {

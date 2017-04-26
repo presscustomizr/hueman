@@ -615,7 +615,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
       $header_nav_notice =  sprintf( '%1$s %2$s', __( 'The Hueman theme supports up to two menu locations in your header.', 'hueman' ), $nav_section_desc );
       return array(
           'default-menu-header' => array(
-                'default'   => hu_user_started_before_version( '3.3.8' ) ? 0 : 1,
+                'default'   => 0,//hu_user_started_before_version( '3.3.8' ) ? 0 : 1,
                 'control'   => 'HU_controls',
                 'label'     => __("Topbar menu", 'hueman') . ' : ' . __("Use a default page menu if no menu has been assigned.", 'hueman'),
                 'section'   => 'header_menus_sec',
@@ -627,11 +627,34 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 )
           ),
           'header-desktop-sticky' => array(
-                'default'   => 1,
+                'default'   => 'stick_up',
                 'control'   => 'HU_controls',
-                'label'     => sprintf( '%1$s : %2$s', __('Desktop devices', 'hueman' ) , __('make the top menu stick to the top on scroll', 'hueman') ),
+                'title'     => sprintf( '%1$s %2$s', __( 'Menus settings for', 'hueman' ) , __('Desktop devices', 'hueman' ) ),
+                'label'     => sprintf( '%1$s : %2$s', __('Desktop devices', 'hueman' ) , __('menu visibility on scroll', 'hueman') ),
                 'section'   => 'header_menus_sec',
-                'type'      => 'checkbox',
+                'type'      => 'select',
+                'choices'   => array(
+                    'no_stick'      => __( 'Not visible when scrolling the page', 'hueman'),
+                    'stick_up'      => __( 'Reveal on scroll up', 'hueman'),
+                    'stick_always'  => __( 'Always visible', 'hueman')
+                ),
+                'ubq_section'   => array(
+                    'section' => 'menu_locations',
+                    'priority' => '120'
+                )
+          ),
+
+          'desktop-search' => array(
+                'default'   => 'topbar',
+                'control'   => 'HU_controls',
+                'label'     => sprintf( '%1$s : %2$s', __('Desktop devices', 'hueman' ) , __('display a search field', 'hueman') ),
+                'section'   => 'header_menus_sec',
+                'type'      => 'select',
+                'choices'   => array(
+                    'no_search' => __( 'No search field', 'hueman'),
+                    'topbar'    => __( 'Display a search field in the top menu', 'hueman'),
+                    'header'    => __( 'Display a search field in the header menu', 'hueman')
+                ),
                 'ubq_section'   => array(
                     'section' => 'menu_locations',
                     'priority' => '120'
@@ -639,11 +662,17 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           ),
 
           'header-mobile-sticky' => array(
-                'default'   => 1,
+                'default'   => 'stick_up',
                 'control'   => 'HU_controls',
-                'label'     => sprintf( '%1$s : %2$s', __('Mobile devices', 'hueman' ) , __('make the mobile menu stick to the top on scroll', 'hueman') ),
+                'title'     => sprintf( '%1$s %2$s', __( 'Menus settings for', 'hueman' ) , __('Mobile devices', 'hueman' ) ),
+                'label'     => sprintf( '%1$s : %2$s', __('Mobile devices', 'hueman' ) , __('menu visibility on scroll', 'hueman') ),
                 'section'   => 'header_menus_sec',
-                'type'      => 'checkbox',
+                'type'      => 'select',
+                'choices'   => array(
+                    'no_stick'      => __( 'Not visible when scrolling the page', 'hueman'),
+                    'stick_up'      => __( 'Reveal on scroll up', 'hueman'),
+                    'stick_always'  => __( 'Always visible', 'hueman')
+                ),
                 'ubq_section'   => array(
                     'section' => 'menu_locations',
                     'priority' => '130'
@@ -683,7 +712,18 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                     'section' => 'menu_locations',
                     'priority' => '110'
                 )
-          )
+          ),
+          'mobile-search' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => sprintf( '%1$s : %2$s', __('Mobile devices', 'hueman' ) , __('display a search field', 'hueman') ),
+                'section'   => 'header_menus_sec',
+                'type'      => 'checkbox',
+                'ubq_section'   => array(
+                    'section' => 'menu_locations',
+                    'priority' => '120'
+                )
+          ),
       );
     }
 
@@ -1097,7 +1137,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'priority'  => 1
           ),
           'desktop-sticky-sb' => array(
-                'default'   => hu_user_started_before_version( '3.3.9' ) ? 1 : 0,
+                'default'   => hu_user_started_before_version( '3.3.9', '1.0.3' ) ? 1 : 0,
                 'control'   => 'HU_controls',
                 'label'     => sprintf( '%1$s : %2$s', __('Desktop devices', 'hueman' ) , __('make sidebars sticky on scroll', 'hueman') ),
                 'section'   => 'sidebars_design_sec',
@@ -1105,7 +1145,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'notice'    => __("Glues your website's sidebars on top of the page, making them permanently visible when scrolling up and down. Useful when a sidebar is too tall or too short compared to the rest of the content." , 'hueman')
           ),
           'mobile-sticky-sb' => array(
-                'default'   => hu_user_started_before_version( '3.3.9' ) ? 1 : 0,
+                'default'   => hu_user_started_before_version( '3.3.9', '1.0.3' ) ? 1 : 0,
                 'control'   => 'HU_controls',
                 'label'     => sprintf( '%1$s : %2$s', __('Mobile devices', 'hueman' ) , __('make sidebars sticky on scroll', 'hueman') ),
                 'section'   => 'sidebars_design_sec',
@@ -1408,7 +1448,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
               'panel'   => 'hu-header-panel'
         ),
         'header_menus_sec'          => array(
-              'title'    => __( 'Header Menus : mobile settings, scroll behaviour', 'hueman' ),
+              'title'    => __( 'Header Menus : mobile settings, scroll behaviour, search button', 'hueman' ),
               'priority' => 40,
               'panel'   => 'hu-header-panel'
         ),

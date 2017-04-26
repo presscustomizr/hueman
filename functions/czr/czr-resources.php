@@ -637,10 +637,9 @@ function hu_get_czr_translated_strings() {
 
                 //error when loading
                 'There was a problem when trying to load the customizer.' => __('There was a problem when trying to load the customizer.','hueman'),
-                'Please open your' => __('Please open your','hueman'),
-                'browser debug tool' => __('browser debug tool','hueman'),
-                'and report any error message (in red) printed in the javascript console in the' => __('and report any error message (in red) printed in the javascript console in the','hueman'),
-                'Hueman theme forum' => __('Hueman theme forum','hueman'),
+                'Please refer to' => __('Please refer to','hueman'),
+                'this documentation page' => __('this documentation page','hueman'),
+                'to understand how to fix the problem.' => __('to understand how to fix the problem.','hueman')
             )
       )
   );
