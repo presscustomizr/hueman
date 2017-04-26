@@ -13,23 +13,25 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
 
 /*
-The main css stylesheet of the Hueman theme is located in /assets/front/css/main.css.
+* The main css stylesheet of the Hueman theme is located in /assets/front/css/main.css.
 
-The main reason why the main stylesheet of the Hueman theme has been moved to another place is minification.
-Minification is a technique to compress a css file and therefore improve speed (page load time) of your website.
+* The main reason why the main stylesheet of the Hueman theme has been moved to another place is minification.
+* Minification is a technique to compress a css file and therefore improve speed (page load time) of your website.
 
-This style.css file provides details about the Theme (in the form of comments above) that is read by WordPress, and therefore cannot be minified.
+* This style.css file provides details about the Theme (in the form of comments above) that is read by WordPress, and therefore cannot be minified.
 
-Note : You can load the not minified stylesheet if you uncheck the option in the customizer > Advanced Options > performances
+* Note : You can load the not minified stylesheet if you uncheck the option in the customizer > Advanced Options > performances
 */
 
 
 /*
-Developers Recommendation
-To make it easy to update your theme, you should NOT add your custom css rules to this file. Instead use
-a child theme to add your styles. You can copy a style from this file and paste it in the child
-theme's style.css and it will override the style in this file. You have been warned! :)
+* Developers Recommendation
+* If you want to make quick style test / changes, consider using the Custom CSS section in Appearance > customize > advanced options > Additional CSS.
+* It will persist on update since it is saved in your server database.
+*
+* To make important CSS customizations, you'll want to use a child theme and add your css code in the style.css file of it.
+* You should NEVER add your custom css rules to this file. They will be lost when updating your theme.
 
-If you don't know what a child theme is, you really want to spend 5 minutes learning how to use child themes in WordPress, you won't regret it :) !
-https://codex.wordpress.org/Child_Themes
+* If you don't know what a child theme is, you really want to spend 5 minutes learning how to use child themes in WordPress, you won't regret it :) !
+* https://codex.wordpress.org/Child_Themes
 */
