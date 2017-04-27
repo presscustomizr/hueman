@@ -1006,6 +1006,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 
 /*  header : search
 /* ------------------------------------ */
+/* Search in topbar + default styling */
 .toggle-search { color: #fff; font-size: 18px; line-height: 24px; cursor: pointer; padding: 13px 20px; display: block; position: absolute; right: 0; top: -50px;
 -webkit-box-shadow: -1px 0 0 rgba(255,255,255,0.1);
 box-shadow: -1px 0 0 rgba(255,255,255,0.1); }
@@ -1017,6 +1018,22 @@ box-shadow: 0 1px 0 rgba(255,255,255,0.1); }
 .search-expand-inner { background: rgba(0,0,0,0.15); padding: 15px; }
 .search-expand .themeform input { width: 100%; border: 2px solid #e2e2e2; border-radius: 0; }
 .search-expand .themeform input:focus {  }
+
+/* Search in header nav */
+#main-header-search .toggle-search {
+  top: inherit;
+  float: left;
+  position: relative;
+  z-index: 1;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+#main-header-search .search-expand {
+  display: none;
+  left: 0px;
+  top: 50px;
+}
 
 
 /* header : mobile menu */
@@ -1089,9 +1106,9 @@ box-shadow: inset 1px 0 0 rgba(255,255,255,0.06); }
   .full-width #nav-topbar.nav-container { position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 999;}
   .full-width.admin-bar #nav-topbar.nav-container { top: 32px;  }*/
 
-  /*.header-desktop-sticky-up.topbar-enabled #header { padding-top: 50px; }
-  .header-desktop-sticky-up #nav-topbar.nav-container { position: fixed; top: 0; left: 0; right: 0; z-index: 999;}
-  .header-desktop-sticky-up.admin-bar #nav-topbar.nav-container { top: 32px;  }
+  /*.header-desktop-sticky.topbar-enabled #header { padding-top: 50px; }
+  .header-desktop-sticky #nav-topbar.nav-container { position: fixed; top: 0; left: 0; right: 0; z-index: 999;}
+  .header-desktop-sticky.admin-bar #nav-topbar.nav-container { top: 32px;  }
   .full-width #nav-topbar.nav-container { width : 100%;}*/
 
   /* common */
@@ -1213,6 +1230,11 @@ box-shadow: inset 1px 0 0 rgba(255,255,255,0.06); }
   /* set nav-topbar to position fixed if both menu mobile are actived */
   /* adjust the header padding top */
   .top-menu-mobile-on #nav-topbar .toggle-search { display: none;}
+
+  /* Hide main-header-search */
+  #main-header-search {
+    display: none;
+  }
 }
 
 
@@ -1277,9 +1299,9 @@ box-shadow: inset 1px 0 0 rgba(255,255,255,0.05), -1px 0 0 rgba(0,0,0,0.2); }
   }
 }
 @media only screen and (min-width: 720px) {
-  .header-desktop-sticky-up.topbar-enabled #header { padding-top: 50px; }
-  .header-desktop-sticky-up #nav-topbar.nav-container { position: fixed; z-index: 999; top: 0;}
-  .header-desktop-sticky-up.admin-bar #nav-topbar.nav-container { top: 32px;  }
+  .header-desktop-sticky.topbar-enabled #header { padding-top: 50px; }
+  .header-desktop-sticky #nav-topbar.nav-container { position: fixed; z-index: 999; top: 0;}
+  .header-desktop-sticky.admin-bar #nav-topbar.nav-container { top: 32px;  }
 
   .full-width #nav-topbar.nav-container { width : 100%; top: 0; left: 0; right: 0; }
   .fixed-header-on .desktop-sticky { position: fixed; }

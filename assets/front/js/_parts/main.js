@@ -1356,12 +1356,23 @@ var czrapp = czrapp || {};
         ------------------------------------------------------*/
         stickify : function() {
               var self = this;
+              this.stickyCandidatesMap = {
+                    mobile : {
+                          mediaRule : 'only screen and (max-width: 719px)',
+                          selector : 'mobile-sticky'
+                    },
+                    desktop : {
+                          mediaRule : 'only screen and (min-width: 720px)',
+                          selector : 'desktop-sticky'
+                    }
+              };
               this.stickyMenuWrapper      = false;
               this.stickyMenuDown         = new czrapp.Value( '_not_set_' );
               this.stickyHeaderThreshold  = 50;
               this.currentStickySelector  = new czrapp.Value( '' );//<= will be set on init and on resize
               this.hasStickyCandidate     = new czrapp.Value( false );
               this.stickyHeaderAnimating  = new czrapp.Value( false );
+              this.userStickyOpt          = new czrapp.Value( self._setUserStickyOpt() );//set on init and on resize : stick_always, no_stick, stick_up
 
               //// SETUP LISTENERS ////
               //react to current sticky selector
@@ -1413,9 +1424,13 @@ var czrapp = czrapp || {};
               czrapp.bind( 'topbar-collapsed', _maybeResetTop );//react on topbar collapsed, @see topNavToLife
 
               //animate : make sure we don't hide the menu when too close from top
+              //only animate when user option is set to stick_up
               self.stickyMenuDown.validate = function( value ) {
                     if ( ! self.hasStickyCandidate() )
                       return false;
+                    //the menu is always down if the reveal on scroll up is not enabled
+                    if ( 'stick_up' != self.userStickyOpt() )
+                      return true;
                     if ( self.scrollPosition() < self.stickyHeaderThreshold && ! value ) {
                           if ( ! self.isScrolling() ) {
                                 //print a message when attempt to programmatically hide the menu
@@ -1449,6 +1464,10 @@ var czrapp = czrapp || {};
               * (real) RESIZE EVENT : refreshed every 50 ms
               ------------------------------------------------------*/
               self.isResizing.bind( function( is_resizing ) {
+                    //always reset the userStickyOpt ( czrapp.Value() ) when resizing
+                    //=> desktop and mobile sticky user option can be different
+                    self.userStickyOpt( self._setUserStickyOpt() );
+
                     // if ( ! is_resizing )
                     //   return;
                     //reset the current sticky selector
@@ -1504,29 +1523,45 @@ var czrapp = czrapp || {};
         //@return void()
         //Is fired on first load and on resize
         //set the currentStickySelector observable Value()
+        // this.stickyCandidatesMap = {
+        //       mobile : {
+        //             mediaRule : 'only screen and (max-width: 719px)',
+        //             selector : 'mobile-sticky'
+        //       },
+        //       desktop : {
+        //             mediaRule : 'only screen and (min-width: 720px)',
+        //             selector : 'desktop-sticky'
+        //       }
+        // };
         _setStickySelector : function() {
               var self = this,
-                  stickyCandidatesMap = {
-                        'only screen and (max-width: 719px)' : {
-                              selector : 'mobile-sticky',
-                              isOn : HUParams.sbStickyUserSettings && 'stick_up' == HUParams.menuStickyUserSettings.mobile
-                        },
-                        'only screen and (min-width: 720px)' : {
-                              selector : 'desktop-sticky',
-                              isOn : HUParams.sbStickyUserSettings && 'stick_up' == HUParams.menuStickyUserSettings.desktop
-                        },
-                  },
                   _match_ = false;
 
               // self.currentStickySelector = self.currentStickySelector || new czrapp.Value('');
-              _.each( stickyCandidatesMap, function( _params, _layout ) {
-                    if ( _.isFunction( window.matchMedia ) && matchMedia( _layout ).matches && _params.isOn ) {
+              _.each( self.stickyCandidatesMap, function( _params, _device ) {
+                    if ( _.isFunction( window.matchMedia ) && matchMedia( _params.mediaRule ).matches && 'no_stick' != self.userStickyOpt() ) {
                           _match_ = [ '.nav-container', _params.selector ].join('.');
                     }
               });
               self.currentStickySelector( _match_ );
         },
 
+        //@return string : no_stick, stick_up, stick_always
+        //falls back on no_stick
+        _setUserStickyOpt : function( device ) {
+              var self = this;
+              if ( _.isUndefined( device ) ) {
+                    // self.currentStickySelector = self.currentStickySelector || new czrapp.Value('');
+                    _.each( self.stickyCandidatesMap, function( _params, _device ) {
+                          if ( _.isFunction( window.matchMedia ) && matchMedia( _params.mediaRule ).matches ) {
+                                device = _device;
+                          }
+                    });
+              }
+              device = device || 'desktop';
+
+              return ( HUParams.menuStickyUserSettings && HUParams.menuStickyUserSettings[ device ] ) ? HUParams.menuStickyUserSettings[ device ] : 'no_stick';
+        },
 
         //This is specific to Hueman
         _adjustDesktopTopNavPaddingTop : function() {

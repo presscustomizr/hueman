@@ -2705,6 +2705,11 @@ body.czr-editing-sektion #customize-preview {
     background-color: #fcad06;
 }
 
+/* FIX CUSTOMIZE INFO OVERLAPPING SKOPE SWITCHER */
+.czr-skop-on #customize-controls .customize-info.is-in-view, #customize-controls .customize-section-title.is-in-view {
+  opacity: 0;
+}
+
 
 /* HEADER AND SCOPE SWITCHER */
 .czr-skop-on .wp-full-overlay-sidebar .wp-full-overlay-header {
@@ -2975,7 +2980,7 @@ h2.czr-current-skope-title {
 }
 
 /* Underline skope switch text in control notices and in the main skope switcher title */
-.czr-skope-notice .czr-skope-switch, .czr-scope-switcher .czr-skope-switch {
+.czr-skope-switch {
   cursor: pointer;
   text-decoration: underline;
 }
@@ -3153,12 +3158,11 @@ body.czr-skop-loading #customize-preview {
 
 
 
-/* TOP NOTE ( for Welcome, etc ) */
-#czr-top-note {
+/* PREVIEW NOTIFICATIONS BLOCKS ( for Welcome, etc ) */
+/* COMMONS */
+#czr-top-note, #czr-bottom-infos {
   position: absolute;
   text-align: center;
-  padding: 2%;
-  top : -100%;
   right: 0;
   left: 0;
   z-index: 20;
@@ -3170,16 +3174,10 @@ body.czr-skop-loading #customize-preview {
   -o-transition: all, 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   visibility: hidden;
-  background: rgba(0, 0, 0, 0.80);
 }
-#czr-top-note h2 {
-  color: #fff;
-  font-size: 25px
-}
-#czr-top-note a {
-  color: #fff;
-}
-#czr-top-note .czr-top-note-close {
+.czr-preview-notification a, .czr-preview-notification h2 {color: #fff; margin: 0.5em 0;}
+
+.czr-preview-notification .czr-preview-note-close {
   position: absolute;
   top: 10px;
   right: 25px;
@@ -3187,26 +3185,56 @@ body.czr-skop-loading #customize-preview {
   cursor: pointer;
 }
 
-#czr-top-note .fa-arrow-left {
+.czr-preview-notification  .fa-arrow-left {
   position: absolute;
   bottom: 10px;
   left: 25px;
   font-size: 40px;
 }
-#czr-top-note .czr-note-content {
+.czr-preview-notification .czr-note-content {
   display: inline-block;
   line-height: 20px;
   width: 80%;
 }
-#czr-top-note .czr-note-message {
+.czr-preview-notification .czr-note-message {
   font-size: 16px;
-  line-height: 20px;
+  line-height: 1.5em;
+  margin: 0.5em 0;
 }
+
+/* TOP NOTE */
+#czr-top-note { top : -100%; background: rgba(0, 0, 0, 0.80); padding: 2%;}
+#czr-top-note h2 {font-size: 25px; }
+
 body.czr-top-note-open #czr-top-note {
   top: 0;
   visibility: inherit;
 }
 
+/* BOTTOM SKOPE INFOS */
+#czr-bottom-infos { bottom : -100%; background-color: rgba(0, 0, 0, 0.85);padding: 1px;}
+body.czr-bottom-infos-open #czr-bottom-infos {
+  bottom: 0;
+  visibility: inherit;
+}
+#czr-bottom-infos .czr-note-content .czr-note-message {
+    font-size: 13px;
+}
+#czr-bottom-infos .action-links-wrap {
+  width: 100%;
+}
+#czr-bottom-infos .action-link {
+  font-style: italic;
+  display: inline-block;
+  width: 40%;
+}
+#czr-bottom-infos .action-link a:hover {
+  color: #fff;
+}
+.czr-disable-bottom-infos {
+  text-decoration: underline;
+  cursor: pointer;
+}
 
 
 

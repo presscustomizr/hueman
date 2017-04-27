@@ -696,12 +696,9 @@ if ( ! function_exists( 'hu_body_class' ) ) {
     //=> hu_normalize_stick_menu_opt() is used to ensure retro compat with the previously boolean option type
     $desktop_sticky = hu_normalize_stick_menu_opt( hu_get_option('header-desktop-sticky') );
     $mobile_sticky = hu_normalize_stick_menu_opt( hu_get_option('header-mobile-sticky') );
-    //desktop class
-    if ( 'stick_up' == $desktop_sticky ) { $classes[] = 'header-desktop-sticky-up'; }
-    else if ( 'stick_always' == $desktop_sticky ) { $classes[] = 'header-desktop-sticky-always'; }
-    //mobile class
-    if ( 'stick_up' == $mobile_sticky ) { $classes[] = 'header-mobile-sticky-up'; }
-    else if ( 'stick_always' == $mobile_sticky ) { $classes[] = 'header-mobile-sticky-always'; }
+
+    if ( 'no_stick' != $desktop_sticky ) { $classes[] = 'header-desktop-sticky'; }
+    if ( 'no_stick' != $mobile_sticky ) { $classes[] = 'header-mobile-sticky'; }
 
     return $classes;
   }

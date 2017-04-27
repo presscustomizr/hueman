@@ -14,7 +14,8 @@ if ( array_key_exists( $mobile_menu_opt, $class_map ) ) {
 $mobile_menu_classes = array(
     'nav-container',
     'group',
-    'mobile-menu mobile-sticky',
+    'mobile-menu',
+    'no_stick' != hu_normalize_stick_menu_opt( hu_get_option('header-mobile-sticky') ) ? 'mobile-sticky' : '',
     $has_menu_assigned ? '' : 'no-menu-assigned'
 );
 $mobile_menu_id = 'top_menu' == $mobile_menu_opt ? 'nav-topbar' : 'nav-header';
@@ -43,11 +44,13 @@ $fallback_cb = apply_filters( 'hu_mobile_menu_fallback_cb', $fallback_cb )//set 
 
       <div class="nav-text"><?php apply_filters( 'hu_mobile_menu_text', '' );//put your mobile menu text here ?></div>
       <div class="nav-wrap container">
-        <ul class="nav container-inner group mobile-search">
-          <li>
-            <?php get_search_form(); ?>
-          </li>
-        </ul>
+        <?php if ( hu_is_checked( 'mobile-search' ) ) : ?>
+          <ul class="nav container-inner group mobile-search">
+            <li>
+              <?php get_search_form(); ?>
+            </li>
+          </ul>
+        <?php endif; ?>
         <?php
           if ( has_nav_menu( $mobile_menu_location ) || ! empty( $fallback_cb ) ) {
               wp_nav_menu(

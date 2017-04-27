@@ -4,7 +4,7 @@ $topnav_classes = array(
     'nav-container',
     'group',
     'desktop-menu',
-    apply_filters( 'hu_is_topnav_sticky_on_desktop', true ) ? 'desktop-sticky' : '',
+    'no_stick' != hu_normalize_stick_menu_opt( hu_get_option('header-desktop-sticky') ) ? 'desktop-sticky' : '',
     hu_has_nav_menu( 'topbar' ) ? '' : 'no-menu-assigned'
 );
 if ( is_multisite() ) {
@@ -13,6 +13,7 @@ if ( is_multisite() ) {
     $fallback_cb = hu_is_checked( "default-menu-header" ) ? 'hu_page_menu' : '';
 }
 $fallback_cb = apply_filters( 'hu_topbar_menu_fallback_cb', $fallback_cb );//set to 'hu_page_menu' on prevdem
+$display_search = ( 'topbar' == hu_get_option( 'desktop-search' ) ) && ( 'both_menus' == $mobile_menu_opt || ! wp_is_mobile() ) && ( hu_has_nav_menu( 'topbar' ) || ! empty( $fallback_cb ) );
 ?>
 <nav class="<?php echo implode(' ', $topnav_classes ); ?>" id="nav-topbar" data-menu-id="<?php echo hu_get_menu_id( 'header'); ?>">
   <?php if ( 'both_menus' == $mobile_menu_opt ) { hu_print_mobile_btn(); } ?>
@@ -34,7 +35,7 @@ $fallback_cb = apply_filters( 'hu_topbar_menu_fallback_cb', $fallback_cb );//set
       );
     ?>
   </div>
-  <?php if ( apply_filters( 'hu_display_topnav_search', ( 'both_menus' == $mobile_menu_opt || ! wp_is_mobile() ) && ( hu_has_nav_menu( 'topbar' ) || ! empty( $fallback_cb ) ) ) ) : ?>
+  <?php if ( $display_search ) : ?>
     <div id="topbar-header-search" class="container">
       <div class="container-inner">
         <div class="toggle-search"><i class="fa fa-search"></i></div>

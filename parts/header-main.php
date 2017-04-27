@@ -25,6 +25,8 @@
     //HEADER CSS CLASSES
     $header_classes = array(
         $mobile_menu_class,
+        'both_menus' == $mobile_menu_opt ? 'two-mobile-menus' : 'one-mobile-menu',
+        hu_get_option( 'header_mobile_menu_layout' ),
         hu_is_checked( 'header-ads-desktop' ) ? 'header-ads-desktop' : '',
         hu_is_checked( 'header-ads-mobile' ) ? 'header-ads-mobile' : ''
     );

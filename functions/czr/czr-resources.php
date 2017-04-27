@@ -616,7 +616,7 @@ function hu_get_czr_translated_strings() {
                 'Customized and applied sitewide.' => __('Customized and applied sitewide.', 'hueman'),
                 'Customized and applied to' => __('Customized and applied to','hueman'),
                 'Default website value applied sitewide.' => __('Default website value applied sitewide.','hueman'),
-                'Default website value.' => __('Default website value.','hueman'),
+                'Default website value.' => __('Default sitewide value.','hueman'),
                 'You can customize this specifically for' => __('You can customize this specifically for', 'hueman'),
                 'Currently inherited from' => __('Currently inherited from','hueman'),
                 'You can customize this specifically for' => __('You can customize this specifically for','hueman'),
@@ -639,7 +639,17 @@ function hu_get_czr_translated_strings() {
                 'There was a problem when trying to load the customizer.' => __('There was a problem when trying to load the customizer.','hueman'),
                 'Please refer to' => __('Please refer to','hueman'),
                 'this documentation page' => __('this documentation page','hueman'),
-                'to understand how to fix the problem.' => __('to understand how to fix the problem.','hueman')
+                'to understand how to fix the problem.' => __('to understand how to fix the problem.','hueman'),
+
+                //skope preview bottom informations
+                'The customizations made site wide are inherited by all other levels of customization.' => __('The customizations made site wide are inherited by all other levels of customization.', 'hueman'),
+                'The current context' => __('The current context', 'hueman'),
+                'can be customized more specifically at the following level' => __('can be customized more specifically at the following level', 'hueman'),
+                'The current customizations will be applied to' => __('The current customizations will be applied to', 'hueman'),
+                'The options not customized at this level will inherit their value from' => __('The options not customized at this level will inherit their value from', 'hueman'),
+                'can be customized more specifically at the following level' => __('can be customized more specifically at the following level', 'hueman'),
+                'can be customized with a specific set of options.' => __('can be customized with a specific set of options.', 'hueman'),
+                'The options not customized at this level will inherit their value from' => __('The options not customized at this level will inherit their value from', 'hueman')
             )
       )
   );
