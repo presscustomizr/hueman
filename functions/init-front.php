@@ -331,16 +331,9 @@ if ( ! function_exists( 'hu_print_logo_or_title' ) ) {
         }
 
         ob_start();
-          if ( hu_is_home() ) {
-              printf( '<%1$s class="site-title">%2$s</%1$s>',
-                  $is_image ? 'p' : 'h1',
-                  hu_do_render_logo_site_tite( $logo_or_title, false )
-              );
-          } else {
-              ?>
-                <p class="site-title"><?php hu_do_render_logo_site_tite( $logo_or_title ) ?></p>
-              <?php
-          }
+          ?>
+            <p class="site-title"><?php hu_do_render_logo_site_tite( $logo_or_title ) ?></p>
+          <?php
         $html = ob_get_contents();
         if ($html) ob_end_clean();
         if ( $echo )
