@@ -630,7 +630,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'default'   => 'stick_up',
                 'control'   => 'HU_controls',
                 'title'     => sprintf( '%1$s %2$s', __( 'Menus settings for', 'hueman' ) , __('Desktop devices', 'hueman' ) ),
-                'label'     => sprintf( '%1$s : %2$s', __('Desktop devices', 'hueman' ) , __('menu visibility on scroll', 'hueman') ),
+                'label'     => sprintf( '%1$s : %2$s', __('Desktop devices', 'hueman' ) , __('top menu visibility on scroll', 'hueman') ),
                 'section'   => 'header_menus_sec',
                 'type'      => 'select',
                 'choices'   => array(

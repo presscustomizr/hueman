@@ -1,4 +1,4 @@
-# Hueman v3.3.9
+# Hueman v3.3.10
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > Hueman is a mobile friendly WordPress theme for blogs, magazines and business websites. It's been designed to beautifully display pictures and text content, and engineered to be easy to use and fast. The Hueman theme helps you attract and retain more visitors, that's why it's already used by 70K+ active websites in the world and has received hundreds of five stars ratings.
@@ -73,6 +73,21 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 # Changelog
+= 3.3.10 April 28th 2017 =
+* fixed : blog description rendering and blogdescription partial refresh fixes #450
+* fixed : hu_get_search_title printing icons fixes #456
+* fixed : fix IE11 js compatibility fixes #435
+* fixed : Sticky sidebar, disabling on mobile should be consistent with wp_is_mobile()
+* fixed : header title or logo is not anymore wrapped in a h1 tag
+* added : desktop menus search field options. Users can now add the search field in top menu or in the header menu. Implemented for desktop and mobile devices.
+* added : hu_get_id() utility
+* added : HU_IS_PRO_ADDONS constant
+* added : implemented pro link
+* added : implemented a better sticky menu options. Users can now choose between : don't show on scroll, always visible, reveal on scroll up. Implemented for desktop and mobile devices.
+* improved : front end javascript framework performances
+* improved : sidebars are not sticky by default
+* improved : style.css comments
+
 = 3.3.9 April 6th 2017 =
 * fixed : update flexslider to the latest version #427
 * fixed : topbar width when global layout is boxed

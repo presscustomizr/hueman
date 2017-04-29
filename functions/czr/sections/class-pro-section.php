@@ -11,7 +11,7 @@ class HU_Customize_Section_Pro extends WP_Customize_Section {
      *
      * @var    string
      */
-    public $type ='hu-customize-section-pro';
+    public $type ='czr-customize-section-pro';
 
     /**
      * Custom button text to output.

@@ -376,28 +376,33 @@ function hu_maybe_transfer_option_tree_to_customizer( $_options ) {
 //2) user had not defined a custom logo in Hueman
 //=> display-header-logo set to false
 function hu_maybe_copy_logo_to_theme_mod( $_options ) {
-  //keep using the old logo if WP version < 4.5
-  if ( ! function_exists( 'the_custom_logo' ) )
-    return;
+    //keep using the old logo if WP version < 4.5
+    if ( ! function_exists( 'the_custom_logo' ) )
+      return;
 
-  $_old_custom_logo_exists = isset($_options['custom-logo']) && false != $_options['custom-logo'] && ! empty($_options['custom-logo']);
-  if ( $_old_custom_logo_exists ) {
-    set_theme_mod( 'custom_logo', $_options['custom-logo'] );
-    $_options['display-header-logo'] = 1;
-    unset($_options['custom-logo']);
-    update_option( HU_THEME_OPTIONS, $_options );
-  }
+    $_old_custom_logo_exists = isset($_options['custom-logo']) && false != $_options['custom-logo'] && ! empty($_options['custom-logo']);
+    if ( $_old_custom_logo_exists ) {
+        set_theme_mod( 'custom_logo', $_options['custom-logo'] );
+        $_options['display-header-logo'] = 1;
+        unset($_options['custom-logo']);
+        update_option( HU_THEME_OPTIONS, $_options );
+    }
 }
 
-
-//copy old options from option tree framework into new option raw 'hu_theme_options'
-//copy logo from previous to custom_logo introduced in wp 4.5
-//only if user is logged in
-if ( is_user_logged_in() && current_user_can( 'edit_theme_options' ) ) {
-  $_options = get_option( HU_THEME_OPTIONS );
-  hu_maybe_transfer_option_tree_to_customizer( $_options );
-  hu_maybe_copy_logo_to_theme_mod( $_options );
+//hook : hu_init_options_done
+//=> this hook is invoked in Utils::hu_init_properties(), when started_using_hueman transient has been set
+function hu_update_option_backward_compat() {
+    //copy old options from option tree framework into new option raw 'hu_theme_options'
+    //copy logo from previous to custom_logo introduced in wp 4.5
+    //only if user is logged in
+    if ( is_user_logged_in() && current_user_can( 'edit_theme_options' ) ) {
+      $_options = get_option( HU_THEME_OPTIONS );
+      hu_maybe_transfer_option_tree_to_customizer( $_options );
+      hu_maybe_copy_logo_to_theme_mod( $_options );
+    }
 }
+
+add_action( 'hu_init_options_done', 'hu_update_option_backward_compat' );
 
 
 

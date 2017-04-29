@@ -76,6 +76,9 @@ if ( ! class_exists( 'HU_utils' ) ) :
                 );
             }
       }
+      //the db updates for retro compat can be done now.
+      //=> @see functions/init-retro-compat.php
+      do_action('hu_init_options_done');
     }
 
 
