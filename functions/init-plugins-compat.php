@@ -215,7 +215,7 @@ function hu_set_woocommerce_compat() {
             </ul>
             <?php endif /*isset( $product )*/ ?>
           <?php else: ?>
-            <h2><?php woocommerce_page_title() ?></h2>
+            <h1><?php woocommerce_page_title() ?></h1>
           <?php endif ?>
         </div><!--/.page-title-->
       <?php

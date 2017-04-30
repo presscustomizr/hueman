@@ -665,7 +665,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'default'   => 'stick_up',
                 'control'   => 'HU_controls',
                 'title'     => sprintf( '%1$s %2$s', __( 'Menus settings for', 'hueman' ) , __('Mobile devices', 'hueman' ) ),
-                'label'     => sprintf( '%1$s : %2$s', __('Mobile devices', 'hueman' ) , __('menu visibility on scroll', 'hueman') ),
+                'label'     => sprintf( '%1$s : %2$s', __('Mobile devices', 'hueman' ) , __('top menu visibility on scroll', 'hueman') ),
                 'section'   => 'header_menus_sec',
                 'type'      => 'select',
                 'choices'   => array(
@@ -1527,7 +1527,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
 
       );
 
-      if ( ! HU_IS_PRO ) {
+      if ( ! HU_IS_PRO && ! hu_isprevdem() ) {
           //GO PRO SECTION
           $_sections = array_merge(
               array(

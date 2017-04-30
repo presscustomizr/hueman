@@ -2633,7 +2633,7 @@ box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
 	.format-link .post-format p { margin-bottom: 5px; }
 
   /* Don't display the sharre bar */
-  .sharrre-container { display: none;}
+  /*.sharrre-container { display: none;}*/
 
 }
 

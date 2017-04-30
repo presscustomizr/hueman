@@ -96,6 +96,7 @@ See headers of files for further details.
 * improved : front end javascript framework performances
 * improved : sidebars are not sticky by default
 * improved : style.css comments
+* improved : WooCommerce compatibility
 
 = 3.3.9 April 6th 2017 =
 * fixed : update flexslider to the latest version #427

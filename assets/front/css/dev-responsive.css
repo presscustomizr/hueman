@@ -299,7 +299,7 @@
 	.format-link .post-format p { margin-bottom: 5px; }
 
   /* Don't display the sharre bar */
-  .sharrre-container { display: none;}
+  /*.sharrre-container { display: none;}*/
 
 }
 
