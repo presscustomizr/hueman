@@ -665,6 +665,11 @@
         }
       });
     },
+    /* Hueman doesn't need date and time picker jquery plugins 
+    * we remove them for compatibility reasons. 
+    * See : https://github.com/presscustomizr/hueman/issues/454
+    */
+    /*
     bind_date_picker: function(field_id, date_format) {
       $('#'+field_id).datepicker({
         showOtherMonths: true,
@@ -681,6 +686,7 @@
         dateFormat: date_format
       });
     },
+    */
     fix_upload_parent: function() {
       $('.option-tree-ui-upload-input').not('.ot-upload-attachment-id').on('focus blur', function(){
         $(this).parent('.option-tree-ui-upload-parent').toggleClass('focus');
