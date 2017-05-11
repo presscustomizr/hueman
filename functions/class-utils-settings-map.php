@@ -237,6 +237,14 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 //'transport'     => 'postMessage',
                 'notice'        => __('Max-width of the container. If you use 2 sidebars, your container should be at least 1200px.<br /><i>Note: For 720px content (default) use <strong>1380px</strong> for 2 sidebars and <strong>1120px</strong> for 1 sidebar. If you use a combination of both, try something inbetween.</i>', 'hueman')//@todo sprintf and split translations
           ),
+          'boxed' => array(
+                'default'   => 0,
+                'control'   => 'HU_controls',
+                'label'     => __('Boxed Layout', 'hueman'),
+                'section'   => 'general_design_sec',
+                'type'      => 'checkbox',
+                'notice'    => __( 'Use a boxed layout' , 'hueman' )
+          ),
           'sidebar-padding' => array(
                 'default'   => '30',
                 'control'   => 'HU_controls',
@@ -318,14 +326,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'type'          => 'checkbox' ,
                 'notice'    => __( 'This will be applied to the links included in post or page content only.' , 'hueman' ),
                 //'transport'     => 'postMessage'
-          ),
-          'boxed' => array(
-                'default'   => 0,
-                'control'   => 'HU_controls',
-                'label'     => __('Boxed Layout', 'hueman'),
-                'section'   => 'general_design_sec',
-                'type'      => 'checkbox',
-                'notice'    => __( 'Use a boxed layout' , 'hueman' )
           )
       );
     }
@@ -510,6 +510,25 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'sanitize_js_callback' => 'maybe_hash_hex_color'
                 //'transport'   => 'postMessage'
           ),
+          'color-sticky-menu' => array(
+                'default'     => '#121d30',
+                'control'     => 'WP_Customize_Color_Control',
+                'label'       => __( 'Topbar background color on scroll' , 'hueman' ),
+                'section'     => 'header_design_sec',
+                'type'        =>  'color',
+                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
+                'sanitize_js_callback' => 'maybe_hash_hex_color',
+                'description'    => __( 'This color is applied when scrolling down, for desktop and mobile devices, when the top navigation bar becomes fixed or is revealed.' , 'hueman' )
+                //'transport'   => 'postMessage'
+          ),
+          'transparent-fixed-topnav' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __( 'Apply a semi-transparent filter to the topbar on scroll' , 'hueman' ),
+                'section'   => 'header_design_sec',
+                'type'      => 'checkbox',
+          ),
+
           'color-header' => array(
                 'default'     => hu_user_started_before_version( '3.3.8' ) ? '#33363b' : '#454e5c',
                 'control'     => 'WP_Customize_Color_Control',
