@@ -22,13 +22,15 @@ add_action( 'admin_enqueue_scripts', 'hu_post_formats_script');
  *  Loads and instanciates admin pages related classes
 /* ------------------------------------------------------------------------- */
 if ( is_admin() && ! hu_is_customizing() ) {
-  //Update notice
-  load_template( get_template_directory() . '/functions/admin/class-admin-update-notification.php' );
-  new HU_admin_update_notification;
-  if ( hu_is_checked('about-page') ) {
-    load_template( get_template_directory() . '/functions/admin/class-admin-page.php' );
-    new HU_admin_page;
-  }
+    if ( ! defined( 'HU_IS_PRO' ) || ! HU_IS_PRO ) {
+        //Update notice
+        load_template( get_template_directory() . '/functions/admin/class-admin-update-notification.php' );
+        new HU_admin_update_notification;
+    }
+    if ( hu_is_checked('about-page') ) {
+      load_template( get_template_directory() . '/functions/admin/class-admin-page.php' );
+      new HU_admin_page;
+    }
 }
 
 add_action( 'admin_init' , 'hu_admin_style' );
