@@ -1,4 +1,4 @@
-# Hueman v3.3.10
+# Hueman v3.3.11
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > Hueman is a mobile friendly WordPress theme for blogs, magazines and business websites. It's been designed to beautifully display pictures and text content, and engineered to be easy to use and fast. The Hueman theme helps you attract and retain more visitors, that's why it's already used by 70K+ active websites in the world and has received hundreds of five stars ratings.
@@ -73,6 +73,12 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 # Changelog
+= 3.3.11 May 11th 2017 =
+* fixed : Compatibility issue with the Event Calendar plugin on date picker ( fixes #454 )
+* fixed : wrong variable name in HU_utils::hu_cache_dp_options()
+* added a new option : in Header Design, "Topbar background color on scroll". This color is applied when scrolling down, for desktop and mobile devices, when the top navigation bar becomes fixed or is revealed. Default Hexadecimal value : #121d30 <= like the topbar default background ( fixes #469 )
+* added a new option : in Header Design, "Apply a semi-transparent filter to the topbar on scroll." Enabled by default. ( fixes #469 )
+
 = 3.3.10 April 28th 2017 =
 * fixed : blog description rendering and blogdescription partial refresh fixes #450
 * fixed : hu_get_search_title printing icons fixes #456
