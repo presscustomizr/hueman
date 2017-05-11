@@ -366,7 +366,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
     *
     */
     function hu_cache_db_options($opt_group = null) {
-      $opts_group = is_null($opt_group) ? HU_THEME_OPTIONS : $opt_group;
+      $opt_group = is_null( $opt_group ) ? HU_THEME_OPTIONS : $opt_group;
       $this -> db_options = false === get_option( $opt_group ) ? array() : (array)get_option( $opt_group );
       return $this -> db_options;
     }
