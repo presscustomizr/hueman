@@ -348,7 +348,7 @@ if ( ! function_exists( 'ot_admin_styles' ) ) {
     wp_enqueue_style( 'wp-color-picker' );
 
     /* load admin styles */
-    wp_enqueue_style( 'ot-admin-css', OT_URL . 'assets/css/ot-admin.css', false, OT_VERSION . '-' . HUEMAN_VERSION );
+    wp_enqueue_style( 'ot-admin-css', OT_URL . 'assets/css/ot-admin.css', false, OT_VERSION );
 
     /* load the RTL stylesheet */
     $wp_styles->add_data( 'ot-admin-css','rtl', true );
@@ -409,9 +409,9 @@ if ( ! function_exists( 'ot_admin_scripts' ) ) {
       /* Legacy Thickbox */
       add_thickbox();
     }
-    
-    /* Hueman doesn't need date and time picker jquery plugins 
-    * we remove them for compatibility reasons. 
+
+    /* Hueman doesn't need date and time picker jquery plugins
+    * we remove them for compatibility reasons.
     * See : https://github.com/presscustomizr/hueman/issues/454
     */
 
@@ -436,15 +436,15 @@ if ( ! function_exists( 'ot_admin_scripts' ) ) {
     }
 
     /* load all the required scripts */
-    wp_enqueue_script( 'ot-admin-js', OT_URL . 'assets/js/ot-admin.js', array( 
-      'jquery', 
-      'jquery-ui-tabs', 
-      'jquery-ui-sortable', 
-      'jquery-ui-slider', 
-      'wp-color-picker', 
-      'ace-editor', 
-    //  'jquery-ui-datepicker', 
-    //  'jquery-ui-timepicker' 
+    wp_enqueue_script( 'ot-admin-js', OT_URL . 'assets/js/ot-admin.js', array(
+      'jquery',
+      'jquery-ui-tabs',
+      'jquery-ui-sortable',
+      'jquery-ui-slider',
+      'wp-color-picker',
+      'ace-editor',
+    //  'jquery-ui-datepicker',
+    //  'jquery-ui-timepicker'
     ), OT_VERSION );
 
     /* create localized JS array */

@@ -399,7 +399,7 @@ function hu_is_ajax() {
 * helper ensuring backward compatibility with the previous option system
 * @return img src string
 */
-  function hu_get_img_src( $img ) {
+function hu_get_img_src( $img ) {
     if ( ! $img )
       return;
 
@@ -409,17 +409,17 @@ function hu_is_ajax() {
     $_attachment_id = '';
 
     //Get the img src
-    if ( is_numeric($img) ) {
-      $_attachment_id     = $img;
-      $_attachment_data   = apply_filters( "hu_attachment_img" , wp_get_attachment_image_src( $_attachment_id, 'full' ), $_attachment_id );
-      $_img_src           = $_attachment_data[0];
-      $_width             = ( isset($_attachment_data[1]) && $_attachment_data[1] > 1 ) ? $_attachment_data[1] : $_width;
-      $_height            = ( isset($_attachment_data[2]) && $_attachment_data[2] > 1 ) ? $_attachment_data[2] : $_height;
+    if ( is_numeric( $img ) ) {
+        $_attachment_id     = $img;
+        $_attachment_data   = apply_filters( "hu_attachment_img" , wp_get_attachment_image_src( $_attachment_id, 'full' ), $_attachment_id );
+        $_img_src           = $_attachment_data[0];
+        $_width             = ( isset($_attachment_data[1]) && $_attachment_data[1] > 1 ) ? $_attachment_data[1] : $_width;
+        $_height            = ( isset($_attachment_data[2]) && $_attachment_data[2] > 1 ) ? $_attachment_data[2] : $_height;
     } else { //old treatment
-      //rebuild the img path : check if the full path is already saved in DB. If not, then rebuild it.
-      $upload_dir         = wp_upload_dir();
-      $_saved_path        = esc_url ( $img );
-      $_img_src           = ( false !== strpos( $_saved_path , '/wp-content/' ) ) ? $_saved_path : $upload_dir['baseurl'] . $_saved_path;
+        //rebuild the img path : check if the full path is already saved in DB. If not, then rebuild it.
+        $upload_dir         = wp_upload_dir();
+        $_saved_path        = esc_url ( $img );
+        $_img_src           = ( false !== strpos( $_saved_path , '/wp-content/' ) ) ? $_saved_path : $upload_dir['baseurl'] . $_saved_path;
     }
 
     //return img source + make ssl compliant

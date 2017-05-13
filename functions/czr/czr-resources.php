@@ -275,12 +275,6 @@ function hu_add_customize_preview_data() {
 
 //hook : 'customize_controls_print_footer_scripts':10
 function hu_extend_ctrl_dependencies() {
-  $_header_img_notice = esc_js( sprintf( __( "When the %s, this element will not be displayed in your header.", 'hueman'),
-      sprintf('<a href="%1$s" title="%2$s">%2$s</a>',
-        "javascript:wp.customize.section(\'header_image_sec\').focus();",
-        __('header image is enabled', 'hueman')
-      )
-  ) );
   $_front_page_content_notice = esc_js( sprintf( __( "Jump to the %s.", 'hueman'),
       sprintf('<a href="%1$s" title="%2$s">%2$s</a>',
         "javascript:wp.customize.section(\'content_blog_sec\').focus();",
@@ -340,7 +334,7 @@ function hu_extend_ctrl_dependencies() {
                 },
                 {
                         dominus : 'display-header-logo',
-                        servi : ['logo-max-height', 'custom_logo', 'custom-logo' ],//depending on the WP version, the custom logo option is different.
+                        servi : ['logo-max-height', 'custom_logo', 'custom-logo', 'mobile-header-logo' ],//depending on the WP version, the custom logo option is different.
                         visibility : function( to ) {
                               return _is_checked(to);
                         }
@@ -348,62 +342,12 @@ function hu_extend_ctrl_dependencies() {
                 {
                         dominus : 'use-header-image',
                         onSectionExpand : false,
-                        servi : ['header_image', 'display-header-logo', 'custom_logo', 'custom-logo', 'logo-max-height', 'blogname', 'blogdescription', 'header-ads', 'site-description'],
+                        servi : ['header_image', 'logo-title-on-header-image', 'display-header-logo', 'custom_logo', 'custom-logo', 'logo-max-height', 'blogname', 'blogdescription', 'header-ads', 'site-description'],
                         visibility : function( to, servusShortId ) {
                               if ( 'header_image' != servusShortId )
                                 return 'unchanged';
                               return _is_checked(to);
-                        },
-                        actions : function( to, servusShortId ) {
-                              var wpServusId = api.CZR_Helpers.build_setId( servusShortId ),
-                                  shortServusId = api.CZR_Helpers.getOptionName( servusShortId ),
-                                  _return = api.control(wpServusId).active();
-
-                              //print a notice
-                              switch( shortServusId ) {
-                                    case 'display-header-logo' :
-                                    case 'custom_logo' :
-                                    case 'blogname' :
-                                    case 'blogdescription' :
-                                    case 'custom-logo' :
-                                    case 'header-ads' :
-                                    case 'site-description' :
-                                        if ( ! api.control.has(wpServusId) )
-                                          return;
-
-                                        if ( ! _is_checked(to) && $( '.hu-header-image-notice', api.control(wpServusId).container ).length ) {
-                                              $('.hu-header-image-notice', api.control(wpServusId).container ).remove();
-                                        } else if ( _is_checked(to) ) {
-                                              if ( $( '.hu-header-image-notice', api.control(wpServusId).container ).length )
-                                                return;
-                                              var _html = [
-                                                    '<span class="description customize-control-description hu-header-image-notice">',
-                                                    '<?php echo html_entity_decode( $_header_img_notice ); ?>',
-                                                    '</span>'
-                                              ].join('');
-                                              api.control(wpServusId).container.find('.customize-control-title').after( $.parseHTML( _html ) );
-                                        }
-                                    break;
-                              }
-
-                              //change opacity
-                              switch( shortServusId ) {
-                                    case 'display-header-logo' :
-                                    case 'logo-max-height' :
-                                    case 'custom_logo' :
-                                    case 'custom-logo' :
-                                    case 'header-ads' :
-                                    case 'site-description' :
-                                        if ( ! api.control.has(wpServusId) )
-                                          return;
-                                        if ( ! _is_checked(to) ) {
-                                              $(api.control(wpServusId).container ).css('opacity', 1);
-                                        } else {
-                                              $(api.control(wpServusId).container ).css('opacity', 0.6);
-                                        }
-                                    break;
-                              }
-                        }//actions()
+                        }
                   },
                   {
                         dominus : 'blog-heading-enabled',

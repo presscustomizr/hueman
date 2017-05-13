@@ -48,24 +48,38 @@
     <div class="container-inner">
 
       <?php if ( ! $_has_header_img || ! hu_is_checked( 'use-header-image' ) ) : ?>
-
               <div class="group pad central-header-zone">
-                <div class="logo-tagline-group">
-                    <?php hu_print_logo_or_title();//gets the logo or the site title ?>
-                    <?php if ( hu_is_checked('site-description') ) : ?>
-                        <p class="site-description"><?php hu_render_blog_description() ?></p>
-                    <?php endif; ?>
-                </div>
+                  <div class="logo-tagline-group">
+                      <?php hu_print_logo_or_title();//gets the logo or the site title ?>
+                      <?php if ( hu_is_checked('site-description') ) : ?>
+                          <p class="site-description"><?php hu_render_blog_description() ?></p>
+                      <?php endif; ?>
+                  </div>
 
-                <?php if ( hu_is_checked('header-ads') ) : ?>
-                    <div id="header-widgets">
-                        <?php hu_print_widgets_in_location( 'header-ads' ); ?>
-                    </div><!--/#header-ads-->
-                <?php endif; ?>
+                  <?php if ( hu_is_checked('header-ads') ) : ?>
+                      <div id="header-widgets">
+                          <?php hu_print_widgets_in_location( 'header-ads' ); ?>
+                      </div><!--/#header-ads-->
+                  <?php endif; ?>
               </div>
-
       <?php else :  ?>
           <div id="header-image-wrap">
+              <div class="group pad central-header-zone">
+                  <?php if ( hu_is_checked( 'logo-title-on-header-image' ) ) : ?>
+                      <div class="logo-tagline-group">
+                          <?php hu_print_logo_or_title();//gets the logo or the site title ?>
+                          <?php if ( hu_is_checked('site-description') ) : ?>
+                              <p class="site-description"><?php hu_render_blog_description() ?></p>
+                          <?php endif; ?>
+                      </div>
+                  <?php endif; ?>
+                  <?php if ( hu_is_checked('header-ads') ) : ?>
+                      <div id="header-widgets">
+                          <?php hu_print_widgets_in_location( 'header-ads' ); ?>
+                      </div><!--/#header-ads-->
+                  <?php endif; ?>
+              </div>
+
               <?php hu_render_header_image( $_header_img_src ); ?>
           </div>
       <?php endif; ?>

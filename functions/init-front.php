@@ -315,21 +315,44 @@ if ( ! function_exists( 'hu_render_header_image' ) ) {
   }
 }
 
+
+
+
 /*  Site name/logo and tagline callbacks
 /* ------------------------------------ */
-if ( ! function_exists( 'hu_print_logo_or_title' ) ) {
-    function hu_print_logo_or_title( $echo = true ) {
-        // Text or image?
-        // Since v3.2.4, uses the WP 'custom_logo' theme mod option. Set with a filter.
-        $is_image = false;
-        if ( false != hu_get_img_src_from_option( 'custom-logo' ) && apply_filters( 'hu_display_header_logo', hu_is_checked('display-header-logo') ) ) {
-            $logo_src = apply_filters( 'hu_header_logo_src' , hu_get_img_src_from_option( 'custom-logo' ) );
-            $logo_or_title = '<img src="'. $logo_src . '" alt="' . get_bloginfo('name'). '">';
-            $is_image = true;
-        } else {
-            $logo_or_title = get_bloginfo( 'name' );
-        }
+//@utility used on front end and partial refresh
+//@return string, either a textual or a logo imr src
+function hu_get_logo_title( $is_mobile_menu = false ) {
+    // Text or image?
+    // Since v3.2.4, uses the WP 'custom_logo' theme mod option. Set with a filter.
+    $logo_src = false;
+    $is_logo_src_set = false;
+    $logo_or_title = get_bloginfo( 'name' );
 
+    // Do we have to display a logo ?
+    // Then, let's display the relevant one ( desktop or mobile ), if set
+    if ( apply_filters( 'hu_display_header_logo', hu_is_checked( 'display-header-logo' ) ) ) {
+        //if $is_mobile_menu, let's check if we have a specific logo for mobile set
+        if ( $is_mobile_menu ) {
+            $logo_src = hu_get_img_src_from_option( 'mobile-header-logo' );
+            $is_logo_src_set = false !== $logo_src && ! empty( $logo_src );
+        }
+        if ( ( $is_mobile_menu && ! $is_logo_src_set ) || ! $is_mobile_menu ) {
+            $logo_src = hu_get_img_src_from_option( 'custom-logo' );
+            $is_logo_src_set = false !== $logo_src && ! empty( $logo_src );
+        }
+        if ( $is_logo_src_set ) {
+            $logo_src = apply_filters( 'hu_header_logo_src' , $logo_src, $is_mobile_menu );
+            $logo_or_title = '<img src="'. $logo_src . '" alt="' . get_bloginfo('name'). '">';
+        }
+    }//if apply_filters( 'hu_display_header_logo', hu_is_checked( 'display-header-logo' )
+    return $logo_or_title;
+}
+
+
+if ( ! function_exists( 'hu_print_logo_or_title' ) ) {
+    function hu_print_logo_or_title( $echo = true, $is_mobile_menu = false ) {
+        $logo_or_title = hu_get_logo_title( $is_mobile_menu );
         ob_start();
           ?>
             <p class="site-title"><?php hu_do_render_logo_site_tite( $logo_or_title ) ?></p>
@@ -348,14 +371,7 @@ if ( ! function_exists( 'hu_do_render_logo_site_tite' ) ) {
     function hu_do_render_logo_site_tite( $logo_or_title = null, $echo = true ) {
         //typically, logo_or_title is not provided when partially refreshed from the customizer
         if ( is_null( $logo_or_title ) || hu_is_ajax() ) {
-            // Text or image?
-            // Since v3.2.4, uses the WP 'custom_logo' theme mod option. Set with a filter.
-            if ( false != hu_get_img_src_from_option( 'custom-logo' ) && apply_filters( 'hu_display_header_logo', hu_is_checked('display-header-logo') ) ) {
-                $logo_src = apply_filters( 'hu_header_logo_src' , hu_get_img_src_from_option( 'custom-logo' ) );
-                $logo_or_title = '<img src="'. $logo_src . '" alt="' . get_bloginfo('name'). '">';
-            } else {
-                $logo_or_title = get_bloginfo('name');
-            }
+           $logo_or_title = hu_get_logo_title();
         }
         if ( $echo ) {
             printf( '<a class="custom-logo-link" href="%1$s" rel="home" title="%3$s">%2$s</a>',
@@ -892,7 +908,11 @@ if ( ! function_exists( 'hu_scripts' ) ) {
               )),
               'goldenRatio'         => apply_filters( 'hu_grid_golden_ratio' , 1.618 ),
               'gridGoldenRatioLimit' => apply_filters( 'hu_grid_golden_ratio_limit' , 350),
-              'sbStickyUserSettings' => array( 'desktop' => hu_is_checked('desktop-sticky-sb'), 'mobile' => hu_is_checked('mobile-sticky-sb') && wp_is_mobile() ),
+              'sbStickyUserSettings' => array(
+                  'desktop' => hu_is_checked('desktop-sticky-sb'),
+                  'mobile' => hu_is_checked( 'mobile-sticky-sb' )
+              ),
+              'isWPMobile' => wp_is_mobile(),
               'menuStickyUserSettings' => array(
                   'desktop' => hu_normalize_stick_menu_opt( hu_get_option('header-desktop-sticky') ),
                   'mobile'  => hu_normalize_stick_menu_opt( hu_get_option('header-mobile-sticky') )

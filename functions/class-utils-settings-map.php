@@ -157,6 +157,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     //IF WP VERSION >= 4.3 AND SITE_ICON SETTING EXISTS
     //=> The following FAV ICON CONTROL is removed (@see class-czr-init.php)
     function hu_site_identity_sec() {
+      global $wp_version;
       return array(
           'favicon'  => array(
                 'control'   =>  'HU_Customize_Upload_Control' ,
@@ -183,18 +184,35 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                     'priority' => '0'
                 )
           ),
+          'mobile-header-logo'  => array(
+                'control'   =>  version_compare( $wp_version, '4.3', '>=' ) ? 'HU_Customize_Cropped_Image_Control' : 'HU_Customize_Upload_Control',
+                'label'     =>  __( 'Use a specific logo for mobile devices' , 'hueman' ),
+                'title'     => __( 'Logo for mobiles', 'hueman' ),
+                'section'   => 'title_tagline' ,
+                'priority'  => 50,
+                'sanitize_callback' => array( $this , 'hu_sanitize_number' ),
+                //we can define suggested cropping area and allow it to be flexible (def 150x150 and not flexible)
+                'width'     => 120,
+                'height'    => 45,
+                'flex_width' => true,
+                'flex_height' => true,
+                //to keep the selected cropped size
+                'dst_width'  => false,
+                'dst_height'  => false,
+                'notice'    => __('Upload your custom logo image. Supported formats : .jpg, .png, .gif, svg, svgz' , 'hueman')
+          ),
           'logo-max-height'  =>  array(
                 'default'       => 60,
-                'priority'      => 9,
+                'priority'      => 7,
                 'control'       => 'HU_controls' ,
                 'sanitize_callback' => array( $this , 'hu_sanitize_number' ),
-                'label'         => sprintf( '%1$s %2$s' , __( "Header Logo Image Max-height" , 'hueman' ) , __('(in pixels)', 'hueman') ),
+                'label'         => sprintf( '%1$s : %2$s %3$s' , __('Desktop devices', 'hueman' ), __( "Header Logo Image Max-height" , 'hueman' ) , __('(in pixels)', 'hueman') ),
                 'section'       => 'title_tagline',
                 'type'          => 'number' ,
                 'step'          => 1,
                 'min'           => 20,
                 'transport'     => 'postMessage'
-          )
+          ),
       );
     }
 
@@ -562,7 +580,19 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'header_image_sec',
                 'type'      => 'checkbox',
                 'notice'    => __('Upload a header image (supported formats : .jpg, .png, .gif, svg, svgz). This will disable header title/logo, site description, header ads widget' , 'hueman')
-          )
+          ),
+          'logo-title-on-header-image' => array(
+                'default'   => 0,
+                'control'   => 'HU_controls',
+                'label'     => __( 'Display your logo or site title, and tagline on top of the header image' , 'hueman' ),
+                'section'   => 'header_image_sec',
+                'type'      => 'checkbox',
+                'notice'    => sprintf( '%3$s <strong><a href="%1$s" title="%3$s">%2$s</a><strong>',
+                    "javascript:wp.customize.section('title_tagline').focus();",
+                    __("here" , "hueman"),
+                    __("Set your logo, title and tagline", "hueman")
+                ),
+          ),
       );
     }
 
@@ -1158,7 +1188,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'     => sprintf( '%1$s : %2$s', __('Mobile devices', 'hueman' ) , __('make sidebars sticky on scroll', 'hueman') ),
                 'section'   => 'sidebars_design_sec',
                 'type'      => 'checkbox',
-                //'notice'    => __("Glues your website's sidebars on top of the page, making them permanently visible when scrolling up and down. Useful when a sidebar is too tall or too short compared to the rest of the content." , 'hueman')
+                'notice'    => __( "Decide if your sidebars should be sticky on tablets and smartphones devices." , 'hueman' )
           ),
           'mobile-sidebar-hide' => array(
                 'default'   => '1',

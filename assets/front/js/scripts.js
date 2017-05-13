@@ -4492,11 +4492,14 @@ var czrapp = czrapp || {};
         /* ------------------------------------ */
         //@return bool
         //HUParams.sbStickyUserSettings = { desktop : bool, mobile : bool }
+        //We need to combine the user option with the wp_is_mobile() boolean HUParams.isWPMobile
+        //=> fixes https://github.com/presscustomizr/hueman/issues/470
         _isStickyOptionOn : function() {
               var _dbOpt;
               if ( HUParams.sbStickyUserSettings && _.isObject( HUParams.sbStickyUserSettings ) ) {
                     _dbOpt = _.extend( { desktop : false, mobile : false }, HUParams.sbStickyUserSettings );
-                    return czrapp.userXP._isMobile() ? ( _dbOpt.mobile || false ) : ( _dbOpt.desktop || false );
+                    var _isMobile = '1' == HUParams.isWPMobile ? true : czrapp.userXP._isMobile();
+                    return _isMobile ? ( _dbOpt.mobile || false ) : ( _dbOpt.desktop || false );
               } else {
                     return false;
               }

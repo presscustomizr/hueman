@@ -93,7 +93,7 @@ if ( ! function_exists( 'hu_setup' ) ) {
     // Custom menu areas
     register_nav_menus( array(
       'topbar' => __( 'Topbar', 'hueman' ),
-      'mobile' => __( 'Mobile. Set a specific menu for mobile devices.', 'hueman' ),
+      'mobile' => __( 'Mobile. You can set a specific menu for mobile devices. If not set, the theme will use the menu assigned to the Topbar, or the Header.', 'hueman' ),
       'header' => __( 'Header', 'hueman' ),
       'footer' => __( 'Footer', 'hueman' )
     ) );

@@ -54,7 +54,7 @@ $we_have_a_menu = has_nav_menu( $mobile_menu_location ) || ! empty( $fallback_cb
 
 ?>
 <nav class="<?php echo implode(' ', $mobile_menu_classes ); ?>" id="nav-mobile" data-menu-id="<?php echo hu_get_menu_id( 'header'); ?>">
-  <div class="mobile-title-logo-in-header"><?php hu_print_logo_or_title();//gets the logo or the site title ?></div>
+  <div class="mobile-title-logo-in-header"><?php hu_print_logo_or_title( true, true );//gets the logo or the site title ?></div>
   <?php //if ( hu_has_nav_menu( 'topbar' ) || ! empty( $fallback_cb ) ) : ?>
     <?php //hu_print_mobile_btn(); ?>
   <?php //endif; ?>
