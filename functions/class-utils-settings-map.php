@@ -167,11 +167,23 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'type'      => 'czr_upload',
                 'sanitize_callback' => array( $this , 'hu_sanitize_number' )
           ),
+          'display-header-title' => array(
+                'default'   => 1,
+                'priority'  => 4,
+                'control'   => 'HU_controls',
+                'label'     => __( 'Display the site title in the header' , 'hueman' ),
+                'section'   => 'title_tagline',
+                'type'      => 'checkbox',
+                'ubq_section'   => array(
+                    'section' => 'header_design_sec',
+                    'priority' => '0'
+                )
+          ),
           'display-header-logo' => array(
                 'default'   => 0,
                 'priority'  => 5,
                 'control'   => 'HU_controls',
-                'label'     => __( 'Display a logo in your header' , 'hueman' ),
+                'label'     => __( 'Display a logo in the header' , 'hueman' ),
                 'section'   => 'title_tagline',
                 'type'      => 'checkbox',
                 'notice'    => sprintf( '%3$s <strong><a href="%1$s" title="%3$s">%2$s</a><strong>',
@@ -536,7 +548,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'type'        =>  'color' ,
                 'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
                 'sanitize_js_callback' => 'maybe_hash_hex_color',
-                'transport'   => 'postMessage'
+                'transport'   => ( ( defined( 'HU_IS_PRO_ADDONS' ) && HU_IS_PRO_ADDONS ) || ( defined('HU_IS_PRO') && HU_IS_PRO  ) ) ? 'refresh' : 'postMessage'
           ),
           'color-header-menu' => array(
                 'default'     => hu_user_started_before_version( '3.3.8' ) ? '#33363b' : '#454e5c',
@@ -546,7 +558,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'type'        =>  'color' ,
                 'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
                 'sanitize_js_callback' => 'maybe_hash_hex_color',
-                'transport'   => 'postMessage'
+                'transport'   => ( ( defined( 'HU_IS_PRO_ADDONS' ) && HU_IS_PRO_ADDONS ) || ( defined('HU_IS_PRO') && HU_IS_PRO  ) ) ? 'refresh' : 'postMessage'
           ),
           'color-mobile-menu' => array(
                 'default'     => hu_user_started_before_version( '3.3.8' ) ? '#33363b' : '#454e5c',

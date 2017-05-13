@@ -327,7 +327,7 @@ function hu_get_logo_title( $is_mobile_menu = false ) {
     // Since v3.2.4, uses the WP 'custom_logo' theme mod option. Set with a filter.
     $logo_src = false;
     $is_logo_src_set = false;
-    $logo_or_title = get_bloginfo( 'name' );
+    $logo_or_title = hu_is_checked( 'display-header-title' ) ? get_bloginfo( 'name' ) : '';
 
     // Do we have to display a logo ?
     // Then, let's display the relevant one ( desktop or mobile ), if set
@@ -353,10 +353,13 @@ function hu_get_logo_title( $is_mobile_menu = false ) {
 if ( ! function_exists( 'hu_print_logo_or_title' ) ) {
     function hu_print_logo_or_title( $echo = true, $is_mobile_menu = false ) {
         $logo_or_title = hu_get_logo_title( $is_mobile_menu );
+        // => If no logo is set and  ! hu_is_checked( 'display-header-title' ), the logo title is empty.
         ob_start();
-          ?>
-            <p class="site-title"><?php hu_do_render_logo_site_tite( $logo_or_title ) ?></p>
-          <?php
+          if ( ! empty( $logo_or_title ) ) {
+              ?>
+                <p class="site-title"><?php hu_do_render_logo_site_tite( $logo_or_title ) ?></p>
+              <?php
+          }
         $html = ob_get_contents();
         if ($html) ob_end_clean();
         if ( $echo )
@@ -373,18 +376,21 @@ if ( ! function_exists( 'hu_do_render_logo_site_tite' ) ) {
         if ( is_null( $logo_or_title ) || hu_is_ajax() ) {
            $logo_or_title = hu_get_logo_title();
         }
-        if ( $echo ) {
-            printf( '<a class="custom-logo-link" href="%1$s" rel="home" title="%3$s">%2$s</a>',
-                home_url('/'),
-                $logo_or_title,
-                sprintf( '%1$s | %2$s', get_bloginfo('name') , __('Home page', 'hueman') )
-            );
-        } else {
-            return sprintf( '<a class="custom-logo-link" href="%1$s" rel="home" title="%3$s">%2$s</a>',
-                home_url('/'),
-                $logo_or_title,
-                sprintf( '%1$s | %2$s', get_bloginfo('name') , __('Home page', 'hueman') )
-            );
+        // => If no logo is set and  ! hu_is_checked( 'display-header-title' ), the logo title is empty.
+        if ( ! empty( $logo_or_title ) ) {
+            if ( $echo ) {
+                printf( '<a class="custom-logo-link" href="%1$s" rel="home" title="%3$s">%2$s</a>',
+                    home_url('/'),
+                    $logo_or_title,
+                    sprintf( '%1$s | %2$s', get_bloginfo('name') , __('Home page', 'hueman') )
+                );
+            } else {
+                return sprintf( '<a class="custom-logo-link" href="%1$s" rel="home" title="%3$s">%2$s</a>',
+                    home_url('/'),
+                    $logo_or_title,
+                    sprintf( '%1$s | %2$s', get_bloginfo('name') , __('Home page', 'hueman') )
+                );
+            }
         }
     }
 }

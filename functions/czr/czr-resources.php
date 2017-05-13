@@ -342,10 +342,8 @@ function hu_extend_ctrl_dependencies() {
                 {
                         dominus : 'use-header-image',
                         onSectionExpand : false,
-                        servi : ['header_image', 'logo-title-on-header-image', 'display-header-logo', 'custom_logo', 'custom-logo', 'logo-max-height', 'blogname', 'blogdescription', 'header-ads', 'site-description'],
+                        servi : [ 'header_image', 'logo-title-on-header-image' ] ,
                         visibility : function( to, servusShortId ) {
-                              if ( 'header_image' != servusShortId )
-                                return 'unchanged';
                               return _is_checked(to);
                         }
                   },
