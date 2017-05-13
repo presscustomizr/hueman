@@ -449,6 +449,41 @@ function hu_extend_ctrl_dependencies() {
                         visibility : function ( to ) {
                               return _is_checked(to);
                         }
+                  },
+                  {
+                        dominus : 'header_mobile_menu_layout',
+                        servi : [
+                              'mobile-search',
+                              'header-mobile-sticky',
+                              'color-mobile-menu',
+                              'transparent-fixed-topnav'
+                        ],
+                        visibility : function( to, servusShortId ) {
+                              return 'both_menus' != to;
+                        }
+                  },
+                  {
+                        dominus : 'nav_menu_locations[topbar]',
+                        servi : [ 'default-menu-header'],
+                        visibility : function( to ) { return 0 == to; }
+                  },
+                  {
+                        dominus : 'nav_menu_locations[mobile]',
+                        servi : [ 'header_mobile_menu_layout'],
+                        visibility : function( to ) { return true; },
+                        actions : function( to, servusShortId ) {
+                              if ( 0 == to )
+                                return;
+                              var wpServusId = api.CZR_Helpers.build_setId( servusShortId ),
+                                  $_select = api.control( wpServusId ).container.find("select");
+                                  //$_select.find( 'option[value="pull-menu-center"]' )[ is_header_centered ? 'removeAttr': 'attr']('disabled', 'disabled');
+                                  $_select.selecter( 'destroy' );
+                                  _.delay( function() {
+                                      api( wpServusId )( 'mobile_menu' );
+                                      $_select.selecter();
+                                  }, 200 );
+
+                        }
                   }
             ]//dominiDeps {}
       );//_.extend()

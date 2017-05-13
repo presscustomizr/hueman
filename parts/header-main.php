@@ -4,6 +4,7 @@
     $class_map = array(
         'main_menu'   => 'main-menu-mobile-on',
         'top_menu'    => 'top-menu-mobile-on',
+        'mobile_menu' => 'specific-mobile-menu-on',
         'both_menus'  => 'both-menus-mobile-on'
     );
     $mobile_menu_opt = hu_get_option( 'header_mobile_menu_layout' );

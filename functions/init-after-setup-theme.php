@@ -92,9 +92,10 @@ if ( ! function_exists( 'hu_setup' ) ) {
 
     // Custom menu areas
     register_nav_menus( array(
-      'topbar' => 'Topbar',
-      'header' => 'Header',
-      'footer' => 'Footer',
+      'topbar' => __( 'Topbar', 'hueman' ),
+      'mobile' => __( 'Mobile. Set a specific menu for mobile devices.', 'hueman' ),
+      'header' => __( 'Header', 'hueman' ),
+      'footer' => __( 'Footer', 'hueman' )
     ) );
   }
 

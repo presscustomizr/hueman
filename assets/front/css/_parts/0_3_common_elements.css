@@ -93,7 +93,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 /*  common : nav
 /* ------------------------------------ */
 .nav-container { background: #888; z-index: 99; position: relative; }
-.nav-toggle { display: none; background: #777; cursor: pointer; float: right; height: 50px; width: 60px; color: #fff; text-align: center; }
+.nav-toggle { display: none; background: #33363b; cursor: pointer; float: right; height: 50px; width: 60px; color: #fff; text-align: center; }
 .nav-toggle i { font-size: 1.75rem; padding: 13px 0; }
 .nav-text { display: none; position: absolute;right:52px;font-size: 1em; line-height: 1.5em; padding: 13px 20px; }
 .nav li > a:after,
@@ -227,7 +227,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 }
 .ham__navbar-toggler-two .line {
   display: block;
-  background: #cecece;
+  background: #ffffff;
   width: 20px;
   height: 1.5px;
   position: absolute;
@@ -348,10 +348,10 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
   .safari .nav-wrap.transition { -webkit-transition: none; transition: none; }
   /* common */
   .nav { float: left; width: 100%; }
-  .nav li a { line-height: 1.6em; display: block; padding: 8px 20px; }
-  .nav li li a { padding-left: 15px; padding-right: 15px; }
+  .nav li a { line-height: 1.6em; display: block; padding: 8px 13px; }
+  /*.nav li li a { padding-left: 15px; padding-right: 15px; }*/
   /* dropdown arrows */
-  .nav li > a:after { content: '\f0d7'; opacity: 0.1; margin-left: 6px; font-size: 0.6rem; }
+  .nav li > a:after { content: '\f0d7'; opacity: 0; margin-left: 6px; font-size: 0.6rem; }
   .nav > li > a:after { content: '\f0d7'; font-size: 0.6rem; }
   .nav li > a:only-child:after { content: ''; }
   /* level 1 */
@@ -361,8 +361,17 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
   .nav li.current-menu-item > a,
   .nav li.current-post-parent > a { color: #fff; }
   /* level 2 & 3 */
-  .nav ul { display: block!important; margin-left: 40px; }
+  .nav ul { display: block!important;}
+
+  /*.nav a { padding-left:25px;}*/
+  .nav ul a { padding-left:37px;}
+  .nav ul ul a { padding-left:65px;}
+  .nav ul ul ul a { padding-left:90px;}
+  .nav ul ul ul ul a { padding-left:115px;}
+  .nav ul ul ul ul ul a { padding-left:140px;}
+  .nav ul ul ul ul ul ul a { padding-left:165px;}
+  .nav ul ul ul ul ul ul ul a { padding-left:190px;}
+
   .nav ul li { font-size: 0.85rem; font-weight: 300; }
   .nav ul li a { padding-top: 6px; padding-bottom: 6px; }
-
 }

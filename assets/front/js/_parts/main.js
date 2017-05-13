@@ -2551,7 +2551,9 @@ var czrapp = czrapp || {};
               // If not mobile :
               //=> on init, on resize and each time the menu is expanded remotely by the app
               var _mayBeToggleArrow = function( force ) {
-                    $( _sel, $topbar ).css( { display : ( ( $topbarNavWrap.height() > 60 || force ) && ! czrapp.userXP._isMobile() ) ? 'inline-block' : '' } );
+                    $( _sel, $topbar ).css( {
+                          display : ( ( $topbarNavWrap.height() > 60 || force ) && ! czrapp.userXP._isMobile() ) ? 'inline-block' : ''
+                    } );
               };
               var _updateMaxWidth = function() {
                     $topbar.css( { 'max-width' : czrapp.$_window.width() } );
@@ -2559,7 +2561,7 @@ var czrapp = czrapp || {};
 
               //reveal arrow on init, on resize
               //update max width on init, on resize
-              _mayBeToggleArrow();
+              _.delay( _mayBeToggleArrow, 100 );
               _updateMaxWidth();
               czrapp.userXP.windowWidth.bind( function() {
                     //always update the max-width on resize

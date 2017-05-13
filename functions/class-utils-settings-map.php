@@ -188,7 +188,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'priority'      => 9,
                 'control'       => 'HU_controls' ,
                 'sanitize_callback' => array( $this , 'hu_sanitize_number' ),
-                'label'         => __( "Header Logo Image Max-height" , 'hueman' ),
+                'label'         => sprintf( '%1$s %2$s' , __( "Header Logo Image Max-height" , 'hueman' ) , __('(in pixels)', 'hueman') ),
                 'section'       => 'title_tagline',
                 'type'          => 'number' ,
                 'step'          => 1,
@@ -510,25 +510,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'sanitize_js_callback' => 'maybe_hash_hex_color'
                 //'transport'   => 'postMessage'
           ),
-          'color-sticky-menu' => array(
-                'default'     => '#121d30',
-                'control'     => 'WP_Customize_Color_Control',
-                'label'       => __( 'Topbar background color on scroll' , 'hueman' ),
-                'section'     => 'header_design_sec',
-                'type'        =>  'color',
-                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
-                'sanitize_js_callback' => 'maybe_hash_hex_color',
-                'description'    => __( 'This color is applied when scrolling down, for desktop and mobile devices, when the top navigation bar becomes fixed or is revealed.' , 'hueman' )
-                //'transport'   => 'postMessage'
-          ),
-          'transparent-fixed-topnav' => array(
-                'default'   => 1,
-                'control'   => 'HU_controls',
-                'label'     => __( 'Apply a semi-transparent filter to the topbar on scroll' , 'hueman' ),
-                'section'   => 'header_design_sec',
-                'type'      => 'checkbox',
-          ),
-
           'color-header' => array(
                 'default'     => hu_user_started_before_version( '3.3.8' ) ? '#33363b' : '#454e5c',
                 'control'     => 'WP_Customize_Color_Control',
@@ -558,7 +539,14 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
                 'sanitize_js_callback' => 'maybe_hash_hex_color',
                 //'transport'   => 'postMessage'
-          )
+          ),
+          'transparent-fixed-topnav' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __( 'Apply a semi-transparent filter to the topbar and mobile menu on scroll' , 'hueman' ),
+                'section'   => 'header_design_sec',
+                'type'      => 'checkbox',
+          ),
         );
     }
 
@@ -679,11 +667,32 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                     'priority' => '120'
                 )
           ),
-
+          'header_mobile_menu_layout' => array(
+                'default'   => hu_user_started_before_version( '3.3.8' ) ? 'main_menu' : 'top_menu',
+                'control'   => 'HU_controls',
+                'title'     => sprintf( '%1$s %2$s', __( 'Menus settings for', 'hueman' ) , __('Mobile devices', 'hueman' ) ),
+                'label'     => __( 'Select the menu(s) to use for mobile devices', 'hueman'),
+                'section'   => 'header_menus_sec',
+                'type'      => 'select',
+                'choices'   => array(
+                    'main_menu' => __('Header Menu', 'hueman'),
+                    'top_menu'  => __('Topbar Menu', 'hueman'),
+                    'mobile_menu' => __('Specific Mobile Menu', 'hueman'),
+                    'both_menus' => __( 'Topbar and header menus, logo centered', 'hueman')
+                ),
+                'notice'    => sprintf( '%1$s<br/>%2$s <br/>%3$s',
+                    __( 'When your visitors are using a smartphone or a tablet, the header becomes a thin bar on top, where the menu is revealed when clicking on the hamburger button. This option let you choose which menu will be displayed.' , 'hueman' ),
+                    __( 'If the selected menu location has no menu assigned, the theme will try to assign another menu in this order : topbar, mobile, header.' , 'hueman' ),
+                    $nav_section_desc
+                ),
+                'ubq_section'   => array(
+                    'section' => 'menu_locations',
+                    'priority' => '100'
+                )
+          ),
           'header-mobile-sticky' => array(
                 'default'   => 'stick_up',
                 'control'   => 'HU_controls',
-                'title'     => sprintf( '%1$s %2$s', __( 'Menus settings for', 'hueman' ) , __('Mobile devices', 'hueman' ) ),
                 'label'     => sprintf( '%1$s : %2$s', __('Mobile devices', 'hueman' ) , __('top menu visibility on scroll', 'hueman') ),
                 'section'   => 'header_menus_sec',
                 'type'      => 'select',
@@ -695,26 +704,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'ubq_section'   => array(
                     'section' => 'menu_locations',
                     'priority' => '130'
-                )
-          ),
-          'header_mobile_menu_layout' => array(
-                'default'   => hu_user_started_before_version( '3.3.8' ) ? 'main_menu' : 'top_menu',
-                'control'   => 'HU_controls',
-                'label'     => __( 'Select the menu(s) to use for mobile devices', 'hueman'),
-                'section'   => 'header_menus_sec',
-                'type'      => 'select',
-                'choices'   => array(
-                    'main_menu' => __('Header Menu', 'hueman'),
-                    'top_menu'  => __('Topbar Menu', 'hueman'),
-                    'both_menus' => __( 'Topbar and header menus, logo centered', 'hueman')
-                ),
-                'notice'    => sprintf( '%1$s %2$s',
-                    __( 'When your visitors are using a smartphone or a tablet, the header becomes a top bar, where menu(s) are revealed when clicking on the hamburger button. This option let you choose which menu(s) will be displayed.' , 'hueman' ),
-                    $nav_section_desc
-                ),
-                'ubq_section'   => array(
-                    'section' => 'menu_locations',
-                    'priority' => '100'
                 )
           ),
           'header_mobile_btn' => array(

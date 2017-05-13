@@ -18,6 +18,8 @@ function hu_isprevdem() {
     return apply_filters( 'hu_isprevdem', ! $is_dirty && hu_get_raw_option( 'template', null, false ) != get_stylesheet() && ! is_child_theme() && ! HU_IS_PRO  );
 }
 
+
+
 /****************************************************************************
 ****************************** HELPERS **************************************
 *****************************************************************************/
@@ -120,6 +122,13 @@ function hu_is_customizing() {
     return hu_is_customize_left_panel() || hu_is_customize_preview_frame() || hu_doing_customizer_ajax();
 }
 
+//@return boolean
+//Is used to check if we can display specific notes including deep links to the customizer
+function hu_user_can_see_customize_notices_on_front() {
+    return ! hu_is_customizing() && is_user_logged_in() && current_user_can( 'edit_theme_options' ) && is_super_admin();
+}
+
+
 
 //@return boolean
 function hu_is_partial_refreshed_on() {
@@ -200,6 +209,7 @@ function hu_user_started_before_version( $_ver, $_pro_ver = null ) {
 
 /**
 * Is there a menu assigned to a given location ?
+* If not, are we in the case where a default page menu can be used has fallback ?
 * @param $location string can be header, footer, topbar
 * @return bool
 */
@@ -249,6 +259,8 @@ function hu_get_raw_option( $opt_name = null, $opt_group = null, $from_cache = t
         return $opt_value;
     }
 }
+
+
 
 
 

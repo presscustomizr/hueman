@@ -76,7 +76,6 @@ See headers of files for further details.
 = 3.3.11 May 11th 2017 =
 * fixed : Compatibility issue with the Event Calendar plugin on date picker ( fixes #454 )
 * fixed : wrong variable name in HU_utils::hu_cache_dp_options()
-* added a new option : in Header Design, "Topbar background color on scroll". This color is applied when scrolling down, for desktop and mobile devices, when the top navigation bar becomes fixed or is revealed. Default Hexadecimal value : #121d30 <= like the topbar default background ( fixes #469 )
 * added a new option : in Header Design, "Apply a semi-transparent filter to the topbar on scroll." Enabled by default. ( fixes #469 )
 
 = 3.3.10 April 28th 2017 =
