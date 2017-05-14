@@ -370,7 +370,7 @@ input:-ms-input-placeholder {
 	/* text-shadow: 0 1px 0 #FFF; */
 	margin: 1em 0em 5px 0em;
 	font-size: 15px!important;
-	border-bottom: 1px dotted #00a0d2;
+	border-bottom: 1px dotted #555;
 	padding-bottom: 5px;
   text-align: center;
 }

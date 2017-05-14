@@ -447,8 +447,13 @@ if ( ! function_exists('alx_post_images') ) {
 
 if ( ! function_exists('alx_related_posts') ) {
   function alx_related_posts() {
-    return hu_related_posts();
+    return hu_get_related_posts();
   }
+}
+if ( ! function_exists('hu_related_posts')) {
+    function hu_related_posts() {
+      return hu_get_related_posts();
+    }
 }
 
 if ( ! function_exists('alx_sidebar_secondary') ) {

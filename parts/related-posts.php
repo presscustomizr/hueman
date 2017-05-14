@@ -1,4 +1,4 @@
-<?php $related = hu_related_posts(); ?>
+<?php $related = hu_get_related_posts(); ?>
 
 <?php if ( $related->have_posts() ): ?>
 

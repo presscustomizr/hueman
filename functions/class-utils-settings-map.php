@@ -1100,15 +1100,18 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'     => __("Single - Author Bio", 'hueman'),
                 'section'   => 'content_single_sec',
                 'type'      => 'checkbox',
+                'priority'  => 10,
                 'notice'    => __( 'Display post author description, if it exists' , 'hueman'),
                 'active_callback' => function_exists('HU_AD') ? 'hu_is_single' : ''//enabled when hueman-addons is enabled
           ),
           'related-posts' => array(
                 'default'   => 'categories',
                 'control'   => 'HU_controls',
+                'title'     => __("Related posts", 'hueman'),
                 'label'     => __("Single - Related Posts", 'hueman'),
                 'section'   => 'content_single_sec',
                 'type'      => 'select',
+                'priority'  => 20,
                 'choices' => array(
                   '1'           => __( 'Disable' , 'hueman' ),
                   'categories'  => __( 'Related by categories' , 'hueman' ),
@@ -1120,9 +1123,11 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           'post-nav' => array(
                 'default'   => 's1',
                 'control'   => 'HU_controls',
+                'title'     => __("Post navigation", 'hueman'),
                 'label'     => __("Post navigation in single posts", 'hueman'),
                 'section'   => 'content_single_sec',
                 'type'      => 'select',
+                'priority'  => 30,
                 'choices' => array(
                   '1'           => __( 'Disable' , 'hueman' ),
                   's1'          => __( 'Left Sidebar' , 'hueman' ),
