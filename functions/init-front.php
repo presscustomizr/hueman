@@ -580,6 +580,7 @@ function hu_get_related_posts() {
         }
         if ( ! $tags ) { $break = true; }
     }
+    // if isset( $break ), returns and empty query
     return ! isset( $break ) ? new WP_Query( $args ) : new WP_Query;
 }
 
@@ -590,20 +591,20 @@ function hu_get_related_posts() {
 if ( ! function_exists( 'hu_post_images' ) ) {
 
   function hu_post_images( $args=array() ) {
-    global $post;
+      global $post;
 
-    $defaults = array(
-      'numberposts'   => -1,
-      'order'       => 'ASC',
-      'orderby'     => 'menu_order',
-      'post_mime_type'  => 'image',
-      'post_parent'   =>  $post->ID,
-      'post_type'     => 'attachment',
-    );
+      $defaults = array(
+        'numberposts'   => -1,
+        'order'       => 'ASC',
+        'orderby'     => 'menu_order',
+        'post_mime_type'  => 'image',
+        'post_parent'   =>  $post->ID,
+        'post_type'     => 'attachment',
+      );
 
-    $args = wp_parse_args( $args, $defaults );
+      $args = wp_parse_args( $args, $defaults );
 
-    return get_posts( $args );
+      return get_posts( $args );
   }
 
 }

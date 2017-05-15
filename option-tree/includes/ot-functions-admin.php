@@ -348,7 +348,7 @@ if ( ! function_exists( 'ot_admin_styles' ) ) {
     wp_enqueue_style( 'wp-color-picker' );
 
     /* load admin styles */
-    wp_enqueue_style( 'ot-admin-css', OT_URL . 'assets/css/ot-admin.css', false, OT_VERSION );
+    wp_enqueue_style( 'ot-admin-css', OT_URL . 'assets/css/ot-admin.css', false, time() );
 
     /* load the RTL stylesheet */
     $wp_styles->add_data( 'ot-admin-css','rtl', true );

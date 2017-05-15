@@ -46,6 +46,6 @@
 
 <?php if ( 'content' == hu_get_option( 'post-nav' ) ) { get_template_part( 'parts/post-nav' ); } ?>
 
-<?php if ( '1' != hu_get_option( 'related-posts' ) ) { hu_get_template_part( 'parts/related-posts' ); } ?>
+<?php if ( apply_filters( 'hu_is_related_posts_enabled', '1' != hu_get_option( 'related-posts' ) ) ) { hu_get_template_part( 'parts/related-posts' ); } ?>
 
 <?php if ( hu_is_checked('post-comments') ) { comments_template('/comments.php',true); } ?>
