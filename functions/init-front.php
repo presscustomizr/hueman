@@ -921,7 +921,10 @@ if ( ! function_exists( 'hu_scripts' ) ) {
               ),
               'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('CZR_DEV') && true === CZR_DEV ),
               //AJAX
-              'ajaxUrl'       => admin_url( 'admin-ajax.php' ),
+              'ajaxUrl'        => add_query_arg(
+                      array( 'huajax' => true ), //to scope our ajax calls
+                      set_url_scheme( home_url( '/' ) )
+              ),
               'huFrontNonce'   => array( 'id' => 'HuFrontNonce', 'handle' => wp_create_nonce( 'hu-front-nonce' ) )
             )
         )//end of filter
@@ -1430,12 +1433,47 @@ function hu_walk_page_tree($pages, $depth, $current_page, $r) {
 //This ajax requests solves the problem of knowing if wp_is_mobile() in a front js script, when the website is using a cache plugin
 //without a cache plugin, we could localize the wp_is_mobile() boolean
 //with a cache plugin, we need to always get a fresh answer from the server
-add_action( 'wp_ajax_hu_wp_is_mobile', 'hu_ajax_wp_is_mobile' );
+add_action( 'after_setup_theme', 'hu_ajax_response' );
+add_action( 'hu_ajax_hu_wp_is_mobile', 'hu_ajax_wp_is_mobile' );
 //'huFrontNonce'   => array( 'id' => 'HuFrontNonce', 'handle' => wp_create_nonce( 'hu-front-nonce' ) )
-function hu_ajax_wp_is_mobile() {
+function hu_ajax_response() {
+
+    //check
+    if ( !hu_is_ajax() )
+        return false;
+
+    //do nothing if not doing a specific huajax call
+    if ( ! ( isset( $_GET[ 'huajax' ] ) && $_GET[ 'huajax' ] ) )
+        return false;
+
+
+    // Require an action parameter
+    if ( empty( $_REQUEST['action'] ) )
+        die( '0' );
+
+    if ( ! defined( 'DOING_AJAX' ) )
+        define( 'DOING_AJAX', true );
+
     check_ajax_referer( 'hu-front-nonce', 'HuFrontNonce' );
+
+    // Don't load the admin bar when doing the AJAX response.
+    show_admin_bar( false );
+
+    @header( 'Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );
+    send_nosniff_header();
+
+    /**
+     * Fires at the end of the Infinite Scroll Ajax response.
+     */
+    do_action( "hu_ajax_{$_REQUEST['action']}"  );
+    die( '0' );
+
+}
+
+function hu_ajax_wp_is_mobile() {
+
     wp_send_json_success( array( 'is_mobile' => wp_is_mobile() ) );
-    //wp_send_json_error(
+
 }
 
 
