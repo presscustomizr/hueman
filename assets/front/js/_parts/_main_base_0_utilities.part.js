@@ -97,6 +97,45 @@ var czrapp = czrapp || {};
 
             console.log.apply( console, czrapp._prettyfy( { bgCol : '#ffd5a0', textCol : '#000', consoleArguments : arguments } ) );
       };
+
+      //encapsulates a WordPress ajax request in a normalize method
+      //@param query = { ... }
+      czrapp.doAjax = function( query ) {
+            //do we have a query ?
+            query = query || ( _.isObject( query ) ? query : {} );
+
+            var ajaxUrl = HUParams.ajaxUrl,
+                nonce = HUParams.huFrontNonce,//{ 'id' : '', 'handle' : '' }
+                dfd = $.Deferred(),
+                _query_ = _.extend( {
+                            action : ''
+                      },
+                      query
+                );
+
+            //check if we're good
+            if ( _.isEmpty( _query_.action ) || ! _.isString( _query_.action ) ) {
+                  czrapp.errorLog( 'czrapp.doAjax : unproper action provided' );
+                  return dfd.resolve().promise();
+            }
+            //setup nonce
+            _query_[ nonce.id ] = nonce.handle;
+            if ( ! _.isObject( nonce ) || _.isUndefined( nonce.id ) || _.isUndefined( nonce.handle ) ) {
+                  czrapp.errorLog( 'czrapp.doAjax : unproper nonce' );
+                  return dfd.resolve().promise();
+            }
+
+            $.post( ajaxUrl, _query_ )
+                  .done( function( _r ) {
+                        // Check if the user is logged out.
+                        if ( '0' === _r ||  '-1' === _r ) {
+                              czrapp.errorLog( 'czrapp.doAjax : ajax error for : ', _query_.action, _r );
+                        }
+                  })
+                  .fail( function( _r ) { czrapp.errorLog( 'czrapp.doAjax : ajax error for : ', _query_.action, _r ); })
+                  .always( function( _r ) { dfd.resolve( _r ); });
+            return dfd.promise();
+      };
 })(jQuery, czrapp);
 
 

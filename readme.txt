@@ -76,7 +76,34 @@ See headers of files for further details.
 = 3.3.11 May 11th 2017 =
 * fixed : Compatibility issue with the Event Calendar plugin on date picker ( fixes #454 )
 * fixed : wrong variable name in HU_utils::hu_cache_dp_options()
+* fixed : search field background color in main header not inheriting the correct color
+* fixed : dekstop tobpar down arrow not showing up because fired too early
+* fixed : sticky sidebars not properly disabled on tablets when option set
+* fixed : php notice for undefined HUEMAN_VERSION constant in admin
+* fixed : replaced OT_VERSION by time() for ot-admin-css as version param
 * added a new option : in Header Design, "Apply a semi-transparent filter to the topbar on scroll." Enabled by default. ( fixes #469 )
+* updated : Hueman Addons thumbnail
+* updated : hu_related_posts by hu_get_related_posts. Retro compatibiliy handled in functions/init-retro-compat.php
+* improved : esc_url gmpg.org/xfn/11 to better support https protocol
+* improved : remove ot datepicker and timepicker - hueman doesn't use them fixes #454
+* improved : customizer control visibility dependencies
+* improved : get wp_is_mobile() on front with an ajax request. Fixed #470
+* improved : utility hu_booleanize_checkbox_val()
+* improved : Mobile menu, if the selected menu location has no menu assigned, the theme will try to assign another menu in this order : topbar, mobile, header.
+* improved : mobile children menu items style
+* improved : mobile menu search field centering and width. Use of css calc()
+* improved : the header ads widget can now be displayed on top of the header image
+* improved : tmpl parts/related-posts now loaded with hu_get_template_part() to easily override it
+* added : mobile menu, specific for mobile devices
+* added : mobile menu notice for admin user if not mobile menu assigned
+* added : new option to set a specific logo for mobile devices
+* added : new option to print the logo / title and tagline on top of the header image
+* added : new option Display the site title in the header. Enabled by default
+* added : include attachments in search results
+* added : fitText jQuery plugin ( < 1kb )
+* added : js ajax utility
+* added : utility hu_user_can_see_customize_notices_on_front()
+* added : filter 'hu_is_related_posts_enabled' as condition to display the related_posts tmpl
 
 = 3.3.10 April 28th 2017 =
 * fixed : blog description rendering and blogdescription partial refresh fixes #450
@@ -124,7 +151,7 @@ See headers of files for further details.
 * removed : dynamic style option. Dynamic style is now applied for each option as soon as the user change the option to a value different than default.
 
 = 3.3.7 March 8th 2017 =
-* fixed : drag resize image inserted into visual editor #415 
+* fixed : drag resize image inserted into visual editor #415
 
 = 3.3.6 March 1st 2017 =
 * fixed : bug on threaded comments font-size getting too small since latest update
@@ -345,7 +372,7 @@ See headers of files for further details.
 = 3.1.0 April 16th 2016 =
 * fixed : wrong path to the default font Titillium in main stylesheet
 * fixed : child theme stylesheet : style.css is loaded again as a dependency of the parent Hueman theme style, to make it easier to override the main stylesheet rules
-* fixed : php notice undefined var _faq_url in /wp-content/themes/hueman/functions/class-admin-page.php 
+* fixed : php notice undefined var _faq_url in /wp-content/themes/hueman/functions/class-admin-page.php
 
 = 3.0.12 April 15th 2016  =
 * fixed : social icon default color is back to rgba(255,255,255,0.7)
