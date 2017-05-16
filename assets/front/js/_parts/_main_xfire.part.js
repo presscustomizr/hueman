@@ -26,11 +26,11 @@ var czrapp = czrapp || {};
                   if ( self.dom_ready && _.isArray( self.dom_ready ) ) {
                         czrapp.status = czrapp.status || [];
                         _.each( self.dom_ready , function( _m_ ) {
-                              if ( ! _.isFunction( self[_m_]) ) {
+                              if ( ! _.isFunction( _m_ ) && ! _.isFunction( self[_m_]) ) {
                                     czrapp.status.push( 'Method ' + _m_ + ' was not found and could not be fired on DOM ready.');
                                     return;
                               }
-                              try { self[_m_](); } catch( er ){
+                              try { ( _.isFunction( _m_ ) ? _m_ : self[_m_] ).call( self ); } catch( er ){
                                     czrapp.status.push( [ 'NOK', self.id + '::' + _m_, _.isString( er ) ? czrapp._truncate( er ) : er ].join( ' => ') );
                                     return;
                               }
@@ -42,12 +42,31 @@ var czrapp = czrapp || {};
 
       czrapp.Base           = czrapp.Root.extend( czrapp.methods.Base );
 
+      //is resolved on 'czrapp-ready', which is triggered when
+      //1) the initial map method has been instantiated
+      //2) all methods have been fired on DOM ready;
       czrapp.ready          = $.Deferred();
-
       czrapp.bind( 'czrapp-ready', function() {
             czrapp.ready.resolve();
       });
 
+      //SERVER MOBILE USER AGENT
+      czrapp.isMobileUserAgent = new czrapp.Value( false );
+      //This ajax requests solves the problem of knowing if wp_is_mobile() in a front js script, when the website is using a cache plugin
+      //without a cache plugin, we could localize the wp_is_mobile() boolean
+      //with a cache plugin, we need to always get a fresh answer from the server
+      //falls back on HUParams.isWPMobile ( which can be cached, so not fully reliable )
+      czrapp.browserAgentSet = $.Deferred( function() {
+            var _dfd = this;
+            czrapp.doAjax( { action: "hu_wp_is_mobile" } )
+                  .always( function( _r_ ) {
+                        czrapp.isMobileUserAgent( ( ! _r_.success || _.isUndefined( _r_.data.is_mobile ) ) ? ( '1' == HUParams.isWPMobile ) : _r_.data.is_mobile );
+                        _dfd.resolve( czrapp.isMobileUserAgent() );
+                  });
+      });
+
+      //THE DEFAULT MAP
+      //Other methods can be hooked. @see czrapp.customMap
       var appMap = {
                 base : {
                       ctor : czrapp.Base,
@@ -80,7 +99,13 @@ var czrapp = czrapp || {};
                             'widgetTabs',
                             'commentTabs',
                             'tableStyle',
-                            'sidebarToLife',
+                            //the sidebar can be set to life properly once we know, from the server, if we display a mobile device or not.
+                            function() {
+                                  var self = this;
+                                  czrapp.browserAgentSet.done( function() {
+                                        self.sidebarToLife();
+                                  });
+                            },
                             'dropdownMenu',
                             'mobileMenu',
                             'topNavToLife'
@@ -89,7 +114,7 @@ var czrapp = czrapp || {};
       };//map
 
       //Instantiates
-      var _instantiate = function( newMap, previousMap, isInitial ) {
+      var _instantianteAndFireOnDomReady = function( newMap, previousMap, isInitial ) {
             if ( ! _.isObject( newMap ) )
               return;
             _.each( newMap, function( params, name ) {
@@ -140,11 +165,11 @@ var czrapp = czrapp || {};
                   //trigger czrapp-ready when the default map has been instantiated
                   czrapp.trigger( isInitial ? 'czrapp-ready' : 'czrapp-updated' );
             });
-      };//_instantiate()
+      };//_instantianteAndFireOnDomReady()
 
       //instantiates the default map
       //@param : new map, previous map, isInitial bool
-      _instantiate( appMap, null, true );
+      _instantianteAndFireOnDomReady( appMap, null, true );
 
       //instantiate additional classes on demand
       //EXAMPLE IN THE PRO HEADER SLIDER PHP TMPL :
@@ -173,6 +198,6 @@ var czrapp = czrapp || {};
       //       }
       // }
       czrapp.customMap = new czrapp.Value( {} );
-      czrapp.customMap.bind( _instantiate );//<=THE CUSTOM MAP IS LISTENED TO HERE
+      czrapp.customMap.bind( _instantianteAndFireOnDomReady );//<=THE CUSTOM MAP IS LISTENED TO HERE
 
 })( czrapp, jQuery, _ );

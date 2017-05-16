@@ -377,8 +377,6 @@ czrapp.methods = {};
        * A collection of observable values.
        *
        * @constructor
-       * @augments wp.customize.Class
-       * @mixes wp.customize.Events
        */
       czrapp.Values = czrapp.Class.extend({
 
@@ -574,7 +572,7 @@ czrapp.methods = {};
         }
       });
 
-      // Create a global events bus on the Customizer.
+      // Create a global events bus
       $.extend( czrapp.Values.prototype, czrapp.Events );
 
 })( HUParams, jQuery );

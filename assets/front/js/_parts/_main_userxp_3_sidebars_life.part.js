@@ -37,6 +37,8 @@ var czrapp = czrapp || {};
         // the viewport is wider than 480px
         //
         // Losing stickyfiability ( on resize when going < 480 px ) will trigger a stickyness reset of the css class and style attributes for the sidebar.
+
+        //FIRED ON czrapp.browserAgentSet.done() <= ajax request to set the browser agent
         sidebarToLife : function() {
               var self = this;
               self.sidebars = new czrapp.Values();
@@ -169,13 +171,17 @@ var czrapp = czrapp || {};
         /* ------------------------------------ */
         //@return bool
         //HUParams.sbStickyUserSettings = { desktop : bool, mobile : bool }
-        //We need to combine the user option with the wp_is_mobile() boolean HUParams.isWPMobile
+        //We need to combine the user option with the wp_is_mobile() boolean
+        //wp_is_mobile() must be always get from the server asynchronously and saved in czrapp.isMobileUserAgent()
+        // => Because a localized hardcoded param could be cached by a plugin.
         //=> fixes https://github.com/presscustomizr/hueman/issues/470
         _isStickyOptionOn : function() {
-              var _dbOpt;
+              var _dbOpt,
+                  _isMobile = false;
               if ( HUParams.sbStickyUserSettings && _.isObject( HUParams.sbStickyUserSettings ) ) {
+                    //User settings
                     _dbOpt = _.extend( { desktop : false, mobile : false }, HUParams.sbStickyUserSettings );
-                    var _isMobile = '1' == HUParams.isWPMobile ? true : czrapp.userXP._isMobile();
+                    _isMobile = czrapp.isMobileUserAgent() ? true : czrapp.userXP._isMobile();
                     return _isMobile ? ( _dbOpt.mobile || false ) : ( _dbOpt.desktop || false );
               } else {
                     return false;

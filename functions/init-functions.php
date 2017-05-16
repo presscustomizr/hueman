@@ -149,12 +149,16 @@ function hu_is_checked( $opt_name = '') {
 function hu_booleanize_checkbox_val( $val ) {
     if ( ! $val )
       return false;
+    if ( is_bool( $val ) && $val )
+      return true;
     switch ( (string) $val ) {
       case 'off':
       case '' :
+      case 'false' :
         return false;
       case 'on':
       case '1' :
+      case 'true' :
         return true;
       default : return false;
     }

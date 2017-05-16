@@ -919,7 +919,10 @@ if ( ! function_exists( 'hu_scripts' ) ) {
                   'desktop' => hu_normalize_stick_menu_opt( hu_get_option('header-desktop-sticky') ),
                   'mobile'  => hu_normalize_stick_menu_opt( hu_get_option('header-mobile-sticky') )
               ),
-              'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('CZR_DEV') && true === CZR_DEV )
+              'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('CZR_DEV') && true === CZR_DEV ),
+              //AJAX
+              'ajaxUrl'       => admin_url( 'admin-ajax.php' ),
+              'huFrontNonce'   => array( 'id' => 'HuFrontNonce', 'handle' => wp_create_nonce( 'hu-front-nonce' ) )
             )
         )//end of filter
        );//wp_localize_script()
@@ -1264,6 +1267,9 @@ function hu_get_template_part( $path ) {
 
 
 
+
+
+
 /* ------------------------------------------------------------------------- *
  *  Page Menu
 /* ------------------------------------------------------------------------- */
@@ -1407,4 +1413,53 @@ function hu_walk_page_tree($pages, $depth, $current_page, $r) {
 
   $args = array($pages, $depth, $r, $current_page);
   return call_user_func_array(array($walker, 'walk'), $args);
+}
+
+
+
+
+
+
+
+
+
+
+/* ------------------------------------------------------------------------- *
+ *  AJAX
+/* ------------------------------------------------------------------------- */
+//This ajax requests solves the problem of knowing if wp_is_mobile() in a front js script, when the website is using a cache plugin
+//without a cache plugin, we could localize the wp_is_mobile() boolean
+//with a cache plugin, we need to always get a fresh answer from the server
+add_action( 'wp_ajax_hu_wp_is_mobile', 'hu_ajax_wp_is_mobile' );
+//'huFrontNonce'   => array( 'id' => 'HuFrontNonce', 'handle' => wp_create_nonce( 'hu-front-nonce' ) )
+function hu_ajax_wp_is_mobile() {
+    check_ajax_referer( 'hu-front-nonce', 'HuFrontNonce' );
+    wp_send_json_success( array( 'is_mobile' => wp_is_mobile() ) );
+    //wp_send_json_error(
+}
+
+
+
+
+/* ------------------------------------------------------------------------- *
+ *  Include attachments in search results
+/* ------------------------------------------------------------------------- */
+add_action ( 'pre_get_posts' , 'hu_include_attachments_in_search' );
+/**
+* hook : pre_get_posts
+* @return  void()
+* Includes attachments in search results
+*/
+function hu_include_attachments_in_search( $query ) {
+    if (! is_search() || ! apply_filters( 'hu_include_attachments_in_search_results' , false ) )
+      return;
+
+    // add post status 'inherit'
+    $post_status = $query->get( 'post_status' );
+    if ( ! $post_status || 'publish' == $post_status )
+      $post_status = array( 'publish', 'inherit' );
+    if ( is_array( $post_status ) )
+      $post_status[] = 'inherit';
+
+    $query->set( 'post_status', $post_status );
 }
