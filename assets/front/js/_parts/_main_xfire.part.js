@@ -63,6 +63,11 @@ var czrapp = czrapp || {};
                         czrapp.isMobileUserAgent( ( ! _r_.success || _.isUndefined( _r_.data.is_mobile ) ) ? ( '1' == HUParams.isWPMobile ) : _r_.data.is_mobile );
                         _dfd.resolve( czrapp.isMobileUserAgent() );
                   });
+            //always auto resolve after 1.5s if the server is too slow.
+            _.delay( function() {
+                if ( 'pending' == _dfd.state() )
+                  _dfd.resolve( false );
+            }, 1500 );
       });
 
       //THE DEFAULT MAP

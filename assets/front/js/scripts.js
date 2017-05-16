@@ -2770,6 +2770,11 @@ var czrapp = czrapp || {};
                       query
                 );
 
+            // HTTP ajaxurl when site is HTTPS causes Access-Control-Allow-Origin failure in Desktop and iOS Safari
+            if ( "https:" == document.location.protocol ) {
+                  ajaxUrl = ajaxUrl.replace( "http://", "https://" );
+            }
+
             //check if we're good
             if ( _.isEmpty( _query_.action ) || ! _.isString( _query_.action ) ) {
                   czrapp.errorLog( 'czrapp.doAjax : unproper action provided' );
@@ -2786,10 +2791,10 @@ var czrapp = czrapp || {};
                   .done( function( _r ) {
                         // Check if the user is logged out.
                         if ( '0' === _r ||  '-1' === _r ) {
-                              czrapp.errorLog( 'czrapp.doAjax : ajax error for : ', _query_.action, _r );
+                              czrapp.errorLog( 'czrapp.doAjax : done ajax error for : ', _query_.action, _r );
                         }
                   })
-                  .fail( function( _r ) { czrapp.errorLog( 'czrapp.doAjax : ajax error for : ', _query_.action, _r ); })
+                  .fail( function( _r ) { czrapp.errorLog( 'czrapp.doAjax : failed ajax error for : ', _query_.action, _r ); })
                   .always( function( _r ) { dfd.resolve( _r ); });
             return dfd.promise();
       };
@@ -5591,6 +5596,11 @@ var czrapp = czrapp || {};
                         czrapp.isMobileUserAgent( ( ! _r_.success || _.isUndefined( _r_.data.is_mobile ) ) ? ( '1' == HUParams.isWPMobile ) : _r_.data.is_mobile );
                         _dfd.resolve( czrapp.isMobileUserAgent() );
                   });
+            //always auto resolve after 1.5s if the server is too slow.
+            _.delay( function() {
+                if ( 'pending' == _dfd.state() )
+                  _dfd.resolve( false );
+            }, 1500 );
       });
 
       //THE DEFAULT MAP
