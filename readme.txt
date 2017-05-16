@@ -73,11 +73,11 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 # Changelog
-= 3.3.11 May 11th 2017 =
+= 3.3.11 May 16th 2017 =
 * fixed : Compatibility issue with the Event Calendar plugin on date picker ( fixes #454 )
 * fixed : wrong variable name in HU_utils::hu_cache_dp_options()
 * fixed : search field background color in main header not inheriting the correct color
-* fixed : dekstop tobpar down arrow not showing up because fired too early
+* fixed : desktop tobpar down arrow not showing up because fired too early
 * fixed : sticky sidebars not properly disabled on tablets when option set
 * fixed : php notice for undefined HUEMAN_VERSION constant in admin
 * fixed : replaced OT_VERSION by time() for ot-admin-css as version param
