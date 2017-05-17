@@ -1483,7 +1483,7 @@ add_action ( 'pre_get_posts' , 'hu_include_attachments_in_search' );
 * Includes attachments in search results
 */
 function hu_include_attachments_in_search( $query ) {
-    if (! is_search() || ! apply_filters( 'hu_include_attachments_in_search_results' , false ) )
+    if ( ! $query -> is_search || ! apply_filters( 'hu_include_attachments_in_search_results' , hu_is_checked( 'attachments-in-search' ) ) )
       return;
 
     // add post status 'inherit'

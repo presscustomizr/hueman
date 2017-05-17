@@ -457,12 +457,15 @@ function hu_get_img_src_from_option( $option_name ) {
 function hu_the_post_thumbnail( $size = 'post-thumbnail', $attr = '', $placeholder = true ) {
     $html = '';
     $post = get_post();
-    if ( ! $post || ! has_post_thumbnail() ) {
-      if ( hu_is_checked('placeholder') && (bool)$placeholder ) {
-        $html = hu_get_placeholder_thumb( $size );
-      }
+    $is_attachment = is_object( $post ) && isset( $post -> post_type ) && 'attachment' == $post -> post_type;
+    if ( ! $post || ( ! $is_attachment && ! has_post_thumbnail() ) ) {
+        if ( hu_is_checked('placeholder') && (bool)$placeholder ) {
+            $html = hu_get_placeholder_thumb( $size );
+        }
+    } else if ( $is_attachment ) {//typically : the case when attachment are included in search results
+        $html = wp_get_attachment_image( $post -> ID, $size, false, $attr );
     } else {
-      $html = get_the_post_thumbnail( null, $size, $attr );
+        $html = get_the_post_thumbnail( null, $size, $attr );
     }
 
     echo apply_filters( 'hu_post_thumbnail_html', $html, $size, $attr );
