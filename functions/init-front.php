@@ -1451,9 +1451,6 @@ function hu_ajax_response() {
     //'huFrontNonce'   => array( 'id' => 'HuFrontNonce', 'handle' => wp_create_nonce( 'hu-front-nonce' ) )
     check_ajax_referer( 'hu-front-nonce', 'HuFrontNonce' );
 
-    // Don't load the admin bar when doing the AJAX response.
-    show_admin_bar( false );
-
     @header( 'Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );
     send_nosniff_header();
 
