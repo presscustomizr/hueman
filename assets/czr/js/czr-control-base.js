@@ -343,7 +343,7 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
       * ADD PRO BEFORE SPECIFIC SECTIONS AND PANELS
       *****************************************************************************/
       if ( serverControlParams.isPro ) {
-            _.each( [ 'tc_font_customizer_settings', 'header_image_sec', 'content_blog_sec', 'static_front_page' ], function( _secId ) {
+            _.each( [ 'tc_font_customizer_settings', 'header_image_sec', 'content_blog_sec', 'static_front_page', 'content_single_sec' ], function( _secId ) {
                   _.delay( function() {
                       api.section.when( _secId, function( _sec_ ) {
                             if ( 1 >= _sec_.headContainer.length ) {

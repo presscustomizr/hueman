@@ -93,33 +93,33 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     function hu_popul_setting_control_map( $_map, $get_default = null ) {
       $_new_map = array();
       $_settings_sections = array(
-        //GENERAL
-        'hu_site_identity_sec',
-        'hu_general_design_sec',
-        'hu_comments_sec',
-        'hu_smoothscroll_sec',
-        'hu_mobiles_sec',
-        'hu_social_links_sec',
-        'hu_performance_sec',
-        'hu_admin_sec',
+          //GENERAL
+          'hu_site_identity_sec',
+          'hu_general_design_sec',
+          'hu_comments_sec',
+          'hu_smoothscroll_sec',
+          'hu_mobiles_sec',
+          'hu_search_sec',
+          'hu_social_links_sec',
+          'hu_performance_sec',
+          'hu_admin_sec',
 
-        //HEADER
-        'hu_header_design_sec',
-        'hu_header_image_sec',
-        'hu_header_widget_sec',
-        'hu_header_menus_sec',
+          //HEADER
+          'hu_header_design_sec',
+          'hu_header_image_sec',
+          'hu_header_widget_sec',
+          'hu_header_menus_sec',
 
-        //CONTENT
-        //'hu_content_home_sec',
-        'hu_content_blog_sec',
-        'hu_content_single_sec',
-        'hu_content_thumbnail_sec',
-        'hu_content_layout_sec',
-        'hu_sidebars_design_sec',
+          //CONTENT
+          //'hu_content_home_sec',
+          'hu_content_blog_sec',
+          'hu_content_single_sec',
+          'hu_content_thumbnail_sec',
+          'hu_content_layout_sec',
+          'hu_sidebars_design_sec',
 
-        //FOOTER
-        'hu_footer_design_sec'
-
+          //FOOTER
+          'hu_footer_design_sec'
       );
 
       foreach ( $_settings_sections as $_section_cb ) {
@@ -447,6 +447,20 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
       );
     }
 
+    /*-----------------------------------------------------------------------------------------------------
+                                   SEARCH RESULTS SECTION
+    ------------------------------------------------------------------------------------------------------*/
+    function hu_search_sec() {
+      return array(
+          'attachments-in-search' => array(
+                'default'   => 0,
+                'control'   => 'HU_controls',
+                'label'     => __('Include images in search results', 'hueman'),
+                'section'   => 'search_sec',
+                'type'      => 'checkbox'
+          )
+      );
+    }
 
     /*-----------------------------------------------------------------------------------------------------
                                    PERFORMANCE SECTION
@@ -1565,8 +1579,13 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
               'panel'   => 'hu-advanced-panel'
         ),
         'mobiles_sec'         => array(
-              'title'    => __( 'Mobile devices', 'hueman' ),
+              'title'    => __( 'Mobile Devices', 'hueman' ),
               'priority' => 20,
+              'panel'   => 'hu-advanced-panel'
+        ),
+        'search_sec'         => array(
+              'title'    => __( 'Search Results', 'hueman' ),
+              'priority' => 25,
               'panel'   => 'hu-advanced-panel'
         ),
         'performance_sec'         => array(

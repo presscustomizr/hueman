@@ -17,6 +17,7 @@ box-shadow: 0 1px 1px rgba(0,0,0,0.1); }
 .single .post,
 .archive .post,
 .search .post,
+.search .grid-item,
 .search .page { margin-bottom: 40px; }
 
 .sticky {}
@@ -57,17 +58,27 @@ box-shadow: 0 1px 1px rgba(0,0,0,0.1); }
 /* woocommerce */
 .products .featured { border-bottom: none }
 /* end woocommerce */
+
+
 /*  post : custom loop
 /* ------------------------------------ */
 .post-list { margin-right: -30px; }
 .post-list .post-row { margin-left: -30px; padding-left: 30px; float: left; width: 100%; border-bottom: 1px solid #eee; margin-bottom: 30px; position: relative; }
 .post-list .post-row:last-child { border: none; margin-bottom: 0; }
 .post-list .post,
+.post-list .grid-item,
 .post-list .page { width: 50%; float: left; }
 .post-list .post-inner { margin-right: 30px; }
 .post-hover:hover .post-thumbnail { opacity: 0.75; }
 .post-hover:hover .post-title a { color: #16cfc1; }
 .post-hover:hover .thumb-icon { background: #fff; color: #111; }
+/* Maybe avoid flickering on post hover */
+.post-hover, .post-hover .post-thumbnail {
+  webkit-backface-visibility : hidden;
+  backface-visibility: hidden;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
 
 .post-thumbnail { width: 100%; -webkit-transition: all 1s ease; -moz-transition: all 1s ease; transition: all 1s ease; }
 .post-thumbnail { position: relative; margin-bottom: 1em; }
@@ -80,6 +91,8 @@ box-shadow: inset -1px 0 1px rgba(0,0,0,0.2); }
 .post-comments > span:before { content:''; display: inline-block; border-left: 9px solid transparent; border-right: 9px solid #efb93f; border-top: 9px solid transparent; border-bottom: 9px solid transparent; position: absolute; top: 3px; left: -16px; }
 .post-comments i { margin-right: 3px; }
 .post-comments:hover { color: #fff!important; padding-right: 4px; }
+/* don't display the comments on attachment in a search result page */
+.search-results .attachment a.post-comments {display: none!important; }
 
 .post-meta { text-transform: uppercase; font-size: 0.875em; font-weight: 400; color: #bbb; margin-bottom: 0.3em; }
 .post-meta .post-category { float: left; margin-right: 6px; }

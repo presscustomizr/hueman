@@ -1,7 +1,7 @@
 # Hueman v3.3.11
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
-> Hueman is a mobile friendly WordPress theme for blogs, magazines and business websites. It's been designed to beautifully display pictures and text content, and engineered to be easy to use and fast. The Hueman theme helps you attract and retain more visitors, that's why it's already used by 70K+ active websites in the world and has received hundreds of five stars ratings.
+> The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 80K+ websites around the world.
 
 View more themes from this author: http://presscustomizr.com
 
@@ -113,6 +113,7 @@ See headers of files for further details.
 * added : js ajax utility
 * added : utility hu_user_can_see_customize_notices_on_front()
 * added : filter 'hu_is_related_posts_enabled' as condition to display the related_posts tmpl
+* added : new option to include attachment images in search results. In the customizer, Advanced Options > Search Results.
 
 = 3.3.10 April 28th 2017 =
 * fixed : blog description rendering and blogdescription partial refresh fixes #450
