@@ -114,6 +114,7 @@ See headers of files for further details.
 * added : utility hu_user_can_see_customize_notices_on_front()
 * added : filter 'hu_is_related_posts_enabled' as condition to display the related_posts tmpl
 * added : new option to include attachment images in search results. In the customizer, Advanced Options > Search Results.
+* added : a dismissable welcome note on front for new users
 
 = 3.3.10 April 28th 2017 =
 * fixed : blog description rendering and blogdescription partial refresh fixes #450

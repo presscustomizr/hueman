@@ -190,7 +190,7 @@ function hu_user_started_before_version( $_ver, $_pro_ver = null ) {
 
     $_start_version_infos = explode( '|', esc_attr( get_transient( $_trans ) ) );
 
-    if ( ! is_array( $_start_version_infos ) )
+    if ( ! is_array( $_start_version_infos ) || count( $_start_version_infos ) < 2 )
       return false;
 
     switch ( $_start_version_infos[0] ) {
@@ -208,6 +208,25 @@ function hu_user_started_before_version( $_ver, $_pro_ver = null ) {
             return false;
         break;
     }
+}
+
+//@return bool
+function hu_user_started_with_current_version() {
+    if ( HU_IS_PRO )
+      return;
+
+    $_trans = 'started_using_hueman';
+    //the transient is set in HU_utils::hu_init_properties()
+    if ( ! get_transient( $_trans ) )
+      return false;
+
+    $_start_version_infos = explode( '|', esc_attr( get_transient( $_trans ) ) );
+
+    //make sure we're good at this point
+    if ( ! is_string( HUEMAN_VER ) || ! is_array( $_start_version_infos ) || count( $_start_version_infos ) < 2 )
+      return false;
+
+    return 'with' == $_start_version_infos[0] && version_compare( $_start_version_infos[1] , HUEMAN_VER, '==' );
 }
 
 
