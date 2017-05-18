@@ -113,7 +113,8 @@ var czrapp = czrapp || {};
                             },
                             'dropdownMenu',
                             'mobileMenu',
-                            'topNavToLife'
+                            'topNavToLife',
+                            'mayBePrintWelcomeNote'
                       ]
                 }
       };//map
