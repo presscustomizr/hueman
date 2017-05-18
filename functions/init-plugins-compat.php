@@ -418,8 +418,8 @@ function hu_wfc_selector_title( $_list) {
             //'marketing'               => __( 'Featured Pages', 'hueman' ),
             'single_post_title'       => __( 'Single Post titles' , 'hueman' ),
             'single_page_title'       => __( 'Single Page titles' , 'hueman' ),
-            'post_content'            => __( 'Post content' , 'hueman' ),
-            'post_excerpt'            => __( 'Post excerpt' , 'hueman' ),
+            'post_content'            => __( 'Post/Page content' , 'hueman' ),
+            'post_excerpt'            => __( 'Post/Page excerpt' , 'hueman' ),
             'post_lists'              => __( 'Lists in post/pages' , 'hueman' ),
             'single_category_meta'    => __( 'Single Post Categories meta' , 'hueman' ),
             'single_tag'              => __( 'Single Post tags' , 'hueman' ),
@@ -428,7 +428,6 @@ function hu_wfc_selector_title( $_list) {
             'postlist_category_meta'  => __( 'Post list category meta' , 'hueman' ),
             'single_tags'             => __( 'Single post tags' , 'hueman' ),
             'comment_meta'            => __( 'Comments metas' , 'hueman' ),
-            'sidebars_social_links'   => __( 'Sidebar Social Links' , 'hueman' ),
             'sidebars_top'            => __( 'Sidebar Top Boxes' , 'hueman' ),
             'footer_social_links'     => __( 'Footer Social Links', 'hueman' )
   );
