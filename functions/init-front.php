@@ -639,9 +639,9 @@ if ( ! function_exists( 'hu_get_featured_post_ids' ) ) {
 *  + an animated svg icon
 *  the src property can be filtered
 /* ------------------------------------ */
-if ( ! function_exists( 'hu_get_placeholder_thumb' ) ) {
+if ( ! function_exists( 'hu_print_placeholder_thumb' ) ) {
 
-  function hu_get_placeholder_thumb( $_requested_size = 'thumb-medium' ) {
+  function hu_print_placeholder_thumb( $_requested_size = 'thumb-medium' ) {
     $_unique_id = uniqid();
     $filter = false;
     $_sizes = array( 'thumb-medium', 'thumb-small', 'thumb-standard' );

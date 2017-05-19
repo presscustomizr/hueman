@@ -479,7 +479,7 @@ function hu_the_post_thumbnail( $size = 'post-thumbnail', $attr = '', $placehold
     $is_attachment = is_object( $post ) && isset( $post -> post_type ) && 'attachment' == $post -> post_type;
     if ( ! $post || ( ! $is_attachment && ! has_post_thumbnail() ) ) {
         if ( hu_is_checked('placeholder') && (bool)$placeholder ) {
-            $html = hu_get_placeholder_thumb( $size );
+            $html = hu_print_placeholder_thumb( $size );
         }
     } else if ( $is_attachment ) {//typically : the case when attachment are included in search results
         $html = wp_get_attachment_image( $post -> ID, $size, false, $attr );

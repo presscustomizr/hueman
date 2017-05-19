@@ -467,3 +467,15 @@ if ( ! function_exists('alx_sidebar_primary') ) {
     return 'primary';
   }
 }
+
+if ( ! function_exists('alx_sidebar_primary') ) {
+  function alx_sidebar_primary() {
+    return 'primary';
+  }
+}
+
+if ( ! function_exists( 'hu_get_placeholder_thumb' ) ) {
+  function hu_get_placeholder_thumb( $_requested_size = 'thumb-medium' ) {
+    return hu_print_placeholder_thumb( $_requested_size );
+  }
+}
