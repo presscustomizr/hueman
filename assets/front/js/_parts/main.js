@@ -918,24 +918,35 @@ var czrapp = czrapp || {};
 
             //bool
             isResponsive : function() {
-                  return $(window).width() <= 979 - 15;
+                  return this.matchMedia(979);
             },
 
             //@return string of current device
             getDevice : function() {
                   var _devices = {
-                        desktop : 979 - 15,
-                        tablet : 767 - 15,
-                        smartphone : 480 - 15
+                        desktop : 979,
+                        tablet : 767,
+                        smartphone : 480
                       },
                       _current_device = 'desktop',
-                      $_window = czrapp.$_window || $(window);
+                      that = this;
+
 
                   _.map( _devices, function( max_width, _dev ){
-                    if ( $_window.width() <= max_width )
-                      _current_device = _dev;
+                        if ( that.matchMedia( max_width ) )
+                          _current_device = _dev;
                   } );
+
                   return _current_device;
+            },
+
+            matchMedia : function( _maxWidth ) {
+                  if ( window.matchMedia )
+                    return ( window.matchMedia("(max-width: "+_maxWidth+"px)").matches );
+
+                  //old browsers compatibility
+                  $_window = czrapp.$_window || $(window);
+                  return $_window.width() <= ( _maxWidth - 15 );
             },
 
             emit : function( cbs, args ) {
@@ -1426,7 +1437,7 @@ var czrapp = czrapp || {};
                           self.stickyMenuWrapper = false;
                           self.hasStickyCandidate( false );
                     };
-
+                    //we have a candidate
                     if ( ! _.isEmpty( to ) ) {
                           self.hasStickyCandidate( 1 == czrapp.$_header.find( to ).length );
                           //Does this selector actually exists ?
@@ -1438,9 +1449,17 @@ var czrapp = czrapp || {};
                                 //make sure we have the transition class in any cases
                                 // + Always set the header height on dom ready
                                 //=> will prevent any wrong value being assigned if menu is expanded before scrolling
-                                czrapp.$_header.css( { 'height' : czrapp.$_header.height() }).addClass( 'fixed-header-on' );
+                                //If the header has an image, defer setting the height when the .site-image is loaded
+                                //=> otherwise the header height might be wrong because based on an empty img
+                                if ( 1 == $('#header-image-wrap').find('.site-image').length ) {
+                                      $('#header-image-wrap').find('img.site-image').load( function( img ) {
+                                            czrapp.$_header.css( { 'height' : czrapp.$_header.height() }).addClass( 'fixed-header-on' );
+                                      } );
+                                } else {
+                                      czrapp.$_header.css( { 'height' : czrapp.$_header.height() }).addClass( 'fixed-header-on' );
+                                }
                           }
-                    } else {
+                    } else {//we don't have a candidate
                           _reset();
                     }
               });
