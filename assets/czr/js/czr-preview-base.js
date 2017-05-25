@@ -1,4 +1,4 @@
-
+//@global CZRPreviewParams
 ( function( api, $, _ ) {
 
       /* ------------------------------------------------------------------------- *
@@ -24,8 +24,10 @@
           $( function() {
                 api.preview.bind( 'sync', function( events ) {
                       api.preview.send( 'czr-pc-synced', {
-                            czr_skopes : _wpCustomizeSettings.czr_skopes || [],
-                            czr_queryInfos : _wpCustomizeSettings.czr_wpQueryInfos
+                            czr_pc_skope : _wpCustomizeSettings.czr_pc_skope || [],
+                            czr_wpQueryInfosForBuilder : _wpCustomizeSettings.czr_wpQueryInfosForBuilder
+                            // isChangesetDirty : _wpCustomizeSettings.isChangesetDirty || false,
+                            // skopeGlobalDBOpt : _wpCustomizeSettings.skopeGlobalDBOpt || [],
                       } );
                 });
           });
