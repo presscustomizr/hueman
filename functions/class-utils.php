@@ -341,7 +341,6 @@ if ( ! class_exists( 'HU_utils' ) ) :
     */
     function hu_set_option( $option_name , $option_value, $option_group = null ) {
         $option_group           = is_null($option_group) ? HU_THEME_OPTIONS : $option_group;
-        $_options               = $this -> hu_get_theme_options( $option_group );
 
         //Get raw to :
         //avoid filtering
