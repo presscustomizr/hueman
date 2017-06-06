@@ -380,49 +380,6 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
                   'czr-customize-section-pro' : proSectionConstructor
             });
       }
-
-
-
-      /*****************************************************************************
-      * FIRE PRESS CUSTOMIZR ON READY
-      *****************************************************************************/
-      api.bind( 'ready' , function() {
-            if ( serverControlParams.isPressCustomizrOn ) {
-                  api.czr_pcBase      = new api.CZR_PCBase();
-            }
-      } );
-})( wp.customize , jQuery, _);
-/*****************************************************************************
-* THE PC BASE OBJECT
-*****************************************************************************/
-var CZRPCBaseMths = CZRPCBaseMths || {};
-(function ( api, $, _ ) {
-      $.extend( CZRPCBaseMths, {
-
-            initialize: function() {
-                  api.czr_PCDataReady = $.Deferred();
-                  api.czr_PCData = api.czr_PCData || new api.Value();
-
-                  api.bind( 'ready', function() {
-                        api.previewer.bind( 'czr-pc-synced', function( data ) {
-                              api.czr_PCData( data );
-                              if ( 'pending' == api.czr_PCDataReady.state() ) {
-                                    api.czr_PCDataReady.resolve( data );
-                              }
-                        });
-                  });
-
-                  api.czr_PCDataReady.done( function( data ) {
-                      console.log('NOW LET US HAVE FUN', data );
-                  });
-            },//initialize
-
-
-
-
-      });//$.extend
-
-
 })( wp.customize , jQuery, _);
 
 
@@ -5050,7 +5007,7 @@ $.extend( CZRSkopeMths, {
 
             };//api.previewer.query
       });//api.bind('ready')
-})( wp.customize , jQuery, _ );//only fired if ( serverControlParams.isSkopOn )
+})( wp.customize , jQuery, _ );
 ( function ( api, $, _ ) {
       api.bind( 'czr-skope-started', function() {
             api.previewer.save = function( args ) {
@@ -10313,7 +10270,7 @@ $.extend( CZRLayoutSelectMths , {
             });
       },
 });//$.extend
-})( wp.customize , jQuery, _ );//global serverControlParams
+})( wp.customize , jQuery, _ );
 ( function ( api, $, _ ) {
       $.extend( CZRBaseControlMths, api.Events );
       $.extend( api.Control.prototype, api.Events );//ensures that the default WP control constructor is extended as well
@@ -10326,15 +10283,10 @@ $.extend( CZRLayoutSelectMths , {
       $.extend( CZRInputMths, api.CZR_Helpers );
       $.extend( CZRModuleMths, api.CZR_Helpers );
       $.extend( CZRSkopeMths, api.CZR_Helpers );
-      if ( serverControlParams.isSkopOn ) {
-            api.CZR_skopeBase             = api.Class.extend( CZRSkopeBaseMths );
-            api.CZR_skopeSave             = api.Class.extend( CZRSkopeSaveMths );
-            api.CZR_skopeReset            = api.Class.extend( CZRSkopeResetMths );
-            api.CZR_skope                 = api.Value.extend( CZRSkopeMths ); //=> used as constructor when creating the collection of skopes
-      }
-      if ( serverControlParams.isPressCustomizrOn ) {
-            api.CZR_PCBase                = api.Class.extend( CZRPCBaseMths );
-      }
+      api.CZR_skopeBase             = api.Class.extend( CZRSkopeBaseMths );
+      api.CZR_skopeSave             = api.Class.extend( CZRSkopeSaveMths );
+      api.CZR_skopeReset            = api.Class.extend( CZRSkopeResetMths );
+      api.CZR_skope                 = api.Value.extend( CZRSkopeMths ); //=> used as constructor when creating the collection of skopes
       if ( _.has(api, 'HeaderTool') ) {
             api.czr_HeaderTool = $.extend(  true, {}, api.HeaderTool );
       }
