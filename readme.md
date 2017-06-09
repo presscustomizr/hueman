@@ -1,4 +1,4 @@
-# Hueman v3.3.11
+# Hueman v3.3.12
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 80K+ websites around the world.
@@ -82,6 +82,14 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 ## Changelog
+= 3.3.12 June 6th 2017 =
+* fixed : when topbar is sticky and header has an header image, wait for the image to be fully loaded before setting the header's height. Fix #486
+* fixed Issue in hu_get_raw_option, php warning. wp_cache_get( 'alloptions', 'options' ) should always be cast to an array(). It might happen that it returns a boolean. fixes #492
+* fixed : fix inaccurate smartload img regex pattern => file extensions were not correctly taken in account
+* changed : hu_get_placeholder_thumb() to hu_print_placeholder_thumb(). Retrocompatibility handled.
+* added : js matchMedia utility. fallsback on old browsers compatibility
+* improved : in hu_set_option remove redundant retrieving of theme options
+
 = 3.3.11 May 16th 2017 =
 * fixed : Compatibility issue with the Event Calendar plugin on date picker ( fixes #454 )
 * fixed : wrong variable name in HU_utils::hu_cache_dp_options()
