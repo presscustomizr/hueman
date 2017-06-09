@@ -447,8 +447,12 @@ if ( is_admin() && ! hu_is_customizing() ) {
     //@return void()
     //hook : after_setup_theme
     function hu_add_editor_style() {
+        //we need only the relative path, otherwise get_editor_stylesheets() will treat this as external CSS
+        //which means:
+        //a) child-themes cannot override it
+        //b) no check on the file existence will be made (producing the rtl error, for instance : https://github.com/presscustomizr/customizr/issues/926)
         $_stylesheets = array(
-            sprintf( '%1$sassets/admin/css/editor-style.css' , HU_BASE_URL ),
+            'assets/admin/css/editor-style.css',
             //hu_get_front_style_url(),
             //get_stylesheet_uri()
         );
@@ -511,8 +515,11 @@ function hu_user_defined_tinymce_css( $init ) {
   $family       = hu_get_fonts( array( 'font_id' => $user_font, 'request' => 'family' ) );//'"Raleway", Arial, sans-serif'
   $family       = ( empty( $family ) || ! is_string( $family ) ) ? "'Titillium Web', Arial, sans-serif" : $family;
 
+  //maybe add rtl class
+  $_mce_body_context = is_rtl() ? 'mce-content-body.rtl' : 'mce-content-body';
+
   //fonts
-  $_css = "body.mce-content-body{ font-family : {$family}; }\n";
+  $_css = "body.{$_mce_body_context}{ font-family : {$family}; }\n";
 
   $init['content_style'] = trim( preg_replace('/\s+/', ' ', $_css ) );
 
