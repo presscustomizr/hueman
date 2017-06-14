@@ -2674,7 +2674,7 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
 })( jQuery );var czrapp = czrapp || {};
 
 /*************************
-* JS LOG UTILITIES
+* JS LOG VARIOUS UTILITIES
 *************************/
 (function($, czrapp) {
       //Utility : print a js log on front
@@ -5679,6 +5679,8 @@ var czrapp = czrapp || {};
 ( function ( czrapp, $, _ ) {
       //add the events manager object to the root
       $.extend( czrapp, czrapp.Events );
+
+
 
       //defines a Root class
       //=> adds the constructor options : { id : ctor name, dom_ready : params.ready || [] }

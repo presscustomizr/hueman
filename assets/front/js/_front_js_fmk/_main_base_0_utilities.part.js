@@ -1,7 +1,7 @@
 var czrapp = czrapp || {};
 
 /*************************
-* JS LOG UTILITIES
+* JS LOG VARIOUS UTILITIES
 *************************/
 (function($, czrapp) {
       //Utility : print a js log on front
