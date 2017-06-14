@@ -942,7 +942,7 @@ if ( ! function_exists( 'hu_scripts' ) ) {
                     array( 'huajax' => true ), //to scope our ajax calls
                     set_url_scheme( home_url( '/' ) )
               ),
-              'huFrontNonce'   => array( 'id' => 'HuFrontNonce', 'handle' => wp_create_nonce( 'hu-front-nonce' ) ),
+              'frontNonce'   => array( 'id' => 'HuFrontNonce', 'handle' => wp_create_nonce( 'hu-front-nonce' ) ),
 
               //Welcome
               'userStarted' => array(
@@ -1473,7 +1473,7 @@ function hu_ajax_response() {
     if ( ! defined( 'DOING_AJAX' ) )
         define( 'DOING_AJAX', true );
 
-    //'huFrontNonce'   => array( 'id' => 'HuFrontNonce', 'handle' => wp_create_nonce( 'hu-front-nonce' ) )
+    //'frontNonce'   => array( 'id' => 'HuFrontNonce', 'handle' => wp_create_nonce( 'hu-front-nonce' ) )
     check_ajax_referer( 'hu-front-nonce', 'HuFrontNonce' );
 
     @header( 'Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );

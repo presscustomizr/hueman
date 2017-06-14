@@ -4,6 +4,9 @@ var czrapp = czrapp || {};
 * ADD BASE CLASS METHODS
 *************************/
 (function($, czrapp) {
+      //adds the server params to the app now
+      czrapp.localized = HUParams || {};
+
       var _methods = {
             /**
             * Cache properties on Dom Ready

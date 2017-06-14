@@ -1,4 +1,3 @@
-//@global HUParams
 var czrapp = czrapp || {};
 
 /*************************
@@ -104,8 +103,8 @@ var czrapp = czrapp || {};
             //do we have a query ?
             query = query || ( _.isObject( query ) ? query : {} );
 
-            var ajaxUrl = HUParams.ajaxUrl,
-                nonce = HUParams.huFrontNonce,//{ 'id' : '', 'handle' : '' }
+            var ajaxUrl = czrapp.localized.ajaxUrl,
+                nonce = czrapp.localized.frontNonce,//{ 'id' : '', 'handle' : '' }
                 dfd = $.Deferred(),
                 _query_ = _.extend( {
                             action : ''

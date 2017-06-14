@@ -1,14 +1,10 @@
 var czrapp = czrapp || {};
-//@global HUParams
-/************************************************
-* LET'S DANCE
-*************************************************/
-( function ( czrapp, $, _ ) {
-      //adds the server params to the app now
-      czrapp.localized = HUParams || {};
 
+( function ( czrapp, $, _ ) {
       //add the events manager object to the root
       $.extend( czrapp, czrapp.Events );
+
+
 
       //defines a Root class
       //=> adds the constructor options : { id : ctor name, dom_ready : params.ready || [] }
@@ -50,76 +46,12 @@ var czrapp = czrapp || {};
             czrapp.ready.resolve();
       });
 
-      //SERVER MOBILE USER AGENT
-      czrapp.isMobileUserAgent = new czrapp.Value( false );
-      //This ajax requests solves the problem of knowing if wp_is_mobile() in a front js script, when the website is using a cache plugin
-      //without a cache plugin, we could localize the wp_is_mobile() boolean
-      //with a cache plugin, we need to always get a fresh answer from the server
-      //falls back on HUParams.isWPMobile ( which can be cached, so not fully reliable )
-      czrapp.browserAgentSet = $.Deferred( function() {
-            var _dfd = this;
-            czrapp.doAjax( { action: "hu_wp_is_mobile" } )
-                  .always( function( _r_ ) {
-                        czrapp.isMobileUserAgent( ( ! _r_.success || _.isUndefined( _r_.data.is_mobile ) ) ? ( '1' == HUParams.isWPMobile ) : _r_.data.is_mobile );
-                        _dfd.resolve( czrapp.isMobileUserAgent() );
-                  });
-            //always auto resolve after 1.5s if the server is too slow.
-            _.delay( function() {
-                if ( 'pending' == _dfd.state() )
-                  _dfd.resolve( false );
-            }, 1500 );
-      });
 
-      //THE DEFAULT MAP
-      //Other methods can be hooked. @see czrapp.customMap
-      var appMap = {
-                base : {
-                      ctor : czrapp.Base,
-                      ready : [
-                            'cacheProp'
-                      ]
-                },
-                browserDetect : {
-                      ctor : czrapp.Base.extend( czrapp.methods.BrowserDetect ),
-                      ready : [ 'addBrowserClassToBody' ]
-                },
-                jqPlugins : {
-                      ctor : czrapp.Base.extend( czrapp.methods.JQPlugins ),
-                      ready : [
-                            'imgSmartLoad',
-                            'extLinks',
-                            'parallax'
-                      ]
-                },
-                userXP : {
-                      ctor : czrapp.Base.extend( czrapp.methods.UserXP ),
-                      ready : [
-                            'setupUIListeners',//<=setup observables values used in various UX modules
-
-                            'stickify',
-                            'outline',
-                            'smoothScroll',
-                            'headerSearchToLife',
-                            'scrollToTop',
-                            'widgetTabs',
-                            'commentTabs',
-                            'tableStyle',
-                            //the sidebar can be set to life properly once we know, from the server, if we display a mobile device or not.
-                            function() {
-                                  var self = this;
-                                  czrapp.browserAgentSet.done( function() {
-                                        self.sidebarToLife();
-                                  });
-                            },
-                            'dropdownMenu',
-                            'mobileMenu',
-                            'topNavToLife',
-                            'mayBePrintWelcomeNote'
-                      ]
-                }
-      };//map
 
       //Instantiates
+      //@param newMap {}
+      //@param previousMap {}
+      //@param isInitial bool
       var _instantianteAndFireOnDomReady = function( newMap, previousMap, isInitial ) {
             if ( ! _.isObject( newMap ) )
               return;
@@ -173,9 +105,15 @@ var czrapp = czrapp || {};
             });
       };//_instantianteAndFireOnDomReady()
 
+
+
+      //This Value is set with theme specific map
+      czrapp.appMap = new czrapp.Value( {} );
+      czrapp.appMap.bind( _instantianteAndFireOnDomReady );//<=THE MAP IS LISTENED TO HERE
+
       //instantiates the default map
       //@param : new map, previous map, isInitial bool
-      _instantianteAndFireOnDomReady( appMap, null, true );
+      //_instantianteAndFireOnDomReady( appMap, null, true );
 
       //instantiate additional classes on demand
       //EXAMPLE IN THE PRO HEADER SLIDER PHP TMPL :
@@ -205,5 +143,6 @@ var czrapp = czrapp || {};
       // }
       czrapp.customMap = new czrapp.Value( {} );
       czrapp.customMap.bind( _instantianteAndFireOnDomReady );//<=THE CUSTOM MAP IS LISTENED TO HERE
+
 
 })( czrapp, jQuery, _ );

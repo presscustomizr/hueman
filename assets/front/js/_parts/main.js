@@ -1,4 +1,3 @@
-//@global HUParams
 var czrapp = czrapp || {};
 
 /*************************
@@ -104,8 +103,8 @@ var czrapp = czrapp || {};
             //do we have a query ?
             query = query || ( _.isObject( query ) ? query : {} );
 
-            var ajaxUrl = HUParams.ajaxUrl,
-                nonce = HUParams.huFrontNonce,//{ 'id' : '', 'handle' : '' }
+            var ajaxUrl = czrapp.localized.ajaxUrl,
+                nonce = czrapp.localized.frontNonce,//{ 'id' : '', 'handle' : '' }
                 dfd = $.Deferred(),
                 _query_ = _.extend( {
                             action : ''
@@ -310,11 +309,10 @@ var czrapp = czrapp || {};
                     $_dom_el.trigger( 'after_' + _cb, _.omit( args, 'event' ) );
               });//_.map
       };
-})(jQuery, czrapp);//@global HUParams
-var czrapp = czrapp || {};
+})(jQuery, czrapp);var czrapp = czrapp || {};
 czrapp.methods = {};
 
-(function( HUParams, $ ){
+(function( $ ){
       var ctor, inherits, slice = Array.prototype.slice;
 
       // Shared empty constructor function to aid in prototype-chain creation.
@@ -887,12 +885,15 @@ czrapp.methods = {};
       // Create a global events bus
       $.extend( czrapp.Values.prototype, czrapp.Events );
 
-})( HUParams, jQuery );//@global HUParams
+})( jQuery );//@global HUParams
 var czrapp = czrapp || {};
 /*************************
 * ADD BASE CLASS METHODS
 *************************/
 (function($, czrapp) {
+      //adds the server params to the app now
+      czrapp.localized = HUParams || {};
+
       var _methods = {
             /**
             * Cache properties on Dom Ready
@@ -3001,14 +3002,8 @@ var czrapp = czrapp || {};
   $.extend( czrapp.methods.UserXP , _methods );
 
 })(jQuery, czrapp);var czrapp = czrapp || {};
-//@global HUParams
-/************************************************
-* LET'S DANCE
-*************************************************/
-( function ( czrapp, $, _ ) {
-      //adds the server params to the app now
-      czrapp.localized = HUParams || {};
 
+( function ( czrapp, $, _ ) {
       //add the events manager object to the root
       $.extend( czrapp, czrapp.Events );
 
@@ -3051,6 +3046,114 @@ var czrapp = czrapp || {};
       czrapp.bind( 'czrapp-ready', function() {
             czrapp.ready.resolve();
       });
+
+
+
+      //Instantiates
+      //@param newMap {}
+      //@param previousMap {}
+      //@param isInitial bool
+      var _instantianteAndFireOnDomReady = function( newMap, previousMap, isInitial ) {
+            if ( ! _.isObject( newMap ) )
+              return;
+            _.each( newMap, function( params, name ) {
+                  //skip if already instantiated or invalid params
+                  if ( czrapp[ name ] || ! _.isObject( params ) )
+                    return;
+
+                  params = _.extend(
+                        {
+                              ctor : {},//should extend czrapp.Base with custom methods
+                              ready : [],//a list of method to execute on dom ready,
+                              options : {}//can be used to pass a set of initial params to set to the constructors
+                        },
+                        params
+                  );
+
+                  //the constructor has 2 mandatory params : id and dom_ready methods
+                  var ctorOptions = _.extend(
+                      {
+                          id : name,
+                          dom_ready : params.ready || []
+                      },
+                      params.options
+                  );
+
+                  try { czrapp[ name ] = new params.ctor( ctorOptions ); }
+                  catch( er ) {
+                        czrapp.errorLog( 'Error when loading ' + name + ' | ' + er );
+                  }
+            });
+
+            //Fire on DOM ready
+            $(function ($) {
+                  _.each( newMap, function( params, name ) {
+                        //bail if already fired
+                        if ( czrapp[ name ] && czrapp[ name ].isReady && 'resolved' == czrapp[ name ].isReady.state() )
+                          return;
+                        if ( _.isObject( czrapp[ name ] ) && _.isFunction( czrapp[ name ].ready ) ) {
+                              czrapp[ name ].ready();
+                        }
+                  });
+                  czrapp.status = czrapp.status || 'OK';
+                  if ( _.isArray( czrapp.status ) ) {
+                        _.each( czrapp.status, function( error ) {
+                              czrapp.errorLog( error );
+                        });
+                  }
+                  //trigger czrapp-ready when the default map has been instantiated
+                  czrapp.trigger( isInitial ? 'czrapp-ready' : 'czrapp-updated' );
+            });
+      };//_instantianteAndFireOnDomReady()
+
+
+
+      //This Value is set with theme specific map
+      czrapp.appMap = new czrapp.Value( {} );
+      czrapp.appMap.bind( _instantianteAndFireOnDomReady );//<=THE MAP IS LISTENED TO HERE
+
+      //instantiates the default map
+      //@param : new map, previous map, isInitial bool
+      //_instantianteAndFireOnDomReady( appMap, null, true );
+
+      //instantiate additional classes on demand
+      //EXAMPLE IN THE PRO HEADER SLIDER PHP TMPL :
+      //instantiate on first run, then on the following runs, call fire statically
+      // var _do = function() {
+      //       if ( czrapp.proHeaderSlid ) {
+      //             czrapp.proHeaderSlid.fire( args );
+      //       } else {
+      //             var _map = $.extend( true, {}, czrapp.customMap() );
+      //             _map = $.extend( _map, {
+      //                   proHeaderSlid : {
+      //                         ctor : czrapp.Base.extend( czrapp.methods.ProHeaderSlid ),
+      //                         ready : [ 'fire' ],
+      //                         options : args
+      //                   }
+      //             });
+      //             //this is listened to in xfire.js
+      //             czrapp.customMap( _map );
+      //       }
+      // };
+      // if ( ! _.isUndefined( czrapp ) && czrapp.ready ) {
+      //       if ( 'resolved' == czrapp.ready.state() ) {
+      //             _do();
+      //       } else {
+      //             czrapp.ready.done( _do );
+      //       }
+      // }
+      czrapp.customMap = new czrapp.Value( {} );
+      czrapp.customMap.bind( _instantianteAndFireOnDomReady );//<=THE CUSTOM MAP IS LISTENED TO HERE
+
+
+})( czrapp, jQuery, _ );var czrapp = czrapp || {};
+//@global HUParams
+/************************************************
+* LET'S DANCE
+*************************************************/
+( function ( czrapp, $, _ ) {
+      //adds the server params to the app now
+      czrapp.localized = HUParams || {};
 
       //SERVER MOBILE USER AGENT
       czrapp.isMobileUserAgent = new czrapp.Value( false );
@@ -3121,91 +3224,8 @@ var czrapp = czrapp || {};
                 }
       };//map
 
-      //Instantiates
-      var _instantianteAndFireOnDomReady = function( newMap, previousMap, isInitial ) {
-            if ( ! _.isObject( newMap ) )
-              return;
-            _.each( newMap, function( params, name ) {
-                  //skip if already instantiated or invalid params
-                  if ( czrapp[ name ] || ! _.isObject( params ) )
-                    return;
-
-                  params = _.extend(
-                        {
-                              ctor : {},//should extend czrapp.Base with custom methods
-                              ready : [],//a list of method to execute on dom ready,
-                              options : {}//can be used to pass a set of initial params to set to the constructors
-                        },
-                        params
-                  );
-
-                  //the constructor has 2 mandatory params : id and dom_ready methods
-                  var ctorOptions = _.extend(
-                      {
-                          id : name,
-                          dom_ready : params.ready || []
-                      },
-                      params.options
-                  );
-
-                  try { czrapp[ name ] = new params.ctor( ctorOptions ); }
-                  catch( er ) {
-                        czrapp.errorLog( 'Error when loading ' + name + ' | ' + er );
-                  }
-            });
-
-            //Fire on DOM ready
-            $(function ($) {
-                  _.each( newMap, function( params, name ) {
-                        //bail if already fired
-                        if ( czrapp[ name ] && czrapp[ name ].isReady && 'resolved' == czrapp[ name ].isReady.state() )
-                          return;
-                        if ( _.isObject( czrapp[ name ] ) && _.isFunction( czrapp[ name ].ready ) ) {
-                              czrapp[ name ].ready();
-                        }
-                  });
-                  czrapp.status = czrapp.status || 'OK';
-                  if ( _.isArray( czrapp.status ) ) {
-                        _.each( czrapp.status, function( error ) {
-                              czrapp.errorLog( error );
-                        });
-                  }
-                  //trigger czrapp-ready when the default map has been instantiated
-                  czrapp.trigger( isInitial ? 'czrapp-ready' : 'czrapp-updated' );
-            });
-      };//_instantianteAndFireOnDomReady()
-
-      //instantiates the default map
-      //@param : new map, previous map, isInitial bool
-      _instantianteAndFireOnDomReady( appMap, null, true );
-
-      //instantiate additional classes on demand
-      //EXAMPLE IN THE PRO HEADER SLIDER PHP TMPL :
-      //instantiate on first run, then on the following runs, call fire statically
-      // var _do = function() {
-      //       if ( czrapp.proHeaderSlid ) {
-      //             czrapp.proHeaderSlid.fire( args );
-      //       } else {
-      //             var _map = $.extend( true, {}, czrapp.customMap() );
-      //             _map = $.extend( _map, {
-      //                   proHeaderSlid : {
-      //                         ctor : czrapp.Base.extend( czrapp.methods.ProHeaderSlid ),
-      //                         ready : [ 'fire' ],
-      //                         options : args
-      //                   }
-      //             });
-      //             //this is listened to in xfire.js
-      //             czrapp.customMap( _map );
-      //       }
-      // };
-      // if ( ! _.isUndefined( czrapp ) && czrapp.ready ) {
-      //       if ( 'resolved' == czrapp.ready.state() ) {
-      //             _do();
-      //       } else {
-      //             czrapp.ready.done( _do );
-      //       }
-      // }
-      czrapp.customMap = new czrapp.Value( {} );
-      czrapp.customMap.bind( _instantianteAndFireOnDomReady );//<=THE CUSTOM MAP IS LISTENED TO HERE
+      //set the observable value
+      //listened to by _instantianteAndFireOnDomReady = function( newMap, previousMap, isInitial )
+      czrapp.appMap( appMap , true );//true for isInitial map
 
 })( czrapp, jQuery, _ );
