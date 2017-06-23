@@ -1,12 +1,6 @@
-[submodule "assets/front/js/jquery-plugins"]
-	path = assets/front/js/jquery-plugins
+[submodule "assets/front/js/libs/jquery-plugins"]
+	path = assets/front/js/libs/jquery-plugins
 	url = https://github.com/presscustomizr/front-jquery-plugins.git
-[submodule "assets/front/js/_parts"]
-  path = assets/front/js/_parts
-  url = https://github.com/presscustomizr/hueman-front-js-parts.git
-[submodule "assets/front/js/_front_js_fmk"]
-  path = assets/front/js/_front_js_fmk
-  url = https://github.com/presscustomizr/themes-front-js-fmk.git
 [submodule "grunt-tasks-config"]
   path = grunt-tasks-config
   url = https://github.com/presscustomizr/hueman-grunt-tasks.git

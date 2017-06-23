@@ -841,7 +841,7 @@ if ( ! function_exists( 'hu_scripts' ) ) {
     if ( has_post_format( 'gallery' ) || ( is_home() && ! is_paged() && ( hu_get_option('featured-posts-count') != '0' ) ) ) {
       wp_enqueue_script(
         'flexslider',
-        get_template_directory_uri() . '/assets/front/js/lib/jquery.flexslider.min.js',
+        get_template_directory_uri() . '/assets/front/js/libs/jquery.flexslider.min.js',
         array( 'jquery' ),
         '',
         false
@@ -851,7 +851,7 @@ if ( ! function_exists( 'hu_scripts' ) ) {
     if ( has_post_format( 'audio' ) ) {
       wp_enqueue_script(
         'jplayer',
-        get_template_directory_uri() . '/assets/front/js/lib/jquery.jplayer.min.js',
+        get_template_directory_uri() . '/assets/front/js/libs/jquery.jplayer.min.js',
         array( 'jquery' ),
         '',
         true
