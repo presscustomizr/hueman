@@ -492,15 +492,6 @@ function hu_the_post_thumbnail( $size = 'post-thumbnail', $attr = '', $placehold
     echo apply_filters( 'hu_post_thumbnail_html', $html, $size, $attr );
 }
 
-/**
- * adds sanitization callback funtion : colors
- */
-function hu_sanitize_hex_color( $color ) {
-  if ( $unhashed = sanitize_hex_color_no_hash( $color ) )
-    return '#' . $unhashed;
-
-  return $color;
-}
 
 //@return bool
 //WHEN DO WE DISPLAY THE REGULAR TOP NAV ?

@@ -297,7 +297,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'       => __( 'Primary Color' , 'hueman' ),
                 'section'     => 'general_design_sec',
                 'type'        =>  'color' ,
-                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
+                'sanitize_callback'    => 'maybe_hash_hex_color',
                 'sanitize_js_callback' => 'maybe_hash_hex_color'
                 //'transport'   => 'postMessage'
           ),
@@ -307,7 +307,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'       => __( 'Secondary Color' , 'hueman' ),
                 'section'     => 'general_design_sec',
                 'type'        =>  'color' ,
-                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
+                'sanitize_callback'    => 'maybe_hash_hex_color',
                 'sanitize_js_callback' => 'maybe_hash_hex_color'
                 //'transport'   => 'postMessage'
           ),
@@ -550,7 +550,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'       => __( 'Topbar Background' , 'hueman' ),
                 'section'     => 'header_design_sec',
                 'type'        =>  'color' ,
-                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
+                'sanitize_callback'    => 'maybe_hash_hex_color',
                 'sanitize_js_callback' => 'maybe_hash_hex_color'
                 //'transport'   => 'postMessage'
           ),
@@ -560,7 +560,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'       => __( 'Header Background' , 'hueman' ),
                 'section'     => 'header_design_sec',
                 'type'        =>  'color' ,
-                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
+                'sanitize_callback'    => 'maybe_hash_hex_color',
                 'sanitize_js_callback' => 'maybe_hash_hex_color',
                 'transport'   => ( ( defined( 'HU_IS_PRO_ADDONS' ) && HU_IS_PRO_ADDONS ) || ( defined('HU_IS_PRO') && HU_IS_PRO  ) ) ? 'refresh' : 'postMessage'
           ),
@@ -570,7 +570,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'       => __( 'Header Menu Background' , 'hueman' ),
                 'section'     => 'header_design_sec',
                 'type'        =>  'color' ,
-                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
+                'sanitize_callback'    => 'maybe_hash_hex_color',
                 'sanitize_js_callback' => 'maybe_hash_hex_color',
                 'transport'   => ( ( defined( 'HU_IS_PRO_ADDONS' ) && HU_IS_PRO_ADDONS ) || ( defined('HU_IS_PRO') && HU_IS_PRO  ) ) ? 'refresh' : 'postMessage'
           ),
@@ -580,7 +580,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'       => __( 'Mobile Menu Background' , 'hueman' ),
                 'section'     => 'header_design_sec',
                 'type'        =>  'color' ,
-                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
+                'sanitize_callback'    => 'maybe_hash_hex_color',
                 'sanitize_js_callback' => 'maybe_hash_hex_color',
                 //'transport'   => 'postMessage'
           ),
@@ -1312,7 +1312,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'       => __( 'Footer Background' , 'hueman' ),
                 'section'     => 'footer_design_sec',
                 'type'        =>  'color' ,
-                'sanitize_callback'    => array( $this, 'hu_sanitize_hex_color' ),
+                'sanitize_callback'    => 'maybe_hash_hex_color',
                 'sanitize_js_callback' => 'maybe_hash_hex_color',
                 'transport'   => 'postMessage'
           ),
@@ -1868,33 +1868,6 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     /********************************************************************************************
     ************ / TEMPORARY
     *********************************************************************************************/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * adds sanitization callback funtion : colors
-     * @package Hueman
-     * @since Hueman 3.3.0
-     */
-    function hu_sanitize_hex_color( $color ) {
-      if ( $unhashed = sanitize_hex_color_no_hash( $color ) )
-        return '#' . $unhashed;
-
-      return $color;
-    }
 
 
     /**

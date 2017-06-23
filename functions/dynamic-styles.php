@@ -105,14 +105,14 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
 
 
       // primary color
-      $prim_color = hu_sanitize_hex_color( hu_get_option('color-1') );
+      $prim_color = maybe_hash_hex_color( hu_get_option('color-1') );
       //$def_prim_col = hu_user_started_before_version( '3.3.8' ) ? '#3b8dbd' : '#16cfc1';
       if ( $prim_color != '#16cfc1' ) {
           $styles = array_merge( $styles, hu_get_primary_color_style() );
       }
 
 
-      $second_color = hu_sanitize_hex_color( hu_get_option('color-2') );
+      $second_color = maybe_hash_hex_color( hu_get_option('color-2') );
       //$def_second_col = hu_user_started_before_version( '3.3.8' ) ? '#82b965' : '#efb93f';
       // secondary color
       if ( $second_color != '#efb93f' ) {
@@ -126,7 +126,7 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
       // The default background is #121d30  / semi transparent because hu_is_checked( 'transparent-fixed-topnav' ) : rgba(18, 29, 48, 0.8)
       // those default css rules are hard coded in the theme main stylesheed.
       // If user settings are different, let's write a custom rule
-      $tb_color = hu_sanitize_hex_color( hu_get_option('color-topbar') );
+      $tb_color = maybe_hash_hex_color( hu_get_option('color-topbar') );
       $is_transparent = hu_is_checked( 'transparent-fixed-topnav' );
       //$def_tb_col = hu_user_started_before_version( '3.3.8' ) ? '#26272b' : '#121d30';
       if ( $tb_color != '#121d30' || ! $is_transparent ) {
@@ -148,7 +148,7 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
       }
 
       // header color
-      $h_color = hu_sanitize_hex_color( hu_get_option('color-header') );
+      $h_color = maybe_hash_hex_color( hu_get_option('color-header') );
       //$def_h_col = hu_user_started_before_version( '3.3.8' ) ? '#33363b' : '#454e5c';
       if ( $h_color != '#454e5c' ) {
         $styles[] = '#header { background-color: '.$h_color.'; }
@@ -160,7 +160,7 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
 
 
       // Mobile menu color
-      $mm_color = hu_sanitize_hex_color( hu_get_option('color-mobile-menu') );
+      $mm_color = maybe_hash_hex_color( hu_get_option('color-mobile-menu') );
       if ( $mm_color != '#454e5c' ) {
         $styles[] = '#header #nav-mobile { background-color: '.$mm_color.'; }';
       }
@@ -174,7 +174,7 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
 
 
       // header menu color
-      $hm_color = hu_sanitize_hex_color( hu_get_option('color-header-menu') );
+      $hm_color = maybe_hash_hex_color( hu_get_option('color-header-menu') );
       //$def_hm_col = hu_user_started_before_version( '3.3.8' ) ? '#33363b' : '#454e5c';
       if ( $hm_color != '#454e5c' ) {
         $styles[] = '#nav-header.nav-container, #main-header-search .search-expand { background-color: '.$hm_color.'; }
@@ -186,7 +186,7 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
 
 
       // footer color
-      if ( hu_sanitize_hex_color( hu_get_option('color-footer') ) != '#33363b' ) {
+      if ( maybe_hash_hex_color( hu_get_option('color-footer') ) != '#33363b' ) {
         $styles[] = '#footer-bottom { background-color: '.hu_get_option('color-footer').'; }';
       }
 
