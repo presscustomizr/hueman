@@ -709,7 +709,9 @@ if ( ! function_exists( 'hu_body_class' ) ) {
     $mobile_sticky = hu_normalize_stick_menu_opt( hu_get_option('header-mobile-sticky') );
 
     if ( 'no_stick' != $desktop_sticky ) { $classes[] = 'header-desktop-sticky'; }
-    if ( 'no_stick' != $mobile_sticky ) { $classes[] = 'header-mobile-sticky'; }
+
+    //Note : no stickyness implemented when 2 menus ( 'both_menus') are displayed on mobiles ( => like it was historically in the earliest version in Hueman )
+    if ( 'no_stick' != $mobile_sticky && 'both_menus' != hu_get_option( 'header_mobile_menu_layout' ) ) { $classes[] = 'header-mobile-sticky'; }
 
     return $classes;
   }
@@ -889,6 +891,10 @@ if ( ! function_exists( 'hu_scripts' ) ) {
         }
     }
 
+    //user font-size preprocess
+    $user_font_size = hu_get_option( 'body-font-size' );
+    $user_font_size = is_numeric( $user_font_size ) ? $user_font_size : '16';
+
     //user started with
     $started_on = get_transient( 'hu_start_date' );
 
@@ -950,7 +956,20 @@ if ( ! function_exists( 'hu_scripts' ) ) {
                     'on' => is_object( $started_on ) ? (array)$started_on : $started_on
               ),
               'isWelcomeNoteOn' => $is_welcome_note_on,
-              'welcomeContent'  => $welcome_note_content
+              'welcomeContent'  => $welcome_note_content,
+              'fitTextMap'      => array(
+                  'single_post_title' => array(
+                      'selectors' => '.single .post-title',
+                      'minEm'     => 1.375,
+                      'maxEm'     => 2.62
+                  ),
+                  'page_title' => array(
+                      'selectors' => '.page-title h1',
+                      'minEm'     => 1,
+                      'maxEm'     => 1.3
+                  ),
+              ),
+              'userFontSize'    => $user_font_size
             )
         )//end of filter
        );//wp_localize_script()

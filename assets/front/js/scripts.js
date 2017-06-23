@@ -5282,6 +5282,46 @@ var czrapp = czrapp || {};
 *************************************************/
 (function($, czrapp) {
   var _methods =  {
+        fittext : function() {
+            var _userBodyFontSize = _.isNumber( HUParams.userFontSize ) && HUParams.userFontSize * 1 > 0 ? HUParams.userFontSize : 16,
+                _fitTextMap = HUParams.fitTextMap;
+            if ( ! _.isObject( _fitTextMap ) || _.size( _fitTextMap ) < 1 ) {
+                czrapp.errorLog( 'Unable to apply fittext params, wrong HUParams.fitTextMap.');
+                return;
+            }
+
+            //Fittextmap looks like:
+            // 'fitTextMap'      => array(
+            //     'single_post_title' => array(
+            //         'selectors' => '.single .post-title',
+            //         'minEm'     => 1.375,
+            //         'maxEm'     => 2.62
+            //     ),
+            //     'page_title' => array(
+            //         'selectors' => '.page-title h1',
+            //         'minEm'     => 1,
+            //         'maxEm'     => 1.3
+            //     ),
+            // )
+            _.each( _fitTextMap, function( data, key ) {
+                  //Are we well formed ?
+                  if ( ! _.isObject( data ) )
+                    return;
+                  data = _.extend( {
+                        selectors : '',
+                        minEm : 1,
+                        maxEm : 1
+                  }, data );
+                  //Do we have node(s) for the selector(s)
+                  if ( 1 > $( data.selectors ).length )
+                    return;
+                  $( data.selectors ).fitText( 1.2, {
+                      minFontSize : ( Math.round( data.minEm * _userBodyFontSize * 100) / 100 ) + 'px',
+                      maxFontSize : ( Math.round( data.maxEm * _userBodyFontSize * 100) / 100 ) + 'px'
+                  } );
+            });
+        },
+
         //outline firefox fix, see https://github.com/presscustomizr/customizr/issues/538
         outline: function() {
               if ( czrapp.$_body.hasClass( 'mozilla' ) && 'function' == typeof( tcOutline ) )
@@ -5895,7 +5935,7 @@ var czrapp = czrapp || {};
                       ctor : czrapp.Base.extend( czrapp.methods.UserXP ),
                       ready : [
                             'setupUIListeners',//<=setup observables values used in various UX modules
-
+                            'fittext',
                             'stickify',
                             'outline',
                             'smoothScroll',
