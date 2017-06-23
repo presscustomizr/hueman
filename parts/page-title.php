@@ -12,7 +12,7 @@
     		</ul>
 
     	<?php elseif ( is_page() ): ?>
-    		<h2><?php echo hu_get_page_title(); ?></h2>
+    		<h1><?php echo hu_get_page_title(); ?></h1>
     	<?php elseif ( is_search() ): ?>
     		<h1><?php echo hu_get_search_title(); ?></h1>
     	<?php elseif ( is_404() ): ?>

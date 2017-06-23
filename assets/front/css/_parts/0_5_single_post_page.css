@@ -124,7 +124,7 @@ box-shadow: inset -1px 0 1px rgba(0,0,0,0.2); }
 /* ------------------------------------------------------------------------- *
  *  Single
 /* ------------------------------------------------------------------------- */
-.single .post-title { font-size: 2.375em; letter-spacing: -1px; line-height: 1.3em; }
+.single .post-title { font-size: 2.62em; letter-spacing: -1px; line-height: 1.5em; }
 .single .post-inner .post-thumbnail { margin-bottom: 2em; }
 .post-byline { font-size: 0.875em; font-weight: 400; color: #aaa; text-transform: uppercase; margin-bottom: 1em; }
 
@@ -205,6 +205,21 @@ box-shadow: inset -1px 0 1px rgba(0,0,0,0.2); }
 -moz-transition: all 0.2s ease-out;
 -o-transition: all 0.2s ease-out;
 transition: all 0.2s ease-out; }
+
+
+/*  Page title
+/* ------------------------------------ */
+.page-title { background: #fff; position: relative; padding-top: 18px; padding-bottom: 17px; border-bottom: 1px solid #eee; color: #666; font-size: 1em; font-weight: 600; text-transform: uppercase; line-height: 1.5rem; }
+.page-title h1 { font-size: 1.3em}
+.page-title a { color: #aaa; }
+.page-title a:hover { color: #444; }
+.page-title span { color: #aaa; }
+.page-title i { margin-right: 8px; }
+.page-title h1,
+.page-title h2,
+.page-title h4 { color: #666; }
+.page-title .meta-single li { float: left; margin-right: 14px; }
+.page-title .meta-single li.comments { float: right; margin-right: 0; }
 
 /* sidebar-specific */
 .sidebar .post-nav li a { border-top: 1px solid #eee; border-bottom: 1px solid #ddd; }
