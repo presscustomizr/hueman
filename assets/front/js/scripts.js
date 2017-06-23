@@ -5840,7 +5840,11 @@ var czrapp = czrapp || {};
             var _dfd = this;
             czrapp.doAjax( { action: "hu_wp_is_mobile" } )
                   .always( function( _r_ ) {
-                        czrapp.isMobileUserAgent( ( ! _r_.success || _.isUndefined( _r_.data.is_mobile ) ) ? ( '1' == HUParams.isWPMobile ) : _r_.data.is_mobile );
+                        var _isMobileUserAgent = '1' == HUParams.isWPMobile;
+                        if ( _.isObject( _r_ ) ) {
+                              _isMobileUserAgent = ( ! _r_.success || _.isUndefined( _r_.data ) || _.isUndefined( _r_.data.is_mobile ) ) ? _isMobileUserAgent : _r_.data.is_mobile;
+                        }
+                        czrapp.isMobileUserAgent( _isMobileUserAgent );
                         _dfd.resolve( czrapp.isMobileUserAgent() );
                   });
             //always auto resolve after 1.5s if the server is too slow.
