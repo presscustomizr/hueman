@@ -87,7 +87,7 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
           if ( hu_is_checked( 'boxed' ) ) {
               $styles[] = '.boxed #wrapper, .container-inner { max-width: '.$container_width.'px; }';
               $styles[] = '@media only screen and (min-width: 720px) {
-                .boxed .fixed-header-on .desktop-sticky {
+                .boxed .desktop-sticky {
                   width: ' . $container_width .'px;
                 }
               }';

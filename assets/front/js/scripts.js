@@ -4125,10 +4125,26 @@ var czrapp = czrapp || {};
                                 //=> will prevent any wrong value being assigned if menu is expanded before scrolling
                                 //If the header has an image, defer setting the height when the .site-image is loaded
                                 //=> otherwise the header height might be wrong because based on an empty img
-                                if ( 1 == $('#header-image-wrap').find('.site-image').length ) {
-                                      $('#header-image-wrap').find('img.site-image').load( function( img ) {
+                                var $_header_image = $('#header-image-wrap').find('.site-image');
+                                if ( 1 == $_header_image.length ) {
+
+                                      //We introduce a custom event here
+                                      //=> because we need to handle the case when the image is already loaded. This way we don't need to fire the load() function twice.
+                                      //=> This fixes : https://wordpress.org/support/topic/navbar-not-full-width-until-scroll/
+                                      // reported here : https://github.com/presscustomizr/hueman/issues/508
+                                      $_header_image.bind( 'header-image-loaded', function() {
                                             czrapp.$_header.css( { 'height' : czrapp.$_header.height() }).addClass( 'fixed-header-on' );
-                                      } );
+                                      });
+
+                                      //If the image status is "complete", then trigger the custom event right away, else bind the "load" event
+                                      //http://stackoverflow.com/questions/1948672/how-to-tell-if-an-image-is-loaded-or-cached-in-jquery
+                                      if ( $_header_image[0].complete ) {
+                                            $_header_image.trigger('header-image-loaded');
+                                      } else {
+                                        $_header_image.load( function( img ) {
+                                              $_header_image.trigger('header-image-loaded');
+                                        } );
+                                      }
                                 } else {
                                       czrapp.$_header.css( { 'height' : czrapp.$_header.height() }).addClass( 'fixed-header-on' );
                                 }

@@ -364,11 +364,7 @@ box-shadow: -1px 0 0 rgba(255,255,255,0.1); }
   #nav-header.nav-container  { border-left: 0; border-right: 0; }
   #nav-header .container { padding: 0; }
   #nav-header .nav { padding-bottom: 20px; }
-
-  #header-image-wrap {
-    position: relative;
-    top: 50px;
-  }
+  #header-image-wrap { position: relative; }
 }
 
 
@@ -418,6 +414,17 @@ box-shadow: -1px 0 0 rgba(255,255,255,0.1); }
     -o-transition: -o-transform 0.10s ease-in-out,background-color 0.4s ease-in-out;
     transition: -webkit-transform 0.10s ease-in-out,-moz-transform 0.10s ease-in-out,-o-transform 0.10s ease-in-out,transform 0.10s ease-in-out,background-color 0.4s ease-in-out;
   }
+
+  .header-mobile-sticky #header-image-wrap {
+    position: relative;
+  }
+  /* Make sure that we don't need to wait DOM ready js event to have the mobile menu sticky */
+  /* Otherwise, while waiting for fixed-header-on class to be added ( typically longer if we have a header image ), we might see an unwanted layer of header content disappearing when sticky header set */
+  .header-mobile-sticky .mobile-sticky {
+    position: fixed;
+    width: 100%;
+  }
+  .header-mobile-sticky #header-image-wrap { padding-top: 50px; }
 }
 /* STICKY MENU */
 @media only screen and (min-width: 720px) {
@@ -428,7 +435,7 @@ box-shadow: -1px 0 0 rgba(255,255,255,0.1); }
   .full-width #nav-topbar.nav-container { width : 100%; top: 0; left: 0; right: 0; }
   .fixed-header-on .desktop-sticky { position: fixed; }
   .full-width .fixed-header-on .desktop-sticky { width: 100%; }
-  .boxed .fixed-header-on .desktop-sticky { width: 1380px; }
+  .boxed .desktop-sticky { width: 1380px; }
   .fixed-header-on .topbar-toggle-down {
     -webkit-transition:background-color 0.4s ease-in-out;
     -moz-transition: background-color 0.4s ease-in-out;
