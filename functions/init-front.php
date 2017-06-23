@@ -1473,8 +1473,11 @@ function hu_ajax_response() {
     if ( ! defined( 'DOING_AJAX' ) )
         define( 'DOING_AJAX', true );
 
+    //Nonce is not needed as long as we don't write in the db
+    //Furthermore, when a cache plugin is used, front nonces can not be used.
+    //@see https://github.com/presscustomizr/hueman/issues/512
     //'frontNonce'   => array( 'id' => 'HuFrontNonce', 'handle' => wp_create_nonce( 'hu-front-nonce' ) )
-    check_ajax_referer( 'hu-front-nonce', 'HuFrontNonce' );
+    //check_ajax_referer( 'hu-front-nonce', 'HuFrontNonce' );
 
     @header( 'Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );
     send_nosniff_header();
