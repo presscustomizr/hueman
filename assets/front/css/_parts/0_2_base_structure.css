@@ -24,7 +24,8 @@
 /* boxed */
 .boxed #wrapper { max-width: 1380px; margin: 0 auto;
 -webkit-box-shadow: 6px 0 0 rgba(0,0,0,0.04), -6px 0 0 rgba(0,0,0,0.04);
-box-shadow: 6px 0 0 rgba(0,0,0,0.04), -6px 0 0 rgba(0,0,0,0.04); }
+box-shadow: 6px 0 0 rgba(0,0,0,0.04), -6px 0 0 rgba(0,0,0,0.04);
+position: relative;}
 .boxed .container { padding: 0; }
 .boxed #page { background: #eaeaea; padding-bottom: 1px; }
 
