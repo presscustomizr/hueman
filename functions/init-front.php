@@ -957,7 +957,10 @@ if ( ! function_exists( 'hu_scripts' ) ) {
               ),
               'isWelcomeNoteOn' => $is_welcome_note_on,
               'welcomeContent'  => $welcome_note_content,
+
+              //Fittext
               'fitTextMap'      => array(
+                  //Singular headings
                   'single_post_title' => array(
                       'selectors' => '.single .post-title',
                       'minEm'     => 1.375,
@@ -968,8 +971,74 @@ if ( ! function_exists( 'hu_scripts' ) ) {
                       'minEm'     => 1,
                       'maxEm'     => 1.3
                   ),
+                  'home_page_title' => array(
+                      'selectors' => '.home .page-title',
+                      'minEm'     => 1,
+                      'maxEm'     => 1.2,
+                      'compression' => 2.5
+                  ),
+
+                  //post lists
+                  'post_titles' => array(
+                      'selectors' => '.blog .post-title, .archive .post-title',
+                      'minEm'     => 1.375,
+                      'maxEm'     => 1.475
+                  ),
+                  'featured_post_titles' => array(
+                      'selectors' => '.featured .post-title',
+                      'minEm'     => 1.375,
+                      'maxEm'     => 2.125
+                  ),
+
+                  //Comments
+                  'comments' => array(
+                      'selectors' => '.commentlist li',
+                      'minEm'     => 0.8125,
+                      'maxEm'     => 0.93,
+                      'compression' => 2.5
+                  ),
+
+                  //entry content p and hx headings
+                  'entry' => array(
+                      'selectors' => '.entry',
+                      'minEm'     => 0.9375,
+                      'maxEm'     => 1.125,
+                      'compression' => 2.5
+                  ),
+                  'content_h1' => array(
+                      'selectors' => '.entry h1, .woocommerce div.product h1.product_title',
+                      'minEm'     => 1.875 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
+                      'maxEm'     => 2.375 * 1.125//this factor is the .entry inherited font-size : 1.125em
+                  ),
+                  'content_h2' => array(
+                      'selectors' => '.entry h2',
+                      'minEm'     => 1.625 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
+                      'maxEm'     => 2.125 * 1.125//this factor is the .entry inherited font-size : 1.125em
+                  ),
+                  'content_h3' => array(
+                      'selectors' => '.entry h3',
+                      'minEm'     => 1.5 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
+                      'maxEm'     => 1.75 * 1.125//this factor is the .entry inherited font-size : 1.125em
+                  ),
+                  'content_h4' => array(
+                      'selectors' => '.entry h4',
+                      'minEm'     => 1.375 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
+                      'maxEm'     => 1.5 * 1.125//this factor is the .entry inherited font-size : 1.125em
+                  ),
+                  'content_h5' => array(
+                      'selectors' => '.entry h5',
+                      'minEm'     => 1.125 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
+                      'maxEm'     => 1.25 * 1.125//this factor is the .entry inherited font-size : 1.125em
+                  ),
+                  'content_h6' => array(
+                      'selectors' => '.entry h6',
+                      'minEm'     => 1 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
+                      'maxEm'     => 1.125 * 1.125,//this factor is the .entry inherited font-size : 1.125em,
+                      'compression' => 2.5
+                  )
               ),
-              'userFontSize'    => $user_font_size
+              'userFontSize'    => $user_font_size,
+              'fitTextCompression' => apply_filters( 'hu_fittext_compression', 1.5 )
             )
         )//end of filter
        );//wp_localize_script()
