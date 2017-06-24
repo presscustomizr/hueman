@@ -24,7 +24,9 @@
 .wpcf7 {  }
 .wpcf7 p { color: #222; font-weight: 600; margin: 0 0 12px;  width: 100%; float: left; position: relative; }
 .wpcf7 p span { font-weight: 400; color: #999; }
-.wpcf7 label { display: block; float: left; width: 20%; margin: 9px 0 0 12px; text-align: left; }
+/* the following line has been commented in 3.3.13 because of this issue : https://github.com/presscustomizr/hueman/issues/491 ;*/
+/*.wpcf7 label { display: block; float: left; width: 20%; margin: 9px 0 0 12px; text-align: left; }*/
+
 .wpcf7 input[type="text"],
 .wpcf7 input[type="email"],
 .wpcf7 input[type="url"],
@@ -39,10 +41,10 @@
 .wpcf7 input[type="number"],
 .wpcf7 select,
 .wpcf7 textarea { background: #f5f5f5; margin-top: 12px; }
-.wpcf7 input[type="submit"] { font-size: 1.125em; }
+.wpcf7 input.wpcf7-submit { font-size: 1.125em; padding: 8px 50px;}
 .wpcf7 div.wpcf7-validation-errors { border: none; margin: 0; padding: 0; }
 .wpcf7 div.wpcf7-mail-sent-ok,
 .wpcf7 div.wpcf7-mail-sent-ng { border: none; }
 .wpcf7 div.wpcf7-response-output { margin: 0; padding: 0; }
 .wpcf7 span.wpcf7-form-control-wrap { display: block; position: relative; }
-.wpcf7 span.wpcf7-not-valid-tip { background: #f2dede; border-color: #e3bfbf; color: #b94a48; padding: 4px 14px; font-size: 0.75em; line-height: 1.666em; position: absolute; left: 0; top: 12px; width: auto; right: 0; display: block; }
+.wpcf7 span.wpcf7-not-valid-tip { background: #f2dede; border-color: #e3bfbf; color: #b94a48; padding: 4px 14px; font-size: 0.75em; }
