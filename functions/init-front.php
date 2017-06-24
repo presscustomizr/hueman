@@ -1610,6 +1610,44 @@ function hu_include_attachments_in_search( $query ) {
 }
 
 
+/* ------------------------------------------------------------------------- *
+ *  Include attachments in search results
+/* ------------------------------------------------------------------------- */
+add_action ( 'pre_get_posts' , 'hu_include_cpt_in_lists' );
+/**
+* hook : pre_get_posts
+* Includes Custom Posts Types (set to public and excluded_from_search_result = false) in archives and search results
+* In archives, it handles the case where a CPT has been registered and associated with an existing built-in taxonomy like category or post_tag
+* @return void()
+*/
+function hu_include_cpt_in_lists( $query ) {
+    if (
+      is_admin()
+      || ! $query->is_main_query()
+      || ! apply_filters('hu_include_cpt_in_archives' , false)
+      || ! ( $query->is_search || $query->is_archive )
+    ) { return; }
+
+    //filter the post types to include, they must be public and not excluded from search
+    //we also exclude the built-in types, to exclude pages and attachments, we'll add standard posts later
+    $post_types         = get_post_types( array( 'public' => true, 'exclude_from_search' => false, '_builtin' => false) );
+
+    //add standard posts
+    $post_types['post'] = 'post';
+    if ( $query -> is_search ){
+        // add standard pages in search results => new wp behavior
+        $post_types['page'] = 'page';
+        // allow attachments to be included in search results by tc_include_attachments_in_search method
+        if ( apply_filters( 'hu_include_attachments_in_search_results' , hu_is_checked( 'attachments-in-search' ) ) )
+          $post_types['attachment'] = 'attachment';
+    }
+
+    // add standard pages in search results
+    $query->set('post_type', $post_types );
+}
+
+
+
 
 
 /* ------------------------------------------------------------------------- *
