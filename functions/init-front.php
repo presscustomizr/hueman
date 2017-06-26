@@ -355,11 +355,13 @@ if ( ! function_exists( 'hu_print_logo_or_title' ) ) {
         $logo_or_title = hu_get_logo_title( $is_mobile_menu );
         // => If no logo is set and  ! hu_is_checked( 'display-header-title' ), the logo title is empty.
         ob_start();
-          if ( ! empty( $logo_or_title ) ) {
-              ?>
-                <p class="site-title"><?php hu_do_render_logo_site_tite( $logo_or_title ) ?></p>
-              <?php
-          }
+            do_action( '__before_logo_or_site_title', $logo_or_title );
+            if ( ! empty( $logo_or_title ) ) {
+                ?>
+                  <p class="site-title"><?php hu_do_render_logo_site_tite( $logo_or_title ) ?></p>
+                <?php
+            }
+            do_action( '__after_logo_or_site_title', $logo_or_title );
         $html = ob_get_contents();
         if ($html) ob_end_clean();
         if ( $echo )
