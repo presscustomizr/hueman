@@ -1,9 +1,23 @@
+<?php
+//Let's determine which image size would be the best
+$map = array(
+      'col-1c'  => null,// when no argument is passed to hu_the_post_thumbnail(), it will fallback on the original size
+      'col-2cl' => null,// when no argument is passed to hu_the_post_thumbnail(), it will fallback on the original size
+      'col-2cr' => null,// when no argument is passed to hu_the_post_thumbnail(), it will fallback on the original size
+      'col-3cm' => 'thumb-large',
+      'col-3cl' => 'thumb-large',
+      'col-3cr' => 'thumb-large'
+);
+$sb_layout    = hu_get_layout_class();
+$featured_img_size = array_key_exists( $sb_layout, $map ) ? $map[ $sb_layout ] : null;
+?>
+
 <article id="post-<?php the_ID(); ?>" <?php post_class('group'); ?>>
 	<div class="post-inner post-hover">
 
 		<div class="post-thumbnail">
 			<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
-				<?php hu_the_post_thumbnail('thumb-large'); // only difference to content.php ?>
+				<?php hu_the_post_thumbnail( $featured_img_size ); // only difference to content.php ?>
 				<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon"><i class="fa fa-play"></i></span>'; ?>
 				<?php if ( has_post_format('audio') && !is_sticky() ) echo'<span class="thumb-icon"><i class="fa fa-volume-up"></i></span>'; ?>
 				<?php if ( is_sticky() ) echo'<span class="thumb-icon"><i class="fa fa-star"></i></span>'; ?>
