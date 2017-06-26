@@ -1,4 +1,4 @@
-# Hueman v3.3.12
+# Hueman v3.3.13
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 80K+ websites around the world.
@@ -82,6 +82,29 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 ## Changelog
+= 3.3.13 June 26th 2017 =
+* fixed : when doing an ajax request on front, always make sure that the response is a well formed object, and fallback on the localized param if not
+* updated : flexslider.min.js. Fixes : #511
+* fixed : removed check_ajax_referer( 'hu-front-nonce', 'HuFrontNonce' ); when doing a front end ajax request. Should fix #512
+* fixed : boxed - avoid header elements to horizontally overflow the viewport.fixes #508 3. and 4.fixes https://github.com/presscustomizr/hueman-pro-addons/issues/48
+* fixed : when the layout is boxed + sticky header on on dekstop, the width of the header should be inherited from the used width (or default one ), and not rely on %.
+* fixed : comment reply font size too small when viewed in mobile. fixes #504
+* fixed : wp contact form 7 style. fixes #491
+* fixed : on the blog page, the ( optional ) featured posts thumbnail size was not large enough when using a 1 or 2 columns layout. 'thumb-large' size is now only used for 3 columns layout. Fixes #350
+* fixed: fix use of the add_editor_style wp function : needs relative paths + add rtl class to the inline font style in the wp editor see https://github.com/presscustomizr/customizr/issues/926
+* added : a custom event "header-image-loaded" : partially fixes https://github.com/presscustomizr/hueman/issues/508
+* replaced : hu_sanitize_hex_color() by core WP maybe_hash_hex_color doing the same job since WP 3.4
+* improved : change page title tag from h2 to h1 to be consistent with single posts
+* improved : increased .page-title font-size from 1em to 1.3em
+* improved : .single .post-title from 2.375em to 2.62em => to make them taller than h2 title inside the content. Fix #515
+* improved : 'header-mobile-sticky' classes shall not be added to the body element when 2 menus ( 'both_menus') are displayed on mobiles
+* added : new localized params for a fittext implementation on front
+* improved : slightly increased the max font-size of comments from 0.875rem to 0.93rem
+* added : the headings ( Hx ) font size is now better resized for all type of devices with a dynamic resizing. Use fittext.js => based on the heading's parent container width, instead of relying on the css @media queries, not covering all device dimensions.
+* added : include Custom Post Types in post lists ( archives and search results ). In archives, it handles the case where a CPT has been registered and associated with an existing built-in taxonomy like category or post_tag. Fixes #513
+* added : new filters for hueman posts widget to alter the query args and the date format. Fixes #343
+* added : '__before_logo_or_site_title' and '__after_logo_or_site_title' in hu_print_logo_or_title()
+
 = 3.3.12 June 6th 2017 =
 * fixed : when topbar is sticky and header has an header image, wait for the image to be fully loaded before setting the header's height. Fix #486
 * fixed Issue in hu_get_raw_option, php warning. wp_cache_get( 'alloptions', 'options' ) should always be cast to an array(). It might happen that it returns a boolean. fixes #492

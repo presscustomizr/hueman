@@ -1,5 +1,5 @@
 <?php
-//Let's determine which image size would be the best
+//Let's determine which image size would be the best for the current user layout
 $map = array(
       'col-1c'  => null,// when no argument is passed to hu_the_post_thumbnail(), it will fallback on the original size
       'col-2cl' => null,// when no argument is passed to hu_the_post_thumbnail(), it will fallback on the original size
@@ -8,7 +8,7 @@ $map = array(
       'col-3cl' => 'thumb-large',
       'col-3cr' => 'thumb-large'
 );
-$sb_layout    = hu_get_layout_class();
+$sb_layout = hu_get_layout_class();
 $featured_img_size = array_key_exists( $sb_layout, $map ) ? $map[ $sb_layout ] : null;
 ?>
 
