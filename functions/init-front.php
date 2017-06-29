@@ -964,7 +964,7 @@ if ( ! function_exists( 'hu_scripts' ) ) {
               'fitTextMap'      => array(
                   //Singular headings
                   'single_post_title' => array(
-                      'selectors' => '.single .post-title',
+                      'selectors' => '.single h1.entry-title',
                       'minEm'     => 1.375,
                       'maxEm'     => 2.62
                   ),
