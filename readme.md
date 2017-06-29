@@ -1,4 +1,4 @@
-# Hueman v3.3.13
+# Hueman v3.3.14
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 80K+ websites around the world.
@@ -82,6 +82,11 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 ## Changelog
+= 3.3.14 June 29th 2017 =
+* fixed : Restrict the front ajax query when user has checked the sticky sidebars for either mobile devices or desktops, or both. Fixes #523.
+* fixed : related posts should not inherit the main post-title fittext font-size
+* added : new option in Adanced options > Mobile Devices > Make font sizes flexible. , responsive font-size is unchecked by default. Fixes #522
+
 = 3.3.13 June 26th 2017 =
 * fixed : when doing an ajax request on front, always make sure that the response is a well formed object, and fallback on the localized param if not
 * updated : flexslider.min.js. Fixes : #511

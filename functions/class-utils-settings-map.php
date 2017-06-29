@@ -447,7 +447,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           'fittext' => array(
                 'default'   => 0,
                 'control'   => 'HU_controls',
-                'label'     => __('Makes font sizes flexible. Enable this option to achieve scalable headlines that fill the width of a parent element.', 'hueman'),
+                'label'     => __('Make font sizes flexible. Enable this option to achieve scalable headlines that fill the width of a parent element.', 'hueman'),
                 'section'   => 'mobiles_sec',
                 'type'      => 'checkbox',
                 'notice'    => __( "This option is good if you want to display a perfect font-size for your headings on any mobile devices. Note : it might override the css rules previously set in your custom stylesheet." , 'hueman' )
