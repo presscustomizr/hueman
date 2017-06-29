@@ -689,8 +689,13 @@ if ( ! function_exists( 'hu_print_placeholder_thumb' ) ) {
 
 
 
+
+
+
+
+
 /* ------------------------------------------------------------------------- *
- *  Filters
+ *  FILTERS
 /* ------------------------------------------------------------------------- */
 
 /*  Body class
@@ -829,6 +834,106 @@ add_filter( 'body_class', 'hu_browser_body_class' );
 
 
 
+//hook : hu_front_js_localized_params
+//Add the fittext params on front if the user option is checked
+//@param $localized = array()
+function hu_add_fittext_js_front_params( $localized = array() ) {
+    $localized = ! is_array( $localized ) ? array() : $localized;
+
+    if ( ! hu_is_checked( 'fittext' ) )
+      return $localized;
+
+    //user font-size preprocess
+    $user_font_size = hu_get_option( 'body-font-size' );
+    $user_font_size = is_numeric( $user_font_size ) ? $user_font_size : '16';
+
+
+    return array_merge( $localized , array(
+        //Fittext
+        'fitTextMap'      => array(
+            //Singular headings
+            'single_post_title' => array(
+                'selectors' => '.single h1.entry-title',
+                'minEm'     => 1.375,
+                'maxEm'     => 2.62
+            ),
+            'page_title' => array(
+                'selectors' => '.page-title h1',
+                'minEm'     => 1,
+                'maxEm'     => 1.3
+            ),
+            'home_page_title' => array(
+                'selectors' => '.home .page-title',
+                'minEm'     => 1,
+                'maxEm'     => 1.2,
+                'compression' => 2.5
+            ),
+
+            //post lists
+            'post_titles' => array(
+                'selectors' => '.blog .post-title, .archive .post-title',
+                'minEm'     => 1.375,
+                'maxEm'     => 1.475
+            ),
+            'featured_post_titles' => array(
+                'selectors' => '.featured .post-title',
+                'minEm'     => 1.375,
+                'maxEm'     => 2.125
+            ),
+
+            //Comments
+            'comments' => array(
+                'selectors' => '.commentlist li',
+                'minEm'     => 0.8125,
+                'maxEm'     => 0.93,
+                'compression' => 2.5
+            ),
+
+            //entry content p and hx headings
+            'entry' => array(
+                'selectors' => '.entry',
+                'minEm'     => 0.9375,
+                'maxEm'     => 1.125,
+                'compression' => 2.5
+            ),
+            'content_h1' => array(
+                'selectors' => '.entry h1, .woocommerce div.product h1.product_title',
+                'minEm'     => 1.875 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
+                'maxEm'     => 2.375 * 1.125//this factor is the .entry inherited font-size : 1.125em
+            ),
+            'content_h2' => array(
+                'selectors' => '.entry h2',
+                'minEm'     => 1.625 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
+                'maxEm'     => 2.125 * 1.125//this factor is the .entry inherited font-size : 1.125em
+            ),
+            'content_h3' => array(
+                'selectors' => '.entry h3',
+                'minEm'     => 1.5 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
+                'maxEm'     => 1.75 * 1.125//this factor is the .entry inherited font-size : 1.125em
+            ),
+            'content_h4' => array(
+                'selectors' => '.entry h4',
+                'minEm'     => 1.375 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
+                'maxEm'     => 1.5 * 1.125//this factor is the .entry inherited font-size : 1.125em
+            ),
+            'content_h5' => array(
+                'selectors' => '.entry h5',
+                'minEm'     => 1.125 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
+                'maxEm'     => 1.25 * 1.125//this factor is the .entry inherited font-size : 1.125em
+            ),
+            'content_h6' => array(
+                'selectors' => '.entry h6',
+                'minEm'     => 1 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
+                'maxEm'     => 1.125 * 1.125,//this factor is the .entry inherited font-size : 1.125em,
+                'compression' => 2.5
+            )
+        ),
+        'userFontSize'    => $user_font_size,
+        'fitTextCompression' => apply_filters( 'hu_fittext_compression', 1.5 )
+    ) );
+}
+add_filter( 'hu_front_js_localized_params', 'hu_add_fittext_js_front_params' );
+
 
 
 
@@ -893,154 +998,68 @@ if ( ! function_exists( 'hu_scripts' ) ) {
         }
     }
 
-    //user font-size preprocess
-    $user_font_size = hu_get_option( 'body-font-size' );
-    $user_font_size = is_numeric( $user_font_size ) ? $user_font_size : '16';
-
     //user started with
     $started_on = get_transient( 'hu_start_date' );
 
     wp_localize_script(
           'hu-front-scripts',
           'HUParams',
-          apply_filters( 'hu_customizr_script_params' , array(
-              '_disabled'          => apply_filters( 'hu_disabled_front_js_parts', array() ),
-              'SmoothScroll'      => array(
-                'Enabled' => apply_filters('hu_enable_smoothscroll', ! wp_is_mobile() && hu_is_checked('smoothscroll') ),
-                'Options' => apply_filters('hu_smoothscroll_options', array( 'touchpadSupport' => false ) )
-              ),
-              'centerAllImg'      => apply_filters( 'hu_center_img', true ),
-              'timerOnScrollAllBrowsers' => apply_filters( 'hu_timer_on_scroll_for_all_browser' , true), //<= if false, for ie only
-              'extLinksStyle'       => hu_is_checked('ext_link_style'),
-              'extLinksTargetExt'   => hu_is_checked('ext_link_target'),
-              'extLinksSkipSelectors'   => apply_filters(
-                'hu_ext_links_skip_selectors',
-                array(
-                  'classes' => array('btn', 'button'),
-                  'ids' => array()
-                )
-              ),
-              'imgSmartLoadEnabled' => apply_filters( 'hu_img_smart_load_enabled', hu_is_checked('smart_load_img') ),
-              'imgSmartLoadOpts'    => apply_filters( 'hu_img_smart_load_options' , array(
-                    'parentSelectors' => array(
-                        '.container .content',
-                        '.container .sidebar',
-                        '#footer',
-                        '#header-widgets'
-                    ),
-                    'opts'     => array(
-                        'excludeImg' => array( '.tc-holder-img' ),
-                        'fadeIn_options' => 100
-                    )
-              )),
-              'goldenRatio'         => apply_filters( 'hu_grid_golden_ratio' , 1.618 ),
-              'gridGoldenRatioLimit' => apply_filters( 'hu_grid_golden_ratio_limit' , 350),
-              'sbStickyUserSettings' => array(
-                  'desktop' => hu_is_checked('desktop-sticky-sb'),
-                  'mobile' => hu_is_checked( 'mobile-sticky-sb' )
-              ),
-              'isWPMobile' => wp_is_mobile(),
-              'menuStickyUserSettings' => array(
-                  'desktop' => hu_normalize_stick_menu_opt( hu_get_option( 'header-desktop-sticky' ) ),
-                  'mobile'  => hu_normalize_stick_menu_opt( hu_get_option( 'header-mobile-sticky' ) )
-              ),
-              'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('CZR_DEV') && true === CZR_DEV ),
-              //AJAX
-              'ajaxUrl'        => add_query_arg(
-                    array( 'huajax' => true ), //to scope our ajax calls
-                    set_url_scheme( home_url( '/' ) )
-              ),
-              'frontNonce'   => array( 'id' => 'HuFrontNonce', 'handle' => wp_create_nonce( 'hu-front-nonce' ) ),
-
-              //Welcome
-              'userStarted' => array(
-                    'with' => get_transient( HU_IS_PRO ? 'started_using_hueman_pro' : 'started_using_hueman' ),
-                    'on' => is_object( $started_on ) ? (array)$started_on : $started_on
-              ),
-              'isWelcomeNoteOn' => $is_welcome_note_on,
-              'welcomeContent'  => $welcome_note_content,
-
-              //Fittext
-              'fitTextMap'      => array(
-                  //Singular headings
-                  'single_post_title' => array(
-                      'selectors' => '.single h1.entry-title',
-                      'minEm'     => 1.375,
-                      'maxEm'     => 2.62
-                  ),
-                  'page_title' => array(
-                      'selectors' => '.page-title h1',
-                      'minEm'     => 1,
-                      'maxEm'     => 1.3
-                  ),
-                  'home_page_title' => array(
-                      'selectors' => '.home .page-title',
-                      'minEm'     => 1,
-                      'maxEm'     => 1.2,
-                      'compression' => 2.5
-                  ),
-
-                  //post lists
-                  'post_titles' => array(
-                      'selectors' => '.blog .post-title, .archive .post-title',
-                      'minEm'     => 1.375,
-                      'maxEm'     => 1.475
-                  ),
-                  'featured_post_titles' => array(
-                      'selectors' => '.featured .post-title',
-                      'minEm'     => 1.375,
-                      'maxEm'     => 2.125
-                  ),
-
-                  //Comments
-                  'comments' => array(
-                      'selectors' => '.commentlist li',
-                      'minEm'     => 0.8125,
-                      'maxEm'     => 0.93,
-                      'compression' => 2.5
-                  ),
-
-                  //entry content p and hx headings
-                  'entry' => array(
-                      'selectors' => '.entry',
-                      'minEm'     => 0.9375,
-                      'maxEm'     => 1.125,
-                      'compression' => 2.5
-                  ),
-                  'content_h1' => array(
-                      'selectors' => '.entry h1, .woocommerce div.product h1.product_title',
-                      'minEm'     => 1.875 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
-                      'maxEm'     => 2.375 * 1.125//this factor is the .entry inherited font-size : 1.125em
-                  ),
-                  'content_h2' => array(
-                      'selectors' => '.entry h2',
-                      'minEm'     => 1.625 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
-                      'maxEm'     => 2.125 * 1.125//this factor is the .entry inherited font-size : 1.125em
-                  ),
-                  'content_h3' => array(
-                      'selectors' => '.entry h3',
-                      'minEm'     => 1.5 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
-                      'maxEm'     => 1.75 * 1.125//this factor is the .entry inherited font-size : 1.125em
-                  ),
-                  'content_h4' => array(
-                      'selectors' => '.entry h4',
-                      'minEm'     => 1.375 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
-                      'maxEm'     => 1.5 * 1.125//this factor is the .entry inherited font-size : 1.125em
-                  ),
-                  'content_h5' => array(
-                      'selectors' => '.entry h5',
-                      'minEm'     => 1.125 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
-                      'maxEm'     => 1.25 * 1.125//this factor is the .entry inherited font-size : 1.125em
-                  ),
-                  'content_h6' => array(
-                      'selectors' => '.entry h6',
-                      'minEm'     => 1 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
-                      'maxEm'     => 1.125 * 1.125,//this factor is the .entry inherited font-size : 1.125em,
-                      'compression' => 2.5
+          apply_filters( 'hu_front_js_localized_params' , array(
+                '_disabled'          => apply_filters( 'hu_disabled_front_js_parts', array() ),
+                'SmoothScroll'      => array(
+                  'Enabled' => apply_filters('hu_enable_smoothscroll', ! wp_is_mobile() && hu_is_checked('smoothscroll') ),
+                  'Options' => apply_filters('hu_smoothscroll_options', array( 'touchpadSupport' => false ) )
+                ),
+                'centerAllImg'      => apply_filters( 'hu_center_img', true ),
+                'timerOnScrollAllBrowsers' => apply_filters( 'hu_timer_on_scroll_for_all_browser' , true), //<= if false, for ie only
+                'extLinksStyle'       => hu_is_checked('ext_link_style'),
+                'extLinksTargetExt'   => hu_is_checked('ext_link_target'),
+                'extLinksSkipSelectors'   => apply_filters(
+                  'hu_ext_links_skip_selectors',
+                  array(
+                    'classes' => array('btn', 'button'),
+                    'ids' => array()
                   )
-              ),
-              'userFontSize'    => $user_font_size,
-              'fitTextCompression' => apply_filters( 'hu_fittext_compression', 1.5 )
+                ),
+                'imgSmartLoadEnabled' => apply_filters( 'hu_img_smart_load_enabled', hu_is_checked('smart_load_img') ),
+                'imgSmartLoadOpts'    => apply_filters( 'hu_img_smart_load_options' , array(
+                      'parentSelectors' => array(
+                          '.container .content',
+                          '.container .sidebar',
+                          '#footer',
+                          '#header-widgets'
+                      ),
+                      'opts'     => array(
+                          'excludeImg' => array( '.tc-holder-img' ),
+                          'fadeIn_options' => 100
+                      )
+                )),
+                'goldenRatio'         => apply_filters( 'hu_grid_golden_ratio' , 1.618 ),
+                'gridGoldenRatioLimit' => apply_filters( 'hu_grid_golden_ratio_limit' , 350),
+                'sbStickyUserSettings' => array(
+                    'desktop' => hu_is_checked('desktop-sticky-sb'),
+                    'mobile' => hu_is_checked( 'mobile-sticky-sb' )
+                ),
+                'isWPMobile' => wp_is_mobile(),
+                'menuStickyUserSettings' => array(
+                    'desktop' => hu_normalize_stick_menu_opt( hu_get_option( 'header-desktop-sticky' ) ),
+                    'mobile'  => hu_normalize_stick_menu_opt( hu_get_option( 'header-mobile-sticky' ) )
+                ),
+                'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('CZR_DEV') && true === CZR_DEV ),
+                //AJAX
+                'ajaxUrl'        => add_query_arg(
+                      array( 'huajax' => true ), //to scope our ajax calls
+                      set_url_scheme( home_url( '/' ) )
+                ),
+                'frontNonce'   => array( 'id' => 'HuFrontNonce', 'handle' => wp_create_nonce( 'hu-front-nonce' ) ),
+
+                //Welcome
+                'userStarted' => array(
+                      'with' => get_transient( HU_IS_PRO ? 'started_using_hueman_pro' : 'started_using_hueman' ),
+                      'on' => is_object( $started_on ) ? (array)$started_on : $started_on
+                ),
+                'isWelcomeNoteOn' => $is_welcome_note_on,
+                'welcomeContent'  => $welcome_note_content
             )
         )//end of filter
        );//wp_localize_script()

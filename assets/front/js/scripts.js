@@ -141,6 +141,7 @@ if (!Array.from) {
     };
   }());
 }
+
 ;(function ( $, window, document, undefined ) {
 
   var pluginPrefix = 'original',
@@ -2045,7 +2046,7 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
             query = query || ( _.isObject( query ) ? query : {} );
 
             var ajaxUrl = czrapp.localized.ajaxUrl,
-                nonce = czrapp.localized.frontNonce,//{ 'id' : '', 'handle' : '' }
+                nonce = czrapp.localized.frontNonce,//{ 'id' => 'HuFrontNonce', 'handle' => wp_create_nonce( 'hu-front-nonce' ) },
                 dfd = $.Deferred(),
                 _query_ = _.extend( {
                             action : ''
@@ -3586,11 +3587,14 @@ var czrapp = czrapp || {};
 (function($, czrapp) {
   var _methods =  {
         fittext : function() {
+            if ( ! _.isObject( HUParams.fitTextMap ) )
+              return;
+
             var _userBodyFontSize = _.isNumber( HUParams.userFontSize ) && HUParams.userFontSize * 1 > 0 ? HUParams.userFontSize : 16,
                 _fitTextMap = HUParams.fitTextMap,
                 _fitTextCompression = HUParams.fitTextCompression;
 
-            if ( ! _.isObject( _fitTextMap ) || _.size( _fitTextMap ) < 1 ) {
+            if (_.size( _fitTextMap ) < 1 ) {
                 czrapp.errorLog( 'Unable to apply fittext params, wrong HUParams.fitTextMap.');
                 return;
             }
@@ -4081,7 +4085,10 @@ var czrapp = czrapp || {};
                             function() {
                                   var self = this;
                                   czrapp.browserAgentSet.done( function() {
-                                        self.sidebarToLife();
+                                        try { self.sidebarToLife(); } catch( er ) {
+                                              czrapp.errorLog( [ 'NOK', self.id + '::' + 'sidebarToLife', _.isString( er ) ? czrapp._truncate( er ) : er ].join( ' => ') );
+                                              return;
+                                        }
                                   });
                             },
                             'dropdownMenu',

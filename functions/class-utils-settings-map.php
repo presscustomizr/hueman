@@ -443,6 +443,14 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'mobiles_sec',
                 'type'      => 'checkbox',
                 'notice'    => __( "Hueman is a mobile friendly WordPress theme out of the box. This means that it will adapt and render nicely on any devices : desktops, laptops, tablets, smartphones. <br/>If you uncheck this box, this adaptive (or reponsive) behaviour will not be working anymore. In most of the cases, you won't need to disable this option, and it is not recommended." , 'hueman' )
+          ),
+          'fittext' => array(
+                'default'   => 0,
+                'control'   => 'HU_controls',
+                'label'     => __('Makes font sizes flexible. Enable this option to achieve scalable headlines that fill the width of a parent element.', 'hueman'),
+                'section'   => 'mobiles_sec',
+                'type'      => 'checkbox',
+                'notice'    => __( "This option is good if you want to display a perfect font-size for your headings on any mobile devices. Note : it might override the css rules previously set in your custom stylesheet." , 'hueman' )
           )
       );
     }
