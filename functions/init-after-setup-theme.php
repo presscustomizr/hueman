@@ -89,6 +89,8 @@ if ( ! function_exists( 'hu_setup' ) ) {
     add_image_size( 'thumb-standard', 320, 320, true );
     add_image_size( 'thumb-medium', 520, 245, true );
     add_image_size( 'thumb-large', 720, 340, true );
+    add_image_size( 'thumb-xlarge', 980, 450, true );
+    add_image_size( 'thumb-xxlarge', 1320, 500, true );
 
     // Custom menu areas
     register_nav_menus( array(

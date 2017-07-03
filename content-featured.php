@@ -1,21 +1,23 @@
 <?php
 //Let's determine which image size would be the best for the current user layout
 $map = array(
-      'col-1c'  => null,// when no argument is passed to hu_the_post_thumbnail(), it will fallback on the original size
-      'col-2cl' => null,// when no argument is passed to hu_the_post_thumbnail(), it will fallback on the original size
-      'col-2cr' => null,// when no argument is passed to hu_the_post_thumbnail(), it will fallback on the original size
+      'col-1c'  => 'thumb-xxlarge',
+      'col-2cl' => 'thumb-xlarge',
+      'col-2cr' => 'thumb-xlarge',
       'col-3cm' => 'thumb-large',
       'col-3cl' => 'thumb-large',
       'col-3cr' => 'thumb-large'
 );
 $sb_layout = hu_get_layout_class();
 $featured_img_size = array_key_exists( $sb_layout, $map ) ? $map[ $sb_layout ] : null;
+//the featured img size is also used to generate a dynamic concatenated css class, featured-img-$featured_img_size
+//for which the rule is defined assets/front/css/_parts/0_5_single_post_page.css
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class('group'); ?>>
 	<div class="post-inner post-hover">
 
-		<div class="post-thumbnail">
+		<div class="post-thumbnail featured-img-<?php echo $featured_img_size; ?>">
 			<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 				<?php hu_the_post_thumbnail( $featured_img_size ); // only difference to content.php ?>
 				<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon"><i class="fa fa-play"></i></span>'; ?>
