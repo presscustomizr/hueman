@@ -1,4 +1,4 @@
-# Hueman v3.3.14
+# Hueman v3.3.15
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 80K+ websites around the world.
@@ -73,6 +73,10 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 # Changelog
+= 3.3.15 July 3rd 2017 =
+* fixed : more css specificity added to the sticky sidebars. Fixes #529
+* fixed : the images of the featured post could be too high in some scenario. Two new image sizes have been added and a max-height depending on the culumn layout has been set in the css rules. fixes #525.
+
 = 3.3.14 June 29th 2017 =
 * fixed : huajax used to set the browser agent when the sticky sidebar is on might be too slow. Restrict the ajax query only when user has checked the sticky sidebars for either mobile devices or desktops, or both. Fixes #523.
 * fixed : related posts should not inherit the main post-title fittext font-size
