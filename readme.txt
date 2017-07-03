@@ -1,4 +1,4 @@
-# Hueman v3.3.15
+# Hueman v3.3.16
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 80K+ websites around the world.
@@ -73,6 +73,9 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 # Changelog
+= 3.3.16 July 3rd 2017 =
+* fixed : more css specificity added to the sidebars when building the dynamic style
+
 = 3.3.15 July 3rd 2017 =
 * fixed : more css specificity added to the sticky sidebars. Fixes #529
 * fixed : the images of the featured post could be too high in some scenario. Two new image sizes have been added and a max-height depending on the culumn layout has been set in the css rules. fixes #525.
