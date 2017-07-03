@@ -141,6 +141,632 @@ if (!Array.from) {
     };
   }());
 }
+;(function ( $, window, document, undefined ) {
+
+  var pluginPrefix = 'original',
+      _props       = ['Width', 'Height'];
+
+  _props.map( function(_prop) {
+    var _lprop = _prop.toLowerCase();
+    $.fn[ pluginPrefix + _prop ] = ('natural' + _prop in new Image()) ?
+      function () {
+        return this[0][ 'natural' + _prop ];
+      } :
+      function () {
+        var _size = _getAttr( this, _lprop );
+
+        if ( _size )
+          return _size;
+
+        var _node = this[0],
+            _img;
+
+        if (_node.tagName.toLowerCase() === 'img') {
+          _img = new Image();
+          _img.src = _node.src;
+          _size = _img[ _lprop ];
+        }
+        return _size;
+      };
+  } );//map()
+
+  function _getAttr( _el, prop ){
+    var _img_size = $(_el).attr( prop );
+    return ( typeof _img_size === undefined ) ? false : _img_size;
+  }
+
+})( jQuery, window, document );
+;(function ( $, window, document, undefined ) {
+      var pluginName = 'imgSmartLoad',
+          defaults = {
+                load_all_images_on_first_scroll : false,
+                attribute : [ 'data-src', 'data-srcset', 'data-sizes' ],
+                excludeImg : [''],
+                threshold : 200,
+                fadeIn_options : { duration : 400 },
+                delaySmartLoadEvent : 0,
+
+          },
+          skipImgClass = 'tc-smart-load-skip';
+
+
+      function Plugin( element, options ) {
+            this.element = element;
+            this.options = $.extend( {}, defaults, options) ;
+            if ( _.isArray( this.options.excludeImg ) )
+              this.options.excludeImg.push( '.'+skipImgClass );
+            else
+              this.options.excludeImg = [ '.'+skipImgClass ];
+
+            this._defaults = defaults;
+            this._name = pluginName;
+            this.init();
+      }
+      Plugin.prototype.init = function () {
+            var self        = this,
+                $_imgs   = $( 'img[' + this.options.attribute[0] + ']:not('+ this.options.excludeImg.join() +')' , this.element );
+
+            this.increment  = 1;//used to wait a little bit after the first user scroll actions to trigger the timer
+            this.timer      = 0;
+
+
+            $_imgs
+                  .addClass( skipImgClass )
+                  .bind( 'load_img', {}, function() { self._load_img(this); });
+            $(window).scroll( function( _evt ) { self._better_scroll_event_handler( $_imgs, _evt ); } );
+            $(window).resize( _.debounce( function( _evt ) { self._maybe_trigger_load( $_imgs, _evt ); }, 100 ) );
+            this._maybe_trigger_load( $_imgs );
+      };
+      Plugin.prototype._better_scroll_event_handler = function( $_imgs , _evt ) {
+            var self = this;
+            if ( ! this.doingAnimation ) {
+                  this.doingAnimation = true;
+                  window.requestAnimationFrame(function() {
+                        self._maybe_trigger_load( $_imgs , _evt );
+                        self.doingAnimation = false;
+                  });
+            }
+      };
+      Plugin.prototype._maybe_trigger_load = function( $_imgs , _evt ) {
+            var self = this;
+                _visible_list = $_imgs.filter( function( ind, _img ) { return self._is_visible( _img ,  _evt ); } );
+            _visible_list.map( function( ind, _img ) { $(_img).trigger( 'load_img' );  } );
+      };
+      Plugin.prototype._is_visible = function( _img, _evt ) {
+            var $_img       = $(_img),
+                wt = $(window).scrollTop(),
+                wb = wt + $(window).height(),
+                it  = $_img.offset().top,
+                ib  = it + $_img.height(),
+                th = this.options.threshold;
+            if ( _evt && 'scroll' == _evt.type && this.options.load_all_images_on_first_scroll )
+              return true;
+
+            return ib >= wt - th && it <= wb + th;
+      };
+      Plugin.prototype._load_img = function( _img ) {
+            var $_img    = $(_img),
+                _src     = $_img.attr( this.options.attribute[0] ),
+                _src_set = $_img.attr( this.options.attribute[1] ),
+                _sizes   = $_img.attr( this.options.attribute[2] ),
+                self = this;
+
+            $_img.parent().addClass('smart-loading');
+
+            $_img.unbind('load_img')
+                  .hide()
+                  .removeAttr( this.options.attribute.join(' ') )
+                  .attr( 'sizes' , _sizes )
+                  .attr( 'srcset' , _src_set )
+                  .attr('src', _src )
+                  .load( function () {
+                        if ( ! $_img.hasClass('tc-smart-loaded') ) {
+                              $_img.fadeIn(self.options.fadeIn_options).addClass('tc-smart-loaded');
+                        }
+                        if ( ( 'undefined' !== typeof $_img.attr('data-tcjp-recalc-dims')  ) && ( false !== $_img.attr('data-tcjp-recalc-dims') ) ) {
+                              var _width  = $_img.originalWidth();
+                                  _height = $_img.originalHeight();
+
+                              if ( 2 != _.size( _.filter( [ _width, _height ], function(num){ return _.isNumber( parseInt(num, 10) ) && num > 1; } ) ) )
+                                return;
+                              $_img.removeAttr( 'data-tcjp-recalc-dims scale' );
+
+                              $_img.attr( 'width', _width );
+                              $_img.attr( 'height', _height );
+                        }
+
+                        $_img.trigger('smartload');
+                  });//<= create a load() fn
+            if ( $_img[0].complete ) {
+                  $_img.load();
+            }
+            $_img.parent().removeClass('smart-loading');
+      };
+      $.fn[pluginName] = function ( options ) {
+            return this.each(function () {
+                  if (!$.data(this, 'plugin_' + pluginName)) {
+                        $.data(this, 'plugin_' + pluginName,
+                        new Plugin( this, options ));
+                  }
+            });
+      };
+})( jQuery, window, document );
+;(function ( $, window, document, undefined ) {
+    var pluginName = 'extLinks',
+        defaults = {
+          addIcon : true,
+          iconClassName : 'tc-external',
+          newTab: true,
+          skipSelectors : { //defines the selector to skip when parsing the wrapper
+            classes : [],
+            ids : []
+          },
+          skipChildTags : ['IMG']//skip those tags if they are direct children of the current link element
+        };
+
+
+    function Plugin( element, options ) {
+        this.$_el     = $(element);
+        this.options  = $.extend( {}, defaults, options) ;
+        this._href    = $.trim( this.$_el.attr( 'href' ) );
+        this.init();
+    }
+
+
+    Plugin.prototype.init = function() {
+      var self = this,
+          $_external_icon = this.$_el.next( '.' + self.options.iconClassName );
+      if ( ! this._is_eligible() ) {
+        if ( $_external_icon.length )
+          $_external_icon.remove();
+        return;
+      }
+      if ( this.options.addIcon && 0 === $_external_icon.length ) {
+        this.$_el.after('<span class="' + self.options.iconClassName + '">');
+      }
+      if ( this.options.newTab && '_blank' != this.$_el.attr('target') )
+        this.$_el.attr('target' , '_blank');
+    };
+    Plugin.prototype._is_eligible = function() {
+      var self = this;
+      if ( ! this._is_external( this._href ) )
+        return;
+      if ( ! this._is_first_child_tag_allowed () )
+        return;
+      if ( 2 != ( ['ids', 'classes'].filter( function( sel_type) { return self._is_selector_allowed(sel_type); } ) ).length )
+        return;
+
+      var _is_eligible = true;
+      $.each( this.$_el.parents(), function() {
+        if ( 'underline' == $(this).css('textDecoration') ){
+          _is_eligible = false;
+          return false;
+        }
+      });
+
+      return true && _is_eligible;
+    };
+    Plugin.prototype._is_selector_allowed = function( requested_sel_type ) {
+      if ( czrapp && czrapp.userXP && czrapp.userXP.isSelectorAllowed )
+        return czrapp.userXP.isSelectorAllowed( this.$_el, this.options.skipSelectors, requested_sel_type);
+
+      var sel_type = 'ids' == requested_sel_type ? 'id' : 'class',
+          _selsToSkip   = this.options.skipSelectors[requested_sel_type];
+      if ( 'object' != typeof(this.options.skipSelectors) || ! this.options.skipSelectors[requested_sel_type] || ! $.isArray( this.options.skipSelectors[requested_sel_type] ) || 0 === this.options.skipSelectors[requested_sel_type].length )
+        return true;
+      if ( this.$_el.parents( _selsToSkip.map( function( _sel ){ return 'id' == sel_type ? '#' + _sel : '.' + _sel; } ).join(',') ).length > 0 )
+        return false;
+      if ( ! this.$_el.attr( sel_type ) )
+        return true;
+
+      var _elSels       = this.$_el.attr( sel_type ).split(' '),
+          _filtered     = _elSels.filter( function(classe) { return -1 != $.inArray( classe , _selsToSkip ) ;});
+      return 0 === _filtered.length;
+    };
+    Plugin.prototype._is_first_child_tag_allowed = function() {
+      if ( 0 === this.$_el.children().length )
+        return true;
+
+      var tagName     = this.$_el.children().first()[0].tagName,
+          _tagToSkip  = this.options.skipChildTags;
+      if ( ! $.isArray( _tagToSkip ) )
+        return true;
+      _tagToSkip = _tagToSkip.map( function( _tag ) { return _tag.toUpperCase(); });
+      return -1 == $.inArray( tagName , _tagToSkip );
+    };
+    Plugin.prototype._is_external = function( _href  ) {
+      var _main_domain = (location.host).split('.').slice(-2).join('.'),
+          _reg = new RegExp( _main_domain );
+
+      _href = $.trim( _href );
+
+      if ( _href !== '' && _href != '#' && this._isValidURL( _href ) )
+        return ! _reg.test( _href );
+      return;
+    };
+    Plugin.prototype._isValidURL = function( _url ){
+      var _pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+      return _pattern.test( _url );
+    };
+    $.fn[pluginName] = function ( options ) {
+      return this.each(function () {
+        if (!$.data(this, 'plugin_' + pluginName)) {
+            $.data(this, 'plugin_' + pluginName,
+            new Plugin( this, options ));
+        }
+      });
+    };
+
+})( jQuery, window, document );
+;(function ( $, window, document, undefined ) {
+      var pluginName = 'centerImages',
+          defaults = {
+                enableCentering : true,
+                onresize : true,
+                oncustom : [],//list of event here
+                imgSel : 'img',
+                defaultCSSVal : { width : 'auto' , height : 'auto' },
+                leftAdjust : 0,
+                zeroLeftAdjust : 0,
+                topAdjust : 0,
+                zeroTopAdjust : -2,//<= top ajustement for h-centered
+                enableGoldenRatio : false,
+                goldenRatioLimitHeightTo : 350,
+                goldenRatioVal : 1.618,
+                skipGoldenRatioClasses : ['no-gold-ratio'],
+                disableGRUnder : 767,//in pixels
+                useImgAttr:false,//uses the img height and width attributes if not visible (typically used for the customizr slider hidden images)
+                setOpacityWhenCentered : false,//this can be used to hide the image during the time it is centered
+                opacity : 1
+          };
+
+      function Plugin( element, options ) {
+            var self = this;
+            this.container  = element;
+            this.options    = $.extend( {}, defaults, options) ;
+            this._defaults  = defaults;
+            this._name      = pluginName;
+            this._customEvt = $.isArray(self.options.oncustom) ? self.options.oncustom : self.options.oncustom.split(' ');
+            this.init();
+      }
+      Plugin.prototype.init = function () {
+            var self = this,
+                _do = function() {
+                    self._maybe_apply_golden_r();
+                    var $_imgs = $( self.options.imgSel , self.container );
+                    if ( self.options.enableGoldenRatio ) {
+                          $(window).bind(
+                                'resize',
+                                {},
+                                _.debounce( function( evt ) { self._maybe_apply_golden_r( evt ); }, 200 )
+                          );
+                    }
+                    if ( 1 <= $_imgs.length && self.options.enableCentering ) {
+                          self._parse_imgs($_imgs);
+                    }
+                };
+            _do();
+            if ( $.isArray( self._customEvt ) ) {
+                  self._customEvt.map( function( evt ) {
+                        $( self.container ).bind( evt, {} , _do );
+                  } );
+            }
+      };
+      Plugin.prototype._maybe_apply_golden_r = function( evt ) {
+            if ( ! this.options.enableGoldenRatio || ! this.options.goldenRatioVal || 0 === this.options.goldenRatioVal )
+              return;
+            if ( ! this._is_selector_allowed() )
+              return;
+            if ( ! this._is_window_width_allowed() ) {
+                  $(this.container).attr('style' , '');
+                  return;
+            }
+
+            var new_height = Math.round( $(this.container).width() / this.options.goldenRatioVal );
+            new_height = new_height > this.options.goldenRatioLimitHeightTo ? this.options.goldenRatioLimitHeightTo : new_height;
+            $(this.container)
+                  .css({
+                        'line-height' : new_height + 'px',
+                        height : new_height + 'px'
+                  })
+                  .trigger('golden-ratio-applied');
+      };
+      Plugin.prototype._is_window_width_allowed = function() {
+            return $(window).width() > this.options.disableGRUnder - 15;
+      };
+      Plugin.prototype._parse_imgs = function( $_imgs ) {
+            var self = this;
+            $_imgs.each(function ( ind, img ) {
+                  var $_img = $(img);
+                  self._pre_img_cent( $_img );
+                  if ( self.options.onresize ) {
+                        $(window).resize( _.debounce( function() {
+                              self._pre_img_cent( $_img );
+                        }, 200 ) );
+                  }
+                  if ( $.isArray( self._customEvt ) ) {
+                        self._customEvt.map( function( evt ) {
+                              $_img.bind( evt, {} , function( evt ) {
+                                    self._pre_img_cent( $_img );
+                              } );
+                        } );
+                  }
+            });//$_imgs.each()
+      };
+      Plugin.prototype._pre_img_cent = function( $_img ) {
+            var _state = this._get_current_state( $_img ),
+                self = this,
+                _case  = _state.current,
+                _p     = _state.prop[_case],
+                _not_p = _state.prop[ 'h' == _case ? 'v' : 'h'],
+                _not_p_dir_val = 'h' == _case ? ( this.options.zeroTopAdjust || 0 ) : ( this.options.zeroLeftAdjust || 0 );
+
+            var _centerImg = function( $_img ) {
+                  $_img
+                      .css( _p.dim.name , _p.dim.val )
+                      .css( _not_p.dim.name , self.options.defaultCSSVal[ _not_p.dim.name ] || 'auto' )
+                      .addClass( _p._class ).removeClass( _not_p._class )
+                      .css( _p.dir.name, _p.dir.val ).css( _not_p.dir.name, _not_p_dir_val );
+
+                  return $_img;
+            };
+            if ( this.options.setOpacityWhenCentered ) {
+                  $.when( _centerImg( $_img ) ).done( function( $_img ) {
+                        $_img.css( 'opacity', self.options.opacity );
+                  });
+            } else {
+                  _centerImg( $_img );
+            }
+      };
+      Plugin.prototype._get_current_state = function( $_img ) {
+            var c_x     = $_img.closest(this.container).outerWidth(),
+                c_y     = $(this.container).outerHeight(),
+                i_x     = this._get_img_dim( $_img , 'x'),
+                i_y     = this._get_img_dim( $_img , 'y'),
+                up_i_x  = i_y * c_y !== 0 ? Math.round( i_x / i_y * c_y ) : c_x,
+                up_i_y  = i_x * c_x !== 0 ? Math.round( i_y / i_x * c_x ) : c_y,
+                current = 'h';
+            if ( 0 !== c_x * i_x ) {
+                  current = ( c_y / c_x ) >= ( i_y / i_x ) ? 'h' : 'v';
+            }
+
+            var prop    = {
+                  h : {
+                        dim : { name : 'height', val : c_y },
+                        dir : { name : 'left', val : ( c_x - up_i_x ) / 2 + ( this.options.leftAdjust || 0 ) },
+                        _class : 'h-centered'
+                  },
+                  v : {
+                        dim : { name : 'width', val : c_x },
+                        dir : { name : 'top', val : ( c_y - up_i_y ) / 2 + ( this.options.topAdjust || 0 ) },
+                        _class : 'v-centered'
+                  }
+            };
+
+            return { current : current , prop : prop };
+      };
+      Plugin.prototype._get_img_dim = function( $_img, _dim ) {
+            if ( ! this.options.useImgAttr )
+              return 'x' == _dim ? $_img.outerWidth() : $_img.outerHeight();
+
+            if ( $_img.is(":visible") ) {
+                  return 'x' == _dim ? $_img.outerWidth() : $_img.outerHeight();
+            } else {
+                  if ( 'x' == _dim ){
+                        var _width = $_img.originalWidth();
+                        return typeof _width === undefined ? 0 : _width;
+                  }
+                  if ( 'y' == _dim ){
+                        var _height = $_img.originalHeight();
+                        return typeof _height === undefined ? 0 : _height;
+                  }
+            }
+      };
+      Plugin.prototype._is_selector_allowed = function() {
+            if ( ! $(this.container).attr( 'class' ) )
+              return true;
+            if ( ! this.options.skipGoldenRatioClasses || ! $.isArray( this.options.skipGoldenRatioClasses )  )
+              return true;
+
+            var _elSels       = $(this.container).attr( 'class' ).split(' '),
+                _selsToSkip   = this.options.skipGoldenRatioClasses,
+                _filtered     = _elSels.filter( function(classe) { return -1 != $.inArray( classe , _selsToSkip ) ;});
+            return 0 === _filtered.length;
+      };
+      $.fn[pluginName] = function ( options ) {
+            return this.each(function () {
+                if (!$.data(this, 'plugin_' + pluginName)) {
+                    $.data(this, 'plugin_' + pluginName,
+                    new Plugin( this, options ));
+                }
+            });
+      };
+
+})( jQuery, window, document );/* ===================================================
+ * jqueryParallax.js v1.0.0
+ * ===================================================
+ * (c) 2016 Nicolas Guillaume - Rocco Aliberti, Nice, France
+ * CenterImages plugin may be freely distributed under the terms of the GNU GPL v2.0 or later license.
+ *
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ *
+ *
+ *
+ * =================================================== */
+;(function ( $, window, document, undefined ) {
+        var pluginName = 'czrParallax',
+            defaults = {
+                  parallaxRatio : 0.5,
+                  parallaxDirection : 1,
+                  parallaxOverflowHidden : true,
+                  oncustom : [],//list of event here
+                  backgroundClass : 'image',
+                  matchMedia : 'only screen and (max-width: 768px)'
+            };
+
+        function Plugin( element, options ) {
+              this.element         = $(element);
+              this.element_wrapper = this.element.closest( '.parallax-wrapper' );
+              this.options         = $.extend( {}, defaults, options, this.parseElementDataOptions() ) ;
+              this._defaults       = defaults;
+              this._name           = pluginName;
+              this.init();
+        }
+
+        Plugin.prototype.parseElementDataOptions = function () {
+              return this.element.data();
+        };
+        Plugin.prototype.init = function () {
+              this.$_document   = $(document);
+              this.$_window     = czrapp ? czrapp.$_window : $(window);
+              this.doingAnimation = false;
+
+              this.initWaypoints();
+              this.stageParallaxElements();
+              this._bind_evt();
+        };
+        Plugin.prototype._bind_evt = function() {
+              var self = this,
+                  _customEvt = $.isArray(this.options.oncustom) ? this.options.oncustom : this.options.oncustom.split(' ');
+
+              _.bindAll( this, 'maybeParallaxMe', 'parallaxMe' );
+        };
+
+        Plugin.prototype.stageParallaxElements = function() {
+
+              this.element.css({
+                    'position': this.element.hasClass( this.options.backgroundClass ) ? 'absolute' : 'relative',
+                    'will-change': 'transform'
+              });
+
+              if ( this.options.parallaxOverflowHidden ){
+                    var $_wrapper = this.element_wrapper;
+                    if ( $_wrapper.length )
+                      $_wrapper.css( 'overflow', 'hidden' );
+              }
+        };
+
+        Plugin.prototype.initWaypoints = function() {
+              var self = this;
+
+              this.way_start = new Waypoint({
+                    element: self.element_wrapper.length ? self.element_wrapper : self.element,
+                    handler: function() {
+                          self.maybeParallaxMe();
+                          if ( ! self.element.hasClass('parallaxing') ){
+                                self.$_window.on('scroll', self.maybeParallaxMe );
+                                self.element.addClass('parallaxing');
+                          } else{
+                                self.element.removeClass('parallaxing');
+                                self.$_window.off('scroll', self.maybeParallaxMe );
+                                self.doingAnimation = false;
+                                self.element.css('top', 0 );
+                          }
+                    }
+              });
+
+              this.way_stop = new Waypoint({
+                    element: self.element_wrapper.length ? self.element_wrapper : self.element,
+                    handler: function() {
+                          self.maybeParallaxMe();
+                          if ( ! self.element.hasClass('parallaxing') ) {
+                                self.$_window.on('scroll', self.maybeParallaxMe );
+                                self.element.addClass('parallaxing');
+                          }else {
+                                self.element.removeClass('parallaxing');
+                                self.$_window.off('scroll', self.maybeParallaxMe );
+                                self.doingAnimation = false;
+                          }
+                    },
+                    offset: function(){
+                          return - this.adapter.outerHeight();
+                    }
+              });
+        };
+        Plugin.prototype.maybeParallaxMe = function() {
+              var self = this;
+              if ( _.isFunction( window.matchMedia ) && matchMedia( self.options.matchMedia ).matches )
+                return this.setTopPosition();
+
+              if ( ! this.doingAnimation ) {
+                    this.doingAnimation = true;
+                    window.requestAnimationFrame(function() {
+                          self.parallaxMe();
+                          self.doingAnimation = false;
+                    });
+              }
+        };
+        Plugin.prototype.setTopPosition = function( _top_ ) {
+              _top_ = _top_ || 0;
+              this.element.css({
+                    'transform' : 'translate3d(0px, ' + _top_  + 'px, .01px)',
+                    '-webkit-transform' : 'translate3d(0px, ' + _top_  + 'px, .01px)'
+              });
+        };
+
+        Plugin.prototype.parallaxMe = function() {
+
+              var ratio = this.options.parallaxRatio,
+                  parallaxDirection = this.options.parallaxDirection,
+                  value = ratio * parallaxDirection * ( this.$_document.scrollTop() - this.way_start.triggerPoint );
+              this.setTopPosition( parallaxDirection * value < 0 ? 0 : value );
+        };
+        $.fn[pluginName] = function ( options ) {
+            return this.each(function () {
+                if (!$.data(this, 'plugin_' + pluginName)) {
+                    $.data(this, 'plugin_' + pluginName,
+                    new Plugin( this, options ));
+                }
+            });
+        };
+})( jQuery, window, document );/* ===================================================
+ * jqueryAnimateSvg.js v1.0.0
+ * @dependency : Vivus.js (MIT licensed)
+ * ===================================================
+ * (c) 2016 Nicolas Guillaume, Nice, France
+ * Animates an svg icon with Vivus given its #id
+ * =================================================== */
+;(function ( $, window, document, _ ) {
+  var pluginName = 'animateSvg',
+      defaults = {
+        filter_opacity : 0.8,
+        svg_opacity : 0.8,
+        animation_duration : 400
+      },
+      _drawSvgIcon = function(options) {
+          var id = $(this).attr('id');
+          if ( _.isUndefined(id) || _.isEmpty(id) || 'function' != typeof( Vivus ) ) {
+            if ( window.czrapp )
+              czrapp.consoleLog( 'An svg icon could not be animated with Vivus.');
+            return;
+          }
+          if ( $('[id=' + id + ']').length > 1 ) {
+            if ( window.czrapp )
+              czrapp.consoleLog( 'Svg icons must have a unique css #id to be animated. Multiple id found for : ' + id );
+          }
+          var set_opacity = function() {
+            if ( $('#' + id ).siblings('.filter-placeholder').length )
+              return $('#' + id ).css('opacity', options.svg_opacity ).siblings('.filter-placeholder').css('opacity', options.filter_opacity);
+            else
+              return $('#' + id ).css('opacity', options.svg_opacity );
+          };
+          $.when( set_opacity() ).done( function() {
+              new Vivus( id, {type: 'delayed', duration: options.animation_duration } );
+          });
+      };
+  $.fn[pluginName] = function ( options ) {
+      options  = $.extend( {}, defaults, options) ;
+      return this.each(function () {
+          if ( ! $.data(this, 'plugin_' + pluginName) ) {
+              $.data(
+                this,
+                'plugin_' + pluginName,
+                _drawSvgIcon.call( this, options )
+              );
+          }
+      });
+  };
+})( jQuery, window, document, _ );// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
 (function() {
     var lastTime = 0;
     var vendors = ['ms', 'moz', 'webkit', 'o'];
@@ -1419,7 +2045,7 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
             query = query || ( _.isObject( query ) ? query : {} );
 
             var ajaxUrl = czrapp.localized.ajaxUrl,
-                nonce = czrapp.localized.frontNonce,//{ 'id' => 'HuFrontNonce', 'handle' => wp_create_nonce( 'hu-front-nonce' ) },
+                nonce = czrapp.localized.frontNonce,//{ 'id' : '', 'handle' : '' }
                 dfd = $.Deferred(),
                 _query_ = _.extend( {
                             action : ''
