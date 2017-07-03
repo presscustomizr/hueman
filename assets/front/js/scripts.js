@@ -141,6 +141,7 @@ if (!Array.from) {
     };
   }());
 }
+
 ;(function ( $, window, document, undefined ) {
 
   var pluginPrefix = 'original',
@@ -3171,7 +3172,7 @@ var czrapp = czrapp || {};
                     });
               });
               $( '.s1, .s2', '#wrapper .main' ).each( function( index ) {
-                    if ( 1 != $(this).length )
+                    if ( ! _.isString( $(this).attr( 'data-sb-id') ) || _.isEmpty( $(this).attr( 'data-sb-id') ) )
                       return;
 
                     var $container = $(this),

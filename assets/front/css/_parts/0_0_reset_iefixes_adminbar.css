@@ -21,7 +21,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 /* ------------------------------------------------------------------------- */
 body.ie8,
 .ie8.single .related-posts .post-title,
-.ie8 .s1 .alx-posts .post-item-title,
+.ie8 .sidebar.s1 .alx-posts .post-item-title,
 .ie8 #footer .alx-posts .post-item-title { font-weight: 400; }
 
 .ie8 .author-bio .bio-avatar:after,

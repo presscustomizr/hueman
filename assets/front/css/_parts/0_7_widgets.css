@@ -107,9 +107,9 @@
 .widget_rss ul li span.rss-date { color: #444; font-weight: 600; display: block; text-transform: uppercase; font-size: 0.75em; }
 .widget_rss ul li cite { color: #999; }
 
-.s1 .widget_rss ul li a,
+.sidebar.s1 .widget_rss ul li a,
 #footer .widget_rss ul li a { color: #16cfc1; }
-.s2 .widget_rss ul li a { color: #efb93f; }
+.sidebar.s2 .widget_rss ul li a { color: #efb93f; }
 
 /*  widget : search
 /* ------------------------------------ */
@@ -135,12 +135,12 @@
 .widget_calendar td { padding: 3px 0; text-align: center; border: 1px solid #e2e2e2; }
 .widget_calendar .pad { padding: 0!important; }
 
-.s1 .widget_calendar a,
+.sidebar.s1 .widget_calendar a,
 #footer .widget_calendar a { color: #16cfc1; }
-.s1 .widget_calendar caption,
+.sidebar.s1 .widget_calendar caption,
 #footer .widget_calendar caption{ background: #16cfc1; }
-.s2 .widget_calendar a { color: #efb93f; }
-.s2 .widget_calendar caption { background: #efb93f; }
+.sidebar.s2 .widget_calendar a { color: #efb93f; }
+.sidebar.s2 .widget_calendar caption { background: #efb93f; }
 
 /*  custom widget : alxtabs / alxposts
 /* ------------------------------------ */
@@ -158,9 +158,9 @@
 #footer .alx-tabs-nav { border-bottom-color: #eee; }
 #footer .alx-tabs-nav li a:hover { border-bottom-color: #ddd; }
 
-.s1 .alx-tabs-nav li.active a,
+.sidebar.s1 .alx-tabs-nav li.active a,
 #footer .alx-tabs-nav li.active a { border-bottom-color: #16cfc1; }
-.s2 .alx-tabs-nav li.active a { border-bottom-color: #efb93f; }
+.sidebar.s2 .alx-tabs-nav li.active a { border-bottom-color: #efb93f; }
 
 .alx-tab li,
 .alx-posts li { font-weight: 400; line-height: 1.4em; overflow: hidden; }
@@ -194,29 +194,29 @@
 .alx-tab li:hover .thumb-icon,
 .alx-posts li:hover .thumb-icon { background: #fff; color: #111; }
 
-.s1 .alx-tab .tab-item-category a,
-.s1 .alx-posts .post-item-category a,
-.s1 .alx-tab li:hover .tab-item-title a,
-.s1 .alx-tab li:hover .tab-item-comment a,
-.s1 .alx-posts li:hover .post-item-title a,
+.sidebar.s1 .alx-tab .tab-item-category a,
+.sidebar.s1 .alx-posts .post-item-category a,
+.sidebar.s1 .alx-tab li:hover .tab-item-title a,
+.sidebar.s1 .alx-tab li:hover .tab-item-comment a,
+.sidebar.s1 .alx-posts li:hover .post-item-title a,
 #footer .alx-tab .tab-item-category a,
 #footer .alx-posts .post-item-category a,
 #footer .alx-tab li:hover .tab-item-title a,
 #footer .alx-tab li:hover .tab-item-comment a,
 #footer .alx-posts li:hover .post-item-title a { color: #16cfc1; }
-.s2 .alx-tab .tab-item-category a,
-.s2 .alx-posts .post-item-category a,
-.s2 .alx-tab li:hover .tab-item-title a,
-.s2 .alx-tab li:hover .tab-item-comment a,
-.s2 .alx-posts li:hover .post-item-title a { color: #efb93f; }
+.sidebar.s2 .alx-tab .tab-item-category a,
+.sidebar.s2 .alx-posts .post-item-category a,
+.sidebar.s2 .alx-tab li:hover .tab-item-title a,
+.sidebar.s2 .alx-tab li:hover .tab-item-comment a,
+.sidebar.s2 .alx-posts li:hover .post-item-title a { color: #efb93f; }
 
 .alx-posts .post-item-thumbnail { margin-bottom: 10px; }
 .alx-posts .post-item-title { font-size: 1em; line-height: 1.5em; }
 
-.s1 .alx-posts .post-item-title,
+.sidebar.s1 .alx-posts .post-item-title,
 #footer .alx-posts .post-item-title { font-size: 1.125em; line-height: 1.4em; font-weight: 300; }
-.s1 .alx-posts .post-item-category,
-.s1 .alx-posts .post-item-date,
+.sidebar.s1 .alx-posts .post-item-category,
+.sidebar.s1 .alx-posts .post-item-date,
 #footer .alx-posts .post-item-category,
 #footer .alx-posts .post-item-date { font-size: 0.875em; }
 

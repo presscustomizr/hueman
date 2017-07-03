@@ -21,7 +21,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 /* ------------------------------------------------------------------------- */
 body.ie8,
 .ie8.single .related-posts .post-title,
-.ie8 .s1 .alx-posts .post-item-title,
+.ie8 .sidebar.s1 .alx-posts .post-item-title,
 .ie8 #footer .alx-posts .post-item-title { font-weight: 400; }
 
 .ie8 .author-bio .bio-avatar:after,
@@ -409,33 +409,33 @@ position: relative;}
 
 /* 2 column, content left */
 .col-2cl .main-inner { background: url(../img/sidebar/s-right-s1.png) repeat-y right 0; padding-right: 340px; }
-.col-2cl .s1 { float: right; margin-right: -340px; }
+.col-2cl .sidebar.s1 { float: right; margin-right: -340px; }
 .col-2cl .content { float: left; }
 
 /* 2 column, content right */
 .col-2cr .main-inner { background: url(../img/sidebar/s-left.png) repeat-y left 0; padding-left: 340px; }
-.col-2cr .s1 { float: left; margin-left: -340px; }
+.col-2cr .sidebar.s1 { float: left; margin-left: -340px; }
 .col-2cr .content { float: right; }
 
 /* 3 column, content middle */
 .col-3cm .main { background: url(../img/sidebar/s-right-s2.png) repeat-y right 0; }
 .col-3cm .main-inner { background: url(../img/sidebar/s-left.png) repeat-y left 0; padding-left: 340px; padding-right: 260px; }
-.col-3cm .s1 { float: left; margin-left: -340px; }
-.col-3cm .s2 { float: right; margin-right: -260px; /* ingenuity! */ position: relative; right: -100%; }
+.col-3cm .sidebar.s1 { float: left; margin-left: -340px; }
+.col-3cm .sidebar.s2 { float: right; margin-right: -260px; /* ingenuity! */ position: relative; right: -100%; }
 .col-3cm .content { float: right; }
 
 /* 3 column, content left */
 .col-3cl .main { background-image: none; }
 .col-3cl .main-inner { background: url(../img/sidebar/s-right-dual-full-expand.png) repeat-y right 0; padding-right: 600px; }
-.col-3cl .s1 { float: right; margin-right: -600px; }
-.col-3cl .s2 { float: right; margin-right: -260px; }
+.col-3cl .sidebar.s1 { float: right; margin-right: -600px; }
+.col-3cl .sidebar.s2 { float: right; margin-right: -260px; }
 .col-3cl .content { float: left; }
 
 /* 3 column, content right */
 .col-3cr .main { background-image: none; }
 .col-3cr .main-inner { background: url(../img/sidebar/s-left-dual-full-expand.png) repeat-y left 0; padding-left: 600px; }
-.col-3cr .s1 { float: left; margin-left: -600px; }
-.col-3cr .s2 { float: left; margin-left: -260px; }
+.col-3cr .sidebar.s1 { float: left; margin-left: -600px; }
+.col-3cr .sidebar.s2 { float: left; margin-left: -260px; }
 .col-3cr .content { float: right; }
 
 /*  base : sidebar
@@ -584,23 +584,23 @@ box-shadow: inset 0 -1px 0 rgba(255,255,255,0.1); }
 */
 
 /* sidebar primary */
-.s1 { width: 340px; z-index: 2; }
-.s1:hover { z-index: 98; /* social icons tooltip above header nav */ }
-.s1 .sidebar-top,
-.s1 .sidebar-toggle { background: #16cfc1; }
+.sidebar.s1 { width: 340px; z-index: 2; }
+.sidebar.s1:hover { z-index: 98; /* social icons tooltip above header nav */ }
+.sidebar.s1 .sidebar-top,
+.sidebar.s1 .sidebar-toggle { background: #16cfc1; }
 @media only screen and (min-width: 479px) and (max-width: 960px) {
-  .s1 .sidebar-top { background: none!important; border-bottom: 1px solid #ddd; }
-  .s1 .sidebar-top p { color: #666; }
-  .s1 .sidebar-top .social-links .social-tooltip { color: #666!important; }
+  .sidebar.s1 .sidebar-top { background: none!important; border-bottom: 1px solid #ddd; }
+  .sidebar.s1 .sidebar-top p { color: #666; }
+  .sidebar.s1 .sidebar-top .social-links .social-tooltip { color: #666!important; }
 }
 
 /* sidebar secondary */
-.s2 { width: 260px; z-index: 1; }
-.s2 .sidebar-top,
-.s2 .sidebar-toggle { background: #efb93f; }
+.sidebar.s2 { width: 260px; z-index: 1; }
+.sidebar.s2 .sidebar-top,
+.sidebar.s2 .sidebar-toggle { background: #efb93f; }
 @media only screen and (min-width: 479px) and (max-width: 1200px) {
-  .s2 .sidebar-top { background: none!important; border-bottom: 1px solid #ddd; }
-  .s2 .sidebar-top p { color: #666; }
+  .sidebar.s2 .sidebar-top { background: none!important; border-bottom: 1px solid #ddd; }
+  .sidebar.s2 .sidebar-top p { color: #666; }
 }
 
 /*  base : grid
@@ -1732,8 +1732,8 @@ transition: all 0.2s ease-out; }
 .sidebar .post-nav li a:hover { background: #ebebeb; background: rgba(0,0,0,0.02); }
 .sidebar .post-nav li.previous a,
 .sidebar .post-nav li.next a { border-bottom: 1px solid #ddd; }
-.s1 .post-nav li a:hover i { color: #16cfc1; }
-.s2 .post-nav li a:hover i { color: #efb93f; }
+.sidebar.s1 .post-nav li a:hover i { color: #16cfc1; }
+.sidebar.s2 .post-nav li a:hover i { color: #efb93f; }
 
 /* content-specific */
 .content .post-nav { border-top: 2px solid #eee; border-bottom: 2px solid #eee; margin-bottom: 40px;  }
@@ -1978,9 +1978,9 @@ box-shadow: inset 0 1px 0 rgba(255,255,255,0.25); }
 .widget_rss ul li span.rss-date { color: #444; font-weight: 600; display: block; text-transform: uppercase; font-size: 0.75em; }
 .widget_rss ul li cite { color: #999; }
 
-.s1 .widget_rss ul li a,
+.sidebar.s1 .widget_rss ul li a,
 #footer .widget_rss ul li a { color: #16cfc1; }
-.s2 .widget_rss ul li a { color: #efb93f; }
+.sidebar.s2 .widget_rss ul li a { color: #efb93f; }
 
 /*  widget : search
 /* ------------------------------------ */
@@ -2006,12 +2006,12 @@ box-shadow: inset 0 1px 0 rgba(255,255,255,0.25); }
 .widget_calendar td { padding: 3px 0; text-align: center; border: 1px solid #e2e2e2; }
 .widget_calendar .pad { padding: 0!important; }
 
-.s1 .widget_calendar a,
+.sidebar.s1 .widget_calendar a,
 #footer .widget_calendar a { color: #16cfc1; }
-.s1 .widget_calendar caption,
+.sidebar.s1 .widget_calendar caption,
 #footer .widget_calendar caption{ background: #16cfc1; }
-.s2 .widget_calendar a { color: #efb93f; }
-.s2 .widget_calendar caption { background: #efb93f; }
+.sidebar.s2 .widget_calendar a { color: #efb93f; }
+.sidebar.s2 .widget_calendar caption { background: #efb93f; }
 
 /*  custom widget : alxtabs / alxposts
 /* ------------------------------------ */
@@ -2029,9 +2029,9 @@ box-shadow: inset 0 1px 0 rgba(255,255,255,0.25); }
 #footer .alx-tabs-nav { border-bottom-color: #eee; }
 #footer .alx-tabs-nav li a:hover { border-bottom-color: #ddd; }
 
-.s1 .alx-tabs-nav li.active a,
+.sidebar.s1 .alx-tabs-nav li.active a,
 #footer .alx-tabs-nav li.active a { border-bottom-color: #16cfc1; }
-.s2 .alx-tabs-nav li.active a { border-bottom-color: #efb93f; }
+.sidebar.s2 .alx-tabs-nav li.active a { border-bottom-color: #efb93f; }
 
 .alx-tab li,
 .alx-posts li { font-weight: 400; line-height: 1.4em; overflow: hidden; }
@@ -2065,29 +2065,29 @@ box-shadow: inset 0 1px 0 rgba(255,255,255,0.25); }
 .alx-tab li:hover .thumb-icon,
 .alx-posts li:hover .thumb-icon { background: #fff; color: #111; }
 
-.s1 .alx-tab .tab-item-category a,
-.s1 .alx-posts .post-item-category a,
-.s1 .alx-tab li:hover .tab-item-title a,
-.s1 .alx-tab li:hover .tab-item-comment a,
-.s1 .alx-posts li:hover .post-item-title a,
+.sidebar.s1 .alx-tab .tab-item-category a,
+.sidebar.s1 .alx-posts .post-item-category a,
+.sidebar.s1 .alx-tab li:hover .tab-item-title a,
+.sidebar.s1 .alx-tab li:hover .tab-item-comment a,
+.sidebar.s1 .alx-posts li:hover .post-item-title a,
 #footer .alx-tab .tab-item-category a,
 #footer .alx-posts .post-item-category a,
 #footer .alx-tab li:hover .tab-item-title a,
 #footer .alx-tab li:hover .tab-item-comment a,
 #footer .alx-posts li:hover .post-item-title a { color: #16cfc1; }
-.s2 .alx-tab .tab-item-category a,
-.s2 .alx-posts .post-item-category a,
-.s2 .alx-tab li:hover .tab-item-title a,
-.s2 .alx-tab li:hover .tab-item-comment a,
-.s2 .alx-posts li:hover .post-item-title a { color: #efb93f; }
+.sidebar.s2 .alx-tab .tab-item-category a,
+.sidebar.s2 .alx-posts .post-item-category a,
+.sidebar.s2 .alx-tab li:hover .tab-item-title a,
+.sidebar.s2 .alx-tab li:hover .tab-item-comment a,
+.sidebar.s2 .alx-posts li:hover .post-item-title a { color: #efb93f; }
 
 .alx-posts .post-item-thumbnail { margin-bottom: 10px; }
 .alx-posts .post-item-title { font-size: 1em; line-height: 1.5em; }
 
-.s1 .alx-posts .post-item-title,
+.sidebar.s1 .alx-posts .post-item-title,
 #footer .alx-posts .post-item-title { font-size: 1.125em; line-height: 1.4em; font-weight: 300; }
-.s1 .alx-posts .post-item-category,
-.s1 .alx-posts .post-item-date,
+.sidebar.s1 .alx-posts .post-item-category,
+.sidebar.s1 .alx-posts .post-item-date,
 #footer .alx-posts .post-item-category,
 #footer .alx-posts .post-item-date { font-size: 0.875em; }
 

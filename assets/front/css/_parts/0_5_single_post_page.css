@@ -233,8 +233,8 @@ transition: all 0.2s ease-out; }
 .sidebar .post-nav li a:hover { background: #ebebeb; background: rgba(0,0,0,0.02); }
 .sidebar .post-nav li.previous a,
 .sidebar .post-nav li.next a { border-bottom: 1px solid #ddd; }
-.s1 .post-nav li a:hover i { color: #16cfc1; }
-.s2 .post-nav li a:hover i { color: #efb93f; }
+.sidebar.s1 .post-nav li a:hover i { color: #16cfc1; }
+.sidebar.s2 .post-nav li a:hover i { color: #efb93f; }
 
 /* content-specific */
 .content .post-nav { border-top: 2px solid #eee; border-bottom: 2px solid #eee; margin-bottom: 40px;  }
