@@ -274,18 +274,18 @@ function hu_get_primary_color_style() {
           '#flexslider-featured .flex-direction-nav .flex-prev:hover',
           '.post-hover:hover .post-title a',
           '.post-title a:hover',
-          '.s1 .post-nav li a:hover i',
+          '.sidebar.s1 .post-nav li a:hover i',
           '.content .post-nav li a:hover i',
           '.post-related a:hover',
-          '.s1 .widget_rss ul li a',
+          '.sidebar.s1 .widget_rss ul li a',
           '#footer .widget_rss ul li a',
-          '.s1 .widget_calendar a',
+          '.sidebar.s1 .widget_calendar a',
           '#footer .widget_calendar a',
-          '.s1 .alx-tab .tab-item-category a',
-          '.s1 .alx-posts .post-item-category a',
-          '.s1 .alx-tab li:hover .tab-item-title a',
-          '.s1 .alx-tab li:hover .tab-item-comment a',
-          '.s1 .alx-posts li:hover .post-item-title a',
+          '.sidebar.s1 .alx-tab .tab-item-category a',
+          '.sidebar.s1 .alx-posts .post-item-category a',
+          '.sidebar.s1 .alx-tab li:hover .tab-item-title a',
+          '.sidebar.s1 .alx-tab li:hover .tab-item-comment a',
+          '.sidebar.s1 .alx-posts li:hover .post-item-title a',
           '#footer .alx-tab .tab-item-category a',
           '#footer .alx-posts .post-item-category a',
           '#footer .alx-tab li:hover .tab-item-title a',
@@ -304,11 +304,11 @@ function hu_get_primary_color_style() {
       $_primary_color_background_color_prop_selectors = array(
           '.themeform input[type="submit"]',
           '.themeform button[type="submit"]',
-          '.s1 .sidebar-top',
-          '.s1 .sidebar-toggle',
+          '.sidebar.s1 .sidebar-top',
+          '.sidebar.s1 .sidebar-toggle',
           '#flexslider-featured .flex-control-nav li a.flex-active',
           '.post-tags a:hover',
-          '.s1 .widget_calendar caption',
+          '.sidebar.s1 .widget_calendar caption',
           '#footer .widget_calendar caption',
           '.author-bio .bio-avatar:after',
           '.commentlist li.bypostauthor > .comment-body:after',
@@ -321,7 +321,7 @@ function hu_get_primary_color_style() {
       $styles[] ='.post-format .format-container { border-color: '.$prim_color.'; }';
 
       $_primary_color_border_bottom_color_prop_selectors = array(
-          '.s1 .alx-tabs-nav li.active a',
+          '.sidebar.s1 .alx-tabs-nav li.active a',
           '#footer .alx-tabs-nav li.active a',
           '.comment-tabs li.active a',
           '.wp-pagenavi a:hover',
@@ -339,28 +339,28 @@ function hu_get_primary_color_style() {
 function hu_get_second_color_style() {
     $glue    = hu_is_checked('minified-css') ? '' : "\n";
     $styles = array();
-    $styles[] = '.s2 .post-nav li a:hover i,
-.s2 .widget_rss ul li a,
-.s2 .widget_calendar a,
-.s2 .alx-tab .tab-item-category a,
-.s2 .alx-posts .post-item-category a,
-.s2 .alx-tab li:hover .tab-item-title a,
-.s2 .alx-tab li:hover .tab-item-comment a,
-.s2 .alx-posts li:hover .post-item-title a { color: '.hu_get_option('color-2').'; }
+    $styles[] = '.sidebar.s2 .post-nav li a:hover i,
+.sidebar.s2 .widget_rss ul li a,
+.sidebar.s2 .widget_calendar a,
+.sidebar.s2 .alx-tab .tab-item-category a,
+.sidebar.s2 .alx-posts .post-item-category a,
+.sidebar.s2 .alx-tab li:hover .tab-item-title a,
+.sidebar.s2 .alx-tab li:hover .tab-item-comment a,
+.sidebar.s2 .alx-posts li:hover .post-item-title a { color: '.hu_get_option('color-2').'; }
 ';
     $_secondary_color_background_color_prop_selectors = array(
-      '.s2 .sidebar-top',
-      '.s2 .sidebar-toggle',
+      '.sidebar.s2 .sidebar-top',
+      '.sidebar.s2 .sidebar-toggle',
       '.post-comments',
       '.jp-play-bar',
       '.jp-volume-bar-value',
-      '.s2 .widget_calendar caption'
+      '.sidebar.s2 .widget_calendar caption'
   );
 
   $_secondary_color_background_color_prop_selectors = implode( ",{$glue}", apply_filters( 'hu_dynamic_secondary_color_background_color_prop_selectors', $_secondary_color_background_color_prop_selectors ) );
   $styles[] = $_secondary_color_background_color_prop_selectors ? $_secondary_color_background_color_prop_selectors . '{ background-color: '.hu_get_option('color-2').'; }'."{$glue}" : '';
 
-  $styles[] ='.s2 .alx-tabs-nav li.active a { border-bottom-color: '.hu_get_option('color-2').'; }
+  $styles[] ='.sidebar.s2 .alx-tabs-nav li.active a { border-bottom-color: '.hu_get_option('color-2').'; }
 .post-comments span:before { border-right-color: '.hu_get_option('color-2').'; }
       ';
     return $styles;
