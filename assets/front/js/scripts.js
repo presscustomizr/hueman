@@ -2045,7 +2045,7 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
             query = query || ( _.isObject( query ) ? query : {} );
 
             var ajaxUrl = czrapp.localized.ajaxUrl,
-                nonce = czrapp.localized.frontNonce,//{ 'id' : '', 'handle' : '' }
+                nonce = czrapp.localized.frontNonce,//{ 'id' => 'HuFrontNonce', 'handle' => wp_create_nonce( 'hu-front-nonce' ) },
                 dfd = $.Deferred(),
                 _query_ = _.extend( {
                             action : ''
