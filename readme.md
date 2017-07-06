@@ -1,4 +1,4 @@
-# Hueman v3.3.15
+# Hueman v3.3.17
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 80K+ websites around the world.
@@ -10,7 +10,7 @@ View more themes from this author: http://presscustomizr.com
 * **Documentation** : http://docs.presscustomizr.com/article/236-first-steps-with-the-hueman-wordpress-theme
 
 ## Hueman Addons plugin
-The Hueman Addons plugin is a free WordPress plugin which includes cool additional features specifically designed for the Hueman WordPress : 
+The Hueman Addons plugin is a free WordPress plugin which includes cool additional features specifically designed for the Hueman WordPress :
 * Shortcodes to help you style your content ( columns, dropcaps, ...)
 * A social sharing bar for your posts with count boxes for Twitter, Facebook, Google Plus, Pinterest
 
@@ -82,6 +82,12 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 ## Changelog
+= 3.3.17 July 3rd 2017 =
+* fixed : correctly include front js parts
+
+= 3.3.16 July 3rd 2017 =
+* fixed : more css specificity added to the sidebars when building the dynamic style
+
 = 3.3.15 July 3rd 2017 =
 * fixed : more css specificity added to the sticky sidebars. Fixes #529
 * fixed : the images of the featured post could be too high in some scenario. Two new image sizes have been added and a max-height depending on the culumn layout has been set in the css rules. fixes #525.
@@ -202,7 +208,7 @@ See headers of files for further details.
 * removed : dynamic style option. Dynamic style is now applied for each option as soon as the user change the option to a value different than default.
 
 = 3.3.7 March 8th 2017 =
-* fixed : drag resize image inserted into visual editor #415 
+* fixed : drag resize image inserted into visual editor #415
 
 = 3.3.6 March 1st 2017 =
 * fixed : bug on threaded comments font-size getting too small since latest update
