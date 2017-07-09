@@ -4,7 +4,7 @@
 
       <?php hu_get_template_part('parts/single-heading'); ?>
 
-      <?php if( get_post_format() ) { get_template_part('parts/post-formats'); } ?>
+      <?php get_template_part('parts/post-formats'); ?>
 
       <div class="clear"></div>
 

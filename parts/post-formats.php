@@ -1,6 +1,6 @@
 <?php $meta = get_post_custom($post->ID); ?>
 
-<?php if ( has_post_format( 'post' ) ): // Post @fromfull ?>
+<?php if ( !get_post_format() ): // Post @fromfull ?>
 	<div class="post-format">
   		<div class="image-container">
   			<?php if ( has_post_thumbnail() ) {
