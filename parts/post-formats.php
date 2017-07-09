@@ -1,5 +1,15 @@
 <?php $meta = get_post_custom($post->ID); ?>
 
+<?php if ( has_post_format( 'post' ) ): // Post @fromfull ?>
+	<div class="post-format">
+  		<div class="image-container">
+  			<?php if ( has_post_thumbnail() ) {
+  				hu_the_post_thumbnail('thumb-large', '', false);//no attr, no placeholder
+  			} ?>
+  		</div>
+	</div>
+<?php endif; ?>
+
 <?php if ( has_post_format( 'audio' ) ): // Audio @fromfull ?>
 
     <?php $formats = array();
