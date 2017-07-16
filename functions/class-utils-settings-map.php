@@ -700,7 +700,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           'header-desktop-sticky' => array(
                 'default'   => 'stick_up',
                 'control'   => 'HU_controls',
-                'title'     => sprintf( '%1$s %2$s', __( 'Menus settings for', 'hueman' ) , __('Desktop devices', 'hueman' ) ),
+                'title'     => sprintf( __( 'Menus settings for %s', 'hueman' ), __( 'Desktop devices', 'hueman' ) ),
                 'label'     => sprintf( '%1$s : %2$s', __('Desktop devices', 'hueman' ) , __('top menu visibility on scroll', 'hueman') ),
                 'section'   => 'header_menus_sec',
                 'type'      => 'select',
@@ -734,7 +734,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           'header_mobile_menu_layout' => array(
                 'default'   => hu_user_started_before_version( '3.3.8' ) ? 'main_menu' : 'top_menu',
                 'control'   => 'HU_controls',
-                'title'     => sprintf( '%1$s %2$s', __( 'Menus settings for', 'hueman' ) , __('Mobile devices', 'hueman' ) ),
+                'title'     => sprintf( __( 'Menus settings for %s', 'hueman' ), __( 'Mobile devices', 'hueman' ) ),
                 'label'     => __( 'Select the menu(s) to use for mobile devices', 'hueman'),
                 'section'   => 'header_menus_sec',
                 'type'      => 'select',

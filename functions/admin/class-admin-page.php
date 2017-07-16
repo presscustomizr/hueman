@@ -80,13 +80,11 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
         <div id="hueman-admin-panel" class="wrap about-wrap">
           <?php
             if ( $is_help ) {
-              printf( '<h1 style="font-size: 2.5em;" class="need-help-title">%1$s %2$s ?</h1>',
-                __( "Need help with", 'hueman' ),
+              printf( '<h1 style="font-size: 2.5em;" class="need-help-title">' . __( 'Need help with %s ?', 'hueman' ) . '</h1>',
                 $_theme_name
               );
             } else {
-              printf( '<h1 class="need-help-title">%1$s %2$s %3$s</h1>',
-                __( "Welcome to", 'hueman' ),
+              printf( '<h1 class="need-help-title">' . __( 'Welcome to %1$s %2$s', 'hueman' ) . '</h1>',
                 $_theme_name,
                 HUEMAN_VER
               );
@@ -165,10 +163,8 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
                 )
               );
               if ( ! HU_IS_PRO ) {
-                  printf( '<p>%1$s <a href="%2$s" title="support forum" target="_blank">%3$s</a>.</p>',
-                      __( "If you don't find an answer to your question in the documentation, don't panic :) ! The Hueman theme is used by a large number of webmasters constantly reporting bugs and potential issues. If you encounter a problem with the theme, chances are that it's already been reported and fixed in the", 'hueman' ),
-                      $this -> support_url,
-                      __('support forum', 'hueman')
+                  printf( '<p>' . __( "If you don't find an answer to your question in the documentation, don't panic :) ! The Hueman theme is used by a large number of webmasters constantly reporting bugs and potential issues. If you encounter a problem with the theme, chances are that it's already been reported and fixed in the <a href='%s' title='support forum' target='_blank'>support forum</a>", 'hueman' ) . '.</p>',
+                      $this -> support_url
                     );//printf
               }
               ?>
