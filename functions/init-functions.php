@@ -1,25 +1,5 @@
 <?php
 
-/* ------------------------------------------------------------------------- *
- *  Demo
-/* ------------------------------------------------------------------------- */
-//@return bool
-function hu_isprevdem() {
-    global $wp_customize;
-    $is_dirty = false;
-    if ( is_object( $wp_customize ) && method_exists( $wp_customize, 'unsanitized_post_values' ) ) {
-        $real_cust            = $wp_customize -> unsanitized_post_values( array( 'exclude_changeset' => true ) );
-        $_preview_index       = array_key_exists( 'customize_messenger_channel' , $_POST ) ? $_POST['customize_messenger_channel'] : '';
-        $_is_first_preview    = false !== strpos( $_preview_index ,'-0' );
-        $_doing_ajax_partial  = array_key_exists( 'wp_customize_render_partials', $_POST );
-        //There might be cases when the unsanitized post values contains old widgets infos on initial preview load, giving a wrong dirtyness information
-        $is_dirty             = ( ! empty( $real_cust ) && ! $_is_first_preview ) || $_doing_ajax_partial;
-    }
-    return apply_filters( 'hu_isprevdem', ! $is_dirty && hu_get_raw_option( 'template', null, false ) != get_stylesheet() && ! is_child_theme() && ! HU_IS_PRO  );
-}
-
-
-
 /****************************************************************************
 ****************************** HELPERS **************************************
 *****************************************************************************/
@@ -39,6 +19,28 @@ function hu_get_id()  {
     }
     return ( is_404() || is_search() || is_archive() ) ? null : $_id;
 }
+
+
+//@return bool
+function hu_isprevdem() {
+    global $wp_customize;
+    $is_dirty = false;
+    if ( is_object( $wp_customize ) && method_exists( $wp_customize, 'unsanitized_post_values' ) ) {
+        $real_cust            = $wp_customize -> unsanitized_post_values( array( 'exclude_changeset' => true ) );
+        $_preview_index       = array_key_exists( 'customize_messenger_channel' , $_POST ) ? $_POST['customize_messenger_channel'] : '';
+        $_is_first_preview    = false !== strpos( $_preview_index ,'-0' );
+        $_doing_ajax_partial  = array_key_exists( 'wp_customize_render_partials', $_POST );
+        //There might be cases when the unsanitized post values contains old widgets infos on initial preview load, giving a wrong dirtyness information
+        $is_dirty             = ( ! empty( $real_cust ) && ! $_is_first_preview ) || $_doing_ajax_partial;
+    }
+    return apply_filters( 'hu_isprevdem', ! $is_dirty && hu_get_raw_option( 'template', null, false ) != get_stylesheet() && ! is_child_theme() && ! HU_IS_PRO  );
+}
+
+//@return bool
+function hu_is_pro_section_on() {
+   return ! HU_IS_PRO && class_exists( 'HU_Customize_Section_Pro' ) && ! hu_isprevdem();
+}
+
 
 //Use to generate unique menu id attribute data-menu-id
 //=> is used in the front js app to populate the collection
@@ -272,7 +274,7 @@ function hu_get_raw_option( $opt_name = null, $opt_group = null, $from_cache = t
     } else {
         $opt_value = array_key_exists( $opt_name, $alloptions ) ? maybe_unserialize( $alloptions[ $opt_name ] ) : false;//fallback on cache option val
         //do we need to get the db value instead of the cached one ? <= might be safer with some user installs not properly handling the wp cache
-        //=> typically used to checked the template name for czr_fn_isprevdem()
+        //=> typically used to checked the template name for hu_isprevdem()
         if ( ! $from_cache ) {
             global $wpdb;
             //@see wp-includes/option.php : get_option()

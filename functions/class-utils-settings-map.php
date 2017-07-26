@@ -1609,7 +1609,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
 
       );
 
-      if ( ! HU_IS_PRO && ! hu_isprevdem() ) {
+      if ( hu_is_pro_section_on() ) {
           //GO PRO SECTION
           $_sections = array_merge(
               array(

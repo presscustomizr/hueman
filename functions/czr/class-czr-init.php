@@ -156,7 +156,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
               $manager -> register_panel_type( 'HU_Customize_Panels');
             if ( class_exists('HU_Customize_Sections') )
               $manager -> register_panel_type( 'HU_Customize_Sections');
-            if ( ! HU_IS_PRO && class_exists('HU_Customize_Section_Pro') ) {
+            if ( hu_is_pro_section_on() ) {
               $manager -> register_section_type( 'HU_Customize_Section_Pro');
             }
         }
