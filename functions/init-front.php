@@ -1586,7 +1586,8 @@ function hu_ajax_response() {
     //Furthermore, when a cache plugin is used, front nonces can not be used.
     //@see https://github.com/presscustomizr/hueman/issues/512
     //'frontNonce'   => array( 'id' => 'HuFrontNonce', 'handle' => wp_create_nonce( 'hu-front-nonce' ) )
-    //check_ajax_referer( 'hu-front-nonce', 'HuFrontNonce' );
+    if ( isset( $_REQUEST['withNonce'] ) && true == $_REQUEST['withNonce'] )
+        check_ajax_referer( 'hu-front-nonce', 'HuFrontNonce' );
 
     @header( 'Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );
     send_nosniff_header();
@@ -1700,7 +1701,7 @@ function hu_get_welcome_note_content() {
                   );
                   printf('<p>%1$s : <a href="%2$s" title="%3$s" target="_blank">%3$s <i class="fa fa-external-link" aria-hidden="true"></i></a>&nbsp;,<a href="%4$s" title="%5$s" target="_blank">%5$s <i class="fa fa-external-link" aria-hidden="true"></i></a></p>',
                       __("If you need inspiration, you can visit our online demos", 'hueman'),
-                      esc_url('http://wp-themes.com/hueman/'),
+                      esc_url('https://wp-themes.com/hueman/'),
                       __('Hueman Demo 1', 'hueman'),
                       esc_url('demo-hueman.presscustomizr.com/'),
                       __('Hueman Demo 2', 'hueman')
