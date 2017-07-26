@@ -139,8 +139,9 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
               'panels/class-panels.php',
 
-              'sections/class-widgets-section.php',
+              'sections/class-sections.php',
               'sections/class-pro-section.php',
+              'sections/class-widgets-section.php',
 
               'settings/class-settings.php'
             );
@@ -151,10 +152,10 @@ if ( ! class_exists( 'HU_customize' ) ) :
             //Registered types are eligible to be rendered via JS and created dynamically.
             if ( class_exists('HU_Customize_Cropped_Image_Control') )
               $manager -> register_control_type( 'HU_Customize_Cropped_Image_Control' );
-
             if ( class_exists('HU_Customize_Panels') )
               $manager -> register_panel_type( 'HU_Customize_Panels');
-
+            if ( class_exists('HU_Customize_Sections') )
+              $manager -> register_panel_type( 'HU_Customize_Sections');
             if ( ! HU_IS_PRO && class_exists('HU_Customize_Section_Pro') ) {
               $manager -> register_section_type( 'HU_Customize_Section_Pro');
             }
@@ -256,7 +257,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
               $wp_customize -> get_setting( 'header_image_data' )->transport = 'postMessage';
             }
 
-            //MOVE WP FRONT PAGE SECTION TO CONTENT PANEL
+            //MOVE WP FRONT PAGE SECTION TO ROOT PANEL
             if ( is_object( $wp_customize -> get_section( 'static_front_page' ) ) ) {
               $wp_customize -> get_section( 'static_front_page' ) -> panel = '';//'hu-content-panel';
               $wp_customize -> get_section( 'static_front_page' ) -> title = __( 'Front Page Content', 'hueman' );
@@ -569,7 +570,9 @@ if ( ! class_exists( 'HU_customize' ) ) :
                       'type',
                       'active_callback',
                       'pro_text',
-                      'pro_url'
+                      'pro_url',
+
+                      'ubq_panel'
                 ),
                 'settings' => array(
                       'default'     =>  null,
