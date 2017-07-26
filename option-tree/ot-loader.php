@@ -470,23 +470,30 @@ if ( ! class_exists( 'OT_Loader' ) ) {
       /* default settings */
       //add_action( 'admin_init', 'ot_default_settings', 2 );
 
-      /* add xml to upload filetypes array */
-      add_action( 'admin_init', 'ot_add_xml_to_upload_filetypes', 3 );
+      //Managing plugins on jetpack's wordpress.com dashboard fix
+      //https://github.com/presscustomizr/hueman/issues/541
+      //For some reason admin_init is fired but is_admin() returns false
+      //so some required admin files are not loaded:
+      //see $this->admin_includes() : it returns if not is_admin()
+      if ( is_admin() ) {
+          /* add xml to upload filetypes array */
+          add_action( 'admin_init', 'ot_add_xml_to_upload_filetypes', 3 );
 
-      /* import */
-      //add_action( 'admin_init', 'ot_import', 4 );
+          /* import */
+          //add_action( 'admin_init', 'ot_import', 4 );
 
-      /* export */
-      //add_action( 'admin_init', 'ot_export', 5 );
+          /* export */
+          //add_action( 'admin_init', 'ot_export', 5 );
 
-      /* save settings */
-      add_action( 'admin_init', 'ot_save_settings', 6 );
+          /* save settings */
+          add_action( 'admin_init', 'ot_save_settings', 6 );
 
-      /* save layouts */
-      add_action( 'admin_init', 'ot_modify_layouts', 7 );
+          /* save layouts */
+          add_action( 'admin_init', 'ot_modify_layouts', 7 );
 
-      /* create media post */
-      add_action( 'admin_init', 'ot_create_media_post', 8 );
+          /* create media post */
+          add_action( 'admin_init', 'ot_create_media_post', 8 );
+      }
 
       /* global CSS */
       add_action( 'admin_head', array( $this, 'global_admin_css' ) );

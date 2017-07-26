@@ -165,7 +165,14 @@ function hu_register_required_plugins() {
 /* ------------------------------------------------------------------------- *
  *  Initialize the meta boxes.
 /* ------------------------------------------------------------------------- */
-add_action( 'admin_init', 'hu_custom_meta_boxes' );
+//Managing plugins on jetpack's wordpress.com dashboard fix
+//https://github.com/presscustomizr/hueman/issues/541
+//For some reason admin_init is fired but is_admin() returns false
+//so some required OT admin files are not loaded:
+//see OT_Loader::admin_includes() : it returns if not is_admin()
+if ( is_admin() ) {
+    add_action( 'admin_init', 'hu_custom_meta_boxes' );
+}
 
 function hu_custom_meta_boxes() {
 
