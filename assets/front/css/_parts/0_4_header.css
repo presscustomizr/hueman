@@ -325,7 +325,7 @@ box-shadow: -1px 0 0 rgba(255,255,255,0.1); }
   #nav-topbar .container { padding-left: 0; }
 
   /* HEADER WIDGET ZONE*/
-  .header-ads-mobile #header-widgets { float:none; display: block; text-align: center; top: 50px; position: relative;}
+  .header-ads-mobile #header-widgets { float:none; display: block; text-align: center; padding-top: 50px; position: relative;}
   .both-menus-mobile-on.header-ads-mobile #header-widgets{ top: 0;}
 
   /* LOGO AND TAGLINE GROUP */
