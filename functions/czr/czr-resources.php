@@ -333,8 +333,10 @@ function hu_extend_ctrl_dependencies() {
                   },
                   {
                           dominus : 'display-header-logo',
-                          servi : ['logo-max-height', 'custom_logo', 'custom-logo', 'mobile-header-logo' ],//depending on the WP version, the custom logo option is different.
-                          visibility : function( to ) {
+                          servi : ['logo-max-height', 'custom_logo', 'custom-logo', 'mobile-header-logo', 'display-header-title' ],//depending on the WP version, the custom logo option is different.
+                          visibility : function( to, servusShortId ) {
+                                if ( 'display-header-title' == servusShortId )
+                                  return ! _is_checked(to);
                                 return _is_checked(to);
                           }
                   },

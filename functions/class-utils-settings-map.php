@@ -174,6 +174,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'     => __( 'Display the site title in the header' , 'hueman' ),
                 'section'   => 'title_tagline',
                 'type'      => 'checkbox',
+                'notice'    => __( 'The site title is displayed when there is no logo uploaded', 'hueman' ),
                 'ubq_section'   => array(
                     'section' => 'header_design_sec',
                     'priority' => '0'
