@@ -1,4 +1,4 @@
-# Hueman v3.3.19
+# Hueman v3.3.20
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 80K+ websites around the world.
@@ -82,6 +82,9 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 ## Changelog
+= 3.3.20 August 2nd 2017 =
+* improved : added support for pagination in pages using <!--nextpage-->. Compatible with the WP-PageNavi plugin. fixes #550
+
 = 3.3.19 July 26th 2017 =
 * fixed : fix wp.com sites managing compatiblity. fixes #541
 * fixed : position of the header widget on mobile viewports fixes #543
