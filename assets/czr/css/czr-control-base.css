@@ -577,11 +577,23 @@ li#customize-control-tc_theme_options-tc_custom_css textarea {
 #customize-theme-controls #accordion-panel-hu-advanced-panel {
   border-top: 1px solid #ddd;
 }
-#customize-theme-controls #accordion-panel-hu-general-panel {
+#customize-theme-controls #accordion-panel-hu-general-panel,
+#customize-theme-controls #accordion-panel-tc-global-panel {
   margin-bottom: 10px;
 }
 
-#customize-theme-controls #accordion-section-static_front_page {
+#customize-theme-controls #accordion-section-static_front_page,
+#customize-theme-controls #accordion-section-frontpage_sec {
+  margin-bottom: 10px;
+}
+
+/* FPU */
+#customize-theme-controls #accordion-section-tc_fpu {
+  margin-bottom: 10px;
+}
+
+/* WFC */
+#customize-theme-controls #accordion-section-tc_font_customizer_settings {
   margin-bottom: 10px;
 }
 
