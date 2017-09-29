@@ -76,7 +76,6 @@ See headers of files for further details.
 = 3.3.20 August 2nd 2017 =
 * improved : added support for pagination in pages using <!--nextpage-->. Compatible with the WP-PageNavi plugin. fixes #550
 
-
 = 3.3.19 July 26th 2017 =
 * fixed : fix wp.com sites managing compatiblity. fixes #541
 * fixed : position of the header widget on mobile viewports fixes #543
