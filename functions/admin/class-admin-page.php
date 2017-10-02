@@ -79,24 +79,51 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
         ?>
         <div id="hueman-admin-panel" class="wrap about-wrap">
           <?php
-            if ( $is_help ) {
-              printf( '<h1 style="font-size: 2.5em;" class="need-help-title">%1$s %2$s ?</h1>',
-                __( "Need help with", 'hueman' ),
-                $_theme_name
-              );
-            } else {
               printf( '<h1 class="need-help-title">%1$s %2$s %3$s</h1>',
-                __( "Welcome to", 'hueman' ),
+                __( "Thank you for using", 'hueman' ),
                 $_theme_name,
                 HUEMAN_VER
               );
-            }
           ?>
 
 
           <?php if ( $is_help ) : ?>
 
-            <?php $this -> hu_render_help_content(); ?>
+            <div class="changelog">
+              <div class="about-text tc-welcome">
+              <?php
+                printf( '<p>%1$s</p>',
+                  sprintf( __( "The best way to start is to read the %s." , 'hueman' ),
+                    sprintf('<a href="%1$s" title="%2$s" target="_blank">%2$s</a>', esc_url('docs.presscustomizr.com/article/236-first-steps-with-the-hueman-wordpress-theme'), __("knowledge base" , 'hueman') )
+                  )
+                );
+                if ( ! HU_IS_PRO ) {
+                    ob_start();
+                        printf( '<p>%1$s <a href="%2$s" title="support forum" target="_blank">%3$s</a>.</p>',
+                          __( "If you don't find an answer to your question in the documentation, don't panic :) ! The Hueman theme is used by a large number of webmasters constantly reporting bugs and potential issues. If you encounter a problem with the theme, chances are that it's already been reported and fixed in the", 'hueman' ),
+                          $this -> support_url,
+                          __('support forum', 'hueman')
+                        );//printf
+                    $html = ob_get_contents();
+                    if ($html) ob_end_clean();
+                    echo convert_smilies($html);
+                } // ! HU_IS_PRO
+              ?>
+              </div>
+
+              <div class="feature-section col two-col">
+                <div class="col">
+                   <br/>
+                    <a class="button-secondary hueman-help" title="documentation" href="<?php echo esc_url('docs.presscustomizr.com/') ?>" target="_blank"><?php _e( 'Read the documentation','hueman' ); ?></a>
+                </div>
+                <div class="last-feature col">
+                    <a class="button-secondary hueman-help" title="help" href="<?php echo esc_url('wordpress.org/support/theme/hueman'); ?>" target="_blank">
+                      <?php _e( 'Get help in the free support forum','hueman' ); ?>
+                    </a>
+                </div>
+              </div><!-- .two-col -->
+
+            </div><!-- .changelog -->
 
           <?php else: ?>
 
@@ -140,6 +167,42 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
 
           <div class="changelog point-releases"></div>
 
+          <?php if ( ! HU_IS_PRO ) : ?>
+              <div class="changelog">
+
+                  <div class="feature-section col two-col">
+
+                    <div class="col">
+                      <h3 style="font-size:1.3em;"><?php _e( 'Happy user of Hueman?','hueman' ); ?></h3>
+                      <p><?php _e( 'If you are happy with the theme, say it on wordpress.org and give Hueman a nice review!','hueman' ) ?></br>
+                      <a class="button-primary review-hueman" title="Hueman WordPress Theme" href="<?php echo esc_url('wordpress.org/support/view/theme-reviews/hueman') ?>" target="_blank">Review Hueman &raquo;</a></p>
+                    </div>
+
+                    <div class="last-feature col">
+                      <h3 style="font-size:1.3em;"><?php _e( 'Follow us','hueman' ); ?></h3>
+                      <p class="tc-follow"><a href="<?php echo esc_url( HU_WEBSITE . '/blog' ); ?>" target="_blank"><img style="border:none" src="<?php echo HU_BASE_URL .'assets/admin/img/pc.png' ?>" alt="Press Customizr" /></a></p>
+                      <!-- Place this tag where you want the widget to render. -->
+
+                    </div><!-- .feature-section -->
+                  </div><!-- .feature-section col three-col -->
+
+              </div><!-- .changelog -->
+
+              <div id="extend" class="changelog">
+                <h3 style="text-align:left;font-size:1.3em;"><?php _e("Go Hueman Pro" ,'hueman') ?></h3>
+
+                <div class="feature-section images-stagger-right">
+                  <a class="" title="Go Pro" href="<?php echo esc_url( HU_WEBSITE . 'hueman-pro?ref=a' ); ?>" target="_blank"><img style="border:none;" alt="Hueman Pro" src="<?php echo HU_BASE_URL .'assets/admin/img/screenshot-300x225.png' ?>" class=""></a>
+                  <h4 style="text-align: left;max-width:inherit"><?php _e('Easily take your web design one step further' ,'hueman') ?></h4></br>
+
+                  <p style="text-align: lef;max-width:inherit"><?php _e("The Hueman Pro WordPress theme allows anyone to create a beautiful, professional and mobile friendly website in a few minutes. In the Pro version, you'll get all features included in the free version plus many conversion oriented ones, to help you attract and retain more visitors on your websites." , 'hueman') ?>
+                  </p>
+                  <p style="text-align:left;max-width:inherit">
+                      <a class="button-primary review-hueman hu-go-pro-btn" title="<?php _e("Discover Hueman Pro",'hueman') ?>" href="<?php echo esc_url( HU_WEBSITE . 'hueman-pro?ref=a' ); ?>" target="_blank"><?php _e("Discover Hueman Pro",'hueman') ?> &raquo;</a>
+                  </p>
+                </div>
+              </div>
+          <?php endif; //end if ! is_pro ?>
 
         <?php do_action( '__after_welcome_panel' ); ?>
 
@@ -152,38 +215,6 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
       <?php
     }
 
-
-    function hu_render_help_content() {
-      ob_start();
-      ?>
-        <div class="changelog">
-              <div class="about-text tc-welcome">
-            <?php
-              printf( '<p>%1$s</p>',
-                sprintf( __( "The best way to start is to read the %s." , 'hueman' ),
-                  sprintf('<a href="%1$s" title="%2$s" target="_blank">%2$s</a>', esc_url('docs.presscustomizr.com/article/236-first-steps-with-the-hueman-wordpress-theme'), __("knowledge base" , 'hueman') )
-                )
-              );
-              if ( ! HU_IS_PRO ) {
-                  printf( '<p>%1$s <a href="%2$s" title="support forum" target="_blank">%3$s</a>.</p>',
-                      __( "If you don't find an answer to your question in the documentation, don't panic :) ! The Hueman theme is used by a large number of webmasters constantly reporting bugs and potential issues. If you encounter a problem with the theme, chances are that it's already been reported and fixed in the", 'hueman' ),
-                      $this -> support_url,
-                      __('support forum', 'hueman')
-                    );//printf
-              }
-              ?>
-            </div>
-            <div class="feature-section col two-col">
-              <div class="col">
-                  <a class="button-secondary hueman-help" title="documentation" href="<?php echo esc_url('docs.presscustomizr.com/article/236-first-steps-with-the-hueman-wordpress-theme') ?>" target="_blank"><?php _e( 'Open the knowledge base','hueman' ); ?></a>
-              </div>
-            </div><!-- .two-col -->
-          </div><!-- .changelog -->
-        <?php
-      $html = ob_get_contents();
-      if ($html) ob_end_clean();
-      echo convert_smilies($html);
-    }
 
 
     /**

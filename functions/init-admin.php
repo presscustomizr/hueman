@@ -53,7 +53,7 @@ function hu_add_help_button() {
   $wp_admin_bar->add_menu( array(
      'parent' => 'top-secondary', // Off on the right side
      'id' => 'tc-hueman-help' ,
-     'title' =>  __( 'Help' , 'hueman' ),
+     'title' =>  __( '' , 'hueman' ),
      'href' => admin_url( 'themes.php?page=welcome.php&help=true' ),
      'meta'   => array(
         'title'  => __( 'Need help with the Hueman theme ? Click here!', 'hueman' ),

@@ -63,6 +63,7 @@
   line-height: 1em;
 }
 
+
 /* ADMIN BAR
     -------------------------------------------------- */
 h1.need-help-title:before,
@@ -82,31 +83,35 @@ h1.need-help-title:before,
 
 #wp-admin-bar-tc-hueman-help .ab-item:before, li#wp-admin-bar-tc-hueman-help a:before {
   padding-right: 0px;
+  margin-right: 0;
   top: 2px;
   color: #FFF;
 }
 
 li#wp-admin-bar-tc-hueman-help a {
-  color: #FFF!important;
-  text-decoration: none;
-  background-color: #82b965;
-  -webkit-transition: background .1s linear;
-  -moz-transition: background .1s linear;
-  -ms-transition: background .1s linear;
-  -o-transition: background .1s linear;
-  transition: background .1s linear;
-}
-
-.ab-top-menu>li#wp-admin-bar-tc-hueman-help:hover>.ab-item {
   color: #FFF;
-  background: #6B9C51;
+  text-decoration: none;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #8DA65A;
+  background-image: -moz-linear-gradient(top, #008ec2,#006799);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#008ec2), to(#006799));
+  background-image: -webkit-linear-gradient(top, #008ec2,#006799);
+  background-image: -o-linear-gradient(top, #008ec2,#006799);
+  background-image: linear-gradient(to bottom,#008ec2,#006799);
+  background-repeat: repeat-x;
+  border-color: #006799;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
-
+h1.need-help-title {
+  line-height: 1.5em;
+  font-size: 2.2em;
+}
 h1.need-help-title:before {
   padding-right: 17px;
   top: 1px;
   font-size: 1.2em;
-  color:#82b965;
+  color:#008ec2;
 }
 
 #hueman-admin-panel .button-secondary.hueman-help {
@@ -146,7 +151,7 @@ h1.need-help-title:before {
 }
 
 /* GO PRO BTN */
-.wp-core-ui .updated .hu-go-pro-btn {
+.wp-core-ui #hueman-admin-panel .hu-go-pro-btn, .wp-core-ui .updated .hu-go-pro-btn {
   line-height: 24px;
   height: 30px;
   padding: 1px 20px;
