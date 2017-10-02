@@ -947,6 +947,16 @@ add_filter( 'hu_front_js_localized_params', 'hu_add_fittext_js_front_params' );
 //hook : wp_enqueue_scripts
 if ( ! function_exists( 'hu_scripts' ) ) {
   function hu_scripts() {
+    if ( hu_is_checked( 'js-mobile-detect') ) {
+      wp_enqueue_script(
+        'mobile-detect',
+        get_template_directory_uri() . '/assets/front/js/libs/mobile-detect.min.js',
+        array(),
+        '',
+        false
+      );
+    }
+
     if ( has_post_format( 'gallery' ) || ( is_home() && ! is_paged() && ( hu_get_option('featured-posts-count') != '0' ) ) ) {
       wp_enqueue_script(
         'flexslider',

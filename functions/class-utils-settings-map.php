@@ -499,6 +499,14 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'     => 'performance_sec',
                 'type'        => 'checkbox',
                 'notice'      => __('Check this option to delay the loading of non visible images. Images below the viewport will be loaded dynamically on scroll. This can really boost speed performances by reducing the weight of long pages that include many images.' , 'hueman')
+          ),
+          'js-mobile-detect'  =>  array(
+                'default'       => 0,
+                'control'     =>  'HU_controls',
+                'label'       => __( 'Mobile device detection' , 'hueman' ),
+                'section'     => 'performance_sec',
+                'type'        => 'checkbox',
+                'notice'      => __('When checked, this option loads a small javascript file ( 30 kb ) to detect if your site is being displayed by a mobile device like a phone or a tablet. It is recommended to check this option if you are using a cache plugin.' , 'hueman')
           )
 
       );
