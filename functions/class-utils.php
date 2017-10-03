@@ -345,10 +345,22 @@ if ( ! class_exists( 'HU_utils' ) ) :
         //Get raw to :
         //avoid filtering
         //avoid merging with defaults
-        $_options               = hu_get_raw_option( $option_group );
-        $_options[$option_name] = $option_value;
+        //Reminder : hu_get_raw_option( $opt_name = null, $opt_group = null, $from_cache = true, $report_error = false )
+        //get the raw option and enabled the wp error report
+        //=> prevent issue https://github.com/presscustomizr/hueman/issues/571
+        $_options               = hu_get_raw_option( $option_group, null, true, true );
 
-        update_option( $option_group, $_options );
+        //Always make sure that getting raw options returns valid data
+        //For example, when opening wp-activate.php, wp_cache_get( 'alloptions', 'options' ); returns false
+        //=> which might lead to reset all previous user theme options when using update_option()
+        // => prevent issue https://github.com/presscustomizr/hueman/issues/571
+        if ( is_wp_error( $_options ) ) {
+          error_log( $_options -> get_error_code() );
+          return;
+        } else {
+          $_options[$option_name] = $option_value;
+          update_option( $option_group, $_options );
+        }
     }
 
 
