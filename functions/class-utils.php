@@ -238,18 +238,24 @@ if ( ! class_exists( 'HU_utils' ) ) :
         if ( ! empty($def_options) && $this -> is_customizing )
           return apply_filters( 'hu_default_options', $def_options );
 
+        //Never update the defaults when wp_installing()
+        //prevent issue https://github.com/presscustomizr/hueman/issues/571
         //Always update/generate the default option when (OR) :
         // 1) current user can edit theme options
         // 2) they are not defined
         // 3) theme version not defined
         // 4) versions are different
-        if ( current_user_can('edit_theme_options') || empty($def_options) || ! isset($def_options['ver']) || 0 != version_compare( $def_options['ver'] , HUEMAN_VER ) ) {
-          $def_options          = $this -> hu_generate_default_options( HU_utils_settings_map::$instance -> hu_get_customizer_map( $get_default_option = 'true' ) , HU_THEME_OPTIONS );
-          //Adds the version in default
-          $def_options['ver']   =  HUEMAN_VER;
+        if ( ! wp_installing() ) {
+            if ( current_user_can('edit_theme_options') || empty($def_options) || ! isset($def_options['ver']) || 0 != version_compare( $def_options['ver'] , HUEMAN_VER ) ) {
+                $def_options          = $this -> hu_generate_default_options( HU_utils_settings_map::$instance -> hu_get_customizer_map( $get_default_option = 'true' ) , HU_THEME_OPTIONS );
+                //Adds the version in default
+                $def_options['ver']   =  HUEMAN_VER;
 
-          //writes the new value in db (merging raw options with the new defaults )
-          $this -> hu_set_option( 'defaults', $def_options, HU_THEME_OPTIONS );
+                //writes the new value in db (merging raw options with the new defaults )
+                //=> will abort when wp_cache_get() returns false
+                // => prevent issue https://github.com/presscustomizr/hueman/issues/571
+                $this -> hu_set_option( 'defaults', $def_options, HU_THEME_OPTIONS );
+            }
         }
         return apply_filters( 'hu_default_options', $def_options );
     }
@@ -345,10 +351,22 @@ if ( ! class_exists( 'HU_utils' ) ) :
         //Get raw to :
         //avoid filtering
         //avoid merging with defaults
-        $_options               = hu_get_raw_option( $option_group );
-        $_options[$option_name] = $option_value;
+        //Reminder : hu_get_raw_option( $opt_name = null, $opt_group = null, $from_cache = true, $report_error = false )
+        //get the raw option and enabled the wp error report
+        //=> prevent issue https://github.com/presscustomizr/hueman/issues/571
+        $_options               = hu_get_raw_option( $option_group, null, true, true );
 
-        update_option( $option_group, $_options );
+        //Always make sure that getting raw options returns valid data
+        //For example, when opening wp-activate.php, wp_cache_get( 'alloptions', 'options' ); returns false
+        //=> which might lead to reset all previous user theme options when using update_option()
+        // => prevent issue https://github.com/presscustomizr/hueman/issues/571
+        if ( is_wp_error( $_options ) ) {
+            error_log( $_options -> get_error_code() );
+            return;
+        } else {
+            $_options[$option_name] = $option_value;
+            update_option( $option_group, $_options );
+        }
     }
 
 

@@ -259,9 +259,20 @@ function hu_has_nav_menu( $_location ) {
 
 //@return an array of unfiltered options
 //=> all options or a single option val
-function hu_get_raw_option( $opt_name = null, $opt_group = null, $from_cache = true ) {
+//@param $report_error is used only when invoking HU_utils::set_option() to avoid a potential theme option reset
+//=> prevent issue https://github.com/presscustomizr/hueman/issues/571
+function hu_get_raw_option( $opt_name = null, $opt_group = null, $from_cache = true, $report_error = false ) {
     $alloptions = wp_cache_get( 'alloptions', 'options' );
     $alloptions = maybe_unserialize( $alloptions );
+
+    //prevent issue https://github.com/presscustomizr/hueman/issues/492
+    //prevent issue https://github.com/presscustomizr/hueman/issues/571
+    if ( $report_error ) {
+        if ( ! is_array( $alloptions ) || empty( $alloptions ) ) {
+            return new WP_Error( 'wp_options_not_cached', '' );
+        }
+    }
+
     $alloptions = ! is_array( $alloptions ) ? array() : $alloptions;//prevent issue https://github.com/presscustomizr/hueman/issues/492
 
     //is there any option group requested ?
