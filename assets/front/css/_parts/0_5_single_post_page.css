@@ -217,7 +217,7 @@ transition: all 0.2s ease-out; }
 /*  Page title
 /* ------------------------------------ */
 .page-title { background: #fff; position: relative; padding-top: 18px; padding-bottom: 17px; border-bottom: 1px solid #eee; color: #666; font-size: 1em; font-weight: 600; text-transform: uppercase; line-height: 1.5rem; }
-.page-title h1 { font-size: 1.3em}
+/*.page-title h1 { font-size: 1.3em} <= commenting this for fixing issue https://github.com/presscustomizr/hueman/issues/535 */
 .page-title a { color: #aaa; }
 .page-title a:hover { color: #444; }
 .page-title span { color: #aaa; }
