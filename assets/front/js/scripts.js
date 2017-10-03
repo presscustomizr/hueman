@@ -3117,7 +3117,8 @@ var czrapp = czrapp || {};
                     });
               });
               czrapp.isMobileUserAgent = new czrapp.Value( '1' == HUParams.isWPMobile );
-              if ( MobileDetect && _.isFunction( MobileDetect ) ) { // <= is js-mobile-detect option checked ?
+
+              if ( ! _.isUndefined( window.MobileDetect ) && _.isFunction( window.MobileDetect ) ) { // <= is js-mobile-detect option checked ?
                     var _md = new MobileDetect(window.navigator.userAgent);
                     czrapp.isMobileUserAgent( ! _.isNull( _md.mobile() ) );
               }
@@ -3256,7 +3257,9 @@ var czrapp = czrapp || {};
                                             czrapp.userXP.sidebars.each( function( _sb_ ) {
                                                 _sb_( _sb_.id == sb.id ? _sb_() : 'collapsed' );
                                             });
-                                            sb( 'collapsed' == sb() ? 'expanded' : 'collapsed' );
+                                            sb( 'collapsed' == sb() ? 'expanded' : 'collapsed' ).done( function() {
+                                                sb._stickify();
+                                            });
                                       }
                                 },
                                 {
@@ -3363,13 +3366,17 @@ var czrapp = czrapp || {};
                                 sb.container.addClass( 'sticky' );
                                 sb._translateSbContent();
 
-                                sb.container.css({
-                                      position : 'fixed',
-                                      top : '0px',
-                                      height : expanded ? Math.max( sb._getInnerHeight(), czrapp.$_window.height() ) + 'px' : '',
-                                      left : sb._getStickyXOffset(),//<= depdendant of the sidebar position : left, middle-left, middle-right, right
-                                      'padding-bottom' : expanded ? 0 : '',
-                                });
+                                if ( ! expanded ) {
+                                    sb.container.css({
+                                          position : 'fixed',
+                                          top : '0px',
+                                          height : expanded ? Math.max( sb._getInnerHeight(), czrapp.$_window.height() ) + 'px' : '',
+                                          left : sb._getStickyXOffset(),//<= depdendant of the sidebar position : left, middle-left, middle-right, right
+                                          'padding-bottom' : expanded ? 0 : '',
+                                    });
+                                } else {
+                                    sb._resetStickyness();
+                                }
                           break;
 
                           case 'bottom' :
@@ -3383,6 +3390,7 @@ var czrapp = czrapp || {};
               _toggleSidebar : function() {
                     var sb = this,
                         expanded = 'expanded' == sb();
+
                     return $.Deferred( function() {
                           var _dfd_ = this;
 
@@ -3457,7 +3465,9 @@ var czrapp = czrapp || {};
                                       }, 350 );//transition: width .35s ease-in-out;
                                 }).promise();
                           })().done( function() {
+
                                 sb.container.toggleClass( 'expanded', expanded ).toggleClass('collapsed', ! expanded );
+
                                 sb.container
                                       .removeClass( 'expanding')
                                       .removeClass( 'collapsing')
@@ -3478,6 +3488,7 @@ var czrapp = czrapp || {};
                                 if ( sb.isStickyfiable() ) {
                                       sb._setStickyness();
                                 }
+
                                 _dfd_.resolve();
                           });
                     }).promise();
@@ -3582,11 +3593,7 @@ var czrapp = czrapp || {};
                         _winHeight = czrapp.$_window.height(),
                         _contentBottomToTop = czrapp.$_mainWrapper.offset().top + czrapp.$_mainWrapper.find('.content').outerHeight() - sb.container.offset().top,
                         _maxColHeight = czrapp.userXP.maxColumnHeight();
-                    if ( 'between' == sb.stickyness() ) {
-                          return _contentBottomToTop < _winHeight ? _contentBottomToTop : Math.max( _winHeight, sb._getInnerHeight() );
-                    } else {
-                          return Math.max( _winHeight, sb._getInnerHeight() > _maxColHeight ? _maxColHeight : sb._getInnerHeight() );
-                    }
+                    return Math.max( _winHeight, sb._getInnerHeight() );
 
 
               },
