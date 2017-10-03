@@ -181,7 +181,7 @@ input, textarea, button, select, label { font-family: inherit; }
 /* end woocommerce */
 .themeform.searchform div { position: relative; }
 .themeform.searchform div input { padding-left: 26px; line-height: 20px; }
-.themeform.searchform div:after { color: #ccc; line-height: 1.714em; font-size: 0.875em; content: "\f002"; position: absolute; left: 10px; top: 6px; font-family: FontAwesome; }
+.themeform.searchform div:after { color: #ccc; line-height: 1.714em; font-size: 0.875em; content: "\f002"; position: absolute; left: 10px; top: 8px; font-family: FontAwesome; }
 
 /*  base : entry
 /* ------------------------------------ */

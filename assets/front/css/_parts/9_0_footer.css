@@ -1,7 +1,7 @@
 /* ------------------------------------------------------------------------- *
  *  Section: Footer
 /* ------------------------------------------------------------------------- */
-#footer { background: #fff; color: #777; width: 100%; }
+#footer { background: #fff; color: #777; width: 100%; position: relative; }
 #footer a { color: #777; }
 #footer a:hover { color: #ccc; }
 #footer .pad { padding-bottom: 30px; }
@@ -41,6 +41,55 @@ box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
 #nav-footer.nav-container { background: #fff; border-top: 1px solid #eee; }
 #nav-footer .nav-toggle { background: transparent; color: #444; border-left: 1px solid #eee; }
 
+/* Welcome Note
+/* ------------------------------------ */
+#bottom-welcome-note {
+    bottom: -100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    padding: 20px 0;
+    position: fixed;
+    text-align: center;
+    right: 0;
+    left: 0;
+    z-index: 10000;
+    color: #fff;
+    display: block;
+    -webkit-transition: all 0.45s ease-in-out;
+    -moz-transition: all, 0.45s ease-in-out;
+    -ms-transition: all, 0.45s ease-in-out;
+    -o-transition: all, 0.45s ease-in-out;
+    transition: all 0.45s ease-in-out;
+}
+#bottom-welcome-note h2 {
+  font-size: 1.5em;
+  line-height: 1.6em;
+  color: #fff;
+  margin-bottom: 15px;
+}
+#bottom-welcome-note a {
+  color: #fff;
+  text-decoration: underline;
+}
+#bottom-welcome-note p { line-height: 2em;}
+#bottom-welcome-note .note-content {
+  display: inline-block;
+  line-height: 20px;
+  width: 80%;
+}
+#bottom-welcome-note .fa:before {
+  top: 2px;
+  position: relative;
+  padding-left: 2px;
+}
+#bottom-welcome-note .close-note {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 31px;
+    cursor: pointer;
+}
+
+
 @media only screen and (min-width: 720px) {
 
   /* common */
@@ -77,5 +126,4 @@ box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
   #nav-footer .nav li.current_page_item > a,
   #nav-footer .nav li.current-menu-item > a,
   #nav-footer .nav li.current-post-parent > a { background: #f2f2f2; color: #444; }
-
 }

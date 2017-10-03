@@ -215,7 +215,7 @@ function hu_set_woocommerce_compat() {
             </ul>
             <?php endif /*isset( $product )*/ ?>
           <?php else: ?>
-            <h2><?php woocommerce_page_title() ?></h2>
+            <h1><?php woocommerce_page_title() ?></h1>
           <?php endif ?>
         </div><!--/.page-title-->
       <?php
@@ -412,11 +412,14 @@ function hu_wfc_selector_title( $_list) {
 
   $_hu_list = array(
             'top_menu_items'          => __( 'Top-Menu items' , 'hueman' ),
-            'marketing'               => __( 'Featured Pages', 'hueman' ),
+            'slider_title'            => __( 'Slider title', 'hueman' ),
+            'slider_subtitle'         => __( 'Slider subtitle', 'hueman' ),
+            'slider_button'           => __( 'Slider button', 'hueman' ),
+            //'marketing'               => __( 'Featured Pages', 'hueman' ),
             'single_post_title'       => __( 'Single Post titles' , 'hueman' ),
             'single_page_title'       => __( 'Single Page titles' , 'hueman' ),
-            'post_content'            => __( 'Post content' , 'hueman' ),
-            'post_excerpt'            => __( 'Post excerpt' , 'hueman' ),
+            'post_content'            => __( 'Post/Page content' , 'hueman' ),
+            'post_excerpt'            => __( 'Post/Page excerpt' , 'hueman' ),
             'post_lists'              => __( 'Lists in post/pages' , 'hueman' ),
             'single_category_meta'    => __( 'Single Post Categories meta' , 'hueman' ),
             'single_tag'              => __( 'Single Post tags' , 'hueman' ),
@@ -425,64 +428,26 @@ function hu_wfc_selector_title( $_list) {
             'postlist_category_meta'  => __( 'Post list category meta' , 'hueman' ),
             'single_tags'             => __( 'Single post tags' , 'hueman' ),
             'comment_meta'            => __( 'Comments metas' , 'hueman' ),
-            'sidebars_social_links'   => __( 'Sidebar Social Links' , 'hueman' ),
             'sidebars_top'            => __( 'Sidebar Top Boxes' , 'hueman' ),
             'footer_social_links'     => __( 'Footer Social Links', 'hueman' )
   );
 
   return array_merge( $_list, $_hu_list );
 }
-
-add_filter( 'tc_font_customizer_zone_map', 'hu_wfc_zone_map' );
+/*
+* Do not add specific FP zone for the moment
+*/
+//add_filter( 'tc_font_customizer_zone_map', 'hu_wfc_zone_map' );
 function hu_wfc_zone_map( $zone_map ) {
+
+
   $_hu_zone_map = array(
     'marketing'     => array('full-layout'  , __( 'Featured pages' , 'hueman' ))
   );
   return array_merge( $zone_map, $_hu_zone_map );
+
 }
 
-/*
-* Add self-hosted Font among the WFC WebSafe ones (maybe WFC should have a specific section?!)
-*/
-add_filter( 'tc_font_customizer_cfonts' , 'add_hu_fonts_to_list' );
-function add_hu_fonts_to_list( $original_list ) {
-  $_fonts = array(
-      array( 'name' => 'Titillium,Arial,sans-serif' ,'subsets'=> array() ),
-  );
-
-  return array_merge( $_fonts , $original_list);
-}
-
-
-/*
-* Add/Merge theme specific default selector properties
-*/
-add_filter('tc_selector_properties' , 'hu_selector_properties' );
-function hu_selector_properties( $selector_properties ){
-  $hu_selector_properties     = array(
-              'zone'            => null,
-              'selector'        => null,
-              'not'             => null,
-              'subset'          => null,
-              'font-family'     => 'Titillium,Arial,sans-serif',
-              'font-weight'     => 'normal',
-              'font-style'      => null,
-              'color'           => '#666',
-              'color-hover'     => 'main',
-              'font-size'       => "16px",
-              'line-height'     => "1.5em",
-              'text-align'      => 'inherit',
-              'text-decoration' => 'none',
-              'text-transform'  => 'none',
-              'letter-spacing'  => 0,
-              'static-effect'   => 'none',
-              'icon'            => false,
-              'important'       => false,
-              'title'           => false //used for custom selectors
-  );
-  return array_merge( $selector_properties, $hu_selector_properties );
-}
-/*End WFC Compatibility */
 
 /* FPU Compatibility code */
 /*

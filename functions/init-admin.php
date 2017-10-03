@@ -22,13 +22,15 @@ add_action( 'admin_enqueue_scripts', 'hu_post_formats_script');
  *  Loads and instanciates admin pages related classes
 /* ------------------------------------------------------------------------- */
 if ( is_admin() && ! hu_is_customizing() ) {
-  //Update notice
-  load_template( get_template_directory() . '/functions/admin/class-admin-update-notification.php' );
-  new HU_admin_update_notification;
-  if ( hu_is_checked('about-page') ) {
-    load_template( get_template_directory() . '/functions/admin/class-admin-page.php' );
-    new HU_admin_page;
-  }
+    if ( ! defined( 'HU_IS_PRO' ) || ! HU_IS_PRO ) {
+        //Update notice
+        load_template( get_template_directory() . '/functions/admin/class-admin-update-notification.php' );
+        new HU_admin_update_notification;
+    }
+    if ( hu_is_checked('about-page') ) {
+      load_template( get_template_directory() . '/functions/admin/class-admin-page.php' );
+      new HU_admin_page;
+    }
 }
 
 add_action( 'admin_init' , 'hu_admin_style' );
@@ -51,7 +53,7 @@ function hu_add_help_button() {
   $wp_admin_bar->add_menu( array(
      'parent' => 'top-secondary', // Off on the right side
      'id' => 'tc-hueman-help' ,
-     'title' =>  __( 'Help' , 'hueman' ),
+     'title' =>  __( '' , 'hueman' ),
      'href' => admin_url( 'themes.php?page=welcome.php&help=true' ),
      'meta'   => array(
         'title'  => __( 'Need help with the Hueman theme ? Click here!', 'hueman' ),
@@ -60,16 +62,15 @@ function hu_add_help_button() {
 }
 
 
-
 /* ------------------------------------------------------------------------- *
  *  Loads Required Plugin Class and Setup
 /* ------------------------------------------------------------------------- */
-if ( is_admin() && ! hu_is_customizing() ) {
-  /**
-  * Include the TGM_Plugin_Activation class.
-  */
-  load_template( get_template_directory() . '/functions/admin/class-tgm-plugin-activation.php' );
-  add_action( 'tgmpa_register', 'hu_register_required_plugins' );
+if ( ! HU_IS_PRO_ADDONS && ! HU_IS_PRO && is_admin() && ! hu_is_customizing() ) {
+    /**
+    * Include the TGM_Plugin_Activation class.
+    */
+    load_template( get_template_directory() . '/functions/admin/class-tgm-plugin-activation.php' );
+    add_action( 'tgmpa_register', 'hu_register_required_plugins' );
 }
 
 
@@ -164,7 +165,14 @@ function hu_register_required_plugins() {
 /* ------------------------------------------------------------------------- *
  *  Initialize the meta boxes.
 /* ------------------------------------------------------------------------- */
-add_action( 'admin_init', 'hu_custom_meta_boxes' );
+//Managing plugins on jetpack's wordpress.com dashboard fix
+//https://github.com/presscustomizr/hueman/issues/541
+//For some reason admin_init is fired but is_admin() returns false
+//so some required OT admin files are not loaded:
+//see OT_Loader::admin_includes() : it returns if not is_admin()
+if ( is_admin() ) {
+    add_action( 'admin_init', 'hu_custom_meta_boxes' );
+}
 
 function hu_custom_meta_boxes() {
 
@@ -446,8 +454,12 @@ if ( is_admin() && ! hu_is_customizing() ) {
     //@return void()
     //hook : after_setup_theme
     function hu_add_editor_style() {
+        //we need only the relative path, otherwise get_editor_stylesheets() will treat this as external CSS
+        //which means:
+        //a) child-themes cannot override it
+        //b) no check on the file existence will be made (producing the rtl error, for instance : https://github.com/presscustomizr/customizr/issues/926)
         $_stylesheets = array(
-            sprintf( '%1$sassets/admin/css/editor-style.css' , HU_BASE_URL ),
+            'assets/admin/css/editor-style.css',
             //hu_get_front_style_url(),
             //get_stylesheet_uri()
         );
@@ -510,8 +522,11 @@ function hu_user_defined_tinymce_css( $init ) {
   $family       = hu_get_fonts( array( 'font_id' => $user_font, 'request' => 'family' ) );//'"Raleway", Arial, sans-serif'
   $family       = ( empty( $family ) || ! is_string( $family ) ) ? "'Titillium Web', Arial, sans-serif" : $family;
 
+  //maybe add rtl class
+  $_mce_body_context = is_rtl() ? 'mce-content-body.rtl' : 'mce-content-body';
+
   //fonts
-  $_css = "body.mce-content-body{ font-family : {$family}; }\n";
+  $_css = "body.{$_mce_body_context}{ font-family : {$family}; }\n";
 
   $init['content_style'] = trim( preg_replace('/\s+/', ' ', $_css ) );
 

@@ -315,32 +315,53 @@ if ( ! function_exists( 'hu_render_header_image' ) ) {
   }
 }
 
+
+
+
 /*  Site name/logo and tagline callbacks
 /* ------------------------------------ */
-if ( ! function_exists( 'hu_print_logo_or_title' ) ) {
-    function hu_print_logo_or_title( $echo = true ) {
-        // Text or image?
-        // Since v3.2.4, uses the WP 'custom_logo' theme mod option. Set with a filter.
-        $is_image = false;
-        if ( false != hu_get_img_src_from_option( 'custom-logo' ) && apply_filters( 'hu_display_header_logo', hu_is_checked('display-header-logo') ) ) {
-            $logo_src = apply_filters( 'hu_header_logo_src' , hu_get_img_src_from_option( 'custom-logo' ) );
-            $logo_or_title = '<img src="'. $logo_src . '" alt="' . get_bloginfo('name'). '">';
-            $is_image = true;
-        } else {
-            $logo_or_title = get_bloginfo( 'name' );
-        }
+//@utility used on front end and partial refresh
+//@return string, either a textual or a logo imr src
+function hu_get_logo_title( $is_mobile_menu = false ) {
+    // Text or image?
+    // Since v3.2.4, uses the WP 'custom_logo' theme mod option. Set with a filter.
+    $logo_src = false;
+    $is_logo_src_set = false;
+    $logo_or_title = hu_is_checked( 'display-header-title' ) ? get_bloginfo( 'name' ) : '';
 
+    // Do we have to display a logo ?
+    // Then, let's display the relevant one ( desktop or mobile ), if set
+    if ( apply_filters( 'hu_display_header_logo', hu_is_checked( 'display-header-logo' ) ) ) {
+        //if $is_mobile_menu, let's check if we have a specific logo for mobile set
+        if ( $is_mobile_menu ) {
+            $logo_src = hu_get_img_src_from_option( 'mobile-header-logo' );
+            $is_logo_src_set = false !== $logo_src && ! empty( $logo_src );
+        }
+        if ( ( $is_mobile_menu && ! $is_logo_src_set ) || ! $is_mobile_menu ) {
+            $logo_src = hu_get_img_src_from_option( 'custom-logo' );
+            $is_logo_src_set = false !== $logo_src && ! empty( $logo_src );
+        }
+        if ( $is_logo_src_set ) {
+            $logo_src = apply_filters( 'hu_header_logo_src' , $logo_src, $is_mobile_menu );
+            $logo_or_title = '<img src="'. $logo_src . '" alt="' . get_bloginfo('name'). '">';
+        }
+    }//if apply_filters( 'hu_display_header_logo', hu_is_checked( 'display-header-logo' )
+    return $logo_or_title;
+}
+
+
+if ( ! function_exists( 'hu_print_logo_or_title' ) ) {
+    function hu_print_logo_or_title( $echo = true, $is_mobile_menu = false ) {
+        $logo_or_title = hu_get_logo_title( $is_mobile_menu );
+        // => If no logo is set and  ! hu_is_checked( 'display-header-title' ), the logo title is empty.
         ob_start();
-          if ( hu_is_home() ) {
-              printf( '<%1$s class="site-title">%2$s</%1$s>',
-                  $is_image ? 'p' : 'h1',
-                  hu_do_render_logo_site_tite( $logo_or_title, false )
-              );
-          } else {
-              ?>
-                <p class="site-title"><?php hu_do_render_logo_site_tite( $logo_or_title ) ?></p>
-              <?php
-          }
+            do_action( '__before_logo_or_site_title', $logo_or_title );
+            if ( ! empty( $logo_or_title ) ) {
+                ?>
+                  <p class="site-title"><?php hu_do_render_logo_site_tite( $logo_or_title ) ?></p>
+                <?php
+            }
+            do_action( '__after_logo_or_site_title', $logo_or_title );
         $html = ob_get_contents();
         if ($html) ob_end_clean();
         if ( $echo )
@@ -355,27 +376,23 @@ if ( ! function_exists( 'hu_do_render_logo_site_tite' ) ) {
     function hu_do_render_logo_site_tite( $logo_or_title = null, $echo = true ) {
         //typically, logo_or_title is not provided when partially refreshed from the customizer
         if ( is_null( $logo_or_title ) || hu_is_ajax() ) {
-            // Text or image?
-            // Since v3.2.4, uses the WP 'custom_logo' theme mod option. Set with a filter.
-            if ( false != hu_get_img_src_from_option( 'custom-logo' ) && apply_filters( 'hu_display_header_logo', hu_is_checked('display-header-logo') ) ) {
-                $logo_src = apply_filters( 'hu_header_logo_src' , hu_get_img_src_from_option( 'custom-logo' ) );
-                $logo_or_title = '<img src="'. $logo_src . '" alt="' . get_bloginfo('name'). '">';
-            } else {
-                $logo_or_title = get_bloginfo('name');
-            }
+           $logo_or_title = hu_get_logo_title();
         }
-        if ( $echo ) {
-            printf( '<a class="custom-logo-link" href="%1$s" rel="home" title="%3$s">%2$s</a>',
-                home_url('/'),
-                $logo_or_title,
-                sprintf( '%1$s | %2$s', get_bloginfo('name') , __('Home page', 'hueman') )
-            );
-        } else {
-            return sprintf( '<a class="custom-logo-link" href="%1$s" rel="home" title="%3$s">%2$s</a>',
-                home_url('/'),
-                $logo_or_title,
-                sprintf( '%1$s | %2$s', get_bloginfo('name') , __('Home page', 'hueman') )
-            );
+        // => If no logo is set and  ! hu_is_checked( 'display-header-title' ), the logo title is empty.
+        if ( ! empty( $logo_or_title ) ) {
+            if ( $echo ) {
+                printf( '<a class="custom-logo-link" href="%1$s" rel="home" title="%3$s">%2$s</a>',
+                    home_url('/'),
+                    $logo_or_title,
+                    sprintf( '%1$s | %2$s', get_bloginfo('name') , __('Home page', 'hueman') )
+                );
+            } else {
+                return sprintf( '<a class="custom-logo-link" href="%1$s" rel="home" title="%3$s">%2$s</a>',
+                    home_url('/'),
+                    $logo_or_title,
+                    sprintf( '%1$s | %2$s', get_bloginfo('name') , __('Home page', 'hueman') )
+                );
+            }
         }
     }
 }
@@ -383,7 +400,7 @@ if ( ! function_exists( 'hu_do_render_logo_site_tite' ) ) {
 
 if ( ! function_exists( 'hu_render_blog_description' ) ) {
     function hu_render_blog_description() {
-        echo bloginfo( 'description' );
+        echo get_bloginfo( 'description' );
     }
 }
 
@@ -419,16 +436,15 @@ if ( ! function_exists( 'hu_get_page_title' ) ) {
 /* ------------------------------------ */
 if ( ! function_exists( 'hu_get_search_title' ) ) {
   function hu_get_search_title() {
-    global $wp_query;
-    ?>
-      <?php if ( have_posts() ): ?><i class="fa fa-search"></i><?php endif; ?>
-      <?php if ( ! have_posts() ): ?><i class="fa fa-exclamation-circle"></i><?php endif; ?>
-    <?php
+      global $wp_query;
+
       $search_results = $wp_query -> found_posts;
+      $icon           = have_posts() ? '<i class="fa fa-search"></i> ' : '<i class="fa fa-exclamation-circle"></i> ';
+
       if ( 1 == $search_results ) {
-          return sprintf( '%1$s %2$s', $search_results, __('Search result','hueman') );
+          return sprintf( '%1$s%2$s %3$s', $icon, $search_results, __('Search result','hueman') );
       } else {
-          return sprintf( '%1$s %2$s', $search_results, __('Search results','hueman') );
+          return sprintf( '%1$s%2$s %3$s', $icon, $search_results, __('Search results','hueman') );
       }
   }
 }
@@ -527,53 +543,49 @@ if ( ! function_exists( 'hu_blog_title' ) ) {
 
 /*  Related posts
 /* ------------------------------------ */
-if ( ! function_exists( 'hu_related_posts' ) ) {
-
-  function hu_related_posts() {
+function hu_get_related_posts() {
     wp_reset_postdata();
     global $post;
 
     // Define shared post arguments
     $args = array(
-      'no_found_rows'       => true,
-      'update_post_meta_cache'  => false,
-      'update_post_term_cache'  => false,
-      'ignore_sticky_posts'   => 1,
-      'orderby'         => 'rand',
-      'post__not_in'        => array($post->ID),
-      'posts_per_page'      => 3
+        'no_found_rows'           => true,
+        'update_post_meta_cache'  => false,
+        'update_post_term_cache'  => false,
+        'ignore_sticky_posts'     => 1,
+        'orderby'                 => 'rand',
+        'post__not_in'            => array( $post->ID ),
+        'posts_per_page'          => 3
     );
+
     // Related by categories
-    if ( hu_get_option('related-posts') == 'categories' ) {
+    if ( hu_get_option( 'related-posts' ) == 'categories' ) {
+        $cats = get_post_meta( $post->ID, 'related-cat', true );
 
-      $cats = get_post_meta($post->ID, 'related-cat', true);
-
-      if ( !$cats ) {
-        $cats = wp_get_post_categories($post->ID, array('fields'=>'ids'));
-        $args['category__in'] = $cats;
-      } else {
-        $args['cat'] = $cats;
-      }
+        if ( ! $cats ) {
+            $cats = wp_get_post_categories( $post->ID, array( 'fields'=>'ids' ) );
+            $args['category__in'] = $cats;
+        } else {
+            $args['cat'] = $cats;
+        }
     }
+
     // Related by tags
-    if ( hu_get_option('related-posts') == 'tags' ) {
+    if ( hu_get_option( 'related-posts' ) == 'tags' ) {
+        $tags = get_post_meta($post->ID, 'related-tag', true);
 
-      $tags = get_post_meta($post->ID, 'related-tag', true);
-
-      if ( !$tags ) {
-        $tags = wp_get_post_tags($post->ID, array('fields'=>'ids'));
-        $args['tag__in'] = $tags;
-      } else {
-        $args['tag_slug__in'] = explode(',', $tags);
-      }
-      if ( !$tags ) { $break = true; }
+        if ( ! $tags ) {
+            $tags = wp_get_post_tags( $post->ID, array( 'fields'=>'ids') );
+            $args['tag__in'] = $tags;
+        } else {
+            $args['tag_slug__in'] = explode( ',', $tags );
+        }
+        if ( ! $tags ) { $break = true; }
     }
-
-    $query = !isset($break)?new WP_Query($args):new WP_Query;
-    return $query;
-  }
-
+    // if isset( $break ), returns and empty query
+    return ! isset( $break ) ? new WP_Query( $args ) : new WP_Query;
 }
+
 
 
 /*  Get images attached to post
@@ -581,20 +593,20 @@ if ( ! function_exists( 'hu_related_posts' ) ) {
 if ( ! function_exists( 'hu_post_images' ) ) {
 
   function hu_post_images( $args=array() ) {
-    global $post;
+      global $post;
 
-    $defaults = array(
-      'numberposts'   => -1,
-      'order'       => 'ASC',
-      'orderby'     => 'menu_order',
-      'post_mime_type'  => 'image',
-      'post_parent'   =>  $post->ID,
-      'post_type'     => 'attachment',
-    );
+      $defaults = array(
+        'numberposts'   => -1,
+        'order'       => 'ASC',
+        'orderby'     => 'menu_order',
+        'post_mime_type'  => 'image',
+        'post_parent'   =>  $post->ID,
+        'post_type'     => 'attachment',
+      );
 
-    $args = wp_parse_args( $args, $defaults );
+      $args = wp_parse_args( $args, $defaults );
 
-    return get_posts( $args );
+      return get_posts( $args );
   }
 
 }
@@ -629,9 +641,9 @@ if ( ! function_exists( 'hu_get_featured_post_ids' ) ) {
 *  + an animated svg icon
 *  the src property can be filtered
 /* ------------------------------------ */
-if ( ! function_exists( 'hu_get_placeholder_thumb' ) ) {
+if ( ! function_exists( 'hu_print_placeholder_thumb' ) ) {
 
-  function hu_get_placeholder_thumb( $_requested_size = 'thumb-medium' ) {
+  function hu_print_placeholder_thumb( $_requested_size = 'thumb-medium' ) {
     $_unique_id = uniqid();
     $filter = false;
     $_sizes = array( 'thumb-medium', 'thumb-small', 'thumb-standard' );
@@ -677,8 +689,13 @@ if ( ! function_exists( 'hu_get_placeholder_thumb' ) ) {
 
 
 
+
+
+
+
+
 /* ------------------------------------------------------------------------- *
- *  Filters
+ *  FILTERS
 /* ------------------------------------------------------------------------- */
 
 /*  Body class
@@ -692,8 +709,17 @@ if ( ! function_exists( 'hu_body_class' ) ) {
     if ( hu_get_option( 'mobile-sidebar-hide' ) == 's2' ) { $classes[] = 'mobile-sidebar-hide-s2'; }
     if ( hu_get_option( 'mobile-sidebar-hide' ) == 's1-s2' ) { $classes[] = 'mobile-sidebar-hide'; }
     if ( wp_is_mobile() ) { $classes[] = 'wp-is-mobile'; };
-    if ( hu_is_checked( 'header-desktop-sticky' ) ) { $classes[] = 'header-desktop-sticky'; }
-    if ( hu_is_checked( 'header-mobile-sticky' ) ) { $classes[] = 'header-mobile-sticky'; }
+
+    //Stickyness of menus
+    //=> hu_normalize_stick_menu_opt() is used to ensure retro compat with the previously boolean option type
+    $desktop_sticky = hu_normalize_stick_menu_opt( hu_get_option('header-desktop-sticky') );
+    $mobile_sticky = hu_normalize_stick_menu_opt( hu_get_option('header-mobile-sticky') );
+
+    if ( 'no_stick' != $desktop_sticky ) { $classes[] = 'header-desktop-sticky'; }
+
+    //Note : no stickyness implemented when 2 menus ( 'both_menus') are displayed on mobiles ( => like it was historically in the earliest version in Hueman )
+    if ( 'no_stick' != $mobile_sticky && 'both_menus' != hu_get_option( 'header_mobile_menu_layout' ) ) { $classes[] = 'header-mobile-sticky'; }
+
     return $classes;
   }
 }
@@ -808,6 +834,106 @@ add_filter( 'body_class', 'hu_browser_body_class' );
 
 
 
+//hook : hu_front_js_localized_params
+//Add the fittext params on front if the user option is checked
+//@param $localized = array()
+function hu_add_fittext_js_front_params( $localized = array() ) {
+    $localized = ! is_array( $localized ) ? array() : $localized;
+
+    if ( ! hu_is_checked( 'fittext' ) )
+      return $localized;
+
+    //user font-size preprocess
+    $user_font_size = hu_get_option( 'body-font-size' );
+    $user_font_size = is_numeric( $user_font_size ) ? $user_font_size : '16';
+
+
+    return array_merge( $localized , array(
+        //Fittext
+        'fitTextMap'      => array(
+            //Singular headings
+            'single_post_title' => array(
+                'selectors' => '.single h1.entry-title',
+                'minEm'     => 1.375,
+                'maxEm'     => 2.62
+            ),
+            'page_title' => array(
+                'selectors' => '.page-title h1',
+                'minEm'     => 1,
+                'maxEm'     => 1.3
+            ),
+            'home_page_title' => array(
+                'selectors' => '.home .page-title',
+                'minEm'     => 1,
+                'maxEm'     => 1.2,
+                'compression' => 2.5
+            ),
+
+            //post lists
+            'post_titles' => array(
+                'selectors' => '.blog .post-title, .archive .post-title',
+                'minEm'     => 1.375,
+                'maxEm'     => 1.475
+            ),
+            'featured_post_titles' => array(
+                'selectors' => '.featured .post-title',
+                'minEm'     => 1.375,
+                'maxEm'     => 2.125
+            ),
+
+            //Comments
+            'comments' => array(
+                'selectors' => '.commentlist li',
+                'minEm'     => 0.8125,
+                'maxEm'     => 0.93,
+                'compression' => 2.5
+            ),
+
+            //entry content p and hx headings
+            'entry' => array(
+                'selectors' => '.entry',
+                'minEm'     => 0.9375,
+                'maxEm'     => 1.125,
+                'compression' => 2.5
+            ),
+            'content_h1' => array(
+                'selectors' => '.entry h1, .woocommerce div.product h1.product_title',
+                'minEm'     => 1.875 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
+                'maxEm'     => 2.375 * 1.125//this factor is the .entry inherited font-size : 1.125em
+            ),
+            'content_h2' => array(
+                'selectors' => '.entry h2',
+                'minEm'     => 1.625 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
+                'maxEm'     => 2.125 * 1.125//this factor is the .entry inherited font-size : 1.125em
+            ),
+            'content_h3' => array(
+                'selectors' => '.entry h3',
+                'minEm'     => 1.5 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
+                'maxEm'     => 1.75 * 1.125//this factor is the .entry inherited font-size : 1.125em
+            ),
+            'content_h4' => array(
+                'selectors' => '.entry h4',
+                'minEm'     => 1.375 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
+                'maxEm'     => 1.5 * 1.125//this factor is the .entry inherited font-size : 1.125em
+            ),
+            'content_h5' => array(
+                'selectors' => '.entry h5',
+                'minEm'     => 1.125 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
+                'maxEm'     => 1.25 * 1.125//this factor is the .entry inherited font-size : 1.125em
+            ),
+            'content_h6' => array(
+                'selectors' => '.entry h6',
+                'minEm'     => 1 * 0.9375,//this factor is the .entry inherited font-size @media only screen and (max-width: 719px) {.entry : .9375em }
+                'maxEm'     => 1.125 * 1.125,//this factor is the .entry inherited font-size : 1.125em,
+                'compression' => 2.5
+            )
+        ),
+        'userFontSize'    => $user_font_size,
+        'fitTextCompression' => apply_filters( 'hu_fittext_compression', 1.5 )
+    ) );
+}
+add_filter( 'hu_front_js_localized_params', 'hu_add_fittext_js_front_params' );
+
 
 
 
@@ -821,10 +947,20 @@ add_filter( 'body_class', 'hu_browser_body_class' );
 //hook : wp_enqueue_scripts
 if ( ! function_exists( 'hu_scripts' ) ) {
   function hu_scripts() {
+    if ( hu_is_checked( 'js-mobile-detect') ) {
+      wp_enqueue_script(
+        'mobile-detect',
+        get_template_directory_uri() . '/assets/front/js/libs/mobile-detect.min.js',
+        array(),
+        '',
+        false
+      );
+    }
+
     if ( has_post_format( 'gallery' ) || ( is_home() && ! is_paged() && ( hu_get_option('featured-posts-count') != '0' ) ) ) {
       wp_enqueue_script(
         'flexslider',
-        get_template_directory_uri() . '/assets/front/js/lib/jquery.flexslider.min.js',
+        get_template_directory_uri() . '/assets/front/js/libs/jquery.flexslider.min.js',
         array( 'jquery' ),
         '',
         false
@@ -834,7 +970,7 @@ if ( ! function_exists( 'hu_scripts' ) ) {
     if ( has_post_format( 'audio' ) ) {
       wp_enqueue_script(
         'jplayer',
-        get_template_directory_uri() . '/assets/front/js/lib/jquery.jplayer.min.js',
+        get_template_directory_uri() . '/assets/front/js/libs/jquery.jplayer.min.js',
         array( 'jquery' ),
         '',
         true
@@ -858,52 +994,107 @@ if ( ! function_exists( 'hu_scripts' ) ) {
     foreach ( $wp_registered_widgets as $_key => $_value) {
       $_regwdgt[] = $_key;
     }
+
+    //Welcome note preprocess
+    $is_welcome_note_on = false;
+    $welcome_note_content = '';
+    if ( ! HU_IS_PRO && hu_user_started_with_current_version() ) {
+        $is_welcome_note_on = apply_filters(
+            'hu_is_welcome_front_notification_on',
+            hu_user_can_see_customize_notices_on_front() && ! hu_is_customizing() && ! hu_isprevdem() && 'dismissed' != get_transient( 'hu_welcome_note_status' )
+        );
+        if ( $is_welcome_note_on ) {
+            $welcome_note_content = hu_get_welcome_note_content();
+        }
+    }
+
+    //user started with
+    $started_on = get_transient( 'hu_start_date' );
+
     wp_localize_script(
           'hu-front-scripts',
           'HUParams',
-          apply_filters( 'hu_customizr_script_params' , array(
-              '_disabled'          => apply_filters( 'hu_disabled_front_js_parts', array() ),
-              'SmoothScroll'      => array(
-                'Enabled' => apply_filters('hu_enable_smoothscroll', ! wp_is_mobile() && hu_is_checked('smoothscroll') ),
-                'Options' => apply_filters('hu_smoothscroll_options', array( 'touchpadSupport' => false ) )
-              ),
-              'centerAllImg'      => apply_filters( 'hu_center_img', true ),
-              'timerOnScrollAllBrowsers' => apply_filters( 'hu_timer_on_scroll_for_all_browser' , true), //<= if false, for ie only
-              'extLinksStyle'       => hu_is_checked('ext_link_style'),
-              'extLinksTargetExt'   => hu_is_checked('ext_link_target'),
-              'extLinksSkipSelectors'   => apply_filters(
-                'hu_ext_links_skip_selectors',
-                array(
-                  'classes' => array('btn', 'button'),
-                  'ids' => array()
-                )
-              ),
-              'imgSmartLoadEnabled' => apply_filters( 'hu_img_smart_load_enabled', hu_is_checked('smart_load_img') ),
-              'imgSmartLoadOpts'    => apply_filters( 'hu_img_smart_load_options' , array(
-                    'parentSelectors' => array(
-                        '.container .content',
-                        '.container .sidebar',
-                        '#footer',
-                        '#header-widgets'
-                    ),
-                    'opts'     => array(
-                        'excludeImg' => array( '.tc-holder-img' ),
-                        'fadeIn_options' => 100
-                    )
-              )),
-              'goldenRatio'         => apply_filters( 'hu_grid_golden_ratio' , 1.618 ),
-              'gridGoldenRatioLimit' => apply_filters( 'hu_grid_golden_ratio_limit' , 350),
-              'sbStickyUserSettings' => array( 'desktop' => hu_is_checked('desktop-sticky-sb'), 'mobile' => hu_is_checked('mobile-sticky-sb') ),
-              'menuStickyUserSettings' => array( 'desktop' => hu_is_checked('header-desktop-sticky'), 'mobile' => hu_is_checked('header-mobile-sticky') ),
-              'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('CZR_DEV') && true === CZR_DEV )
+          apply_filters( 'hu_front_js_localized_params' , array(
+                '_disabled'          => apply_filters( 'hu_disabled_front_js_parts', array() ),
+                'SmoothScroll'      => array(
+                  'Enabled' => apply_filters('hu_enable_smoothscroll', ! wp_is_mobile() && hu_is_checked('smoothscroll') ),
+                  'Options' => apply_filters('hu_smoothscroll_options', array( 'touchpadSupport' => false ) )
+                ),
+                'centerAllImg'      => apply_filters( 'hu_center_img', true ),
+                'timerOnScrollAllBrowsers' => apply_filters( 'hu_timer_on_scroll_for_all_browser' , true), //<= if false, for ie only
+                'extLinksStyle'       => hu_is_checked('ext_link_style'),
+                'extLinksTargetExt'   => hu_is_checked('ext_link_target'),
+                'extLinksSkipSelectors'   => apply_filters(
+                  'hu_ext_links_skip_selectors',
+                  array(
+                    'classes' => array('btn', 'button'),
+                    'ids' => array()
+                  )
+                ),
+                'imgSmartLoadEnabled' => apply_filters( 'hu_img_smart_load_enabled', hu_is_checked('smart_load_img') ),
+                'imgSmartLoadOpts'    => apply_filters( 'hu_img_smart_load_options' , array(
+                      'parentSelectors' => array(
+                          '.container .content',
+                          '.container .sidebar',
+                          '#footer',
+                          '#header-widgets'
+                      ),
+                      'opts'     => array(
+                          'excludeImg' => array( '.tc-holder-img' ),
+                          'fadeIn_options' => 100
+                      )
+                )),
+                'goldenRatio'         => apply_filters( 'hu_grid_golden_ratio' , 1.618 ),
+                'gridGoldenRatioLimit' => apply_filters( 'hu_grid_golden_ratio_limit' , 350),
+                'sbStickyUserSettings' => array(
+                    'desktop' => hu_is_checked('desktop-sticky-sb'),
+                    'mobile' => hu_is_checked( 'mobile-sticky-sb' )
+                ),
+                'isWPMobile' => wp_is_mobile(),
+                'menuStickyUserSettings' => array(
+                    'desktop' => hu_normalize_stick_menu_opt( hu_get_option( 'header-desktop-sticky' ) ),
+                    'mobile'  => hu_normalize_stick_menu_opt( hu_get_option( 'header-mobile-sticky' ) )
+                ),
+                'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('CZR_DEV') && true === CZR_DEV ),
+                //AJAX
+                'ajaxUrl'        => add_query_arg(
+                      array( 'huajax' => true ), //to scope our ajax calls
+                      set_url_scheme( home_url( '/' ) )
+                ),
+                'frontNonce'   => array( 'id' => 'HuFrontNonce', 'handle' => wp_create_nonce( 'hu-front-nonce' ) ),
+
+                //Welcome
+                'userStarted' => array(
+                      'with' => get_transient( HU_IS_PRO ? 'started_using_hueman_pro' : 'started_using_hueman' ),
+                      'on' => is_object( $started_on ) ? (array)$started_on : $started_on
+                ),
+                'isWelcomeNoteOn' => $is_welcome_note_on,
+                'welcomeContent'  => $welcome_note_content
             )
         )//end of filter
-       );
-
-
+       );//wp_localize_script()
   }//function
 }
 add_action( 'wp_enqueue_scripts', 'hu_scripts' );
+
+/* ------------------------------------------------------------------------- *
+ *  Helper for header and mobile sticky setting
+ *  => previously set with a checkbox. Since v3.3.10 the option is a string set with a select input type
+/* ------------------------------------------------------------------------- */
+function hu_normalize_stick_menu_opt( $opt_val = 'stick_up' ) {
+    //since v3.3.10, the option should be a string among those : 'no_stick', 'stick_up', 'stick_always'
+    //before, the option could be : booleans : true, false, numeric : 1, 0, or strings '1', '0'
+    //if the current value is a string longer than 1, then nothing to worry about.
+    //if not, then we have to apply the following correspondance mapping :
+    // [ true or 1 or '1' <=> hu_is_checked( $opt_val ) ] => 'stick_up'
+    //else
+    //'no_stick'
+    if ( is_string( $opt_val ) && 1 < strlen( $opt_val ) ) {
+        return $opt_val;
+    } else {
+        return hu_booleanize_checkbox_val( $opt_val ) ? 'stick_up' : 'no_stick';
+    }
+}
 
 
 /*  Enqueue css
@@ -1223,6 +1414,9 @@ function hu_get_template_part( $path ) {
 
 
 
+
+
+
 /* ------------------------------------------------------------------------- *
  *  Page Menu
 /* ------------------------------------------------------------------------- */
@@ -1366,4 +1560,180 @@ function hu_walk_page_tree($pages, $depth, $current_page, $r) {
 
   $args = array($pages, $depth, $r, $current_page);
   return call_user_func_array(array($walker, 'walk'), $args);
+}
+
+
+
+
+
+
+
+
+
+
+/* ------------------------------------------------------------------------- *
+ *  AJAX
+/* ------------------------------------------------------------------------- */
+add_action( 'template_redirect', 'hu_ajax_response' );
+function hu_ajax_response() {
+    //check
+    if ( ! hu_is_ajax() )
+        return false;
+
+    //do nothing if not doing a specific huajax call
+    if ( ! ( isset( $_GET[ 'huajax' ] ) && $_GET[ 'huajax' ] ) )
+        return false;
+
+    // Require an action parameter
+    if ( ! isset( $_REQUEST['action'] ) || empty( $_REQUEST['action'] ) )
+        die( '0' );
+
+    // Will be used by hu_is_ajax();
+    if ( ! defined( 'DOING_AJAX' ) )
+        define( 'DOING_AJAX', true );
+
+    //Nonce is not needed as long as we don't write in the db
+    //Furthermore, when a cache plugin is used, front nonces can not be used.
+    //@see https://github.com/presscustomizr/hueman/issues/512
+    //'frontNonce'   => array( 'id' => 'HuFrontNonce', 'handle' => wp_create_nonce( 'hu-front-nonce' ) )
+    if ( isset( $_REQUEST['withNonce'] ) && true == $_REQUEST['withNonce'] )
+        check_ajax_referer( 'hu-front-nonce', 'HuFrontNonce' );
+
+    @header( 'Content-Type: text/html; charset=' . get_option( 'blog_charset' ) );
+    send_nosniff_header();
+
+    $action = $_REQUEST['action'];//we know it is set at this point
+    do_action( "hu_ajax_{$action}"  );
+    die( '0' );
+}
+
+//This ajax requests solves the problem of knowing if wp_is_mobile() in a front js script, when the website is using a cache plugin
+//without a cache plugin, we could localize the wp_is_mobile() boolean
+//with a cache plugin, we need to always get a fresh answer from the server
+add_action( 'hu_ajax_hu_wp_is_mobile', 'hu_ajax_wp_is_mobile' );
+function hu_ajax_wp_is_mobile() {
+    wp_send_json_success( array( 'is_mobile' => wp_is_mobile() ) );
+}
+
+
+
+
+/* ------------------------------------------------------------------------- *
+ *  Include attachments in search results
+/* ------------------------------------------------------------------------- */
+add_action ( 'pre_get_posts' , 'hu_include_attachments_in_search' );
+/**
+* hook : pre_get_posts
+* @return  void()
+* Includes attachments in search results
+*/
+function hu_include_attachments_in_search( $query ) {
+    if ( ! $query -> is_search || ! apply_filters( 'hu_include_attachments_in_search_results' , hu_is_checked( 'attachments-in-search' ) ) )
+      return;
+
+    // add post status 'inherit'
+    $post_status = $query->get( 'post_status' );
+    if ( ! $post_status || 'publish' == $post_status )
+      $post_status = array( 'publish', 'inherit' );
+    if ( is_array( $post_status ) )
+      $post_status[] = 'inherit';
+
+    $query->set( 'post_status', $post_status );
+}
+
+
+/* ------------------------------------------------------------------------- *
+ *  Include attachments in search results
+/* ------------------------------------------------------------------------- */
+add_action ( 'pre_get_posts' , 'hu_include_cpt_in_lists' );
+/**
+* hook : pre_get_posts
+* Includes Custom Posts Types (set to public and excluded_from_search_result = false) in archives and search results
+* In archives, it handles the case where a CPT has been registered and associated with an existing built-in taxonomy like category or post_tag
+* @return void()
+*/
+function hu_include_cpt_in_lists( $query ) {
+    if (
+      is_admin()
+      || ! $query->is_main_query()
+      || ! apply_filters('hu_include_cpt_in_archives' , false)
+      || ! ( $query->is_search || $query->is_archive )
+    ) { return; }
+
+    //filter the post types to include, they must be public and not excluded from search
+    //we also exclude the built-in types, to exclude pages and attachments, we'll add standard posts later
+    $post_types         = get_post_types( array( 'public' => true, 'exclude_from_search' => false, '_builtin' => false) );
+
+    //add standard posts
+    $post_types['post'] = 'post';
+    if ( $query -> is_search ){
+        // add standard pages in search results => new wp behavior
+        $post_types['page'] = 'page';
+        // allow attachments to be included in search results by tc_include_attachments_in_search method
+        if ( apply_filters( 'hu_include_attachments_in_search_results' , hu_is_checked( 'attachments-in-search' ) ) )
+          $post_types['attachment'] = 'attachment';
+    }
+
+    // add standard pages in search results
+    $query->set('post_type', $post_types );
+}
+
+
+
+
+
+/* ------------------------------------------------------------------------- *
+ *  WELCOME NOTE
+/* ------------------------------------------------------------------------- */
+//This function is invoked only when :
+//1) ! HU_IS_PRO && hu_user_started_with_current_version()
+//2) AND if the welcome note can be displayed : hu_user_can_see_customize_notices_on_front() && ! hu_is_customizing() && ! hu_isprevdem() && 'dismissed' != get_transient( 'hu_welcome_note_status' )
+//It returns a welcome note html string that will be localized in the front js
+//@return html string
+function hu_get_welcome_note_content() {
+    // beautify notice text using some defaults the_content filter callbacks
+    // => turns emoticon :D into an svg
+    foreach ( array( 'wptexturize', 'convert_smilies', 'wpautop') as $callback ) {
+      if ( function_exists( $callback ) )
+          add_filter( 'hu_front_welcome_note_html', $callback );
+    }
+    ob_start();
+      ?>
+        <div id="bottom-welcome-note">
+          <div class="note-content">
+            <h2><?php printf( '%1$s :D' , __('Welcome in the Hueman theme', 'hueman' ) ); ?></h2>
+              <?php
+                  printf('<p>%1$s <a href="%2$s" target="_blank">%3$s</a> %4$s</p>',
+                      __('The theme offers a wide range', 'hueman'),
+                       admin_url( 'customize.php'),
+                      __('of customization options', 'hueman'),
+                      __('to let you create the best possible websites.', 'hueman' )
+                  );
+                  printf('<p>%1$s : <a href="%2$s" title="%3$s" target="_blank">%3$s <i class="fa fa-external-link" aria-hidden="true"></i></a>&nbsp;,<a href="%4$s" title="%5$s" target="_blank">%5$s <i class="fa fa-external-link" aria-hidden="true"></i></a></p>',
+                      __("If you need inspiration, you can visit our online demos", 'hueman'),
+                      esc_url('https://wp-themes.com/hueman/'),
+                      __('Hueman Demo 1', 'hueman'),
+                      esc_url('demo-hueman.presscustomizr.com/'),
+                      __('Hueman Demo 2', 'hueman')
+                  );
+                  printf( '<br/><br/><p>%1$s <a href="%2$s" target="_blank">%3$s <i class="fa fa-external-link" aria-hidden="true"></i></a></p>',
+                      __('To help you getting started with Hueman, we have published', 'hueman'),
+                      esc_url('docs.presscustomizr.com/article/236-first-steps-with-the-hueman-wordpress-theme'),
+                      __('a short guide here.', 'hueman')
+                  );
+              ?>
+              <span class="fa fa-times close-note" title="Close"></span>
+          </div>
+        </div>
+      <?php
+    $html = ob_get_contents();
+    if ($html) ob_end_clean();
+    return apply_filters('hu_front_welcome_note_html', $html );
+}
+
+
+add_action( 'hu_ajax_dismiss_welcome_front', 'hu_dismiss_welcome_front' );
+function hu_dismiss_welcome_front() {
+    set_transient( 'hu_welcome_note_status', 'dismissed' , 60*60*24*365*20 );//20 years of peace
+    wp_send_json_success( array( 'status_note' => 'dismissed' ) );
 }

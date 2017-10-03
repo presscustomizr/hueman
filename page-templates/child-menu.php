@@ -19,6 +19,15 @@ Template Name: Child Menu
 
 				<div class="entry themeform">
 					<?php the_content(); ?>
+          <nav class="pagination group">
+            <?php
+              //Checks for and uses wp_pagenavi to display page navigation for multi-page posts.
+              if ( function_exists('wp_pagenavi') )
+                wp_pagenavi( array( 'type' => 'multipart' ) );
+              else
+                wp_link_pages(array('before'=>'<div class="post-pages">'.__('Pages:','hueman'),'after'=>'</div>'));
+            ?>
+          </nav><!--/.pagination-->
 					<div class="clear"></div>
 				</div><!--/.entry-->
 

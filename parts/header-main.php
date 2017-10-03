@@ -4,6 +4,7 @@
     $class_map = array(
         'main_menu'   => 'main-menu-mobile-on',
         'top_menu'    => 'top-menu-mobile-on',
+        'mobile_menu' => 'specific-mobile-menu-on',
         'both_menus'  => 'both-menus-mobile-on'
     );
     $mobile_menu_opt = hu_get_option( 'header_mobile_menu_layout' );
@@ -25,8 +26,11 @@
     //HEADER CSS CLASSES
     $header_classes = array(
         $mobile_menu_class,
+        'both_menus' == $mobile_menu_opt ? 'two-mobile-menus' : 'one-mobile-menu',
+        hu_get_option( 'header_mobile_menu_layout' ),
         hu_is_checked( 'header-ads-desktop' ) ? 'header-ads-desktop' : '',
-        hu_is_checked( 'header-ads-mobile' ) ? 'header-ads-mobile' : ''
+        hu_is_checked( 'header-ads-mobile' ) ? 'header-ads-mobile' : '',
+        hu_is_checked( 'transparent-fixed-topnav') ? 'topbar-transparent' : ''
     );
 
 ?>
@@ -44,24 +48,38 @@
     <div class="container-inner">
 
       <?php if ( ! $_has_header_img || ! hu_is_checked( 'use-header-image' ) ) : ?>
-
               <div class="group pad central-header-zone">
-                <div class="logo-tagline-group">
-                    <?php hu_print_logo_or_title();//gets the logo or the site title ?>
-                    <?php if ( hu_is_checked('site-description') ) : ?>
-                        <p class="site-description"><?php hu_render_blog_description() ?></p>
-                    <?php endif; ?>
-                </div>
+                  <div class="logo-tagline-group">
+                      <?php hu_print_logo_or_title();//gets the logo or the site title ?>
+                      <?php if ( hu_is_checked('site-description') ) : ?>
+                          <p class="site-description"><?php hu_render_blog_description() ?></p>
+                      <?php endif; ?>
+                  </div>
 
-                <?php if ( hu_is_checked('header-ads') ) : ?>
-                    <div id="header-widgets">
-                        <?php hu_print_widgets_in_location( 'header-ads' ); ?>
-                    </div><!--/#header-ads-->
-                <?php endif; ?>
+                  <?php if ( hu_is_checked('header-ads') ) : ?>
+                      <div id="header-widgets">
+                          <?php hu_print_widgets_in_location( 'header-ads' ); ?>
+                      </div><!--/#header-ads-->
+                  <?php endif; ?>
               </div>
-
       <?php else :  ?>
           <div id="header-image-wrap">
+              <div class="group pad central-header-zone">
+                  <?php if ( hu_is_checked( 'logo-title-on-header-image' ) ) : ?>
+                      <div class="logo-tagline-group">
+                          <?php hu_print_logo_or_title();//gets the logo or the site title ?>
+                          <?php if ( hu_is_checked('site-description') ) : ?>
+                              <p class="site-description"><?php hu_render_blog_description() ?></p>
+                          <?php endif; ?>
+                      </div>
+                  <?php endif; ?>
+                  <?php if ( hu_is_checked('header-ads') ) : ?>
+                      <div id="header-widgets">
+                          <?php hu_print_widgets_in_location( 'header-ads' ); ?>
+                      </div><!--/#header-ads-->
+                  <?php endif; ?>
+              </div>
+
               <?php hu_render_header_image( $_header_img_src ); ?>
           </div>
       <?php endif; ?>

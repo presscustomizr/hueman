@@ -87,7 +87,7 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
           if ( hu_is_checked( 'boxed' ) ) {
               $styles[] = '.boxed #wrapper, .container-inner { max-width: '.$container_width.'px; }';
               $styles[] = '@media only screen and (min-width: 720px) {
-                .boxed .fixed-header-on .desktop-sticky {
+                .boxed .desktop-sticky {
                   width: ' . $container_width .'px;
                 }
               }';
@@ -105,37 +105,50 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
 
 
       // primary color
-      $prim_color = hu_sanitize_hex_color( hu_get_option('color-1') );
+      $prim_color = maybe_hash_hex_color( hu_get_option('color-1') );
       //$def_prim_col = hu_user_started_before_version( '3.3.8' ) ? '#3b8dbd' : '#16cfc1';
       if ( $prim_color != '#16cfc1' ) {
           $styles = array_merge( $styles, hu_get_primary_color_style() );
       }
 
 
-      $second_color = hu_sanitize_hex_color( hu_get_option('color-2') );
+      $second_color = maybe_hash_hex_color( hu_get_option('color-2') );
       //$def_second_col = hu_user_started_before_version( '3.3.8' ) ? '#82b965' : '#efb93f';
       // secondary color
       if ( $second_color != '#efb93f' ) {
           $styles = array_merge( $styles, hu_get_second_color_style() );
       }
 
+      // what is the transparency setting to be applied to both topbar and mobile menu on scroll ?
+      $is_transparent = hu_is_checked( 'transparent-fixed-topnav' );
 
       // topbar color
-      $tb_color = hu_sanitize_hex_color( hu_get_option('color-topbar') );
+      // The default background is #121d30  / semi transparent because hu_is_checked( 'transparent-fixed-topnav' ) : rgba(18, 29, 48, 0.8)
+      // those default css rules are hard coded in the theme main stylesheed.
+      // If user settings are different, let's write a custom rule
+      $tb_color = maybe_hash_hex_color( hu_get_option('color-topbar') );
+      $is_transparent = hu_is_checked( 'transparent-fixed-topnav' );
       //$def_tb_col = hu_user_started_before_version( '3.3.8' ) ? '#26272b' : '#121d30';
-      if ( $tb_color != '#121d30' ) {
-        $tb_color_rgba = 'rgba(' . hu_hex2rgb( $tb_color ) . ',0.8)';
-        $styles[] = '.search-expand,
-#nav-topbar.nav-container { background-color: '.$tb_color.'; background-color: '.$tb_color_rgba.' }
-@media only screen and (min-width: 720px) {
-  #nav-topbar .nav ul { background-color: '.$tb_color.'; }
-}
-        ';
+      if ( $tb_color != '#121d30' || ! $is_transparent ) {
+          if ( $tb_color != '#121d30' ) {
+              $styles[] = '.search-expand,
+              #nav-topbar.nav-container { background-color: '.$tb_color.'}';
+              $styles[] = '@media only screen and (min-width: 720px) {
+                #nav-topbar .nav ul { background-color: '.$tb_color.'; }
+              }';
+          }
+          if ( $is_transparent ) {
+              $sticky_color_rgba = 'rgba(' . hu_hex2rgb( $tb_color ) . ',0.90)';
+              $sticky_color_rgba_dark = 'rgba(' . hu_hex2rgb( $tb_color ) . ',0.95)';
+
+              $styles[] = '.is-scrolled #header .nav-container.desktop-sticky,
+              .is-scrolled #header .search-expand { background-color: '.$tb_color.'; background-color: '.$sticky_color_rgba.' }';
+              $styles[] = '.is-scrolled .topbar-transparent #nav-topbar.desktop-sticky .nav ul { background-color: '.$tb_color.'; background-color: '.$sticky_color_rgba_dark.' }';
+          }
       }
 
-
       // header color
-      $h_color = hu_sanitize_hex_color( hu_get_option('color-header') );
+      $h_color = maybe_hash_hex_color( hu_get_option('color-header') );
       //$def_h_col = hu_user_started_before_version( '3.3.8' ) ? '#33363b' : '#454e5c';
       if ( $h_color != '#454e5c' ) {
         $styles[] = '#header { background-color: '.$h_color.'; }
@@ -147,17 +160,24 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
 
 
       // Mobile menu color
-      $mm_color = hu_sanitize_hex_color( hu_get_option('color-mobile-menu') );
+      $mm_color = maybe_hash_hex_color( hu_get_option('color-mobile-menu') );
       if ( $mm_color != '#454e5c' ) {
-        $styles[] = '#header .nav-container.mobile-sticky { background-color: '.$mm_color.'; }';
+        $styles[] = '#header #nav-mobile { background-color: '.$mm_color.'; }';
+      }
+      if ( $is_transparent ) {
+          $mm_color_rgba = 'rgba(' . hu_hex2rgb( $mm_color ) . ',0.90)';
+          //$mm_color_rgba_dark = 'rgba(' . hu_hex2rgb( $mm_color ) . ',0.95)';
+
+          $styles[] = '.is-scrolled #header #nav-mobile { background-color: '.$mm_color.'; background-color: '.$mm_color_rgba.' }';
+          //$styles[] = '.is-scrolled .topbar-transparent #nav-topbar.desktop-sticky .nav ul { background-color: '.$tb_color.'; background-color: '.$mm_color_rgba_dark.' }';
       }
 
 
       // header menu color
-      $hm_color = hu_sanitize_hex_color( hu_get_option('color-header-menu') );
+      $hm_color = maybe_hash_hex_color( hu_get_option('color-header-menu') );
       //$def_hm_col = hu_user_started_before_version( '3.3.8' ) ? '#33363b' : '#454e5c';
       if ( $hm_color != '#454e5c' ) {
-        $styles[] = '#nav-header.nav-container { background-color: '.$hm_color.'; }
+        $styles[] = '#nav-header.nav-container, #main-header-search .search-expand { background-color: '.$hm_color.'; }
 @media only screen and (min-width: 720px) {
   #nav-header .nav ul { background-color: '.$hm_color.'; }
 }
@@ -166,7 +186,7 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
 
 
       // footer color
-      if ( hu_sanitize_hex_color( hu_get_option('color-footer') ) != '#33363b' ) {
+      if ( maybe_hash_hex_color( hu_get_option('color-footer') ) != '#33363b' ) {
         $styles[] = '#footer-bottom { background-color: '.hu_get_option('color-footer').'; }';
       }
 
@@ -254,18 +274,18 @@ function hu_get_primary_color_style() {
           '#flexslider-featured .flex-direction-nav .flex-prev:hover',
           '.post-hover:hover .post-title a',
           '.post-title a:hover',
-          '.s1 .post-nav li a:hover i',
+          '.sidebar.s1 .post-nav li a:hover i',
           '.content .post-nav li a:hover i',
           '.post-related a:hover',
-          '.s1 .widget_rss ul li a',
+          '.sidebar.s1 .widget_rss ul li a',
           '#footer .widget_rss ul li a',
-          '.s1 .widget_calendar a',
+          '.sidebar.s1 .widget_calendar a',
           '#footer .widget_calendar a',
-          '.s1 .alx-tab .tab-item-category a',
-          '.s1 .alx-posts .post-item-category a',
-          '.s1 .alx-tab li:hover .tab-item-title a',
-          '.s1 .alx-tab li:hover .tab-item-comment a',
-          '.s1 .alx-posts li:hover .post-item-title a',
+          '.sidebar.s1 .alx-tab .tab-item-category a',
+          '.sidebar.s1 .alx-posts .post-item-category a',
+          '.sidebar.s1 .alx-tab li:hover .tab-item-title a',
+          '.sidebar.s1 .alx-tab li:hover .tab-item-comment a',
+          '.sidebar.s1 .alx-posts li:hover .post-item-title a',
           '#footer .alx-tab .tab-item-category a',
           '#footer .alx-posts .post-item-category a',
           '#footer .alx-tab li:hover .tab-item-title a',
@@ -284,11 +304,11 @@ function hu_get_primary_color_style() {
       $_primary_color_background_color_prop_selectors = array(
           '.themeform input[type="submit"]',
           '.themeform button[type="submit"]',
-          '.s1 .sidebar-top',
-          '.s1 .sidebar-toggle',
+          '.sidebar.s1 .sidebar-top',
+          '.sidebar.s1 .sidebar-toggle',
           '#flexslider-featured .flex-control-nav li a.flex-active',
           '.post-tags a:hover',
-          '.s1 .widget_calendar caption',
+          '.sidebar.s1 .widget_calendar caption',
           '#footer .widget_calendar caption',
           '.author-bio .bio-avatar:after',
           '.commentlist li.bypostauthor > .comment-body:after',
@@ -301,7 +321,7 @@ function hu_get_primary_color_style() {
       $styles[] ='.post-format .format-container { border-color: '.$prim_color.'; }';
 
       $_primary_color_border_bottom_color_prop_selectors = array(
-          '.s1 .alx-tabs-nav li.active a',
+          '.sidebar.s1 .alx-tabs-nav li.active a',
           '#footer .alx-tabs-nav li.active a',
           '.comment-tabs li.active a',
           '.wp-pagenavi a:hover',
@@ -319,28 +339,28 @@ function hu_get_primary_color_style() {
 function hu_get_second_color_style() {
     $glue    = hu_is_checked('minified-css') ? '' : "\n";
     $styles = array();
-    $styles[] = '.s2 .post-nav li a:hover i,
-.s2 .widget_rss ul li a,
-.s2 .widget_calendar a,
-.s2 .alx-tab .tab-item-category a,
-.s2 .alx-posts .post-item-category a,
-.s2 .alx-tab li:hover .tab-item-title a,
-.s2 .alx-tab li:hover .tab-item-comment a,
-.s2 .alx-posts li:hover .post-item-title a { color: '.hu_get_option('color-2').'; }
+    $styles[] = '.sidebar.s2 .post-nav li a:hover i,
+.sidebar.s2 .widget_rss ul li a,
+.sidebar.s2 .widget_calendar a,
+.sidebar.s2 .alx-tab .tab-item-category a,
+.sidebar.s2 .alx-posts .post-item-category a,
+.sidebar.s2 .alx-tab li:hover .tab-item-title a,
+.sidebar.s2 .alx-tab li:hover .tab-item-comment a,
+.sidebar.s2 .alx-posts li:hover .post-item-title a { color: '.hu_get_option('color-2').'; }
 ';
     $_secondary_color_background_color_prop_selectors = array(
-      '.s2 .sidebar-top',
-      '.s2 .sidebar-toggle',
+      '.sidebar.s2 .sidebar-top',
+      '.sidebar.s2 .sidebar-toggle',
       '.post-comments',
       '.jp-play-bar',
       '.jp-volume-bar-value',
-      '.s2 .widget_calendar caption'
+      '.sidebar.s2 .widget_calendar caption'
   );
 
   $_secondary_color_background_color_prop_selectors = implode( ",{$glue}", apply_filters( 'hu_dynamic_secondary_color_background_color_prop_selectors', $_secondary_color_background_color_prop_selectors ) );
   $styles[] = $_secondary_color_background_color_prop_selectors ? $_secondary_color_background_color_prop_selectors . '{ background-color: '.hu_get_option('color-2').'; }'."{$glue}" : '';
 
-  $styles[] ='.s2 .alx-tabs-nav li.active a { border-bottom-color: '.hu_get_option('color-2').'; }
+  $styles[] ='.sidebar.s2 .alx-tabs-nav li.active a { border-bottom-color: '.hu_get_option('color-2').'; }
 .post-comments span:before { border-right-color: '.hu_get_option('color-2').'; }
       ';
     return $styles;

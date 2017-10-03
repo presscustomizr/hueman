@@ -30,7 +30,7 @@
 .comment-tabs li.active a { color: #16cfc1; border-bottom-color: #16cfc1; }
 
 .commentlist, .pinglist { margin-bottom: 20px; }
-.commentlist li, .pinglist li { padding-left: 60px; font-size: 0.875rem; line-height: 1.5714rem; font-weight: 400; }
+.commentlist li, .pinglist li { padding-left: 60px; font-size: 0.93rem; line-height: 1.5714rem; font-weight: 400; }
 .commentlist .comment-body, .pinglist li { clear: both; position: relative; padding-bottom: 15px; }
 .commentlist .comment-author,
 .commentlist .comment-meta,
