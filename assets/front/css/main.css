@@ -1409,7 +1409,7 @@ box-shadow: -1px 0 0 rgba(255,255,255,0.1); }
   }
   .header-mobile-sticky #header-image-wrap { padding-top: 50px; }
   /* Fixes https://github.com/presscustomizr/hueman/issues/527 */
-  .header-mobile-sticky #wrapper .no-header-img { padding-bottom: 50px; }
+  .header-mobile-sticky #header { min-height: 50px; }
 }
 /* STICKY MENU */
 @media only screen and (min-width: 720px) {
