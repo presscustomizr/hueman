@@ -1500,7 +1500,12 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         'title_tagline'         => array(
               'title'    => __( 'Site Identity : Logo, Title, Tagline and Site Icon', 'hueman' ),
               'priority' => 10,
-              'panel'   => 'hu-general-panel'
+              'panel'   => 'hu-general-panel',
+              'section_class' => 'HU_Customize_Sections',
+              'ubq_panel'   => array(
+                  'panel' => 'hu-header-panel',
+                  'priority' => '1'
+              )
         ),
         'general_design_sec'         => array(
               'title'    => __( 'General Design Options : Font, Colors, ...', 'hueman' ),
