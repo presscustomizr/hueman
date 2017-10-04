@@ -121,14 +121,14 @@
                 $hu_theme = wp_get_theme();
               ?>
               <div id="credit" style="<?php echo ! hu_is_checked( 'credit' ) ? 'display:none' : ''; ?>">
-                <p><?php _e('Powered by','hueman'); ?> <a href="http://wordpress.org" target="_blank">WordPress</a>. <?php _e('Designed with','hueman'); ?> <a href="<?php echo $hu_theme -> get('ThemeURI'); ?>">Hueman</a>.</p>
+                <p><?php _e('Powered by','hueman'); ?>&nbsp;<a class="fa fa-wordpress" title="<?php _e( 'Powered by WordPress', 'hueman' ) ?>" href="<?php echo esc_url( __( 'https://wordpress.org/', 'hueman' ) ); ?>" target="_blank"></a> - <?php _e('Designed with the','hueman'); ?>&nbsp;<a href="<?php echo $hu_theme -> get('ThemeURI'); ?>" title="<?php _e('Hueman theme','hueman'); ?>"><?php _e('Hueman theme','hueman'); ?></a></p>
               </div><!--/#credit-->
             <?php endif; ?>
 
           </div>
 
           <div class="grid one-half last">
-            <?php if ( hu_has_social_links() ) : ?>
+            <?php if ( hu_has_social_links() || hu_is_customizing() ) : ?>
               <?php hu_print_social_links(); ?>
             <?php else : //if not customizing, display an empty p for design purposes ?>
                 <?php if ( hu_user_can_see_customize_notices_on_front() ) : ?>

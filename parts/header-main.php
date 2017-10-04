@@ -13,6 +13,7 @@
     //HEADER IMAGE
     $_header_img_src = get_header_image();// hu_get_img_src_from_option('header-image');
     $_has_header_img = false != $_header_img_src && ! empty( $_header_img_src );
+    $_print_header_img = $_has_header_img && hu_is_checked( 'use-header-image' );
 
     //WHEN DO WE DISPLAY THE REGULAR TOP NAV
     //=> when there's a topbar menu assigned or when the default page menu option "default-menu-header" is checked ( not for multisite @see issue on github )
@@ -30,7 +31,8 @@
         hu_get_option( 'header_mobile_menu_layout' ),
         hu_is_checked( 'header-ads-desktop' ) ? 'header-ads-desktop' : '',
         hu_is_checked( 'header-ads-mobile' ) ? 'header-ads-mobile' : '',
-        hu_is_checked( 'transparent-fixed-topnav') ? 'topbar-transparent' : ''
+        hu_is_checked( 'transparent-fixed-topnav') ? 'topbar-transparent' : '',
+        $_print_header_img ? 'has-header-img' : 'no-header-img'
     );
 
 ?>
@@ -47,7 +49,7 @@
     <?php do_action('__before_after_container_inner'); ?>
     <div class="container-inner">
 
-      <?php if ( ! $_has_header_img || ! hu_is_checked( 'use-header-image' ) ) : ?>
+      <?php if ( ! $_print_header_img ) : ?>
               <div class="group pad central-header-zone">
                   <div class="logo-tagline-group">
                       <?php hu_print_logo_or_title();//gets the logo or the site title ?>
