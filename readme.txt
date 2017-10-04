@@ -1,4 +1,4 @@
-# Hueman v3.3.21-beta
+# Hueman v3.3.21
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
@@ -74,14 +74,17 @@ See headers of files for further details.
 
 # Changelog
 = 3.3.21 October 3rd 2017 =
-* fix : bottom portion of Sidebar gets cut off in tablet view when content is short. fix #476
-* fix : archive and page titles font-size. fixes #535
-* fix : potential loss of customizations when wp_cache_get() returns false. fixes #571
+* fix : bottom portion of sidebar gets cut off in tablet view when content is short. Fixes #476.
+* fix : archive and page titles font-size. Fixes #535.
+* fix : potential loss of customizations when wp_cache_get() returns false. Fixes #571.
+* fix : social links not refreshing in the footer on initial customization ( when nothing printed yet )
+* fix : headings hidden on mobile when no header image displayed. Fixes #527.
 * added : new option js-mobile-detect for optional javascript Mobile device detection. Loads the mobile-detect script ( 35 kb ) when checked
 * added : mobile-detect.js library conditionally enqueued
 * improved : replaced the ajax call by a javascript library to check if the device is mobile. Fixes #567.
-* improved admin page wording and style
-* updated customize control js
+* improved : admin page wording and style
+* improved : Footer credits made smaller. Now use the WordPress icon. Default link to the Hueman theme page instead of presscustomizr.com.
+* updated : customize control js
 
 = 3.3.20 August 2nd 2017 =
 * improved : added support for pagination in pages using <!--nextpage-->. Compatible with the WP-PageNavi plugin. fixes #550
