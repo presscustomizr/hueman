@@ -117,8 +117,11 @@
             </div><!--/#copyright-->
 
             <?php if ( hu_is_checked( 'credit' ) || hu_is_customizing() ) : ?>
+              <?php
+                $hu_theme = wp_get_theme();
+              ?>
               <div id="credit" style="<?php echo ! hu_is_checked( 'credit' ) ? 'display:none' : ''; ?>">
-                <p><?php _e('Powered by','hueman'); ?> <a href="http://wordpress.org" target="_blank">WordPress</a>. <?php _e('Theme by','hueman'); ?> <a href="http://presscustomizr.com">Press Customizr</a>.</p>
+                <p><?php _e('Powered by','hueman'); ?> <a href="http://wordpress.org" target="_blank">WordPress</a>. <?php _e('Designed with','hueman'); ?> <a href="<?php echo $hu_theme -> get('ThemeURI'); ?>">Hueman</a>.</p>
               </div><!--/#credit-->
             <?php endif; ?>
 
