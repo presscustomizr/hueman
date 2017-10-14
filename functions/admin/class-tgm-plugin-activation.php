@@ -1322,10 +1322,11 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
           unset( $type, $plugin_group, $linked_plugins, $count, $last_plugin, $imploded );
 
           //HU MODS
-          $rendered = sprintf( '%1$s <span style="font-weight:normal; font-style:italic">%2$s<br/>%3$s</span>',
+          $rendered = sprintf( '%1$s <span style="font-weight:normal; font-style:italic">%2$s %3$s<br/>%4$s</span>',
             $rendered,
+            __( 'The Hueman Addons is a free plugin providing an enhanced customization interface for the Hueman theme.',  'hueman'),
             sprintf(
-                __( 'The Hueman Addons is a free plugin including some cool additional features like a %1$s and %2$s.', 'hueman' ),
+                __( 'It also includes some cool additional features like a %1$s and %2$s.', 'hueman' ),
                 sprintf('<a href="%1$s" target="_blank" title="%2$s">%2$s</a>', esc_url('docs.presscustomizr.com/article/242-hueman-addons-how-to-set-the-share-bar-options'), __('social share bar', 'hueman') ),
                 sprintf('<a href="%1$s" target="_blank" title="%2$s">%2$s</a>', esc_url('docs.presscustomizr.com/article/246-hueman-addons-how-to-use-the-shortcodes'), __('useful shortcodes', 'hueman') )
             ),
