@@ -141,6 +141,7 @@ if (!Array.from) {
     };
   }());
 }
+
 ;(function ( $, window, document, undefined ) {
 
   var pluginPrefix = 'original',
@@ -3488,7 +3489,18 @@ var czrapp = czrapp || {};
                                       sb._setStickyness();
                                 }
 
-                                _dfd_.resolve();
+                                if ( expanded ) {
+                                      $('html, body').animate({
+                                              scrollTop: czrapp.$_header.height()
+                                        }, {
+                                            duration: 'slow',
+                                            complete : function() {
+                                                _dfd_.resolve();
+                                            }
+                                        });
+                                } else {
+                                  _dfd_.resolve();
+                                }
                           });
                     }).promise();
               },//toggleSidebar
