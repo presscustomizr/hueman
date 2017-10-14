@@ -1,9 +1,9 @@
-# Hueman v3.3.21
+# Hueman v3.3.22
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
 
-View more themes from this author: http://presscustomizr.com
+View more themes from this author: https://presscustomizr.com
 
 ## Demo and Documentation
 * **Demo** : https://demo-hueman.presscustomizr.com/
@@ -82,6 +82,10 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 ## Changelog
+= 3.3.22 October 14th 2017 =
+* imp : various improvements in the welcome / about admin page
+* imp : added a filter for the footer credits
+
 = 3.3.21 October 3rd 2017 =
 * fix : bottom portion of sidebar gets cut off in tablet view when content is short. Fixes #476.
 * fix : archive and page titles font-size. Fixes #535.
