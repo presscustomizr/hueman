@@ -79,11 +79,14 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
         ?>
         <div id="hueman-admin-panel" class="wrap about-wrap">
           <?php
-              printf( '<h1 class="need-help-title">%1$s %2$s %3$s</h1>',
-                __( "Thank you for using", 'hueman' ),
-                $_theme_name,
-                HUEMAN_VER
+              $title = sprintf( '<h1 class="need-help-title">%1$s</h1>',
+                sprintf( __( "Thank you for using %s %s :)", 'hueman' ),
+                  $_theme_name,
+                  HUEMAN_VER
+                )
               );
+
+              echo convert_smilies( $title )
           ?>
 
 
@@ -111,18 +114,25 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
               ?>
               </div>
 
-              <div class="feature-section col two-col">
-                <div class="col">
-                   <br/>
-                    <a class="button-secondary hueman-help" title="documentation" href="<?php echo esc_url('docs.presscustomizr.com/') ?>" target="_blank"><?php _e( 'Read the documentation','hueman' ); ?></a>
-                </div>
-                <div class="last-feature col">
-                    <a class="button-secondary hueman-help" title="help" href="<?php echo esc_url('wordpress.org/support/theme/hueman'); ?>" target="_blank">
-                      <?php _e( 'Get help in the free support forum','hueman' ); ?>
-                    </a>
-                </div>
-              </div><!-- .two-col -->
-
+              <?php ob_start(); ?>
+                  <div class="feature-section col two-col">
+                    <div class="col">
+                       <br/>
+                        <a class="button-secondary hueman-help" title="documentation" href="<?php echo esc_url('docs.presscustomizr.com/') ?>" target="_blank"><?php _e( 'Read the documentation','hueman' ); ?></a>
+                    </div>
+                    <?php if ( ! HU_IS_PRO ) : ?>
+                        <div class="last-feature col">
+                            <a class="button-secondary hueman-help" title="help" href="<?php echo esc_url('wordpress.org/support/theme/hueman'); ?>" target="_blank">
+                              <?php _e( 'Get help in the free support forum','hueman' ); ?>
+                            </a>
+                        </div>
+                    <?php endif; ?>
+                  </div><!-- .two-col -->
+              <?php
+                $html = ob_get_contents();
+                if ($html) ob_end_clean();
+                echo apply_filters( 'hu_display_doc_support_content', $html );
+              ?>
             </div><!-- .changelog -->
 
           <?php else: ?>
@@ -130,8 +140,8 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
             <div class="about-text tc-welcome">
               <?php
                 printf( '<p>%1$s %2$s</p> <p>%3$s. <strong>%4$s</strong></p>',
-                  __( "Thank you for using the Hueman WordPress theme for your website.", 'hueman' ),
-                  sprintf( __( "Hueman %s has more features, is safer and more stable than ever to help you designing an awesome webdesign.", 'hueman' ), HUEMAN_VER ),
+                  sprintf( __( "Thank you for using the %s theme for your website.", 'hueman' ), $_theme_name ),
+                  sprintf( __( "%s %s has more features, is safer and more stable than ever to help you designing an awesome webdesign.", 'hueman' ), $_theme_name, HUEMAN_VER ),
                   sprintf( __( "For more informations about this new version of the theme, %s or check the changelog below", "hueman" ),
                     sprintf('<a href="%1$s" target="_blank">%2$s</a>', HU_WEBSITE . "/category/hueman-releases/", __( "read the latest release notes" , "hueman" ) )
                   ),
@@ -165,7 +175,9 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
             </div>
           <?php endif; ?>
 
-          <div class="changelog point-releases"></div>
+          <?php do_action( 'hu_after_welcome_admin_intro' ); ?>
+
+          <div class="changelog point-releases" style="margin-top: 3em;"></div>
 
           <?php if ( ! HU_IS_PRO ) : ?>
               <div class="changelog">
@@ -394,8 +406,6 @@ $mysql_ver =  ( ! empty( $wpdb->use_mysqli ) && $wpdb->use_mysqli ) ? @mysqli_ge
     * @return void
     */
     function hu_fix_wp_footer_link_style() {
-      /* if ( is_array(get_current_screen()) )
-        array_walk_recursive(get_current_screen(), function(&$v) { $v = htmlspecialchars($v); }); */
       $screen = get_current_screen();
       if ( 'appearance_page_welcome' != $screen-> id )
         return;
