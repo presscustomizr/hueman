@@ -141,6 +141,7 @@ if (!Array.from) {
     };
   }());
 }
+
 ;(function ( $, window, document, undefined ) {
 
   var pluginPrefix = 'original',
@@ -3489,8 +3490,9 @@ var czrapp = czrapp || {};
                                 }
 
                                 if ( expanded ) {
+                                      var $_scrollTopEl = 1 == $('#ha-large-header').length ? $('#ha-large-header') : czrapp.$_header;
                                       $('html, body').animate({
-                                              scrollTop: czrapp.$_header.height()
+                                              scrollTop: $_scrollTopEl.height()
                                         }, {
                                             duration: 'slow',
                                             complete : function() {
