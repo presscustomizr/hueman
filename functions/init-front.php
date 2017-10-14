@@ -1097,29 +1097,57 @@ function hu_normalize_stick_menu_opt( $opt_val = 'stick_up' ) {
 }
 
 
-/*  Enqueue css
+// ENQUEUE CSS
+// The style priority order is, without child theme :
+// 1) main hueman css
+// 2) dynamic inline style with wp_add_inline_style() ( @see dynamic style + hueman pro )
+// 3) wp-custom-css ( if any )
+//
+// and with child theme
+// 1) main hueman css
+// 2) dynamic inline style with wp_add_inline_style() ( @see dynamic style + hueman pro )
+// 3) child theme style.css
+// 4) wp-custom-css ( if any )
+//
+// The parent style.css is not needed when no child theme used
+// Let's save a useless http request !
 /* ------------------------------------ */
 if ( ! function_exists( 'hu_styles' ) ) {
   function hu_styles() {
-    //registered only, will be loaded as a dependency of the wp style.css
-    wp_register_style(
-        'hueman-main-style',
-        hu_get_front_style_url(),//defined in init-core
-        array(),
-        ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
-        'all'
-    );
+    //Registered only if child theme => will be loaded as a dependency when enqueuing wp child style.css
+    if ( is_child_theme() ) {
+        wp_register_style(
+            'hueman-main-style',
+            hu_get_front_style_url(),//defined in init-core
+            array(),
+            ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
+            'all'
+        );
+    } else {
+        wp_enqueue_style(
+            'hueman-main-style',
+            hu_get_front_style_url(),//defined in init-core
+            array(),
+            ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
+            'all'
+        );
+    }
+
+    //Always loaded before a child theme style.css if any
+    wp_add_inline_style( 'hueman-main-style', apply_filters( 'ha_user_options_style' , '' ) );
 
     //This function loads the main theme stylesheet or the child theme one
     //1) Not mandatory if only the main theme is activated. But mandatory if a child theme is used (otherwise the child theme style won't be loaded)
-    //2) must be loaded as a dependency of 'hueman-main', to make it easier to override the main stylesheet rules without having to increase the specificicty of each child theme css rules
-    wp_enqueue_style(
-        'theme-stylesheet',
-        get_stylesheet_uri(),
-        array('hueman-main-style'),
-        ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
-        'all'
-    );
+    //2) must be loaded dependant of 'hueman-main', to make it easier to override the main stylesheet rules without having to increase the specificicty of each child theme css rules
+    if ( is_child_theme() ) {
+        wp_enqueue_style(
+            'theme-stylesheet',
+            get_stylesheet_uri(),
+            array('hueman-main-style'),
+            ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
+            'all'
+        );
+    }
 
     //can be dequeued() if already loaded by a plugin.
     //=> wp_dequeue_style( 'hueman-font-awesome' )
@@ -1129,11 +1157,12 @@ if ( ! function_exists( 'hu_styles' ) ) {
             get_template_directory_uri(),
             hu_is_checked('minified-css') ? 'font-awesome.min.css' : 'dev-font-awesome.css'
         ),
-        array( 'theme-stylesheet' ),
+        is_child_theme() ? array( 'theme-stylesheet' ) : array(),
         ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
         'all'
     );
-    wp_add_inline_style( 'theme-stylesheet', apply_filters( 'ha_user_options_style' , '' ) );
+
+
   }
 }
 add_action( 'wp_enqueue_scripts', 'hu_styles' );

@@ -46,12 +46,18 @@ if ( ! function_exists( 'hu_print_gfont_head_link' ) ) {
 }
 add_action( 'wp_head', 'hu_print_gfont_head_link', 2 );
 
-add_action( 'wp_head', 'hu_dynamic_css', 100 );
+
+// Write user option inline style
+// @see wp_add_inline_style( 'hueman-main-style', apply_filters( 'ha_user_options_style' , '' ) );
+// tThis hook is also used in hueman pro for the user options rules of the slider style for example
+add_filter( 'ha_user_options_style', 'hu_get_user_defined_inline_css_rules');
+
 /*  Dynamic css output
 /* ------------------------------------ */
-if ( ! function_exists( 'hu_dynamic_css' ) ) {
-
-  function hu_dynamic_css() {
+if ( ! function_exists( 'hu_get_user_defined_inline_css_rules' ) ) {
+  //@return string
+  //hook : ha_user_options_style
+  function hu_get_user_defined_inline_css_rules() {
       // rgb values
       // $color_1 = hu_get_option('color-1');
       // $color_1_rgb = hu_hex2rgb($color_1);
@@ -240,17 +246,11 @@ if ( ! function_exists( 'hu_dynamic_css' ) ) {
       // end computing
 
       if ( empty ( $styles ) )
-        return;
+        return '';
 
-      // start output
-      $_p_styles   = array( '<style type="text/css" id="hu-dynamic-style">' );
-      $_p_styles[] = '/* Dynamic CSS: For no styles in head, copy and put the css below in your child theme\'s style.css, disable dynamic styles */';
       $_p_styles[] = implode( "{$glue}", $styles );
-      $_p_styles[] = '</style>'."\n";
-      //end output;
 
-      //print
-      echo implode( "{$glue}", $_p_styles );
+      return implode( "{$glue}", $_p_styles );
     }
 
 }
