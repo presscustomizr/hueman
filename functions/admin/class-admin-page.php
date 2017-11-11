@@ -101,15 +101,15 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
                   )
                 );
                 if ( ! HU_IS_PRO ) {
-                    ob_start();
-                        printf( '<p>%1$s <a href="%2$s" title="support forum" target="_blank">%3$s</a>.</p>',
-                          __( "If you don't find an answer to your question in the documentation, don't panic :) ! The Hueman theme is used by a large number of webmasters constantly reporting bugs and potential issues. If you encounter a problem with the theme, chances are that it's already been reported and fixed in the", 'hueman' ),
-                          $this -> support_url,
-                          __('support forum', 'hueman')
-                        );//printf
-                    $html = ob_get_contents();
-                    if ($html) ob_end_clean();
-                    echo convert_smilies($html);
+                    // ob_start();
+                    //     printf( '<p>%1$s <a href="%2$s" title="support forum" target="_blank">%3$s</a>.</p>',
+                    //       __( "If you don't find an answer to your question in the documentation, don't panic :) ! The Hueman theme is used by a large number of webmasters constantly reporting bugs and potential issues. If you encounter a problem with the theme, chances are that it's already been reported and fixed in the", 'hueman' ),
+                    //       $this -> support_url,
+                    //       __('support forum', 'hueman')
+                    //     );//printf
+                    // $html = ob_get_contents();
+                    // if ($html) ob_end_clean();
+                    // echo convert_smilies($html);
                 } // ! HU_IS_PRO
               ?>
               </div>
