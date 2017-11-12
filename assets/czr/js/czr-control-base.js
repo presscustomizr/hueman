@@ -5986,9 +5986,7 @@ $.extend( CZRMultiModuleControlMths, {
                   var _notSyncedSettings    = [],
                       _sentSkopeCollection  = skopesServerData.czr_skopes;
 
-                  console.log('REACT WHEN SAVE DONE SERVER DATA', skopesServerData );
-                  //api.consoleLog('REACT WHEN SAVE DONE', saved_dirties, _sentSkopeCollection );
-                  console.log('REACT WHEN SAVE DONE SAVED DIRTIES', saved_dirties );
+                  //api.consoleLog('REACT WHEN SAVE DONE', skopesServerData, saved_dirties, _sentSkopeCollection );;
 
                   _.each( saved_dirties, function( skp_data, _saved_opt_name ) {
                         _.each( skp_data, function( _val, _setId ) {
@@ -7080,8 +7078,8 @@ var CZRSkopeBaseMths = CZRSkopeBaseMths || {};
                 self.skope_colors = {
                       global : 'rgb(255, 255, 255)',
                       special_group : 'rgba(173, 213, 247, 0.55)',
-                      group  : 'rgba(39, 59, 88, 0.12)',// 'rgba(173, 213, 247, 0.55)',
-                      local  : 'rgba(39, 59, 88, 0.28)'// 'rgba(78, 122, 199, 0.35)'
+                      group  : 'rgba(120, 136, 158, 0.12)',// 'rgba(39, 59, 88, 0.12)',// 'rgba(173, 213, 247, 0.55)',
+                      local  : 'rgba(187, 211, 247, 0.28)', //rgba(39, 59, 88, 0.28)'// 'rgba(78, 122, 199, 0.35)'
                 };
                 //Deferred used to make sure the overridden api.previewer.query method has been taken into account
                 api.czr_isPreviewerSkopeAware   = $.Deferred();
