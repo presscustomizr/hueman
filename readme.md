@@ -82,6 +82,9 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 ## Changelog
+= 3.3.23 November 11th 2017 =
+* improved : compatibility with WP4.9, target release date November 14th 2017
+
 = 3.3.22 October 14th 2017 =
 * improved : various improvements in the welcome / about admin page
 * improved : added a filter for the footer credits
