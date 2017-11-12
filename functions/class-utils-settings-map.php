@@ -400,7 +400,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'comments_sec',
                 'type'      => 'checkbox',
                 'notice'    => __( 'Comments on posts' , 'hueman' ),
-                'active_callback' => 'hu_is_single'
+                //'active_callback' => 'hu_is_single'
           ),
           'page-comments' => array(
                 'default'   => 0,
@@ -409,7 +409,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'comments_sec',
                 'type'      => 'checkbox',
                 'notice'    => __( 'Comments on pages' , 'hueman' ),
-                'active_callback' => 'hu_is_page'
+                //'active_callback' => 'hu_is_page'
           )
       );
     }
@@ -979,7 +979,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'content_blog_sec',
                 'type'      => 'checkbox',
                 'notice'    => __( 'While the default blog design is a grid of posts, you can check this option and display one post per row, whith the thumbnail beside the text.' , 'hueman'),
-                'active_callback' => 'hu_is_post_list',
+                //'active_callback' => 'hu_is_post_list',
                 'priority'   => 20,
                 'ubq_section'   => array(
                     'section' => 'static_front_page',
@@ -1000,7 +1000,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'notice'    => sprintf( __( "The WordPress Excerpt is the summary or description of a post. By default, it will be the first words of a post, but you can write a %s if you want. You can set the number of words you want to display with this option." , "hueman" ),
                       sprintf('<a href="%1$s" title="%2$s" target="_blank">%2$s <span class="dashicons dashicons-external" style="font-size: inherit;display: inherit;"></span></a>', esc_url('codex.wordpress.org/Excerpt#How_to_add_excerpts_to_posts'), __('custom excerpt', 'hueman') )
                 ),
-                'active_callback' => 'hu_is_post_list',
+                //'active_callback' => 'hu_is_post_list',
                 'priority'   => 25,
                 'ubq_section'   => array(
                     'section' => 'static_front_page',
@@ -1133,7 +1133,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'type'      => 'checkbox',
                 'priority'  => 10,
                 'notice'    => __( 'Display post author description, if it exists' , 'hueman'),
-                'active_callback' => function_exists('HU_AD') ? 'hu_is_single' : ''//enabled when hueman-addons is enabled
+                //'active_callback' => function_exists('HU_AD') ? 'hu_is_single' : ''//enabled when hueman-addons is enabled
           ),
           'related-posts' => array(
                 'default'   => 'categories',
@@ -1149,7 +1149,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                   'tags'        => __( 'Related by tags' , 'hueman' )
                 ),
                 'notice'    => __( 'Display randomized related articles below the post' , 'hueman'),
-                'active_callback' => function_exists('HU_AD') ? 'hu_is_single' : ''//enabled when hueman-addons is enabled
+                //'active_callback' => function_exists('HU_AD') ? 'hu_is_single' : ''//enabled when hueman-addons is enabled
           ),
           'post-nav' => array(
                 'default'   => 's1',
@@ -1166,7 +1166,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                   'content'     => __( 'Below content' , 'hueman' )
                 ),
                 'notice'    => __( 'Display links to the next and previous article' , 'hueman'),
-                'active_callback' => function_exists('HU_AD') ? 'hu_is_single' : '',//enabled when hueman-addons is enabled
+                //'active_callback' => function_exists('HU_AD') ? 'hu_is_single' : '',//enabled when hueman-addons is enabled
                 'ubq_section'   => array(
                     'section' => 'sidebars_design_sec',
                     'priority' => '2'
@@ -1561,13 +1561,13 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
               'title'    => __( 'Post Lists Design and Content : Blog, Archives, Search Results', 'hueman' ),
               'priority' => 30,
               'panel'   => 'hu-content-panel',
-              'active_callback' => 'hu_is_post_list'
+              //'active_callback' => 'hu_is_post_list'
         ),
         'content_single_sec'         => array(
               'title'    => __( 'Single Posts Settings', 'hueman' ),
               'priority' => 40,
               'panel'   => 'hu-content-panel',
-              'active_callback' => function_exists('HU_AD') ? 'hu_is_single' : ''
+              //'active_callback' => function_exists('HU_AD') ? 'hu_is_single' : ''
         ),
         'content_thumbnail_sec'         => array(
               'title'    => __( 'Thumbnails Settings', 'hueman' ),
@@ -1578,7 +1578,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
               'title'    => __( 'Comments', 'hueman' ),
               'priority' => 60,
               'panel'   => 'hu-content-panel',
-              'active_callback' => 'hu_is_singular'
+              //'active_callback' => 'hu_is_singular'
         ),
 
         /*---------------------------------------------------------------------------------------------

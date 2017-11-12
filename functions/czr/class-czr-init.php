@@ -263,7 +263,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
               $wp_customize -> get_section( 'static_front_page' ) -> panel = '';//'hu-content-panel';
               $wp_customize -> get_section( 'static_front_page' ) -> title = __( 'Front Page Content', 'hueman' );
               $wp_customize -> get_section( 'static_front_page' ) -> priority = 10;
-              $wp_customize -> get_section( 'static_front_page' ) -> active_callback = 'hu_is_home';
+              //$wp_customize -> get_section( 'static_front_page' ) -> active_callback = 'hu_is_home';
             }
 
             //CHANGE THE STATIC FRONT PAGE WP CONTROLS
