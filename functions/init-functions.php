@@ -520,3 +520,23 @@ function hu_is_header_nav_displayed() {
   $header_nav_fb = apply_filters( 'hu_header_menu_fallback_cb', '' );
   return hu_has_nav_menu( 'header' ) || ! empty( $header_nav_fb );
 }
+
+
+// When do we display the comment icon in grids ?
+// Handles the post and page cases
+// Should be used in the loop, when global $post is set
+// @return bool
+function hu_is_comment_icon_displayed_on_grid_item_thumbnails() {
+    // the comment icon is displayed only if comment are enabled for this type of post
+    // 'comment-count' option => Display comment count on thumbnails
+    global $post;
+    if ( empty ( $post ) || ! isset( $post -> ID ) )
+      return;
+    $are_comments_contextually_enabled = false;
+    if ( 'page' == $post -> post_type && hu_is_checked( 'page-comments' ) ) {
+      $are_comments_contextually_enabled = true;
+    } else if ( 'page' != $post -> post_type && hu_is_checked( 'post-comments' ) ) {
+      $are_comments_contextually_enabled = true;
+    }
+    return comments_open() && hu_is_checked( 'comment-count') && $are_comments_contextually_enabled;
+}

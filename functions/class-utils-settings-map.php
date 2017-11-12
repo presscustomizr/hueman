@@ -1195,7 +1195,11 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'     => __("Thumbnail Comment Count", 'hueman'),
                 'section'   => 'content_thumbnail_sec',
                 'type'      => 'checkbox',
-                'notice'    => __( 'Display comment count on thumbnails' , 'hueman')
+                'notice'    => __( 'Display comment count on thumbnails' , 'hueman'),
+                'ubq_section'   => array(
+                    'section' => 'comments_sec',
+                    'priority' => '30'
+                )
           )
         );
     }
