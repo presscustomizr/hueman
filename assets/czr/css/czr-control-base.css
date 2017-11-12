@@ -271,12 +271,20 @@ li[id*="customize-control-"] {
     -webkit-box-shadow: 1px 0px 2px 0px rgba(204, 204, 204, 0.45);
 }
 
+/*<@4.9compat>*/
+/* outer section introduced in v4.9 needs to keep its original width */
+#customize-outer-theme-controls li[id*="customize-control-"] {
+  width: 100%;
+}
+#customize-outer-theme-controls input[type=checkbox], #customize-outer-theme-controls input[type=radio] {
+    float: none;
+    min-height: inherit;
+}
+/*</@4.9compat>*/
+
 /* GENERAL STYLE */
 .control-section .accordion-section-content {
 	overflow-y: auto;
-}
-li[id*="customize-control-"] {
-	margin: 8px 0;
 }
 
 .wp-customizer .control-section h3.accordion-section-title {
@@ -2713,7 +2721,7 @@ body.czr-editing-sektion #czr-sektion-settings-panel {
 body.czr-editing-sektion #customize-preview {
   opacity: 0.7;
 }/* WP SAVE BUTTON */
-.czr-api-dirty input#save {
+/*.czr-api-dirty input#save {
     background-color: #FFBD2E;
     border-color: #d99400;
     color: black;
@@ -2728,7 +2736,7 @@ body.czr-editing-sektion #customize-preview {
 }
 .czr-api-dirty input#save:hover {
     background-color: #fcad06;
-}
+}*/
 
 /* FIX CUSTOMIZE INFO OVERLAPPING SKOPE SWITCHER */
 .czr-skop-on #customize-controls .customize-info.is-in-view, #customize-controls .customize-section-title.is-in-view {
@@ -2741,7 +2749,7 @@ body.czr-editing-sektion #customize-preview {
   height: 185px;
 }
 .czr-skop-on .wp-full-overlay-sidebar .wp-full-overlay-sidebar-content {
-  top: 185px;
+  top: 185px!important;
 }
 .wp-customizer .in-sub-panel .wp-full-overlay-sidebar .wp-full-overlay-header {
   padding: 0 15px;
@@ -2749,8 +2757,13 @@ body.czr-editing-sektion #customize-preview {
 .customize-controls-close {
   border-bottom: 1px solid #ddd;
 }
-
-
+/*
+  * when skope is on, the z-index of the #customize-notifications-area has to be increased
+  * this #customize-notifications-area block has been introduced in WP 4.9
+*/
+.czr-skop-on #customize-controls #customize-notifications-area {
+  z-index: 1000;
+}
 
 .wp-customizer #customize-header-actions {
   border-bottom: 0px;

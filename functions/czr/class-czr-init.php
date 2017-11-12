@@ -185,12 +185,13 @@ if ( ! class_exists( 'HU_customize' ) ) :
                 'settings' => array( 'header_image' ),
                 'render_callback' => 'hu_render_header_image',
             ) );
-
-            $wp_customize->selective_refresh->add_partial( 'site_title', array(
-                'selector' => '.site-title',
-                'settings' => array( 'blogname' ),
-                'render_callback' => 'hu_do_render_logo_site_tite',
-            ) );
+            //if ( ! function_exists( 'HU_AD') || ! HU_AD() -> ha_is_skop_on() ) {
+              $wp_customize->selective_refresh->add_partial( 'site_title', array(
+                  'selector' => '.site-title',
+                  'settings' => array( 'blogname' ),
+                  'render_callback' => 'hu_do_render_logo_site_tite',
+              ) );
+            //}
             $wp_customize->selective_refresh->add_partial( 'site_description', array(
                 'selector' => '.site-description',
                 'settings' => array( 'blogdescription' ),

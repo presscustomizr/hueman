@@ -1987,7 +1987,7 @@ box-shadow: inset 0 1px 0 rgba(255,255,255,0.25); }
 
 /*  widget : search
 /* ------------------------------------ */
-.widget_search input.search { color: #999; padding-left: 26px; width: 100%; }555
+.widget_search input.search { color: #999; padding-left: 26px; width: 100%; }
 .widget_search .screen-reader-text,
 .widget_search #searchsubmit { display: none; }
 

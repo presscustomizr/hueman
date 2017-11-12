@@ -604,7 +604,7 @@ function hu_get_czr_translated_strings() {
                   'is customized in' => __('is customized in','hueman'),
 
                   //various skope
-                  'can only be customized sitewide.' => __('can only be customized sitewide.', 'hueman'),
+                  'is always customized sitewide.' => __('is always customized sitewide.', 'hueman'),
                   'Menus are created sitewide.' => __('Menus are created sitewide.', 'hueman'),
                   'Widgets are created sitewide.' => __('Widgets are created sitewide.', 'hueman'),
                   'and' => __('and', 'hueman'),
