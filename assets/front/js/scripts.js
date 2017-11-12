@@ -181,7 +181,7 @@ if (!Array.from) {
           defaults = {
                 load_all_images_on_first_scroll : false,
                 attribute : [ 'data-src', 'data-srcset', 'data-sizes' ],
-                excludeImg : [''],
+                excludeImg : [],
                 threshold : 200,
                 fadeIn_options : { duration : 400 },
                 delaySmartLoadEvent : 0,
@@ -193,10 +193,11 @@ if (!Array.from) {
       function Plugin( element, options ) {
             this.element = element;
             this.options = $.extend( {}, defaults, options) ;
-            if ( _.isArray( this.options.excludeImg ) )
-              this.options.excludeImg.push( '.'+skipImgClass );
-            else
-              this.options.excludeImg = [ '.'+skipImgClass ];
+            if ( _.isArray( this.options.excludeImg ) ) {
+                  this.options.excludeImg.push( '.'+skipImgClass );
+            } else {
+                  this.options.excludeImg = [ '.'+skipImgClass ];
+            }
 
             this._defaults = defaults;
             this._name = pluginName;
@@ -212,7 +213,9 @@ if (!Array.from) {
 
             $_imgs
                   .addClass( skipImgClass )
-                  .bind( 'load_img', {}, function() { self._load_img(this); });
+                  .bind( 'load_img', {}, function() {
+                        self._load_img(this);
+                  });
             $(window).scroll( function( _evt ) { self._better_scroll_event_handler( $_imgs, _evt ); } );
             $(window).resize( _.debounce( function( _evt ) { self._maybe_trigger_load( $_imgs, _evt ); }, 100 ) );
             this._maybe_trigger_load( $_imgs );
@@ -230,7 +233,9 @@ if (!Array.from) {
       Plugin.prototype._maybe_trigger_load = function( $_imgs , _evt ) {
             var self = this;
                 _visible_list = $_imgs.filter( function( ind, _img ) { return self._is_visible( _img ,  _evt ); } );
-            _visible_list.map( function( ind, _img ) { $(_img).trigger( 'load_img' );  } );
+            _visible_list.map( function( ind, _img ) {
+                  $(_img).trigger( 'load_img' );
+            });
       };
       Plugin.prototype._is_visible = function( _img, _evt ) {
             var $_img       = $(_img),
@@ -258,7 +263,7 @@ if (!Array.from) {
                   .removeAttr( this.options.attribute.join(' ') )
                   .attr( 'sizes' , _sizes )
                   .attr( 'srcset' , _src_set )
-                  .attr('src', _src )
+                  .attr( 'src', _src )
                   .load( function () {
                         if ( ! $_img.hasClass('tc-smart-loaded') ) {
                               $_img.fadeIn(self.options.fadeIn_options).addClass('tc-smart-loaded');
@@ -276,6 +281,7 @@ if (!Array.from) {
                         }
 
                         $_img.trigger('smartload');
+                        $_img.data('czr-smart-loaded', true );
                   });//<= create a load() fn
             if ( $_img[0].complete ) {
                   $_img.load();
@@ -403,7 +409,9 @@ if (!Array.from) {
           defaults = {
                 enableCentering : true,
                 onresize : true,
+                onInit : true,//<= shall we smartload on init or wait for a custom event, typically smartload ?
                 oncustom : [],//list of event here
+                $containerToListen : null,//<= we might want to listen to custom event trigger to a parent container.Should be a jQuery obj
                 imgSel : 'img',
                 defaultCSSVal : { width : 'auto' , height : 'auto' },
                 leftAdjust : 0,
@@ -432,7 +440,8 @@ if (!Array.from) {
       }
       Plugin.prototype.init = function () {
             var self = this,
-                _do = function() {
+                _do = function( _event_ ) {
+                    _event_ = _event_ || 'init';
                     self._maybe_apply_golden_r();
                     var $_imgs = $( self.options.imgSel , self.container );
                     if ( self.options.enableGoldenRatio ) {
@@ -443,13 +452,18 @@ if (!Array.from) {
                           );
                     }
                     if ( 1 <= $_imgs.length && self.options.enableCentering ) {
-                          self._parse_imgs($_imgs);
+                          self._parse_imgs( $_imgs, _event_ );
                     }
                 };
-            _do();
+            if ( self.options.onInit ) {
+                  _do();
+            }
             if ( $.isArray( self._customEvt ) ) {
                   self._customEvt.map( function( evt ) {
-                        $( self.container ).bind( evt, {} , _do );
+                        var $_containerToListen = ( self.options.$containerToListen instanceof $ && 1 < self.options.$containerToListen.length ) ? self.options.$containerToListen : $( self.container );
+                        $_containerToListen.bind( evt, {} , function() {
+                              _do( evt );
+                        });
                   } );
             }
       };
@@ -475,26 +489,28 @@ if (!Array.from) {
       Plugin.prototype._is_window_width_allowed = function() {
             return $(window).width() > this.options.disableGRUnder - 15;
       };
-      Plugin.prototype._parse_imgs = function( $_imgs ) {
+      Plugin.prototype._parse_imgs = function( $_imgs, _event_ ) {
             var self = this;
             $_imgs.each(function ( ind, img ) {
                   var $_img = $(img);
-                  self._pre_img_cent( $_img );
-                  if ( self.options.onresize ) {
+                  self._pre_img_cent( $_img, _event_ );
+                  if ( self.options.onresize && ! $_img.data('resize-react-bound' ) ) {
+                        $_img.data('resize-react-bound', true );
                         $(window).resize( _.debounce( function() {
-                              self._pre_img_cent( $_img );
-                        }, 200 ) );
+                              self._pre_img_cent( $_img, 'resize');
+                        }, 100 ) );
                   }
-                  if ( $.isArray( self._customEvt ) ) {
-                        self._customEvt.map( function( evt ) {
-                              $_img.bind( evt, {} , function( evt ) {
-                                    self._pre_img_cent( $_img );
-                              } );
-                        } );
-                  }
+
             });//$_imgs.each()
+            if ( $(self.container).attr('data-img-centered-in-container') ) {
+                  var _n = parseInt( $(self.container).attr('data-img-centered-in-container'), 10 ) + 1;
+                  $(self.container).attr('data-img-centered-in-container', _n );
+            } else {
+                  $(self.container).attr('data-img-centered-in-container', 1 );
+            }
       };
-      Plugin.prototype._pre_img_cent = function( $_img ) {
+      Plugin.prototype._pre_img_cent = function( $_img, _event_ ) {
+
             var _state = this._get_current_state( $_img ),
                 self = this,
                 _case  = _state.current,
@@ -515,7 +531,12 @@ if (!Array.from) {
                   } else {
                         $_img.addClass( _p._class ).removeClass( _not_p._class );
                   }
-
+                  if ( $_img.attr('data-img-centered') ) {
+                        var _n = parseInt( $_img.attr('data-img-centered'), 10 ) + 1;
+                        $_img.attr('data-img-centered', _n );
+                  } else {
+                        $_img.attr('data-img-centered', 1 );
+                  }
                   return $_img;
             };
             if ( this.options.setOpacityWhenCentered ) {
