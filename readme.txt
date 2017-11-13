@@ -73,7 +73,8 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 # Changelog
-= 3.3.23 November 11th 2017 =
+= 3.3.23 November 13th 2017 =
+* Fix : Contact Form 7 recaptcha CSS style issue. Fixes #566
 * Fix : incorrect css rules for .screen-reader-text. Fixes #586
 * Improved : the featured image of a page should be displayed in search results. Fixes #585
 * Improved : compatibility with WP4.9, target release date November 14th 2017
