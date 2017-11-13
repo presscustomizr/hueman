@@ -295,3 +295,26 @@ h1, h2, h3, h4, h5, h6 { color: #444; font-weight: 600; -ms-word-wrap: break-wor
 .woocommerce #reviews h3,
 #reply-title { font-weight: normal; font-size: 1.125em; text-transform: uppercase; font-weight: 600; margin-bottom: 1em; }
 .heading i { font-size: 1.375em; margin-right: 6px; }
+
+/* base : screenreader
+/* @fixes https://github.com/presscustomizr/hueman/issues/586
+/* ------------------------------------ */
+.screen-reader-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.screen-reader-text:active, .screen-reader-text:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+}
