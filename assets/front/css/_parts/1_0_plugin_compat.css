@@ -21,7 +21,12 @@
 
 /*  plugin : contact form 7
 /* ------------------------------------ */
-.wpcf7 {  }
+.wpcf7-form-control-wrap {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: auto;
+}
 .wpcf7 p { color: #222; font-weight: 600; margin: 0 0 12px;  width: 100%; float: left; position: relative; }
 .wpcf7 p span { font-weight: 400; color: #999; }
 /* the following line has been commented in 3.3.13 because of this issue : https://github.com/presscustomizr/hueman/issues/491 ;*/
