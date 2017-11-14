@@ -149,6 +149,18 @@
                       return;
                     self.subsetting_cbs[ _opt_name ][ args.changed_prop ]( args );
               });
+
+
+              // The 'czr_input' event send a data object formed like :
+              // {
+              //       set_id        : module.control.id,
+              //       module        : { items : $.extend( true, {}, module().items) , modOpt : module.hasModOpt() ?  $.extend( true, {}, module().modOpt ): {} },
+              //       module_id     : module.id,//<= will allow us to target the right dom element on front end
+              //       input_id      : input.id,
+              //       input_parent_id : input.input_parent.id,//<= can be the mod opt or the item
+              //       value         : to,
+              //       isPartialRefresh : args.isPartialRefresh//<= let us know if it is a full wrapper refresh or a single input update ( true when fired from sendModuleInputsToPreview )
+              // }
               api.preview.bind( 'czr_input', function( args ) {
                     var _defaults = {
                           set_id : '',
