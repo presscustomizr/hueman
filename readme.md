@@ -82,6 +82,9 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 ## Changelog
+= 3.3.24 November 16th 2017 =
+* Fix : custom css compatibility issue with WP4.9. Fixes #596
+
 = 3.3.23 November 13th 2017 =
 * Fix : Contact Form 7 recaptcha CSS style issue. Fixes #566
 * Fix : incorrect css rules for .screen-reader-text. Fixes #586

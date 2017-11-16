@@ -398,17 +398,6 @@ if ( ! class_exists( 'HU_customize' ) ) :
               $wp_customize -> get_section( 'custom_css' ) -> priority = 40;
             }
 
-            //CHANGE CUSTOM_CSS DEFAULT
-            $custom_css_setting_id = sprintf( 'custom_css[%s]', get_stylesheet() );
-            if ( is_object( $wp_customize->get_setting( $custom_css_setting_id ) ) ) {
-                $original = $wp_customize->get_setting( $custom_css_setting_id )->default;
-                $new_def = sprintf( "%s\n%s\n%s\n*/",
-                    substr( $original, 0, strlen($original) - 2),
-                    __( "Use this field to test small chunks of CSS code. For important CSS customizations, it is recommended to modify the style.css file of a child theme." , 'hueman' ),
-                    'http' . esc_url( '//codex.wordpress.org/Child_Themes' )
-                );
-                $wp_customize->get_setting( $custom_css_setting_id )->default = $new_def;
-            }
         }//end of hu_alter_wp_customizer_settings()
 
 
