@@ -1,4 +1,4 @@
-# Hueman v3.3.24
+# Hueman v3.3.25
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
@@ -73,6 +73,9 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 # Changelog
+= 3.3.25 November 20th 2017 =
+* Fix : WP 4.9 Code Editor issue could impact the custom css customizer option when checking errors in the code
+
 = 3.3.24 November 16th 2017 =
 * Fix : custom css compatibility issue with WP4.9. Fixes #596
 
