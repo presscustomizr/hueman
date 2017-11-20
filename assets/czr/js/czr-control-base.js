@@ -122,13 +122,32 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
       * A "CONTEXT AWARE" SET METHD
       *****************************************************************************/
       /**
-      * OVERRIDES BASE api.Value method
+      * OVERRIDES BASE api.Value set method
       * => adds the o {} param, allowing to pass additional contextual informations.
       *
       * Set the value and trigger all bound callbacks.
       *
       * @param {object} to New value.
       */
+
+      // set: function( to ) {
+      //   var from = this._value;
+
+      //   to = this._setter.apply( this, arguments );
+      //   to = this.validate( to );
+
+      //   // Bail if the sanitized value is null or unchanged.
+      //   if ( null === to || _.isEqual( from, to ) ) {
+      //     return this;
+      //   }
+
+      //   this._value = to;
+      //   this._dirty = true;
+
+      //   this.callbacks.fireWith( this, [ to, from ] );
+
+      //   return this;
+      // },
       api.Value.prototype.set = function( to, o ) {
             var from = this._value, dfd = $.Deferred(), self = this, _promises = [];
 
@@ -232,23 +251,23 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
       //Changed the core to specify that the setting preview is actually a deferred callback
       //=> allows us to use syntax like :
       //api( setId ).set( new_value ).done( function() { execute actions when all the setting callbacks have been done })
-      api.Setting.prototype.initialize = function( id, value, options ) {
-            var setting = this;
-            api.Value.prototype.initialize.call( setting, value, options );
+      // api.Setting.prototype.initialize = function( id, value, options ) {
+      //       var setting = this;
+      //       api.Value.prototype.initialize.call( setting, value, options );
 
-            setting.id = id;
-            setting.transport = setting.transport || 'refresh';
-            setting._dirty = options.dirty || false;
-            setting.notifications = new api.Values({ defaultConstructor: api.Notification });
+      //       setting.id = id;
+      //       setting.transport = setting.transport || 'refresh';
+      //       setting._dirty = options.dirty || false;
+      //       setting.notifications = new api.Values({ defaultConstructor: api.Notification });
 
-            // Whenever the setting's value changes, refresh the preview.
-            setting.bind( setting.preview );
+      //       // Whenever the setting's value changes, refresh the preview.
+      //       setting.bind( setting.preview );
 
-            // the deferred can be used in moduleCollectionReact to execute actions after the module has been set.
-            // setting.bind( function( to, from , data ) {
-            //       return setting.preview( to, from , data );
-            // }, { deferred : true } );
-      };
+      //       // the deferred can be used in moduleCollectionReact to execute actions after the module has been set.
+      //       // setting.bind( function( to, from , data ) {
+      //       //       return setting.preview( to, from , data );
+      //       // }, { deferred : true } );
+      // };
 
 
       //var _old_preview = api.Setting.prototype.preview;
@@ -6055,7 +6074,6 @@ $.extend( CZRMultiModuleControlMths, {
 
                   if ( ! _.isEmpty( _notSyncedSettings ) ) {
                         api.consoleLog('SOME SETTINGS HAVE NOT BEEN PROPERLY SAVED : ', _notSyncedSettings );
-                        console.log('_notSyncedSettings', _notSyncedSettings );
                   } else {
                         api.consoleLog('ALL RIGHT, SERVER AND API ARE SYNCHRONIZED AFTER SAVE' );
                   }
