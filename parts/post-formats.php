@@ -164,7 +164,7 @@
 <?php if ( has_post_format( 'chat' ) ): // Chat @fromfull?>
   	<div class="post-format">
       <div class="format-container pad">
-        <i class="far fa-comments-o"></i>
+        <i class="far fa-comments"></i>
         <blockquote>
           <?php echo (isset($meta['_chat'][0])?wpautop($meta['_chat'][0]):''); ?>
         </blockquote>
