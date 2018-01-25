@@ -271,6 +271,29 @@ if ( ! function_exists( 'hu_print_social_links' ) ) {
     //if the size is the default one, do not add the inline style css
     $social_size_css  = empty( $font_size_value ) || $_default_size == $font_size_value ? '' : "font-size:{$font_size_value}px";
 
+    //FA5 backward compatibility with FA4
+    //see https://github.com/presscustomizr/customizr/issues/1364
+    $_fa_solid_icons = array(
+        'fa-envelope',
+        'fa-envelope-square',
+        'fa-mobile',
+        'fa-mobile-alt',
+        'fa-phone',
+        'fa-phone-square',
+        'fa-rss',
+        'fa-rss-square',
+        'fa-share-alt',
+        'fa-share-alt-square'
+    );
+    $_fa_icon_replacements = array(
+        'fa-bitbucket-square'     => 'fa-bitbucket',
+        'fa-facebook-official'    => 'fa-facebook-f',
+        'fa-google-plus-circle'   => 'fa-google-plus',
+        'fa-google-plus-official' => 'fa-google-plus',
+        'fa-linkedin-square'      => 'fa-linkedin',
+        'fa-youtube-play'         => 'fa-youtube'
+    );
+
     echo '<ul class="social-links">';
       foreach( $_social_items as $key => $item ) {
         //skip if mod_opt
@@ -288,15 +311,34 @@ if ( ! function_exists( 'hu_print_social_links' ) ) {
         //do we have an id set ?
         //Typically not if the user still uses the old options value.
         //So, if the id is not present, let's build it base on the key, like when added to the collection in the customizer
+        $icon_class            = isset($item['social-icon']) ? esc_attr($item['social-icon']) : '';
+
+
+        //FA5 backward compatibility with FA4
+        //see https://github.com/presscustomizr/customizr/issues/1364
+        //by default they're brands
+        $fa_group              = 'fab';
+        //perform replacements for missing icons
+        $icon_class            = str_replace( array_keys( $_fa_icon_replacements ), array_values( $_fa_icon_replacements ), $icon_class );
+        //then treat the -o case: We just use the fa-envelope-o as of now
+        if ( strlen( $icon_class ) - 2 == strpos( $icon_class, '-o' ) ) {
+            $icon_class        = str_replace( '-o', '', $icon_class );
+            $fa_group          = 'far';
+        }
+        //treat the few solid icons
+        else if ( in_array( $icon_class, $_fa_solid_icons ) ){
+            $fa_group          = 'fas';
+        }
+        $icon_class            = "{$fa_group} {$icon_class}";
 
         // Put them together
-        printf( '<li><a rel="nofollow" class="social-tooltip" %1$s title="%2$s" href="%3$s" %4$s %5$s><i class="fa %6$s"></i></a></li>',
+        printf( '<li><a rel="nofollow" class="social-tooltip" %1$s title="%2$s" aria-label="%2$s" href="%3$s" %4$s %5$s><i class="%6$s"></i></a></li>',
             ! hu_is_customizing() ? '' : sprintf( 'data-model-id="%1$s"', ! isset( $item['id'] ) ? 'hu_socials_'. $key : $item['id'] ),
             isset($item['title']) ? esc_attr( $item['title'] ) : '',
             ( isset($item['social-link']) && ! empty( $item['social-link'] ) ) ? esc_url( $item['social-link'] ) : 'javascript:void(0)',
             ( isset($item['social-target']) && false != $item['social-target'] ) ? 'target="_blank"' : '',
             $style_attr,
-            isset($item['social-icon']) ? esc_attr($item['social-icon']) : ''
+            $icon_class
         );
       }
     echo '</ul>';
