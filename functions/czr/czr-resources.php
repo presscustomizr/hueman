@@ -523,7 +523,7 @@ function hu_add_various_dom_ready_actions() {
               if ( $('.control-panel-widgets').find('.accordion-section-title').first().length ) {
                     $('.control-panel-widgets').find('.accordion-section-title')
                           .first()
-                          .prepend( $('<span/>', {class:'fa fa-magic'} ) );
+                          .prepend( $('<span/>', {class:'fas fa-magic'} ) );
               }
           });//end of $( function($) ) dom ready
       }) ( wp, jQuery );
