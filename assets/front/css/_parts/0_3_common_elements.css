@@ -84,7 +84,8 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 .nav-toggle i { font-size: 1.75rem; padding: 13px 0; }
 .nav-text { display: none; position: absolute;right:52px;font-size: 1em; line-height: 1.5em; padding: 13px 20px; }
 .nav li > a:after,
-.nav > li > a:after { font-family: FontAwesome; display: inline-block; }
+.nav > li > a:after { font-family: 'Font Awesome 5 Free'; font-weight: 900; -moz-osx-font-smoothing: grayscale; -webkit-font-smoothing: antialiased; display: inline-block; font-style: normal; font-variant: normal; text-rendering: auto; }
+
 
 /* NEW BUTTON */
 .ham__navbar-toggler *:after, .ham__navbar-toggler *:before {
