@@ -1,11 +1,13 @@
 @font-face {
-  font-family: 'FontAwesome';
-  src:url('../../front/fonts/fontawesome-webfont.eot');
-  src:url('../../front/fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
-      url('../../front/fonts/fontawesome-webfont.woff2') format('woff2'),
-      url('../../front/fonts/fontawesome-webfont.woff') format('woff'),
-      url('../../front/fonts/fontawesome-webfont.ttf') format('truetype'),
-      url('../../front/fonts/fontawesome-webfont.svg#fontawesomeregular') format('svg');
+  font-family: 'Font Awesome\ 5 Free';
+  font-style: normal;
+  font-weight: 400;
+  src: url("../../front/webfonts/fa-regular-400.eot");
+  src: url("../../front/webfonts/fa-regular-400.eot?#iefix") format("embedded-opentype"),
+       url("../../front/webfonts/fa-regular-400.woff2") format("woff2"),
+       url("../../front/webfonts/fa-regular-400.woff") format("woff"),
+       url("../../front/webfonts/fa-regular-400.ttf") format("truetype"),
+       url("../../front/webfonts/fa-regular-400.svg#fontawesome") format("svg");
 }
 
 .about-wrap h3 {
@@ -68,7 +70,7 @@
     -------------------------------------------------- */
 h1.need-help-title:before,
 #wp-admin-bar-tc-hueman-help .ab-item:before, li#wp-admin-bar-tc-hueman-help a:before {
-  font-family: 'FontAwesome';
+  font-family: 'Font Awesome\ 5 Free';
   speak: none;
   font-weight: normal;
   font-variant: normal;
