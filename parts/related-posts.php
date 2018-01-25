@@ -3,7 +3,7 @@
 <?php if ( $related->have_posts() ): ?>
 
 <h4 class="heading">
-	<i class="fa fa-hand-o-right"></i><?php _e('You may also like...','hueman'); ?>
+	<i class="far fa-hand-point-right"></i><?php _e('You may also like...','hueman'); ?>
 </h4>
 
 <ul class="related-posts group">
@@ -15,12 +15,12 @@
 			<div class="post-thumbnail">
 				<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 					<?php hu_the_post_thumbnail('thumb-medium'); ?>
-					<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fa fa-play"></i></span>'; ?>
-					<?php if ( has_post_format('audio') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fa fa-volume-up"></i></span>'; ?>
-					<?php if ( is_sticky() ) echo'<span class="thumb-icon small"><i class="fa fa-star"></i></span>'; ?>
+					<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fas fa-play"></i></span>'; ?>
+					<?php if ( has_post_format('audio') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fas fa-volume-up"></i></span>'; ?>
+					<?php if ( is_sticky() ) echo'<span class="thumb-icon small"><i class="fas fa-star"></i></span>'; ?>
 				</a>
 				<?php if ( comments_open() && ( hu_is_checked( 'comment-count' ) ) ): ?>
-					<a class="post-comments" href="<?php comments_link(); ?>"><span><i class="fa fa-comments-o"></i><?php comments_number( '0', '1', '%' ); ?></span></a>
+					<a class="post-comments" href="<?php comments_link(); ?>"><span><i class="far fa-comments"></i><?php comments_number( '0', '1', '%' ); ?></span></a>
 				<?php endif; ?>
 			</div><!--/.post-thumbnail-->
 

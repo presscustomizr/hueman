@@ -52,10 +52,10 @@
       <div class="jp-audio">
         <div id="jp-interface-<?php the_ID(); ?>" class="jp-interface">
           <ul class="jp-controls">
-            <li><a href="#" class="jp-play" tabindex="1"><i class="fa fa-play"></i></a></li>
-            <li><a href="#" class="jp-pause" tabindex="1"><i class="fa fa-pause"></i></a></li>
-            <li><a href="#" class="jp-mute" tabindex="1"><i class="fa fa-volume-up"></i></a></li>
-            <li><a href="#" class="jp-unmute" tabindex="1"><i class="fa fa-volume-down"></i></a></li>
+            <li><a href="#" class="jp-play" tabindex="1"><i class="fas fa-play"></i></a></li>
+            <li><a href="#" class="jp-pause" tabindex="1"><i class="fas fa-pause"></i></a></li>
+            <li><a href="#" class="jp-mute" tabindex="1"><i class="fas fa-volume-up"></i></a></li>
+            <li><a href="#" class="jp-unmute" tabindex="1"><i class="fas fa-volume-down"></i></a></li>
           </ul>
           <div class="jp-progress-container">
             <div class="jp-progress">
@@ -154,7 +154,7 @@
 <?php if ( has_post_format( 'quote' ) ): // Quote @fromfull ?>
     <div class="post-format">
       <div class="format-container pad">
-        <i class="fa fa-quote-right"></i>
+        <i class="fas fa-quote-right"></i>
         <blockquote><?php echo isset($meta['_quote'][0])?wpautop($meta['_quote'][0]):''; ?></blockquote>
         <p class="quote-author"><?php echo (isset($meta['_quote_author'][0])?'&mdash; '.$meta['_quote_author'][0]:''); ?></p>
       </div>
@@ -164,7 +164,7 @@
 <?php if ( has_post_format( 'chat' ) ): // Chat @fromfull?>
   	<div class="post-format">
       <div class="format-container pad">
-        <i class="fa fa-comments-o"></i>
+        <i class="far fa-comments-o"></i>
         <blockquote>
           <?php echo (isset($meta['_chat'][0])?wpautop($meta['_chat'][0]):''); ?>
         </blockquote>
@@ -176,7 +176,7 @@
   	<div class="post-format">
       <div class="format-container pad">
         <p><a href="<?php echo (isset($meta['_link_url'][0])?$meta['_link_url'][0]:'#'); ?>">
-          <i class="fa fa-link"></i>
+          <i class="fas fa-link"></i>
           <?php echo (isset($meta['_link_title'][0])?$meta['_link_title'][0]:get_the_title()); ?> &rarr;
         </a></p>
       </div>
