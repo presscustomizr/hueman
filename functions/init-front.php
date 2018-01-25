@@ -70,7 +70,7 @@ if ( ! function_exists( 'hu_print_mobile_btn' ) ) {
     function hu_print_mobile_btn() {
       ?>
       <?php if ( apply_filters( 'hu_is_simple_mobile_menu_btn', 'simple' == hu_get_option( 'header_mobile_btn' ) ) ) : ?>
-        <div class="nav-toggle"><i class="fa fa-bars"></i></div>
+        <div class="nav-toggle"><i class="fas fa-bars"></i></div>
       <?php else : ?>
         <!-- <div class="ham__navbar-toggler collapsed" aria-expanded="false">
           <div class="ham__navbar-span-wrapper">
@@ -481,7 +481,7 @@ if ( ! function_exists( 'hu_get_search_title' ) ) {
       global $wp_query;
 
       $search_results = $wp_query -> found_posts;
-      $icon           = have_posts() ? '<i class="fa fa-search"></i> ' : '<i class="fa fa-exclamation-circle"></i> ';
+      $icon           = have_posts() ? '<i class="fas fa-search"></i> ' : '<i class="fas fa-exclamation-circle"></i> ';
 
       if ( 1 == $search_results ) {
           return sprintf( '%1$s%2$s %3$s', $icon, $search_results, __('Search result','hueman') );
@@ -496,7 +496,7 @@ if ( ! function_exists( 'hu_get_search_title' ) ) {
 /* ------------------------------------ */
 if ( ! function_exists( 'hu_get_404_title' ) ) {
   function hu_get_404_title() {
-    return sprintf('<i class="fa fa-exclamation-circle"></i>%1$s <span>%2$s </span>',
+    return sprintf('<i class="fas fa-exclamation-circle"></i>%1$s <span>%2$s </span>',
         __('Error 404.','hueman'),
         __('Page not found!','hueman')
     );
@@ -509,7 +509,7 @@ if ( ! function_exists( 'hu_get_404_title' ) ) {
 if ( ! function_exists( 'hu_get_author_title' ) ) {
   function hu_get_author_title() {
     $author = get_userdata( get_query_var('author') );
-    return sprintf('<i class="fa fa-user"></i>%1$s <span>%2$s </span>',
+    return sprintf('<i class="fas fa-user"></i>%1$s <span>%2$s </span>',
         __('Author:','hueman'),
         $author->display_name
     );
@@ -523,12 +523,12 @@ if ( ! function_exists( 'hu_get_author_title' ) ) {
 if ( ! function_exists( 'hu_get_term_page_title' ) ) {
   function hu_get_term_page_title() {
     if ( is_category() ) {
-      $title = sprintf('<i class="fa fa-folder-open"></i>%1$s <span>%2$s </span>',
+      $title = sprintf('<i class="fas fa-folder-open"></i>%1$s <span>%2$s </span>',
           __('Category:','hueman'),
           single_cat_title('', false)
       );
     } else if ( is_tag() ) {
-      $title = sprintf('<i class="fa fa-tags"></i>%1$s <span>%2$s </span>',
+      $title = sprintf('<i class="fas fa-tags"></i>%1$s <span>%2$s </span>',
           __('Tagged:','hueman'),
           single_tag_title('', false)
       );
@@ -543,17 +543,17 @@ if ( ! function_exists( 'hu_get_term_page_title' ) ) {
 if ( ! function_exists( 'hu_get_date_archive_title' ) ) {
   function hu_get_date_archive_title() {
     if ( is_day() ) {
-      $title = sprintf('<i class="fa fa-calendar"></i>%1$s <span>%2$s </span>',
+      $title = sprintf('<i class="fas fa-calendar"></i>%1$s <span>%2$s </span>',
           __('Daily Archive:','hueman'),
           get_the_time('F j, Y')
       );
     } else if ( is_month() ) {
-      $title = sprintf('<i class="fa fa-calendar"></i>%1$s <span>%2$s </span>',
+      $title = sprintf('<i class="fas fa-calendar"></i>%1$s <span>%2$s </span>',
           __('Monthly Archive:','hueman'),
           get_the_time('F Y')
       );
     } else if ( is_year() ) {
-      $title = sprintf('<i class="fa fa-calendar"></i>%1$s <span>%2$s </span>',
+      $title = sprintf('<i class="fas fa-calendar"></i>%1$s <span>%2$s </span>',
           __('Yearly Archive:','hueman'),
           get_the_time('Y')
       );
@@ -1780,20 +1780,20 @@ function hu_get_welcome_note_content() {
                       __('of customization options', 'hueman'),
                       __('to let you create the best possible websites.', 'hueman' )
                   );
-                  printf('<p>%1$s : <a href="%2$s" title="%3$s" target="_blank">%3$s <i class="fa fa-external-link" aria-hidden="true"></i></a>&nbsp;,<a href="%4$s" title="%5$s" target="_blank">%5$s <i class="fa fa-external-link" aria-hidden="true"></i></a></p>',
+                  printf('<p>%1$s : <a href="%2$s" title="%3$s" target="_blank">%3$s <i class="fas fa-external-link-alt" aria-hidden="true"></i></a>&nbsp;,<a href="%4$s" title="%5$s" target="_blank">%5$s <i class="fas fa-external-link-alt" aria-hidden="true"></i></a></p>',
                       __("If you need inspiration, you can visit our online demos", 'hueman'),
                       esc_url('https://wp-themes.com/hueman/'),
                       __('Hueman Demo 1', 'hueman'),
                       esc_url('demo-hueman.presscustomizr.com/'),
                       __('Hueman Demo 2', 'hueman')
                   );
-                  printf( '<br/><br/><p>%1$s <a href="%2$s" target="_blank">%3$s <i class="fa fa-external-link" aria-hidden="true"></i></a></p>',
+                  printf( '<br/><br/><p>%1$s <a href="%2$s" target="_blank">%3$s <i class="fas fa-external-link-alt" aria-hidden="true"></i></a></p>',
                       __('To help you getting started with Hueman, we have published', 'hueman'),
                       esc_url('docs.presscustomizr.com/article/236-first-steps-with-the-hueman-wordpress-theme'),
                       __('a short guide here.', 'hueman')
                   );
               ?>
-              <span class="fa fa-times close-note" title="Close"></span>
+              <span class="fas fa-times close-note" title="Close"></span>
           </div>
         </div>
       <?php
