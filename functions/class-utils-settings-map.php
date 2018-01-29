@@ -165,7 +165,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'title'     => __( 'FAVICON' , 'hueman'),
                 'section'   => 'title_tagline',//<= this is a default WP section, not created for the Hueman theme
                 'type'      => 'czr_upload',
-                'sanitize_callback' => array( $this , 'hu_sanitize_number' )
+                'sanitize_callback' => array( $this , 'hu_sanitize_number' ),
+                'skoped' => false
           ),
           'display-header-title' => array(
                 'default'   => 1,
@@ -383,7 +384,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'type'      => 'czr_module',
                 'module_type' => 'czr_social_module',
                 'transport' => hu_is_partial_refreshed_on() ? 'postMessage' : 'refresh',
-                'priority'  => 10
+                'priority'  => 10,
+                'skoped' => false
           )
       );
     }
