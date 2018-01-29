@@ -678,7 +678,6 @@ span.czr-panel-subtitle {
 
 /* PRO BLOCK BEFORE SECTIONS AND PANELS TITLE */
 .pro-title-block {
-    background: #f0ad4e;
     border: 1px solid #eea236;
     padding: 0px 6px;
     font-size: 0.7em;
@@ -686,7 +685,7 @@ span.czr-panel-subtitle {
     margin-right: 3px;
     bottom: 2px;
     position: relative;
-    color: #fff;
+    color: #f0ad4e;
     webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
     box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
     border-radius: 3px;
