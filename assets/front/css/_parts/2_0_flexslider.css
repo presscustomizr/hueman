@@ -58,7 +58,7 @@ html[xmlns] .flexslider .slides { display: block; }
 .flex-direction-nav .flex-disabled {opacity: .3!important; filter:alpha(opacity=30); cursor: default; }
 
 /* direction nav arrows */
-.flex-direction-nav a:before { font-family: FontAwesome; font-size: 20px; line-height: 24px; position: absolute; text-align: center; left: 0; right: 0; top: 9px; text-indent: 0; }
+.flex-direction-nav a:before { font-family: 'Font Awesome 5 Free'; font-weight: 900; -moz-osx-font-smoothing: grayscale; -webkit-font-smoothing: antialiased; font-style: normal; font-variant: normal; text-rendering: auto; line-height: 23px; position: absolute; text-align: center; left: 0; right: 0; top: 8px; text-indent: 0; }
 .flex-direction-nav .flex-next:before { content:"\f054"; }
 .flex-direction-nav .flex-prev:before { content: "\f053"; }
 

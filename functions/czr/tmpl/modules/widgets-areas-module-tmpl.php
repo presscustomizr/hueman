@@ -41,7 +41,7 @@ function hu_print_widget_areas_built_in_templates() {
     <script type="text/html" id="tmpl-czr-module-widgets-ru-item-part">
         <div class="<?php echo $css_attr['item_header']; ?> czr-builtin-model">
           <div class="<?php echo $css_attr['item_title']; ?> <?php echo $css_attr['item_sort_handle']; ?>"><h4>{{ data.title }}</h4></div>
-          <div class="<?php echo $css_attr['item_btns']; ?>"><a title="<?php _e('Edit', 'hueman'); ?>" href="javascript:void(0);" class="fa fa-pencil <?php echo $css_attr['edit_view_btn']; ?>"></a></div>
+          <div class="<?php echo $css_attr['item_btns']; ?>"><a title="<?php _e('Edit', 'hueman'); ?>" href="javascript:void(0);" class="fas fa-pencil-alt <?php echo $css_attr['edit_view_btn']; ?>"></a></div>
         </div>
     </script>
   <?php

@@ -210,7 +210,7 @@ function hu_set_woocommerce_compat() {
             <ul class="meta-single group">
               <li class="category category_products"><?php echo $categories ?></li>
               <?php if ( comments_open() && ( hu_is_checked( 'comment-count' ) ) && $review_enabled ): ?>
-                <li class="comments rewiews"><a href="#reviews" class="woocommerce-review-link" rel="nofollow"><i class="fa fa-star-o"></i><?php echo $review_count ? '<span itemprop="reviewCount" class="count">'.$review_count.'</span>' : '' ?></a></li>
+                <li class="comments rewiews"><a href="#reviews" class="woocommerce-review-link" rel="nofollow"><i class="far fa-star"></i><?php echo $review_count ? '<span itemprop="reviewCount" class="count">'.$review_count.'</span>' : '' ?></a></li>
               <?php endif /*comments_open*/ ?>
             </ul>
             <?php endif /*isset( $product )*/ ?>
@@ -240,12 +240,12 @@ function hu_set_woocommerce_compat() {
 
   if ( ! function_exists( 'hu_wc_description_tab_title' ) ) {
     function hu_wc_description_tab_title( $title ){
-      return '<i class="fa fa-pencil"></i>' . $title;
+      return '<i class="fas fa-pencil-alt"></i>' . $title;
     }
   }
   if ( ! function_exists( 'hu_wc_additional_information_tab_title' ) ) {
     function hu_wc_additional_information_tab_title( $title ){
-      return '<i class="fa fa-info"></i>' . $title;
+      return '<i class="fas fa-info"></i>' . $title;
     }
   }
   if ( ! function_exists( 'hu_wc_reviews_tab_title' ) ) {
@@ -260,7 +260,7 @@ function hu_set_woocommerce_compat() {
           $title                = trim( str_replace($review_count_search, '', $title) ) . $review_count_replace;
         }
       }
-      return '<i class="fa fa-star"></i>' . $title;
+      return '<i class="fas fa-star"></i>' . $title;
     }
   }
 
