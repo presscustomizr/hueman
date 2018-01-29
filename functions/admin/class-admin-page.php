@@ -407,7 +407,7 @@ $mysql_ver =  ( ! empty( $wpdb->use_mysqli ) && $wpdb->use_mysqli ) ? @mysqli_ge
     */
     function hu_fix_wp_footer_link_style() {
       $screen = get_current_screen();
-      if ( 'appearance_page_welcome' != $screen-> id )
+      if ( ! is_object( $screen ) || 'appearance_page_welcome' != $screen-> id )
         return;
       ?>
         <style type="text/css" id="tc-fix-wp-footer-position">
