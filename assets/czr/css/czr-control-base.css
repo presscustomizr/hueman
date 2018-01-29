@@ -888,7 +888,9 @@ span.czr-panel-subtitle {
 .czr-item-title h4 {
   margin: 0;
 }
-.czr-item-title .fa:before {
+.czr-item-title .fab::before,
+.czr-item-title .fas::before,
+.czr-item-title .far::before {
   padding-right: 2px;
 }
 .czr-item-btns {
@@ -986,7 +988,9 @@ span.czr-panel-subtitle {
     -webkit-filter: blur(1px);
 }
 
-.czr-item-title .fa {
+.czr-item-title .far,
+.czr-item-title .fab,
+.czr-item-title .fas {
   font-size: 18px;
 }
 
@@ -1651,7 +1655,7 @@ section .czr-sub-set:first-child {
 .selecter .selecter-selected { background: #F9F9F9 url(img/jquery.fs.selecter-arrow.png) no-repeat right center; border: 1px solid #ccc; border-radius: 3px; color: #333; cursor: pointer; display: block; font-size: 13px; margin: 0; overflow: hidden; padding: 4px 4.6%; position: relative; text-overflow: clip; z-index: 49; box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);height: auto;line-height: 18px;width: 90%; }
 
 .selecter .selecter-options { border: 1px solid #ccc; border-width: 0 1px 1px; background-color: #fefefe; border-radius: 0 0 3px 3px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15); display: none; left: 0; margin: 0; max-height: 260px; overflow: auto; overflow-x: hidden; padding: 0; position: relative; top: 100%; width: 99%; *width: auto; z-index: 50; }
-.selecter .selecter-group { background: #F9F9F9; border-bottom: 1px solid #e3e3e3; color: #999; display: block; font-size: 11px; padding: 5px 10px 4px; text-transform: uppercase; }
+.selecter .selecter-group { background: #F9F9F9; border-bottom: 1px solid #e3e3e3; color: #999; display: block; font-size: 11px; padding: 5px 6px 4px; text-transform: uppercase; }
 .selecter .selecter-item { background: #fff; border-bottom: 1px solid #e3e3e3; color: #333; cursor: pointer; display: block; font-size: 13px; margin: 0; overflow: hidden; padding: 8px 10px; text-overflow: ellipsis; width: 86%;height: auto;line-height: 14px;padding: 8px 24px 8px 10px;}
 .selecter .selecter-item.selected { background: #F9F9F9; }
 .selecter .selecter-item.disabled { color: #999; cursor: default; }
@@ -2952,7 +2956,9 @@ h2.czr-current-skope-title {
     font-weight: normal;
     text-shadow: 1px 1px 0px #dedede;
 }
-.czr-scope .fa {
+.czr-scope .fab,
+.czr-scope .far,
+.czr-scope .fas {
     font-size: 10px;
     padding: 2%;
     color: #585858;
