@@ -98,7 +98,7 @@
     <section class="container" id="footer-bottom">
       <div class="container-inner">
 
-        <a id="back-to-top" href="#"><i class="fa fa-angle-up"></i></a>
+        <a id="back-to-top" href="#"><i class="fas fa-angle-up"></i></a>
 
         <div class="pad group">
 
@@ -122,7 +122,7 @@
               ?>
               <?php ob_start(); ?>
                   <div id="credit" style="<?php echo ! hu_is_checked( 'credit' ) ? 'display:none' : ''; ?>">
-                    <p><?php _e('Powered by','hueman'); ?>&nbsp;<a class="fa fa-wordpress" title="<?php _e( 'Powered by WordPress', 'hueman' ) ?>" href="<?php echo esc_url( __( 'https://wordpress.org/', 'hueman' ) ); ?>" target="_blank"></a> - <?php _e('Designed with the','hueman'); ?>&nbsp;<a href="<?php echo $hu_theme -> get('ThemeURI'); ?>" title="<?php _e('Hueman theme','hueman'); ?>"><?php _e('Hueman theme','hueman'); ?></a></p>
+                    <p><?php _e('Powered by','hueman'); ?>&nbsp;<a class="fab fa-wordpress" title="<?php _e( 'Powered by WordPress', 'hueman' ) ?>" href="<?php echo esc_url( __( 'https://wordpress.org/', 'hueman' ) ); ?>" target="_blank"></a> - <?php _e('Designed with the','hueman'); ?>&nbsp;<a href="<?php echo $hu_theme -> get('ThemeURI'); ?>" title="<?php _e('Hueman theme','hueman'); ?>"><?php _e('Hueman theme','hueman'); ?></a></p>
                   </div><!--/#credit-->
               <?php
                 $credits_html = ob_get_contents();

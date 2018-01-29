@@ -135,9 +135,9 @@ box-shadow: -1px 0 0 rgba(255,255,255,0.1); }
   display: none;
 }
 .topbar-toggle-down i {
-  font-size: 38px;
+  font-size: 30px;
   color: #fff;
-  padding: 6px 0;
+  padding: 10px 0;
   -webkit-transition: -webkit-transform, opacity, .25s ease;
   -moz-transition: -moz-transform, opacity, .25s ease;
   -o-transition: -o-transform, opacity, .25s ease;

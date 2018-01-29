@@ -16,7 +16,7 @@ $display_search = ( 'header' == hu_get_option( 'desktop-search' ) ) && ( 'both_m
     <?php if ( $display_search ) : ?>
       <div id="main-header-search" class="container">
         <div class="container-inner">
-          <div class="toggle-search"><i class="fa fa-search"></i></div>
+          <div class="toggle-search"><i class="fas fa-search"></i></div>
           <div class="search-expand">
             <div class="search-expand-inner"><?php get_search_form(); ?></div>
           </div>

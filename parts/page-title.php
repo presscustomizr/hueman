@@ -7,7 +7,7 @@
     		<ul class="meta-single group">
     			<li class="category"><?php the_category(' <span>/</span> '); ?></li>
     			<?php if ( comments_open() && ( hu_is_checked( 'comment-count' ) ) ): ?>
-    			<li class="comments"><a href="<?php comments_link(); ?>"><i class="fa fa-comments-o"></i><?php comments_number( '0', '1', '%' ); ?></a></li>
+    			<li class="comments"><a href="<?php comments_link(); ?>"><i class="far fa-comments"></i><?php comments_number( '0', '1', '%' ); ?></a></li>
     			<?php endif; ?>
     		</ul>
 

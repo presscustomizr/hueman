@@ -8,7 +8,7 @@
 .wp-pagenavi a,
 .wp-pagenavi span { color: #aaa; font-size: 1em; padding: 7px 8px; display: inline; margin: 0 2px; }
 .wp-pagenavi span.pages { font-size: 1.0625em; font-weight: 300; display: block; margin-bottom: 1em!important; border: none!important; }
-.wp-pagenavi span.pages:before { content: "\f15c"; font-family: FontAwesome; margin-right: 6px; }
+.wp-pagenavi span.pages:before { content: "\f15c"; font-family: 'Font Awesome 5 Free'; font-weight: 900; -moz-osx-font-smoothing: grayscale; -webkit-font-smoothing: antialiased; font-style: normal; font-variant: normal; text-rendering: auto; line-height: 1; margin-right: 6px; }
 .wp-pagenavi span.extend { border: none!important; border-bottom: 3px solid transparent; border-top: 1px solid transparent; }
 .wp-pagenavi a:hover,
 .wp-pagenavi a:active,

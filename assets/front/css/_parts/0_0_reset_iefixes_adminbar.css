@@ -45,8 +45,7 @@ body.ie8,
 /* ADMIN BAR
 -------------------------------------------------- */
 #wp-admin-bar-tc-hueman-help .ab-item:before, li#wp-admin-bar-tc-hueman-help a:before {
-  font-family: "FontAwesome";
-  speak: none;
+  font-family: 'Font Awesome\ 5 Free';
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
