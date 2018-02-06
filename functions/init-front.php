@@ -44,15 +44,17 @@ if ( ! function_exists( 'hu_get_content') ) {
 
 //helper
 //@return bool
-function hu_is_authorized_tmpl( $tmpl ) {
-    $ct_map = apply_filters(
-        'hu_content_map',
-        array( 'tmpl/index-tmpl', 'tmpl/archive-tmpl', 'tmpl/page-tmpl', 'tmpl/single-tmpl', 'tmpl/search-tmpl', 'tmpl/404-tmpl' )
-    );
-    //Are we good after filtering ?
-    if ( ! is_array( $ct_map ) || ! is_string( $tmpl ) )
-      return;
-    return in_array( $tmpl, $ct_map );
+if( ! function_exists('hu_is_authorized_tmpl') ) {
+  function hu_is_authorized_tmpl( $tmpl ) {
+      $ct_map = apply_filters(
+          'hu_content_map',
+          array( 'tmpl/index-tmpl', 'tmpl/archive-tmpl', 'tmpl/page-tmpl', 'tmpl/single-tmpl', 'tmpl/search-tmpl', 'tmpl/404-tmpl' )
+      );
+      //Are we good after filtering ?
+      if ( ! is_array( $ct_map ) || ! is_string( $tmpl ) )
+        return;
+      return in_array( $tmpl, $ct_map );
+  }
 }
 
 
