@@ -38,7 +38,7 @@ if( ! defined( 'HU_IS_PRO' ) ) define( 'HU_IS_PRO' , file_exists( HU_BASE . 'add
 if( ! defined( 'HU_IS_PRO_ADDONS' ) ) define( 'HU_IS_PRO_ADDONS' , false );
 
 //TEXT DOMAIN FOR TRANSLATIONS
-if( ! defined( 'THEME_TEXT_DOM' ) )       define( 'THEME_TEXT_DOM' , HU_IS_PRO ? 'hueman-pro' : 'hueman' );
+if( ! defined( 'HU_THEME_TEXT_DOM' ) )       define( 'HU_THEME_TEXT_DOM' , HU_IS_PRO ? 'hueman-pro' : 'hueman' );
 
 //HU_WEBSITE is the home website of Hueman
 if( ! defined( 'HU_WEBSITE' ) )         define( 'HU_WEBSITE' , $hu_base_data['authoruri'] );
