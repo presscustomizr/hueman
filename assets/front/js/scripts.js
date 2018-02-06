@@ -2303,7 +2303,7 @@ czrapp.methods = {};
 
               to = this._setter.apply( this, arguments );
               to = this.validate( to );
-              args = _.extend( { silent : false }, _.isObject( o ) ? o : {} );
+              var args = _.extend( { silent : false }, _.isObject( o ) ? o : {} );
               if ( null === to || _.isEqual( from, to ) ) {
                     return dfd.resolveWith( self, [ to, from, o ] ).promise();
               }
@@ -2320,7 +2320,7 @@ czrapp.methods = {};
                     });
 
                     $.when.apply( null, _promises )
-                          .fail( function() { api.errorLog( 'A deferred callback failed in api.Value::set()'); })
+                          .fail( function() { czrapp.errorLog( 'A deferred callback failed in api.Value::set()'); })
                           .then( function() {
                                 self.callbacks.fireWith( self, [ to, from, o ] );
                                 dfd.resolveWith( self, [ to, from, o ] );
@@ -2332,8 +2332,7 @@ czrapp.methods = {};
               return dfd.promise( self );
         },
         silent_set : function( to, dirtyness ) {
-              var from = this._value,
-                  _save_state = api.state('saved')();
+              var from = this._value;
 
               to = this._setter.apply( this, arguments );
               to = this.validate( to );
@@ -2345,7 +2344,7 @@ czrapp.methods = {};
               this._dirty = ( _.isUndefined( dirtyness ) || ! _.isBoolean( dirtyness ) ) ? this._dirty : dirtyness;
 
               this.callbacks.fireWith( this, [ to, from, { silent : true } ] );
-              api.state('saved')( _save_state );
+
               return this;
         },
 
@@ -4077,7 +4076,7 @@ var czrapp = czrapp || {};
                         czrapp.errorLog( 'Error when loading ' + name + ' | ' + er );
                   }
             });
-            $(function ($) {
+            $(function () {
                   _.each( newMap, function( params, name ) {
                         if ( czrapp[ name ] && czrapp[ name ].isReady && 'resolved' == czrapp[ name ].isReady.state() )
                           return;

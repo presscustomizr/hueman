@@ -2,1460 +2,1769 @@
 # This file is distributed under the same license as the Themes - Hueman package.
 msgid ""
 msgstr ""
+"Project-Id-Version: Themes - Hueman\n"
+"Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
+"POT-Creation-Date: 2018-02-06 14:43:11+00:00\n"
 "PO-Revision-Date: 2016-11-04 13:54+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Poedit 1.8.8\n"
-"Language: nl\n"
-"Project-Id-Version: Themes - Hueman\n"
-"POT-Creation-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
 
-#. Description of the plugin/theme
-msgid "Hueman is a mobile friendly WordPress theme for blogs, magazines and business websites. It's been designed to beautifully display pictures and text content, and engineered to be easy to use and fast. The Hueman theme helps you attract and retain more visitors, that's why it's already used by 70K+ active websites in the world and has received hundreds of five stars ratings."
-msgstr "Hueman is een mobiel-vriendelijk WordPress thema voor blogs, magazines en commerciële websites. Het is ontworpen om afbeeldingen en en tekstuele inhoud prachtig weer te geven en ontwikkeld om makkelijk en snel te gebruiken. Het Hueman thema helpt u meer bezoekers te trekken en te houden. Daarom wordt het wereldwijd gebruikt door meer dan 70.000 actieve websites en heeft het honderden beoordelingen met 5 sterren gekregen."
+#: comments.php:7
+msgid "No Responses"
+msgstr ""
 
-#. Theme Name of the plugin/theme
-msgid "Hueman"
+#: comments.php:7
+msgid "1 Response"
+msgstr "1 reactie"
+
+#: comments.php:7
+msgid "% Responses"
+msgstr "% reacties"
+
+#: comments.php:10 functions/class-utils-settings-map.php:1584
+msgid "Comments"
+msgstr "Reacties"
+
+#: comments.php:11
+msgid "Pingbacks"
+msgstr ""
+
+#: footer.php:115 functions/czr/czr-resources.php:44
+msgid "All Rights Reserved."
+msgstr "Alle rechten voorbehouden."
+
+#: footer.php:125
+msgid "Powered by"
+msgstr "Mogelijk gemaakt door"
+
+#: footer.php:125
+#, fuzzy
+msgid "Powered by WordPress"
+msgstr "Mogelijk gemaakt door"
+
+#: footer.php:125
+msgid "https://wordpress.org/"
+msgstr ""
+
+#: footer.php:125
+msgid "Designed with the"
+msgstr ""
+
+#: footer.php:125
+#, fuzzy
+msgid "Hueman theme"
 msgstr "Hueman"
 
-#: functions/init-front.php:172
-msgid "HIGHLIGHTS"
+#: footer.php:143 functions/init-front.php:266 sidebar.php:18
+msgid "You can set your social links here from the live customizer"
 msgstr ""
 
-#: functions/init-front.php:154
-msgid "RECENT COMMENTS"
+#: footer.php:145 parts/header-nav-mobile.php:74 sidebar.php:20
+msgid "Customize now"
 msgstr ""
 
-#: functions/init-front.php:141
-msgid "RECENT POSTS"
+#: functions/admin/class-admin-page.php:37
+msgid ""
+"<h2>As per the WordPress themes guidelines (%1$s), all the Hueman theme "
+"options have been moved to the %2$s.</h2>"
 msgstr ""
 
-#: functions/init-front.php:126
-msgid "Discover"
+#: functions/admin/class-admin-page.php:38
+msgid "more informations here"
 msgstr ""
 
-#: functions/czr/czr-resources.php:241
-msgid "blog design panel"
+#: functions/admin/class-admin-page.php:39
+msgid "customizer"
 msgstr ""
 
-#: functions/czr/czr-resources.php:238
-msgid "Jump to the %s."
-msgstr "Ga naar de %s."
-
-#: functions/czr/czr-resources.php:235
-msgid "header image is enabled"
+#: functions/admin/class-admin-page.php:42
+msgid ""
+"All your previous options have been kept and are available in the customizer "
+"options panel."
 msgstr ""
 
-#: functions/czr/czr-resources.php:232
-msgid "When the %s, this element will not be displayed in your header."
+#: functions/admin/class-admin-page.php:55
+msgid "About Hueman"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:236
-msgid "A static page"
+#: functions/admin/class-admin-page.php:83
+msgid "Thank you for using %s %s :)"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:235
-msgid "Your latest posts"
-msgstr "Je laatste berichten"
-
-#: functions/czr/class-czr-init.php:234
-msgid "Don't show any posts or page"
+#: functions/admin/class-admin-page.php:99
+msgid "The best way to start is to read the %s."
 msgstr ""
 
-#: functions/czr/class-czr-init.php:227
-msgid "Front Page Content"
+#: functions/admin/class-admin-page.php:100
+msgid "knowledge base"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1253
-msgid "Footer Menu"
+#: functions/admin/class-admin-page.php:121
+msgid "Read the documentation"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1208
-msgid "Header Menu"
+#: functions/admin/class-admin-page.php:126
+msgid "Get help in the free support forum"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1198
-msgid "Header Design : banner image, ..."
+#: functions/admin/class-admin-page.php:143
+msgid "Thank you for using the %s theme for your website."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1128
-#: functions/class-utils-settings-map.php:1136
-msgid "You can create menus and set their locations %s."
+#: functions/admin/class-admin-page.php:144
+msgid ""
+"%s %s has more features, is safer and more stable than ever to help you "
+"designing an awesome webdesign."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:726
-msgid "custom excerpt"
+#: functions/admin/class-admin-page.php:145
+msgid ""
+"For more informations about this new version of the theme, %s or check the "
+"changelog below"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:725
-msgid "The WordPress Excerpt is the summary or description of a post. By default, it will be the first words of a post, but you can write a %s if you want. You can set the number of words you want to display with this option."
+#: functions/admin/class-admin-page.php:146
+msgid "read the latest release notes"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:717
-msgid "Post Summary"
+#: functions/admin/class-admin-page.php:148
+#: functions/admin/class-admin-page.php:273
+#, fuzzy
+msgid "Changelog"
+msgstr "Aanpassen afbeelding"
+
+#: functions/admin/class-admin-page.php:152
+msgid "The best way to start with %s is to read the %s and visit the %s."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:708
-msgid "Post List Design"
+#: functions/admin/class-admin-page.php:154
+msgid "getting started guide"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:561
-#: functions/class-utils-settings-map.php:987
-msgid "Use a default page menu if no menu has been assigned."
+#: functions/admin/class-admin-page.php:155
+msgid "demo website"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:527
-msgid "Use a header banner image"
+#: functions/admin/class-admin-page.php:169
+msgid ""
+"You are using a child theme of Hueman %1$s : always check the %2$s after "
+"upgrading to see if a function or a template has been deprecated."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:172
-msgid "Display a logo in your header"
-msgstr "Toon een logo in de header"
-
-#: functions/admin/class-tgm-plugin-activation.php:2941
-msgid "Update"
-msgstr "Bijwerken"
-
-#. translators: %2$s: plugin name in screen reader markup
-#: functions/admin/class-tgm-plugin-activation.php:2832
-msgid "Activate %2$s"
+#: functions/admin/class-admin-page.php:188
+msgid "Happy user of Hueman?"
 msgstr ""
 
-#. translators: %2$s: plugin name in screen reader markup
-#: functions/admin/class-tgm-plugin-activation.php:2826
-msgid "Update %2$s"
+#: functions/admin/class-admin-page.php:189
+msgid ""
+"If you are happy with the theme, say it on wordpress.org and give Hueman a "
+"nice review!"
 msgstr ""
 
-#. translators: %2$s: plugin name in screen reader markup
-#: functions/admin/class-tgm-plugin-activation.php:2821
-msgid "Install %2$s"
+#: functions/admin/class-admin-page.php:194
+#, fuzzy
+msgid "Follow us"
+msgstr "Volg ons op"
+
+#: functions/admin/class-admin-page.php:204
+#, fuzzy
+msgid "Go Hueman Pro"
+msgstr "Hueman"
+
+#: functions/admin/class-admin-page.php:208
+msgid "Easily take your web design one step further"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2771
-msgid "Version"
+#: functions/admin/class-admin-page.php:210
+msgid ""
+"The Hueman Pro WordPress theme allows anyone to create a beautiful, "
+"professional and mobile friendly website in a few minutes. In the Pro "
+"version, you'll get all features included in the free version plus many "
+"conversion oriented ones, to help you attract and retain more visitors on "
+"your websites."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2751
-msgid "No plugins to install, update or activate."
+#: functions/admin/class-admin-page.php:213
+msgid "Discover Hueman Pro"
 msgstr ""
 
-#. translators: 1: install status, 2: update status
-#: functions/admin/class-tgm-plugin-activation.php:2560
-msgctxt "Install/Update Status"
-msgid "%1$s, %2$s"
+#: functions/admin/class-admin-page.php:223
+msgid "Go to Dashboard &rarr; Home"
+msgstr "Ga naar Dashboard &rarr; Home"
+
+#: functions/admin/class-admin-page.php:223
+msgid "Go to Dashboard"
+msgstr "Ga naar het Dashboard"
+
+#: functions/admin/class-admin-page.php:295
+msgid "System Informations"
 msgstr ""
 
-#. translators: %s: version number
-#: functions/admin/class-tgm-plugin-activation.php:2200
-msgid "TGMPA v%s"
+#: functions/admin/class-admin-page.php:296
+msgid "Please include the following informations when posting support requests"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:579
-msgid "There are one or more required or recommended plugins to install, update or activate."
+#: functions/admin/class-admin-page.php:297
+msgid ""
+"To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C "
+"(Mac)."
 msgstr ""
+
+#: functions/admin/class-admin-update-notification.php:88
+msgid "Good, you've just upgraded to"
+msgstr ""
+
+#: functions/admin/class-admin-update-notification.php:90
+msgid "version"
+msgstr "versie"
+
+#: functions/admin/class-admin-update-notification.php:99
+msgid "We'd like to introduce the new features we've been working on."
+msgstr ""
+
+#: functions/admin/class-admin-update-notification.php:101
+msgid "Read the latest release notes"
+msgstr ""
+
+#: functions/admin/class-admin-update-notification.php:103
+#: functions/class-utils-settings-map.php:1637
+msgid "Upgrade to Hueman Pro"
+msgstr ""
+
+#: functions/admin/class-admin-update-notification.php:109
+msgid "I already know what's new thanks !"
+msgstr ""
+
+#: functions/admin/class-admin-update-notification.php:110
+msgid "close"
+msgstr "sluit"
+
+#: functions/admin/class-tgm-plugin-activation.php:509
+#: functions/init-admin.php:137
+msgid "Install Required Plugins"
+msgstr "Installeer de benodigde plugins"
+
+#: functions/admin/class-tgm-plugin-activation.php:510
+#: functions/init-admin.php:138
+msgid "Install Plugins"
+msgstr "Plugins installeren"
+
+#. translators: %s: plugin name.
+#: functions/admin/class-tgm-plugin-activation.php:512
+#: functions/init-admin.php:139
+msgid "Installing Plugin: %s"
+msgstr "Plugin %s wordt ge&#239;nstalleerd."
 
 #. translators: %s: plugin name.
 #: functions/admin/class-tgm-plugin-activation.php:514
 msgid "Updating Plugin: %s"
 msgstr ""
 
+#: functions/admin/class-tgm-plugin-activation.php:515
+#: functions/init-admin.php:140
+msgid "Something went wrong with the plugin API."
+msgstr "Er is iets fout gegaan met de plugin API."
+
+#. translators: 1: plugin name(s).
+#: functions/admin/class-tgm-plugin-activation.php:552
+#: functions/init-admin.php:149
+msgid "Begin installing plugin"
+msgid_plural "Begin installing plugins"
+msgstr[0] "Begin met de installatie van de plugin"
+msgstr[1] "Begin met de installatie van de plugins"
+
+#: functions/admin/class-tgm-plugin-activation.php:557
+msgid "Begin updating plugin"
+msgid_plural "Begin updating plugins"
+msgstr[0] "Begin bijwerken plugin"
+msgstr[1] "Begin bijwerken plugins"
+
+#: functions/admin/class-tgm-plugin-activation.php:562
+msgid "Begin activating plugin"
+msgid_plural "Begin activating plugins"
+msgstr[0] "Begin met activeren van plugin"
+msgstr[1] "Begin met activeren van plugins"
+
+#: functions/admin/class-tgm-plugin-activation.php:567
+#: functions/init-admin.php:151
+msgid "Return to Required Plugins Installer"
+msgstr "Ga terug naar de Benodigde Plugins Installer"
+
+#: functions/admin/class-tgm-plugin-activation.php:568
+#: functions/admin/class-tgm-plugin-activation.php:1015
+#: functions/admin/class-tgm-plugin-activation.php:2752
+#: functions/admin/class-tgm-plugin-activation.php:3799
+msgid "Return to the Dashboard"
+msgstr "Ga terug naar het dashboard"
+
+#: functions/admin/class-tgm-plugin-activation.php:569
+#: functions/admin/class-tgm-plugin-activation.php:3378
+#: functions/init-admin.php:152
+msgid "Plugin activated successfully."
+msgstr "Plugin succesvol geactiveerd."
+
+#: functions/admin/class-tgm-plugin-activation.php:570
+#: functions/admin/class-tgm-plugin-activation.php:3171
+msgid "The following plugin was activated successfully:"
+msgstr "De volgende plugin is succesvol geactiveerd:"
+
+#. translators: 1: plugin name.
+#: functions/admin/class-tgm-plugin-activation.php:572
+msgid "No action taken. Plugin %1$s was already active."
+msgstr "Geen actie ondernomen. Plugin %1$s was al actief."
+
+#. translators: 1: plugin name.
+#: functions/admin/class-tgm-plugin-activation.php:574
+msgid ""
+"Plugin not activated. A higher version of %s is needed for this theme. "
+"Please update the plugin."
+msgstr ""
+"Plugin niet geactiveerd. Een nieuwere versie van %s is nodig voor dit thema. "
+"Werk de plugin bij."
+
 #. translators: 1: dashboard link.
 #: functions/admin/class-tgm-plugin-activation.php:576
 msgid "All plugins installed and activated successfully. %1$s"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:1342
-msgid "Hueman Addons"
-msgstr ""
-
-#: functions/admin/class-tgm-plugin-activation.php:1332
-msgid "The plugin has been designed specifically for the Hueman WordPress theme. Lightweight and safe."
-msgstr ""
-
-#: functions/admin/class-tgm-plugin-activation.php:1330
-msgid "useful shortcodes"
-msgstr ""
-
-#: functions/admin/class-tgm-plugin-activation.php:1329
-msgid "social share bar"
-msgstr ""
-
-#: functions/admin/class-tgm-plugin-activation.php:1328
-msgid "The Hueman Addons is a free plugin including some cool additional features like a %1$s and %2$s."
-msgstr ""
+#: functions/admin/class-tgm-plugin-activation.php:577
+msgid "Dismiss this notice"
+msgstr "Negeer deze melding"
 
 #: functions/admin/class-tgm-plugin-activation.php:578
 msgid "Remind me later"
 msgstr ""
 
-#: functions/init-core.php:1508
-msgid "Activate Hueman Addons"
-msgid_plural "Activate installed plugins"
-msgstr[0] ""
-msgstr[1] ""
-
-#: functions/init-core.php:1503
-msgid "The Hueman Addons plugin is currently inactive: %1$s."
-msgid_plural "The following recommended plugins are currently inactive: %1$s."
-msgstr[0] ""
-msgstr[1] ""
-
-#: functions/init-core.php:1500
-msgid "The Hueman theme recommends the Hueman Addons: %1$s."
-msgid_plural "This theme recommends the following plugins: %1$s."
-msgstr[0] ""
-msgstr[1] ""
-
-#: functions/plugins-compatibility.php:203
-msgid "Featured Pages"
+#: functions/admin/class-tgm-plugin-activation.php:579
+msgid ""
+"There are one or more required or recommended plugins to install, update or "
+"activate."
 msgstr ""
 
-#: functions/plugins-compatibility.php:218
-msgid "Footer Social Links"
+#: functions/admin/class-tgm-plugin-activation.php:580
+msgid "Please contact the administrator of this site for help."
+msgstr "Neem voor hulp contact op met de beheerder van deze website."
+
+#: functions/admin/class-tgm-plugin-activation.php:705
+msgid "This plugin needs to be updated to be compatible with your theme."
+msgstr "Deze plugin moet bijgewerkt worden om geschikt te zijn voor je thema."
+
+#: functions/admin/class-tgm-plugin-activation.php:706
+msgid "Update Required"
+msgstr "Update vereist"
+
+#: functions/admin/class-tgm-plugin-activation.php:1122
+msgid ""
+"The remote plugin package does not contain a folder with the desired slug "
+"and renaming did not work."
 msgstr ""
 
-#: functions/plugins-compatibility.php:216
-msgid "Sidebar Social Links"
+#: functions/admin/class-tgm-plugin-activation.php:1122
+#: functions/admin/class-tgm-plugin-activation.php:1125
+msgid ""
+"Please contact the plugin provider and ask them to package their plugin "
+"according to the WordPress guidelines."
 msgstr ""
 
-#: functions/plugins-compatibility.php:215
-msgid "Comments metas"
+#: functions/admin/class-tgm-plugin-activation.php:1125
+msgid ""
+"The remote plugin package consists of more than one file, but the files are "
+"not packaged in a folder."
 msgstr ""
 
-#: functions/plugins-compatibility.php:214
-msgid "Single post tags"
+#: functions/admin/class-tgm-plugin-activation.php:1327
+msgid ""
+"The Hueman Addons is a free plugin providing an enhanced customization "
+"interface for the Hueman theme."
 msgstr ""
 
-#: functions/plugins-compatibility.php:213
-msgid "Post list category meta"
+#: functions/admin/class-tgm-plugin-activation.php:1329
+msgid "It also includes some cool additional features like a %1$s and %2$s."
 msgstr ""
 
-#: functions/plugins-compatibility.php:212
-msgid "Post list post metas"
+#: functions/admin/class-tgm-plugin-activation.php:1330
+msgid "social share bar"
 msgstr ""
 
-#: functions/plugins-compatibility.php:211
-msgid "Archive Type Title"
+#: functions/admin/class-tgm-plugin-activation.php:1331
+msgid "useful shortcodes"
 msgstr ""
 
-#: functions/plugins-compatibility.php:210
-msgid "Single Post tags"
+#: functions/admin/class-tgm-plugin-activation.php:1333
+msgid ""
+"The plugin has been designed specifically for the Hueman WordPress theme. "
+"Lightweight and safe."
 msgstr ""
 
-#: functions/plugins-compatibility.php:209
-msgid "Single Post Categories meta"
+#: functions/admin/class-tgm-plugin-activation.php:1343
+msgid "Hueman Addons"
 msgstr ""
 
-#: functions/plugins-compatibility.php:208
-msgid "Lists in post/pages"
+#. translators: %s: version number
+#: functions/admin/class-tgm-plugin-activation.php:2201
+msgid "TGMPA v%s"
 msgstr ""
 
-#: functions/plugins-compatibility.php:207
-msgid "Post excerpt"
+#: functions/admin/class-tgm-plugin-activation.php:2492
+msgid "Required"
+msgstr "Verplicht"
+
+#: functions/admin/class-tgm-plugin-activation.php:2495
+#: functions/init-prevdem.php:161
+msgid "Recommended"
+msgstr "Aanbevolen"
+
+#: functions/admin/class-tgm-plugin-activation.php:2511
+msgid "WordPress Repository"
+msgstr "WordPress Archief"
+
+#: functions/admin/class-tgm-plugin-activation.php:2514
+msgid "External Source"
+msgstr "Externe bron"
+
+#: functions/admin/class-tgm-plugin-activation.php:2517
+msgid "Pre-Packaged"
+msgstr "Voorverpakt"
+
+#: functions/admin/class-tgm-plugin-activation.php:2534
+msgid "Not Installed"
+msgstr "Niet geïnstalleerd"
+
+#: functions/admin/class-tgm-plugin-activation.php:2538
+msgid "Installed But Not Activated"
+msgstr "Geïnstalleerd maar niet geactiveerd"
+
+#: functions/admin/class-tgm-plugin-activation.php:2540
+msgid "Active"
+msgstr "Activeer"
+
+#: functions/admin/class-tgm-plugin-activation.php:2546
+msgid "Required Update not Available"
+msgstr "Vereiste update niet beschikbaar"
+
+#: functions/admin/class-tgm-plugin-activation.php:2549
+msgid "Requires Update"
+msgstr "Vereiste update"
+
+#: functions/admin/class-tgm-plugin-activation.php:2552
+msgid "Update recommended"
+msgstr "Update aangeraden"
+
+#. translators: 1: number of plugins.
+#: functions/admin/class-tgm-plugin-activation.php:2611
+msgid "To Install <span class=\"count\">(%s)</span>"
+msgid_plural "To Install <span class=\"count\">(%s)</span>"
+msgstr[0] "Te installeren <span class=\"count\">(%s)</span>"
+msgstr[1] "Te installeren <span class=\"count\">(%s)</span>"
+
+#. translators: 1: number of plugins.
+#: functions/admin/class-tgm-plugin-activation.php:2615
+msgid "Update Available <span class=\"count\">(%s)</span>"
+msgid_plural "Update Available <span class=\"count\">(%s)</span>"
+msgstr[0] "Update beschikbaar <span class=\"count\">(%s)</span>"
+msgstr[1] "Updates beschikbaar <span class=\"count\">(%s)</span>"
+
+#. translators: 1: number of plugins.
+#: functions/admin/class-tgm-plugin-activation.php:2619
+msgid "To Activate <span class=\"count\">(%s)</span>"
+msgid_plural "To Activate <span class=\"count\">(%s)</span>"
+msgstr[0] "Te activeren <span class=\"count\">(%s)</span>"
+msgstr[1] "Te activeren <span class=\"count\">(%s)</span>"
+
+#: functions/admin/class-tgm-plugin-activation.php:2709
+msgid "Installed version:"
+msgstr "Geïnstalleerde versie:"
+
+#: functions/admin/class-tgm-plugin-activation.php:2717
+msgid "Minimum required version:"
+msgstr "Minimaal vereiste versie:"
+
+#: functions/admin/class-tgm-plugin-activation.php:2729
+msgid "Available version:"
+msgstr "Beschikbare versie:"
+
+#: functions/admin/class-tgm-plugin-activation.php:2752
+msgid "No plugins to install, update or activate."
 msgstr ""
 
-#: functions/plugins-compatibility.php:206
-msgid "Post content"
+#: functions/admin/class-tgm-plugin-activation.php:2766
+msgid "Plugin"
+msgstr "Plugin"
+
+#: functions/admin/class-tgm-plugin-activation.php:2767
+msgid "Source"
+msgstr "Bron"
+
+#: functions/admin/class-tgm-plugin-activation.php:2768
+msgid "Type"
+msgstr "Type"
+
+#: functions/admin/class-tgm-plugin-activation.php:2772
+msgid "Version"
 msgstr ""
 
-#: functions/plugins-compatibility.php:205
-msgid "Single Page titles"
+#: functions/admin/class-tgm-plugin-activation.php:2773
+msgid "Status"
+msgstr "Status"
+
+#. translators: %2$s: plugin name in screen reader markup
+#: functions/admin/class-tgm-plugin-activation.php:2822
+msgid "Install %2$s"
 msgstr ""
 
-#: functions/plugins-compatibility.php:204
-msgid "Single Post titles"
+#. translators: %2$s: plugin name in screen reader markup
+#: functions/admin/class-tgm-plugin-activation.php:2827
+msgid "Update %2$s"
 msgstr ""
 
-#: functions/plugins-compatibility.php:202
-msgid "Top-Menu items"
+#. translators: %2$s: plugin name in screen reader markup
+#: functions/admin/class-tgm-plugin-activation.php:2833
+msgid "Activate %2$s"
 msgstr ""
 
-#: functions/czr/tmpl/modules/slide-module-tmpl.php:25
-#: functions/czr/tmpl/modules/slide-module-tmpl.php:62
-msgid "Enter a subtitle"
+#: functions/admin/class-tgm-plugin-activation.php:2903
+msgid "Upgrade message from the plugin author:"
+msgstr "Upgrade bericht van de plugin auteur:"
+
+#: functions/admin/class-tgm-plugin-activation.php:2936
+msgid "Install"
+msgstr "Installeren"
+
+#: functions/admin/class-tgm-plugin-activation.php:2942
+msgid "Update"
+msgstr "Bijwerken"
+
+#: functions/admin/class-tgm-plugin-activation.php:2945
+msgid "Activate"
+msgstr "Activeren"
+
+#: functions/admin/class-tgm-plugin-activation.php:2976
+msgid "No plugins were selected to be installed. No action taken."
+msgstr ""
+"Er zijn geen plugins geselecteerd om te installeren. Er is geen actie "
+"ondernomen."
+
+#: functions/admin/class-tgm-plugin-activation.php:2978
+msgid "No plugins were selected to be updated. No action taken."
+msgstr ""
+"Er zijn geen plugins geselecteerd om bijgewerkt te worden. Er is geen actie "
+"ondernomen."
+
+#: functions/admin/class-tgm-plugin-activation.php:3019
+msgid "No plugins are available to be installed at this time."
+msgstr "Er zijn geen plugins om te installeren op dit moment."
+
+#: functions/admin/class-tgm-plugin-activation.php:3021
+msgid "No plugins are available to be updated at this time."
+msgstr "Er zijn op dit moment geen plugins beschikbaar om bij te werken."
+
+#: functions/admin/class-tgm-plugin-activation.php:3127
+msgid "No plugins were selected to be activated. No action taken."
+msgstr ""
+"Er zijn geen plugins geselecteerd om geactiveerd te worden. Er is geen actie "
+"ondernomen."
+
+#: functions/admin/class-tgm-plugin-activation.php:3153
+msgid "No plugins are available to be activated at this time."
+msgstr "Er zijn geen plugins om te activeren op dit moment."
+
+#: functions/admin/class-tgm-plugin-activation.php:3377
+msgid "Plugin activation failed."
+msgstr "Plugin activatie mislukt."
+
+#. translators: 1: plugin name, 2: action number 3: total number of actions.
+#: functions/admin/class-tgm-plugin-activation.php:3717
+msgid "Updating Plugin %1$s (%2$d/%3$d)"
+msgstr "Plugin %1$s bijwerken (%2$d/%3$d)"
+
+#. translators: 1: plugin name, 2: error message.
+#: functions/admin/class-tgm-plugin-activation.php:3720
+msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
+msgstr ""
+"Er is een fout opgetreden tijdens de installatie van %1$s: <strong> %2$s</"
+"strong>."
+
+#. translators: 1: plugin name.
+#: functions/admin/class-tgm-plugin-activation.php:3722
+msgid "The installation of %1$s failed."
+msgstr "De installatie van %1$s is mislukt."
+
+#: functions/admin/class-tgm-plugin-activation.php:3726
+msgid ""
+"The installation and activation process is starting. This process may take a "
+"while on some hosts, so please be patient."
+msgstr ""
+"Het installatie- en activeringsproces is begonnen. Dit proces kan een tijdje "
+"duren afhankelijk van uw webhost, een moment geduld a.u.b."
+
+#. translators: 1: plugin name.
+#: functions/admin/class-tgm-plugin-activation.php:3728
+msgid "%1$s installed and activated successfully."
+msgstr "%1$s succesvol geïnstalleerd en geactiveerd."
+
+#: functions/admin/class-tgm-plugin-activation.php:3728
+#: functions/admin/class-tgm-plugin-activation.php:3736
+msgid "Show Details"
+msgstr "Details tonen"
+
+#: functions/admin/class-tgm-plugin-activation.php:3728
+#: functions/admin/class-tgm-plugin-activation.php:3736
+msgid "Hide Details"
+msgstr "Details verbergen"
+
+#: functions/admin/class-tgm-plugin-activation.php:3729
+msgid "All installations and activations have been completed."
+msgstr "Alle installaties en activeringen zijn voltooid."
+
+#. translators: 1: plugin name, 2: action number 3: total number of actions.
+#: functions/admin/class-tgm-plugin-activation.php:3731
+msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
+msgstr "Plugin %1$s (%2$d/%3$d) wordt geïnstalleerd en geactiveerd."
+
+#: functions/admin/class-tgm-plugin-activation.php:3734
+msgid ""
+"The installation process is starting. This process may take a while on some "
+"hosts, so please be patient."
+msgstr ""
+"Het installatieproces is begonnen. Dit proces kan een tijdje duren "
+"afhankelijk van uw webhost, een moment geduld a.u.b."
+
+#. translators: 1: plugin name.
+#: functions/admin/class-tgm-plugin-activation.php:3736
+msgid "%1$s installed successfully."
+msgstr "%1$s is succesvol geïnstalleerd."
+
+#: functions/admin/class-tgm-plugin-activation.php:3737
+msgid "All installations have been completed."
+msgstr "Alle installaties zijn voltooid."
+
+#. translators: 1: plugin name, 2: action number 3: total number of actions.
+#: functions/admin/class-tgm-plugin-activation.php:3739
+msgid "Installing Plugin %1$s (%2$d/%3$d)"
+msgstr "Plugin  %1$s (%2$d/%3$d) wordt geïnstalleerd"
+
+#: functions/class-utils-settings-map.php:164
+msgid "Favicon Upload (supported formats : .ico, .png, .gif)"
 msgstr ""
 
-#: functions/czr/tmpl/modules/slide-module-tmpl.php:23
-#: functions/czr/tmpl/modules/slide-module-tmpl.php:60
-msgid "Slide subtitle"
+#: functions/class-utils-settings-map.php:165
+msgid "FAVICON"
 msgstr ""
 
-#: functions/czr/tmpl/modules/slide-module-tmpl.php:17
-#: functions/czr/tmpl/modules/slide-module-tmpl.php:54
-msgid "Slide Title"
+#: functions/class-utils-settings-map.php:175
+#, fuzzy
+msgid "Display the site title in the header"
+msgstr "Toon een Help button in de admin balk."
+
+#: functions/class-utils-settings-map.php:178
+msgid "The site title is displayed when there is no logo uploaded"
 msgstr ""
 
-#: functions/czr/tmpl/modules/slide-module-tmpl.php:10
-#: functions/czr/tmpl/modules/slide-module-tmpl.php:47
-msgid "Slide Background"
-msgstr ""
+#: functions/class-utils-settings-map.php:188
+#, fuzzy
+msgid "Display a logo in the header"
+msgstr "Toon een logo in de header"
 
-#: functions/czr/czr-resources.php:441
-msgid "New Slide created ! Scroll down to edit it."
-msgstr ""
-
-#: functions/czr/czr-resources.php:438
-msgid "Close Editor"
-msgstr ""
-
-#: functions/class-utils.php:161
-msgid "Page %s"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1172
-msgid "Smooth Scroll"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:467
-msgid "Check this option to delay the loading of non visible images. Images below the viewport will be loaded dynamically on scroll. This can really boost speed performances by reducing the weight of long pages that include many images."
-msgstr ""
-
-#: functions/czr/tmpl/inputs/text_editor-input-tmpl.php:29
-msgid "Resize Editor"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:464
-msgid "Load images on scroll"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:416
-msgid "This option enables a smoother page scroll."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:413
-msgid "Enable Smooth Scrolling"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:345
-msgid "Open external links in a new tab"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:338
-#: functions/class-utils-settings-map.php:348
-msgid "This will be applied to the links included in post or page content only."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:335
-msgid "Display an icon next to external links"
-msgstr ""
-
+#: functions/class-utils-settings-map.php:193
+#: functions/class-utils-settings-map.php:637
 #: functions/czr/tmpl/modules/body_bg-module-tmpl.php:102
 msgid "here"
 msgstr "hier"
 
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:101
-msgid "Learn more"
-msgstr "Meer weten"
-
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:99
-msgid "The background-size CSS property specifies the size of the background images. The size of the image can be fully constrained or only partially in order to preserve its intrinsic ratio."
-msgstr "De CSS-property background-size bepaalt de grootte van de achtergrondafbeeldingen. De grootte van de afbeelding kan volledig beperkt worden of alleen in delen om de originele ratio te behouden."
-
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:60
-msgid "Hex Value"
-msgstr "Hex-kleur"
-
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:34
-msgid "Right Bottom"
-msgstr "Rechts beneden"
-
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:33
-msgid "Right Center"
-msgstr "Rechts midden"
-
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:32
-msgid "Right Top"
-msgstr "Rechts boven"
-
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:31
-msgid "Center Bottom"
-msgstr "Midden beneden"
-
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:30
-msgid "Center Center"
-msgstr "Midden midden"
-
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:29
-msgid "Center Top"
-msgstr "Midden boven"
-
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:28
-msgid "Left Bottom"
-msgstr "Links beneden"
-
-#: functions/czr/czr-resources.php:428
-msgid "Select position property"
-msgstr "Selecteer eigenschappen voor positie"
-
-#: functions/czr/czr-resources.php:427
-msgid "Select attachment property"
-msgstr "Selecteer eigenschappen voor bijvoegsel"
-
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:12
-msgid "Repeat Horizontally"
-msgstr "Herhaal horizontaal"
-
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:26
-msgid "Left Top"
-msgstr "Links boven"
-
-#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:61
-msgid "Choose Image"
-msgstr "Kies afbeelding"
-
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:11
-msgid "Repeat All"
-msgstr "Alles herhalen"
-
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:10
-msgid "No Repeat"
-msgstr "Niet herhalen"
-
-#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:55
-#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:60
-msgid "Select Image"
-msgstr "Selecteer afbeelding"
-
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:20
-msgid "Scroll"
-msgstr "Scroll"
-
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:19
-msgid "Fixed"
-msgstr "Vast"
-
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:14
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:21
-msgid "Inherit"
-msgstr "Inherit"
-
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:13
-msgid "Repeat Vertically"
-msgstr "Herhaal verticaal"
-
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:27
-msgid "Left Center"
-msgstr "Links midden"
-
-#: functions/czr/czr-resources.php:426
-msgid "Select repeat property"
-msgstr "Selecteer eigenschappen voor herhalen"
-
-#: functions/czr/czr-resources.php:429
-msgid "Widget Zone"
-msgstr "Widget Zone"
-
-#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:59
-msgid "No image selected"
-msgstr "Geen afbeelding geselecteerd"
-
-#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:56
-msgid "Change Image"
-msgstr "Aanpassen afbeelding"
-
-#: functions/init-core.php:1011
-msgid "The Footer Widget Zone is located before the other footer widgets and takes 100% of the width. Very appropriate to display a Google Map or an advertisement banner."
-msgstr "De Footer Widget Zone bevindt zich boven de andere footer widgets en neemt 100% van de breedte in. Zeer geschikt om Google Maps weer te geven of een advertentiebanner."
-
-#: functions/init-core.php:1009 functions/init-core.php:1085
-msgid "Footer Full Width"
-msgstr "Footer volledige breedte"
-
-#: functions/init-core.php:1002
-msgid "The Header Widget Zone is located next to your logo or site title."
-msgstr "De Header Widget Zone bevindt zich naast je logo of site titel."
-
-#: functions/init-core.php:1000 functions/init-core.php:1084
-msgid "Header (next to logo / title)"
-msgstr "Header (naast logo / titel)"
-
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:17
-msgid "Give it a name"
-msgstr "Geef het een naam"
-
-#: functions/czr/tmpl/modules/slide-module-tmpl.php:19
-#: functions/czr/tmpl/modules/slide-module-tmpl.php:56
-#: functions/czr/tmpl/modules/social-module-tmpl.php:64
-msgid "Enter a title"
-msgstr "Voer een titel in"
-
-#: functions/czr/tmpl/modules/social-module-tmpl.php:59
-msgid "Enter the full url of your social profile (must be a valid url)."
-msgstr "Geef de volledige url van je sociale profiel op (moet een geldige link zijn)."
-
-#: functions/czr/tmpl/modules/social-module-tmpl.php:21
-msgid "Enter the full url of your social profile (must be valid url)."
-msgstr "Geef de volledige url van je sociale profiel op (moet een geldige link zijn)."
-
-#: functions/czr/tmpl/modules/social-module-tmpl.php:17
-msgid "Social link url"
-msgstr "Social link url"
-
-#: functions/czr/tmpl/modules/social-module-tmpl.php:11
-msgid "Select an icon"
-msgstr "Selecteer een icoon"
-
-#: functions/czr/tmpl/modules/all-modules-tmpl.php:16
-msgid "Add it"
-msgstr "Toevoegen"
-
-#: functions/czr/tmpl/modules/all-modules-tmpl.php:16
-msgid "Cancel"
-msgstr "Annuleren"
-
-#: functions/czr/czr-resources.php:434
-msgid "Learn more about this in the documentation"
-msgstr "Leer meer hierover in de documentatie"
-
-#: functions/czr/czr-resources.php:433
-msgid "A selected location is not available with the current settings."
-msgstr "Een geselecteerde locatie is niet beschikbaar met de huidige instellingen."
-
-#: functions/czr/czr-resources.php:432
-msgid "Unavailable location. Some settings must be changed."
-msgstr "Niet beschikbare locatie. Sommige instellingen moeten veranderd worden."
-
-#: functions/czr/czr-resources.php:431
-msgid "Inactive in current context/location"
-msgstr "Inactief in huidige context/locatie"
-
-#: functions/czr/czr-resources.php:430
-msgid "New Widget Zone created ! Scroll down to edit it."
-msgstr "Nieuwe widgetgebied toegevoegd. Scroll naar beneden om te bewerken."
-
-#: functions/czr/czr-resources.php:425
-msgid "New Social Link created ! Scroll down to edit it."
-msgstr "Nieuwe social link gemaakt. Scroll naar beneden om te bewerken."
-
-#: functions/czr/czr-resources.php:424
-msgid "Done !"
-msgstr "Klaar"
-
-#: functions/czr/czr-resources.php:423
-msgid "Follow us on"
-msgstr "Volg ons op"
-
-#: functions/czr/czr-resources.php:422
-msgid "Select a social icon"
-msgstr "Selecteer een social icoon"
-
-#: functions/class-utils-settings-map.php:932
-msgid "This zone is located before the other footer widgets and takes 100% of the width. Very appropriate to display a Google Map or an advertisement banner."
-msgstr "Deze zone bevindt zich boven de andere footer widgets en neemt 100% van de breedte in. Zeer geschikt om Google Maps weer te geven of een advertentiebanner."
-
-#: functions/class-utils-settings-map.php:929
-msgid "Display a full width widget area in your footer"
-msgstr "Widget zone van volledige breedte in je footer weergeven"
-
-#: functions/class-utils-settings-map.php:768
-msgid "By default, your featured posts display the first words of their content ( the \"excerpt\"). Check this box to display the full content."
-msgstr "Standaard worden van je featured berichten de eerste woorden van de inhoud (\"samenvatting\") getoond. Vink dit aan om de volledige inhoud weer te geven."
-
-#: functions/class-utils-settings-map.php:765
-msgid "Display the full post content"
-msgstr "Volledige inhoud van bericht weergeven"
-
-#: parts/single-author-date.php:13
-msgid "Published"
-msgstr "Gepubliceerd"
-
-#: functions/init-meta-boxes.php:36
-msgid "Notes : 1)This will override any default settings of the customizer options panel. 2) The secondary sidebar is placed on the right in a 3 columns layout."
-msgstr "Noten: 1) Dit overschrijft elke standaard instelling in het customizer opties paneel. 2) De tweede sidebar bevindt zich rechts in een driekoloms layout."
-
-#: functions/init-meta-boxes.php:36
-msgid "Select a widget zone for the secondary sidebar."
-msgstr "Selecteer een widget zone voor de tweede sidebar."
-
-#: functions/init-meta-boxes.php:30
-msgid "Notes : 1)This will override any default settings of the customizer options panel. 2) The primary sidebar is placed on the left in a 3 columns layout. It can be on the right in a 2 columns layout, when the content is on the left."
-msgstr "Noten: 1) Dit overschrijft elke standaard instelling in het customizer opties paneel. 2) De primaire sidebar is links geplaatst bij een driekoloms layout. Kan rechts bij een tweekoloms layout wanneer de inhoud zich links bevindt."
-
-#: functions/init-meta-boxes.php:30
-msgid "Select a widget zone for the primary sidebar."
-msgstr "Selecteer een widget zone voor de primaire sidebar."
-
-#: functions/init-core.php:958
-msgid "Full width widget zone. Located in the right sidebar in a 3 columns layout."
-msgstr "Volledige breedte widget zone. Deze bevindt zich in de linker sidebar bij een driekoloms layout."
-
-#: functions/init-core.php:949
-msgid "Full width widget zone. Located in the left sidebar in a 3 columns layout. Can be on the right of a 2 columns sidebar when content is on the left."
-msgstr "Volledige breedte widget zone. Deze bevindt zich in de linker sidebar bij een driekoloms layout. Kan rechts bij een tweekoloms sidebar wanneer de inhoud zich links bevindt."
-
-#: functions/class-utils-settings-map.php:1187
-msgid "Hueman Admin Settings"
-msgstr "Hueman Admin instellingen"
-
-#: functions/class-utils-settings-map.php:1182
-msgid "Performances and SEO"
-msgstr "Prestaties en SEO"
-
-#: functions/class-utils-settings-map.php:493
-msgid "This button links to the \"About Hueman\" page."
-msgstr "Deze button linkt naar de \"Over Hueman\" pagina."
-
-#: functions/class-utils-settings-map.php:490
-msgid "Display a Help button in the admin bar"
-msgstr "Toon een Help button in de admin balk."
-
-#: functions/class-utils-settings-map.php:485
-msgid "This page is intended to provide informations about the Hueman theme : changelog, release note, documentation link. It also display informations about your current install that can be useful if you need to report an issue."
-msgstr "Deze pagina is bedoeld om meer informatie over het Hueman thema te bieden: changelog, release note, documentatielink. Het geeft ook informatie weer over je huidige installatie die nodig kan zijn als je een probleem wil melden."
-
-#: functions/class-utils-settings-map.php:482
-msgid "Display the \"About Hueman\" page in the \"Appearance\" admin menu"
-msgstr "Toon de \"Over Hueman\" pagina in het \"Weergave\" admin menu."
-
-#: functions/class-utils-settings-map.php:459
-msgid "\"Structured data markup\" is a standard way to annotate your content so machines can understand it. Implementing it will help your website rank higher in search engines."
-msgstr "\"Structured data markup\" is een standaard manier om je content op te maken zodat machines het begrijpen. Als je dit implementeert kan je website hoger komen in zoekmachines."
-
-#: functions/class-utils-settings-map.php:456
-msgid "Use Structured Data Markup for your posts"
-msgstr "Gebruik Structured Data Markup voor je berichten"
-
-#: functions/class-utils-settings-map.php:451
-msgid "Unchecking this option is not recommended. Minifying css stylesheets improves performance for your website overall by decreasing the load time."
-msgstr "Uitvinken van deze optie wordt niet aanbevolen. Minifying css stylesheets bevorderen de prestaties van je website globaal door een lagere laadtijd."
-
-#: functions/class-utils-settings-map.php:448
-msgid "Use a minified stylesheet"
-msgstr "Gebruik een minified stylesheet"
-
-#: functions/class-utils-settings-map.php:313
-msgid "Footer Background"
-msgstr "Footer achtergrond"
-
-#: functions/class-utils-settings-map.php:965
-msgid "Note : Html is allowed."
-msgstr "Opmerking: HTML is toegestaan."
-
-#: functions/class-utils-settings-map.php:701
-msgid "Your blog sub-heading. Html is allowed. Note : write a blank space to hide the default content."
+#: functions/class-utils-settings-map.php:194
+msgid "Set your logo below or"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:691
-msgid "Your blog heading. Html is allowed. Note : write a blank space to hide the default content."
+#: functions/class-utils-settings-map.php:203
+msgid "Use a specific logo for mobile devices"
 msgstr ""
 
-#: functions/czr/czr-resources.php:421
-msgid "Rss"
-msgstr "Rss"
-
-#: functions/czr/czr-resources.php:420
-msgid "Not set"
-msgstr "Niet ingesteld"
-
-#: functions/init-core.php:1079
-msgid "Secondary Sidebar (on the right in a 3 columns layout)"
+#: functions/class-utils-settings-map.php:204
+msgid "Logo for mobiles"
 msgstr ""
 
-#: functions/init-core.php:1078
-msgid "Primary Sidebar (on the left in a 3 columns layout)"
-msgstr ""
-
-#: functions/init-core.php:1063
-msgid "Blog Page"
-msgstr "Blog pagina"
-
-#: functions/class-utils-settings-map.php:746
-msgid "If no specific category is selected, the featured posts block will display your latest post(s) from all categories."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:742
-msgid "Select a category to feature"
-msgstr ""
-
-#: functions/widgets/alx-video.php:23
-msgid "Display a responsive video with a YouTube or Vimeo link."
-msgstr ""
-
-#: functions/widgets/alx-video.php:21
-msgid "Hueman Videos"
-msgstr ""
-
-#: functions/widgets/alx-tabs.php:23
-msgid "List posts, comments, and/or tags with or without tabs."
-msgstr ""
-
-#: functions/widgets/alx-tabs.php:21
-msgid "Hueman Dynamic Tabs"
-msgstr ""
-
-#: functions/widgets/alx-posts.php:23
-msgid "Display posts from a category"
-msgstr ""
-
-#: functions/widgets/alx-posts.php:21
-msgid "Hueman Posts"
-msgstr ""
-
-#: functions/init-meta-boxes.php:42
-msgid "Select a layout for this page."
-msgstr ""
-
-#: functions/init-meta-boxes.php:103
-msgid "Select a widget zone for the right sidebar."
-msgstr ""
-
-#: functions/init-meta-boxes.php:42 functions/init-meta-boxes.php:97
-#: functions/init-meta-boxes.php:103
-msgid "This will override any default settings of the customizer options panel."
-msgstr ""
-
-#: functions/init-meta-boxes.php:97
-msgid "Select a widget zone for the left sidebar."
-msgstr ""
-
-#: functions/init-front.php:220
-msgid "Add widgets to the zone :"
-msgstr ""
-
-#: functions/init-front.php:214
-msgid "You can change or disable this setting by editing the options of the current post / page."
-msgstr ""
-
-#: functions/init-front.php:213
-msgid "in this post or page options."
-msgstr ""
-
-#: functions/init-front.php:211
-msgid "You have already assigned the following widget zone here : "
-msgstr ""
-
-#: functions/init-front.php:98
-msgid "You can add Widget Areas here from the customizer, in the <strong>Dynamic Sidebars and Widgets</strong> panel, or you can change the layout to remove this sidebar in <strong>Content &raquo; Layout Options for the main content</strong>."
-msgstr ""
-
-#: functions/init-front.php:97
-msgid "No widget zones available in this sidebar."
-msgstr ""
-
-#: functions/init-core.php:1412
-msgid "Need help with the Hueman theme ? Click here!"
-msgstr ""
-
-#: functions/init-core.php:1409
-msgid "Help"
-msgstr "Help"
-
-#: functions/init-core.php:1069
-msgid "404 Error Pages"
-msgstr ""
-
-#: functions/init-core.php:1068
-msgid "Search Results"
-msgstr "Zoek resultaten "
-
-#: functions/init-core.php:1067
-msgid "Categories"
-msgstr "Categorieën"
-
-#: functions/init-core.php:1066
-msgid "Archives"
-msgstr "Archieven"
-
-#: functions/init-core.php:1065
-msgid "Single Posts"
-msgstr "Enkele berichten"
-
-#: functions/init-core.php:1064 functions/init-front.php:1282
-msgid "Pages"
-msgstr "Pagina’s"
-
-#: functions/init-core.php:1061
-msgid "All contexts"
-msgstr ""
-
-#: functions/init-core.php:994
-msgid "Widgetized footer 4"
-msgstr ""
-
-#: functions/init-core.php:992 functions/init-core.php:1083
-msgid "Footer 4"
-msgstr "Voettekst 4"
-
-#: functions/init-core.php:985
-msgid "Widgetized footer 3"
-msgstr ""
-
-#: functions/init-core.php:983 functions/init-core.php:1082
-msgid "Footer 3"
-msgstr "Voettekst 3"
-
-#: functions/init-core.php:976
-msgid "Widgetized footer 2"
-msgstr ""
-
-#: functions/init-core.php:974 functions/init-core.php:1081
-msgid "Footer 2"
-msgstr "Voettekst 2"
-
-#: functions/init-core.php:967
-msgid "Widgetized footer 1"
-msgstr ""
-
-#: functions/init-core.php:965 functions/init-core.php:1080
-msgid "Footer 1"
-msgstr "Voettekst 1"
-
-#: functions/init-core.php:956
-msgid "Secondary"
-msgstr "Secundair"
-
-#: functions/init-core.php:947
-msgid "Primary"
-msgstr "Primair"
-
-#: functions/init-core.php:319
-msgid "Theme Options [OLD]"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1388
-msgid "4 Columns"
-msgstr "4 kolommen"
-
-#: functions/class-utils-settings-map.php:1384
-msgid "3 Columns"
-msgstr "3 kolommen"
-
-#: functions/class-utils-settings-map.php:1380
-msgid "2 Columns"
-msgstr "2 Kolommen"
-
-#: functions/class-utils-settings-map.php:1354
-msgid "Inherit Global Layout"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1346
-msgid "3 Columns - Content Right"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1342
-msgid "3 Columns - Content Left"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1338
-msgid "3 Columns - Content Middle"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1334
-msgid "2 Columns - Content Right"
-msgstr ""
-
+#: functions/class-utils-settings-map.php:216
 #: functions/class-utils-settings-map.php:1330
-msgid "2 Columns - Content Left"
+#: functions/czr/class-czr-init.php:114
+msgid ""
+"Upload your custom logo image. Supported formats : .jpg, .png, .gif, svg, "
+"svgz"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1326
-#: functions/class-utils-settings-map.php:1376
-msgid "1 Column"
-msgstr "1 kolom"
-
-#: functions/class-utils-settings-map.php:1307
-msgid "Choose one "
-msgstr "Kies één"
-
-#: functions/class-utils-settings-map.php:1248
-msgid "Footer Design : Logo, layout, ..."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1239
-msgid "Thumbnails Settings"
-msgstr ""
-
+#: functions/class-utils-settings-map.php:223
+#: functions/class-utils-settings-map.php:714
+#: functions/class-utils-settings-map.php:715
+#: functions/class-utils-settings-map.php:732
 #: functions/class-utils-settings-map.php:1234
-msgid "Single Posts Settings"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1228
-msgid "Blog Design and Content"
-msgstr "Blog design en content"
-
-#: functions/class-utils-settings-map.php:1223
-msgid "Sidebars : Design and Mobile Settings"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1218
-msgid "Layout options for the main content"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1203
-msgid "Header Advertisement Widget"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1177
-msgid "Mobile devices"
+#, fuzzy
+msgid "Desktop devices"
 msgstr "Mobiele apparaten"
 
-#: functions/class-utils-settings-map.php:1162
-msgid "Social links"
-msgstr "Sociale links"
-
-#: functions/class-utils-settings-map.php:1157
-msgid "General Design Options : Font, Colors, ..."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1152
-msgid "Site Identity : Logo, Title, Tagline and Site Icon"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1139
-msgid "in the menu panel"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1132
-#: functions/class-utils-settings-map.php:1140
-msgid "create/edit menus"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1131
-msgid "on the Menus screen in the Appearance section"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1125
-msgid "Your theme supports %s menu. Select which menu you would like to use."
-msgid_plural "Your theme supports %s menus. Select which menu appears in each location."
-msgstr[0] "Je thema ondersteunt %s menu. Het menu selecteren die je wilt gebruiken."
-msgstr[1] "Je thema ondersteunt %s menu&#39;s. De menu's selecteren die je wilt gebruiken op elke locatie."
-
-#: functions/class-utils-settings-map.php:1051
-msgid "Advanced settings for the Hueman theme."
-msgstr "Uitgebreide opties voor het Hueman thema."
-
-#: functions/class-utils-settings-map.php:1050
-msgid "Advanced options"
-msgstr "Uitgebreide opties"
-
-#: functions/class-utils-settings-map.php:1045
-msgid "Footer settings for the Hueman theme."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1044
-msgid "Footer"
-msgstr "Voet"
-
-#: functions/class-utils-settings-map.php:1039
-msgid "Sidebars settings for the Hueman theme."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1038
-msgid "Sidebars"
-msgstr "Zijbalk"
-
-#: functions/class-utils-settings-map.php:1033
-msgid "Content settings for the Hueman theme."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1027
-msgid "Header settings for the Hueman theme."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1026
-msgid "Header"
-msgstr "Kop"
-
-#: functions/class-utils-settings-map.php:1021
-msgid "General settings for the Hueman theme : design, comments, mobile, ..."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1020
-msgid "Global settings"
-msgstr "Globale instellingen"
-
-#: functions/class-utils-settings-map.php:970
-msgid "Footer credit text"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:961
-msgid "Replace the footer copyright text"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:945
-msgid "Upload your custom logo image"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:941
-msgid "Recommended number of columns : 3"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:937
-msgid "Select columns to enable footer widgets"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:908
-msgid "Control how the sidebar content is displayed on smartphone mobile devices (320px). Note : on smartphones the sidebars are displayed below the content."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:906
-msgid "Hide both sidebars"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:905
-msgid "Hide secondary sidebar"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:904
-msgid "Hide primary sidebar"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:903
-msgid "Display both sidebars"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:899
-msgid "Mobile Sidebar Content"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:894
-msgid "Display boxes at the top of the sidebars"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:891
-#: functions/plugins-compatibility.php:217
-msgid "Sidebar Top Boxes"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:870
-msgid "Display comment count on thumbnails"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:867
-msgid "Thumbnail Comment Count"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:862
-msgid "Display featured image placeholders if no featured image is set"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:859
-msgid "Thumbnail Placeholder"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:845
-msgid "Display links to the next and previous article"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:843
-msgid "Below content"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:836
-msgid "Single - Post Navigation"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:831
-msgid "Display randomized related articles below the post"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:829
-msgid "Related by tags"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:828
-msgid "Related by categories"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:827
-#: functions/class-utils-settings-map.php:840
-#: functions/class-utils-settings-map.php:1372
-msgid "Disable"
-msgstr "Schakel uit"
-
-#: functions/class-utils-settings-map.php:823
-msgid "Single - Related Posts"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:818
-msgid "Display post author description, if it exists"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:815
-msgid "Single - Author Bio"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:799
-msgid "If this box is checked, your featured posts will be displayed both in the featured slider and in the post list below. Usually not recommended because a given post might appear two times on the same page."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:796
-msgid "Display the featured posts also in the list of posts"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:790
-msgid "Speed of the automatic slideshow animation"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:784
-msgid "Featured Slideshow Speed"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:777
-msgid "Enables the automatic animation of the featured posts carousel."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:774
-msgid "Animate your featured posts with a slideshow"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:759
-msgid "Max number of featured posts to display. <br /><i>Set to 1 and it will show it without any slider script</i><br /><i>Set it to 0 to disable</i>"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:753
-msgid "Featured Post Count"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:736
-msgid "Check this box to display a selection of posts with a slideshow, on top of your blog."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:733
-msgid "Feature posts on top of your blog"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:731
-msgid "Featured posts"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:712
-msgid "While the default blog design is a grid of posts, you can check this option and display one post per row, whith the thumbnail beside the text."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:709
-msgid "Display your blog posts as a standard list."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:719
-msgid "Excerpt Length"
-msgstr "Uittreksel Length"
-
-#: functions/class-utils-settings-map.php:698
-msgid "Blog Sub-Heading"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:696 functions/init-front.php:407
-msgid "Blog"
-msgstr "Site"
-
-#: functions/class-utils-settings-map.php:679
-#: functions/class-utils-settings-map.php:688
-msgid "Blog Heading"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:680
-msgid "Display a custom heading for your blog."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:665
-msgid "[ <strong>is_page</strong> ] Default page layout - If a page has a set layout, it will override this."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:661
-msgid "Default Page"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:656
-msgid "[ <strong>is_404</strong> ] Error 404 page layout"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:652
-msgid "Error 404"
-msgstr "Error 404"
-
-#: functions/class-utils-settings-map.php:647
-msgid "[ <strong>is_search</strong> ] Search page layout"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:643
-msgid "Search"
-msgstr "Zoek"
-
-#: functions/class-utils-settings-map.php:638
-msgid "[ <strong>is_category</strong> ] Category archive layout"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:634
-msgid "Archive - Category"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:629
-msgid "[ <strong>is_archive</strong> ] Category, date, tag and author archive layout"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:625
-msgid "Archive"
-msgstr "Archief"
-
-#: functions/class-utils-settings-map.php:620
-msgid "[ <strong>is_single</strong> ] Single post layout - If a post has a set layout, it will override this."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:616
-msgid "Single"
-msgstr "Enige"
-
-#: functions/class-utils-settings-map.php:611
-msgid "[ <strong>is_home</strong> ] Posts homepage layout"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:607 functions/init-core.php:1062
-#: functions/init-front.php:1234
-msgid "Home"
-msgstr "Huis"
-
-#: functions/class-utils-settings-map.php:602
-msgid "Other layouts will override this option if they are set"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:598
-msgid "Global Layout"
-msgstr "Globale lay-out"
-
-#: functions/class-utils-settings-map.php:547
-msgid "Header widget area, perfect to insert advertisements. Note : this feature is not available when a header image is being displayed."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:544
-msgid "Display a widget in your header"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:530
-msgid "Upload a header image (supported formats : .jpg, .png, .gif, svg, svgz). This will disable header title/logo, site description, header ads widget"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:522
-msgid "The description that appears next to your logo"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:519
-msgid "Display your site's description (tagline)"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:181
+#: functions/class-utils-settings-map.php:223
 msgid "Header Logo Image Max-height"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:956
-#: functions/czr/class-czr-init.php:108
-msgid "Upload your custom logo image. Supported formats : .jpg, .png, .gif, svg, svgz"
-msgstr ""
-
-#: functions/czr/class-czr-init.php:97
-msgid "Custom Header Logo"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:371
-msgid "Create and organize your social links"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:434
-msgid "Hueman is a mobile friendly WordPress theme out of the box. This means that it will adapt and render nicely on any devices : desktops, laptops, tablets, smartphones. <br/>If you uncheck this box, this adaptive (or reponsive) behaviour will not be working anymore. In most of the cases, you won't need to disable this option, and it is not recommended."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:431
-msgid "Enable the Mobile Friendly (or Responsive) layout"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:400
-msgid "Comments on pages"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:397
-msgid "Pages Comments"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:392
-msgid "Comments on posts"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:389
-msgid "Posts Comments"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:270
-msgid "Set the website background color"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:269
-msgid "Body Background"
-msgstr "Body Achtergrond"
-
-#: functions/class-utils-settings-map.php:330
-msgid "Give your thumbnails and layout images rounded corners"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:324
-msgid "Image Border Radius"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:303
-msgid "Header Menu Background"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:293
-msgid "Header Background"
-msgstr "Header Achtergrond"
-
-#: functions/class-utils-settings-map.php:283
-msgid "Topbar Background"
-msgstr "Topbalk Achtergrond"
-
-#: functions/class-utils-settings-map.php:258
-msgid "Secondary Color"
-msgstr "Secundaire kleur"
-
-#: functions/class-utils-settings-map.php:248
-msgid "Primary Color"
-msgstr "Primaire Kleur"
-
-#: functions/class-utils-settings-map.php:243
-msgid "Change left and right sidebars padding"
+#: functions/class-utils-settings-map.php:223
+msgid "(in pixels)"
 msgstr ""
 
 #: functions/class-utils-settings-map.php:241
-msgid "20px padding for widgets"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:240
-msgid "30px padding for widgets"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:236
-msgid "Sidebar Width"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:231
-msgid "Max-width of the container. If you use 2 sidebars, your container should be at least 1200px.<br /><i>Note: For 720px content (default) use <strong>1380px</strong> for 2 sidebars and <strong>1120px</strong> for 1 sidebar. If you use a combination of both, try something inbetween.</i>"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:225
-msgid "Website Max-width"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:219
-msgid "Select a font for your website"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:215
 msgid "Font"
 msgstr "Lettertype"
 
-#: functions/class-utils-settings-map.php:210
-msgid "Use a boxed layout"
+#: functions/class-utils-settings-map.php:246
+msgid "Select a font for your website"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:207
+#: functions/class-utils-settings-map.php:251
+msgid "Set your website default font size in pixels."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:258
+msgid ""
+"This option sets the default font size applied to any text element of your "
+"website, when no font size is already applied."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:264
+msgid "Website Max-width"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:270
+msgid ""
+"Max-width of the container. If you use 2 sidebars, your container should be "
+"at least 1200px.<br /><i>Note: For 720px content (default) use "
+"<strong>1380px</strong> for 2 sidebars and <strong>1120px</strong> for 1 "
+"sidebar. If you use a combination of both, try something inbetween.</i>"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:275
 msgid "Boxed Layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:202
-msgid "Turn on to use the styling options below"
+#: functions/class-utils-settings-map.php:278
+msgid "Use a boxed layout"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:199
-msgid "Dynamic Styles"
+#: functions/class-utils-settings-map.php:283
+msgid "Sidebar Width"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:163
-msgid "FAVICON"
+#: functions/class-utils-settings-map.php:287
+msgid "30px padding for widgets"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:162
-msgid "Favicon Upload (supported formats : .ico, .png, .gif)"
+#: functions/class-utils-settings-map.php:288
+msgid "20px padding for widgets"
 msgstr ""
 
-#: functions/czr/tmpl/modules/social-module-tmpl.php:85
-msgid "Check this option to open the link in a another tab of the browser."
+#: functions/class-utils-settings-map.php:290
+msgid "Change left and right sidebars padding"
 msgstr ""
 
-#: functions/czr/tmpl/modules/social-module-tmpl.php:81
-msgid "Link target"
-msgstr "Link Doel"
+#: functions/class-utils-settings-map.php:299
+msgid "Primary Color"
+msgstr "Primaire Kleur"
 
-#: functions/czr/tmpl/modules/social-module-tmpl.php:74
-msgid "Set a unique color for your icon."
+#: functions/class-utils-settings-map.php:309
+msgid "Secondary Color"
+msgstr "Secundaire kleur"
+
+#: functions/class-utils-settings-map.php:320
+msgid "Body Background"
+msgstr "Body Achtergrond"
+
+#: functions/class-utils-settings-map.php:321
+msgid "Set the website background color"
 msgstr ""
 
-#: functions/czr/tmpl/modules/social-module-tmpl.php:70
-msgid "Icon color"
-msgstr "Icon kleur"
-
-#: functions/czr/tmpl/modules/social-module-tmpl.php:66
-msgid "This is the text displayed on mouse over."
+#: functions/class-utils-settings-map.php:335
+msgid "Image Border Radius"
 msgstr ""
 
-#: functions/czr/tmpl/modules/social-module-tmpl.php:19
-#: functions/czr/tmpl/modules/social-module-tmpl.php:57
-msgid "http://..."
+#: functions/class-utils-settings-map.php:341
+msgid "Give your thumbnails and layout images rounded corners"
 msgstr ""
 
-#: functions/czr/tmpl/modules/social-module-tmpl.php:55
-msgid "Social link"
+#: functions/class-utils-settings-map.php:346
+msgid "Display an icon next to external links"
 msgstr ""
 
-#: functions/czr/tmpl/modules/social-module-tmpl.php:48
-msgid "Social icon"
+#: functions/class-utils-settings-map.php:349
+#: functions/class-utils-settings-map.php:359
+msgid ""
+"This will be applied to the links included in post or page content only."
 msgstr ""
 
-#: functions/czr/tmpl/modules/social-module-tmpl.php:42
-msgid "Id"
-msgstr "Id"
-
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:120
-msgid "Pick the context(s) where this widget area will be displayed."
+#: functions/class-utils-settings-map.php:356
+msgid "Open external links in a new tab"
 msgstr ""
 
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:19
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:109
-msgid "Personalizing the name of the widget zone will help you identify it."
+#: functions/class-utils-settings-map.php:382
+msgid "Create and organize your social links"
 msgstr ""
 
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:107
-msgid "Enter a name"
+#: functions/class-utils-settings-map.php:401
+msgid "Posts Comments"
 msgstr ""
 
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:76
-msgid "Pick the contexts where this widget area will be displayed."
+#: functions/class-utils-settings-map.php:404
+msgid "Comments on posts"
 msgstr ""
 
-#: functions/czr/czr-resources.php:419
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:75
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:119
-msgid "Context(s)"
+#: functions/class-utils-settings-map.php:410
+msgid "Pages Comments"
 msgstr ""
 
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:23
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:69
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:113
-msgid "Select the pre-defined location(s) in which you will embed this widget zone."
+#: functions/class-utils-settings-map.php:413
+msgid "Comments on pages"
 msgstr ""
 
-#: functions/czr/czr-resources.php:418
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:22
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:68
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:112
-msgid "Location(s)"
+#: functions/class-utils-settings-map.php:427
+msgid "Enable Smooth Scrolling"
 msgstr ""
 
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:58
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:101
-msgid "unique id"
+#: functions/class-utils-settings-map.php:430
+msgid "This option enables a smoother page scroll."
 msgstr ""
 
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:56
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:99
-msgid "id"
-msgstr "id"
-
-#: functions/czr/tmpl/modules/all-modules-tmpl.php:23
-msgid "Are you sure you want to remove : <strong>{{ data.title }} ?</strong>"
+#: functions/class-utils-settings-map.php:445
+msgid "Enable the Mobile Friendly (or Responsive) layout"
 msgstr ""
+
+#: functions/class-utils-settings-map.php:448
+msgid ""
+"Hueman is a mobile friendly WordPress theme out of the box. This means that "
+"it will adapt and render nicely on any devices : desktops, laptops, tablets, "
+"smartphones. <br/>If you uncheck this box, this adaptive (or reponsive) "
+"behaviour will not be working anymore. In most of the cases, you won't need "
+"to disable this option, and it is not recommended."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:453
+msgid ""
+"Make font sizes flexible. Enable this option to achieve scalable headlines "
+"that fill the width of a parent element."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:456
+msgid ""
+"This option is good if you want to display a perfect font-size for your "
+"headings on any mobile devices. Note : it might override the css rules "
+"previously set in your custom stylesheet."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:469
+msgid "Include images in search results"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:484
+msgid "Use a minified stylesheet"
+msgstr "Gebruik een minified stylesheet"
+
+#: functions/class-utils-settings-map.php:487
+msgid ""
+"Unchecking this option is not recommended. Minifying css stylesheets "
+"improves performance for your website overall by decreasing the load time."
+msgstr ""
+"Uitvinken van deze optie wordt niet aanbevolen. Minifying css stylesheets "
+"bevorderen de prestaties van je website globaal door een lagere laadtijd."
+
+#: functions/class-utils-settings-map.php:492
+msgid "Use Structured Data Markup for your posts"
+msgstr "Gebruik Structured Data Markup voor je berichten"
+
+#: functions/class-utils-settings-map.php:495
+msgid ""
+"\"Structured data markup\" is a standard way to annotate your content so "
+"machines can understand it. Implementing it will help your website rank "
+"higher in search engines."
+msgstr ""
+"\"Structured data markup\" is een standaard manier om je content op te maken "
+"zodat machines het begrijpen. Als je dit implementeert kan je website hoger "
+"komen in zoekmachines."
+
+#: functions/class-utils-settings-map.php:500
+msgid "Load images on scroll"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:503
+msgid ""
+"Check this option to delay the loading of non visible images. Images below "
+"the viewport will be loaded dynamically on scroll. This can really boost "
+"speed performances by reducing the weight of long pages that include many "
+"images."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:508
+#, fuzzy
+msgid "Mobile device detection"
+msgstr "Mobiele apparaten"
+
+#: functions/class-utils-settings-map.php:511
+msgid ""
+"When checked, this option loads a small javascript file ( 30 kb ) to detect "
+"if your site is being displayed by a mobile device like a phone or a tablet. "
+"It is recommended to check this option if you are using a cache plugin."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:526
+msgid "Display the \"About Hueman\" page in the \"Appearance\" admin menu"
+msgstr "Toon de \"Over Hueman\" pagina in het \"Weergave\" admin menu."
+
+#: functions/class-utils-settings-map.php:529
+msgid ""
+"This page is intended to provide informations about the Hueman theme : "
+"changelog, release note, documentation link. It also display informations "
+"about your current install that can be useful if you need to report an issue."
+msgstr ""
+"Deze pagina is bedoeld om meer informatie over het Hueman thema te bieden: "
+"changelog, release note, documentatielink. Het geeft ook informatie weer "
+"over je huidige installatie die nodig kan zijn als je een probleem wil "
+"melden."
+
+#: functions/class-utils-settings-map.php:534
+msgid "Display a Help button in the admin bar"
+msgstr "Toon een Help button in de admin balk."
+
+#: functions/class-utils-settings-map.php:537
+msgid "This button links to the \"About Hueman\" page."
+msgstr "Deze button linkt naar de \"Over Hueman\" pagina."
+
+#: functions/class-utils-settings-map.php:557
+msgid "Display your site's description (tagline)"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:560
+msgid "The description that appears next to your logo"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:569
+msgid "Topbar Background"
+msgstr "Topbalk Achtergrond"
+
+#: functions/class-utils-settings-map.php:579
+msgid "Header Background"
+msgstr "Header Achtergrond"
+
+#: functions/class-utils-settings-map.php:589
+msgid "Header Menu Background"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:599
+#, fuzzy
+msgid "Mobile Menu Background"
+msgstr "Footer achtergrond"
+
+#: functions/class-utils-settings-map.php:609
+msgid "Apply a semi-transparent filter to the topbar and mobile menu on scroll"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:624
+msgid "Use a header banner image"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:627
+msgid ""
+"Upload a header image (supported formats : .jpg, .png, .gif, svg, svgz). "
+"This will disable header title/logo, site description, header ads widget"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:632
+msgid "Display your logo or site title, and tagline on top of the header image"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:638
+msgid "Set your logo, title and tagline"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:652
+msgid "Display a widget in your header"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:655
+msgid ""
+"Header widget area, perfect to insert advertisements. Note : this feature is "
+"not available when a header image is being displayed."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:660
+msgid "Display the header widget zone on desktop devices"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:663
+msgid ""
+"This will display your widget zone on devices with a width greater than 720 "
+"pixels : laptops and desktops."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:668
+msgid "Display the header widget zone on mobile devices"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:671
+msgid ""
+"This will display your widget zone on devices with a width smaller than 720 "
+"pixels : tablets, smartphones."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:682
+#: functions/class-utils-settings-map.php:1277
+msgid "You can create menus and set their locations %s."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:692
+#: functions/class-utils-settings-map.php:1287
+msgid "in the menu panel"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:693
+#: functions/class-utils-settings-map.php:1288
+msgid "create/edit menus"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:697
+msgid "The Hueman theme supports up to two menu locations in your header."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:702
+msgid "Topbar menu"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:702
+#: functions/class-utils-settings-map.php:1303
+msgid "Use a default page menu if no menu has been assigned."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:714
+#: functions/class-utils-settings-map.php:748
+msgid "Menus settings for"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:715
+#: functions/class-utils-settings-map.php:771
+msgid "top menu visibility on scroll"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:719
+#: functions/class-utils-settings-map.php:775
+msgid "Not visible when scrolling the page"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:720
+#: functions/class-utils-settings-map.php:776
+msgid "Reveal on scroll up"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:721
+#: functions/class-utils-settings-map.php:777
+msgid "Always visible"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:732
+#: functions/class-utils-settings-map.php:802
+msgid "display a search field"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:736
+msgid "No search field"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:737
+msgid "Display a search field in the top menu"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:738
+#, fuzzy
+msgid "Display a search field in the header menu"
+msgstr "Toon een logo in de header"
+
+#: functions/class-utils-settings-map.php:748
+#: functions/class-utils-settings-map.php:771
+#: functions/class-utils-settings-map.php:802
+#: functions/class-utils-settings-map.php:1242
+msgid "Mobile devices"
+msgstr "Mobiele apparaten"
+
+#: functions/class-utils-settings-map.php:749
+msgid "Select the menu(s) to use for mobile devices"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:753
+msgid "Header Menu"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:754
+msgid "Topbar Menu"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:755
+msgid "Specific Mobile Menu"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:756
+msgid "Topbar and header menus, logo centered"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:759
+msgid ""
+"When your visitors are using a smartphone or a tablet, the header becomes a "
+"thin bar on top, where the menu is revealed when clicking on the hamburger "
+"button. This option let you choose which menu will be displayed."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:760
+msgid ""
+"If the selected menu location has no menu assigned, the theme will try to "
+"assign another menu in this order : topbar, mobile, header."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:787
+msgid "Style of the mobile menu button"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:791
+msgid "Animated"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:792
+msgid "Simple"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:841
+msgid "Columns layout for"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:846
+msgid "Global Layout"
+msgstr "Globale lay-out"
+
+#: functions/class-utils-settings-map.php:850
+msgid "Other layouts will override this option if they are set"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:855 functions/init-front.php:1514
+#: functions/init-sidebars-widgets.php:132
+msgid "Home"
+msgstr "Huis"
+
+#: functions/class-utils-settings-map.php:859
+msgid "[ <strong>is_home</strong> ] Posts homepage layout"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:868
+msgid "Single"
+msgstr "Enige"
+
+#: functions/class-utils-settings-map.php:872
+msgid ""
+"[ <strong>is_single</strong> ] Single post layout - If a post has a set "
+"layout, it will override this."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:881
+msgid "Archive"
+msgstr "Archief"
+
+#: functions/class-utils-settings-map.php:885
+msgid ""
+"[ <strong>is_archive</strong> ] Category, date, tag and author archive layout"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:890
+msgid "Archive - Category"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:894
+msgid "[ <strong>is_category</strong> ] Category archive layout"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:899
+msgid "Search"
+msgstr "Zoek"
+
+#: functions/class-utils-settings-map.php:903
+msgid "[ <strong>is_search</strong> ] Search page layout"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:908
+msgid "Error 404"
+msgstr "Error 404"
+
+#: functions/class-utils-settings-map.php:912
+msgid "[ <strong>is_404</strong> ] Error 404 page layout"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:917
+msgid "Default Page"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:921
+msgid ""
+"[ <strong>is_page</strong> ] Default page layout - If a page has a set "
+"layout, it will override this."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:935
+#: functions/class-utils-settings-map.php:949
+msgid "Blog Heading"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:936
+msgid "Display a custom heading for your blog."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:952
+msgid ""
+"Your blog heading. Html is allowed. Note : write a blank space to hide the "
+"default content."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:962 functions/init-front.php:576
+msgid "Blog"
+msgstr "Site"
+
+#: functions/class-utils-settings-map.php:964
+msgid "Blog Sub-Heading"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:967
+msgid ""
+"Your blog sub-heading. Html is allowed. Note : write a blank space to hide "
+"the default content."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:979
+msgid "Post List Design"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:980
+msgid "Display your blog posts as a standard list."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:983
+msgid ""
+"While the default blog design is a grid of posts, you can check this option "
+"and display one post per row, whith the thumbnail beside the text."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:994
+msgid "Post Summary"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:996
+msgid "Excerpt Length"
+msgstr "Uittreksel Length"
+
+#: functions/class-utils-settings-map.php:1002
+msgid ""
+"The WordPress Excerpt is the summary or description of a post. By default, "
+"it will be the first words of a post, but you can write a %s if you want. "
+"You can set the number of words you want to display with this option."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1003
+msgid "custom excerpt"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1014
+msgid "Featured posts"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1016
+msgid "Feature posts on top of your blog"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1019
+msgid ""
+"Check this box to display a selection of posts with a slideshow, on top of "
+"your blog."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1030
+msgid "Select a category to feature"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1034
+msgid ""
+"If no specific category is selected, the featured posts block will display "
+"your latest post(s) from all categories."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1046
+msgid "Featured Post Count"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1052
+msgid ""
+"Max number of featured posts to display. <br /><i>Set to 1 and it will show "
+"it without any slider script</i><br /><i>Set it to 0 to disable</i>"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1063
+msgid "Display the full post content"
+msgstr "Volledige inhoud van bericht weergeven"
+
+#: functions/class-utils-settings-map.php:1066
+msgid ""
+"By default, your featured posts display the first words of their content "
+"( the \"excerpt\"). Check this box to display the full content."
+msgstr ""
+"Standaard worden van je featured berichten de eerste woorden van de inhoud "
+"(\"samenvatting\") getoond. Vink dit aan om de volledige inhoud weer te "
+"geven."
+
+#: functions/class-utils-settings-map.php:1077
+msgid "Animate your featured posts with a slideshow"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1080
+msgid "Enables the automatic animation of the featured posts carousel."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1092
+msgid "Featured Slideshow Speed"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1098
+msgid "Speed of the automatic slideshow animation"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1109
+msgid "Display the featured posts also in the list of posts"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1112
+msgid ""
+"If this box is checked, your featured posts will be displayed both in the "
+"featured slider and in the post list below. Usually not recommended because "
+"a given post might appear two times on the same page."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1133
+msgid "Single - Author Bio"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1137
+msgid "Display post author description, if it exists"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1143
+#, fuzzy
+msgid "Related posts"
+msgstr "Je laatste berichten"
+
+#: functions/class-utils-settings-map.php:1144
+msgid "Single - Related Posts"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1149
+#: functions/class-utils-settings-map.php:1165
+#: functions/class-utils-settings-map.php:1730
+msgid "Disable"
+msgstr "Schakel uit"
+
+#: functions/class-utils-settings-map.php:1150
+msgid "Related by categories"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1151
+msgid "Related by tags"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1153
+msgid "Display randomized related articles below the post"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1159
+msgid "Post navigation"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1160
+msgid "Post navigation in single posts"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1166
+msgid "Left Sidebar"
+msgstr "Sidebar links"
+
+#: functions/class-utils-settings-map.php:1167
+msgid "Right Sidebar"
+msgstr "Sidebar rechts"
+
+#: functions/class-utils-settings-map.php:1168
+msgid "Below content"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1170
+msgid "Display links to the next and previous article"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1189
+msgid "Thumbnail Placeholder"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1192
+msgid "Display featured image placeholders if no featured image is set"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1197
+msgid "Thumbnail Comment Count"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1200
+msgid "Display comment count on thumbnails"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1225
+#: functions/init-plugins-compat.php:431
+msgid "Sidebar Top Boxes"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1228
+msgid "Display boxes at the top of the sidebars"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1234
+#: functions/class-utils-settings-map.php:1242
+msgid "make sidebars sticky on scroll"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1237
+msgid ""
+"Glues your website's sidebars on top of the page, making them permanently "
+"visible when scrolling up and down. Useful when a sidebar is too tall or too "
+"short compared to the rest of the content."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1245
+msgid ""
+"Decide if your sidebars should be sticky on tablets and smartphones devices."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1250
+msgid "Mobile Sidebar Content"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1255
+msgid "Display both sidebars"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1256
+msgid "Hide primary sidebar"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1257
+msgid "Hide secondary sidebar"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1258
+msgid "Hide both sidebars"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1260
+msgid ""
+"Control how the sidebar content is displayed on smartphone mobile devices "
+"(320px). Note : on smartphones the sidebars are displayed below the content."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1295
+msgid "Display a full width widget area in your footer"
+msgstr "Widget zone van volledige breedte in je footer weergeven"
+
+#: functions/class-utils-settings-map.php:1298
+msgid ""
+"This zone is located before the other footer widgets and takes 100% of the "
+"width. Very appropriate to display a Google Map or an advertisement banner."
+msgstr ""
+"Deze zone bevindt zich boven de andere footer widgets en neemt 100% van de "
+"breedte in. Zeer geschikt om Google Maps weer te geven of een "
+"advertentiebanner."
+
+#: functions/class-utils-settings-map.php:1311
+msgid "Select columns to enable footer widgets"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1315
+msgid "Recommended number of columns : 3"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1319
+msgid "Upload your custom logo image"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1335
+msgid "Footer Background"
+msgstr "Footer achtergrond"
+
+#: functions/class-utils-settings-map.php:1345
+msgid "Replace the footer copyright text"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1349
+msgid "Note : Html is allowed."
+msgstr "Opmerking: HTML is toegestaan."
+
+#: functions/class-utils-settings-map.php:1354
+msgid "Footer credit text"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1385
+msgid "Web Page Design"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1386
+msgid "Title, Logo, Fonts, Colors, Background, Socials, Links"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1387
+msgid "General settings for the Hueman theme : design, comments, mobile, ..."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1393
+#, fuzzy
+msgid "Header Design"
+msgstr "Kop"
+
+#: functions/class-utils-settings-map.php:1394
+msgid "Header Image, Menu, Widget"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1395
+msgid "Header settings for the Hueman theme."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1401
+msgid "Main Body Design"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1402
+msgid "Layout, Sidebars, Blog Posts, Thumbnails"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1403
+msgid "Content settings for the Hueman theme."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1415
+#, fuzzy
+msgid "Footer Design"
+msgstr "Voettekst 4"
+
+#: functions/class-utils-settings-map.php:1416
+msgid "Logo, Layout, Menu"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1417
+msgid "Footer settings for the Hueman theme."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1423
+msgid "Advanced options"
+msgstr "Uitgebreide opties"
+
+#: functions/class-utils-settings-map.php:1424
+#, fuzzy
+msgid "Performances, SEO, CSS, Scroll"
+msgstr "Prestaties en SEO"
+
+#: functions/class-utils-settings-map.php:1425
+msgid "Advanced settings for the Hueman theme."
+msgstr "Uitgebreide opties voor het Hueman thema."
+
+#: functions/class-utils-settings-map.php:1507
+msgid "Site Identity : Logo, Title, Tagline and Site Icon"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1517
+msgid "General Design Options : Font, Colors, ..."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1522
+msgid "Social links"
+msgstr "Sociale links"
+
+#: functions/class-utils-settings-map.php:1533
+msgid "Header Design : colors and others"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1538
+#, fuzzy
+msgid "Header Image"
+msgstr "Selecteer afbeelding"
+
+#: functions/class-utils-settings-map.php:1543
+msgid "Header Advertisement Widget"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1548
+msgid "Header Menus : mobile settings, scroll behaviour, search button"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1557
+msgid "Column layout for the main content"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1562
+msgid "Sidebars : Design and Mobile Settings"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1567
+msgid "Post Lists Design and Content : Blog, Archives, Search Results"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1573
+msgid "Single Posts Settings"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1579
+msgid "Thumbnails Settings"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1594
+msgid "Footer Design : Logo, layout, ..."
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1605
+msgid "Smooth Scroll"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1610
+#, fuzzy
+msgid "Mobile Devices"
+msgstr "Mobiele apparaten"
+
+#: functions/class-utils-settings-map.php:1615
+#: functions/init-sidebars-widgets.php:138
+msgid "Search Results"
+msgstr "Zoek resultaten "
+
+#: functions/class-utils-settings-map.php:1620
+msgid "Performances and SEO"
+msgstr "Prestaties en SEO"
+
+#: functions/class-utils-settings-map.php:1625
+msgid "Hueman Admin Settings"
+msgstr "Hueman Admin instellingen"
+
+#: functions/class-utils-settings-map.php:1638
+msgid "Go Pro"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1665
+msgid "Choose one "
+msgstr "Kies één"
+
+#: functions/class-utils-settings-map.php:1684
+#: functions/class-utils-settings-map.php:1734
+msgid "1 Column"
+msgstr "1 kolom"
+
+#: functions/class-utils-settings-map.php:1688
+msgid "2 Columns - Content Left"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1692
+msgid "2 Columns - Content Right"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1696
+msgid "3 Columns - Content Middle"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1700
+msgid "3 Columns - Content Left"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1704
+msgid "3 Columns - Content Right"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1712
+msgid "Inherit Global Layout"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1738
+msgid "2 Columns"
+msgstr "2 Kolommen"
+
+#: functions/class-utils-settings-map.php:1742
+msgid "3 Columns"
+msgstr "3 kolommen"
+
+#: functions/class-utils-settings-map.php:1746
+msgid "4 Columns"
+msgstr "4 kolommen"
+
+#: functions/class-utils-settings-map.php:1771
+#: option-tree/includes/ot-functions-option-types.php:235
+msgid "No Sidebars"
+msgstr "Geen Zijbalken"
+
+#: functions/class-utils-settings-map.php:1776
+#: option-tree/includes/ot-functions-option-types.php:230
+msgid "Choose Sidebar"
+msgstr "Kies Sidebar"
+
+#: functions/class-utils.php:213
+msgid "Page %s"
+msgstr ""
+
+#: functions/czr/class-czr-init.php:103
+msgid "Custom Header Logo"
+msgstr ""
+
+#: functions/czr/class-czr-init.php:283
+msgid "Front Page Content"
+msgstr ""
+
+#: functions/czr/class-czr-init.php:292
+msgid "Don't show any posts or page"
+msgstr ""
+
+#: functions/czr/class-czr-init.php:293
+msgid "Your latest posts"
+msgstr "Je laatste berichten"
+
+#: functions/czr/class-czr-init.php:294
+msgid "A static page"
+msgstr ""
+
+#: functions/czr/class-czr-init.php:409
+msgid "SITE ICON"
+msgstr ""
+
+#: functions/czr/class-czr-init.php:465
+msgid "Create And Order Widget Areas"
+msgstr ""
+
+#: functions/czr/class-czr-init.php:469 functions/czr/class-czr-init.php:498
+msgid ""
+"You must save changes for the new areas to appear below. <br /><i>Warning: "
+"Make sure each area has a unique ID.</i>"
+msgstr ""
+
+#: functions/czr/class-czr-init.php:494
+msgid "Create And Manage Widget Areas"
+msgstr ""
+
+#: functions/czr/class-czr-init.php:505
+msgid "Create and manage widget zones"
+msgstr ""
+
+#: functions/czr/class-czr-init.php:526
+msgid "Dynamic Sidebars and Widgets"
+msgstr ""
+
+#: functions/czr/controls/class-upload-control.php:67
+msgid "Upload"
+msgstr "Uploaden"
 
 #: functions/czr/controls/class-upload-control.php:68
 #: functions/czr/tmpl/inputs/img-uploader-tmpl.php:57
@@ -1464,448 +1773,26 @@ msgstr ""
 msgid "Remove"
 msgstr "Weghalen"
 
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:65
-msgid "Background Image"
-msgstr "Achtergrond afbeelding"
+#: functions/czr/czr-resources.php:277
+msgid "Jump to the %s."
+msgstr "Ga naar de %s."
 
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:94
-msgid "Background size"
+#: functions/czr/czr-resources.php:280
+msgid "blog design panel"
 msgstr ""
 
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:87
-msgid "Background position"
-msgstr "Achtergrondpositie"
-
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:80
-msgid "Background attachment"
+#: functions/czr/czr-resources.php:283
+msgid ""
+"The menu currently displayed in your header is a default page menu, you can "
+"disable it in the %s."
 msgstr ""
 
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:73
-msgid "Repeat"
-msgstr "Herhaal"
-
-#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:58
-msgid "Color"
-msgstr "Kleur"
-
-#: functions/czr/sections/class-widgets-section.php:36
-msgid "Press return or enter to open this section"
-msgstr "Klik op enter om deze sectie te openen"
-
-#: functions/admin/class-admin-update-notification.php:107
-msgid "close"
-msgstr "sluit"
-
-#: functions/admin/class-admin-update-notification.php:106
-msgid "I already know what's new thanks !"
-msgstr ""
-
-#: functions/admin/class-admin-update-notification.php:100
-msgid "Visit the demo"
-msgstr ""
-
-#: functions/admin/class-admin-update-notification.php:98
-msgid "Read the latest release notes"
-msgstr ""
-
-#: functions/admin/class-admin-update-notification.php:96
-msgid "We'd like to introduce the new features we've been working on."
-msgstr ""
-
-#: functions/admin/class-admin-update-notification.php:85
-msgid "Good, you've just upgraded to"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:263
-msgid "To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C (Mac)."
-msgstr ""
-
-#: functions/admin/class-admin-page.php:262
-msgid "Please include the following informations when posting support requests"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:261
-msgid "System Informations"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:239
-msgid "Changelog in version %1$s"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:179
-msgid "Get help in the support forum"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:175
-msgid "Read the documentation"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:169
-msgid "support forum"
-msgstr "support forum"
-
-#: functions/admin/class-admin-page.php:167
-msgid "If you don't find an answer to your question in the documentation, don't panic :) ! The Hueman theme is used by a large number of webmasters constantly reporting bugs and potential issues. If you encounter a problem with the theme, chances are that it's already been reported and fixed in the"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:163
-msgid "documentation"
-msgstr "documentatie"
-
-#: functions/admin/class-admin-page.php:162
-msgid "The best way to start is to read the %s."
-msgstr ""
-
-#: functions/admin/class-admin-page.php:147
-msgid "Go to Dashboard"
-msgstr "Ga naar het Dashboard"
-
-#: functions/admin/class-admin-page.php:147
-msgid "Go to Dashboard &rarr; Home"
-msgstr "Ga naar Dashboard &rarr; Home"
-
-#: functions/admin/class-admin-page.php:131
-msgid "You are using a child theme of Hueman %1$s : always check the %2$s after upgrading to see if a function or a template has been deprecated."
-msgstr ""
-
-#: functions/admin/class-admin-page.php:117
-msgid "demo website"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:116
-msgid "getting started guide"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:114
-msgid "The best way to start with %s is to read the %s and visit the %s."
-msgstr ""
-
-#: functions/admin/class-admin-page.php:109
-msgid "read the latest release notes"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:108
-msgid "For more informations about this new version of the theme, %s or check the changelog below"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:106
-msgid "customizer panel"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:105
-msgid "Since version 3.0+, all the options have been moved to the %s, allowing you to design your website safely and in live preview before publishing the changes. If you just upgraded from a lower version, you'll be able to find all your previous settings in the customizer."
-msgstr ""
-
-#: functions/admin/class-admin-page.php:104
-msgid "Hueman %s has more features, is safer and more stable than ever to help you designing an awesome webdesign."
-msgstr ""
-
-#: functions/admin/class-admin-page.php:103
-msgid "Thank you for using the Hueman WordPress theme for your website."
-msgstr ""
-
-#: functions/admin/class-admin-page.php:86
-msgid "Welcome to"
-msgstr "Welkom bij"
-
-#: functions/admin/class-admin-page.php:81
-msgid "Need help with"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:53
-msgid "About Hueman"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:40
-msgid "All your previous options have been kept and are available in the customizer options panel."
-msgstr ""
-
-#: functions/admin/class-admin-page.php:37
-msgid "customizer"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:36
-msgid "more informations here"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:35
-msgid "<h2>As per the WordPress themes guidelines (%1$s), all the Hueman theme options have been moved to the %2$s.</h2>"
-msgstr ""
-
-#: functions/czr/czr-resources.php:417
-msgid "Your favicon is currently handled with an old method and will not be properly displayed on all devices. You might consider to re-upload your favicon with the new control below."
-msgstr ""
-
-#: functions/czr/class-czr-init.php:426
-msgid "Dynamic Sidebars and Widgets"
-msgstr ""
-
-#: functions/czr/class-czr-init.php:405
-msgid "Create and manage widget zones"
-msgstr ""
-
-#: functions/czr/class-czr-init.php:394
-msgid "Create And Manage Widget Areas"
-msgstr ""
-
-#: functions/czr/class-czr-init.php:368 functions/czr/class-czr-init.php:398
-msgid "You must save changes for the new areas to appear below. <br /><i>Warning: Make sure each area has a unique ID.</i>"
-msgstr ""
-
-#: functions/czr/class-czr-init.php:364
-msgid "Create And Order Widget Areas"
-msgstr ""
-
-#: functions/czr/class-czr-init.php:338
-msgid "SITE ICON"
-msgstr ""
-
-#: functions/czr/class-czr-init.php:308
-msgid "WordPress documentation"
-msgstr ""
-
-#: functions/czr/class-czr-init.php:307
-msgid "Create a new menu now"
-msgstr ""
-
-#: functions/czr/class-czr-init.php:306
-msgid "You haven't created any menu yet. %s or check the %s to learn more about menus."
-msgstr ""
-
-#: functions/czr/class-czr-init.php:296
-msgid "Assign menus to locations"
-msgstr ""
-
-#: functions/czr/class-czr-init.php:259
-msgid "&mdash; Select &mdash;"
-msgstr "&mdash; Selecteer een tabel &mdash;"
-
-#. translators: 1: plugin name, 2: action number 3: total number of actions.
-#: functions/admin/class-tgm-plugin-activation.php:3716
-msgid "Updating Plugin %1$s (%2$d/%3$d)"
-msgstr "Plugin %1$s bijwerken (%2$d/%3$d)"
-
-#: functions/admin/class-tgm-plugin-activation.php:3152
-msgid "No plugins are available to be activated at this time."
-msgstr "Er zijn geen plugins om te activeren op dit moment."
-
-#: functions/admin/class-tgm-plugin-activation.php:3126
-msgid "No plugins were selected to be activated. No action taken."
-msgstr "Er zijn geen plugins geselecteerd om geactiveerd te worden. Er is geen actie ondernomen."
-
-#: functions/admin/class-tgm-plugin-activation.php:3020
-msgid "No plugins are available to be updated at this time."
-msgstr "Er zijn op dit moment geen plugins beschikbaar om bij te werken."
-
-#: functions/admin/class-tgm-plugin-activation.php:3018
-msgid "No plugins are available to be installed at this time."
-msgstr "Er zijn geen plugins om te installeren op dit moment."
-
-#: functions/admin/class-tgm-plugin-activation.php:2977
-msgid "No plugins were selected to be updated. No action taken."
-msgstr "Er zijn geen plugins geselecteerd om bijgewerkt te worden. Er is geen actie ondernomen."
-
-#: functions/admin/class-tgm-plugin-activation.php:2975
-msgid "No plugins were selected to be installed. No action taken."
-msgstr "Er zijn geen plugins geselecteerd om te installeren. Er is geen actie ondernomen."
-
-#: parts/single-author-date.php:14
-msgid "Updated"
-msgstr "Bijgewerkt"
-
-#: functions/admin/class-tgm-plugin-activation.php:2902
-msgid "Upgrade message from the plugin author:"
-msgstr "Upgrade bericht van de plugin auteur:"
-
-#: functions/admin/class-admin-update-notification.php:87
-msgid "version"
-msgstr "versie"
-
-#: functions/admin/class-tgm-plugin-activation.php:2728
-msgid "Available version:"
-msgstr "Beschikbare versie:"
-
-#: functions/admin/class-tgm-plugin-activation.php:2716
-msgid "Minimum required version:"
-msgstr "Minimaal vereiste versie:"
-
-#: functions/admin/class-tgm-plugin-activation.php:2708
-msgid "Installed version:"
-msgstr "Geïnstalleerde versie:"
-
-#: functions/admin/class-tgm-plugin-activation.php:2700
-msgctxt "as in: \"version nr unknown\""
-msgid "unknown"
-msgstr "onbekend"
-
-#. translators: 1: number of plugins.
-#: functions/admin/class-tgm-plugin-activation.php:2618
-msgid "To Activate <span class=\"count\">(%s)</span>"
-msgid_plural "To Activate <span class=\"count\">(%s)</span>"
-msgstr[0] "Te activeren <span class=\"count\">(%s)</span>"
-msgstr[1] "Te activeren <span class=\"count\">(%s)</span>"
-
-#. translators: 1: number of plugins.
-#: functions/admin/class-tgm-plugin-activation.php:2614
-msgid "Update Available <span class=\"count\">(%s)</span>"
-msgid_plural "Update Available <span class=\"count\">(%s)</span>"
-msgstr[0] "Update beschikbaar <span class=\"count\">(%s)</span>"
-msgstr[1] "Updates beschikbaar <span class=\"count\">(%s)</span>"
-
-#. translators: 1: number of plugins.
-#: functions/admin/class-tgm-plugin-activation.php:2610
-msgid "To Install <span class=\"count\">(%s)</span>"
-msgid_plural "To Install <span class=\"count\">(%s)</span>"
-msgstr[0] "Te installeren <span class=\"count\">(%s)</span>"
-msgstr[1] "Te installeren <span class=\"count\">(%s)</span>"
-
-#. translators: 1: number of plugins.
-#: functions/admin/class-tgm-plugin-activation.php:2606
-msgctxt "plugins"
-msgid "All <span class=\"count\">(%s)</span>"
-msgid_plural "All <span class=\"count\">(%s)</span>"
-msgstr[0] "Alle <span class=\"count\">(%s)</span>"
-msgstr[1] "Alle <span class=\"count\">(%s)</span>"
-
-#: functions/admin/class-tgm-plugin-activation.php:2551
-msgid "Update recommended"
-msgstr "Update aangeraden"
-
-#: functions/admin/class-tgm-plugin-activation.php:2548
-msgid "Requires Update"
-msgstr "Vereiste update"
-
-#: functions/admin/class-tgm-plugin-activation.php:2545
-msgid "Required Update not Available"
-msgstr "Vereiste update niet beschikbaar"
-
-#: functions/admin/class-tgm-plugin-activation.php:2539
-msgid "Active"
-msgstr "Activeer"
-
-#: functions/admin/class-tgm-plugin-activation.php:2513
-msgid "External Source"
-msgstr "Externe bron"
-
-#: functions/admin/class-tgm-plugin-activation.php:1310
-#: functions/admin/class-tgm-plugin-activation.php:3166
-msgctxt "plugin A *and* plugin B"
-msgid "and"
-msgstr "en"
-
-#: functions/admin/class-tgm-plugin-activation.php:1125
-msgid "The remote plugin package consists of more than one file, but the files are not packaged in a folder."
-msgstr ""
-
-#: functions/admin/class-tgm-plugin-activation.php:1122
-#: functions/admin/class-tgm-plugin-activation.php:1125
-msgid "Please contact the plugin provider and ask them to package their plugin according to the WordPress guidelines."
-msgstr ""
-
-#: functions/admin/class-tgm-plugin-activation.php:1122
-msgid "The remote plugin package does not contain a folder with the desired slug and renaming did not work."
-msgstr ""
-
-#: functions/admin/class-tgm-plugin-activation.php:706
-msgid "Update Required"
-msgstr "Update vereist"
-
-#: functions/admin/class-tgm-plugin-activation.php:705
-msgid "This plugin needs to be updated to be compatible with your theme."
-msgstr "Deze plugin moet bijgewerkt worden om geschikt te zijn voor je thema."
-
-#: functions/admin/class-tgm-plugin-activation.php:580
-msgid "Please contact the administrator of this site for help."
-msgstr "Neem voor hulp contact op met de beheerder van deze website."
-
-#. translators: 1: plugin name.
-#: functions/admin/class-tgm-plugin-activation.php:574
-msgid "Plugin not activated. A higher version of %s is needed for this theme. Please update the plugin."
-msgstr "Plugin niet geactiveerd. Een nieuwere versie van %s is nodig voor dit thema. Werk de plugin bij."
-
-#. translators: 1: plugin name.
-#: functions/admin/class-tgm-plugin-activation.php:572
-msgid "No action taken. Plugin %1$s was already active."
-msgstr "Geen actie ondernomen. Plugin %1$s was al actief."
-
-#: functions/admin/class-tgm-plugin-activation.php:557
-msgid "Begin updating plugin"
-msgid_plural "Begin updating plugins"
-msgstr[0] "Begin bijwerken plugin"
-msgstr[1] "Begin bijwerken plugins"
-
-#: functions/admin/class-tgm-plugin-activation.php:515
-#: functions/init-core.php:1498
-msgid "Something went wrong with the plugin API."
-msgstr "Er is iets fout gegaan met de plugin API."
-
-#. Template Name of the plugin/theme
-msgid "Child Menu"
-msgstr ""
-
-#: single.php:44
-msgid "Tags:"
-msgstr "Tags: "
-
-#: single.php:28
-msgid "Pages:"
-msgstr "Pagina&#39;s:"
-
-#: parts/post-list-author-date.php:11 parts/single-author-date.php:7
-msgid "by"
-msgstr "door"
-
-#: sidebar.php:12
-msgid "Follow:"
-msgstr "Volg:"
-
-#: sidebar-2.php:9
-msgid "More"
-msgstr "Meer"
-
-#: sidebar-2.php:3 sidebar.php:6
-msgid "Expand Sidebar"
-msgstr "Sidebar uitbreiden"
-
-#: searchform.php:3
-msgid "To search type and hit enter"
-msgstr "Typ je zoekterm en druk op enter"
-
-#: search.php:12
-msgid "Please try another search:"
-msgstr "Probeer een andere zoekterm:"
-
-#: search.php:10
-msgid "For the term"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1413
-#: option-tree/includes/ot-functions-option-types.php:235
-msgid "No Sidebars"
-msgstr "Geen Zijbalken"
-
-#: functions/class-utils-settings-map.php:1418
-#: option-tree/includes/ot-functions-option-types.php:230
-msgid "Choose Sidebar"
-msgstr "Kies Sidebar"
-
-#: functions/czr/tmpl/modules/all-modules-tmpl.php:11
-msgid "Add New"
-msgstr "Toevoegen"
-
-#: option-tree/includes/ot-functions-option-types.php:441
-msgid "Add Media"
-msgstr "Media toevoegen"
-
-#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:58
-msgid "Default"
-msgstr "Standaard"
-
-#: functions/czr/tmpl/modules/social-module-tmpl.php:62
-msgid "Title"
-msgstr "Titel"
-
-#: functions/czr/czr-resources.php:415 functions/czr/czr-resources.php:437
+#: functions/czr/czr-resources.php:286
+#, fuzzy
+msgid "Header Panel"
+msgstr "Kop"
+
+#: functions/czr/czr-resources.php:537
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:32
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:45
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:103
@@ -1913,43 +1800,371 @@ msgstr "Titel"
 msgid "Edit"
 msgstr "Bewerken"
 
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:15
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:62
-#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:105
-msgid "Name"
-msgstr "Naam"
-
-#: functions/class-utils-settings-map.php:842
-msgid "Right Sidebar"
-msgstr "Sidebar rechts"
-
-#: functions/class-utils-settings-map.php:841
-msgid "Left Sidebar"
-msgstr "Sidebar links"
-
-#: functions/czr/czr-resources.php:442
-msgid "Slide"
-msgstr "Slide"
-
-#: functions/plugins-compatibility.php:227
-msgid "Featured pages"
-msgstr "Uitgelichte pagina's"
-
-#: functions/czr/czr-resources.php:416
+#: functions/czr/czr-resources.php:538
 msgid "Close"
 msgstr "Sluiten"
 
-#: option-tree/includes/ot-functions-option-types.php:457
-msgid "Remove Media"
+#: functions/czr/czr-resources.php:539
+msgid ""
+"Your favicon is currently handled with an old method and will not be "
+"properly displayed on all devices. You might consider to re-upload your "
+"favicon with the new control below."
 msgstr ""
 
-#: functions/czr/controls/class-upload-control.php:67
-msgid "Upload"
-msgstr "Uploaden"
+#: functions/czr/czr-resources.php:540
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:22
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:68
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:112
+msgid "Location(s)"
+msgstr ""
 
-#: functions/class-utils-settings-map.php:1032
-msgid "Content"
-msgstr "Inhoud"
+#: functions/czr/czr-resources.php:541
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:75
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:119
+msgid "Context(s)"
+msgstr ""
+
+#: functions/czr/czr-resources.php:542
+msgid "Not set"
+msgstr "Niet ingesteld"
+
+#: functions/czr/czr-resources.php:543
+msgid "Rss"
+msgstr "Rss"
+
+#: functions/czr/czr-resources.php:544
+msgid "Select a social icon"
+msgstr "Selecteer een social icoon"
+
+#: functions/czr/czr-resources.php:545
+msgid "Follow us on"
+msgstr "Volg ons op"
+
+#: functions/czr/czr-resources.php:546
+msgid "Done !"
+msgstr "Klaar"
+
+#: functions/czr/czr-resources.php:547
+msgid "New Social Link created ! Scroll down to edit it."
+msgstr "Nieuwe social link gemaakt. Scroll naar beneden om te bewerken."
+
+#: functions/czr/czr-resources.php:549
+msgid "Select repeat property"
+msgstr "Selecteer eigenschappen voor herhalen"
+
+#: functions/czr/czr-resources.php:550
+msgid "Select attachment property"
+msgstr "Selecteer eigenschappen voor bijvoegsel"
+
+#: functions/czr/czr-resources.php:551
+msgid "Select position property"
+msgstr "Selecteer eigenschappen voor positie"
+
+#: functions/czr/czr-resources.php:553
+msgid "Widget Zone"
+msgstr "Widget Zone"
+
+#: functions/czr/czr-resources.php:554
+msgid "New Widget Zone created ! Scroll down to edit it."
+msgstr "Nieuwe widgetgebied toegevoegd. Scroll naar beneden om te bewerken."
+
+#: functions/czr/czr-resources.php:555
+msgid "Inactive in current context/location"
+msgstr "Inactief in huidige context/locatie"
+
+#: functions/czr/czr-resources.php:556
+msgid "Unavailable location. Some settings must be changed."
+msgstr ""
+"Niet beschikbare locatie. Sommige instellingen moeten veranderd worden."
+
+#: functions/czr/czr-resources.php:557
+msgid "A selected location is not available with the current settings."
+msgstr ""
+"Een geselecteerde locatie is niet beschikbaar met de huidige instellingen."
+
+#: functions/czr/czr-resources.php:559
+msgid "Learn more about this in the documentation"
+msgstr "Leer meer hierover in de documentatie"
+
+#: functions/czr/czr-resources.php:560
+#, fuzzy
+msgid "Settings"
+msgstr "Globale instellingen"
+
+#: functions/czr/czr-resources.php:561
+msgid "Options for"
+msgstr ""
+
+#: functions/czr/czr-resources.php:565
+msgid "Reset the current customizations for"
+msgstr ""
+
+#: functions/czr/czr-resources.php:566
+msgid "Reset the theme options published sitewide"
+msgstr ""
+
+#: functions/czr/czr-resources.php:567
+msgid "Reset your website published options for"
+msgstr ""
+
+#: functions/czr/czr-resources.php:568
+msgid ""
+"Please confirm that you want to reset your current ( not published ) "
+"customizations for"
+msgstr ""
+
+#: functions/czr/czr-resources.php:569
+msgid "Your customizations have been reset for"
+msgstr ""
+
+#: functions/czr/czr-resources.php:570
+msgid ""
+"Please confirm that you want to reset your sitewide published "
+"customizations. Note : this will not reset the customizations made in other "
+"option scopes"
+msgstr ""
+
+#: functions/czr/czr-resources.php:571
+msgid "Please confirm that you want to reset your published customizations for"
+msgstr ""
+
+#: functions/czr/czr-resources.php:572
+msgid "Your published customizations have been reset for"
+msgstr ""
+
+#: functions/czr/czr-resources.php:575
+msgid "Reset your customized ( and published ) value"
+msgstr ""
+
+#: functions/czr/czr-resources.php:576 functions/czr/czr-resources.php:578
+msgid "Reset your customized ( but not yet published ) value"
+msgstr ""
+
+#: functions/czr/czr-resources.php:577
+msgid "Not customized yet, nothing to reset"
+msgstr ""
+
+#: functions/czr/czr-resources.php:579
+msgid ""
+"Please confirm that you want to reset your current customizations for this "
+"option"
+msgstr ""
+
+#: functions/czr/czr-resources.php:580
+msgid ""
+"Please confirm that you want to reset your current customizations for this "
+"option in"
+msgstr ""
+
+#: functions/czr/czr-resources.php:581
+msgid "sitewide"
+msgstr ""
+
+#: functions/czr/czr-resources.php:582
+#, fuzzy
+msgid "Your customizations have been reset"
+msgstr "Alle installaties zijn voltooid."
+
+#: functions/czr/czr-resources.php:583
+msgid "This WordPress setting can not be reset sitewide"
+msgstr ""
+
+#: functions/czr/czr-resources.php:584
+msgid "Please confirm that you want to reset this option"
+msgstr ""
+
+#: functions/czr/czr-resources.php:585
+msgid "Please confirm that you want to reset this option in"
+msgstr ""
+
+#: functions/czr/czr-resources.php:586
+msgid "The option has been reset"
+msgstr ""
+
+#: functions/czr/czr-resources.php:589
+msgid "Display informations about the scope of this option."
+msgstr ""
+
+#: functions/czr/czr-resources.php:590
+msgid "This option is always customized sitewide and cannot be reset."
+msgstr ""
+
+#: functions/czr/czr-resources.php:591
+msgid "Customized. Will be applied sitewide once published."
+msgstr ""
+
+#: functions/czr/czr-resources.php:592
+msgid "Customized. Will be applied to"
+msgstr ""
+
+#: functions/czr/czr-resources.php:593
+#, fuzzy
+msgid "once published."
+msgstr "Gepubliceerd"
+
+#: functions/czr/czr-resources.php:594
+msgid "Customized and applied sitewide."
+msgstr ""
+
+#: functions/czr/czr-resources.php:595
+msgid "Customized and applied to"
+msgstr ""
+
+#: functions/czr/czr-resources.php:596
+msgid "Default website value applied sitewide."
+msgstr ""
+
+#: functions/czr/czr-resources.php:597
+msgid "Default sitewide value."
+msgstr ""
+
+#: functions/czr/czr-resources.php:598 functions/czr/czr-resources.php:600
+msgid "You can customize this specifically for"
+msgstr ""
+
+#: functions/czr/czr-resources.php:599
+msgid "Currently inherited from"
+msgstr ""
+
+#: functions/czr/czr-resources.php:601
+msgid "The value currently applied to"
+msgstr ""
+
+#: functions/czr/czr-resources.php:602
+msgid "The value that will be applied to"
+msgstr ""
+
+#: functions/czr/czr-resources.php:603
+msgid "is set in"
+msgstr ""
+
+#: functions/czr/czr-resources.php:604
+msgid "is customized in"
+msgstr ""
+
+#: functions/czr/czr-resources.php:607
+msgid "is always customized sitewide."
+msgstr ""
+
+#: functions/czr/czr-resources.php:608
+msgid "Menus are created sitewide."
+msgstr ""
+
+#: functions/czr/czr-resources.php:609
+msgid "Widgets are created sitewide."
+msgstr ""
+
+#: functions/czr/czr-resources.php:610
+#, fuzzy
+msgid "and"
+msgstr "en"
+
+#: functions/czr/czr-resources.php:611
+msgid "Switch to scope"
+msgstr ""
+
+#: functions/czr/czr-resources.php:612
+msgid "In this context :"
+msgstr ""
+
+#: functions/czr/czr-resources.php:613
+#, fuzzy
+msgid "inherits from"
+msgstr "Inherit"
+
+#: functions/czr/czr-resources.php:614
+msgid "overridden by"
+msgstr ""
+
+#: functions/czr/czr-resources.php:617
+msgid "There was a problem when trying to load the customizer."
+msgstr ""
+
+#: functions/czr/czr-resources.php:618
+msgid "Please refer to"
+msgstr ""
+
+#: functions/czr/czr-resources.php:619
+#, fuzzy
+msgid "this documentation page"
+msgstr "documentatie"
+
+#: functions/czr/czr-resources.php:620
+msgid "to understand how to fix the problem."
+msgstr ""
+
+#: functions/czr/czr-resources.php:623
+msgid ""
+"The customizations made site wide are inherited by all other levels of "
+"customization."
+msgstr ""
+
+#: functions/czr/czr-resources.php:624
+#, fuzzy
+msgid "The current context"
+msgstr "Inactief in huidige context/locatie"
+
+#: functions/czr/czr-resources.php:625 functions/czr/czr-resources.php:628
+msgid "can be customized more specifically at the following level"
+msgstr ""
+
+#: functions/czr/czr-resources.php:626
+msgid "The current customizations will be applied to"
+msgstr ""
+
+#: functions/czr/czr-resources.php:627 functions/czr/czr-resources.php:630
+msgid "The options not customized at this level will inherit their value from"
+msgstr ""
+
+#: functions/czr/czr-resources.php:629
+msgid "can be customized with a specific set of options."
+msgstr ""
+
+#: functions/czr/panels/class-panels.php:63
+#, fuzzy
+msgid "Press return or enter to open this panel"
+msgstr "Klik op enter om deze sectie te openen"
+
+#: functions/czr/sections/class-widgets-section.php:36
+msgid "Press return or enter to open this section"
+msgstr "Klik op enter om deze sectie te openen"
+
+#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:55
+#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:60
+msgid "Select Image"
+msgstr "Selecteer afbeelding"
+
+#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:56
+msgid "Change Image"
+msgstr "Aanpassen afbeelding"
+
+#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:58
+msgid "Default"
+msgstr "Standaard"
+
+#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:59
+msgid "No image selected"
+msgstr "Geen afbeelding geselecteerd"
+
+#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:61
+msgid "Choose Image"
+msgstr "Kies afbeelding"
+
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:11
+msgid "Add New"
+msgstr "Toevoegen"
+
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:16
+msgid "Cancel"
+msgstr "Annuleren"
+
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:16
+msgid "Add it"
+msgstr "Toevoegen"
+
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:23
+msgid "Are you sure you want to remove : <strong>{{ data.title }} ?</strong>"
+msgstr ""
 
 #: functions/czr/tmpl/modules/all-modules-tmpl.php:24
 msgid "Yes"
@@ -1959,332 +2174,960 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nee"
 
-#: functions/czr/tmpl/modules/text_editor-module-tmpl.php:14
-msgid "Text"
-msgstr "Tekst"
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:10
+msgid "No Repeat"
+msgstr "Niet herhalen"
 
-#: parts/related-posts.php:6
-msgid "You may also like..."
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:11
+msgid "Repeat All"
+msgstr "Alles herhalen"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:12
+msgid "Repeat Horizontally"
+msgstr "Herhaal horizontaal"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:13
+msgid "Repeat Vertically"
+msgstr "Herhaal verticaal"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:14
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:21
+msgid "Inherit"
+msgstr "Inherit"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:19
+msgid "Fixed"
+msgstr "Vast"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:20
+msgid "Scroll"
+msgstr "Scroll"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:26
+msgid "Left Top"
+msgstr "Links boven"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:27
+msgid "Left Center"
+msgstr "Links midden"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:28
+msgid "Left Bottom"
+msgstr "Links beneden"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:29
+msgid "Center Top"
+msgstr "Midden boven"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:30
+msgid "Center Center"
+msgstr "Midden midden"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:31
+msgid "Center Bottom"
+msgstr "Midden beneden"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:32
+msgid "Right Top"
+msgstr "Rechts boven"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:33
+msgid "Right Center"
+msgstr "Rechts midden"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:34
+msgid "Right Bottom"
+msgstr "Rechts beneden"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:58
+msgid "Color"
+msgstr "Kleur"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:58
+#, fuzzy
+msgid "default"
+msgstr "Standaard"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:60
+msgid "Hex Value"
+msgstr "Hex-kleur"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:65
+msgid "Background Image"
+msgstr "Achtergrond afbeelding"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:73
+msgid "Repeat"
+msgstr "Herhaal"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:80
+msgid "Background attachment"
+msgstr ""
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:87
+msgid "Background position"
+msgstr "Achtergrondpositie"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:94
+msgid "Background size"
+msgstr ""
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:99
+msgid ""
+"The background-size CSS property specifies the size of the background "
+"images. The size of the image can be fully constrained or only partially in "
+"order to preserve its intrinsic ratio."
+msgstr ""
+"De CSS-property background-size bepaalt de grootte van de "
+"achtergrondafbeeldingen. De grootte van de afbeelding kan volledig beperkt "
+"worden of alleen in delen om de originele ratio te behouden."
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:101
+msgid "Learn more"
+msgstr "Meer weten"
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:10
+msgid "Select an icon"
+msgstr "Selecteer een icoon"
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:16
+msgid "Social link url"
+msgstr "Social link url"
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:18
+#: functions/czr/tmpl/modules/social-module-tmpl.php:50
+msgid "http://..."
+msgstr ""
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:20
+msgid "Enter the full url of your social profile (must be valid url)."
+msgstr ""
+"Geef de volledige url van je sociale profiel op (moet een geldige link zijn)."
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:26
+msgid "Size in px"
+msgstr ""
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:35
+msgid "Id"
+msgstr "Id"
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:41
+msgid "Social icon"
+msgstr ""
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:48
+msgid "Social link"
+msgstr ""
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:52
+msgid "Enter the full url of your social profile (must be a valid url)."
+msgstr ""
+"Geef de volledige url van je sociale profiel op (moet een geldige link zijn)."
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:55
+msgid "Title"
+msgstr "Titel"
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:57
+msgid "Enter a title"
+msgstr "Voer een titel in"
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:59
+msgid "This is the text displayed on mouse over."
+msgstr ""
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:63
+msgid "Icon color"
+msgstr "Icon kleur"
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:63
+#, fuzzy
+msgid "default:"
+msgstr "Standaard"
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:67
+msgid "Set a unique color for your icon."
+msgstr ""
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:74
+msgid "Link target"
+msgstr "Link Doel"
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:78
+msgid "Check this option to open the link in a another tab of the browser."
+msgstr ""
+
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:15
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:62
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:105
+msgid "Name"
+msgstr "Naam"
+
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:17
+msgid "Give it a name"
+msgstr "Geef het een naam"
+
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:19
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:109
+msgid "Personalizing the name of the widget zone will help you identify it."
+msgstr ""
+
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:23
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:69
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:113
+msgid ""
+"Select the pre-defined location(s) in which you will embed this widget zone."
+msgstr ""
+
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:56
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:99
+msgid "id"
+msgstr "id"
+
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:58
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:101
+msgid "unique id"
+msgstr ""
+
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:76
+msgid "Pick the contexts where this widget area will be displayed."
+msgstr ""
+
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:107
+msgid "Enter a name"
+msgstr ""
+
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:120
+msgid "Pick the context(s) where this widget area will be displayed."
+msgstr ""
+
+#: functions/init-admin.php:59
+msgid "Need help with the Hueman theme ? Click here!"
+msgstr ""
+
+#: functions/init-admin.php:141
+msgid "The Hueman theme requires the following plugin: %1$s."
+msgid_plural "This theme requires the following plugins: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: functions/init-admin.php:142
+msgid "The Hueman theme recommends the Hueman Addons: %1$s."
+msgid_plural "This theme recommends the following plugins: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: functions/init-admin.php:143
+msgid ""
+"Sorry, but you do not have the correct permissions to install the %s plugin. "
+"Contact the administrator of this site for help on getting the plugin "
+"installed."
+msgid_plural ""
+"Sorry, but you do not have the correct permissions to install the %s "
+"plugins. Contact the administrator of this site for help on getting the "
+"plugins installed."
+msgstr[0] ""
+"Je hebt geen toestemming om de plugin %s  te installeren. Neem contact op "
+"met de administrator"
+msgstr[1] ""
+"Je hebt geen toestemming om de plugins %s  te installeren. Neem contact op "
+"met de administrator"
+
+#: functions/init-admin.php:144
+msgid "The Hueman Addons required plugin is currently inactive: %1$s."
+msgid_plural "The following required plugins are currently inactive: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: functions/init-admin.php:145
+msgid "The Hueman Addons plugin is currently inactive: %1$s."
+msgid_plural "The following recommended plugins are currently inactive: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: functions/init-admin.php:146
+msgid ""
+"Sorry, but you do not have the correct permissions to activate the %s "
+"plugin. Contact the administrator of this site for help on getting the "
+"plugin activated."
+msgid_plural ""
+"Sorry, but you do not have the correct permissions to activate the %s "
+"plugins. Contact the administrator of this site for help on getting the "
+"plugins activated."
+msgstr[0] ""
+"Je hebt niet de juiste rechten om de plugin  %s te activeren. Neem contact "
+"op met de administrator"
+msgstr[1] ""
+"Je hebt niet de juiste rechten om de plugins  %s te activeren. Neem contact "
+"op met de administrator"
+
+#: functions/init-admin.php:147
+msgid ""
+"The Hueman Addons plugin needs to be updated to its latest version to ensure "
+"maximum compatibility with the Hueman theme: %1$s."
+msgid_plural ""
+"The following plugins need to be updated to their latest version to ensure "
+"maximum compatibility with this theme: %1$s."
+msgstr[0] ""
+"De volgende plugin moet bijgewerkt worden om goed te kunnen werken bij dit "
+"thema:  %1$s."
+msgstr[1] ""
+"De volgende plugins moeten bijgewerkt worden om goed te kunnen werken bij "
+"dit thema:  %1$s."
+
+#: functions/init-admin.php:148
+msgid ""
+"Sorry, but you do not have the correct permissions to update the %s plugin. "
+"Contact the administrator of this site for help on getting the plugin "
+"updated."
+msgid_plural ""
+"Sorry, but you do not have the correct permissions to update the %s plugins. "
+"Contact the administrator of this site for help on getting the plugins "
+"updated."
+msgstr[0] ""
+"Je hebt niet de juiste rechten om de plugin %s bij te werken. Neem contact "
+"op met de administrator"
+msgstr[1] ""
+"Je hebt niet de juiste rechten om de plugins %s bij te werken. Neem contact "
+"op met de administrator"
+
+#: functions/init-admin.php:150
+msgid "Activate Hueman Addons"
+msgid_plural "Activate installed plugins"
+msgstr[0] ""
+msgstr[1] ""
+
+#: functions/init-admin.php:153
+msgid "All plugins installed and activated successfully. %s"
+msgstr "Alle plugins zijn succesvol geïnstalleerd en geactiveerd. %s"
+
+#: functions/init-admin.php:200
+msgid "Select a widget zone for the primary sidebar."
+msgstr "Selecteer een widget zone voor de primaire sidebar."
+
+#: functions/init-admin.php:200
+msgid ""
+"Notes : 1)This will override any default settings of the customizer options "
+"panel. 2) The primary sidebar is placed on the left in a 3 columns layout. "
+"It can be on the right in a 2 columns layout, when the content is on the "
+"left."
+msgstr ""
+"Noten: 1) Dit overschrijft elke standaard instelling in het customizer "
+"opties paneel. 2) De primaire sidebar is links geplaatst bij een driekoloms "
+"layout. Kan rechts bij een tweekoloms layout wanneer de inhoud zich links "
+"bevindt."
+
+#: functions/init-admin.php:206
+msgid "Select a widget zone for the secondary sidebar."
+msgstr "Selecteer een widget zone voor de tweede sidebar."
+
+#: functions/init-admin.php:206
+msgid ""
+"Notes : 1)This will override any default settings of the customizer options "
+"panel. 2) The secondary sidebar is placed on the right in a 3 columns layout."
+msgstr ""
+"Noten: 1) Dit overschrijft elke standaard instelling in het customizer "
+"opties paneel. 2) De tweede sidebar bevindt zich rechts in een driekoloms "
+"layout."
+
+#: functions/init-admin.php:223
+msgid "Select a widget zone for the left sidebar."
+msgstr ""
+
+#: functions/init-admin.php:223 functions/init-admin.php:229
+#: functions/init-admin.php:285
+msgid ""
+"This will override any default settings of the customizer options panel."
+msgstr ""
+
+#: functions/init-admin.php:229
+msgid "Select a widget zone for the right sidebar."
+msgstr ""
+
+#: functions/init-admin.php:285
+msgid "Select a layout for this page."
+msgstr ""
+
+#: functions/init-after-setup-theme.php:97
+msgid "Topbar"
+msgstr ""
+
+#: functions/init-after-setup-theme.php:98
+msgid ""
+"Mobile. You can set a specific menu for mobile devices. If not set, the "
+"theme will use the menu assigned to the Topbar, or the Header."
+msgstr ""
+
+#: functions/init-after-setup-theme.php:99
+msgid "Header"
+msgstr "Kop"
+
+#: functions/init-after-setup-theme.php:100
+msgid "Footer"
+msgstr "Voet"
+
+#: functions/init-core.php:85
+msgid "Theme Options [OLD]"
+msgstr ""
+
+#: functions/init-front.php:193
+msgid "No widget zones available in this sidebar."
+msgstr ""
+
+#: functions/init-front.php:194
+msgid ""
+"You can add Widget Areas here from the customizer, in the <strong>Dynamic "
+"Sidebars and Widgets</strong> panel, or you can change the layout to remove "
+"this sidebar in <strong>Content &raquo; Layout Options for the main content</"
+"strong>."
+msgstr ""
+
+#: functions/init-front.php:222
+msgid "You have already assigned the following widget zone here : "
+msgstr ""
+
+#: functions/init-front.php:224
+msgid "in this post or page options."
+msgstr ""
+
+#: functions/init-front.php:225
+msgid ""
+"You can change or disable this setting by editing the options of the current "
+"post / page."
+msgstr ""
+
+#: functions/init-front.php:231
+msgid "Add widgets to the zone :"
+msgstr ""
+
+#: functions/init-front.php:431 functions/init-front.php:437
+#, fuzzy
+msgid "Home page"
+msgstr "Huis"
+
+#: functions/init-front.php:489
+msgid "Search result"
+msgstr "Zoekresultaten"
+
+#: functions/init-front.php:491
+msgid "Search results"
+msgstr "Zoekresultaten"
+
+#: functions/init-front.php:502
+msgid "Error 404."
+msgstr ""
+
+#: functions/init-front.php:503
+msgid "Page not found!"
+msgstr ""
+
+#: functions/init-front.php:515
+msgid "Author:"
+msgstr "Auteur:"
+
+#: functions/init-front.php:529
+msgid "Category:"
+msgstr "Categorie:"
+
+#: functions/init-front.php:534
+msgid "Tagged:"
+msgstr "Tags:"
+
+#: functions/init-front.php:549
+msgid "Daily Archive:"
+msgstr ""
+
+#: functions/init-front.php:554
+msgid "Monthly Archive:"
+msgstr ""
+
+#: functions/init-front.php:559
+msgid "Yearly Archive:"
+msgstr ""
+
+#: functions/init-front.php:1562 functions/init-sidebars-widgets.php:134
+msgid "Pages"
+msgstr "Pagina’s"
+
+#: functions/init-front.php:1777
+#, fuzzy
+msgid "Welcome in the Hueman theme"
+msgstr "Uitgebreide opties voor het Hueman thema."
+
+#: functions/init-front.php:1780
+msgid "The theme offers a wide range"
+msgstr ""
+
+#: functions/init-front.php:1782
+msgid "of customization options"
+msgstr ""
+
+#: functions/init-front.php:1783
+msgid "to let you create the best possible websites."
+msgstr ""
+
+#: functions/init-front.php:1786
+msgid "If you need inspiration, you can visit our online demos"
+msgstr ""
+
+#: functions/init-front.php:1788
+#, fuzzy
+msgid "Hueman Demo 1"
+msgstr "Hueman"
+
+#: functions/init-front.php:1790
+#, fuzzy
+msgid "Hueman Demo 2"
+msgstr "Hueman"
+
+#: functions/init-front.php:1793
+msgid "To help you getting started with Hueman, we have published"
+msgstr ""
+
+#: functions/init-front.php:1795
+msgid "a short guide here."
+msgstr ""
+
+#: functions/init-plugins-compat.php:414
+msgid "Top-Menu items"
+msgstr ""
+
+#: functions/init-plugins-compat.php:415
+#, fuzzy
+msgid "Slider title"
+msgstr "Voer een titel in"
+
+#: functions/init-plugins-compat.php:416
+msgid "Slider subtitle"
+msgstr ""
+
+#: functions/init-plugins-compat.php:417
+msgid "Slider button"
+msgstr ""
+
+#: functions/init-plugins-compat.php:419
+msgid "Single Post titles"
+msgstr ""
+
+#: functions/init-plugins-compat.php:420
+msgid "Single Page titles"
+msgstr ""
+
+#: functions/init-plugins-compat.php:421
+msgid "Post/Page content"
+msgstr ""
+
+#: functions/init-plugins-compat.php:422
+msgid "Post/Page excerpt"
+msgstr ""
+
+#: functions/init-plugins-compat.php:423
+msgid "Lists in post/pages"
+msgstr ""
+
+#: functions/init-plugins-compat.php:424
+msgid "Single Post Categories meta"
+msgstr ""
+
+#: functions/init-plugins-compat.php:425
+msgid "Single Post tags"
+msgstr ""
+
+#: functions/init-plugins-compat.php:426
+msgid "Archive Type Title"
+msgstr ""
+
+#: functions/init-plugins-compat.php:427
+msgid "Post list post metas"
+msgstr ""
+
+#: functions/init-plugins-compat.php:428
+msgid "Post list category meta"
+msgstr ""
+
+#: functions/init-plugins-compat.php:429
+msgid "Single post tags"
+msgstr ""
+
+#: functions/init-plugins-compat.php:430
+msgid "Comments metas"
+msgstr ""
+
+#: functions/init-plugins-compat.php:432
+msgid "Footer Social Links"
+msgstr ""
+
+#: functions/init-plugins-compat.php:445
+msgid "Featured pages"
+msgstr "Uitgelichte pagina's"
+
+#: functions/init-prevdem.php:154
+msgid "Discover"
+msgstr ""
+
+#: functions/init-prevdem.php:169
+msgid "RECENT POSTS"
+msgstr ""
+
+#: functions/init-prevdem.php:182
+msgid "RECENT COMMENTS"
+msgstr ""
+
+#: functions/init-prevdem.php:200
+msgid "HIGHLIGHTS"
+msgstr ""
+
+#: functions/init-sidebars-widgets.php:17
+msgid "Primary"
+msgstr "Primair"
+
+#: functions/init-sidebars-widgets.php:19
+msgid ""
+"Full width widget zone. Located in the left sidebar in a 3 columns layout. "
+"Can be on the right of a 2 columns sidebar when content is on the left."
+msgstr ""
+"Volledige breedte widget zone. Deze bevindt zich in de linker sidebar bij "
+"een driekoloms layout. Kan rechts bij een tweekoloms sidebar wanneer de "
+"inhoud zich links bevindt."
+
+#: functions/init-sidebars-widgets.php:26
+msgid "Secondary"
+msgstr "Secundair"
+
+#: functions/init-sidebars-widgets.php:28
+msgid ""
+"Full width widget zone. Located in the right sidebar in a 3 columns layout."
+msgstr ""
+"Volledige breedte widget zone. Deze bevindt zich in de linker sidebar bij "
+"een driekoloms layout."
+
+#: functions/init-sidebars-widgets.php:35
+#: functions/init-sidebars-widgets.php:150
+msgid "Footer 1"
+msgstr "Voettekst 1"
+
+#: functions/init-sidebars-widgets.php:37
+msgid "Widgetized footer 1"
+msgstr ""
+
+#: functions/init-sidebars-widgets.php:44
+#: functions/init-sidebars-widgets.php:151
+msgid "Footer 2"
+msgstr "Voettekst 2"
+
+#: functions/init-sidebars-widgets.php:46
+msgid "Widgetized footer 2"
+msgstr ""
+
+#: functions/init-sidebars-widgets.php:53
+#: functions/init-sidebars-widgets.php:152
+msgid "Footer 3"
+msgstr "Voettekst 3"
+
+#: functions/init-sidebars-widgets.php:55
+msgid "Widgetized footer 3"
+msgstr ""
+
+#: functions/init-sidebars-widgets.php:62
+#: functions/init-sidebars-widgets.php:153
+msgid "Footer 4"
+msgstr "Voettekst 4"
+
+#: functions/init-sidebars-widgets.php:64
+msgid "Widgetized footer 4"
+msgstr ""
+
+#: functions/init-sidebars-widgets.php:70
+#: functions/init-sidebars-widgets.php:154
+msgid "Header (next to logo / title)"
+msgstr "Header (naast logo / titel)"
+
+#: functions/init-sidebars-widgets.php:72
+msgid "The Header Widget Zone is located next to your logo or site title."
+msgstr "De Header Widget Zone bevindt zich naast je logo of site titel."
+
+#: functions/init-sidebars-widgets.php:79
+#: functions/init-sidebars-widgets.php:155
+msgid "Footer Full Width"
+msgstr "Footer volledige breedte"
+
+#: functions/init-sidebars-widgets.php:81
+msgid ""
+"The Footer Widget Zone is located before the other footer widgets and takes "
+"100% of the width. Very appropriate to display a Google Map or an "
+"advertisement banner."
+msgstr ""
+"De Footer Widget Zone bevindt zich boven de andere footer widgets en neemt "
+"100% van de breedte in. Zeer geschikt om Google Maps weer te geven of een "
+"advertentiebanner."
+
+#: functions/init-sidebars-widgets.php:131
+msgid "All contexts"
+msgstr ""
+
+#: functions/init-sidebars-widgets.php:133
+msgid "Blog Page"
+msgstr "Blog pagina"
+
+#: functions/init-sidebars-widgets.php:135
+msgid "Single Posts"
+msgstr "Enkele berichten"
+
+#: functions/init-sidebars-widgets.php:136
+msgid "Archives"
+msgstr "Archieven"
+
+#: functions/init-sidebars-widgets.php:137
+msgid "Categories"
+msgstr "Categorieën"
+
+#: functions/init-sidebars-widgets.php:139
+msgid "404 Error Pages"
+msgstr ""
+
+#: functions/init-sidebars-widgets.php:148
+msgid "Primary Sidebar (on the left in a 3 columns layout)"
+msgstr ""
+
+#: functions/init-sidebars-widgets.php:149
+msgid "Secondary Sidebar (on the right in a 3 columns layout)"
+msgstr ""
+
+#: functions/widgets/alx-posts.php:21
+msgid "Hueman Posts"
+msgstr ""
+
+#: functions/widgets/alx-posts.php:23
+msgid "Display posts from a category"
+msgstr ""
+
+#: functions/widgets/alx-tabs.php:21
+msgid "Hueman Dynamic Tabs"
+msgstr ""
+
+#: functions/widgets/alx-tabs.php:23
+msgid "List posts, comments, and/or tags with or without tabs."
+msgstr ""
+
+#: functions/widgets/alx-tabs.php:66
+msgid "Recent Posts"
+msgstr "Meest recente berichten"
+
+#: functions/widgets/alx-tabs.php:67
+msgid "Popular Posts"
+msgstr "Populaire Berichten"
+
+#: functions/widgets/alx-tabs.php:68
+msgid "Recent Comments"
+msgstr "Recente reacties"
+
+#: functions/widgets/alx-tabs.php:69
+msgid "Tags"
+msgstr "Tags"
+
+#: functions/widgets/alx-tabs.php:227
+msgid "says:"
+msgstr "zegt:"
+
+#: functions/widgets/alx-video.php:21
+msgid "Hueman Videos"
+msgstr ""
+
+#: functions/widgets/alx-video.php:23
+msgid "Display a responsive video with a YouTube or Vimeo link."
+msgstr ""
+
+#: option-tree/includes/ot-functions-option-types.php:441
+msgid "Add Media"
+msgstr "Media toevoegen"
+
+#: option-tree/includes/ot-functions-option-types.php:457
+msgid "Remove Media"
+msgstr ""
+
+#: page-templates/child-menu.php:28 tmpl/page-tmpl.php:15
+#: tmpl/single-tmpl.php:20
+msgid "Pages:"
+msgstr "Pagina&#39;s:"
+
+#: parts/header-nav-mobile.php:72
+msgid ""
+"No menu has been assigned for mobile devices yet. You can set it from the "
+"live customizer"
+msgstr ""
+
+#: parts/header-nav-topbar.php:22
+#, fuzzy
+msgid "Expand menu"
+msgstr "Sidebar uitbreiden"
+
+#: parts/header-nav-topbar.php:23
+msgid "Collapse menu"
+msgstr ""
+
+#: parts/post-list-author-date.php:11 parts/single-author-date.php:7
+msgid "by"
+msgstr "door"
+
+#: parts/post-nav.php:3
+msgid "Next story"
 msgstr ""
 
 #: parts/post-nav.php:4
 msgid "Previous story"
 msgstr ""
 
-#: parts/post-nav.php:3
-msgid "Next story"
+#: parts/related-posts.php:6
+msgid "You may also like..."
 msgstr ""
 
-#: functions/init-front.php:390
-msgid "Yearly Archive:"
+#: parts/single-author-date.php:13
+msgid "Published"
+msgstr "Gepubliceerd"
+
+#: parts/single-author-date.php:14
+msgid "Updated"
+msgstr "Bijgewerkt"
+
+#: searchform.php:3
+msgid "To search type and hit enter"
+msgstr "Typ je zoekterm en druk op enter"
+
+#: sidebar-2.php:3 sidebar.php:6
+msgid "Expand Sidebar"
+msgstr "Sidebar uitbreiden"
+
+#: sidebar-2.php:9
+msgid "More"
+msgstr "Meer"
+
+#: sidebar.php:13
+msgid "Follow:"
+msgstr "Volg:"
+
+#: tmpl/404-tmpl.php:6
+msgid ""
+"The page you are trying to reach does not exist, or has been moved. Please "
+"use the menus or the search box to find what you are looking for."
 msgstr ""
 
-#: functions/init-front.php:385
-msgid "Monthly Archive:"
+#: tmpl/search-tmpl.php:2
+msgid "For the term"
 msgstr ""
 
-#: functions/init-front.php:380
-msgid "Daily Archive:"
+#: tmpl/search-tmpl.php:4
+msgid "Please try another search:"
+msgstr "Probeer een andere zoekterm:"
+
+#: tmpl/single-tmpl.php:36
+msgid "Tags:"
+msgstr "Tags: "
+
+#. Theme Name of the plugin/theme
+msgid "Hueman"
+msgstr "Hueman"
+
+#. Theme URI of the plugin/theme
+msgid "https://presscustomizr.com/hueman/"
 msgstr ""
 
-#: functions/init-front.php:365
-msgid "Tagged:"
-msgstr "Tags:"
-
-#: functions/init-front.php:360
-msgid "Category:"
-msgstr "Categorie:"
-
-#: functions/init-front.php:346
-msgid "Author:"
-msgstr "Auteur:"
-
-#: functions/init-front.php:334
-msgid "Page not found!"
-msgstr ""
-
-#: functions/init-front.php:333
-msgid "Error 404."
-msgstr ""
-
-#: functions/init-front.php:322
-msgid "Search results"
-msgstr "Zoekresultaten"
-
-#: functions/init-front.php:320
-msgid "Search result"
-msgstr "Zoekresultaten"
-
-#: functions/widgets/alx-tabs.php:235
-msgid "says:"
-msgstr "zegt:"
-
-#: functions/widgets/alx-tabs.php:69
-msgid "Tags"
-msgstr "Tags"
-
-#: functions/widgets/alx-tabs.php:68
-msgid "Recent Comments"
-msgstr "Recente reacties"
-
-#: functions/widgets/alx-tabs.php:67
-msgid "Popular Posts"
-msgstr "Populaire Berichten"
-
-#: functions/widgets/alx-tabs.php:66
-msgid "Recent Posts"
-msgstr "Meest recente berichten"
-
-#. translators: 1: plugin name, 2: action number 3: total number of actions.
-#: functions/admin/class-tgm-plugin-activation.php:3738
-msgid "Installing Plugin %1$s (%2$d/%3$d)"
-msgstr "Plugin  %1$s (%2$d/%3$d) wordt geïnstalleerd"
-
-#: functions/admin/class-tgm-plugin-activation.php:3736
-msgid "All installations have been completed."
-msgstr "Alle installaties zijn voltooid."
-
-#. translators: 1: plugin name.
-#: functions/admin/class-tgm-plugin-activation.php:3735
-msgid "%1$s installed successfully."
-msgstr "%1$s is succesvol geïnstalleerd."
-
-#. translators: 1: plugin name.
-#: functions/admin/class-tgm-plugin-activation.php:3721
-msgid "The installation of %1$s failed."
-msgstr "De installatie van %1$s is mislukt."
-
-#. translators: 1: plugin name, 2: error message.
-#: functions/admin/class-tgm-plugin-activation.php:3719
-msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
-msgstr "Er is een fout opgetreden tijdens de installatie van %1$s: <strong> %2$s</strong>."
-
-#: functions/admin/class-tgm-plugin-activation.php:3733
-msgid "The installation process is starting. This process may take a while on some hosts, so please be patient."
-msgstr "Het installatieproces is begonnen. Dit proces kan een tijdje duren afhankelijk van uw webhost, een moment geduld a.u.b."
-
-#. translators: 1: plugin name, 2: action number 3: total number of actions.
-#: functions/admin/class-tgm-plugin-activation.php:3730
-msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
-msgstr "Plugin %1$s (%2$d/%3$d) wordt geïnstalleerd en geactiveerd."
-
-#: functions/admin/class-tgm-plugin-activation.php:3728
-msgid "All installations and activations have been completed."
-msgstr "Alle installaties en activeringen zijn voltooid."
-
-#: functions/admin/class-tgm-plugin-activation.php:3727
-#: functions/admin/class-tgm-plugin-activation.php:3735
-msgid "Hide Details"
-msgstr "Details verbergen"
-
-#: functions/admin/class-tgm-plugin-activation.php:3727
-#: functions/admin/class-tgm-plugin-activation.php:3735
-msgid "Show Details"
-msgstr "Details tonen"
-
-#. translators: 1: plugin name.
-#: functions/admin/class-tgm-plugin-activation.php:3727
-msgid "%1$s installed and activated successfully."
-msgstr "%1$s succesvol geïnstalleerd en geactiveerd."
-
-#: functions/admin/class-tgm-plugin-activation.php:3725
-msgid "The installation and activation process is starting. This process may take a while on some hosts, so please be patient."
-msgstr "Het installatie- en activeringsproces is begonnen. Dit proces kan een tijdje duren afhankelijk van uw webhost, een moment geduld a.u.b."
-
-#: functions/admin/class-tgm-plugin-activation.php:3376
-msgid "Plugin activation failed."
-msgstr "Plugin activatie mislukt."
-
-#: functions/admin/class-tgm-plugin-activation.php:2772
-msgid "Status"
-msgstr "Status"
-
-#: functions/admin/class-tgm-plugin-activation.php:2767
-msgid "Type"
-msgstr "Type"
-
-#: functions/admin/class-tgm-plugin-activation.php:2766
-msgid "Source"
-msgstr "Bron"
-
-#: functions/admin/class-tgm-plugin-activation.php:2765
-msgid "Plugin"
-msgstr "Plugin"
-
-#: functions/admin/class-tgm-plugin-activation.php:2944
-msgid "Activate"
-msgstr "Activeren"
-
-#: functions/admin/class-tgm-plugin-activation.php:2935
-msgid "Install"
-msgstr "Installeren"
-
-#: functions/admin/class-tgm-plugin-activation.php:2537
-msgid "Installed But Not Activated"
-msgstr "Geïnstalleerd maar niet geactiveerd"
-
-#: functions/admin/class-tgm-plugin-activation.php:2533
-msgid "Not Installed"
-msgstr "Niet geïnstalleerd"
-
-#: functions/admin/class-tgm-plugin-activation.php:2494
-#: functions/init-front.php:133
-msgid "Recommended"
-msgstr "Aanbevolen"
-
-#: functions/admin/class-tgm-plugin-activation.php:2491
-msgid "Required"
-msgstr "Verplicht"
-
-#: functions/admin/class-tgm-plugin-activation.php:2510
-msgid "WordPress Repository"
-msgstr "WordPress Archief"
-
-#: functions/admin/class-tgm-plugin-activation.php:2516
-msgid "Pre-Packaged"
-msgstr "Voorverpakt"
-
-#: functions/admin/class-tgm-plugin-activation.php:568
-#: functions/admin/class-tgm-plugin-activation.php:1015
-#: functions/admin/class-tgm-plugin-activation.php:2751
-#: functions/admin/class-tgm-plugin-activation.php:3798
-msgid "Return to the Dashboard"
-msgstr "Ga terug naar het dashboard"
-
-#: functions/admin/class-tgm-plugin-activation.php:577
-msgid "Dismiss this notice"
-msgstr "Negeer deze melding"
-
-#: functions/init-core.php:1511
-msgid "All plugins installed and activated successfully. %s"
-msgstr "Alle plugins zijn succesvol geïnstalleerd en geactiveerd. %s"
-
-#: functions/admin/class-tgm-plugin-activation.php:570
-#: functions/admin/class-tgm-plugin-activation.php:3170
-msgid "The following plugin was activated successfully:"
-msgstr "De volgende plugin is succesvol geactiveerd:"
-
-#: functions/admin/class-tgm-plugin-activation.php:569
-#: functions/admin/class-tgm-plugin-activation.php:3377
-#: functions/init-core.php:1510
-msgid "Plugin activated successfully."
-msgstr "Plugin succesvol geactiveerd."
-
-#: functions/admin/class-tgm-plugin-activation.php:567
-#: functions/init-core.php:1509
-msgid "Return to Required Plugins Installer"
-msgstr "Ga terug naar de Benodigde Plugins Installer"
-
-#: functions/admin/class-tgm-plugin-activation.php:562
-msgid "Begin activating plugin"
-msgid_plural "Begin activating plugins"
-msgstr[0] "Begin met activeren van plugin"
-msgstr[1] "Begin met activeren van plugins"
-
-#. translators: 1: plugin name(s).
-#: functions/admin/class-tgm-plugin-activation.php:552
-#: functions/init-core.php:1507
-msgid "Begin installing plugin"
-msgid_plural "Begin installing plugins"
-msgstr[0] "Begin met de installatie van de plugin"
-msgstr[1] "Begin met de installatie van de plugins"
-
-#: functions/init-core.php:1506
-msgid "Sorry, but you do not have the correct permissions to update the %s plugin. Contact the administrator of this site for help on getting the plugin updated."
-msgid_plural "Sorry, but you do not have the correct permissions to update the %s plugins. Contact the administrator of this site for help on getting the plugins updated."
-msgstr[0] "Je hebt niet de juiste rechten om de plugin %s bij te werken. Neem contact op met de administrator"
-msgstr[1] "Je hebt niet de juiste rechten om de plugins %s bij te werken. Neem contact op met de administrator"
-
-#: functions/init-core.php:1505
-msgid "The Hueman Addons plugin needs to be updated to its latest version to ensure maximum compatibility with the Hueman theme: %1$s."
-msgid_plural "The following plugins need to be updated to their latest version to ensure maximum compatibility with this theme: %1$s."
-msgstr[0] "De volgende plugin moet bijgewerkt worden om goed te kunnen werken bij dit thema:  %1$s."
-msgstr[1] "De volgende plugins moeten bijgewerkt worden om goed te kunnen werken bij dit thema:  %1$s."
-
-#: functions/init-core.php:1504
-msgid "Sorry, but you do not have the correct permissions to activate the %s plugin. Contact the administrator of this site for help on getting the plugin activated."
-msgid_plural "Sorry, but you do not have the correct permissions to activate the %s plugins. Contact the administrator of this site for help on getting the plugins activated."
-msgstr[0] "Je hebt niet de juiste rechten om de plugin  %s te activeren. Neem contact op met de administrator"
-msgstr[1] "Je hebt niet de juiste rechten om de plugins  %s te activeren. Neem contact op met de administrator"
-
-#: functions/init-core.php:1502
-msgid "The Hueman Addons required plugin is currently inactive: %1$s."
-msgid_plural "The following required plugins are currently inactive: %1$s."
-msgstr[0] ""
-msgstr[1] ""
-
-#: functions/init-core.php:1501
-msgid "Sorry, but you do not have the correct permissions to install the %s plugin. Contact the administrator of this site for help on getting the plugin installed."
-msgid_plural "Sorry, but you do not have the correct permissions to install the %s plugins. Contact the administrator of this site for help on getting the plugins installed."
-msgstr[0] "Je hebt geen toestemming om de plugin %s  te installeren. Neem contact op met de administrator"
-msgstr[1] "Je hebt geen toestemming om de plugins %s  te installeren. Neem contact op met de administrator"
-
-#: functions/init-core.php:1499
-msgid "The Hueman theme requires the following plugin: %1$s."
-msgid_plural "This theme requires the following plugins: %1$s."
-msgstr[0] ""
-msgstr[1] ""
-
-#. translators: %s: plugin name.
-#: functions/admin/class-tgm-plugin-activation.php:512
-#: functions/init-core.php:1497
-msgid "Installing Plugin: %s"
-msgstr "Plugin %s wordt ge&#239;nstalleerd."
-
-#: functions/admin/class-tgm-plugin-activation.php:510
-#: functions/init-core.php:1496
-msgid "Install Plugins"
-msgstr "Plugins installeren"
-
-#: functions/admin/class-tgm-plugin-activation.php:509
-#: functions/init-core.php:1495
-msgid "Install Required Plugins"
-msgstr "Installeer de benodigde plugins"
-
-#: footer.php:109
-msgid "Theme by"
-msgstr "Thema bij"
-
-#: footer.php:109
-msgid "Powered by"
-msgstr "Mogelijk gemaakt door"
-
-#: footer.php:103 functions/czr/czr-resources.php:40
-msgid "All Rights Reserved."
-msgstr "Alle rechten voorbehouden."
-
-#: comments.php:11
-msgid "Pingbacks"
-msgstr ""
-
-#: comments.php:10 functions/class-utils-settings-map.php:1167
-msgid "Comments"
-msgstr "Reacties"
-
-#: comments.php:7
-msgid "% Responses"
-msgstr "% reacties"
-
-#: comments.php:7
-msgid "1 Response"
-msgstr "1 reactie"
-
-#: comments.php:7
-msgid "No Responses"
-msgstr ""
-
-#: 404.php:14
-msgid "The page you are trying to reach does not exist, or has been moved. Please use the menus or the search box to find what you are looking for."
-msgstr ""
-
-#. Author URI of the plugin/theme
-msgid "http://presscustomizr.com"
+#. Description of the plugin/theme
+msgid ""
+"The Hueman theme helps you increase your traffic and engage your visitors. "
+"It loads fast and is 100% mobile-friendly according to Google. Best rated "
+"theme for blogs and magazines on WordPress.org. Powering 70K+ websites "
+"around the world."
 msgstr ""
 
 #. Author of the plugin/theme
 msgid "nikeo"
 msgstr ""
 
-#. Theme URI of the plugin/theme
-msgid "http://presscustomizr.com/hueman/"
+#. Author URI of the plugin/theme
+msgid "https://presscustomizr.com"
 msgstr ""
+
+#. Template Name of the plugin/theme
+msgid "Child Menu"
+msgstr ""
+
+#: functions/admin/class-tgm-plugin-activation.php:1310
+#: functions/admin/class-tgm-plugin-activation.php:3167
+msgctxt "plugin A *and* plugin B"
+msgid "and"
+msgstr "en"
+
+#. translators: 1: install status, 2: update status
+#: functions/admin/class-tgm-plugin-activation.php:2561
+msgctxt "Install/Update Status"
+msgid "%1$s, %2$s"
+msgstr ""
+
+#. translators: 1: number of plugins.
+#: functions/admin/class-tgm-plugin-activation.php:2607
+msgctxt "plugins"
+msgid "All <span class=\"count\">(%s)</span>"
+msgid_plural "All <span class=\"count\">(%s)</span>"
+msgstr[0] "Alle <span class=\"count\">(%s)</span>"
+msgstr[1] "Alle <span class=\"count\">(%s)</span>"
+
+#: functions/admin/class-tgm-plugin-activation.php:2701
+msgctxt "as in: \"version nr unknown\""
+msgid "unknown"
+msgstr "onbekend"
+
+#~ msgid ""
+#~ "Hueman is a mobile friendly WordPress theme for blogs, magazines and "
+#~ "business websites. It's been designed to beautifully display pictures and "
+#~ "text content, and engineered to be easy to use and fast. The Hueman theme "
+#~ "helps you attract and retain more visitors, that's why it's already used "
+#~ "by 70K+ active websites in the world and has received hundreds of five "
+#~ "stars ratings."
+#~ msgstr ""
+#~ "Hueman is een mobiel-vriendelijk WordPress thema voor blogs, magazines en "
+#~ "commerciële websites. Het is ontworpen om afbeeldingen en en tekstuele "
+#~ "inhoud prachtig weer te geven en ontwikkeld om makkelijk en snel te "
+#~ "gebruiken. Het Hueman thema helpt u meer bezoekers te trekken en te "
+#~ "houden. Daarom wordt het wereldwijd gebruikt door meer dan 70.000 actieve "
+#~ "websites en heeft het honderden beoordelingen met 5 sterren gekregen."
+
+#~ msgid "Help"
+#~ msgstr "Help"
+
+#~ msgid "Blog Design and Content"
+#~ msgstr "Blog design en content"
+
+#~ msgid ""
+#~ "Your theme supports %s menu. Select which menu you would like to use."
+#~ msgid_plural ""
+#~ "Your theme supports %s menus. Select which menu appears in each location."
+#~ msgstr[0] ""
+#~ "Je thema ondersteunt %s menu. Het menu selecteren die je wilt gebruiken."
+#~ msgstr[1] ""
+#~ "Je thema ondersteunt %s menu&#39;s. De menu's selecteren die je wilt "
+#~ "gebruiken op elke locatie."
+
+#~ msgid "Sidebars"
+#~ msgstr "Zijbalk"
+
+#~ msgid "support forum"
+#~ msgstr "support forum"
+
+#~ msgid "Welcome to"
+#~ msgstr "Welkom bij"
+
+#~ msgid "&mdash; Select &mdash;"
+#~ msgstr "&mdash; Selecteer een tabel &mdash;"
+
+#~ msgid "Slide"
+#~ msgstr "Slide"
+
+#~ msgid "Content"
+#~ msgstr "Inhoud"
+
+#~ msgid "Text"
+#~ msgstr "Tekst"
+
+#~ msgid "Theme by"
+#~ msgstr "Thema bij"

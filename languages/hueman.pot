@@ -2,9 +2,9 @@
 # This file is distributed under the GNU General Public License v3.0.=!>
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman 3.3.25\n"
+"Project-Id-Version: Hueman 3.3.26\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2018-02-06 11:03:22+00:00\n"
+"POT-Creation-Date: 2018-02-06 14:43:11+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -57,7 +57,7 @@ msgstr ""
 msgid "Hueman theme"
 msgstr ""
 
-#: footer.php:143 functions/init-front.php:264 sidebar.php:18
+#: footer.php:143 functions/init-front.php:266 sidebar.php:18
 msgid "You can set your social links here from the live customizer"
 msgstr ""
 
@@ -1114,7 +1114,7 @@ msgstr ""
 msgid "Other layouts will override this option if they are set"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:855 functions/init-front.php:1512
+#: functions/class-utils-settings-map.php:855 functions/init-front.php:1514
 #: functions/init-sidebars-widgets.php:132
 msgid "Home"
 msgstr ""
@@ -1192,7 +1192,7 @@ msgid ""
 "default content."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:962 functions/init-front.php:574
+#: functions/class-utils-settings-map.php:962 functions/init-front.php:576
 msgid "Blog"
 msgstr ""
 
@@ -2482,11 +2482,11 @@ msgstr ""
 msgid "Theme Options [OLD]"
 msgstr ""
 
-#: functions/init-front.php:191
+#: functions/init-front.php:193
 msgid "No widget zones available in this sidebar."
 msgstr ""
 
-#: functions/init-front.php:192
+#: functions/init-front.php:194
 msgid ""
 "You can add Widget Areas here from the customizer, in the <strong>Dynamic "
 "Sidebars and Widgets</strong> panel, or you can change the layout to remove "
@@ -2494,105 +2494,105 @@ msgid ""
 "content</strong>."
 msgstr ""
 
-#: functions/init-front.php:220
+#: functions/init-front.php:222
 msgid "You have already assigned the following widget zone here : "
 msgstr ""
 
-#: functions/init-front.php:222
+#: functions/init-front.php:224
 msgid "in this post or page options."
 msgstr ""
 
-#: functions/init-front.php:223
+#: functions/init-front.php:225
 msgid ""
 "You can change or disable this setting by editing the options of the "
 "current post / page."
 msgstr ""
 
-#: functions/init-front.php:229
+#: functions/init-front.php:231
 msgid "Add widgets to the zone :"
 msgstr ""
 
-#: functions/init-front.php:429 functions/init-front.php:435
+#: functions/init-front.php:431 functions/init-front.php:437
 msgid "Home page"
 msgstr ""
 
-#: functions/init-front.php:487
+#: functions/init-front.php:489
 msgid "Search result"
 msgstr ""
 
-#: functions/init-front.php:489
+#: functions/init-front.php:491
 msgid "Search results"
 msgstr ""
 
-#: functions/init-front.php:500
+#: functions/init-front.php:502
 msgid "Error 404."
 msgstr ""
 
-#: functions/init-front.php:501
+#: functions/init-front.php:503
 msgid "Page not found!"
 msgstr ""
 
-#: functions/init-front.php:513
+#: functions/init-front.php:515
 msgid "Author:"
 msgstr ""
 
-#: functions/init-front.php:527
+#: functions/init-front.php:529
 msgid "Category:"
 msgstr ""
 
-#: functions/init-front.php:532
+#: functions/init-front.php:534
 msgid "Tagged:"
 msgstr ""
 
-#: functions/init-front.php:547
+#: functions/init-front.php:549
 msgid "Daily Archive:"
 msgstr ""
 
-#: functions/init-front.php:552
+#: functions/init-front.php:554
 msgid "Monthly Archive:"
 msgstr ""
 
-#: functions/init-front.php:557
+#: functions/init-front.php:559
 msgid "Yearly Archive:"
 msgstr ""
 
-#: functions/init-front.php:1560 functions/init-sidebars-widgets.php:134
+#: functions/init-front.php:1562 functions/init-sidebars-widgets.php:134
 msgid "Pages"
 msgstr ""
 
-#: functions/init-front.php:1775
+#: functions/init-front.php:1777
 msgid "Welcome in the Hueman theme"
 msgstr ""
 
-#: functions/init-front.php:1778
+#: functions/init-front.php:1780
 msgid "The theme offers a wide range"
 msgstr ""
 
-#: functions/init-front.php:1780
+#: functions/init-front.php:1782
 msgid "of customization options"
 msgstr ""
 
-#: functions/init-front.php:1781
+#: functions/init-front.php:1783
 msgid "to let you create the best possible websites."
 msgstr ""
 
-#: functions/init-front.php:1784
+#: functions/init-front.php:1786
 msgid "If you need inspiration, you can visit our online demos"
 msgstr ""
 
-#: functions/init-front.php:1786
+#: functions/init-front.php:1788
 msgid "Hueman Demo 1"
 msgstr ""
 
-#: functions/init-front.php:1788
+#: functions/init-front.php:1790
 msgid "Hueman Demo 2"
 msgstr ""
 
-#: functions/init-front.php:1791
+#: functions/init-front.php:1793
 msgid "To help you getting started with Hueman, we have published"
 msgstr ""
 
-#: functions/init-front.php:1793
+#: functions/init-front.php:1795
 msgid "a short guide here."
 msgstr ""
 
