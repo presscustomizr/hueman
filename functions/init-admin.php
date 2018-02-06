@@ -41,7 +41,7 @@ function hu_admin_style() {
     'hu-admincss',
     sprintf('%1$sassets/admin/css/hu_admin.css' , HU_BASE_URL ),
     array(),
-    HUEMAN_VER
+    ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER
   );
 }
 

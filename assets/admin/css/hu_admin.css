@@ -191,3 +191,52 @@ h1.need-help-title:before {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+
+/* UPDATE NOTICE */
+.czr-update-notice h3, .czr-update-notice h4 {
+  font-weight: normal;
+}
+.czr-update-notice .button {
+  font-weight: normal;
+}
+.czr-update-notice .button.upgrade-to-pro {
+/*  font-size: 15px;
+  line-height: 24px;*/
+  height: 30px;
+  padding: 1px 20px;
+  display: inline-block;
+  color: #de8200;
+  background: white;
+  border: 1px solid #eea236;
+  -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  border-radius: 3px;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-top: -4px;
+  font-weight: 400;
+  margin-left: 8px;
+  text-shadow : none;
+}
+.czr-update-notice .button.upgrade-to-pro:hover {
+    color: #fff;
+    background: #ed9c28;
+    border-color: #d58512;
+}
+/*a.czr-rating-link {
+    color: #eea236;
+}*/
+a.czr-rating-link:hover {
+    color: #eea236;
+}

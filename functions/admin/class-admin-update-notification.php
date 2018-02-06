@@ -80,7 +80,7 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
 
             ob_start();
               ?>
-              <div class="updated" style="position:relative">
+              <div class="updated czr-update-notice">
                 <?php
                   echo apply_filters(
                     'hu_update_notice',
@@ -95,20 +95,30 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
                 <?php
                   echo apply_filters(
                     'hu_update_notice',
-                    sprintf( '<h4>%1$s</h4><strong><a class="button button-primary" href="%2$s" title="%3$s" target="_blank">%3$s &raquo;</a> <a class="button button-primary hu-go-pro-btn" href="%4$s" title="%5$s" target="_blank">%5$s &raquo;</a></strong>',
+                    sprintf( '<h4>%1$s <a class="" href="%2$s" title="%3$s" target="_blank">%3$s &raquo;</a></h4>%4$s',
                       __( "We'd like to introduce the new features we've been working on.", "hueman"),
-                      HU_WEBSITE . "/category/hueman-releases/",
+                      HU_WEBSITE . "category/hueman-releases/",
                       __( "Read the latest release notes" , "hueman" ),
-                      esc_url('presscustomizr.com/hueman-pro?ref=a'),
-                      __( "Upgrade to Hueman Pro", "hueman" )
+                      ! HU_IS_PRO ? sprintf( '<a class="button button-primary upgrade-to-pro" href="%1$s" title="%2$s" target="_blank">%2$s &raquo;</a>',
+                        esc_url('presscustomizr.com/hueman-pro?ref=a'),
+                        __( "Upgrade to Hueman Pro", "hueman" )
+                      ) : ''
                     )
                   );
                 ?>
-                <p style="text-align:right;position: absolute;right: 7px;bottom: -5px;">
-                  <?php printf('<em>%1$s <strong><a href="#" title="%1$s" class="tc-dismiss-update-notice"> ( %2$s x ) </a></strong></em>',
-                      __("I already know what's new thanks !", "hueman" ),
-                      __('close' , 'hueman')
-                    );
+                <p style="text-align:right;position: absolute;font-size: 1.1em;<?php echo is_rtl()? 'left' : 'right';?>: 7px;bottom: -5px;">
+                <?php printf('<a href="#" title="%1$s" class="tc-dismiss-update-notice"> ( %1$s <strong>X</strong> ) </a>',
+                    __('close' , 'hueman')
+                  );
+                ?>
+                </p>
+                <p>
+                  <?php
+                  printf(
+                    __( 'If you like %1$s please leave us a %2$s rating. A huge thanks in advance!', 'hueman' ),
+                    sprintf( '<strong>%s</strong>', esc_html__( 'the Hueman theme', 'hueman' ) ),
+                    sprintf( '<a href="%1$s" target="_blank" class="czr-rating-link">&#9733;&#9733;&#9733;&#9733;&#9733;</a>', esc_url( 'wordpress.org/support/theme/hueman/reviews/?filter=5#new-post') )
+                  );
                   ?>
                 </p>
               </div>
