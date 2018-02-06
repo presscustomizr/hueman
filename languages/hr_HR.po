@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Hueman v3.3.26\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2018-02-06 14:43:11+00:00\n"
+"POT-Creation-Date: 2018-02-06 18:14:52+00:00\n"
 "PO-Revision-Date: 2016-05-30 08:47+0200\n"
 "Last-Translator: zcuric <zcuric@gmail.com>\n"
 "Language-Team: Press Customizr\n"
@@ -236,17 +236,22 @@ msgstr ""
 msgid "Read the latest release notes"
 msgstr ""
 
-#: functions/admin/class-admin-update-notification.php:103
+#: functions/admin/class-admin-update-notification.php:104
 #: functions/class-utils-settings-map.php:1637
 msgid "Upgrade to Hueman Pro"
 msgstr ""
 
-#: functions/admin/class-admin-update-notification.php:109
-msgid "I already know what's new thanks !"
+#: functions/admin/class-admin-update-notification.php:111
+msgid "close"
 msgstr ""
 
-#: functions/admin/class-admin-update-notification.php:110
-msgid "close"
+#: functions/admin/class-admin-update-notification.php:118
+msgid ""
+"If you like %1$s please leave us a %2$s rating. A huge thanks in advance!"
+msgstr ""
+
+#: functions/admin/class-admin-update-notification.php:119
+msgid "the Hueman theme"
 msgstr ""
 
 #: functions/admin/class-tgm-plugin-activation.php:509
