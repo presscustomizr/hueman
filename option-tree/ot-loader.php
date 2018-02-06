@@ -50,7 +50,8 @@ if ( ! class_exists( 'OT_Loader' ) ) {
     public function __construct() {
 
       /* load languages */
-      $this->load_languages();
+      //Do not load OT specific translations: this is totally useless in WordPress themes
+      //$this->load_languages();
 
       /* load OptionTree */
       add_action( 'after_setup_theme', array( $this, 'load_option_tree' ), 1 );
