@@ -47,7 +47,11 @@ module.exports = function(grunt) {
             'lineending:front_js',
             'comments:front_assets_js'
         ],
-				'hueman_build':  [ 'concurrent:hueman_pre_build', 'compress'],
+        'i18n' : [
+            'makepot',
+            'potomo',
+        ],
+				'hueman_build':  [ 'concurrent:hueman_pre_build', 'i18n', 'copy:free', 'compress', 'copy:pro', 'copy:pro_lang' ],
 
 				//TRAVIS ci virtual machine build check on js @todo check other resources?
 				'travis' : ['jshint'],

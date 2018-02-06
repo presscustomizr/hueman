@@ -13,7 +13,7 @@ if ( ! function_exists( 'hu_setup' ) ) {
 
   function hu_setup() {
      // Load theme languages
-    load_theme_textdomain( 'hueman', get_stylesheet_directory().'/languages' );
+    load_theme_textdomain( HU_THEME_TEXT_DOM, get_stylesheet_directory().'/languages' );
 
     // Enable header image
     // the header image is stored as a theme mod option

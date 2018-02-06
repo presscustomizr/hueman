@@ -1,0 +1,2767 @@
+# Translation of Themes - Hueman in Persian
+# This file is distributed under the same license as the Themes - Hueman package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2018-02-01 03:53:45+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: GlotPress/2.4.0-alpha\n"
+"Language: fa\n"
+"Project-Id-Version: Themes - Hueman\n"
+
+#. Description of the plugin/theme
+msgid "The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world."
+msgstr "قالب Hueman به شما کمک می‌کند تا ترافیک وبسایت خود را افزایش دهید و بازدیدکنندگان را جذب وبسایت خود کنید. سرعت لود بسیار بالایی دارد و صد در صد سازگار با گوشی موبایل و تبلت است. این قالب دارای بالاترین رای برای قالبهای وبلاگی و مجله‌ای در سایت wordpress.org است و بیشتر از ۸۰ هزار وبسایت در سرتاسر دنیا از این قالب استفاده می‌کنند."
+
+#. Theme Name of the plugin/theme
+msgid "Hueman"
+msgstr "قالب Hueman"
+
+#: functions/czr/czr-resources.php:607
+msgid "is always customized sitewide."
+msgstr "همیشه به صورت sitewide سفارشی‌سازی می‌شود."
+
+#: functions/admin/class-tgm-plugin-activation.php:1329
+msgid "It also includes some cool additional features like a %1$s and %2$s."
+msgstr "همچنین شامل امکانات جالبی مانند %1$s و %2$s است."
+
+#: functions/admin/class-tgm-plugin-activation.php:1327
+msgid "The Hueman Addons is a free plugin providing an enhanced customization interface for the Hueman theme."
+msgstr "افزونه مکمل قالب Hueman یک افزونه رایگان است که باعث افزایش کارایی و قدرت سفارشی‌سازی این قالب می‌شود."
+
+#: functions/admin/class-admin-page.php:143
+msgid "Thank you for using the %s theme for your website."
+msgstr "از اینکه از قالب %s برای وبسایت خود استفاده می‌کنید از شما متشکریم."
+
+#: functions/admin/class-admin-page.php:83
+msgid "Thank you for using %s %s :)"
+msgstr "از اینکه از %s %s استفاده می‌کنید از شما متشکریم :)"
+
+#: functions/class-utils-settings-map.php:509
+msgid "When checked, this option loads a small javascript file ( 30 kb ) to detect if your site is being displayed by a mobile device like a phone or a tablet. It is recommended to check this option if you are using a cache plugin."
+msgstr "هنگامی که این گزینه تیک خورده باشد، برای تشخیص اینکه آیا بازدیدکنندگان از تلفن همراه یا تبلت استفاده می‌کنند یک فایل کم حجم (۳۰ کیلوبایت) در دستگاه بارگذاری می‌شود. اگر از یک افزونه کش استفاده می‌کنید انتخاب این گزینه پیشنهاد می‌شود."
+
+#: functions/class-utils-settings-map.php:506
+msgid "Mobile device detection"
+msgstr "بررسی برای گوشی موبایل"
+
+#: functions/admin/class-admin-page.php:213
+msgid "Discover Hueman Pro"
+msgstr "با قالب hueman Pro بیشتر آشنا شوید"
+
+#: functions/admin/class-admin-page.php:210
+msgid "The Hueman Pro WordPress theme allows anyone to create a beautiful, professional and mobile friendly website in a few minutes. In the Pro version, you'll get all features included in the free version plus many conversion oriented ones, to help you attract and retain more visitors on your websites."
+msgstr "قالب پیشرفته Hueman Pro به شما این امکان را می‌دهد که یک وبسایت زیبا، حرفه‌ای و کاملا سازگار با موبایل تنها در چند دقیقه طراحی کنید. در نسخه حرفه‌ای شما همه امکانات نسخه رایگان به اضافه خیلی امکانات دیگر را خواهید داشت. این امکانات به شما کمک می‌کنند که بازدیدکنندگان بیشتری را جذب وبسایت خود کنید."
+
+#: functions/admin/class-admin-page.php:208
+msgid "Easily take your web design one step further"
+msgstr "به آسانی طراحی خود را یک قدم جلوتر ببرید"
+
+#: functions/admin/class-admin-page.php:204
+msgid "Go Hueman Pro"
+msgstr "به نسخه حرفه‌ای ارتقا دهید"
+
+#: functions/admin/class-admin-page.php:194
+msgid "Follow us"
+msgstr "ما را دنبال کنید"
+
+#: functions/admin/class-admin-page.php:189
+msgid "If you are happy with the theme, say it on wordpress.org and give Hueman a nice review!"
+msgstr "اگر از این قالب راضی هستید، لطفا این را در سایت wordpress.org بیان کنید و با یک امتیاز پنج ستاره به ما برای ادامه کار انگیزه دهید."
+
+#: functions/admin/class-admin-page.php:188
+msgid "Happy user of Hueman?"
+msgstr "آیا از این قالب راضی هستید؟"
+
+#: footer.php:125
+msgid "Hueman theme"
+msgstr "Hueman theme"
+
+#: footer.php:125
+msgid "Designed with the"
+msgstr "طراحی شده توسط"
+
+#: footer.php:125
+msgid "https://wordpress.org/"
+msgstr "https://wordpress.org/"
+
+#: footer.php:125
+msgid "Powered by WordPress"
+msgstr "نیرو گرفته از وردپرس"
+
+#: functions/class-utils-settings-map.php:177
+msgid "The site title is displayed when there is no logo uploaded"
+msgstr "عنوان سایت زمانی نمایش داده می شود که لوگویی بارگذاری نشده باشد"
+
+#: functions/class-utils-settings-map.php:454
+msgid "This option is good if you want to display a perfect font-size for your headings on any mobile devices. Note : it might override the css rules previously set in your custom stylesheet."
+msgstr "این گزینه خوب است اگر بخواهید نمایش کاملی از اندازه فونت در سربرگ‌ها در هر دستگاه موبایلی داشته باشید. نکته: ممکن است کد استایل قوانین جایگزین استایل سفارشی شما شود."
+
+#: functions/class-utils-settings-map.php:451
+msgid "Make font sizes flexible. Enable this option to achieve scalable headlines that fill the width of a parent element."
+msgstr "اندازه فونت را انعطافی کنید. فعالسازی این گزینه سربرگ‌ها را منعطف می کند که بتواند عرض عنصر والد را کامل کند."
+
+#: functions/init-plugins-compat.php:422
+msgid "Post/Page excerpt"
+msgstr "خلاصه نوشته/برگه"
+
+#: functions/init-plugins-compat.php:421
+msgid "Post/Page content"
+msgstr "محتوای نوشته/برگه"
+
+#: parts/header-nav-mobile.php:72
+msgid "No menu has been assigned for mobile devices yet. You can set it from the live customizer"
+msgstr "هنوز فهرستی برای دستگاه های موبایل نشانه گذاری نشده است. می توانید آن را در سفارشی سازی تنظیم کنید."
+
+#: functions/init-front.php:1751
+msgid "a short guide here."
+msgstr "یک راهنمایی کوتاه در اینجا."
+
+#: functions/init-front.php:1749
+msgid "To help you getting started with Hueman, we have published"
+msgstr "برای کمک به شما جهت کار با Hueman  منتشرش کرده ایم"
+
+#: functions/init-front.php:1746
+msgid "Hueman Demo 2"
+msgstr "دموی 2 قالب Hueman"
+
+#: functions/init-front.php:1744
+msgid "Hueman Demo 1"
+msgstr "دموی 1 قالب Hueman"
+
+#: functions/init-front.php:1742
+msgid "If you need inspiration, you can visit our online demos"
+msgstr "اگر نیاز به الهام گرفتن دارید می توانید از دموهای آنلاین ما استفاده کنید"
+
+#: functions/init-front.php:1739
+msgid "to let you create the best possible websites."
+msgstr "برای ایجاد سایت هایی بسیار عالی."
+
+#: functions/init-front.php:1738
+msgid "of customization options"
+msgstr "از تنظیمات سفارشی"
+
+#: functions/init-front.php:1736
+msgid "The theme offers a wide range"
+msgstr "قالب گستره پیشنهادات زیادی دارد"
+
+#: functions/init-front.php:1733
+msgid "Welcome in the Hueman theme"
+msgstr "به جمع کاربران قالب Hueman خوش آمدید"
+
+#: functions/init-after-setup-theme.php:98
+msgid "Mobile. You can set a specific menu for mobile devices. If not set, the theme will use the menu assigned to the Topbar, or the Header."
+msgstr "موبایل. می توانید فهرستی برای دستگاه های موبایل تعیین کنید. اگر تنظیم نکرده اید، قالب از فهرست نوار بالا استفاده می کند یا سربرگ."
+
+#: functions/init-after-setup-theme.php:97
+msgid "Topbar"
+msgstr "نواربالا"
+
+#: functions/class-utils-settings-map.php:1608
+msgid "Mobile Devices"
+msgstr "دستگاه‌های موبایل"
+
+#: functions/class-utils-settings-map.php:1243
+msgid "Decide if your sidebars should be sticky on tablets and smartphones devices."
+msgstr "انتخاب اگر نواحی کناری شما چسبنده هستند در تبلت‌ها و گوشی های هوشمند."
+
+#: functions/class-utils-settings-map.php:1157
+msgid "Post navigation"
+msgstr "ناوبری نوشته"
+
+#: functions/class-utils-settings-map.php:1141
+msgid "Related posts"
+msgstr "نوشته‌های مرتبط"
+
+#: functions/class-utils-settings-map.php:758
+msgid "If the selected menu location has no menu assigned, the theme will try to assign another menu in this order : topbar, mobile, header."
+msgstr "اگر موقعیت فهرست انتخاب شده دارای فهرستی نباشد، قالب تلاش می کند از فهرست دیگیری به این ترتیب استفاده کند: نواربالا،موبایل،سربرگ."
+
+#: functions/class-utils-settings-map.php:753
+msgid "Specific Mobile Menu"
+msgstr "تعریف فهرست موبایل"
+
+#: functions/class-utils-settings-map.php:636
+msgid "Set your logo, title and tagline"
+msgstr "تنظیم لوگو،عنوان و شعار سایت"
+
+#: functions/class-utils-settings-map.php:630
+msgid "Display your logo or site title, and tagline on top of the header image"
+msgstr "نمایش لوگو یا عنوان سایت، و شعار دربالای تصویر سربرگ"
+
+#: functions/class-utils-settings-map.php:607
+msgid "Apply a semi-transparent filter to the topbar and mobile menu on scroll"
+msgstr "اعمال فیلتر semi-transparent به نواربالا و فهرست موبایل در اسکرول"
+
+#: functions/class-utils-settings-map.php:467
+msgid "Include images in search results"
+msgstr "شامل تصاویر در نتیجه جستجو"
+
+#: functions/class-utils-settings-map.php:222
+msgid "(in pixels)"
+msgstr "(به پیکسل)"
+
+#: functions/class-utils-settings-map.php:203
+msgid "Logo for mobiles"
+msgstr "لوگو برای موبایل"
+
+#: functions/class-utils-settings-map.php:202
+msgid "Use a specific logo for mobile devices"
+msgstr "استفاده از لوگوی مشخص برای دستگاه‌های موبایل"
+
+#: functions/class-utils-settings-map.php:174
+msgid "Display the site title in the header"
+msgstr "نمایش عنوان سایت در سربرگ"
+
+#: functions/czr/czr-resources.php:629
+msgid "can be customized with a specific set of options."
+msgstr "می تواند سفارشی شود با تنظیمات تعریف شده."
+
+#: functions/czr/czr-resources.php:627 functions/czr/czr-resources.php:630
+msgid "The options not customized at this level will inherit their value from"
+msgstr "تنظیم سفارشی نشده است در این سطح ارث می برد از مقدار آن"
+
+#: functions/czr/czr-resources.php:626
+msgid "The current customizations will be applied to"
+msgstr "سفارشی سازی کنونی اعمال می شود به"
+
+#: functions/czr/czr-resources.php:625 functions/czr/czr-resources.php:628
+msgid "can be customized more specifically at the following level"
+msgstr "می تواند سفارشی شود بطور خاص بیشتر در سطح زیر"
+
+#: functions/czr/czr-resources.php:624
+msgid "The current context"
+msgstr "چارچوب فعلی"
+
+#: functions/czr/czr-resources.php:623
+msgid "The customizations made site wide are inherited by all other levels of customization."
+msgstr "سفارشی‌سازی به صورت Sitewide باعث می‌شود همه سطوح زیرین، تنظیمات را به ارث ببرند."
+
+#: functions/czr/czr-resources.php:620
+msgid "to understand how to fix the problem."
+msgstr "برای درک حل این مشکل."
+
+#: functions/czr/czr-resources.php:619
+msgid "this documentation page"
+msgstr "این برگه مستندات"
+
+#: functions/czr/czr-resources.php:618
+msgid "Please refer to"
+msgstr "مراجعه کنید به"
+
+#: functions/czr/czr-resources.php:597
+msgid "Default sitewide value."
+msgstr "مقدا پیشفرض صفحه ویژه."
+
+#: functions/class-utils-settings-map.php:1636
+msgid "Go Pro"
+msgstr "بزن بریم"
+
+#: functions/class-utils-settings-map.php:1546
+msgid "Header Menus : mobile settings, scroll behaviour, search button"
+msgstr "فهرست سربرگ: تنظیمات موبایل،رفتار اسکرول،دکمه جستجو"
+
+#: functions/class-utils-settings-map.php:1158
+msgid "Post navigation in single posts"
+msgstr "ناوبری پست‌ها در تک‌نوشته"
+
+#: functions/class-utils-settings-map.php:736
+msgid "Display a search field in the header menu"
+msgstr "نمایش فیلد جستجو در فهرست سربرگ"
+
+#: functions/class-utils-settings-map.php:735
+msgid "Display a search field in the top menu"
+msgstr "نمایش فیلد جستجو در فهرست بالا"
+
+#: functions/class-utils-settings-map.php:734
+msgid "No search field"
+msgstr "بدون فیلد جستجو"
+
+#: functions/class-utils-settings-map.php:730
+#: functions/class-utils-settings-map.php:800
+msgid "display a search field"
+msgstr "نمایش فیلد جستجو"
+
+#: functions/class-utils-settings-map.php:719
+#: functions/class-utils-settings-map.php:775
+msgid "Always visible"
+msgstr "همیشه نمایان"
+
+#: functions/class-utils-settings-map.php:718
+#: functions/class-utils-settings-map.php:774
+msgid "Reveal on scroll up"
+msgstr "آشکار در اسکرول به بالا"
+
+#: functions/class-utils-settings-map.php:717
+#: functions/class-utils-settings-map.php:773
+msgid "Not visible when scrolling the page"
+msgstr "نماین نیست هنگام اسکرول صفحه"
+
+#: functions/class-utils-settings-map.php:713
+#: functions/class-utils-settings-map.php:769
+msgid "top menu visibility on scroll"
+msgstr "نمایش فهرست بالا هنگام اسکرول"
+
+#: functions/class-utils-settings-map.php:712
+#: functions/class-utils-settings-map.php:746
+msgid "Menus settings for"
+msgstr "تنظیمات فهرست برای"
+
+#: functions/admin/class-admin-update-notification.php:103
+#: functions/class-utils-settings-map.php:1635
+msgid "Upgrade to Hueman Pro"
+msgstr "ارتقاء به نسخه پولی"
+
+#: functions/admin/class-admin-page.php:100
+msgid "knowledge base"
+msgstr "راهنمای استفاده از قالب"
+
+#: functions/init-plugins-compat.php:417
+msgid "Slider button"
+msgstr "دکمه اسلایدر"
+
+#: functions/class-utils-settings-map.php:1531
+msgid "Header Design : colors and others"
+msgstr "طرح سربرگ : رنگ‌ها و غیره"
+
+#: functions/class-utils-settings-map.php:757
+msgid "When your visitors are using a smartphone or a tablet, the header becomes a thin bar on top, where the menu is revealed when clicking on the hamburger button. This option let you choose which menu will be displayed."
+msgstr "وقتی کاربران شما از گوشی یا تبلت استفاده می کنند،سربرگ تبدیل به نواربالا می شود،وقتی که فهرست نشان داده می شود هنگام کلیک بر روی آن دکمه. این تنظیم اجازه می دهد انتخاب کنید کدام فهرست نمایش داده شود."
+
+#: functions/class-utils-settings-map.php:669
+msgid "This will display your widget zone on devices with a width smaller than 720 pixels : tablets, smartphones."
+msgstr "این نمایش می دهد ناحیه ابزارک در دستگاه هایی با عرض کمتر از 720 پیکسل: تبلت‌ها و گوشی‌ها."
+
+#: functions/class-utils-settings-map.php:666
+msgid "Display the header widget zone on mobile devices"
+msgstr "نمایش ناحیه ابزارک سربرگ در دستگاه موبایل"
+
+#: functions/class-utils-settings-map.php:661
+msgid "This will display your widget zone on devices with a width greater than 720 pixels : laptops and desktops."
+msgstr "این نمایش می دهد ناحیه ابزارک در دستگاه‌ها با عرض بیشتر از 720 پیکسل: لپ تاپ و کامپیوترهای رومیزی."
+
+#: functions/class-utils-settings-map.php:658
+msgid "Display the header widget zone on desktop devices"
+msgstr "نمایش ناحیه ابزارک سربرگ در دستگاه کامپیوتر رومیزی"
+
+#: parts/header-nav-topbar.php:23
+msgid "Collapse menu"
+msgstr "جمع کردن فهرست"
+
+#: parts/header-nav-topbar.php:22
+msgid "Expand menu"
+msgstr "باز کردن فهرست"
+
+#: functions/init-front.php:387 functions/init-front.php:393
+msgid "Home page"
+msgstr "صفحه نخست"
+
+#: functions/class-utils-settings-map.php:1555
+msgid "Column layout for the main content"
+msgstr "طرح‌بندی ستون"
+
+#: functions/class-utils-settings-map.php:1235
+msgid "Glues your website's sidebars on top of the page, making them permanently visible when scrolling up and down. Useful when a sidebar is too tall or too short compared to the rest of the content."
+msgstr "چسبیدن سایدبار سایت در قسمت بالای صفحه، که باعث می‌شود هنکام اسکرول به بالا و پایین همیشه آشکار باشد. انتخاب این گزینه هنگامی مناسب است که سایدبارها در مقایسه با مطالب یا خیلی بلند یا خیلی کوتاه هستند."
+
+#: functions/class-utils-settings-map.php:1232
+#: functions/class-utils-settings-map.php:1240
+msgid "make sidebars sticky on scroll"
+msgstr "چسبنده کردن سایدبارها هنگام اسکرول"
+
+#: functions/class-utils-settings-map.php:222
+#: functions/class-utils-settings-map.php:712
+#: functions/class-utils-settings-map.php:713
+#: functions/class-utils-settings-map.php:730
+#: functions/class-utils-settings-map.php:1232
+msgid "Desktop devices"
+msgstr "دستگاه‌های کامپیوتر رومیزی و لپ‌تاپ‌ها"
+
+#: functions/class-utils-settings-map.php:839
+msgid "Columns layout for"
+msgstr "طرح‌بندی ستون‌ها برای"
+
+#: functions/class-utils-settings-map.php:790
+msgid "Simple"
+msgstr "ساده"
+
+#: functions/class-utils-settings-map.php:789
+msgid "Animated"
+msgstr "متحرک"
+
+#: functions/class-utils-settings-map.php:785
+msgid "Style of the mobile menu button"
+msgstr "استایل دکمه‌ی فهرست موبایل"
+
+#: functions/class-utils-settings-map.php:754
+msgid "Topbar and header menus, logo centered"
+msgstr "نواربالا و فهرست سربرگ، لوگو در وسط"
+
+#: functions/class-utils-settings-map.php:752
+msgid "Topbar Menu"
+msgstr "فهرست نواربالا"
+
+#: functions/class-utils-settings-map.php:747
+msgid "Select the menu(s) to use for mobile devices"
+msgstr "انتخاب فهرست برای استفاده در موبایل"
+
+#: functions/class-utils-settings-map.php:597
+msgid "Mobile Menu Background"
+msgstr "رنگ فهرست موبایل"
+
+#: functions/class-utils-settings-map.php:700
+msgid "Topbar menu"
+msgstr "فهرست نواربالا"
+
+#: functions/class-utils-settings-map.php:695
+msgid "The Hueman theme supports up to two menu locations in your header."
+msgstr "قالب Hueman تا دو فهرست را در سربرگ شما پشتیبانی می‌کند."
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:26
+msgid "Size in px"
+msgstr "سایز در پیکسل"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:58
+msgid "default"
+msgstr "پیشفرض"
+
+#: functions/czr/czr-resources.php:617
+msgid "There was a problem when trying to load the customizer."
+msgstr "یک مشکل هنگام بارگذاری سفارشی‌سازی به وجود آمد."
+
+#: functions/czr/czr-resources.php:614
+msgid "overridden by"
+msgstr "بازنویسی توسط"
+
+#: functions/czr/czr-resources.php:613
+msgid "inherits from"
+msgstr "ارث می‌برد از"
+
+#: functions/czr/czr-resources.php:612
+msgid "In this context :"
+msgstr "در این متن"
+
+#: functions/czr/czr-resources.php:611
+msgid "Switch to scope"
+msgstr "تغییر به حوزه"
+
+#: functions/czr/czr-resources.php:609
+msgid "Widgets are created sitewide."
+msgstr "ابزارک ها صفحات ویژه ایجاد شده است."
+
+#: functions/czr/czr-resources.php:608
+msgid "Menus are created sitewide."
+msgstr "فهرست‌ها به صورت Sitewide ایجاد شده‌اند."
+
+#: functions/czr/czr-resources.php:604
+msgid "is customized in"
+msgstr "سفارشی سازی شده در"
+
+#: functions/czr/czr-resources.php:603
+msgid "is set in"
+msgstr "تنظیم شده در"
+
+#: functions/czr/czr-resources.php:602
+msgid "The value that will be applied to"
+msgstr "مقداری که اعمال می شود به"
+
+#: functions/czr/czr-resources.php:601
+msgid "The value currently applied to"
+msgstr "مقداری که اکنون اعمال شده است به"
+
+#: functions/czr/czr-resources.php:599
+msgid "Currently inherited from"
+msgstr "اکنون ارث می برد از"
+
+#: functions/czr/czr-resources.php:598 functions/czr/czr-resources.php:600
+msgid "You can customize this specifically for"
+msgstr "شما می توانید این را بطور خاص سفارشی کنید برای"
+
+#: functions/czr/czr-resources.php:596
+msgid "Default website value applied sitewide."
+msgstr "مقدار پیشفرض سایت اعمال می شود به صفحات ویژه"
+
+#: functions/czr/czr-resources.php:595
+msgid "Customized and applied to"
+msgstr "سفارشی سازی شده و اعمال شده به"
+
+#: functions/czr/czr-resources.php:594
+msgid "Customized and applied sitewide."
+msgstr "سفارشی و اعمال شده به صورت sitewide."
+
+#: functions/czr/czr-resources.php:593
+msgid "once published."
+msgstr "یکبار منتشر شده."
+
+#: functions/czr/czr-resources.php:592
+msgid "Customized. Will be applied to"
+msgstr "سفارشی شده. اعمال می شود به"
+
+#: functions/czr/czr-resources.php:591
+msgid "Customized. Will be applied sitewide once published."
+msgstr "سفارشی شده. هنگامی که منتشر شود به صورت sitewide اعمال خواهد شد."
+
+#: functions/czr/czr-resources.php:590
+msgid "This option is always customized sitewide and cannot be reset."
+msgstr "این تنظیم همیشه صفحات ویژه را سفارشی می کند و نمی تواند بازنشانی شود."
+
+#: functions/czr/czr-resources.php:589
+msgid "Display informations about the scope of this option."
+msgstr "اطلاعات نمایشی درباره حوزه این تنظیم."
+
+#: functions/czr/czr-resources.php:586
+msgid "The option has been reset"
+msgstr "گزینه‌ تنظیم مجدد شد."
+
+#: functions/czr/czr-resources.php:585
+msgid "Please confirm that you want to reset this option in"
+msgstr "لطفا تائید کنید که شما می خواهید این گزینه را بازنشانی کند در"
+
+#: functions/czr/czr-resources.php:584
+msgid "Please confirm that you want to reset this option"
+msgstr "لطفاً تایید کنید که می‌خواهید این گزینه را تنظیم مجدد کنید"
+
+#: functions/czr/czr-resources.php:583
+msgid "This WordPress setting can not be reset sitewide"
+msgstr "این تنظیم وردپرس نمی تواند صفحه ویژه را بازنشانی کند"
+
+#: functions/czr/czr-resources.php:582
+msgid "Your customizations have been reset"
+msgstr "سفارشی سازی های شما ریست شده است."
+
+#: functions/czr/czr-resources.php:581
+msgid "sitewide"
+msgstr "صفحات ویژه"
+
+#: functions/czr/czr-resources.php:580
+msgid "Please confirm that you want to reset your current customizations for this option in"
+msgstr "لطفا تائید کنید که شما می خواهید بازنشانی کنید تنظیمات کنونی را برای این گزینه در"
+
+#: functions/czr/czr-resources.php:579
+msgid "Please confirm that you want to reset your current customizations for this option"
+msgstr "لطفا تائید کنید که شما می خواهید بازنشانی کنید سفارشی سازی کنونی را برای این گزینه"
+
+#: functions/czr/czr-resources.php:577
+msgid "Not customized yet, nothing to reset"
+msgstr "هنوز سفارشی نشده است،چیزی بازنشانی نمی شود"
+
+#: functions/czr/czr-resources.php:576 functions/czr/czr-resources.php:578
+msgid "Reset your customized ( but not yet published ) value"
+msgstr "بازنشانی مقدار سفارشی سازی (که هنوز منتشر) نشده"
+
+#: functions/czr/czr-resources.php:575
+msgid "Reset your customized ( and published ) value"
+msgstr "سفارشی‌سازی‌های خود را ریست کنید (که منتشر شده)"
+
+#: functions/czr/czr-resources.php:572
+msgid "Your published customizations have been reset for"
+msgstr "سفارشی‌سازی های شما ریست شده است برای"
+
+#: functions/czr/czr-resources.php:571
+msgid "Please confirm that you want to reset your published customizations for"
+msgstr "لطفا تائید کنید که شما می خواهید سفارشی سازی منتشر شده را بازنشانی کنید برای"
+
+#: functions/czr/czr-resources.php:570
+msgid "Please confirm that you want to reset your sitewide published customizations. Note : this will not reset the customizations made in other option scopes"
+msgstr "لطفا تائید کنید که شما می خواهید سفارشی سازی صفحات ویژه منتشر شده را بازنشانی کنید. یادداشت: این بازنشانی سفارشی سازی تاثیری در دیگر حوزه‌ها ندارد"
+
+#: functions/czr/czr-resources.php:569
+msgid "Your customizations have been reset for"
+msgstr "سفارشی سازی های شما ریست شده است برای"
+
+#: functions/czr/czr-resources.php:568
+msgid "Please confirm that you want to reset your current ( not published ) customizations for"
+msgstr "لطفا تائید کنید که شما میخواهید بازنشانی کنید سفارشی سازی که منتشر نشده است برای"
+
+#: functions/czr/czr-resources.php:567
+msgid "Reset your website published options for"
+msgstr "تنظیمات منتشر شده برای وبسایت خود را ریست کنید برای"
+
+#: functions/czr/czr-resources.php:566
+msgid "Reset the theme options published sitewide"
+msgstr "بازنشانی تنظیمات قالب منتشر شده صفحات ویژه"
+
+#: functions/czr/czr-resources.php:565
+msgid "Reset the current customizations for"
+msgstr "ریست کردن سفارشی‌سازی های کنوی برای"
+
+#: functions/czr/czr-resources.php:561
+msgid "Options for"
+msgstr "تنظیمات برای"
+
+#: functions/class-utils-settings-map.php:257
+msgid "This option sets the default font size applied to any text element of your website, when no font size is already applied."
+msgstr "این گزینه تنظیم می کند مقدار پیشفض اندازه فونت اعمال شده برای هر عنصر متنی در سایت شما،وقتی که هنوز اندازه فونتی اعمال نشده باشد."
+
+#: functions/class-utils-settings-map.php:250
+msgid "Set your website default font size in pixels."
+msgstr "تنظیم اندازه فونت پیشفرض سایت به پیکسل."
+
+#: functions/class-utils-settings-map.php:193
+msgid "Set your logo below or"
+msgstr "تنظیم لوگو در پایین یا"
+
+#: footer.php:145 parts/header-nav-mobile.php:74 sidebar.php:20
+msgid "Customize now"
+msgstr "اکنون سفارشی کن"
+
+#: footer.php:143 functions/init-front.php:264 sidebar.php:18
+msgid "You can set your social links here from the live customizer"
+msgstr "شما می‌توانید از اینجا به صورت زنده لینک شبکه‌های اجتماعی را انتخاب کنید"
+
+#: functions/czr/panels/class-panels.php:63
+msgid "Press return or enter to open this panel"
+msgstr "بازگشت یا وارد شدن ر بفشارید برای بازکردن این پنل"
+
+#: functions/class-utils-settings-map.php:1422
+msgid "Performances, SEO, CSS, Scroll"
+msgstr "عملکرد سایت، سئو، CSS، اسکرول"
+
+#: functions/class-utils-settings-map.php:1414
+msgid "Logo, Layout, Menu"
+msgstr "لوگو، طرح بندی، فهرست"
+
+#: functions/class-utils-settings-map.php:1413
+msgid "Footer Design"
+msgstr "طراحی پانوشت"
+
+#: functions/class-utils-settings-map.php:1400
+msgid "Layout, Sidebars, Blog Posts, Thumbnails"
+msgstr "طرح بندی، سایدبارها، پست های وبلاگ، عکسهای بندانگشتی"
+
+#: functions/class-utils-settings-map.php:1399
+msgid "Main Body Design"
+msgstr "طراحی بدنه اصلی"
+
+#: functions/class-utils-settings-map.php:1392
+msgid "Header Image, Menu, Widget"
+msgstr "تصویر سربرگ، فهرست، ابزارک"
+
+#: functions/class-utils-settings-map.php:1391
+msgid "Header Design"
+msgstr "طراحی سربرگ"
+
+#: functions/class-utils-settings-map.php:1384
+msgid "Title, Logo, Fonts, Colors, Background, Socials, Links"
+msgstr "عنوان، لوگو، فونت، رنگها، پس زمینه، شبکه های اجتماعی، لینک ها"
+
+#: functions/class-utils-settings-map.php:1383
+msgid "Web Page Design"
+msgstr "طراحی صفحات وب"
+
+#: functions/czr/czr-resources.php:286
+msgid "Header Panel"
+msgstr "پنل سربرگ"
+
+#: functions/czr/czr-resources.php:283
+msgid "The menu currently displayed in your header is a default page menu, you can disable it in the %s."
+msgstr "فهرست کنونی نمایش داده شده در سربرگ فهرست پیشفرض برگه است،می توانید غیرفعال کنید در %s."
+
+#: functions/class-utils-settings-map.php:1565
+msgid "Post Lists Design and Content : Blog, Archives, Search Results"
+msgstr "طرح لیست نوشته و محتوا: بلاگ، بایگانی، نتایج جستجو"
+
+#: functions/admin/class-admin-page.php:148
+#: functions/admin/class-admin-page.php:273
+msgid "Changelog"
+msgstr "تغییرات"
+
+#: functions/init-prevdem.php:200
+msgid "HIGHLIGHTS"
+msgstr "برترین‌ها"
+
+#: functions/init-prevdem.php:182
+msgid "RECENT COMMENTS"
+msgstr "آخرین دیدگاه‌ها"
+
+#: functions/init-prevdem.php:169
+msgid "RECENT POSTS"
+msgstr "آخرین مطالب"
+
+#: functions/init-prevdem.php:154
+msgid "Discover"
+msgstr "ببینید"
+
+#: functions/czr/czr-resources.php:280
+msgid "blog design panel"
+msgstr "پنل طراحی بلاگ"
+
+#: functions/czr/czr-resources.php:277
+msgid "Jump to the %s."
+msgstr "رفتن به %s."
+
+#: functions/czr/class-czr-init.php:294
+msgid "A static page"
+msgstr "برگه ایستا"
+
+#: functions/czr/class-czr-init.php:293
+msgid "Your latest posts"
+msgstr "نوشته‌های جدید"
+
+#: functions/czr/class-czr-init.php:292
+msgid "Don't show any posts or page"
+msgstr "هیچ نوشته یا برگه ای نمایش ندهد"
+
+#: functions/czr/class-czr-init.php:283
+msgid "Front Page Content"
+msgstr "محتوای صفحه اصلی"
+
+#: functions/class-utils-settings-map.php:751
+msgid "Header Menu"
+msgstr "فهرست سربرگ"
+
+#: functions/class-utils-settings-map.php:680
+#: functions/class-utils-settings-map.php:1275
+msgid "You can create menus and set their locations %s."
+msgstr "می توانید فهرست خود را ساخته و نمایشش در هر بخش را %s تنظیم کنید."
+
+#: functions/class-utils-settings-map.php:1001
+msgid "custom excerpt"
+msgstr "خلاصه متن دلخواه"
+
+#: functions/class-utils-settings-map.php:1000
+msgid "The WordPress Excerpt is the summary or description of a post. By default, it will be the first words of a post, but you can write a %s if you want. You can set the number of words you want to display with this option."
+msgstr "خلاصه وردپرس خلاصه ای از توضیحات نوشته است. بطور پیشفرض این کلمات اولیه نوشته می باشد،اما شما می توانید %s بنویسید اگر بخواهید. میتوانید با این گزینه تعداد کلماتی که میخواهید نمایش داده شود را تعیین کنید."
+
+#: functions/class-utils-settings-map.php:992
+msgid "Post Summary"
+msgstr "خلاصه مطالب"
+
+#: functions/class-utils-settings-map.php:977
+msgid "Post List Design"
+msgstr "طراحی لیست نوشته"
+
+#: functions/class-utils-settings-map.php:700
+#: functions/class-utils-settings-map.php:1301
+msgid "Use a default page menu if no menu has been assigned."
+msgstr "استفاده از فهرست برگه پیشفرض اگر هیچ فهرستی نشانه گذاری نشده باشد."
+
+#: functions/class-utils-settings-map.php:622
+msgid "Use a header banner image"
+msgstr "استفاده از تصویر بنر سربرگ"
+
+#: functions/class-utils-settings-map.php:187
+msgid "Display a logo in the header"
+msgstr "نمایش لوگو در سربرگ سایت"
+
+#: functions/admin/class-tgm-plugin-activation.php:2942
+msgid "Update"
+msgstr "بروز رسانی کنید"
+
+#. translators: %2$s: plugin name in screen reader markup
+#: functions/admin/class-tgm-plugin-activation.php:2833
+msgid "Activate %2$s"
+msgstr "فعال‌سازی  %2$s"
+
+#. translators: %2$s: plugin name in screen reader markup
+#: functions/admin/class-tgm-plugin-activation.php:2827
+msgid "Update %2$s"
+msgstr "بروزرسانی  %2$s"
+
+#. translators: %2$s: plugin name in screen reader markup
+#: functions/admin/class-tgm-plugin-activation.php:2822
+msgid "Install %2$s"
+msgstr "نصب  %2$s"
+
+#: functions/admin/class-tgm-plugin-activation.php:2772
+msgid "Version"
+msgstr "نسخه"
+
+#: functions/admin/class-tgm-plugin-activation.php:2752
+msgid "No plugins to install, update or activate."
+msgstr "افزونه ای برای نصب،بروزرسانی و یا فعالسازی نیست."
+
+#. translators: 1: install status, 2: update status
+#: functions/admin/class-tgm-plugin-activation.php:2561
+msgctxt "Install/Update Status"
+msgid "%1$s, %2$s"
+msgstr "%1$s, %2$s"
+
+#. translators: %s: version number
+#: functions/admin/class-tgm-plugin-activation.php:2201
+msgid "TGMPA v%s"
+msgstr "TGMPA v%s"
+
+#: functions/admin/class-tgm-plugin-activation.php:579
+msgid "There are one or more required or recommended plugins to install, update or activate."
+msgstr "یک یا چند افزونه مورد نیاز برای نصب، آپدیت یا فعالسازی وجود دارد."
+
+#. translators: %s: plugin name.
+#: functions/admin/class-tgm-plugin-activation.php:514
+msgid "Updating Plugin: %s"
+msgstr "بروز رسانی افزونه: %s"
+
+#. translators: 1: dashboard link.
+#: functions/admin/class-tgm-plugin-activation.php:576
+msgid "All plugins installed and activated successfully. %1$s"
+msgstr "همه افزونه‌ها با موفقیت نصب و فعال شدند. %1$s"
+
+#: functions/admin/class-tgm-plugin-activation.php:1343
+msgid "Hueman Addons"
+msgstr "افزونه Hueman Addons"
+
+#: functions/admin/class-tgm-plugin-activation.php:1333
+msgid "The plugin has been designed specifically for the Hueman WordPress theme. Lightweight and safe."
+msgstr "افزونه برای قالب Hueman طراحی شده است. کم حجم و امن است."
+
+#: functions/admin/class-tgm-plugin-activation.php:1331
+msgid "useful shortcodes"
+msgstr "شورت کد های مفید"
+
+#: functions/admin/class-tgm-plugin-activation.php:1330
+msgid "social share bar"
+msgstr "نوار شبکه‌های اجتماعی"
+
+#: functions/admin/class-tgm-plugin-activation.php:578
+msgid "Remind me later"
+msgstr "بعدا یادآوری کن"
+
+#: functions/init-admin.php:150
+msgid "Activate Hueman Addons"
+msgid_plural "Activate installed plugins"
+msgstr[0] "فعال‌سازی افزونه"
+
+#: functions/init-admin.php:145
+msgid "The Hueman Addons plugin is currently inactive: %1$s."
+msgid_plural "The following recommended plugins are currently inactive: %1$s."
+msgstr[0] "افزونه زیر غیرفعال است:%1$s."
+
+#: functions/init-admin.php:142
+msgid "The Hueman theme recommends the Hueman Addons: %1$s."
+msgid_plural "This theme recommends the following plugins: %1$s."
+msgstr[0] "نصب افزونه زیر برای این قالب ضروری است: %1$s."
+
+#: functions/init-plugins-compat.php:432
+msgid "Footer Social Links"
+msgstr "لینک‌های شبکه اجتماعی در پانوشت"
+
+#: functions/init-plugins-compat.php:430
+msgid "Comments metas"
+msgstr "متاهای دیدگاه‌ها"
+
+#: functions/init-plugins-compat.php:429
+msgid "Single post tags"
+msgstr "برچسب‌های تک نوشته"
+
+#: functions/init-plugins-compat.php:428
+msgid "Post list category meta"
+msgstr "لیست نوشته متای دسته"
+
+#: functions/init-plugins-compat.php:427
+msgid "Post list post metas"
+msgstr "لیست نوشته متای نوشته"
+
+#: functions/init-plugins-compat.php:426
+msgid "Archive Type Title"
+msgstr "عنوان نوع بایگانی"
+
+#: functions/init-plugins-compat.php:425
+msgid "Single Post tags"
+msgstr "برچسب‌های تک نوشته"
+
+#: functions/init-plugins-compat.php:424
+msgid "Single Post Categories meta"
+msgstr "متای دسته‌های نوشته تکی"
+
+#: functions/init-plugins-compat.php:423
+msgid "Lists in post/pages"
+msgstr "لیست‌ها در نوشته یا برگه"
+
+#: functions/init-plugins-compat.php:420
+msgid "Single Page titles"
+msgstr "عناوین تک برگه"
+
+#: functions/init-plugins-compat.php:419
+msgid "Single Post titles"
+msgstr "عناوین تک نوشته"
+
+#: functions/init-plugins-compat.php:414
+msgid "Top-Menu items"
+msgstr "آیتم‌های فهرست بالا"
+
+#: functions/init-plugins-compat.php:416
+msgid "Slider subtitle"
+msgstr "زیرعنوان اسلایدر"
+
+#: functions/init-plugins-compat.php:415
+msgid "Slider title"
+msgstr "عنوان اسلایدر"
+
+#: functions/class-utils.php:213
+msgid "Page %s"
+msgstr "برگه %s"
+
+#: functions/class-utils-settings-map.php:1603
+msgid "Smooth Scroll"
+msgstr "اسکرول نرم"
+
+#: functions/class-utils-settings-map.php:501
+msgid "Check this option to delay the loading of non visible images. Images below the viewport will be loaded dynamically on scroll. This can really boost speed performances by reducing the weight of long pages that include many images."
+msgstr "فعال کردن این گزینه باعث می شود تا وقتی صفحه اسکرول نشده است تصاویر بارگذاری نشود. این گزینه باعث افزایش عملکرد و بهبود سرعت سایت می گردد."
+
+#: functions/class-utils-settings-map.php:498
+msgid "Load images on scroll"
+msgstr "بارگذاری تصاویر در اسکرول"
+
+#: functions/class-utils-settings-map.php:428
+msgid "This option enables a smoother page scroll."
+msgstr "فعال کردن این تنظیم باعث اسکرول نرم در صفحه می‌شود."
+
+#: functions/class-utils-settings-map.php:425
+msgid "Enable Smooth Scrolling"
+msgstr "فعال کردن اسکرول نرم"
+
+#: functions/class-utils-settings-map.php:355
+msgid "Open external links in a new tab"
+msgstr "باز کردن لینک ها در یک پنجره جدید"
+
+#: functions/class-utils-settings-map.php:348
+#: functions/class-utils-settings-map.php:358
+msgid "This will be applied to the links included in post or page content only."
+msgstr "این تنها به لینک‌های محتوای نوشته یا برگه اعمال می شود."
+
+#: functions/class-utils-settings-map.php:345
+msgid "Display an icon next to external links"
+msgstr "نمایش یک آیکون در کنار لینک های خارجی"
+
+#: functions/class-utils-settings-map.php:192
+#: functions/class-utils-settings-map.php:635
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:102
+msgid "here"
+msgstr "اینجا"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:101
+msgid "Learn more"
+msgstr "اطلاعات بیشتر"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:99
+msgid "The background-size CSS property specifies the size of the background images. The size of the image can be fully constrained or only partially in order to preserve its intrinsic ratio."
+msgstr "خاصیت background-size CSS تعریف اندازه تصاویر پس‌زمینه است. اندازه تصویر می‌تواند کاملا sitewide و یا فقط بخشی از آن باشد."
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:60
+msgid "Hex Value"
+msgstr "مقدار هگزا"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:34
+msgid "Right Bottom"
+msgstr "پایین راست"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:33
+msgid "Right Center"
+msgstr "وسط راست"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:32
+msgid "Right Top"
+msgstr "بالا راست"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:31
+msgid "Center Bottom"
+msgstr "پایین وسط"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:30
+msgid "Center Center"
+msgstr "وسط وسط"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:29
+msgid "Center Top"
+msgstr "بالا وسط"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:28
+msgid "Left Bottom"
+msgstr "پایین چپ"
+
+#: functions/czr/czr-resources.php:551
+msgid "Select position property"
+msgstr "انتخاب وضعیت موقعیت"
+
+#: functions/czr/czr-resources.php:550
+msgid "Select attachment property"
+msgstr "انتخاب وضعیت پیوست"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:12
+msgid "Repeat Horizontally"
+msgstr "تکرار افقی"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:26
+msgid "Left Top"
+msgstr "بالا چپ"
+
+#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:61
+msgid "Choose Image"
+msgstr "تصویر را انتخاب کنید"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:11
+msgid "Repeat All"
+msgstr "تکرار همه"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:10
+msgid "No Repeat"
+msgstr "بدون تکرار"
+
+#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:55
+#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:60
+msgid "Select Image"
+msgstr "انتخاب تصویر"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:20
+msgid "Scroll"
+msgstr "اسکرول"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:19
+msgid "Fixed"
+msgstr "ثابت"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:14
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:21
+msgid "Inherit"
+msgstr "ارث بری"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:13
+msgid "Repeat Vertically"
+msgstr "تکرار عمودی"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:27
+msgid "Left Center"
+msgstr "وسط چپ"
+
+#: functions/czr/czr-resources.php:549
+msgid "Select repeat property"
+msgstr "انتخاب وضعیت تکرار"
+
+#: functions/czr/czr-resources.php:553
+msgid "Widget Zone"
+msgstr "ناحیه ابزارک"
+
+#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:59
+msgid "No image selected"
+msgstr "تصویری انتخاب نشده است"
+
+#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:56
+msgid "Change Image"
+msgstr "تغییر تصویر"
+
+#: functions/init-sidebars-widgets.php:81
+msgid "The Footer Widget Zone is located before the other footer widgets and takes 100% of the width. Very appropriate to display a Google Map or an advertisement banner."
+msgstr "The Footer Widget Zone is located before the other footer widgets and takes 100% of the width. Very appropriate to display a Google Map or an advertisement banner."
+
+#: functions/init-sidebars-widgets.php:79
+#: functions/init-sidebars-widgets.php:155
+msgid "Footer Full Width"
+msgstr "پانوشت با عرض کامل"
+
+#: functions/init-sidebars-widgets.php:72
+msgid "The Header Widget Zone is located next to your logo or site title."
+msgstr "منطقه ابزارک سربرگ وافع شده در کنار لوگو یا عنوان سایت."
+
+#: functions/init-sidebars-widgets.php:70
+#: functions/init-sidebars-widgets.php:154
+msgid "Header (next to logo / title)"
+msgstr "سربرگ ( در کنار لوگو / عنوان )"
+
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:17
+msgid "Give it a name"
+msgstr "یک نام اختصاص دهید"
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:57
+msgid "Enter a title"
+msgstr "یک عنوان وارد کنید"
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:52
+msgid "Enter the full url of your social profile (must be a valid url)."
+msgstr "وارد کردن آدرس کامل پروفایل شبکه اجتماعی شما(باید آدرس معتبر باشد)."
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:20
+msgid "Enter the full url of your social profile (must be valid url)."
+msgstr "وارد کردن آدرس کامل پروفایل شبکه اجتماعی شما(باید آدرس معتبر باشد)."
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:16
+msgid "Social link url"
+msgstr "آدرس URL شبکه اجتماعی"
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:10
+msgid "Select an icon"
+msgstr "انتخاب آیکون"
+
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:16
+msgid "Add it"
+msgstr "افزودن آن"
+
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:16
+msgid "Cancel"
+msgstr "لغو"
+
+#: functions/czr/czr-resources.php:559
+msgid "Learn more about this in the documentation"
+msgstr "با استفاده از مستندات در این‌باره بیشتر بیاموزید"
+
+#: functions/czr/czr-resources.php:557
+msgid "A selected location is not available with the current settings."
+msgstr "موقعیت انتخاب شده برای تنظیمات اخیر دردسترس نیست."
+
+#: functions/czr/czr-resources.php:556
+msgid "Unavailable location. Some settings must be changed."
+msgstr "موقعیت دردسترس نیست. بعضی تنظیمات باید تغییر کنند."
+
+#: functions/czr/czr-resources.php:555
+msgid "Inactive in current context/location"
+msgstr "غیر فعال در زمینه یا موقعیت کنونی"
+
+#: functions/czr/czr-resources.php:554
+msgid "New Widget Zone created ! Scroll down to edit it."
+msgstr "منطقه جدید ابزارک ایجاد شد به پایین بروید و ویرایشش کنید."
+
+#: functions/czr/czr-resources.php:547
+msgid "New Social Link created ! Scroll down to edit it."
+msgstr "شبکه اجتماعی جدید ایجاد شد. به پایین رفته و ویرایشش کنید."
+
+#: functions/czr/czr-resources.php:546
+msgid "Done !"
+msgstr "انجام شد."
+
+#: functions/czr/czr-resources.php:545
+msgid "Follow us on"
+msgstr "ما را دنبال کنید"
+
+#: functions/czr/czr-resources.php:544
+msgid "Select a social icon"
+msgstr "انتخاب آیکون شبکه اجتماعی"
+
+#: functions/class-utils-settings-map.php:1296
+msgid "This zone is located before the other footer widgets and takes 100% of the width. Very appropriate to display a Google Map or an advertisement banner."
+msgstr "This zone is located before the other footer widgets and takes 100% of the width. Very appropriate to display a Google Map or an advertisement banner."
+
+#: functions/class-utils-settings-map.php:1293
+msgid "Display a full width widget area in your footer"
+msgstr "نمایش با عرض کامل ناحیه ابزارک در پانوشت"
+
+#: functions/class-utils-settings-map.php:1064
+msgid "By default, your featured posts display the first words of their content ( the \"excerpt\"). Check this box to display the full content."
+msgstr "بطور پیشفرض نوشته‌های ویژه شما، چند کلمه اول متن (خلاصه متن) را نمایش می‌دهد. با انتخاب این گزینه محتوا به صورت کامل نمایش داده خواهد شد."
+
+#: functions/class-utils-settings-map.php:1061
+msgid "Display the full post content"
+msgstr "نمایش نوشته بطور کامل"
+
+#: parts/single-author-date.php:13
+msgid "Published"
+msgstr "منتشر شده"
+
+#: functions/init-admin.php:206
+msgid "Notes : 1)This will override any default settings of the customizer options panel. 2) The secondary sidebar is placed on the right in a 3 columns layout."
+msgstr "نکته: 1- این جایگزین تنظیمات پیش‌فرض در پنل تنظیمات سفارشی‌سازی می شود. 2- ناحیه کناری دوم در سمت راست در طرح سه ستونه قرار می گیرد."
+
+#: functions/init-admin.php:206
+msgid "Select a widget zone for the secondary sidebar."
+msgstr "یک ابزارک برای سایدبار دوم انتخاب کنید."
+
+#: functions/init-admin.php:200
+msgid "Notes : 1)This will override any default settings of the customizer options panel. 2) The primary sidebar is placed on the left in a 3 columns layout. It can be on the right in a 2 columns layout, when the content is on the left."
+msgstr "نکته: 1- این جایگزین تنظیمات پیش‌فرض در پنل تنظیمات سفارشی‌سازی می شود. 2 - ناحیه کناری اصلی در سمت چپ طرح سه ستونه قرار می گیرد. همچنین میتواند سمت راست در طرح دو ستونه قرار بگیرد هنگامی که محتوا در سمت چپ ان باشد."
+
+#: functions/init-admin.php:200
+msgid "Select a widget zone for the primary sidebar."
+msgstr "یک ابزارک برای سایدبار اصلی انتخاب کنید."
+
+#: functions/init-sidebars-widgets.php:28
+msgid "Full width widget zone. Located in the right sidebar in a 3 columns layout."
+msgstr "منطقه ابزارک با عرض کامل. واقع در سمت راست در حالت سه ستونه."
+
+#: functions/init-sidebars-widgets.php:19
+msgid "Full width widget zone. Located in the left sidebar in a 3 columns layout. Can be on the right of a 2 columns sidebar when content is on the left."
+msgstr "منطقه ابزارک با عرض کامل. واقع در ناحیه کناری چپ در طرح سه ستونه. می تواند در سمت راست حالت دو ستونه قرار گیرد زمانی که محتوا سمت چپ آن باشد."
+
+#: functions/class-utils-settings-map.php:1623
+msgid "Hueman Admin Settings"
+msgstr "تنظیمات مدیریتی قالب"
+
+#: functions/class-utils-settings-map.php:1618
+msgid "Performances and SEO"
+msgstr "عملکرد و سئو"
+
+#: functions/class-utils-settings-map.php:535
+msgid "This button links to the \"About Hueman\" page."
+msgstr "این دکمه به بخش درباره قالب لینک شده است."
+
+#: functions/class-utils-settings-map.php:532
+msgid "Display a Help button in the admin bar"
+msgstr "نمایش دکمه راهنما در نوار مدیریت"
+
+#: functions/class-utils-settings-map.php:527
+msgid "This page is intended to provide informations about the Hueman theme : changelog, release note, documentation link. It also display informations about your current install that can be useful if you need to report an issue."
+msgstr "این بخش درباره این قالب به شما اطلاعاتی می دهد: لینک تغییرات،نکات منتشره،مستندات."
+
+#: functions/class-utils-settings-map.php:524
+msgid "Display the \"About Hueman\" page in the \"Appearance\" admin menu"
+msgstr "نمایش\"درباره قالب\" در بخش \"نمایش\" در فهرست مدیریت"
+
+#: functions/class-utils-settings-map.php:493
+msgid "\"Structured data markup\" is a standard way to annotate your content so machines can understand it. Implementing it will help your website rank higher in search engines."
+msgstr "علامت‌گذاری ساختار داده  \"Structured data markup\" یعنی نوع محتوایی که قابل فهم برای موتور جستجو باشد. انتخاب این گزینه باعث بهبود رتبه سایت در موتورهای جستجو می‌شود."
+
+#: functions/class-utils-settings-map.php:490
+msgid "Use Structured Data Markup for your posts"
+msgstr "بکار بردن علامت‌گذاری ساختار داده در نوشته‌ها"
+
+#: functions/class-utils-settings-map.php:485
+msgid "Unchecking this option is not recommended. Minifying css stylesheets improves performance for your website overall by decreasing the load time."
+msgstr "غیرفعال کردن این گزینه اصلا توصیه نمی شود. چرا که با استفاده از این قابلیت عمکرد و سرعت بارگذاری سایت بسیار بالاتر می رود."
+
+#: functions/class-utils-settings-map.php:482
+msgid "Use a minified stylesheet"
+msgstr "بکاربردن فایل استایل فشرده"
+
+#: functions/class-utils-settings-map.php:1333
+msgid "Footer Background"
+msgstr "رنگ پس‌زمینه پانوشت"
+
+#: functions/class-utils-settings-map.php:1347
+msgid "Note : Html is allowed."
+msgstr "نکته: کد HTML مجاز می باشد."
+
+#: functions/class-utils-settings-map.php:965
+msgid "Your blog sub-heading. Html is allowed. Note : write a blank space to hide the default content."
+msgstr "زیرسربرگ سایت شما. کدهای HTML مجاز است. نکته: می‌توانید با استفاده از کلید space یک فاصله خالی ایجاد کنید تا این قسمت نمایش داده نشود."
+
+#: functions/class-utils-settings-map.php:950
+msgid "Your blog heading. Html is allowed. Note : write a blank space to hide the default content."
+msgstr "سربرگ سایت شما. کدهای HTML مجاز است. نکته: می‌توانید با استفاده از کلید space یک فاصله خالی ایجاد کنید تا این قسمت نمایش داده نشود."
+
+#: functions/czr/czr-resources.php:543
+msgid "Rss"
+msgstr "RSS"
+
+#: functions/czr/czr-resources.php:542
+msgid "Not set"
+msgstr "تنظیم نشده"
+
+#: functions/init-sidebars-widgets.php:149
+msgid "Secondary Sidebar (on the right in a 3 columns layout)"
+msgstr "سایدبار دوم (در سمت راست در طرح سه ستونه)"
+
+#: functions/init-sidebars-widgets.php:148
+msgid "Primary Sidebar (on the left in a 3 columns layout)"
+msgstr "سایدبار اصلی ( در سمت چپ در طرح سه ستونه)"
+
+#: functions/init-sidebars-widgets.php:133
+msgid "Blog Page"
+msgstr "برگه بلاگ"
+
+#: functions/class-utils-settings-map.php:1032
+msgid "If no specific category is selected, the featured posts block will display your latest post(s) from all categories."
+msgstr "اگر دسته ای تعریف نشده، بخش نوشته‌های ویژه نوشته‌های اخیر از همه دسته‌ها را نمایش می دهد."
+
+#: functions/class-utils-settings-map.php:1028
+msgid "Select a category to feature"
+msgstr "یک دسته را برای نوشته‌ ویژه انتخاب کنید"
+
+#: functions/widgets/alx-video.php:23
+msgid "Display a responsive video with a YouTube or Vimeo link."
+msgstr "نمایش ویدئوی واکنش‌گرا با لینک یوتیوب یا ویمئو"
+
+#: functions/widgets/alx-video.php:21
+msgid "Hueman Videos"
+msgstr "ویدئوها"
+
+#: functions/widgets/alx-tabs.php:23
+msgid "List posts, comments, and/or tags with or without tabs."
+msgstr "لیست نوشته‌ها،دیدگاه‌ها و یا برچسب‌ها با یا بدون تب‌ها"
+
+#: functions/widgets/alx-tabs.php:21
+msgid "Hueman Dynamic Tabs"
+msgstr "تب‌های دینامیک"
+
+#: functions/widgets/alx-posts.php:23
+msgid "Display posts from a category"
+msgstr "نمیش نوشته‌ها از دسته"
+
+#: functions/widgets/alx-posts.php:21
+msgid "Hueman Posts"
+msgstr "نوشته‌ها"
+
+#: functions/init-admin.php:285
+msgid "Select a layout for this page."
+msgstr "انتخاب طرح برای این برگه"
+
+#: functions/init-admin.php:229
+msgid "Select a widget zone for the right sidebar."
+msgstr "یک ابزارک برای سایدبار راست انتخاب کنید."
+
+#: functions/init-admin.php:223 functions/init-admin.php:229
+#: functions/init-admin.php:285
+msgid "This will override any default settings of the customizer options panel."
+msgstr "این جایگزین تنظیمات پیش‌فرض در پنل تنظیمات سفارشی‌سازی می شود."
+
+#: functions/init-admin.php:223
+msgid "Select a widget zone for the left sidebar."
+msgstr "یک ابزارک برای سایدبار چپ انتخاب کنید."
+
+#: functions/init-front.php:229
+msgid "Add widgets to the zone :"
+msgstr "افزودن ابزارک‌ها به ناحیه:"
+
+#: functions/init-front.php:223
+msgid "You can change or disable this setting by editing the options of the current post / page."
+msgstr "شما می‌توانید این تنظیمات را تغییر داده یا غیر فعال کنید با ویرایش آپشن‌های برگه یا نوشته فعلی"
+
+#: functions/init-front.php:222
+msgid "in this post or page options."
+msgstr "در تنظیمات این برگه یا نوشته."
+
+#: functions/init-front.php:220
+msgid "You have already assigned the following widget zone here : "
+msgstr "در حال حاضر شما منطقه ابزار زیر را اختصاص داده اید اینجا:"
+
+#: functions/init-front.php:192
+msgid "You can add Widget Areas here from the customizer, in the <strong>Dynamic Sidebars and Widgets</strong> panel, or you can change the layout to remove this sidebar in <strong>Content &raquo; Layout Options for the main content</strong>."
+msgstr "می توانید ناحیه ابزارک از بخش سفارشی‌سازی اضافه کنید در پنل<strong> ابزارک و ناحیه کناری دینامیک </strong> یا میتوانید با تغییر طرح ناحیه کناری را حذف کنید در<strong> محتوا &raquo; تنظیمات طرح برای محتوای اصلی</strong>."
+
+#: functions/init-front.php:191
+msgid "No widget zones available in this sidebar."
+msgstr "هیچ منطقه ابزارکی در این ناحیه کناری دردسترس نیست."
+
+#: functions/init-admin.php:59
+msgid "Need help with the Hueman theme ? Click here!"
+msgstr "برای قالب Hueman به راهنمایی بیشتر نیاز دارید؟ اینجا را کلیک کنید!"
+
+#: functions/init-sidebars-widgets.php:139
+msgid "404 Error Pages"
+msgstr "برگه‌های 404"
+
+#: functions/class-utils-settings-map.php:1613
+#: functions/init-sidebars-widgets.php:138
+msgid "Search Results"
+msgstr "نتایج جستجو"
+
+#: functions/init-sidebars-widgets.php:137
+msgid "Categories"
+msgstr "دسته‌ها"
+
+#: functions/init-sidebars-widgets.php:136
+msgid "Archives"
+msgstr "بایگانی‌ها"
+
+#: functions/init-sidebars-widgets.php:135
+msgid "Single Posts"
+msgstr "تک نوشته‌ها"
+
+#: functions/init-front.php:1518 functions/init-sidebars-widgets.php:134
+msgid "Pages"
+msgstr "برگه‌ها"
+
+#: functions/init-sidebars-widgets.php:131
+msgid "All contexts"
+msgstr "همه زمینه های"
+
+#: functions/init-sidebars-widgets.php:64
+msgid "Widgetized footer 4"
+msgstr "ابزارک‌های پانوشت 4"
+
+#: functions/init-sidebars-widgets.php:62
+#: functions/init-sidebars-widgets.php:153
+msgid "Footer 4"
+msgstr "پانوشت چهارم"
+
+#: functions/init-sidebars-widgets.php:55
+msgid "Widgetized footer 3"
+msgstr "ابزارک‌های پانوشت 3"
+
+#: functions/init-sidebars-widgets.php:53
+#: functions/init-sidebars-widgets.php:152
+msgid "Footer 3"
+msgstr "پانوشت سوم"
+
+#: functions/init-sidebars-widgets.php:46
+msgid "Widgetized footer 2"
+msgstr "ابزارک‌های پانوشت 2"
+
+#: functions/init-sidebars-widgets.php:44
+#: functions/init-sidebars-widgets.php:151
+msgid "Footer 2"
+msgstr "پانوشت دوم"
+
+#: functions/init-sidebars-widgets.php:37
+msgid "Widgetized footer 1"
+msgstr "ابزارک‌های پانوشت 1"
+
+#: functions/init-sidebars-widgets.php:35
+#: functions/init-sidebars-widgets.php:150
+msgid "Footer 1"
+msgstr "پانوشت اول"
+
+#: functions/init-sidebars-widgets.php:26
+msgid "Secondary"
+msgstr "دوم"
+
+#: functions/init-sidebars-widgets.php:17
+msgid "Primary"
+msgstr "اصلی"
+
+#: functions/init-core.php:84
+msgid "Theme Options [OLD]"
+msgstr "تنظیمات قالب قدیمی"
+
+#: functions/class-utils-settings-map.php:1744
+msgid "4 Columns"
+msgstr "4 ستون"
+
+#: functions/class-utils-settings-map.php:1740
+msgid "3 Columns"
+msgstr "3 ستون"
+
+#: functions/class-utils-settings-map.php:1736
+msgid "2 Columns"
+msgstr "2 ستون"
+
+#: functions/class-utils-settings-map.php:1710
+msgid "Inherit Global Layout"
+msgstr "ارث بری طرح کلی"
+
+#: functions/class-utils-settings-map.php:1702
+msgid "3 Columns - Content Right"
+msgstr "3 ستون محتوا - سمت راست"
+
+#: functions/class-utils-settings-map.php:1698
+msgid "3 Columns - Content Left"
+msgstr "3 ستون - محتوا سمت چپ"
+
+#: functions/class-utils-settings-map.php:1694
+msgid "3 Columns - Content Middle"
+msgstr "3 ستون - محتوا در وسط"
+
+#: functions/class-utils-settings-map.php:1690
+msgid "2 Columns - Content Right"
+msgstr "2 ستون - محتوا سمت راست"
+
+#: functions/class-utils-settings-map.php:1686
+msgid "2 Columns - Content Left"
+msgstr "2 ستون - محتوا سمت چپ"
+
+#: functions/class-utils-settings-map.php:1682
+#: functions/class-utils-settings-map.php:1732
+msgid "1 Column"
+msgstr "1 ستون"
+
+#: functions/class-utils-settings-map.php:1663
+msgid "Choose one "
+msgstr "انتخاب کنید"
+
+#: functions/class-utils-settings-map.php:1592
+msgid "Footer Design : Logo, layout, ..."
+msgstr "طرح پانوشت: لوگو،طرح کلی،..."
+
+#: functions/class-utils-settings-map.php:1577
+msgid "Thumbnails Settings"
+msgstr "تنظیمات تصویر بندانگشتی"
+
+#: functions/class-utils-settings-map.php:1571
+msgid "Single Posts Settings"
+msgstr "تنظیمات تک نوشته"
+
+#: functions/class-utils-settings-map.php:1560
+msgid "Sidebars : Design and Mobile Settings"
+msgstr "سایدبارها: طرح و تنظیمات موبایلی"
+
+#: functions/class-utils-settings-map.php:1541
+msgid "Header Advertisement Widget"
+msgstr "ابزارک تبلیغات سربرگ"
+
+#: functions/class-utils-settings-map.php:746
+#: functions/class-utils-settings-map.php:769
+#: functions/class-utils-settings-map.php:800
+#: functions/class-utils-settings-map.php:1240
+msgid "Mobile devices"
+msgstr "دستگاه‌های موبایل"
+
+#: functions/class-utils-settings-map.php:1520
+msgid "Social links"
+msgstr "لینک شبکه‌های اجتماعی"
+
+#: functions/class-utils-settings-map.php:1515
+msgid "General Design Options : Font, Colors, ..."
+msgstr "تنظیمات طرح کلی: فونت، رنگ‌ها،..."
+
+#: functions/class-utils-settings-map.php:1505
+msgid "Site Identity : Logo, Title, Tagline and Site Icon"
+msgstr "مشخصات سایت: لوگو،عنوان،توضیحات و آیکون سایت"
+
+#: functions/class-utils-settings-map.php:690
+#: functions/class-utils-settings-map.php:1285
+msgid "in the menu panel"
+msgstr "در پنل فهرست"
+
+#: functions/class-utils-settings-map.php:691
+#: functions/class-utils-settings-map.php:1286
+msgid "create/edit menus"
+msgstr "ساخت/ ویرایش فهرست‌ها"
+
+#: functions/class-utils-settings-map.php:1423
+msgid "Advanced settings for the Hueman theme."
+msgstr "تنظیمات پیشرفته قالب"
+
+#: functions/class-utils-settings-map.php:1421
+msgid "Advanced options"
+msgstr "تنظیمات پیشرفته"
+
+#: functions/class-utils-settings-map.php:1415
+msgid "Footer settings for the Hueman theme."
+msgstr "تنظیمات پانوشت قالب"
+
+#: functions/init-after-setup-theme.php:100
+msgid "Footer"
+msgstr "پانوشت"
+
+#: functions/class-utils-settings-map.php:1401
+msgid "Content settings for the Hueman theme."
+msgstr "تنظیمات محتوای قالب"
+
+#: functions/class-utils-settings-map.php:1393
+msgid "Header settings for the Hueman theme."
+msgstr "تنظیمات سربرگ قالب."
+
+#: functions/init-after-setup-theme.php:99
+msgid "Header"
+msgstr "سربرگ"
+
+#: functions/class-utils-settings-map.php:1385
+msgid "General settings for the Hueman theme : design, comments, mobile, ..."
+msgstr "تنظیمات کلی برای این قالب: طرح، دیدگاه‌ها، موبایل،..."
+
+#: functions/class-utils-settings-map.php:1352
+msgid "Footer credit text"
+msgstr "متن پانوشت"
+
+#: functions/class-utils-settings-map.php:1343
+msgid "Replace the footer copyright text"
+msgstr "جایگزینی متن کپی رایت در پانوشت"
+
+#: functions/class-utils-settings-map.php:1317
+msgid "Upload your custom logo image"
+msgstr "بارگذاری تصویر لوگو"
+
+#: functions/class-utils-settings-map.php:1313
+msgid "Recommended number of columns : 3"
+msgstr "تعداد ستون پیشنهادی: 3"
+
+#: functions/class-utils-settings-map.php:1309
+msgid "Select columns to enable footer widgets"
+msgstr "انتخاب ستون‌ها برای فعال کردن ابزارک پانوشت"
+
+#: functions/class-utils-settings-map.php:1258
+msgid "Control how the sidebar content is displayed on smartphone mobile devices (320px). Note : on smartphones the sidebars are displayed below the content."
+msgstr "کنترل نمایش محتوای سایدبارها در دستگاه‌های موبایل (320پیکسل). نکته: در موبایل سایدبارها در پایین محتوا نشان داده می شوند."
+
+#: functions/class-utils-settings-map.php:1256
+msgid "Hide both sidebars"
+msgstr "مخفی کردن هردو ناحیه کناری"
+
+#: functions/class-utils-settings-map.php:1255
+msgid "Hide secondary sidebar"
+msgstr "مخفی کردن ناحیه کناری فرعی"
+
+#: functions/class-utils-settings-map.php:1254
+msgid "Hide primary sidebar"
+msgstr "مخفی کردن ناحیه کناری اصلی"
+
+#: functions/class-utils-settings-map.php:1253
+msgid "Display both sidebars"
+msgstr "نمایش هردو ناحیه کناری"
+
+#: functions/class-utils-settings-map.php:1248
+msgid "Mobile Sidebar Content"
+msgstr "محتوای ناحیه کناری در موبایل"
+
+#: functions/class-utils-settings-map.php:1226
+msgid "Display boxes at the top of the sidebars"
+msgstr "نمایش جعبه‌ها در بالای ناحیه کناری"
+
+#: functions/class-utils-settings-map.php:1223
+#: functions/init-plugins-compat.php:431
+msgid "Sidebar Top Boxes"
+msgstr "جعبه بالای سایدبار"
+
+#: functions/class-utils-settings-map.php:1198
+msgid "Display comment count on thumbnails"
+msgstr "نمایش شمارنده دیدگاه در تصویربندانگشتی"
+
+#: functions/class-utils-settings-map.php:1195
+msgid "Thumbnail Comment Count"
+msgstr "تعداد دیدگاه در تصویر بند انگشتی"
+
+#: functions/class-utils-settings-map.php:1190
+msgid "Display featured image placeholders if no featured image is set"
+msgstr "نمایش جانگهدار تصویر‌ویژه اگر تصویری تنظیم نشده باشد"
+
+#: functions/class-utils-settings-map.php:1187
+msgid "Thumbnail Placeholder"
+msgstr "جانگهدار تصویر بندانگشتی"
+
+#: functions/class-utils-settings-map.php:1168
+msgid "Display links to the next and previous article"
+msgstr "نمایش لینک‌های مطالب قبلی و بعدی"
+
+#: functions/class-utils-settings-map.php:1166
+msgid "Below content"
+msgstr "زیر محتوا"
+
+#: functions/class-utils-settings-map.php:1151
+msgid "Display randomized related articles below the post"
+msgstr "نمایش تصادفی مطالب در زیر نوشته"
+
+#: functions/class-utils-settings-map.php:1149
+msgid "Related by tags"
+msgstr "مرتبط توسط برچسب‌ها"
+
+#: functions/class-utils-settings-map.php:1148
+msgid "Related by categories"
+msgstr "مرتبط توسط دسته‌بندی"
+
+#: functions/class-utils-settings-map.php:1147
+#: functions/class-utils-settings-map.php:1163
+#: functions/class-utils-settings-map.php:1728
+msgid "Disable"
+msgstr "غیرفعال"
+
+#: functions/class-utils-settings-map.php:1142
+msgid "Single - Related Posts"
+msgstr "تکی - نوشته‌های مرتبط"
+
+#: functions/class-utils-settings-map.php:1135
+msgid "Display post author description, if it exists"
+msgstr "نمایش توضیحات نویسنده نوشته اگر وجود داشته باشد."
+
+#: functions/class-utils-settings-map.php:1131
+msgid "Single - Author Bio"
+msgstr "تکی - بیوگرافی نویسنده"
+
+#: functions/class-utils-settings-map.php:1110
+msgid "If this box is checked, your featured posts will be displayed both in the featured slider and in the post list below. Usually not recommended because a given post might appear two times on the same page."
+msgstr "اگر این گزینه را انتخاب کنید. نوشته ویژه شما هم در بخش اسلایدر نمایش داده می شود و هم در لیست نوشته‌ها. این توصیه نمی شود برای عدم تکرار محتوا."
+
+#: functions/class-utils-settings-map.php:1107
+msgid "Display the featured posts also in the list of posts"
+msgstr "نمایش نوشته‌های ویژه در لیست نوشته‌ها"
+
+#: functions/class-utils-settings-map.php:1096
+msgid "Speed of the automatic slideshow animation"
+msgstr "سرعت اسلایدر متحرک"
+
+#: functions/class-utils-settings-map.php:1090
+msgid "Featured Slideshow Speed"
+msgstr "سرعت اسلایدر نوشته‌ویژه"
+
+#: functions/class-utils-settings-map.php:1078
+msgid "Enables the automatic animation of the featured posts carousel."
+msgstr "فعال کردن متحرک سازی خودکار نوشته‌های ویژه بصورت چرخشی."
+
+#: functions/class-utils-settings-map.php:1075
+msgid "Animate your featured posts with a slideshow"
+msgstr "نوشته‌های ویژه را متحرک کنید با انتخاب اسلایدر"
+
+#: functions/class-utils-settings-map.php:1050
+msgid "Max number of featured posts to display. <br /><i>Set to 1 and it will show it without any slider script</i><br /><i>Set it to 0 to disable</i>"
+msgstr "بیشترین تعداد نوشته‌های ویژه برای نمایش.<br /><i> عدد 1 را وارد کنید تا بدون اسلایدر نمایش داده شود</i><br /><i> عدد 0 را وارد کنید تا غیر فعال شود</i>"
+
+#: functions/class-utils-settings-map.php:1044
+msgid "Featured Post Count"
+msgstr "تعداد نوشته ویژه"
+
+#: functions/class-utils-settings-map.php:1017
+msgid "Check this box to display a selection of posts with a slideshow, on top of your blog."
+msgstr "این گزینه را انتخاب کنید تا نوشته‌ها با اسلایدر در بالای سایت نمایش داده شود."
+
+#: functions/class-utils-settings-map.php:1014
+msgid "Feature posts on top of your blog"
+msgstr "نوشته‌های ویژه در بالای سایت"
+
+#: functions/class-utils-settings-map.php:1012
+msgid "Featured posts"
+msgstr "نوشته‌های ویژه"
+
+#: functions/class-utils-settings-map.php:981
+msgid "While the default blog design is a grid of posts, you can check this option and display one post per row, whith the thumbnail beside the text."
+msgstr "در حالت عادی نوشته‌ها به صورت جدولی نمایش داده می‌شوند، با انتخاب این گزینه نوشته‌ها به صورت لیست نمایش داده خواهند شد و تصاویر بند انگشتی در کنار نوشته‌ نمایش داده خواهد شد."
+
+#: functions/class-utils-settings-map.php:978
+msgid "Display your blog posts as a standard list."
+msgstr "نمایش نوشته‌های سایت بطور لیست استاندارد."
+
+#: functions/class-utils-settings-map.php:994
+msgid "Excerpt Length"
+msgstr "طول خلاصه متن"
+
+#: functions/class-utils-settings-map.php:962
+msgid "Blog Sub-Heading"
+msgstr "زیرسربرگ سایت"
+
+#: functions/class-utils-settings-map.php:960 functions/init-front.php:532
+msgid "Blog"
+msgstr "سایت"
+
+#: functions/class-utils-settings-map.php:933
+#: functions/class-utils-settings-map.php:947
+msgid "Blog Heading"
+msgstr "سربرگ سایت"
+
+#: functions/class-utils-settings-map.php:934
+msgid "Display a custom heading for your blog."
+msgstr "نمایش سربرگ سفارشی برای سایت شما"
+
+#: functions/class-utils-settings-map.php:919
+msgid "[ <strong>is_page</strong> ] Default page layout - If a page has a set layout, it will override this."
+msgstr "[ <strong>is_page</strong> ] طرح برگه پیش‌فرض - اگر طرحی برای برگه تنظیم شده باشد، آنگاه جایگزین این می شود."
+
+#: functions/class-utils-settings-map.php:915
+msgid "Default Page"
+msgstr "برگه پیش‌فرض"
+
+#: functions/class-utils-settings-map.php:910
+msgid "[ <strong>is_404</strong> ] Error 404 page layout"
+msgstr "[ <strong>is_404</strong> ] طرح برگه خطای 404"
+
+#: functions/class-utils-settings-map.php:906
+msgid "Error 404"
+msgstr "خطای 404"
+
+#: functions/class-utils-settings-map.php:901
+msgid "[ <strong>is_search</strong> ] Search page layout"
+msgstr "[ <strong>is_search</strong> ] طرح برگه جستجو"
+
+#: functions/class-utils-settings-map.php:897
+msgid "Search"
+msgstr "جستجو"
+
+#: functions/class-utils-settings-map.php:892
+msgid "[ <strong>is_category</strong> ] Category archive layout"
+msgstr "[ <strong>is_category</strong> ] طرح بایگانی دسته"
+
+#: functions/class-utils-settings-map.php:888
+msgid "Archive - Category"
+msgstr "دسته - بایگانی"
+
+#: functions/class-utils-settings-map.php:883
+msgid "[ <strong>is_archive</strong> ] Category, date, tag and author archive layout"
+msgstr "[ <strong>is_archive</strong> ] طرح دسته، تاریخ، برچسب و بایگانی نویسنده"
+
+#: functions/class-utils-settings-map.php:879
+msgid "Archive"
+msgstr "بایگانی"
+
+#: functions/class-utils-settings-map.php:870
+msgid "[ <strong>is_single</strong> ] Single post layout - If a post has a set layout, it will override this."
+msgstr "[ <strong>is_single</strong> ] طرح نوشته تکی - اگر طرحی برای نوشته تنظیم شده باشد، آن جایگزینش می شود."
+
+#: functions/class-utils-settings-map.php:866
+msgid "Single"
+msgstr "تکی"
+
+#: functions/class-utils-settings-map.php:857
+msgid "[ <strong>is_home</strong> ] Posts homepage layout"
+msgstr "[ <strong>is_home</strong> ] طرح صفحه اصلی نوشته‌ها"
+
+#: functions/class-utils-settings-map.php:853 functions/init-front.php:1470
+#: functions/init-sidebars-widgets.php:132
+msgid "Home"
+msgstr "صفحه اصلی"
+
+#: functions/class-utils-settings-map.php:848
+msgid "Other layouts will override this option if they are set"
+msgstr "دیگر طرح‌ها جایگزین این تنظیم می شوند، اگر تغییر گردد"
+
+#: functions/class-utils-settings-map.php:844
+msgid "Global Layout"
+msgstr "طرح کلی"
+
+#: functions/class-utils-settings-map.php:653
+msgid "Header widget area, perfect to insert advertisements. Note : this feature is not available when a header image is being displayed."
+msgstr "ناحیه ابزارک سربرگ،عالی برای گذاشتن تبلیغات. نکت: این ویژگی زمانی که تصویر سربرگ فعال باشد نمایش داده نمی شود."
+
+#: functions/class-utils-settings-map.php:650
+msgid "Display a widget in your header"
+msgstr "نمایش ابزارک در سربرگ سایت"
+
+#: functions/class-utils-settings-map.php:625
+msgid "Upload a header image (supported formats : .jpg, .png, .gif, svg, svgz). This will disable header title/logo, site description, header ads widget"
+msgstr "بارگذاری تصویر سربرگ (فرمت‌های پشتیبانی شده: .jpg, .png, .gif, svg, svgz ) این عنوان/لوگوی سربرگ، توضیحات سایت و ابزارک تبلیغات سربرگ را غیرفعال می کند"
+
+#: functions/class-utils-settings-map.php:1536
+msgid "Header Image"
+msgstr "تصویر سربرگ"
+
+#: functions/class-utils-settings-map.php:558
+msgid "The description that appears next to your logo"
+msgstr "توضیحاتی که در کنار لوگوی سایت ظاهر می شود."
+
+#: functions/class-utils-settings-map.php:555
+msgid "Display your site's description (tagline)"
+msgstr "نمایش توضیحات سایت(خط برچسب)"
+
+#: functions/class-utils-settings-map.php:222
+msgid "Header Logo Image Max-height"
+msgstr "تصویر لوگوی سربرگ Max-height"
+
+#: functions/class-utils-settings-map.php:215
+#: functions/class-utils-settings-map.php:1328
+#: functions/czr/class-czr-init.php:114
+msgid "Upload your custom logo image. Supported formats : .jpg, .png, .gif, svg, svgz"
+msgstr "تصویر لوگوی سایت را بارگذاری کنید. فرمتهای پشتیبانی شده: .jpg, .png, .gif, svg, svgz"
+
+#: functions/czr/class-czr-init.php:103
+msgid "Custom Header Logo"
+msgstr "لوگوی سربرگ دلخواه"
+
+#: functions/class-utils-settings-map.php:381
+msgid "Create and organize your social links"
+msgstr "ساخت و مدیریت لینک شبکه‌های اجتماعی"
+
+#: functions/class-utils-settings-map.php:446
+msgid "Hueman is a mobile friendly WordPress theme out of the box. This means that it will adapt and render nicely on any devices : desktops, laptops, tablets, smartphones. <br/>If you uncheck this box, this adaptive (or reponsive) behaviour will not be working anymore. In most of the cases, you won't need to disable this option, and it is not recommended."
+msgstr "این قالب قابلیت واکنش‌گرای بالایی دارد بطوری که با هر دستگاهی مانند:دسکتاپ،لپ‌تاپ،تبلت و تلفن‌های هوشمند هماهنگ می شود.<br/> اگر این گزینه را تیک نزنید قابلیت واکنش‌گرا فعال نمی شود."
+
+#: functions/class-utils-settings-map.php:443
+msgid "Enable the Mobile Friendly (or Responsive) layout"
+msgstr "فعال کردن حالت واکنش‌گرا (سازگار با موبایل و تبلت)"
+
+#: functions/class-utils-settings-map.php:411
+msgid "Comments on pages"
+msgstr "دیدگاه‌ها در برگه‌ها"
+
+#: functions/class-utils-settings-map.php:408
+msgid "Pages Comments"
+msgstr "دیدگاه‌های برگه‌ها"
+
+#: functions/class-utils-settings-map.php:402
+msgid "Comments on posts"
+msgstr "دیدگاه‌ها در نوشته‌ها"
+
+#: functions/class-utils-settings-map.php:399
+msgid "Posts Comments"
+msgstr "دیدگاه‌های نوشته‌ها"
+
+#: functions/class-utils-settings-map.php:320
+msgid "Set the website background color"
+msgstr "تنظیم رنگ پس‌زمینه سایت"
+
+#: functions/class-utils-settings-map.php:319
+msgid "Body Background"
+msgstr "پس‌زمینه بدنه"
+
+#: functions/class-utils-settings-map.php:340
+msgid "Give your thumbnails and layout images rounded corners"
+msgstr "تصویر بندانگشتی و طرح تصاویر با گوشه‌های گردشده"
+
+#: functions/class-utils-settings-map.php:334
+msgid "Image Border Radius"
+msgstr " Border Radius"
+
+#: functions/class-utils-settings-map.php:587
+msgid "Header Menu Background"
+msgstr "رنگ فهرست سربرگ"
+
+#: functions/class-utils-settings-map.php:577
+msgid "Header Background"
+msgstr "رنگ پس‌زمینه سربرگ"
+
+#: functions/class-utils-settings-map.php:567
+msgid "Topbar Background"
+msgstr "رنگ فهرست نوار بالا"
+
+#: functions/class-utils-settings-map.php:308
+msgid "Secondary Color"
+msgstr "رنگ سایدبار دوم"
+
+#: functions/class-utils-settings-map.php:298
+msgid "Primary Color"
+msgstr "رنگ سایدبار اصلی"
+
+#: functions/class-utils-settings-map.php:289
+msgid "Change left and right sidebars padding"
+msgstr "تغییر padding برای سایدبار چپ و راست"
+
+#: functions/class-utils-settings-map.php:287
+msgid "20px padding for widgets"
+msgstr "20 پیکسل padding  برای ابزارک‌ها"
+
+#: functions/class-utils-settings-map.php:286
+msgid "30px padding for widgets"
+msgstr "30 پیکسلpadding برای ابزارک‌ها"
+
+#: functions/class-utils-settings-map.php:282
+msgid "Sidebar Width"
+msgstr "عرض سایدبار"
+
+#: functions/class-utils-settings-map.php:269
+msgid "Max-width of the container. If you use 2 sidebars, your container should be at least 1200px.<br /><i>Note: For 720px content (default) use <strong>1380px</strong> for 2 sidebars and <strong>1120px</strong> for 1 sidebar. If you use a combination of both, try something inbetween.</i>"
+msgstr " Max-width از container.اگر از دو ناحیه کناری استفاده کنید.container شما باید نهایتا 1200پیکسل باشد<br /><i>نکته: برای محتوای 720پیکسل (پیش‌فرض) بکار ببرید<strong>1380پیکسل</strong>برای دو ناحیه کناری و <strong>1120پیکسل </strong> برای یک ناحیه کناری. اگر از ترکیبی از هردو استفاده می کنید از میانگین آن دو استفاده کنید.</i>"
+
+#: functions/class-utils-settings-map.php:263
+msgid "Website Max-width"
+msgstr "بیشترین عرض برای سایت"
+
+#: functions/class-utils-settings-map.php:245
+msgid "Select a font for your website"
+msgstr "انتاخب فونت برای سایت"
+
+#: functions/class-utils-settings-map.php:240
+msgid "Font"
+msgstr "فونت"
+
+#: functions/class-utils-settings-map.php:277
+msgid "Use a boxed layout"
+msgstr "استفاده از طرح جعبه ای"
+
+#: functions/class-utils-settings-map.php:274
+msgid "Boxed Layout"
+msgstr "طرح جعبه ای"
+
+#: functions/class-utils-settings-map.php:165
+msgid "FAVICON"
+msgstr "آیکون سایت"
+
+#: functions/class-utils-settings-map.php:164
+msgid "Favicon Upload (supported formats : .ico, .png, .gif)"
+msgstr "بارگذاری آیکون سایت (فرمت‌های پشتیبانی شده:.ico, .png, .gif)"
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:78
+msgid "Check this option to open the link in a another tab of the browser."
+msgstr "انتخاب این گزینه برای اینکه لینک در یک تب جدید مرورگر باز شود."
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:74
+msgid "Link target"
+msgstr "هدف لینک"
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:67
+msgid "Set a unique color for your icon."
+msgstr "انتخاب رنگ اختصاصی برای آیکون شما"
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:63
+msgid "Icon color"
+msgstr "رنگ آیکون"
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:59
+msgid "This is the text displayed on mouse over."
+msgstr "این متنی است که با حالت mouse over نمایان می شود."
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:18
+#: functions/czr/tmpl/modules/social-module-tmpl.php:50
+msgid "http://..."
+msgstr "http://..."
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:48
+msgid "Social link"
+msgstr "لینک شبکه اجتماعی"
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:41
+msgid "Social icon"
+msgstr "آیکون شبکه اجتماعی"
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:35
+msgid "Id"
+msgstr "شناسه"
+
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:120
+msgid "Pick the context(s) where this widget area will be displayed."
+msgstr "انتخاب زمینه هایی که در آن این زمینه ابزارک نمایش داده خواهد شد."
+
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:19
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:109
+msgid "Personalizing the name of the widget zone will help you identify it."
+msgstr "دادن یک نام اختصاصی به ابزارک، کمک به شناسایی آن می کند."
+
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:107
+msgid "Enter a name"
+msgstr "وارد کردن نام"
+
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:76
+msgid "Pick the contexts where this widget area will be displayed."
+msgstr "انتخاب زمینه هایی که در آن این زمینه ابزارک نمایش داده خواهد شد."
+
+#: functions/czr/czr-resources.php:541
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:75
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:119
+msgid "Context(s)"
+msgstr "زمینه"
+
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:23
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:69
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:113
+msgid "Select the pre-defined location(s) in which you will embed this widget zone."
+msgstr "انتخاب موقعیت ازپیش تعریف شده که شما به منطقه ابزاکتان اختصاص می دهید."
+
+#: functions/czr/czr-resources.php:540
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:22
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:68
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:112
+msgid "Location(s)"
+msgstr "مکان"
+
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:58
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:101
+msgid "unique id"
+msgstr "شناسه اختصاصی"
+
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:56
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:99
+msgid "id"
+msgstr "شناسه"
+
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:23
+msgid "Are you sure you want to remove : <strong>{{ data.title }} ?</strong>"
+msgstr "آیا از حذف کردن آن اطمینان دارید:<strong>{{ data.title }} ?</strong>"
+
+#: functions/czr/controls/class-upload-control.php:68
+#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:57
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:32
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:103
+msgid "Remove"
+msgstr "حذف"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:65
+msgid "Background Image"
+msgstr "تصویر پس‌زمینه"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:94
+msgid "Background size"
+msgstr "اندازه پس‌زمینه"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:87
+msgid "Background position"
+msgstr "موقعیت پس‌زمینه"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:80
+msgid "Background attachment"
+msgstr "پیوست پس‌زمینه"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:73
+msgid "Repeat"
+msgstr "تکرار"
+
+#: functions/czr/tmpl/modules/body_bg-module-tmpl.php:58
+msgid "Color"
+msgstr "رنگ"
+
+#: functions/czr/sections/class-widgets-section.php:36
+msgid "Press return or enter to open this section"
+msgstr "برای باز کردن این بخش وارد شوید یا بازگردید."
+
+#: functions/admin/class-admin-update-notification.php:110
+msgid "close"
+msgstr "بستن"
+
+#: functions/admin/class-admin-update-notification.php:109
+msgid "I already know what's new thanks !"
+msgstr "قبلا فهمیدم چه چیزی اضافه شده است، ممنون!"
+
+#: functions/admin/class-admin-update-notification.php:101
+msgid "Read the latest release notes"
+msgstr "خواندن نکات انتشار یافته اخیر"
+
+#: functions/admin/class-admin-update-notification.php:99
+msgid "We'd like to introduce the new features we've been working on."
+msgstr "دوست داریم به شما امکانات جدیدی را که اضافه کرده ایم نشان دهیم"
+
+#: functions/admin/class-admin-update-notification.php:88
+msgid "Good, you've just upgraded to"
+msgstr "خوب است شما ارتقاء دادید به"
+
+#: functions/admin/class-admin-page.php:297
+msgid "To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C (Mac)."
+msgstr "برای کپی کردن اطلاعات سیستم، قسمت زیر را کلیک کرده، آن گاه دکمه Ctrl + C  برای کامپیوتر و یا دکمه Cmd + C در مکینتاش را فشار دهید."
+
+#: functions/admin/class-admin-page.php:296
+msgid "Please include the following informations when posting support requests"
+msgstr "لطفا از اطلاعات زیر پیروی کنید وقتی میخواهید درخواست پشتیبانی دهید"
+
+#: functions/admin/class-admin-page.php:295
+msgid "System Informations"
+msgstr "اطلاعات سیستم"
+
+#: functions/admin/class-admin-page.php:126
+msgid "Get help in the free support forum"
+msgstr "برای دریافت پشتیبانی به انجمن مراجعه کنید"
+
+#: functions/admin/class-admin-page.php:121
+msgid "Read the documentation"
+msgstr "خواندن مستندات"
+
+#: functions/admin/class-admin-page.php:99
+msgid "The best way to start is to read the %s."
+msgstr "بهترین راه برای شروع مطالعه %s است."
+
+#: functions/admin/class-admin-page.php:223
+msgid "Go to Dashboard"
+msgstr "بازگشت به پیش‌خوان"
+
+#: functions/admin/class-admin-page.php:223
+msgid "Go to Dashboard &rarr; Home"
+msgstr "بازگشت به پیشخوان &rarr; صفحه اصلی"
+
+#: functions/admin/class-admin-page.php:169
+msgid "You are using a child theme of Hueman %1$s : always check the %2$s after upgrading to see if a function or a template has been deprecated."
+msgstr "در حال استفاده child theme %1$s هستید: همیشه %2$s بعداز ارتقاء بررسی کنید تا ببینید آیا توابع یا پوسته منقضی نشده باشد."
+
+#: functions/admin/class-admin-page.php:155
+msgid "demo website"
+msgstr "دموی سایت"
+
+#: functions/admin/class-admin-page.php:154
+msgid "getting started guide"
+msgstr "شروع به کار با این راهنمایی"
+
+#: functions/admin/class-admin-page.php:152
+msgid "The best way to start with %s is to read the %s and visit the %s."
+msgstr "بهترین راه برای شروع با %s خواندن %s و دیدن %s است."
+
+#: functions/admin/class-admin-page.php:146
+msgid "read the latest release notes"
+msgstr "خواندن آخرین تغییرات قالب"
+
+#: functions/admin/class-admin-page.php:145
+msgid "For more informations about this new version of the theme, %s or check the changelog below"
+msgstr "برای آگاه شدن از آخرین تغییرات، لطفا مراجعه کنید به %s و یا به لیست تغییرات مراجعه کنید"
+
+#: functions/admin/class-admin-page.php:144
+msgid "%s %s has more features, is safer and more stable than ever to help you designing an awesome webdesign."
+msgstr "%s %s امکانات بیشتر،بسیار ایمن‌تر از قبل و پایدارتر شده است و به شما در طراحی یک سایت حرفه ای کمک می کند."
+
+#: functions/admin/class-admin-page.php:55
+msgid "About Hueman"
+msgstr "درباره قالب Hueman"
+
+#: functions/admin/class-admin-page.php:42
+msgid "All your previous options have been kept and are available in the customizer options panel."
+msgstr "همه تنظیمات قبلی قالب نگهداری شده و الان در بخش پنل تنظیمات سفارشی‌سازی موجود است."
+
+#: functions/admin/class-admin-page.php:39
+msgid "customizer"
+msgstr "سفارشی‌سازی"
+
+#: functions/admin/class-admin-page.php:38
+msgid "more informations here"
+msgstr "اطلاعات بیشتر در اینجا"
+
+#: functions/admin/class-admin-page.php:37
+msgid "<h2>As per the WordPress themes guidelines (%1$s), all the Hueman theme options have been moved to the %2$s.</h2>"
+msgstr "<h2>راهنمای قالب وردپرس (%1$s)،همه تنظیمات قالب رفتن در قسمت %2$s.</h2>"
+
+#: functions/czr/czr-resources.php:539
+msgid "Your favicon is currently handled with an old method and will not be properly displayed on all devices. You might consider to re-upload your favicon with the new control below."
+msgstr "آیکون سایت شما درحال حاضر به روش قدیمی ساخته شده  و امکان دارد در همه دستگاه‌ها نمایش داده نشود. شما باید آیکون سایت را مجدد در بخش زیر بارگذاری کنید."
+
+#: functions/czr/class-czr-init.php:526
+msgid "Dynamic Sidebars and Widgets"
+msgstr "سایدبارها و ابزارک‌های دینامیک"
+
+#: functions/czr/class-czr-init.php:505
+msgid "Create and manage widget zones"
+msgstr "ساخت و مدیریت ابزارک‌ها"
+
+#: functions/czr/class-czr-init.php:494
+msgid "Create And Manage Widget Areas"
+msgstr "ساخت و مدیریت ابزارک‌ها"
+
+#: functions/czr/class-czr-init.php:469 functions/czr/class-czr-init.php:498
+msgid "You must save changes for the new areas to appear below. <br /><i>Warning: Make sure each area has a unique ID.</i>"
+msgstr "برای مشاهده نواحی جدید باید ابتدا تغییرات را ذخیره کنید. <br /><i> اخطار: مطمئن شوید هر ناحیه یک شناسه اختصاصی داشته باشد</i>"
+
+#: functions/czr/class-czr-init.php:465
+msgid "Create And Order Widget Areas"
+msgstr "ساخت و مرتب‌سازی ابزارک‌ها"
+
+#: functions/czr/class-czr-init.php:409
+msgid "SITE ICON"
+msgstr "آیکون سایت"
+
+#. translators: 1: plugin name, 2: action number 3: total number of actions.
+#: functions/admin/class-tgm-plugin-activation.php:3717
+msgid "Updating Plugin %1$s (%2$d/%3$d)"
+msgstr "در حال بروز رسانی افزونه %1$s (%2$d/%3$d)"
+
+#: functions/admin/class-tgm-plugin-activation.php:3153
+msgid "No plugins are available to be activated at this time."
+msgstr "در حال حاضر هیچ افزونه‌ای برای فعالسازی موجود نیست."
+
+#: functions/admin/class-tgm-plugin-activation.php:3127
+msgid "No plugins were selected to be activated. No action taken."
+msgstr "هیچ افزونه برای فعالسازی انتخاب نشده است."
+
+#: functions/admin/class-tgm-plugin-activation.php:3021
+msgid "No plugins are available to be updated at this time."
+msgstr "در حال حاضر هیچ افزونه‌ای برای بروز رسانی وجود ندارد."
+
+#: functions/admin/class-tgm-plugin-activation.php:3019
+msgid "No plugins are available to be installed at this time."
+msgstr "در حال حاضر هیچ افزونه‌ای برای نصب وجود ندارد."
+
+#: functions/admin/class-tgm-plugin-activation.php:2978
+msgid "No plugins were selected to be updated. No action taken."
+msgstr "هیچ افزونه ای برای بروزرسانی انتخاب نشده است."
+
+#: functions/admin/class-tgm-plugin-activation.php:2976
+msgid "No plugins were selected to be installed. No action taken."
+msgstr "هیچ افزونه برای نصب انتخاب نشده است."
+
+#: parts/single-author-date.php:14
+msgid "Updated"
+msgstr "بروزرسانی شده"
+
+#: functions/admin/class-tgm-plugin-activation.php:2903
+msgid "Upgrade message from the plugin author:"
+msgstr "پیام ارتقاء از نویسنده افزونه:"
+
+#: functions/admin/class-admin-update-notification.php:90
+msgid "version"
+msgstr "نسخه"
+
+#: functions/admin/class-tgm-plugin-activation.php:2729
+msgid "Available version:"
+msgstr "ورژن موجود:"
+
+#: functions/admin/class-tgm-plugin-activation.php:2717
+msgid "Minimum required version:"
+msgstr "حداقل ورژن مورد نیاز:"
+
+#: functions/admin/class-tgm-plugin-activation.php:2709
+msgid "Installed version:"
+msgstr "ورژن نصب شده:"
+
+#: functions/admin/class-tgm-plugin-activation.php:2701
+msgctxt "as in: \"version nr unknown\""
+msgid "unknown"
+msgstr "ناشناخته"
+
+#. translators: 1: number of plugins.
+#: functions/admin/class-tgm-plugin-activation.php:2619
+msgid "To Activate <span class=\"count\">(%s)</span>"
+msgid_plural "To Activate <span class=\"count\">(%s)</span>"
+msgstr[0] "برای فعال‌سازی <span class=\"count\">(%s)</span>"
+
+#. translators: 1: number of plugins.
+#: functions/admin/class-tgm-plugin-activation.php:2615
+msgid "Update Available <span class=\"count\">(%s)</span>"
+msgid_plural "Update Available <span class=\"count\">(%s)</span>"
+msgstr[0] "بروزرسانی دردسترس <span class=\"count\">(%s)</span>"
+
+#. translators: 1: number of plugins.
+#: functions/admin/class-tgm-plugin-activation.php:2611
+msgid "To Install <span class=\"count\">(%s)</span>"
+msgid_plural "To Install <span class=\"count\">(%s)</span>"
+msgstr[0] "برای نصب <span class=\"count\">(%s)</span>"
+
+#. translators: 1: number of plugins.
+#: functions/admin/class-tgm-plugin-activation.php:2607
+msgctxt "plugins"
+msgid "All <span class=\"count\">(%s)</span>"
+msgid_plural "All <span class=\"count\">(%s)</span>"
+msgstr[0] "همه <span class=\"count\">(%s)</span>"
+
+#: functions/admin/class-tgm-plugin-activation.php:2552
+msgid "Update recommended"
+msgstr "بروز رسانی پیشنهاد می‌شود"
+
+#: functions/admin/class-tgm-plugin-activation.php:2549
+msgid "Requires Update"
+msgstr "بروزرسانی ضروری"
+
+#: functions/admin/class-tgm-plugin-activation.php:2546
+msgid "Required Update not Available"
+msgstr "بروز رسانی مورد نیاز موجود نیست"
+
+#: functions/admin/class-tgm-plugin-activation.php:2540
+msgid "Active"
+msgstr "فعال"
+
+#: functions/admin/class-tgm-plugin-activation.php:2514
+msgid "External Source"
+msgstr "لینک خارجی"
+
+#: functions/admin/class-tgm-plugin-activation.php:1310
+#: functions/admin/class-tgm-plugin-activation.php:3167
+msgctxt "plugin A *and* plugin B"
+msgid "and"
+msgstr "و"
+
+#: functions/admin/class-tgm-plugin-activation.php:1125
+msgid "The remote plugin package consists of more than one file, but the files are not packaged in a folder."
+msgstr "بسته نصبی افزونه شامل چندین فایل است، اما فایل بسته نصبی در پوشه نیست."
+
+#: functions/admin/class-tgm-plugin-activation.php:1122
+#: functions/admin/class-tgm-plugin-activation.php:1125
+msgid "Please contact the plugin provider and ask them to package their plugin according to the WordPress guidelines."
+msgstr "با نویسنده افزونه برای چگونگی ساخت بسته نصب افزونه برطبق راهنمای وردپرس تماس بگیرید."
+
+#: functions/admin/class-tgm-plugin-activation.php:1122
+msgid "The remote plugin package does not contain a folder with the desired slug and renaming did not work."
+msgstr "بسته افزونه دارای پوشه با نامک مناست نیست و ویرایش نام آن کاربردی ندارد."
+
+#: functions/admin/class-tgm-plugin-activation.php:706
+msgid "Update Required"
+msgstr "بروز رسانی ضروری"
+
+#: functions/admin/class-tgm-plugin-activation.php:705
+msgid "This plugin needs to be updated to be compatible with your theme."
+msgstr "این افزونه نیازمند بروزرسانی برای سازگاری با قالب است."
+
+#: functions/admin/class-tgm-plugin-activation.php:580
+msgid "Please contact the administrator of this site for help."
+msgstr "با مدیریت برای کمک و راهنمایی تماس بگیرید."
+
+#. translators: 1: plugin name.
+#: functions/admin/class-tgm-plugin-activation.php:574
+msgid "Plugin not activated. A higher version of %s is needed for this theme. Please update the plugin."
+msgstr "افزونه فعال نیست. نسخه جدیدتر %s برای قالب نیاز است. افزونه را بروزکنید."
+
+#. translators: 1: plugin name.
+#: functions/admin/class-tgm-plugin-activation.php:572
+msgid "No action taken. Plugin %1$s was already active."
+msgstr "کاری نیاز نیست. افزونه %1$s درحال حاضر فعال است."
+
+#: functions/admin/class-tgm-plugin-activation.php:557
+msgid "Begin updating plugin"
+msgid_plural "Begin updating plugins"
+msgstr[0] "در حال آپدیت افزونه"
+
+#: functions/admin/class-tgm-plugin-activation.php:515
+#: functions/init-admin.php:140
+msgid "Something went wrong with the plugin API."
+msgstr "خطایی در Api افزونه وجود دارد."
+
+#. Template Name of the plugin/theme
+msgid "Child Menu"
+msgstr "فهرست فرزند"
+
+#: tmpl/single-tmpl.php:36
+msgid "Tags:"
+msgstr "برچسب‌ها:"
+
+#: page-templates/child-menu.php:28 tmpl/page-tmpl.php:15
+#: tmpl/single-tmpl.php:20
+msgid "Pages:"
+msgstr "برگه‌ها:"
+
+#: parts/post-list-author-date.php:11 parts/single-author-date.php:7
+msgid "by"
+msgstr "توسط"
+
+#: sidebar.php:13
+msgid "Follow:"
+msgstr "دنبال کنید:"
+
+#: sidebar-2.php:9
+msgid "More"
+msgstr "بیشتر"
+
+#: sidebar-2.php:3 sidebar.php:6
+msgid "Expand Sidebar"
+msgstr "گسترش سایدبار"
+
+#: searchform.php:3
+msgid "To search type and hit enter"
+msgstr "در جستجوی چه هستید؟"
+
+#: tmpl/search-tmpl.php:4
+msgid "Please try another search:"
+msgstr "با کلمه‌ای دیگر تلاش کنید"
+
+#: tmpl/search-tmpl.php:2
+msgid "For the term"
+msgstr "برای عبارت"
+
+#: functions/class-utils-settings-map.php:1769
+#: option-tree/includes/ot-functions-option-types.php:235
+msgid "No Sidebars"
+msgstr "بدون سایدبار"
+
+#: functions/class-utils-settings-map.php:1774
+#: option-tree/includes/ot-functions-option-types.php:230
+msgid "Choose Sidebar"
+msgstr "انتخاب ناحیه کناری"
+
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:11
+msgid "Add New"
+msgstr "افزودن جدید"
+
+#: option-tree/includes/ot-functions-option-types.php:441
+msgid "Add Media"
+msgstr "افزودن رسانه"
+
+#: functions/czr/tmpl/inputs/img-uploader-tmpl.php:58
+msgid "Default"
+msgstr "پیش‌فرض"
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:63
+msgid "default:"
+msgstr "پیش‌فرض:"
+
+#: functions/czr/tmpl/modules/social-module-tmpl.php:55
+msgid "Title"
+msgstr "عنوان"
+
+#: functions/czr/czr-resources.php:537
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:32
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:45
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:103
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:44
+msgid "Edit"
+msgstr "ویرایش"
+
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:15
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:62
+#: functions/czr/tmpl/modules/widgets-areas-module-tmpl.php:105
+msgid "Name"
+msgstr "نام"
+
+#: functions/class-utils-settings-map.php:1165
+msgid "Right Sidebar"
+msgstr "سایدبار سمت راست"
+
+#: functions/class-utils-settings-map.php:1164
+msgid "Left Sidebar"
+msgstr "سایدبار سمت چپ"
+
+#: functions/init-plugins-compat.php:445
+msgid "Featured pages"
+msgstr "برگه‌های ویژه"
+
+#: functions/czr/czr-resources.php:538
+msgid "Close"
+msgstr "بستن"
+
+#: option-tree/includes/ot-functions-option-types.php:457
+msgid "Remove Media"
+msgstr "حذف مدیا"
+
+#: functions/czr/czr-resources.php:560
+msgid "Settings"
+msgstr "تنظیمات"
+
+#: functions/czr/controls/class-upload-control.php:67
+msgid "Upload"
+msgstr "بارگذاری"
+
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:24
+msgid "Yes"
+msgstr "بله"
+
+#: functions/czr/tmpl/modules/all-modules-tmpl.php:24
+msgid "No"
+msgstr "خیر"
+
+#: functions/czr/czr-resources.php:610
+msgid "and"
+msgstr " و "
+
+#: parts/related-posts.php:6
+msgid "You may also like..."
+msgstr "مطالب مرتبط"
+
+#: parts/post-nav.php:4
+msgid "Previous story"
+msgstr "قبلی"
+
+#: parts/post-nav.php:3
+msgid "Next story"
+msgstr "بعدی"
+
+#: functions/init-front.php:515
+msgid "Yearly Archive:"
+msgstr "بایگانی‌ سالانه:"
+
+#: functions/init-front.php:510
+msgid "Monthly Archive:"
+msgstr "بایگانی‌ ماهانه:"
+
+#: functions/init-front.php:505
+msgid "Daily Archive:"
+msgstr "بایگانی‌ روزانه:"
+
+#: functions/init-front.php:490
+msgid "Tagged:"
+msgstr "برچسب:"
+
+#: functions/init-front.php:485
+msgid "Category:"
+msgstr "دسته:"
+
+#: functions/init-front.php:471
+msgid "Author:"
+msgstr "نویسنده:"
+
+#: functions/init-front.php:459
+msgid "Page not found!"
+msgstr "صفحه مورد نظر یافت نشد!"
+
+#: functions/init-front.php:458
+msgid "Error 404."
+msgstr "صفحه مورد نظر یافت نشد."
+
+#: functions/init-front.php:447
+msgid "Search results"
+msgstr "نتایج جستجو"
+
+#: functions/init-front.php:445
+msgid "Search result"
+msgstr "نتیجه جستجو"
+
+#: functions/widgets/alx-tabs.php:227
+msgid "says:"
+msgstr "گفته است:"
+
+#: functions/widgets/alx-tabs.php:69
+msgid "Tags"
+msgstr "برچسب‌ها"
+
+#: functions/widgets/alx-tabs.php:68
+msgid "Recent Comments"
+msgstr "آخرین دیدگا‌ه‌ها"
+
+#: functions/widgets/alx-tabs.php:67
+msgid "Popular Posts"
+msgstr "محبوبترین مطالب"
+
+#: functions/widgets/alx-tabs.php:66
+msgid "Recent Posts"
+msgstr "آخرین مطالب"
+
+#. translators: 1: plugin name, 2: action number 3: total number of actions.
+#: functions/admin/class-tgm-plugin-activation.php:3739
+msgid "Installing Plugin %1$s (%2$d/%3$d)"
+msgstr "در حال نصب افزونه %1$s (%2$d/%3$d)"
+
+#: functions/admin/class-tgm-plugin-activation.php:3737
+msgid "All installations have been completed."
+msgstr "همه موارد با موفقیت نصب شدند."
+
+#. translators: 1: plugin name.
+#: functions/admin/class-tgm-plugin-activation.php:3736
+msgid "%1$s installed successfully."
+msgstr "%1$s  نصب انجام شد."
+
+#. translators: 1: plugin name.
+#: functions/admin/class-tgm-plugin-activation.php:3722
+msgid "The installation of %1$s failed."
+msgstr "نصب %1$s با مشکل مواجه شد."
+
+#. translators: 1: plugin name, 2: error message.
+#: functions/admin/class-tgm-plugin-activation.php:3720
+msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
+msgstr "هنگام نصب خطایی رخ داده است %1$s: <strong>%2$s</strong>."
+
+#: functions/admin/class-tgm-plugin-activation.php:3734
+msgid "The installation process is starting. This process may take a while on some hosts, so please be patient."
+msgstr "عملیات نصب در حال شروع است. این عملیات در برخی از هاست‌ها ممکن است کمی طول بکشد، بنابراین صبور باشید."
+
+#. translators: 1: plugin name, 2: action number 3: total number of actions.
+#: functions/admin/class-tgm-plugin-activation.php:3731
+msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
+msgstr "در حال نصب و فعالسازی افزونه %1$s (%2$d/%3$d)"
+
+#: functions/admin/class-tgm-plugin-activation.php:3729
+msgid "All installations and activations have been completed."
+msgstr "همه موارد با موفقیت نصب و فعالسازی شدند."
+
+#: functions/admin/class-tgm-plugin-activation.php:3728
+#: functions/admin/class-tgm-plugin-activation.php:3736
+msgid "Hide Details"
+msgstr "پنهان کردن جزئیات"
+
+#: functions/admin/class-tgm-plugin-activation.php:3728
+#: functions/admin/class-tgm-plugin-activation.php:3736
+msgid "Show Details"
+msgstr "نمایش جزئیات"
+
+#. translators: 1: plugin name.
+#: functions/admin/class-tgm-plugin-activation.php:3728
+msgid "%1$s installed and activated successfully."
+msgstr "%1$s  نصب و فعال شد"
+
+#: functions/admin/class-tgm-plugin-activation.php:3726
+msgid "The installation and activation process is starting. This process may take a while on some hosts, so please be patient."
+msgstr "عملیات نصب و فعالسازی در حال شروع است. این عملیات در برخی از هاست‌ها ممکن است کمی طول بکشد، بنابراین صبور باشید."
+
+#: functions/admin/class-tgm-plugin-activation.php:3377
+msgid "Plugin activation failed."
+msgstr "فعالسازی پلاگین با مشکل مواجه شد."
+
+#: functions/admin/class-tgm-plugin-activation.php:2773
+msgid "Status"
+msgstr "وضعیت"
+
+#: functions/admin/class-tgm-plugin-activation.php:2768
+msgid "Type"
+msgstr "نوع"
+
+#: functions/admin/class-tgm-plugin-activation.php:2767
+msgid "Source"
+msgstr "منبع"
+
+#: functions/admin/class-tgm-plugin-activation.php:2766
+msgid "Plugin"
+msgstr "افزونه"
+
+#: functions/admin/class-tgm-plugin-activation.php:2945
+msgid "Activate"
+msgstr "فعالسازی کنید"
+
+#: functions/admin/class-tgm-plugin-activation.php:2936
+msgid "Install"
+msgstr "نصب کنید"
+
+#: functions/admin/class-tgm-plugin-activation.php:2538
+msgid "Installed But Not Activated"
+msgstr "نصب شده اما هنوز فعال نشده"
+
+#: functions/admin/class-tgm-plugin-activation.php:2534
+msgid "Not Installed"
+msgstr "نصب نشده"
+
+#: functions/admin/class-tgm-plugin-activation.php:2495
+#: functions/init-prevdem.php:161
+msgid "Recommended"
+msgstr "پیشنهادی"
+
+#: functions/admin/class-tgm-plugin-activation.php:2492
+msgid "Required"
+msgstr "ضروری"
+
+#: functions/admin/class-tgm-plugin-activation.php:2511
+msgid "WordPress Repository"
+msgstr "منبع وردپرس"
+
+#: functions/admin/class-tgm-plugin-activation.php:2517
+msgid "Pre-Packaged"
+msgstr "از قبل - بسته بندی شده"
+
+#: functions/admin/class-tgm-plugin-activation.php:568
+#: functions/admin/class-tgm-plugin-activation.php:1015
+#: functions/admin/class-tgm-plugin-activation.php:2752
+#: functions/admin/class-tgm-plugin-activation.php:3799
+msgid "Return to the Dashboard"
+msgstr "برگشت به پیشخوان"
+
+#: functions/admin/class-tgm-plugin-activation.php:577
+msgid "Dismiss this notice"
+msgstr "بستن این هشدار"
+
+#: functions/init-admin.php:153
+msgid "All plugins installed and activated successfully. %s"
+msgstr "همه افزونه ها با موفقیت نصب و فعال شدند. %s"
+
+#: functions/admin/class-tgm-plugin-activation.php:570
+#: functions/admin/class-tgm-plugin-activation.php:3171
+msgid "The following plugin was activated successfully:"
+msgstr "افزونه زیر با موفقیت فعال شد:"
+
+#: functions/admin/class-tgm-plugin-activation.php:569
+#: functions/admin/class-tgm-plugin-activation.php:3378
+#: functions/init-admin.php:152
+msgid "Plugin activated successfully."
+msgstr "افزونه با موفقیت فعال شد."
+
+#: functions/admin/class-tgm-plugin-activation.php:567
+#: functions/init-admin.php:151
+msgid "Return to Required Plugins Installer"
+msgstr "بازگشت به بخش نصب‌کننده افزونه های ضروری"
+
+#: functions/admin/class-tgm-plugin-activation.php:562
+msgid "Begin activating plugin"
+msgid_plural "Begin activating plugins"
+msgstr[0] "در حال فعال کردن افزونه"
+
+#. translators: 1: plugin name(s).
+#: functions/admin/class-tgm-plugin-activation.php:552
+#: functions/init-admin.php:149
+msgid "Begin installing plugin"
+msgid_plural "Begin installing plugins"
+msgstr[0] "درحال نصب افزونه"
+
+#: functions/init-admin.php:148
+msgid "Sorry, but you do not have the correct permissions to update the %s plugin. Contact the administrator of this site for help on getting the plugin updated."
+msgid_plural "Sorry, but you do not have the correct permissions to update the %s plugins. Contact the administrator of this site for help on getting the plugins updated."
+msgstr[0] "برای بروزرسانی  %s افزونه دسترسی ندارید. با مدیریت تماس بگیرید."
+
+#: functions/init-admin.php:147
+msgid "The Hueman Addons plugin needs to be updated to its latest version to ensure maximum compatibility with the Hueman theme: %1$s."
+msgid_plural "The following plugins need to be updated to their latest version to ensure maximum compatibility with this theme: %1$s."
+msgstr[0] "افزونه نیامزند بروزرسانی برای هماهنگی کامل با قالب است:%1$s."
+
+#: functions/init-admin.php:146
+msgid "Sorry, but you do not have the correct permissions to activate the %s plugin. Contact the administrator of this site for help on getting the plugin activated."
+msgid_plural "Sorry, but you do not have the correct permissions to activate the %s plugins. Contact the administrator of this site for help on getting the plugins activated."
+msgstr[0] "برای فعال‌سازی %s افزونه دسترسی ندارید. با مدیریت تماس بگیرید."
+
+#: functions/init-admin.php:144
+msgid "The Hueman Addons required plugin is currently inactive: %1$s."
+msgid_plural "The following required plugins are currently inactive: %1$s."
+msgstr[0] "افزونه زیر غیرفعال است:%1$s."
+
+#: functions/init-admin.php:143
+msgid "Sorry, but you do not have the correct permissions to install the %s plugin. Contact the administrator of this site for help on getting the plugin installed."
+msgid_plural "Sorry, but you do not have the correct permissions to install the %s plugins. Contact the administrator of this site for help on getting the plugins installed."
+msgstr[0] "برای نصب %s افزونه دسترسی ندارید. با مدیریت سایت تماس بگیرید."
+
+#: functions/init-admin.php:141
+msgid "The Hueman theme requires the following plugin: %1$s."
+msgid_plural "This theme requires the following plugins: %1$s."
+msgstr[0] "افزونه زیر برای این قالب ضروری است:%1$s."
+
+#. translators: %s: plugin name.
+#: functions/admin/class-tgm-plugin-activation.php:512
+#: functions/init-admin.php:139
+msgid "Installing Plugin: %s"
+msgstr "درحال نصب افزونه : %s"
+
+#: functions/admin/class-tgm-plugin-activation.php:510
+#: functions/init-admin.php:138
+msgid "Install Plugins"
+msgstr "نصب افزونه ها"
+
+#: functions/admin/class-tgm-plugin-activation.php:509
+#: functions/init-admin.php:137
+msgid "Install Required Plugins"
+msgstr "نصب افزونه های مورد نیاز"
+
+#: footer.php:125
+msgid "Powered by"
+msgstr "قدرت گرفته از"
+
+#: footer.php:115 functions/czr/czr-resources.php:44
+msgid "All Rights Reserved."
+msgstr "حق کپی رایت محفوظ است."
+
+#: comments.php:11
+msgid "Pingbacks"
+msgstr "بازتاب‌ها"
+
+#: comments.php:10 functions/class-utils-settings-map.php:1582
+msgid "Comments"
+msgstr "دیدگاه‌ها"
+
+#: comments.php:7
+msgid "% Responses"
+msgstr "% دیدگاه‌"
+
+#: comments.php:7
+msgid "1 Response"
+msgstr "۱ دیدگاه"
+
+#: comments.php:7
+msgid "No Responses"
+msgstr "بدون دیدگاه"
+
+#: tmpl/404-tmpl.php:6
+msgid "The page you are trying to reach does not exist, or has been moved. Please use the menus or the search box to find what you are looking for."
+msgstr "صفحه مورد نظر شما وجود ندارد. لطفا دوباره جستجو کنید."
+
+#. Author URI of the plugin/theme
+msgid "https://presscustomizr.com"
+msgstr "https://presscustomizr.com"
+
+#. Author of the plugin/theme
+msgid "nikeo"
+msgstr "nikeo"
+
+#. Theme URI of the plugin/theme
+msgid "https://presscustomizr.com/hueman/"
+msgstr "https://presscustomizr.com/hueman/"
