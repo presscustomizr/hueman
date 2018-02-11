@@ -354,7 +354,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
         //Reminder : hu_get_raw_option( $opt_name = null, $opt_group = null, $from_cache = true, $report_error = false )
         //get the raw option and enabled the wp error report
         //=> prevent issue https://github.com/presscustomizr/hueman/issues/571
-        $_options               = hu_get_raw_option( $option_group, null, true, true );
+        $_options               = $this -> hu_get_unfiltered_theme_options( $option_group );
 
         //Always make sure that getting raw options returns valid data
         //For example, when opening wp-activate.php, wp_cache_get( 'alloptions', 'options' ); returns false
@@ -394,6 +394,77 @@ if ( ! class_exists( 'HU_utils' ) ) :
         $opt_group = is_null( $opt_group ) ? HU_THEME_OPTIONS : $opt_group;
         $this -> db_options = false === get_option( $opt_group ) ? array() : (array)get_option( $opt_group );
         return $this -> db_options;
+    }
+
+
+    //@return an array of options
+    //This is mostly a copy of the built-in get_option with the difference that
+    //1) by default retrieves only the theme options
+    //2) removes the "pre_option_{$name}", "default_option_{$name}", "option_{$name}" filters
+    //3) doesn't care about the special case when $option in array array('siteurl', 'home', 'category_base', 'tag_base'),
+    //   as they are out of scope here
+    //
+    // The filter suppression is specially needed due to:
+    // a) avoid plugins (qtranslate, other lang plugins) filtering the theme options value, which might mess theme options when we update the options on front
+    // (e.g. to set the defaults, or to perform our retro compat options updates, or either to set the user started before option)
+    // b) speed up the theme option retrieval when we are sure we don't need the theme options to be filtered in any case
+    function hu_get_unfiltered_theme_options( $option = null, $default = array() ) {
+        $option           = is_null($option) ? HU_THEME_OPTIONS : $option;
+
+        global $wpdb;
+
+        $option_group = trim( $option);
+
+        if ( empty( $option ) )
+            return false;
+
+        if ( defined( 'WP_SETUP_CONFIG' ) )
+            return false;
+
+        if ( ! wp_installing() ) {
+            // prevent non-existent options from triggering multiple queries
+            $notoptions = wp_cache_get( 'notoptions', 'options' );
+            if ( isset( $notoptions[ $option ] ) ) {
+                return $default;
+            }
+
+            $alloptions = wp_load_alloptions();
+
+            if ( isset( $alloptions[$option] ) ) {
+                $value = $alloptions[$option];
+            } else {
+                $value = wp_cache_get( $option, 'options' );
+
+                if ( false === $value ) {
+                    $row = $wpdb->get_row( $wpdb->prepare( "SELECT option_value FROM $wpdb->options WHERE option_name = %s LIMIT 1", $option ) );
+
+                    // Has to be get_row instead of get_var because of funkiness with 0, false, null values
+                    if ( is_object( $row ) ) {
+                        $value = $row->option_value;
+                        wp_cache_add( $option, $value, 'options' );
+                    } else { // option does not exist, so we must cache its non-existence
+                        if ( ! is_array( $notoptions ) ) {
+                             $notoptions = array();
+                        }
+                        $notoptions[$option] = true;
+                        wp_cache_set( 'notoptions', $notoptions, 'options' );
+
+                        return $default;
+                    }
+                }
+            }
+        } else {
+            $suppress = $wpdb->suppress_errors();
+            $row = $wpdb->get_row( $wpdb->prepare( "SELECT option_value FROM $wpdb->options WHERE option_name = %s LIMIT 1", $option ) );
+            $wpdb->suppress_errors( $suppress );
+            if ( is_object( $row ) ) {
+                $value = $row->option_value;
+            } else {
+                return $default;
+            }
+        }
+
+        return maybe_unserialize( $value );
     }
   }//end of class
 endif;

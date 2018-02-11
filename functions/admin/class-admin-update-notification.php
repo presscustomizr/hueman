@@ -73,14 +73,14 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
             }//end if
 
             //always display in dev mode
-            $show_new_notice = ( defined( 'CZR_DEV' ) && CZR_DEV ) ? true : $show_new_notice;
+            //$show_new_notice = ( defined( 'CZR_DEV' ) && CZR_DEV ) ? true : $show_new_notice;
 
             if ( ! $show_new_notice )
               return;
 
             ob_start();
               ?>
-              <div class="updated czr-update-notice">
+              <div class="updated czr-update-notice" style="position:relative;">
                 <?php
                   echo apply_filters(
                     'hu_update_notice',
@@ -97,7 +97,7 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
                     'hu_update_notice',
                     sprintf( '<h4>%1$s <a class="" href="%2$s" title="%3$s" target="_blank">%3$s &raquo;</a></h4>%4$s',
                       __( "We'd like to introduce the new features we've been working on.", "hueman"),
-                      HU_WEBSITE . "category/hueman-releases/",
+                      HU_WEBSITE . "/category/hueman-releases/",
                       __( "Read the latest release notes" , "hueman" ),
                       ! HU_IS_PRO ? sprintf( '<a class="button button-primary upgrade-to-pro" href="%1$s" title="%2$s" target="_blank">%2$s &raquo;</a>',
                         esc_url('presscustomizr.com/hueman-pro?ref=a'),
@@ -106,7 +106,7 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
                     )
                   );
                 ?>
-                <p style="text-align:right;position: absolute;font-size: 1.1em;<?php echo is_rtl()? 'left' : 'right';?>: 7px;bottom: -5px;">
+                <p style="text-align:right;position: absolute;font-size: 1.1em;<?php echo is_rtl()? 'left' : 'right';?>: 7px;bottom: -6px;">
                 <?php printf('<a href="#" title="%1$s" class="tc-dismiss-update-notice"> ( %1$s <strong>X</strong> ) </a>',
                     __('close' , 'hueman')
                   );
