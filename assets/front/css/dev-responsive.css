@@ -172,7 +172,7 @@
 	/* sidebar toggle 60 > 50px height */
 	.page-title.pad { padding-top: 12px; padding-bottom: 12px; }
 	.sidebar-toggle { height: 50px; }
-	.sidebar-toggle i { padding: 5px 0; }
+	.sidebar-toggle i { padding: 10px 0; }
 
 	/* hide */
 	.site-description,
