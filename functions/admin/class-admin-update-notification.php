@@ -99,7 +99,7 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
                       __( "We'd like to introduce the new features we've been working on.", "hueman"),
                       HU_WEBSITE . "/category/hueman-releases/",
                       __( "Read the latest release notes" , "hueman" ),
-                      ! HU_IS_PRO ? sprintf( '<a class="button button-primary upgrade-to-pro" href="%1$s" title="%2$s" target="_blank">%2$s &raquo;</a>',
+                      ! HU_IS_PRO ? sprintf( '<p style="position: absolute;right: 7px;top: 4px;"><a class="button button-primary upgrade-to-pro" href="%1$s" title="%2$s" target="_blank">%2$s &raquo;</a></p>',
                         esc_url('presscustomizr.com/hueman-pro?ref=a'),
                         __( "Upgrade to Hueman Pro", "hueman" )
                       ) : ''
