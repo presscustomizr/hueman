@@ -160,6 +160,7 @@ box-shadow: inset -1px 0 1px rgba(0,0,0,0.2); }
 .sharrre#googleplus .box .count { color: #cd483c; }
 .sharrre#pinterest .share,
 .sharrre#pinterest .box .count { color: #ca2128; }
+.sharrre-container.no-counter .box .count {display:none;}
 
 /*  single : post pages
 /* ------------------------------------ */
