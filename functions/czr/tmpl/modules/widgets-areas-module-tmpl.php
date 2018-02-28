@@ -14,7 +14,7 @@ function hu_print_widget_areas_pre_add_view_template() {
     <div class="<?php echo $css_attr['sub_set_wrapper']; ?>" data-input-type="text">
       <div class="customize-control-title"><?php _e('Name', 'hueman'); ?></div>
       <div class="czr-input">
-        <input data-type="title" type="text" value="" placeholder="<?php _e('Give it a name', 'hueman'); ?>"></input>
+        <input data-czrtype="title" type="text" value="" placeholder="<?php _e('Give it a name', 'hueman'); ?>"></input>
       </div>
       <span class="czr-notice"><?php _e('Personalizing the name of the widget zone will help you identify it.', 'hueman'); ?></span>
     </div>
@@ -22,7 +22,7 @@ function hu_print_widget_areas_pre_add_view_template() {
       <div class="customize-control-title"><?php _e('Location(s)', 'hueman'); ?></div>
       <span class="czr-notice"><?php _e('Select the pre-defined location(s) in which you will embed this widget zone.', 'hueman'); ?></span>
       <div class="czr-input">
-        <select data-type="locations" class="js-example-basic-multiple" multiple="multiple"></select>
+        <select data-czrtype="locations" class="js-example-basic-multiple" multiple="multiple"></select>
       </div>
     </div>
   </script>
@@ -68,14 +68,14 @@ function hu_print_widget_areas_built_in_templates() {
         <div class="customize-control-title"><?php _e('Location(s)', 'hueman'); ?></div>
         <span class="czr-notice"><?php _e('Select the pre-defined location(s) in which you will embed this widget zone.', 'hueman'); ?></span>
         <div class="czr-input">
-          <select data-type="locations" class="js-example-basic-multiple" multiple="multiple"></select>
+          <select data-czrtype="locations" class="js-example-basic-multiple" multiple="multiple"></select>
         </div>
       </div>
       <div class="<?php echo $css_attr['sub_set_wrapper']; ?> width-100" data-input-type="select">
         <div class="customize-control-title"><?php _e('Context(s)', 'hueman'); ?></div>
         <span class="czr-notice"><?php _e('Pick the contexts where this widget area will be displayed.', 'hueman'); ?></span>
         <div class="czr-input">
-          <select data-type="contexts" class="js-example-basic-multiple" multiple="multiple"></select>
+          <select data-czrtype="contexts" class="js-example-basic-multiple" multiple="multiple"></select>
         </div>
       </div>
     </script>
@@ -104,7 +104,7 @@ function hu_print_widget_areas_item_content_template() {
     <div class="<?php echo $css_attr['sub_set_wrapper']; ?>" data-input-type="text">
       <div class="customize-control-title"><?php _e('Name', 'hueman'); ?></div>
       <div class="czr-input">
-        <input data-type="title" type="text" value="{{ data.title }}" placeholder="<?php _e('Enter a name', 'hueman'); ?>"></input>
+        <input data-czrtype="title" type="text" value="{{ data.title }}" placeholder="<?php _e('Enter a name', 'hueman'); ?>"></input>
       </div>
       <span class="czr-notice"><?php _e('Personalizing the name of the widget zone will help you identify it.', 'hueman'); ?></span>
     </div>
@@ -112,14 +112,14 @@ function hu_print_widget_areas_item_content_template() {
       <div class="customize-control-title"><?php _e('Location(s)', 'hueman'); ?></div>
       <span class="czr-notice"><?php _e('Select the pre-defined location(s) in which you will embed this widget zone.', 'hueman'); ?></span>
       <div class="czr-input">
-        <select data-type="locations" class="js-example-basic-multiple" multiple="multiple"></select>
+        <select data-czrtype="locations" class="js-example-basic-multiple" multiple="multiple"></select>
       </div>
     </div>
     <div class="<?php echo $css_attr['sub_set_wrapper']; ?> width-100" data-input-type="select">
       <div class="customize-control-title"><?php _e('Context(s)', 'hueman'); ?></div>
       <span class="czr-notice"><?php _e('Pick the context(s) where this widget area will be displayed.', 'hueman'); ?></span>
       <div class="czr-input">
-        <select data-type="contexts" class="js-example-basic-multiple" multiple="multiple"></select>
+        <select data-czrtype="contexts" class="js-example-basic-multiple" multiple="multiple"></select>
       </div>
     </div>
   </script>

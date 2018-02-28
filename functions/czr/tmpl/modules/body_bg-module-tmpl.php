@@ -57,14 +57,14 @@ function hu_print_body_bg_item_content_template() {
       <div class="<?php echo $css_attr['sub_set_wrapper']; ?> width-100" data-input-type="color">
         <div class="customize-control-title width-100"><?php _e('Color', 'hueman'); ?>  ( <?php _e('default', 'hueman' ); ?> : #eaeaea )</div>
         <div class="<?php echo $css_attr['sub_set_input']; ?>">
-          <input data-type="background-color" type="text" maxlength="7" placeholder="<?php esc_attr_e( 'Hex Value', 'hueman' ); ?>" value="{{ data['background-color'] }}" {{ defaultBgColor }} />
+          <input data-czrtype="background-color" type="text" maxlength="7" placeholder="<?php esc_attr_e( 'Hex Value', 'hueman' ); ?>" value="{{ data['background-color'] }}" {{ defaultBgColor }} />
         </div>
       </div>
 
       <div class="<?php echo $css_attr['sub_set_wrapper']; ?>" data-input-type="upload">
         <div class="customize-control-title"><?php _e('Background Image', 'hueman'); ?></div>
         <div class="<?php echo $css_attr['sub_set_input']; ?>">
-          <input data-type="background-image" type="hidden" value="{{ data['background-image'] }}"/>
+          <input data-czrtype="background-image" type="hidden" value="{{ data['background-image'] }}"/>
           <div class="<?php echo $css_attr['img_upload_container']; ?>"></div>
         </div>
       </div>
@@ -72,28 +72,28 @@ function hu_print_body_bg_item_content_template() {
       <div class="<?php echo $css_attr['sub_set_wrapper']; ?>" data-input-type="select">
         <div class="customize-control-title"><?php _e('Repeat', 'hueman'); ?></div>
         <div class="<?php echo $css_attr['sub_set_input']; ?>">
-          <select data-type="background-repeat"></select>
+          <select data-czrtype="background-repeat"></select>
         </div>
       </div>
 
       <div class="<?php echo $css_attr['sub_set_wrapper']; ?>" data-input-type="select">
         <div class="customize-control-title"><?php _e('Background attachment', 'hueman'); ?></div>
         <div class="<?php echo $css_attr['sub_set_input']; ?>">
-          <select data-type="background-attachment"></select>
+          <select data-czrtype="background-attachment"></select>
         </div>
       </div>
 
       <div class="<?php echo $css_attr['sub_set_wrapper']; ?>" data-input-type="select">
         <div class="customize-control-title"><?php _e('Background position', 'hueman'); ?></div>
         <div class="<?php echo $css_attr['sub_set_input']; ?>">
-          <select data-type="background-position"></select>
+          <select data-czrtype="background-position"></select>
         </div>
       </div>
 
       <div class="<?php echo $css_attr['sub_set_wrapper']; ?>" data-input-type="text">
         <div class="customize-control-title"><?php _e('Background size', 'hueman'); ?></div>
         <div class="<?php echo $css_attr['sub_set_input']; ?>">
-          <input data-type="background-size" type="text" value="{{ data['background-size'] }}"/>
+          <input data-czrtype="background-size" type="text" value="{{ data['background-size'] }}"/>
         </div>
          <span class="czr-notice">
             <?php _e('The background-size CSS property specifies the size of the background images. The size of the image can be fully constrained or only partially in order to preserve its intrinsic ratio.', 'hueman');
