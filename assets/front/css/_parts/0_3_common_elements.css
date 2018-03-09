@@ -276,8 +276,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
   background: #000;
 }
 /* END ANOTHER BUTTON */
-
-
+.hu-dropdown-toggle-wrapper { display: none }
 
 
 
@@ -293,6 +292,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
   .nav li > a:after { content: "\f0da"; float: right; opacity: 0.5; }
   .nav > li > a:after {content: "\f0d7"; float: none; margin-left: 6px; font-size: 0.875em; line-height: 1.2em; }
   .nav li > a:only-child:after {content: ""; margin: 0; }
+  #footer nav .nav { display: block !important; }
   #footer .nav li > a:after { content: "\f0da"; }
   #footer .nav > li > a:after { content: "\f0d8"; }
   #footer .nav li > a:only-child:after { content: ""; }
@@ -321,6 +321,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 }
 @media only screen and (max-width: 719px) {
   #header .nav-container .nav, #footer .nav-container .nav {display: none;}
+  #footer .nav-container .nav.expanded, #header .nav-container .nav.expanded {display: block;}
   .nav { font-weight: 400; }
   .nav-container { text-transform: none; }
   .nav-toggle, .ham__navbar-toggler, .nav-text, .ham__navbar-toggler-two { display: block; }
@@ -338,9 +339,12 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
   .nav li a { line-height: 1.6em; display: block; padding: 8px 13px; }
   /*.nav li li a { padding-left: 15px; padding-right: 15px; }*/
   /* dropdown arrows */
+  /* no arrows
   .nav li > a:after { content: '\f0d7'; opacity: 0; margin-left: 6px; font-size: 0.6rem; }
   .nav > li > a:after { content: '\f0d7'; font-size: 0.6rem; }
   .nav li > a:only-child:after { content: ''; }
+  */
+
   /* level 1 */
   .nav > li { font-size: 0.9375em; }
   .nav li > a:hover,
@@ -348,7 +352,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
   .nav li.current-menu-item > a,
   .nav li.current-post-parent > a { color: #fff; }
   /* level 2 & 3 */
-  .nav ul { display: block!important;}
+  .nav ul { display: block }
 
   /*.nav a { padding-left:25px;}*/
   .nav ul a { padding-left:37px;}
@@ -361,4 +365,92 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 
   .nav ul li { font-size: 0.85rem; font-weight: 300; }
   .nav ul li a { padding-top: 6px; padding-bottom: 6px; }
+
+  /*
+  * Mobile dropdown on click
+  * colors are defined in 0_4_header.css and 9_0_footer.css
+  */
+  .submenu-click-expand.nav-wrap,
+  .submenu-click-expand.nav-wrap li,
+  .submenu-click-expand  ul,
+  .hu-dropdown-toggle-wrapper { background: inherit; }
+
+  .submenu-click-expand .sub-menu,
+  .submenu-click-expand .nav li {
+    position: relative;
+  }
+
+  .submenu-click-expand .page_item_has_children > a,
+  .submenu-click-expand .menu-item-has-children  > a {
+    padding-right: 44px;
+  }
+  .submenu-click-expand .nav li a {
+    min-height: 37px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .submenu-click-expand .nav > li > a {
+    min-height: 43px;
+  }
+
+  .hu-dropdown-toggle-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: center;
+    line-height: 1;
+    bottom: 0;
+    overflow: hidden;
+  }
+
+  .submenu-click-expand .hu-dropdown-toggle-wrapper {
+    display: block;
+  }
+
+  .hu-dropdown-toggle {
+    background: none;
+    -webkit-appearance: none;
+    outline: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: block;
+    height: 44px;
+    width: 44px;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+  }
+
+  li li .hu-dropdown-toggle {
+    height: 38px;
+  }
+
+  .hu-dropdown-toggle i {
+    display: block;
+    -webkit-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+    -moz-perspective: 1000px;
+    perspective: 1000px;
+    width: 100%;
+    font-size: 13px;
+  }
+
+  .submenu-click-expand .nav ul { display: none }
+  .submenu-click-expand .nav ul.expanded { display: block; }
+  li.expanded > .hu-dropdown-toggle-wrapper .fa-angle-down {
+    -webkit-transform: rotate(-180deg);
+    -moz-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+  }
+  /* \test */
 }
