@@ -401,7 +401,6 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
     text-align: center;
     line-height: 1;
     bottom: 0;
-    overflow: hidden;
   }
 
   .submenu-click-expand .hu-dropdown-toggle-wrapper {
@@ -416,15 +415,16 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
     padding: 0;
     cursor: pointer;
     display: block;
-    height: 44px;
+    height: 45px;
     width: 44px;
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
   li li .hu-dropdown-toggle {
-    height: 38px;
+    height: 39px;
   }
 
   .hu-dropdown-toggle i {
