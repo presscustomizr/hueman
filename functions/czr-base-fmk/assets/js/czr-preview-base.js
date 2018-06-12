@@ -1,47 +1,6 @@
 
 ( function( api, $, _ ) {
-  $( function() {
-        api.preview.bind( 'sync', function( events ) {
-              api.preview.send( 'czr-skopes-synced', {
-                    czr_skopes : _wpCustomizeSettings.czr_skopes || [],
-                    isChangesetDirty : _wpCustomizeSettings.isChangesetDirty || false,
-                    skopeGlobalDBOpt : _wpCustomizeSettings.skopeGlobalDBOpt || [],
-              } );
-        });
-  });
   wp.customize.bind( 'preview-ready', function() {
-        wp.customize.preview.bind('edit_sek', function(o) {
-              if ( ! _.has( o, 'id') || ! $('[data-sek-id="' + o.id +'"]').length )
-                return;
-              $('html, body').animate({
-                    scrollTop : $('[data-sek-id="' + o.id +'"]').offset().top - 50
-              }, 'slow');
-        });
-
-        wp.customize.preview.bind('start_hovering_sek', function(o) {
-              if ( ! _.has( o, 'id') || ! $('[data-sek-id="' + o.id +'"]').length )
-                return;
-              var $_sek = $('[data-sek-id="' + o.id +'"]'),
-                  _width = $_sek.outerWidth(),
-                  _height = $_sek.outerHeight();
-              $_sek.closest('.czr-sektion').find('.czr-hover-placeholder').each( function(){ $(this).remove(); } );
-              $.when( $_sek.append( $( '<div/>', {
-                    class : 'czr-hover-placeholder',
-                    style : 'width:' + _width +'px;height:' + _height +'px;line-height:' + _height +'px;',
-                    html : '<i class="material-icons">create</i>'
-                })
-              ) ).done( function() {
-                    $('.czr-hover-placeholder').css('opacity', 1).fitText( 0.3, { minFontSize: '50px', maxFontSize: '100px' } );
-              });
-        });
-
-        wp.customize.preview.bind('stop_hovering_sek', function(o) {
-              if ( ! _.has( o, 'id') || ! $('[data-sek-id="' + o.id +'"]').length )
-                return;
-
-              var $_sek = $('[data-sek-id="' + o.id +'"]');
-              $.when( $_sek.find('.czr-hover-placeholder').fadeOut(200) ).done( function() {$_sek.find('.czr-hover-placeholder').remove(); });
-        });
         wp.customize.preview.bind('edit_module', function(o) {
               if ( ! _.has( o, 'id') || ! $('[data-module-id="' + o.id +'"]').length )
                 return;
@@ -74,23 +33,63 @@
               var $_module = $('[data-module-id="' + o.id +'"]');
               $.when( $_module.find('.czr-hover-placeholder').fadeOut(200) ).done( function() {$_module.find('.czr-hover-placeholder').remove(); });
         });
-  });
-  if ( CZRPreviewParams && ! CZRPreviewParams.preview_ready_event_exists ) {
-        api.czr_preview = new api.CZR_preview();
+
+        // wp.customize.preview.bind('edit_sek', function(o) {
+        //       if ( ! _.has( o, 'id') || ! $('[data-sek-id="' + o.id +'"]').length )
+        //         return;
+        //       $('html, body').animate({
+        //             scrollTop : $('[data-sek-id="' + o.id +'"]').offset().top - 50
+        //       }, 'slow');
+        // });
+
+        // wp.customize.preview.bind('start_hovering_sek', function(o) {
+        //       if ( ! _.has( o, 'id') || ! $('[data-sek-id="' + o.id +'"]').length )
+        //         return;
+        //       var $_sek = $('[data-sek-id="' + o.id +'"]'),
+        //           _width = $_sek.outerWidth(),
+        //           _height = $_sek.outerHeight();
+        //       $_sek.closest('.czr-sektion').find('.czr-hover-placeholder').each( function(){ $(this).remove(); } );
+        //       $.when( $_sek.append( $( '<div/>', {
+        //             class : 'czr-hover-placeholder',
+        //             style : 'width:' + _width +'px;height:' + _height +'px;line-height:' + _height +'px;',
+        //             html : '<i class="material-icons">create</i>'
+        //         })
+        //       ) ).done( function() {
+        //             $('.czr-hover-placeholder').css('opacity', 1).fitText( 0.3, { minFontSize: '50px', maxFontSize: '100px' } );
+        //       });
+        // });
+
+        // wp.customize.preview.bind('stop_hovering_sek', function(o) {
+        //       if ( ! _.has( o, 'id') || ! $('[data-sek-id="' + o.id +'"]').length )
+        //         return;
+
+        //       var $_sek = $('[data-sek-id="' + o.id +'"]');
+        //       $.when( $_sek.find('.czr-hover-placeholder').fadeOut(200) ).done( function() {$_sek.find('.czr-hover-placeholder').remove(); });
+        // });
+  });// 'preview-ready'
+
+
+
+
+  if ( serverPreviewParams && ! serverPreviewParams.preview_ready_event_exists ) {
+        try { api.czr_preview = new api.CZR_preview(); } catch( _er_ ) {
+              console.log( "new api.CZR_preview() => error => ", _er_ );
+        }
   }
   else {
         api.bind( 'preview-ready', function(){
               api.preview.bind( 'active', function() {
-                    api.czr_preview = new api.CZR_preview();
+                    try { api.czr_preview = new api.CZR_preview(); } catch( _er_ ) {
+                          console.log( "new api.CZR_preview() => error => ", _er_ );
+                    }
               });
         });
   }
-  api.CZR_preview = api.Class.extend( {
+
+  var czrPreviewConstructor = {
         setting_cbs : {},
         subsetting_cbs : {},//nested sub settings
         input_cbs : {},
-        _wp_sets : CZRPreviewParams.wpBuiltinSettings || [],
-        _theme_options_name : CZRPreviewParams.themeOptions,
         initialize: function() {
               var self = this;
               this.pre_setting_cbs = _.extend( self.pre_setting_cbs, self.getPreSettingCbs() );
@@ -174,14 +173,30 @@
         },
         _build_setId : function ( name ) {
               var self = this;
-              if ( _.contains( self._wp_sets, name ) )
+              if ( _.isEmpty( window.themeServerPreviewParams ) )
                 return name;
-              return -1 == name.indexOf( self._theme_options_name) ? [ self._theme_options_name + '[' , name  , ']' ].join('') : name;
+
+              // do nothing if part of the the wp builtins setting
+              if ( ! _.isArray( themeServerPreviewParams.wpBuiltinSettings ) || _.contains( themeServerPreviewParams.wpBuiltinSettings, name ) )
+                return name;
+
+              var themeOptionsPrefix = themeServerPreviewParams.themeOptionsPrefix;
+              if ( _.isEmpty( themeOptionsPrefix ) )
+                return name;
+
+              return -1 == name.indexOf( themeOptionsPrefix ) ? [ themeOptionsPrefix + '[' , name  , ']' ].join('') : name;
         },
 
-        _get_option_name : function(name) {
+        _get_option_name : function( name ) {
+              if ( _.isEmpty( window.themeServerPreviewParams ) )
+                return name;
+
+              var themeOptionsPrefix = themeServerPreviewParams.themeOptionsPrefix;
+              if ( _.isEmpty( themeOptionsPrefix ) )
+                return name;
+
               var self = this;
-              return name.replace(/\[|\]/g, '').replace(self._theme_options_name, '');
+              return name.replace(/\[|\]/g, '').replace( themeOptionsPrefix, '');
         },
         _is_external : function( _href  ) {
               var _thisHref = $.trim( _href ),
@@ -196,6 +211,9 @@
               var _pattern = /(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
               return _pattern.test( _url );
         }
-  });//api.Class.extend
+  };//czrPreviewConstructor
+
+  api.CZR_preview = api.Class.extend( czrPreviewConstructor );
+
 
 } )( wp.customize, jQuery, _ );
