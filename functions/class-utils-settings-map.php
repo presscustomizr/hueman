@@ -313,21 +313,24 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'sanitize_js_callback' => 'maybe_hash_hex_color'
                 //'transport'   => 'postMessage'
           ),
-          // 'body-background' => array(
-          //       //'default'     => array(),
-          //       'default'       => array( 'background-color' => '#eaeaea' ),
-          //       'control'     => 'HU_Customize_Modules',
-          //       'label'       => __( 'Body Background' , 'hueman' ),
-          //       'description' => __('Set the website background color', 'hueman'),
-          //       'section'     => 'general_design_sec',
-          //       'type'        => 'czr_module',
-          //       'module_type' => 'czr_background'
-          //       //'type'        => 'color',
-          //       // 'sanitize_callback'    => array( $this, 'hu_sanitize_body_bg' ),@todo
-          //       // 'sanitize_js_callback' => array( $this, 'hu_sanitize_js_body_bg' ),@todo
-          //       //'transport'   => 'postMessage',
-          //       //'notice'        => __('Set background color and/or upload your own background image.', 'hueman')
-          // ),
+          // Since June 2018, this setting is registered dynamically
+          // We leave it in the map only for building the default options
+          'body-background' => array(
+                'registered_dynamically' => true,
+                //'default'     => array(),
+                'default'       => array( 'background-color' => '#eaeaea' ),
+                'control'     => 'HU_Customize_Modules',
+                'label'       => __( 'Body Background' , 'hueman' ),
+                'description' => __('Set the website background color', 'hueman'),
+                'section'     => 'general_design_sec',
+                'type'        => 'czr_module',
+                'module_type' => 'czr_background'
+                //'type'        => 'color',
+                // 'sanitize_callback'    => array( $this, 'hu_sanitize_body_bg' ),@todo
+                // 'sanitize_js_callback' => array( $this, 'hu_sanitize_js_body_bg' ),@todo
+                //'transport'   => 'postMessage',
+                //'notice'        => __('Set background color and/or upload your own background image.', 'hueman')
+          ),
           'image-border-radius'  =>  array(
                 'default'       => 0,
                 'control'       => 'HU_controls' ,
@@ -379,6 +382,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           // Since June 2018, this setting is registered dynamically
           // We leave it in the map only for building the default options
           'social-links' => array(
+                'registered_dynamically' => true,
                 'default'   => array(),//empty array by default
                 'control'   => 'HU_Customize_Modules',
                 'label'     => __('Create and organize your social links', 'hueman'),
@@ -387,7 +391,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'module_type' => 'czr_social_module',
                 'transport' => hu_is_partial_refreshed_on() ? 'postMessage' : 'refresh',
                 'priority'  => 10,
-                'skoped' => false
+                'skoped' => false,
           )
       );
     }

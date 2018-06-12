@@ -227,7 +227,6 @@ if ( ! class_exists( 'HU_customize' ) ) :
         function hu_load_tmpl() {
             $_tmpl = array(
                 'tmpl/modules/all-modules-tmpl.php',
-                'tmpl/modules/body_bg-module-tmpl.php',
                 'tmpl/modules/widgets-areas-module-tmpl.php',
                 'tmpl/modules/slide-module-tmpl.php',
 
@@ -244,7 +243,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
         function hu_load_module_data_resources() {
             locate_template( 'functions/czr/modules/modules-data.php' , $load = true, $require_once = true );
-            locate_template( 'functions/czr/modules/modules-resources.php' , $load = true, $require_once = true );
+            //locate_template( 'functions/czr/modules/modules-resources.php' , $load = true, $require_once = true );
         }
 
 
@@ -763,6 +762,12 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
                   //declares settings array
                   $option_settings = array();
+
+                  // bail here if the setting is registered dynamically
+                  // since June 2018
+                  if ( array_key_exists( 'registered_dynamically', $options ) && true === $options[ 'registered_dynamically' ] )
+                    continue;
+
                   foreach( $args['settings'] as $set => $set_value) {
                       if ( $set == 'setting_type' ) {
                           $option_settings['type'] = isset( $options['setting_type']) ?  $options['setting_type'] : $args['settings'][$set];
