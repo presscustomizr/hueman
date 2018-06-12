@@ -1,20 +1,5 @@
 <?php
-add_filter('hu_js_customizer_control_params', 'hu_add_social_module_data');
-add_filter('hu_js_customizer_control_params', 'hu_add_widget_area_module_data');
-
-function hu_add_social_module_data( $params ) {
-  return array_merge(
-    $params,
-    array(
-        'social_el_params' => array(
-            //Social Module
-            'defaultSocialColor' => 'rgba(255,255,255,0.7)',
-            'defaultSocialSize' => 14,
-        )
-    )
-  );
-}
-
+add_filter('czr_js_customizer_control_params', 'hu_add_widget_area_module_data');
 function hu_add_widget_area_module_data( $params ) {
   return array_merge(
     $params,
@@ -62,3 +47,17 @@ function hu_get_widget_el_default_zones() {
   }
   return $default_zones;
 }
+
+//add_filter('czr_js_customizer_control_params', 'hu_add_social_module_data');
+// function hu_add_social_module_data( $params ) {
+//   return array_merge(
+//     $params,
+//     array(
+//         'social_el_params' => array(
+//             //Social Module
+//             'defaultSocialColor' => 'rgba(255,255,255,0.7)',
+//             'defaultSocialSize' => 14,
+//         )
+//     )
+//   );
+// }

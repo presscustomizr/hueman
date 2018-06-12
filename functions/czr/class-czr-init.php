@@ -228,13 +228,13 @@ if ( ! class_exists( 'HU_customize' ) ) :
             $_tmpl = array(
                 'tmpl/modules/all-modules-tmpl.php',
                 'tmpl/modules/body_bg-module-tmpl.php',
-                'tmpl/modules/social-module-tmpl.php',
                 'tmpl/modules/widgets-areas-module-tmpl.php',
-                'tmpl/modules/text_editor-module-tmpl.php',
                 'tmpl/modules/slide-module-tmpl.php',
 
-                'tmpl/inputs/img-uploader-tmpl.php',
-                'tmpl/inputs/text_editor-input-tmpl.php'
+                //'tmpl/inputs/img-uploader-tmpl.php',
+
+                'tmpl/modules/text_editor-module-tmpl.php',
+                //'tmpl/inputs/text_editor-input-tmpl.php'
             );
             foreach ($_tmpl as $_path) {
                 locate_template( 'functions/czr/' . $_path , $load = true, $require_once = true );
