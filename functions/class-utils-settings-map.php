@@ -313,21 +313,21 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'sanitize_js_callback' => 'maybe_hash_hex_color'
                 //'transport'   => 'postMessage'
           ),
-          'body-background' => array(
-                //'default'     => array(),
-                'default'       => array( 'background-color' => '#eaeaea' ),
-                'control'     => 'HU_Customize_Modules',
-                'label'       => __( 'Body Background' , 'hueman' ),
-                'description' => __('Set the website background color', 'hueman'),
-                'section'     => 'general_design_sec',
-                'type'        => 'czr_module',
-                'module_type' => 'czr_background'
-                //'type'        => 'color',
-                // 'sanitize_callback'    => array( $this, 'hu_sanitize_body_bg' ),@todo
-                // 'sanitize_js_callback' => array( $this, 'hu_sanitize_js_body_bg' ),@todo
-                //'transport'   => 'postMessage',
-                //'notice'        => __('Set background color and/or upload your own background image.', 'hueman')
-          ),
+          // 'body-background' => array(
+          //       //'default'     => array(),
+          //       'default'       => array( 'background-color' => '#eaeaea' ),
+          //       'control'     => 'HU_Customize_Modules',
+          //       'label'       => __( 'Body Background' , 'hueman' ),
+          //       'description' => __('Set the website background color', 'hueman'),
+          //       'section'     => 'general_design_sec',
+          //       'type'        => 'czr_module',
+          //       'module_type' => 'czr_background'
+          //       //'type'        => 'color',
+          //       // 'sanitize_callback'    => array( $this, 'hu_sanitize_body_bg' ),@todo
+          //       // 'sanitize_js_callback' => array( $this, 'hu_sanitize_js_body_bg' ),@todo
+          //       //'transport'   => 'postMessage',
+          //       //'notice'        => __('Set background color and/or upload your own background image.', 'hueman')
+          // ),
           'image-border-radius'  =>  array(
                 'default'       => 0,
                 'control'       => 'HU_controls' ,
@@ -376,6 +376,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           //       'section'   => 'social_links_sec',
           //       'type'      => 'dynamic'//@todo create dynamic type
           // )
+          // Since June 2018, this setting is registered dynamically
+          // We leave it in the map only for building the default options
           'social-links' => array(
                 'default'   => array(),//empty array by default
                 'control'   => 'HU_Customize_Modules',
@@ -1518,11 +1520,12 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
               'priority' => 20,
               'panel'   => 'hu-general-panel'
         ),
-        'social_links_sec'         => array(
-              'title'    => __( 'Social links', 'hueman' ),
-              'priority' => 30,
-              'panel'   => 'hu-general-panel'
-        ),
+        // Since June 2018, this section is registered dynamically
+        // 'social_links_sec'         => array(
+        //       'title'    => __( 'Social links', 'hueman' ),
+        //       'priority' => 30,
+        //       'panel'   => 'hu-general-panel'
+        // ),
 
 
 
