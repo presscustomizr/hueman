@@ -251,6 +251,9 @@ if ( ! function_exists( 'hu_print_social_links' ) ) {
     $_social_opts     = array( 'social-size' => $_default_size );
     $_social_items    = array();
 
+    if ( ! is_array( $_raw_socials ) )
+      return;
+
     //get the social mod opts and the items
     foreach( $_raw_socials as $key => $item ) {
       if ( ! array_key_exists( 'is_mod_opt', $item ) ) {
