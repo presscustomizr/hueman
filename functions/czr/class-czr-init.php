@@ -34,7 +34,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
             //add the customizer built with the builder below
             add_action( 'customize_register'                       , array( $this , 'hu_customize_register' ), 20, 1 );
             //add the customizer built with the builder below
-            add_action( 'customize_register'                       , array( $this , 'hu_schedule_register_sidebar_section' ), 1000, 1 );
+            //add_action( 'customize_register'                       , array( $this , 'hu_schedule_register_sidebar_section' ), 1000, 1 );
             //modify some WP built-in settings / controls / sections
             add_action( 'customize_register'                       , array( $this , 'hu_alter_wp_customizer_settings' ), 1000, 1 );
 
