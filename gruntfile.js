@@ -4,7 +4,7 @@ module.exports = function(grunt) {
   var _ = require('lodash');
 	var global_config = {
 		// path to task.js files, defaults to grunt dir
-      configPath: path.join(process.cwd(), 'grunt-tasks-config/'),
+      configPath: path.join(process.cwd(), '__grunt-tasks-config__/'),
       // auto grunt.initConfig
       init: true,
       // data passed into config ( => the basic grunt.initConfig(config) ). Can be used afterwards with < %= test % >
