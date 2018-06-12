@@ -1,7 +1,8 @@
 <?php
 
 //control scripts and style
-add_action( 'customize_controls_enqueue_scripts'        , 'hu_customize_controls_js_css', 10 );
+//Note that the 'czr-theme-customizer-fmk' is loaded @priority 10
+add_action( 'customize_controls_enqueue_scripts'        , 'hu_customize_controls_js_css', 20 );
 //preview scripts
 //set with priority 20 to be fired after hu_customize_store_db_opt in HU_utils
 add_action( 'customize_preview_init'                    , 'hu_customize_preview_js', 20 );
@@ -17,27 +18,16 @@ add_action( 'customize_controls_print_footer_scripts'   , 'hu_add_various_dom_re
 function hu_customize_preview_js() {
     global $wp_version;
 
-    wp_enqueue_script(
-        'hu-customizer-preview' ,
-        sprintf('%1$s/assets/czr/js/czr-preview-base%2$s.js' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
-        array( 'customize-preview', 'underscore'),
-        ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
-        true
-    );
-
     //localizes
     wp_localize_script(
-        'hu-customizer-preview',
-        'CZRPreviewParams',
+        'czr-customizer-preview', // this is the handle of the base czr fmk
+        'themeServerPreviewParams',
         apply_filters('hu_js_customizer_preview_params' ,
             array(
-                'themeFolder'     => get_template_directory_uri(),
                 'wpBuiltinSettings' => HU_customize::$instance -> hu_get_wp_builtin_settings(),
-                'themeOptions'  => HU_THEME_OPTIONS,
+                'themeOptionsPrefix'  => HU_THEME_OPTIONS,
                 'fonts' => array( 'src' => hu_get_fonts( array( 'all' => true, 'request' => 'src' ) ), 'family' => hu_get_fonts( array( 'all' => true, 'request' => 'family' ) ) ),
-                //patch for old wp versions which don't trigger preview-ready signal => since WP 4.1
-                'preview_ready_event_exists'   => version_compare( $wp_version, '4.1' , '>=' ),
-                'blogname' => get_bloginfo('name'),
+
                 'copyright' => sprintf('%1$s &copy; %2$s. %3$s',
                   get_bloginfo('name'),
                   date( 'Y' ),
@@ -58,41 +48,25 @@ function hu_customize_preview_js() {
  * @since Hueman 3.3.0
  */
 function hu_customize_controls_js_css() {
-
-    wp_enqueue_style(
-        'hu-customizer-controls-style',
-        sprintf('%1$s/assets/czr/css/czr-control-base%2$s.css' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
-        array( 'customize-controls' ),
-        HUEMAN_VER,
-        $media = 'all'
-    );
-    wp_enqueue_script(
-        'hu-customizer-controls',
-        sprintf('%1$s/assets/czr/js/czr-control-base%2$s.js' , get_template_directory_uri(), ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min' ),
-        array( 'customize-controls' , 'underscore'),
-        HUEMAN_VER,
-        true
-    );
-
     //localizes
     wp_localize_script(
-        'hu-customizer-controls',
-        'serverControlParams',
-        apply_filters('hu_js_customizer_control_params' ,
+        'czr-theme-customizer-fmk', // this is the handle of the base czr fmk
+        'themeServerControlParams',
+        apply_filters('czr_js_customizer_control_params' ,
           array(
-              'AjaxUrl'       => admin_url( 'admin-ajax.php' ),
-              'docURL'        => esc_url('docs.presscustomizr.com/'),
-              'HUNonce'       => wp_create_nonce( 'hu-customizer-nonce' ),
+              //should be included in all themes
               'wpBuiltinSettings' => HU_customize::$instance -> hu_get_wp_builtin_settings(),
-              'themeName'     => THEMENAME,
+              'isThemeSwitchOn' => ! (bool)HU_IS_PRO,
+              'themeSettingList' => HU_utils::$_theme_setting_list,
               'themeOptions'  => HU_THEME_OPTIONS,
+              'HUNonce'       => wp_create_nonce( 'hu-customizer-nonce' ),
+
+              'themeName'     => THEMENAME,// <= do we need this ?
+
               //'optionAjaxAction' => HU_OPT_AJAX_ACTION,//DEPRECATED
               'faviconOptionName' => 'favicon',
-              'css_attr' => HU_customize::$instance -> hu_get_controls_css_attr(),
-              'i18n' => hu_get_czr_translated_strings(),
-              'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('CZR_DEV') && true === CZR_DEV ),
-              'isThemeSwitchOn' => ! (bool)HU_IS_PRO,
-              'themeSettingList' => HU_utils::$_theme_setting_list
+              'i18n' => hu_get_czr_translated_strings()
+
           )
         )
     );
