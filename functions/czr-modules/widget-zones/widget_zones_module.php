@@ -205,41 +205,6 @@ function hu_print_widget_areas_templates() {
         </div>
     </script>
   <?php
-
-
-
-  //REDUCED VIEW CONTENT TEMPLATE
-  //only the contexts and the locations can be set.
-  ?>
-    <script type="text/html" id="tmpl-czr-module-widgets-item-input-list-reduced">
-      <div class="<?php echo $css_attr['sub_set_wrapper']; ?>">
-        <div class="customize-control-title"><?php _e('id', 'hueman'); ?></div>
-        <div class="czr-input">
-          <span><?php _e('unique id', 'hueman')?> : {{ data.id }}</span>
-        </div>
-      </div>
-      <div class="<?php echo $css_attr['sub_set_wrapper']; ?>">
-        <div class="customize-control-title"><?php _e('Name', 'hueman'); ?></div>
-        <div class="czr-input">
-          <span>{{ data.title }}</span>
-        </div>
-      </div>
-      <div class="<?php echo $css_attr['sub_set_wrapper']; ?> width-100" data-input-type="select">
-        <div class="customize-control-title"><?php _e('Location(s)', 'hueman'); ?></div>
-        <span class="czr-notice"><?php _e('Select the pre-defined location(s) in which you will embed this widget zone.', 'hueman'); ?></span>
-        <div class="czr-input">
-          <select data-czrtype="locations" class="js-example-basic-multiple" multiple="multiple"></select>
-        </div>
-      </div>
-      <div class="<?php echo $css_attr['sub_set_wrapper']; ?> width-100" data-input-type="select">
-        <div class="customize-control-title"><?php _e('Context(s)', 'hueman'); ?></div>
-        <span class="czr-notice"><?php _e('Pick the contexts where this widget area will be displayed.', 'hueman'); ?></span>
-        <div class="czr-input">
-          <select data-czrtype="contexts" class="js-example-basic-multiple" multiple="multiple"></select>
-        </div>
-      </div>
-    </script>
-  <?php
     //the following template is a "sub view"
     //it's rendered :
     //1) on customizer start, depending on what is fetched from the db

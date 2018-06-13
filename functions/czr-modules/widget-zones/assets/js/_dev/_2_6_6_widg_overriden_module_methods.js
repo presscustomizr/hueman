@@ -42,50 +42,6 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
             },
 
 
-
-            //overrides parent
-            //called before rendering a view. Fired in module::renderItemWrapper()
-            //can be overridden to set a specific view template depending on the model properties
-            //@return string
-            //@type can be
-            //Read Update Delete (rud...)
-            //Read Update (ru)
-            //...
-            //@item_model is an object describing the current item model
-            getTemplateEl : function( type, item_model ) {
-                    console.log('IN GET TEMPLATE EL ?', type, item_model );
-                    var module = this, _el;
-                    //force view-content type to ru-item-part if the model is a built-in (primary, secondary, footer-1, ...)
-                    //=> user can't delete a built-in model.
-                    if ( 'rudItemPart' == type ) {
-                        type = ( _.has(item_model, 'is_builtin') && item_model.is_builtin ) ? 'ruItemPart' : type;
-                    } else if ( 'itemInputList' == type ) {
-                        type = ( _.has(item_model, 'is_builtin') && item_model.is_builtin ) ? 'itemInputListReduced' : type;
-                    }
-
-                    switch(type) {
-                          case 'rudItemPart' :
-                            _el = module.rudItemPart;
-                              break;
-                          case 'ruItemPart' :
-                            _el = module.ruItemPart;
-                            break;
-                          case 'itemInputList' :
-                            _el = module.itemInputList;
-                            break;
-                          case 'itemInputListReduced' :
-                            _el = module.itemInputListReduced;
-                            break;
-                    }
-
-                    if ( _.isEmpty(_el) ) {
-                      throw new Error( 'No valid template has been found in getTemplateEl()' );
-                    } else {
-                      return _el;
-                    }
-            },
-
-
             _toggleLocationAlertExpansion : function( $view, to ) {
                     var $_alert_el = $view.find('.czr-location-alert');
                     if ( ! $_alert_el.length ) {

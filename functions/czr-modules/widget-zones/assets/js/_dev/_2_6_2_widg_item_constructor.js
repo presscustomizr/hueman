@@ -196,9 +196,9 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                           $.data(
                               this,
                               'modelUpdateTimer',
-                              setTimeout( function() {
+                              _.delay( function() {
                                   //refresh preview
-                                  module.control.refreshPreview();
+                                  api.previewer.refresh();
                               } , 1000)
                           );//$.data
                   },

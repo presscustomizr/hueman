@@ -12,7 +12,6 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                     $.extend( module, {
                           itemPreAddEl : 'czr-module-widgets-pre-add-view-content',
                           itemInputList : 'czr-module-widgets-item-input-list',
-                          itemInputListReduced : 'czr-module-widgets-item-input-list-reduced',
                           ruItemPart : 'czr-module-widgets-ru-item-part'
                     } );
 
@@ -133,6 +132,7 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
 
             //When the control is embedded on the page, this method is fired in api.CZRBaseModuleControl:ready()
             //=> right after the module is instantiated.
+            //VERIFIED
             ready : function() {
                     var module = this;
                     api.CZRDynModule.prototype.ready.call( module );
@@ -152,6 +152,7 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
 
             //overrides parent method
             //adds the default widget zones in the items
+            //VERIFIED
             initializeModuleModel : function( constructorOptions ) {
                         var module = this, dfd = $.Deferred();
                         constructorOptions.items = _.union( _.has( module.serverParams, 'default_zones' ) ? module.serverParams.default_zones : [], constructorOptions.items );
@@ -159,19 +160,13 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
             },
 
 
+      });//$.extend()
 
-
-
-
-
-
-
-
-
-
-
-
-
+})( wp.customize , jQuery, _ );//extends api.CZRDynModule
+//globals widgetModuleLocalized, themeServerControlParams
+var WidgetAreaConstructor = WidgetAreaConstructor || {};
+( function ( api, $, _ ) {
+      $.extend( WidgetAreaConstructor, {
 
             CZRWZonesInputMths : {
                   ready : function() {
@@ -294,20 +289,13 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                   }
             },//CZRWZonesInputMths
 
+      });//$.extend()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+})( wp.customize , jQuery, _ );//extends api.CZRDynModule
+//globals widgetModuleLocalized, themeServerControlParams
+var WidgetAreaConstructor = WidgetAreaConstructor || {};
+( function ( api, $, _ ) {
+      $.extend( WidgetAreaConstructor, {
             CZRWZonesItemConstructor : {
                   initialize : function( id, options ) {
                           var item = this,
@@ -501,9 +489,9 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                           $.data(
                               this,
                               'modelUpdateTimer',
-                              setTimeout( function() {
+                              _.delay( function() {
                                   //refresh preview
-                                  module.control.refreshPreview();
+                                  api.previewer.refresh();
                               } , 1000)
                           );//$.data
                   },
@@ -539,67 +527,13 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                   }
             },//CZRWZonesItemConstructor
 
+      });//$.extend()
 
-
-
-
-
-
-
-
-
-
-
-
-
-            //DEPRECATED : THE CONTROLS TO SYNCHRONIZE HAVE BEEN REMOVED
-
-            //fired on model_added_by_user and from the timer method
-            //1) model_added, before renderItemWrapper action
-            //    when a new model is manually added ( isTrigger is undefined )
-            //    => refresh the select options of the other controls using this collection
-            //2) model_updated, before updateCollection
-            // addControlOptions : function(obj) {
-            //   var _controls = _.where( api.settings.controls, {section:"sidebars_select_sec"});
-            //   _.map( _controls, function( _control ) {
-            //       var $_select = api.control( _control.settings.default ).container.find('select');
-
-            //       //if this option has already been added, simply updates its attributes
-            //       if ( 1 === $_select.find('option[value="' + obj.model.id + '"]').length ) {
-            //         $_select.find('option[value="' + obj.model.id + '"]').html(obj.model.title);
-            //         $_select.selecter("destroy").selecter();
-            //       } else {
-            //         $_select.append( $('<option>', {value: obj.model.id, html:obj.model.title } ) ).selecter("destroy").selecter();
-            //       }
-            //   });//map
-            // },
-
-            //fired on model_removed
-            // removeControlOptions : function(obj) {
-            //   var _controls = _.where( api.settings.controls, {section:"sidebars_select_sec"});
-
-            //   _.map( _controls, function( _control ) {
-            //       var $_select = api.control( _control.settings.default ).container.find('select');
-
-            //       if ( ! $_select.find('option[value="' + obj.model.id + '"]').length )
-            //         return;
-
-            //       $( 'option[value="' + obj.model.id +'"]', $_select).remove();
-            //       $_select.selecter("destroy").selecter();
-            //   });//map
-            // },
-
-
-
-
-
-
-
-
-
-
-
-
+})( wp.customize , jQuery, _ );//extends api.CZRDynModule
+//globals widgetModuleLocalized, themeServerControlParams
+var WidgetAreaConstructor = WidgetAreaConstructor || {};
+( function ( api, $, _ ) {
+      $.extend( WidgetAreaConstructor, {
             /////////////////////////////////////////
             /// ADD / REMOVE WIDGET ZONES
             ////////////////////////////////////////
@@ -765,15 +699,14 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                   });
             },
 
+      });//$.extend()
 
-
-
-
-
-
-
-
-
+})( wp.customize , jQuery, _ );
+//extends api.CZRDynModule
+//globals widgetModuleLocalized, themeServerControlParams
+var WidgetAreaConstructor = WidgetAreaConstructor || {};
+( function ( api, $, _ ) {
+      $.extend( WidgetAreaConstructor, {
 
             /////////////////////////////////////////
             /// SET EXPANSION CALLBACKS FOR WIDGET PANEL AND WIDGET ZONE CREATION SECTION
@@ -830,13 +763,16 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                   module.closeAllItems().closeRemoveDialogs();
 
                   content.slideToggle();
-            },
+            }
+      });//$.extend()
+})( wp.customize , jQuery, _ );
 
 
-
-
-
-
+//extends api.CZRDynModule
+//globals widgetModuleLocalized, themeServerControlParams
+var WidgetAreaConstructor = WidgetAreaConstructor || {};
+( function ( api, $, _ ) {
+      $.extend( WidgetAreaConstructor, {
 
             /////////////////////////////////////////
             /// LISTEN TO SIDEBAR INSIGHTS FROM THE PREVIEW FRAME
@@ -899,14 +835,16 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                                 api.section( "sidebar-widgets-" +_sidebar.id ).activate();
                         });
                   });
-            },//listenToSidebarInsights()
+            }//listenToSidebarInsights()
+      });//$.extend()
+})( wp.customize , jQuery, _ );
 
 
-
-
-
-
-
+//extends api.CZRDynModule
+//globals widgetModuleLocalized, themeServerControlParams
+var WidgetAreaConstructor = WidgetAreaConstructor || {};
+( function ( api, $, _ ) {
+      $.extend( WidgetAreaConstructor, {
             /////////////////////////////////////////
             /// OVERRIDEN METHODS
             ////////////////////////////////////////
@@ -946,50 +884,6 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
             },
 
 
-
-            //overrides parent
-            //called before rendering a view. Fired in module::renderItemWrapper()
-            //can be overridden to set a specific view template depending on the model properties
-            //@return string
-            //@type can be
-            //Read Update Delete (rud...)
-            //Read Update (ru)
-            //...
-            //@item_model is an object describing the current item model
-            getTemplateEl : function( type, item_model ) {
-                    console.log('IN GET TEMPLATE EL ?', type, item_model);
-                    var module = this, _el;
-                    //force view-content type to ru-item-part if the model is a built-in (primary, secondary, footer-1, ...)
-                    //=> user can't delete a built-in model.
-                    if ( 'rudItemPart' == type ) {
-                        type = ( _.has(item_model, 'is_builtin') && item_model.is_builtin ) ? 'ruItemPart' : type;
-                    } else if ( 'itemInputList' == type ) {
-                        type = ( _.has(item_model, 'is_builtin') && item_model.is_builtin ) ? 'itemInputListReduced' : type;
-                    }
-
-                    switch(type) {
-                          case 'rudItemPart' :
-                            _el = module.rudItemPart;
-                              break;
-                          case 'ruItemPart' :
-                            _el = module.ruItemPart;
-                            break;
-                          case 'itemInputList' :
-                            _el = module.itemInputList;
-                            break;
-                          case 'itemInputListReduced' :
-                            _el = module.itemInputListReduced;
-                            break;
-                    }
-
-                    if ( _.isEmpty(_el) ) {
-                      throw new Error( 'No valid template has been found in getTemplateEl()' );
-                    } else {
-                      return _el;
-                    }
-            },
-
-
             _toggleLocationAlertExpansion : function( $view, to ) {
                     var $_alert_el = $view.find('.czr-location-alert');
                     if ( ! $_alert_el.length ) {
@@ -1009,41 +903,11 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                     $_alert_el.toggle( 'expanded' == to);
             }
       });//$.extend()
-
-      //provides a description of each module
-      //=> will determine :
-      //1) how to initialize the module model. If not crud, then the initial item(s) model shall be provided
-      //2) which js template(s) to use : if crud, the module template shall include the add new and pre-item elements.
-      //   , if crud, the item shall be removable
-      //3) how to render : if multi item, the item content is rendered when user click on edit button.
-      //    If not multi item, the single item content is rendered as soon as the item wrapper is rendered.
-      //4) some DOM behaviour. For example, a multi item shall be sortable.
-      api.czrModuleMap = api.czrModuleMap || {};
-      $.extend( api.czrModuleMap, {
-            czr_widget_areas_module : {
-                  mthds : WidgetAreaConstructor,
-                  crud : true,
-                  multi_item : false,
-                  name : 'Widget Areas',
-                  has_mod_opt : false,
-                  ready_on_section_expanded : true,
-                  //defaultItemModel : {}
-            }
-      });
 })( wp.customize , jQuery, _ );
 
 
 
-
-
-
-
-
-
-
-
-
-
+//globals widgetModuleLocalized, themeServerControlParams
 /*****************************************************************************
 * CAPTURE PREVIEW INFORMATIONS ON REFRESH + REACT TO THEM
 *****************************************************************************/
@@ -1082,4 +946,28 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
 
             });
       });//api.bind('ready')
+})( wp.customize , jQuery, _ );//extends api.CZRDynModule
+//globals widgetModuleLocalized, themeServerControlParams
+var WidgetAreaConstructor = WidgetAreaConstructor || {};
+( function ( api, $, _ ) {
+      //provides a description of each module
+      //=> will determine :
+      //1) how to initialize the module model. If not crud, then the initial item(s) model shall be provided
+      //2) which js template(s) to use : if crud, the module template shall include the add new and pre-item elements.
+      //   , if crud, the item shall be removable
+      //3) how to render : if multi item, the item content is rendered when user click on edit button.
+      //    If not multi item, the single item content is rendered as soon as the item wrapper is rendered.
+      //4) some DOM behaviour. For example, a multi item shall be sortable.
+      api.czrModuleMap = api.czrModuleMap || {};
+      $.extend( api.czrModuleMap, {
+            czr_widget_areas_module : {
+                  mthds : WidgetAreaConstructor,
+                  crud : true,
+                  multi_item : false,
+                  name : 'Widget Areas',
+                  has_mod_opt : false,
+                  ready_on_section_expanded : true,
+                  //defaultItemModel : {}
+            }
+      });
 })( wp.customize , jQuery, _ );

@@ -12,7 +12,6 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                     $.extend( module, {
                           itemPreAddEl : 'czr-module-widgets-pre-add-view-content',
                           itemInputList : 'czr-module-widgets-item-input-list',
-                          itemInputListReduced : 'czr-module-widgets-item-input-list-reduced',
                           ruItemPart : 'czr-module-widgets-ru-item-part'
                     } );
 
@@ -133,6 +132,7 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
 
             //When the control is embedded on the page, this method is fired in api.CZRBaseModuleControl:ready()
             //=> right after the module is instantiated.
+            //VERIFIED
             ready : function() {
                     var module = this;
                     api.CZRDynModule.prototype.ready.call( module );
@@ -152,6 +152,7 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
 
             //overrides parent method
             //adds the default widget zones in the items
+            //VERIFIED
             initializeModuleModel : function( constructorOptions ) {
                         var module = this, dfd = $.Deferred();
                         constructorOptions.items = _.union( _.has( module.serverParams, 'default_zones' ) ? module.serverParams.default_zones : [], constructorOptions.items );
