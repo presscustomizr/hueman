@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Hueman\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2018-06-13 16:54:44+00:00\n"
+"POT-Creation-Date: 2018-06-13 18:52:18+00:00\n"
 "PO-Revision-Date: 2016-11-04 13:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -2939,6 +2939,19 @@ msgstr ""
 
 #: functions/widgets/alx-video.php:23
 msgid "Display a responsive video with a YouTube or Vimeo link."
+msgstr ""
+
+#: functions.php:16
+msgid "PHP"
+msgstr ""
+
+#: functions.php:20
+#, fuzzy
+msgid "WordPress"
+msgstr "Mogelijk gemaakt door"
+
+#: functions.php:27
+msgid "The <strong>%1$s</strong> theme requires at least %2$s version %3$s"
 msgstr ""
 
 #: option-tree/includes/ot-functions-option-types.php:441
