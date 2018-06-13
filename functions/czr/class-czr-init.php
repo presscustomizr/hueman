@@ -51,11 +51,10 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
             //Print modules and inputs templates
             $this -> hu_load_tmpl();
-            //Add the module data server side generated + additional resources (like the WP text editor)
-            $this -> hu_load_module_data_resources();
 
-            //populate the css_attr property, used both server side and on the customize panel (passed via serverControlParams )
-            $this -> css_attr = $this -> hu_get_controls_css_attr();
+            //Add the module data server side generated + additional resources (like the WP text editor)
+            // DEPRECATED SINCE JUNE 2018
+            //$this -> hu_load_module_data_resources();
 
             locate_template( 'functions/czr/czr-resources.php', true, true );
         }
@@ -224,8 +223,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
         /* ------------------------------------------------------------------------- */
         function hu_load_tmpl() {
             $_tmpl = array(
-                'tmpl/modules/all-modules-tmpl.php',
-                'tmpl/modules/widgets-areas-module-tmpl.php',
+                //'tmpl/modules/all-modules-tmpl.php',
                 'tmpl/modules/slide-module-tmpl.php',
 
                 //'tmpl/inputs/img-uploader-tmpl.php',
@@ -238,11 +236,11 @@ if ( ! class_exists( 'HU_customize' ) ) :
             }
         }
 
-
-        function hu_load_module_data_resources() {
-            locate_template( 'functions/czr/modules/modules-data.php' , $load = true, $require_once = true );
-            //locate_template( 'functions/czr/modules/modules-resources.php' , $load = true, $require_once = true );
-        }
+        // DEPRECATED SINCE JUNE 2018
+        // function hu_load_module_data_resources() {
+        //     locate_template( 'functions/czr/modules/modules-data.php' , $load = true, $require_once = true );
+        //     //locate_template( 'functions/czr/modules/modules-resources.php' , $load = true, $require_once = true );
+        // }
 
 
 
@@ -814,45 +812,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
         /* ------------------------------------------------------------------------- *
          *  HELPERS
         /* ------------------------------------------------------------------------- */
-        function hu_get_controls_css_attr() {
-            return apply_filters('controls_css_attr',
-                array(
-                  'multi_input_wrapper' => 'czr-multi-input-wrapper',
-                  'sub_set_wrapper'     => 'czr-sub-set',
-                  'sub_set_input'       => 'czr-input',
-                  'img_upload_container' => 'czr-imgup-container',
 
-                  'edit_modopt_icon'    => 'czr-toggle-modopt',
-                  'close_modopt_icon'   => 'czr-close-modopt',
-                  'mod_opt_wrapper'     => 'czr-mod-opt-wrapper',
-
-
-                  'items_wrapper'     => 'czr-items-wrapper',
-                  'single_item'        => 'czr-single-item',
-                  'item_content'      => 'czr-item-content',
-                  'item_header'       => 'czr-item-header',
-                  'item_title'        => 'czr-item-title',
-                  'item_btns'         => 'czr-item-btns',
-                  'item_sort_handle'   => 'czr-item-sort-handle',
-
-                  //remove dialog
-                  'display_alert_btn' => 'czr-display-alert',
-                  'remove_alert_wrapper'   => 'czr-remove-alert-wrapper',
-                  'cancel_alert_btn'  => 'czr-cancel-button',
-                  'remove_view_btn'        => 'czr-remove-button',
-
-                  'edit_view_btn'     => 'czr-edit-view',
-                  //pre add dialog
-                  'open_pre_add_btn'      => 'czr-open-pre-add-new',
-                  'adding_new'        => 'czr-adding-new',
-                  'pre_add_wrapper'   => 'czr-pre-add-wrapper',
-                  'pre_add_item_content'   => 'czr-pre-add-view-content',
-                  'cancel_pre_add_btn'  => 'czr-cancel-add-new',
-                  'add_new_btn'       => 'czr-add-new',
-                  'pre_add_success'   => 'czr-add-success'
-              )
-            );
-        }
 
 
 
