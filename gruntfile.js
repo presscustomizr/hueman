@@ -17,6 +17,7 @@ module.exports = function(grunt) {
         admin_css : 'assets/admin/css/',
         admin_js : 'assets/admin/js/',
         czr_assets : 'assets/czr/',
+        czr_modules : 'functions/czr-modules/',
         lang : 'languages/'
       },
 			//default less modifiers
@@ -26,7 +27,11 @@ module.exports = function(grunt) {
 			//credentials : 'travis' == grunt.option('context') ? {} : grunt.file.readJSON('.ftpauth'),
 			hueman_tasks : {
 				//DEV : clean the build and watch changes (see watch task)
-				'hueman_dev': [ 'clean' ,'watch'],
+				'hueman_dev': [
+            'replace:czr_fmk_namespace',
+            'clean',
+            'watch'
+        ],
 
 				//PROD
         'pre_front_css' : [
