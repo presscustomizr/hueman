@@ -1,4 +1,5 @@
 //extends api.CZRDynModule
+//globals widgetModuleLocalized, themeServerControlParams
 var WidgetAreaConstructor = WidgetAreaConstructor || {};
 ( function ( api, $, _ ) {
       $.extend( WidgetAreaConstructor, {
@@ -41,14 +42,14 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                     //declares a default model
                     module.defaultItemModel = {
                             id : '',
-                            title : serverControlParams.i18n.widgetZone,
+                            title : themeServerControlParams.i18n.widgetZone,
                             contexts : _.without( _.keys(module.contexts), '_all_' ),//the server list of contexts is an object, we only need the keys, whitout _all_
                             locations : [ module.serverParams.defaultWidgetLocation ],
                             description : ''
                     };
 
                     //overrides the default success message
-                    this.itemAddedMessage = serverControlParams.i18n.widgetZoneAdded;
+                    this.itemAddedMessage = themeServerControlParams.i18n.widgetZoneAdded;
 
                     //Observe and react to sidebar insights from the preview frame
                     // SIDEBAR INSIGHTS => stores and observes the sidebars and widgets settings sent by the preview */
@@ -72,6 +73,7 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                     // available_locations :  data.availableWidgetLocations//built server side
                     api.czr_widgetZoneSettings = api.czr_widgetZoneSettings || new api.Value();
                     api.czr_widgetZoneSettings.bind( function( updated_data_sent_from_preview , from ) {
+                            //console.log('REACT ON czr_widgetZoneSettings', updated_data_sent_from_preview , from );
                             module.isReady.then( function() {
                                   _.each( updated_data_sent_from_preview, function( _data, _key ) {
                                         api.sidebar_insights( _key ).set( _data );
@@ -140,9 +142,9 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                           if ( ! to )
                             return;
                           //refresh the location list
-                          module.preItem.czr_Input('locations')._setupLocationSelect( true );//true for refresh
+                          module.preItem.czr_Input( 'locations' )._setupLocationSelect( true );//true for refresh
                           //refresh the location alert message
-                          module.preItem.czr_Input('locations').mayBeDisplayModelAlert();
+                          module.preItem.czr_Input( 'locations' ).mayBeDisplayModelAlert();
                     });
             },
 
@@ -213,10 +215,10 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                                 if ( key == input_contexts || _.contains( input_contexts, key ) )
                                   $.extend( _attributes, { selected : "selected" } );
 
-                                $( 'select[data-type="contexts"]', input.container ).append( $('<option>', _attributes) );
+                                $( 'select[data-czrtype="contexts"]', input.container ).append( $('<option>', _attributes) );
                           });
                           //fire select2
-                          $( 'select[data-type="contexts"]', input.container ).select2();
+                          $( 'select[data-czrtype="contexts"]', input.container ).select2();
                   },
 
 
@@ -229,9 +231,10 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                               module     = input.module,
                               available_locs = api.sidebar_insights('available_locations')();
 
+                          //console.log('_setupLocationSelect', input(), module.locations );
                           //generates the locations options
                           //append them if not set yet
-                          if ( ! $( 'select[data-type="locations"]', input.container ).children().length ) {
+                          if ( ! $( 'select[data-czrtype="locations"]', input.container ).children().length ) {
                                 _.each( module.locations, function( title, key ) {
                                       var _attributes = {
                                             value : key,
@@ -241,7 +244,7 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                                       if ( key == input_locations || _.contains( input_locations, key ) )
                                         $.extend( _attributes, { selected : "selected" } );
 
-                                      $( 'select[data-type="locations"]', input.container ).append( $('<option>', _attributes) );
+                                      $( 'select[data-czrtype="locations"]', input.container ).append( $('<option>', _attributes) );
                                 });
                           }//if
 
@@ -249,17 +252,17 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                                 if (! state.id) { return state.text; }
                                 if (  _.contains(available_locs, state.element.value) ) { return state.text; }
                                 var $state = $(
-                                  '<span class="czr-unavailable-location fas fa-ban" title="' + serverControlParams.i18n.unavailableLocation + '">&nbsp;&nbsp;' + state.text + '</span>'
+                                  '<span class="czr-unavailable-location fas fa-ban" title="' + themeServerControlParams.i18n.unavailableLocation + '">&nbsp;&nbsp;' + state.text + '</span>'
                                 );
                                 return $state;
                           }
 
                           if ( refresh ) {
-                                $( 'select[data-type="locations"]', input.container ).select2( 'destroy' );
+                                $( 'select[data-czrtype="locations"]', input.container ).select2( 'destroy' );
                           }
 
                           //fire select2
-                          $( 'select[data-type="locations"]', input.container ).select2( {
+                          $( 'select[data-czrtype="locations"]', input.container ).select2( {
                             templateResult: setAvailability,
                             templateSelection: setAvailability
                           });
@@ -276,7 +279,7 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                           if ( ! _.has( item(), 'locations') || _.isEmpty( item().locations ) )
                             return;
 
-                          var _selected_locations = $('select[data-type="locations"]', input.container ).val(),
+                          var _selected_locations = $('select[data-czrtype="locations"]', input.container ).val(),
                               available_locs = api.sidebar_insights('available_locations')(),
                               _unavailable = _.filter( _selected_locations, function( loc ) {
                                 return ! _.contains(available_locs, loc);
@@ -423,9 +426,9 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                           }
 
                           //Translated strings
-                          var _locationText = serverControlParams.i18n.locations,
-                              _contextText = serverControlParams.i18n.contexts,
-                              _notsetText = serverControlParams.i18n.notset;
+                          var _locationText = themeServerControlParams.i18n.locations,
+                              _contextText = themeServerControlParams.i18n.contexts,
+                              _notsetText = themeServerControlParams.i18n.notset;
 
                           _locations = _.isEmpty( _locations ) ? '<span style="font-weight: bold;">' + _notsetText + '</span>' : _locations.join(', ');
                           _contexts = _.isEmpty( _contexts ) ? '<span style="font-weight: bold;">' + _notsetText + '</span>' : _contexts.join(', ');
@@ -954,6 +957,7 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
             //...
             //@item_model is an object describing the current item model
             getTemplateEl : function( type, item_model ) {
+                    console.log('IN GET TEMPLATE EL ?', type, item_model);
                     var module = this, _el;
                     //force view-content type to ru-item-part if the model is a built-in (primary, secondary, footer-1, ...)
                     //=> user can't delete a built-in model.
@@ -1000,7 +1004,7 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                                 style:"display:none"
                           });
 
-                          $('select[data-type="locations"]', $view ).closest('div').after($_alert_el);
+                          $('select[data-czrtype="locations"]', $view ).closest('div').after($_alert_el);
                     }
                     $_alert_el.toggle( 'expanded' == to);
             }
@@ -1026,4 +1030,56 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                   //defaultItemModel : {}
             }
       });
+})( wp.customize , jQuery, _ );
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*****************************************************************************
+* CAPTURE PREVIEW INFORMATIONS ON REFRESH + REACT TO THEM
+*****************************************************************************/
+(function (api, $, _) {
+      //Data are sent by the preview frame when the panel has sent the 'sync' or even better 'active' event
+      api.bind( 'ready', function() {
+            //observe widget settings changes
+            api.previewer.bind('houston-widget-settings', function(data) {
+                  //console.log('control panel => ALORS ON HOUSTON- SETTINGS ? => ', data );
+                  //get the difference
+                  var _candidates = _.filter( data.registeredSidebars, function( sb ) {
+                    return ! _.findWhere( _wpCustomizeWidgetsSettings.registeredSidebars, { id: sb.id } );
+                  });
+
+                  var _inactives = _.filter( data.registeredSidebars, function( sb ) {
+                    return ! _.has( data.renderedSidebars, sb.id );
+                  });
+
+                  _inactives = _.map( _inactives, function(obj) {
+                    return obj.id;
+                  });
+
+                  var _registered = _.map( data.registeredSidebars, function(obj) {
+                    return obj.id;
+                  });
+
+                  //stores and update the widget zone settings
+                  api.czr_widgetZoneSettings = api.czr_widgetZoneSettings || new api.Value();//will store all widget zones data sent by preview as an observable object
+                  api.czr_widgetZoneSettings.set( {
+                        actives :  data.renderedSidebars,
+                        inactives :  _inactives,
+                        registered :  _registered,
+                        candidates :  _candidates,
+                        available_locations :  data.availableWidgetLocations//built server side
+                  } );
+
+            });
+      });//api.bind('ready')
 })( wp.customize , jQuery, _ );
