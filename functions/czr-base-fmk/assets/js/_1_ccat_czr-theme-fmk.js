@@ -83,7 +83,7 @@
             /*****************************************************************************
             * ADD PRO BEFORE SPECIFIC SECTIONS AND PANELS
             *****************************************************************************/
-            if ( themeServerControlParams.isPro ) {
+            if ( window.themeServerControlParams && themeServerControlParams.isPro ) {
                   _.each( [
                         //WFC
                         'tc_font_customizer_settings',

@@ -449,18 +449,6 @@ if ( ! class_exists( 'CZR_Fmk_Base_Ajax_Filter' ) ) :
                     <?php
                 break;
 
-                // only used in the Widget module for the Hueman theme
-                // to prevent the removal of the theme's builtin widget zones
-                case 'ru-item-part' :
-                    ?>
-                      <div class="<?php echo $css_attr['item_header']; ?> czr-custom-model">
-                        <div class="<?php echo $css_attr['item_title']; ?> <?php echo $css_attr['item_sort_handle']; ?>"><h4>{{ data.title }}</h4></div>
-                          <div class="<?php echo $css_attr['item_btns']; ?>"><a title="<?php _e('Edit', 'text_domain_to_be_replaced'); ?>" href="javascript:void(0);" class="fas fa-pencil-alt <?php echo $css_attr['edit_view_btn']; ?>"></a></div>
-                        </div>
-                      </div>
-                    <?php
-                break;
-
                 case 'rud-item-alert-part' :
                     ?>
                       <p class="czr-item-removal-title"><?php _e('Are you sure you want to remove : <strong>{{ data.title }} ?</strong>', 'text_domain_to_be_replaced'); ?></p>

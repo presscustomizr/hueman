@@ -141,7 +141,7 @@ if (!Array.from) {
     };
   }());
 }
-;(function ( $, window, document, undefined ) {
+(function ( $ ) {
 
   var pluginPrefix = 'original',
       _props       = ['Width', 'Height'];
@@ -175,8 +175,8 @@ if (!Array.from) {
     return ( typeof _img_size === undefined ) ? false : _img_size;
   }
 
-})( jQuery, window, document );
-;(function ( $, window, document, undefined ) {
+})( jQuery );
+(function ( $, window ) {
       var pluginName = 'imgSmartLoad',
           defaults = {
                 load_all_images_on_first_scroll : false,
@@ -231,7 +231,7 @@ if (!Array.from) {
             }
       };
       Plugin.prototype._maybe_trigger_load = function( $_imgs , _evt ) {
-            var self = this;
+            var self = this,
                 _visible_list = $_imgs.filter( function( ind, _img ) { return self._is_visible( _img ,  _evt ); } );
             _visible_list.map( function( ind, _img ) {
                   $(_img).trigger( 'load_img' );
@@ -269,7 +269,7 @@ if (!Array.from) {
                               $_img.fadeIn(self.options.fadeIn_options).addClass('tc-smart-loaded');
                         }
                         if ( ( 'undefined' !== typeof $_img.attr('data-tcjp-recalc-dims')  ) && ( false !== $_img.attr('data-tcjp-recalc-dims') ) ) {
-                              var _width  = $_img.originalWidth();
+                              var _width  = $_img.originalWidth(),
                                   _height = $_img.originalHeight();
 
                               if ( 2 != _.size( _.filter( [ _width, _height ], function(num){ return _.isNumber( parseInt(num, 10) ) && num > 1; } ) ) )
@@ -296,8 +296,8 @@ if (!Array.from) {
                   }
             });
       };
-})( jQuery, window, document );
-;(function ( $, window, document, undefined ) {
+})( jQuery, window );
+(function ( $ ) {
     var pluginName = 'extLinks',
         defaults = {
           addIcon : true,
@@ -403,8 +403,8 @@ if (!Array.from) {
       });
     };
 
-})( jQuery, window, document );
-;(function ( $, window, document, undefined ) {
+})( jQuery );
+(function ( $, window ) {
       var pluginName = 'centerImages',
           defaults = {
                 enableCentering : true,
@@ -467,7 +467,7 @@ if (!Array.from) {
                   } );
             }
       };
-      Plugin.prototype._maybe_apply_golden_r = function( evt ) {
+      Plugin.prototype._maybe_apply_golden_r = function() {
             if ( ! this.options.enableGoldenRatio || ! this.options.goldenRatioVal || 0 === this.options.goldenRatioVal )
               return;
             if ( ! this._is_selector_allowed() )
@@ -509,7 +509,7 @@ if (!Array.from) {
                   $(self.container).attr('data-img-centered-in-container', 1 );
             }
       };
-      Plugin.prototype._pre_img_cent = function( $_img, _event_ ) {
+      Plugin.prototype._pre_img_cent = function( $_img ) {
 
             var _state = this._get_current_state( $_img ),
                 self = this,
@@ -611,18 +611,8 @@ if (!Array.from) {
             });
       };
 
-})( jQuery, window, document );/* ===================================================
- * jqueryParallax.js v1.0.0
- * ===================================================
- * (c) 2016 Nicolas Guillaume - Rocco Aliberti, Nice, France
- * CenterImages plugin may be freely distributed under the terms of the GNU GPL v2.0 or later license.
- *
- * License URI: http://www.gnu.org/licenses/gpl-2.0.html
- *
- *
- *
- * =================================================== */
-;(function ( $, window, document, undefined ) {
+})( jQuery, window );
+(function ( $, window, _ ) {
         var pluginName = 'czrParallax',
             defaults = {
                   parallaxRatio : 0.5,
@@ -655,10 +645,8 @@ if (!Array.from) {
               this._bind_evt();
         };
         Plugin.prototype._bind_evt = function() {
-              var self = this,
-                  _customEvt = $.isArray(this.options.oncustom) ? this.options.oncustom : this.options.oncustom.split(' ');
 
-              _.bindAll( this, 'maybeParallaxMe', 'parallaxMe' );
+            _.bindAll( this, 'maybeParallaxMe', 'parallaxMe' );
         };
 
         Plugin.prototype.stageParallaxElements = function() {
@@ -748,14 +736,8 @@ if (!Array.from) {
                 }
             });
         };
-})( jQuery, window, document );/* ===================================================
- * jqueryAnimateSvg.js v1.0.0
- * @dependency : Vivus.js (MIT licensed)
- * ===================================================
- * (c) 2016 Nicolas Guillaume, Nice, France
- * Animates an svg icon with Vivus given its #id
- * =================================================== */
-;(function ( $, window, document, _ ) {
+})( jQuery, window, _ );
+(function ( $, window, document, _ ) {
   var pluginName = 'animateSvg',
       defaults = {
         filter_opacity : 0.8,
@@ -2032,44 +2014,65 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
               return '';
             return string.length > length ? string.substr( 0, length - 1 ) : string;
       };
-      czrapp._prettyfy = function( args ) {
+      var _prettyPrintLog = function( args ) {
             var _defaults = {
                   bgCol : '#5ed1f5',
                   textCol : '#000',
-                  consoleArguments : [],
-                  prettyfy : true
+                  consoleArguments : []
             };
             args = _.extend( _defaults, args );
 
-            var _toArr = Array.from( args.consoleArguments );
+            var _toArr = Array.from( args.consoleArguments ),
+                _truncate = function( string ){
+                      if ( ! _.isString( string ) )
+                        return '';
+                      return string.length > 300 ? string.substr( 0, 299 ) + '...' : string;
+                };
             if ( ! _.isEmpty( _.filter( _toArr, function( it ) { return ! _.isString( it ); } ) ) ) {
-                  _toArr =  JSON.stringify( _toArr );
+                  _toArr =  JSON.stringify( _toArr.join(' ') );
             } else {
                   _toArr = _toArr.join(' ');
             }
-            if ( args.prettyfy )
-              return [
-                    '%c ' + czrapp._truncate( _toArr ),
-                    [ 'background:' + args.bgCol, 'color:' + args.textCol, 'display: block;' ].join(';')
-              ];
-            else
-              return czrapp._truncate( _toArr );
+            return [
+                  '%c ' + _truncate( _toArr ),
+                  [ 'background:' + args.bgCol, 'color:' + args.textCol, 'display: block;' ].join(';')
+            ];
+      };
+
+      var _wrapLogInsideTags = function( title, msg, bgColor ) {
+            if ( ( _.isUndefined( console ) && typeof window.console.log != 'function' ) )
+              return;
+            if ( czrapp.localized.isDevMode ) {
+                  if ( _.isUndefined( msg ) ) {
+                        console.log.apply( console, _prettyPrintLog( { bgCol : bgColor, textCol : '#000', consoleArguments : [ '<' + title + '>' ] } ) );
+                  } else {
+                        console.log.apply( console, _prettyPrintLog( { bgCol : bgColor, textCol : '#000', consoleArguments : [ '<' + title + '>' ] } ) );
+                        console.log( msg );
+                        console.log.apply( console, _prettyPrintLog( { bgCol : bgColor, textCol : '#000', consoleArguments : [ '</' + title + '>' ] } ) );
+                  }
+            } else {
+                  console.log.apply( console, _prettyPrintLog( { bgCol : bgColor, textCol : '#000', consoleArguments : [ title ] } ) );
+            }
       };
       czrapp.consoleLog = function() {
             if ( ! czrapp.localized.isDevMode )
               return;
             if ( ( _.isUndefined( console ) && typeof window.console.log != 'function' ) )
               return;
-
-            console.log.apply( console, czrapp._prettyfy( { consoleArguments : arguments } ) );
+            console.log.apply( console, _prettyPrintLog( { consoleArguments : arguments } ) );
+            console.log( 'Unstyled console message : ', arguments );
       };
 
       czrapp.errorLog = function() {
             if ( ( _.isUndefined( console ) && typeof window.console.log != 'function' ) )
               return;
 
-            console.log.apply( console, czrapp._prettyfy( { bgCol : '#ffd5a0', textCol : '#000', consoleArguments : arguments } ) );
+            console.log.apply( console, _prettyPrintLog( { bgCol : '#ffd5a0', textCol : '#000', consoleArguments : arguments } ) );
       };
+
+
+      czrapp.errare = function( title, msg ) { _wrapLogInsideTags( title, msg, '#ffd5a0' ); };
+      czrapp.infoLog = function( title, msg ) { _wrapLogInsideTags( title, msg, '#5ed1f5' ); };
       czrapp.doAjax = function( queryParams ) {
             queryParams = queryParams || ( _.isObject( queryParams ) ? queryParams : {} );
 
@@ -2097,12 +2100,16 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
 
             $.post( ajaxUrl, _query_ )
                   .done( function( _r ) {
-                        if ( '0' === _r ||  '-1' === _r ) {
-                              czrapp.errorLog( 'czrapp.doAjax : done ajax error for : ', _query_.action, _r );
+                        if ( '0' === _r ||  '-1' === _r || false === _r.success ) {
+                              czrapp.errare( 'czrapp.doAjax : done ajax error for action : ' + _query_.action , _r );
+                              dfd.reject( _r );
                         }
+                        dfd.resolve( _r );
                   })
-                  .fail( function( _r ) { czrapp.errorLog( 'czrapp.doAjax : failed ajax error for : ', _query_.action, _r ); })
-                  .always( function( _r ) { dfd.resolve( _r ); });
+                  .fail( function( _r ) {
+                        czrapp.errare( 'czrapp.doAjax : failed ajax error for : ' + _query_.action, _r );
+                        dfd.reject( _r );
+                  });
             return dfd.promise();
       };
 })(jQuery, czrapp);

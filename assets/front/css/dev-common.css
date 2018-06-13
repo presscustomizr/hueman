@@ -2179,7 +2179,7 @@ box-shadow: inset 0 1px 0 rgba(255,255,255,0.25); }
 
 /* post author & admin comment */
 .commentlist li.bypostauthor > .comment-body:after,
-.commentlist li.comment-author-admin > .comment-body:after { background: #16cfc1; display: block; position: absolute; content: "\f040"; color: #fff; line-height: 12px; width: 12px; font-style: normal; font-family: FontAwesome; text-align: center; }
+.commentlist li.comment-author-admin > .comment-body:after { background: #16cfc1; display: block; position: absolute; content: "\f303"; color: #fff; line-height: 12px; width: 12px; font-family: 'Font Awesome 5 Free'; font-weight: 900; -moz-osx-font-smoothing: grayscale; -webkit-font-smoothing: antialiased; font-style: normal; font-variant: normal; text-rendering: auto; text-align: center; }
 .commentlist li.comment-author-admin > .comment-body:after { content: "\f005"; /* star for admin */ }
 .commentlist li.bypostauthor > .comment-body:after,
 .commentlist li.comment-author-admin > .comment-body:after { top: 32px; left: -28px; font-size: 10px; padding: 2px; -webkit-border-radius: 3px; border-radius: 3px; }

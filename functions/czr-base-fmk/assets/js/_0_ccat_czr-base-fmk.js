@@ -220,8 +220,6 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
                 api.errorLog( 'serverControlParams.paramsForDynamicRegistration should be an array');
           }
 
-          //console.log( 'serverControlParams.paramsForDynamicRegistration', serverControlParams.paramsForDynamicRegistration );
-
           _.each( serverControlParams.paramsForDynamicRegistration, function( dynParams, setId ) {
                 try { registerDynamicModuleSettingControl( dynParams ); } catch( er ) {
                       api.errorLog( er );
@@ -253,8 +251,9 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
 
             }, args );
 
-            // we must have not empty setting_id, section and module_type
-            if ( _.isEmpty( args.setting_id ) || _.isEmpty( args.section) || _.isEmpty( args.module_type ) ) {
+            // we must have not empty setting_id, module_type
+            if ( _.isEmpty( args.setting_id ) || _.isEmpty( args.module_type ) ) {
+                  api.errare( 'registerDynamicModuleSettingControl => args', args );
                   throw new Error( 'registerDynamicModuleSettingControl => missing params when registrating a setting');
             }
 
@@ -263,7 +262,6 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
                   throw new Error( 'registerDynamicModuleSettingControl => the module values must be an array or an object');
             }
 
-            // console.log( "args?", args );
             var settingId =  args.setting_id,
                 settingArgs = args.setting;
 
@@ -289,54 +287,69 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
                   // assign the value sent from the server
                   settingArgs.value = args.option_value;
 
-                  // console.log('registerDynamicModuleSettingControl => SETTING DATA ?', settingId, settingArgs);
                   var SettingConstructor = api.settingConstructor[ settingArgs.type ] || api.Setting;
                   api.add( new SettingConstructor( settingId, settingArgs.value, settingArgs ) );
             }
 
             // MAYBE REGISTER THE SECTION
             var sectionArgs = args.section;
+            if ( ! _.isEmpty( sectionArgs ) ) {
+                  // Check if we have a correct section
+                  if ( ! _.has( sectionArgs, 'id' ) ){
+                        throw new Error( 'registerDynamicModuleSettingControl => missing section id for the section of setting : ' + settingId );
+                  }
 
-            // Check if we have a correct section
-            if ( ! _.has( sectionArgs, 'id' ) ){
-                  throw new Error( 'registerDynamicModuleSettingControl => missing section id for the section of setting : ' + settingId );
-            }
+                  if ( ! api.section.has( sectionArgs.id ) ) {
+                        var _secData = _.extend(
+                            {
+                              active:true,
+                              content:"",
+                              customizeAction:"Customizing",
+                              description:"",
+                              description_hidden:false,
+                              id: "",
+                              instanceNumber: 99,
+                              panel: "",
+                              priority:0,
+                              title: "",
+                              type: "default",
+                            }, {
+                              id: sectionArgs.id,
+                              title: sectionArgs.title || sectionArgs.id,
+                              description: _.isEmpty( sectionArgs.description ) ? '' : sectionArgs.description,
+                              panel: _.isEmpty( sectionArgs.panel ) ? '' : sectionArgs.panel,
+                              priority: sectionArgs.priority || 10
+                            }
+                        );
 
-            if ( ! api.section.has( sectionArgs.id ) ) {
-                  var _secData = _.extend(
-                      {
-                        active:true,
-                        content:"",
-                        customizeAction:"Customizing",
-                        description:"",
-                        description_hidden:false,
-                        id: "",
-                        instanceNumber: 99,
-                        panel: "",
-                        priority:0,
-                        title: "",
-                        type: "default",
-                      }, {
-                        id: sectionArgs.id,
-                        title: sectionArgs.title || sectionArgs.id,
-                        description: _.isEmpty( sectionArgs.description ) ? '' : sectionArgs.description,
-                        panel: _.isEmpty( sectionArgs.panel ) ? '' : sectionArgs.panel,
-                        priority: sectionArgs.priority || 10
-                      }
-                  );
-
-                  var Constructor = api.sectionConstructor[ _secData.type ] || api.Section;
-                  _secData = _.extend( { params: _secData }, _secData ); // Inclusion of params alias is for back-compat for custom sections that expect to augment this property.
-                  api.section.add( new Constructor( _secData.id, _secData ) );
+                        var Constructor = api.sectionConstructor[ _secData.type ] || api.Section;
+                        _secData = _.extend( { params: _secData }, _secData ); // Inclusion of params alias is for back-compat for custom sections that expect to augment this property.
+                        api.section.add( new Constructor( _secData.id, _secData ) );
+                  }
             }
 
             // REGISTER THE CONTROL
             var controlId = settingId;
 
             if ( ! api.control.has( controlId ) ) {
+
+
                   // start from a copy of a core control object
                   var controlArgs = args.control,
-                      defaultControlArgs = $.extend( true, {} , api.settings.controls.blogdescription );
+                      defaultControlArgs = $.extend( true, {} , api.settings.controls.blogdescription ),
+                      ctrlSectionId;
+
+                  // Do we have a section ?
+                  if ( ! _.isEmpty( args.section ) ) {
+                        ctrlSectionId = args.section.id;
+                  } else {
+                        ctrlSectionId = controlArgs.section;
+                  }
+
+                  if ( _.isEmpty( ctrlSectionId ) ) {
+                        api.errare( 'registerDynamicModuleSettingControl => missing section id for the control', args );
+                        throw new Error( 'registerDynamicModuleSettingControl => missing section id for the section of setting : ' + settingId );
+                  }
                   // Then update it with our defaults set server side
                   // array(
                   //     'type'      => 'czr_module',
@@ -348,7 +361,7 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
                         {
                               type : 'czr_module',
                               module_type : args.module_type,
-                              section : sectionArgs.id,
+                              section : ctrlSectionId,
                               content : '',
                               label : controlArgs.label,
                               priority : controlArgs.priority
@@ -364,11 +377,9 @@ if(this.$element.prop("multiple"))this.current(function(d){var e=[];a=[a],a.push
 
                   // if the currently expanded section is the one of the dynamic control
                   // Awake the module => fire ready
-                  if ( api.section( sectionArgs.id ).expanded() ) {
+                  if ( api.section( ctrlSectionId ).expanded() ) {
                         api.control( controlId ).trigger( 'set-module-ready' );
                   }
-                  // console.log('registerDynamicModuleSettingControl => CONTROL DATA ?', settingId, options);
-                  // console.log('ALORS IN DYNAMIC REGISTRATION ? ', dataForSkopeToRegister, settingId );
             }//if ( ! api.control.has( controlId ) )
 
             return settingId;
@@ -1386,37 +1397,6 @@ api.CZR_Helpers = $.extend( api.CZR_Helpers, {
   *****************************************************************************/
   //Data are sent by the preview frame when the panel has sent the 'sync' or even better 'active' event
   api.bind( 'ready', function() {
-        //observe widget settings changes
-        api.previewer.bind('houston-widget-settings', function(data) {
-              //get the difference
-              var _candidates = _.filter( data.registeredSidebars, function( sb ) {
-                return ! _.findWhere( _wpCustomizeWidgetsSettings.registeredSidebars, { id: sb.id } );
-              });
-
-              var _inactives = _.filter( data.registeredSidebars, function( sb ) {
-                return ! _.has( data.renderedSidebars, sb.id );
-              });
-
-              _inactives = _.map( _inactives, function(obj) {
-                return obj.id;
-              });
-
-              var _registered = _.map( data.registeredSidebars, function(obj) {
-                return obj.id;
-              });
-
-              //stores and update the widget zone settings
-              api.czr_widgetZoneSettings = api.czr_widgetZoneSettings || new api.Value();//will store all widget zones data sent by preview as an observable object
-              api.czr_widgetZoneSettings.set( {
-                    actives :  data.renderedSidebars,
-                    inactives :  _inactives,
-                    registered :  _registered,
-                    candidates :  _candidates,
-                    available_locations :  data.availableWidgetLocations//built server side
-              } );
-
-        });
-
         /* WP CONDITIONAL TAGS => stores and observes the WP conditional tags sent by the preview */
         api.previewer.bind( 'czr-query-data-ready', function( data ) {
               api.czr_wpQueryInfos = api.czr_wpQueryInfos || new api.Value();
@@ -2736,11 +2716,12 @@ $.extend( CZRItemMths , {
             module.itemsWrapper.append( $_view_el );
 
             if ( module.isMultiItem() ) {
+                  var _template_selector;
                   // Do we have view content template script?
                   // if yes, let's use it <= Old way
                   // Otherwise let's fetch the html template from the server
                   if ( ! _.isEmpty( module.rudItemPart ) ) {
-                        var _template_selector = module.getTemplateSelectorPart( 'rudItemPart', item_model_for_template_injection );
+                        _template_selector = module.getTemplateSelectorPart( 'rudItemPart', item_model_for_template_injection );
                         //do we have view template script?
                         if ( 1 > $( '#tmpl-' + _template_selector ).length ) {
                             dfd.reject( 'Missing template for item ' + item.id + '. The provided template script has no been found : #tmpl-' + _template_selector );
@@ -2757,15 +2738,27 @@ $.extend( CZRItemMths , {
                         };
                         item.trigger( 'item-wrapper-tmpl-params-before-fetching', requestParams );
 
-                        api.CZR_Helpers.getModuleTmpl( requestParams ).done( function( _serverTmpl_ ) {
-                              //console.log( 'renderItemWrapper => success response =>', module.id, _serverTmpl_);
-                              appendAndResolve( api.CZR_Helpers.parseTemplate( _serverTmpl_ )( {} ) );
-                        }).fail( function( _r_ ) {
-                              //console.log( 'renderItemWrapper => fail response =>', _r_);
-                              dfd.reject( 'renderItemWrapper => Problem when fetching the rud-item-part tmpl from server for module : '+ module.id );
-                        });
+                        // Let's check if the filtered requested params can find a match of a printed tmpl of the module
+                        // this filter 'item-wrapper-tmpl-params-before-fetching', is used in the widget zone module of the Hueman theme (june 2018 )
+                        // it allows us to assign a specific template for the built-in widget zones
+                        if ( ! _.isEmpty( module[ requestParams.tmpl ] ) ) {
+                              _template_selector = module.getTemplateSelectorPart( requestParams.tmpl, item_model_for_template_injection );
+                              //do we have view template script?
+                              if ( 1 > $( '#tmpl-' + _template_selector ).length ) {
+                                  dfd.reject( 'Missing template for item ' + item.id + '. The provided template script has no been found : #tmpl-' + _template_selector );
+                              }
+                              appendAndResolve( wp.template( _template_selector )( item_model_for_template_injection ) );
+                        } else {
+                              api.CZR_Helpers.getModuleTmpl( requestParams ).done( function( _serverTmpl_ ) {
+                                    //console.log( 'renderItemWrapper => success response =>', module.id, _serverTmpl_);
+                                    appendAndResolve( api.CZR_Helpers.parseTemplate( _serverTmpl_ )( {} ) );
+                              }).fail( function( _r_ ) {
+                                    //console.log( 'renderItemWrapper => fail response =>', _r_);
+                                    dfd.reject( 'renderItemWrapper => Problem when fetching the rud-item-part tmpl from server for module : '+ module.id );
+                              });
+                        }
                   }
-            } else {
+            } else {//if ( module.isMultiItem() ) {}
                   appendAndResolve();
             }
 
@@ -4375,7 +4368,7 @@ $.extend( CZRModuleMths, {
                               //console.log( 'renderModuleParts => success response =>', module.id, _serverTmpl_);
                               appendAndResolve( api.CZR_Helpers.parseTemplate( _serverTmpl_ )( {} ) );
                         }).fail( function( _r_ ) {
-                              //console.log( 'renderModuleParts => fail response =>', _r_);
+                              api.errare( 'renderModuleParts => fail response =>', _r_);
                               dfd.reject( 'renderModuleParts => Problem when fetching the crud-module-part tmpl from server for module : '+ module.id );
                         });
                   }
