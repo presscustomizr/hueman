@@ -131,7 +131,7 @@ var BodyBGConstructor = BodyBGConstructor || {};
                   mthds : BodyBGConstructor,
                   crud : false,
                   multi_item : false,
-                  name : 'Slider',
+                  name : 'Body Background',
                   has_mod_opt : false,
                   ready_on_section_expanded : true,
                   defaultItemModel : {
