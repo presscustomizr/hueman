@@ -43,6 +43,8 @@ if( ! defined( 'HU_THEME_TEXT_DOM' ) )       define( 'HU_THEME_TEXT_DOM' , HU_IS
 //HU_WEBSITE is the home website of Hueman
 if( ! defined( 'HU_WEBSITE' ) )         define( 'HU_WEBSITE' , $hu_base_data['authoruri'] );
 
+//define useful constants
+if( ! defined( 'HU_DYN_WIDGETS_SECTION' ) )      define( 'HU_DYN_WIDGETS_SECTION' , 'dyn_widgets_section' );
 
 
 /* ------------------------------------------------------------------------- *

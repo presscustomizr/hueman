@@ -21,8 +21,6 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
             //v3.1.2 option update : registered sidebar names have changed
             $this -> hu_update_widget_database_option();
-            //define useful constants
-            if( ! defined( 'CZR_DYN_WIDGETS_SECTION' ) )      define( 'CZR_DYN_WIDGETS_SECTION' , 'dyn_widgets_section' );
 
             //load custom customizer classes
             //=> will be instantiated on "customize_register"
@@ -34,7 +32,7 @@ if ( ! class_exists( 'HU_customize' ) ) :
             //add the customizer built with the builder below
             add_action( 'customize_register'                       , array( $this , 'hu_customize_register' ), 20, 1 );
             //add the customizer built with the builder below
-            //add_action( 'customize_register'                       , array( $this , 'hu_schedule_register_sidebar_section' ), 1000, 1 );
+            add_action( 'customize_register'                       , array( $this , 'hu_schedule_register_sidebar_section' ), 1000, 1 );
             //modify some WP built-in settings / controls / sections
             add_action( 'customize_register'                       , array( $this , 'hu_alter_wp_customizer_settings' ), 1000, 1 );
 
@@ -459,15 +457,17 @@ if ( ! class_exists( 'HU_customize' ) ) :
                 array(
                     'add_setting' => array(
                         'sidebar-areas' => array(
+                              'registered_dynamically' => true,
                               'default'   => array(),//empty array by default
                               'control'   => 'HU_Customize_Modules',
                               'label'     => __('Create And Order Widget Areas', 'hueman'),
-                              'section'   => CZR_DYN_WIDGETS_SECTION,
+                              'section'   => HU_DYN_WIDGETS_SECTION,
                               'type'      => 'czr_module',
                               'module_type' => 'czr_widget_areas_module',
                               'notice'    => __('You must save changes for the new areas to appear below. <br /><i>Warning: Make sure each area has a unique ID.</i>' , 'hueman'),
                               'transport' => 'postMessage',
-                              'skoped' => false
+                              'skoped' => false,
+
                         )
 
                     )
@@ -484,10 +484,11 @@ if ( ! class_exists( 'HU_customize' ) ) :
 
 
         function hu_register_sidebar_section( $wp_customize ) {
-            $_widget_section_name = CZR_DYN_WIDGETS_SECTION;
+            $_widget_section_name = HU_DYN_WIDGETS_SECTION;
             $_map = array(
               'add_control' => array(
                   'sidebar-areas' => array(
+                        'registered_dynamically' => true,
                         'default'   => array(),//empty array by default
                         'control'   => 'HU_Customize_Modules',
                         'label'     => __('Create And Manage Widget Areas', 'hueman'),

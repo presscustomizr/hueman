@@ -163,7 +163,7 @@ function hu_load_body_bg_module() {
         array(
             'setting_id' => 'hu_theme_options[body-background]',
 
-            'base_url_path' => HU_BASE_URL . 'functions/czr-modules/body-background/',
+            'base_url_path' => HU_BASE_URL . 'functions/czr-modules/body-background',
             'version' => HUEMAN_VER,
 
             'option_value' => hu_get_option( 'body-background' ), // for dynamic registration
@@ -188,6 +188,46 @@ function hu_load_body_bg_module() {
                 'description' => __('Set the website background color', 'hueman'),
                 'type'  => 'czr_module',
                 'section' => 'general_design_sec'
+            )
+        )
+    );
+}
+
+
+add_action( 'after_setup_theme', 'hu_load_widget_areas_module', 20 );
+function hu_load_widget_areas_module() {
+    // load the social links module
+    require_once( HU_BASE . 'functions/czr-modules/widget-zones/widget_zones_module.php' );
+    hu_register_widget_zones_module(
+        array(
+            'setting_id' => 'hu_theme_options[sidebar-areas]',
+
+            'base_url_path' => HU_BASE_URL . 'functions/czr-modules/widget-zones/',
+            'version' => HUEMAN_VER,
+
+            'option_value' => hu_get_option( 'sidebar-areas' ), // for dynamic registration
+            'setting' => array(
+                'type' => 'option',
+                'default'  => array(),//empty array by default
+                //'transport' => hu_is_partial_refreshed_on() ? 'postMessage' : 'refresh',
+                // 'sanitize_callback' => 'hu_sanitize_callback__czr_social_module',
+                // 'validate_callback' => 'hu_validate_callback__czr_social_module'
+            ),
+
+            // 'section' => array(
+            //     'id' => 'social_links_sec',
+            //     'title' => __( 'Social links', 'hueman' ),
+            //     'panel' => 'hu-general-panel',
+            //     'priority' => 30
+            // ),
+
+            'control' => array(
+                'priority' => 10,
+                'label' => __('Create And Order Widget Areas', 'hueman'),
+                'type'  => 'czr_module',
+                'notice'    => __('You must save changes for the new areas to appear below. <br /><i>Warning: Make sure each area has a unique ID.</i>' , 'hueman'),
+                'transport' => 'postMessage',
+                'section' => 'HU_DYN_WIDGETS_SECTION'
             )
         )
     );
