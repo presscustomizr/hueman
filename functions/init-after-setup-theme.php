@@ -109,17 +109,28 @@ function hu_fn_load_czr_base_fmk() {
     // load the czr-base-fmk
     if ( ! isset( $GLOBALS['czr_base_fmk_namespace'] ) ) {
         require_once(  dirname( __FILE__ ) . '/czr-base-fmk/czr-base-fmk.php' );
-        \hu_czr_fmk\CZR_Fmk_Base( array(
-           'text_domain' => 'customizr',
-           'base_url' => HU_BASE_URL . 'functions/czr-base-fmk',
-           'version' => HUEMAN_VER
-        ) );
+        if ( function_exists('\hu_czr_fmk\CZR_Fmk_Base') ) {
+            \hu_czr_fmk\CZR_Fmk_Base( array(
+               'text_domain' => 'customizr',
+               'base_url' => HU_BASE_URL . 'functions/czr-base-fmk',
+               'version' => HUEMAN_VER
+            ) );
+        } else {
+            error_log( __FUNCTION__ . ' => \hu_czr_fmk\CZR_Fmk_Base() does not exists');
+        }
     } else {
         //error_log('Warning => the czr_base_fmk should be loaded and instantiated by the theme.');
     }
 }
 
-add_action( 'after_setup_theme', 'hu_load_social_links_module', 20 );
+
+
+/* ------------------------------------------------------------------------- *
+ *  REGISTER DYNAMIC MODULES
+/* ------------------------------------------------------------------------- */
+// Important : fired @priority 100 because when hueman addons is enabled or in hueman pro, the contextualizer is loaded @after_setup_theme:40
+// and some modules might be deactivated / modified when contextualized.
+add_action( 'after_setup_theme', 'hu_load_social_links_module', 100 );
 function hu_load_social_links_module() {
     // load the social links module
     require_once( HU_BASE . 'functions/czr-modules/social-links/social_links_module.php' );
@@ -155,8 +166,11 @@ function hu_load_social_links_module() {
     );
 }
 
-add_action( 'after_setup_theme', 'hu_load_body_bg_module', 20 );
-function hu_load_body_bg_module() {
+add_action( 'after_setup_theme', 'hu_maybe_load_body_bg_module', 100 );
+function hu_maybe_load_body_bg_module() {
+    // deactivated when the contextualizer is on
+    if ( ! apply_filters( 'hu_maybe_load_body_bg_module', true ) )
+      return;
     // load the social links module
     require_once( HU_BASE . 'functions/czr-modules/body-background/body_bg_module.php' );
     hu_register_body_bg_module(
@@ -194,7 +208,7 @@ function hu_load_body_bg_module() {
 }
 
 
-add_action( 'after_setup_theme', 'hu_load_widget_areas_module', 20 );
+add_action( 'after_setup_theme', 'hu_load_widget_areas_module', 100 );
 function hu_load_widget_areas_module() {
     // load the social links module
     require_once( HU_BASE . 'functions/czr-modules/widget-zones/widget_zones_module.php' );
