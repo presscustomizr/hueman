@@ -33,7 +33,7 @@ function hu_register_widget_zones_module( $args ) {
 
     $CZR_Fmk_Base_fn() -> czr_pre_register_dynamic_setting( array(
         'setting_id' => $args['setting_id'],
-        'module_type' => 'czr_background',
+        'module_type' => 'czr_widget_areas_module',
         'option_value' => ! is_array( $args['option_value'] ) ? array() : $args['option_value'],
 
         'setting' => $args['setting'],
@@ -174,7 +174,19 @@ add_action( 'customize_controls_print_footer_scripts', 'hu_print_widget_areas_te
 
 
 function hu_print_widget_areas_templates() {
-  $css_attr = \hu_czr_fmk\CZR_Fmk_Base()->czr_css_attr;
+  if ( ! isset( $GLOBALS['czr_base_fmk_namespace'] ) ) {
+      error_log( __FUNCTION__ . ' => global czr_base_fmk not set' );
+      return;
+  }
+
+  $czrnamespace = $GLOBALS['czr_base_fmk_namespace'];
+  //czr_fn\czr_register_dynamic_module
+  $CZR_Fmk_Base_fn = $czrnamespace . 'CZR_Fmk_Base';
+  if ( ! function_exists( $CZR_Fmk_Base_fn) ) {
+      error_log( __FUNCTION__ . ' => Namespace problem => ' . $CZR_Fmk_Base_fn );
+      return;
+  }
+  $css_attr = $CZR_Fmk_Base_fn()->czr_css_attr;
   ?>
   <script type="text/html" id="tmpl-czr-module-widgets-pre-add-view-content">
     <div class="<?php echo $css_attr['sub_set_wrapper']; ?>" data-input-type="text">
