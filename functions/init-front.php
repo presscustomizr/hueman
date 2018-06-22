@@ -1046,9 +1046,12 @@ if ( ! function_exists( 'hu_scripts' ) ) {
     $is_welcome_note_on = false;
     $welcome_note_content = '';
     if ( ! HU_IS_PRO && hu_user_started_with_current_version() ) {
+        // Welcome note deactivated since TRT request on slack
+        // implemented in release following since https://github.com/presscustomizr/hueman/issues/683
         $is_welcome_note_on = apply_filters(
             'hu_is_welcome_front_notification_on',
-            hu_user_can_see_customize_notices_on_front() && ! hu_is_customizing() && ! hu_isprevdem() && 'dismissed' != get_transient( 'hu_welcome_note_status' )
+            false
+            //hu_user_can_see_customize_notices_on_front() && ! hu_is_customizing() && ! hu_isprevdem() && 'dismissed' != get_transient( 'hu_welcome_note_status' )
         );
         if ( $is_welcome_note_on ) {
             $welcome_note_content = hu_get_welcome_note_content();

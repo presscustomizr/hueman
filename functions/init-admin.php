@@ -34,7 +34,6 @@ if ( is_admin() && ! hu_is_customizing() ) {
 }
 
 add_action( 'admin_init' , 'hu_admin_style' );
-add_action( 'wp_before_admin_bar_render', 'hu_add_help_button' );
 
 function hu_admin_style() {
   wp_enqueue_style(
@@ -43,24 +42,6 @@ function hu_admin_style() {
     array(),
     ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER
   );
-}
-
-// hook : 'wp_before_admin_bar_render'
-function hu_add_help_button() {
-    if ( ! current_user_can( 'edit_theme_options' ) || ! hu_is_checked('help-button') || ! hu_is_checked('about-page') )
-      return;
-    if ( ! defined( 'HU_IS_PRO' ) || ! HU_IS_PRO )
-      return;
-    global $wp_admin_bar;
-    $wp_admin_bar->add_menu( array(
-       'parent' => 'top-secondary', // Off on the right side
-       'id' => 'tc-hueman-help' ,
-       'title' =>  __( '' , 'hueman' ),
-       'href' => admin_url( 'themes.php?page=welcome.php&help=true' ),
-       'meta'   => array(
-          'title'  => __( 'Need help with the Hueman theme ? Click here!', 'hueman' ),
-        ),
-    ));
 }
 
 

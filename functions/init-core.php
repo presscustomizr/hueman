@@ -54,13 +54,6 @@ load_template( HU_BASE . 'functions/init-functions.php' );
 
 
 /* ------------------------------------------------------------------------- *
- *  PrevDem
-/* ------------------------------------------------------------------------- */
-if ( hu_isprevdem() ) {
-  load_template( get_template_directory() . '/functions/init-prevdem.php' );
-}
-
-/* ------------------------------------------------------------------------- *
  *  OptionTree framework integration: Use in theme mode
 /* ------------------------------------------------------------------------- */
 //control if we use option tree
