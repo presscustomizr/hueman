@@ -83,7 +83,7 @@ function hu_register_widget_zones_module( $args ) {
 
         'tmpl' => array()//tmpl
     ));
-}//hu_register_body_bg_module()
+}//hu_register_widget_zones_module()
 
 
 /* ------------------------------------------------------------------------- *
