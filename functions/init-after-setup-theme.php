@@ -198,10 +198,11 @@ function hu_maybe_load_body_bg_module() {
 
             'control' => array(
                 'priority' => 10,
-                'label' => __( 'Body Background', 'hueman' ),
+                'label' => __( 'Site Wide Body Background', 'hueman' ),
                 'description' => __('Set the website background color', 'hueman'),
                 'type'  => 'czr_module',
-                'section' => 'general_design_sec'
+                // When contx is on and activated for the theme options, let's move the body background in the contx_body_bg section
+                'section' => function_exists('ctx_we_can_contextualize_not_wp_core_options') && ctx_we_can_contextualize_not_wp_core_options() ? 'contx_body_bg' : 'general_design_sec'
             )
         )
     );
