@@ -5,9 +5,6 @@ var BodyBGConstructor = BodyBGConstructor || {};
       $.extend( BodyBGConstructor, {
             initialize: function( id, options ) {
                   var module = this;
-                  //run the parent initialize
-                  api.CZRModule.prototype.initialize.call( module, id, options );
-
                   //extend the module with new template Selectors
                   // $.extend( module, {
                   //       itemInputList : 'czr-module-bodybg-item-content'
@@ -18,28 +15,8 @@ var BodyBGConstructor = BodyBGConstructor || {};
                   //EXTEND THE DEFAULT CONSTRUCTORS FOR MONOMODEL
                   module.itemConstructor = api.CZRItem.extend( module.CZBodyBgItemMths || {} );
 
-                  //declares a default model
-                  // now declared on registration
-                  // module.defaultItemModel = {
-                  //       'background-color' : '#eaeaea',
-                  //       'background-image' : '',
-                  //       'background-repeat' : 'no-repeat',
-                  //       'background-attachment' : 'fixed',
-                  //       'background-position' : 'center center',
-                  //       'background-size' : 'cover'
-                  // };
-
-                  //fired ready :
-                  //1) on section expansion
-                  //2) or in the case of a module embedded in a regular control, if the module section is alreay opened => typically when skope is enabled
-                  if ( _.has( api, 'czr_activeSectionId' ) && module.control.section() == api.czr_activeSectionId() && 'resolved' != module.isReady.state() ) {
-                        module.ready();
-                  }
-                  api.section( module.control.section() ).expanded.bind(function(to) {
-                        if ( 'resolved' == module.isReady.state() )
-                          return;
-                        module.ready();
-                  });
+                  //run the parent initialize
+                  api.CZRModule.prototype.initialize.call( module, id, options );
             },//initialize
 
 
@@ -91,7 +68,6 @@ var BodyBGConstructor = BodyBGConstructor || {};
                   //The item.callbacks are declared.
                   ready : function() {
                         var item = this;
-                        api.CZRItem.prototype.ready.call( item );
 
                         item.inputCollection.bind( function( _col_ ) {
                               if ( ! _.isEmpty( _col_ ) && item.czr_Input && item.czr_Input.has( 'background-image' ) ) {
@@ -110,7 +86,7 @@ var BodyBGConstructor = BodyBGConstructor || {};
                                     });
                               }
                         });
-
+                        api.CZRItem.prototype.ready.call( item );
                   },
 
             }
