@@ -544,9 +544,9 @@ li#customize-control-tc_theme_options-tc_custom_css textarea {
 
 /* LAYOUT SELECTION SPECIFICS */
 .czr-layout-img {
-  height: 26px;
-  padding-top: 2px;
-  border: 1px solid #FFF;
+  height: 22px;
+  margin-top: 2px;
+  outline: 1px solid #FFF;
 }
 .czr-layout-title {
   padding: 0 0px 18px 12px;
@@ -873,14 +873,15 @@ span.czr-panel-subtitle {
   -o-transition: opacity 1s ease-in-out;
   transition: opacity 1s ease-in-out;
 }
-
-/*#customize-theme-controls .czr-single-item.open {
-  border: 1px solid #dedede;
-}*/
+/* Display a thin outline around opened item, for multi-items modules */
+#customize-theme-controls .czr-single-item.open {
+  /*border: 1px solid #dedede;*/
+  outline: 1px solid #ccc;
+}
 /* Keep the normal border for single module, mono items controls */
-/*#customize-theme-controls .mono-item-mod .czr-single-item {
-  border: 1px solid #ccc;
-}*/
+#customize-theme-controls .mono-item-mod .czr-single-item {
+  outline: none;
+}
 
 .czr-single-item .czr-item-header, .czr-single-item .czr-item-content {
   padding: 1%;
@@ -1579,9 +1580,12 @@ section .czr-sub-set:first-child {
   padding-left: 5px;
 }
 
+/* styled like the wp api.notifications, info type */
 .slide-mod-skope-notice {
   padding: 3%;
-  background: rgba(116, 210, 116, 0.42);
+  background: #fff;
+  border-left: 4px solid #00a0d2;
+  box-shadow: 0 1px 1px 0 rgba( 0, 0, 0, 0.1 );
   float: left;
   font-size: 12px;
   line-height: 1.5em;

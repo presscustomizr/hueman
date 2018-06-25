@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Hueman\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2018-06-13 18:52:18+00:00\n"
+"POT-Creation-Date: 2018-06-25 11:51:41+00:00\n"
 "PO-Revision-Date: 2016-11-04 13:55+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -252,18 +252,18 @@ msgid "the Hueman theme"
 msgstr ""
 
 #: functions/admin/class-tgm-plugin-activation.php:509
-#: functions/init-admin.php:139
+#: functions/init-admin.php:120
 msgid "Install Required Plugins"
 msgstr "Install Required Plugins"
 
 #: functions/admin/class-tgm-plugin-activation.php:510
-#: functions/init-admin.php:140
+#: functions/init-admin.php:121
 msgid "Install Plugins"
 msgstr "Install Plugins"
 
 #. translators: %s: plugin name.
 #: functions/admin/class-tgm-plugin-activation.php:512
-#: functions/init-admin.php:141
+#: functions/init-admin.php:122
 msgid "Installing Plugin: %s"
 msgstr "Installing Plugin: %s"
 
@@ -273,13 +273,13 @@ msgid "Updating Plugin: %s"
 msgstr ""
 
 #: functions/admin/class-tgm-plugin-activation.php:515
-#: functions/init-admin.php:142
+#: functions/init-admin.php:123
 msgid "Something went wrong with the plugin API."
 msgstr "Something went wrong with the plugin API."
 
 #. translators: 1: plugin name(s).
 #: functions/admin/class-tgm-plugin-activation.php:552
-#: functions/init-admin.php:151
+#: functions/init-admin.php:132
 msgid "Begin installing plugin"
 msgid_plural "Begin installing plugins"
 msgstr[0] "Begin installing plugin"
@@ -298,7 +298,7 @@ msgstr[0] "Begin activating plugin"
 msgstr[1] "Begin activating plugins"
 
 #: functions/admin/class-tgm-plugin-activation.php:567
-#: functions/init-admin.php:153
+#: functions/init-admin.php:134
 msgid "Return to Required Plugins Installer"
 msgstr "Return to Required Plugins Installer"
 
@@ -311,7 +311,7 @@ msgstr "Return to the dashboard"
 
 #: functions/admin/class-tgm-plugin-activation.php:569
 #: functions/admin/class-tgm-plugin-activation.php:3378
-#: functions/init-admin.php:154
+#: functions/init-admin.php:135
 msgid "Plugin activated successfully."
 msgstr "Plugin activated successfully."
 
@@ -428,7 +428,6 @@ msgid "Required"
 msgstr "Required"
 
 #: functions/admin/class-tgm-plugin-activation.php:2495
-#: functions/init-prevdem.php:161
 msgid "Recommended"
 msgstr "Recommended"
 
@@ -778,12 +777,11 @@ msgid "Secondary Color"
 msgstr "Secondary Colour"
 
 #: functions/class-utils-settings-map.php:323
-#: functions/init-after-setup-theme.php:187
 msgid "Body Background"
 msgstr "Body Background"
 
 #: functions/class-utils-settings-map.php:324
-#: functions/init-after-setup-theme.php:188
+#: functions/init-after-setup-theme.php:202
 msgid "Set the website background color"
 msgstr ""
 
@@ -810,7 +808,7 @@ msgid "Open external links in a new tab"
 msgstr ""
 
 #: functions/class-utils-settings-map.php:388
-#: functions/init-after-setup-theme.php:151
+#: functions/init-after-setup-theme.php:162
 msgid "Create and organize your social links"
 msgstr ""
 
@@ -1142,7 +1140,7 @@ msgstr "Global Layout"
 msgid "Other layouts will override this option if they are set"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:861 functions/init-front.php:1517
+#: functions/class-utils-settings-map.php:861 functions/init-front.php:1520
 #: functions/init-sidebars-widgets.php:132
 msgid "Home"
 msgstr "Home"
@@ -1722,12 +1720,12 @@ msgid "SITE ICON"
 msgstr "SITE ICON"
 
 #: functions/czr/class-czr-init.php:461
-#: functions/init-after-setup-theme.php:226
+#: functions/init-after-setup-theme.php:241
 msgid "Create And Order Widget Areas"
 msgstr ""
 
 #: functions/czr/class-czr-init.php:465 functions/czr/class-czr-init.php:496
-#: functions/init-after-setup-theme.php:228
+#: functions/init-after-setup-theme.php:243
 msgid ""
 "You must save changes for the new areas to appear below. <br /><i>Warning: "
 "Make sure each area has a unique ID.</i>"
@@ -1750,8 +1748,8 @@ msgid "Upload"
 msgstr "Upload"
 
 #: functions/czr/controls/class-upload-control.php:68
-#: functions/czr-base-fmk/czr-base-fmk.php:245
-#: functions/czr-base-fmk/czr-base-fmk.php:446
+#: functions/czr-base-fmk/czr-base-fmk.php:248
+#: functions/czr-base-fmk/czr-base-fmk.php:454
 msgid "Remove"
 msgstr "Remove"
 
@@ -1775,16 +1773,16 @@ msgid "Header Panel"
 msgstr "Header"
 
 #: functions/czr/czr-resources.php:163
-#: functions/czr-base-fmk/czr-base-fmk.php:233
-#: functions/czr-base-fmk/czr-base-fmk.php:446
-#: functions/czr-base-fmk/czr-base-fmk.php:779
-#: functions/czr-modules/widget-zones/widget_zones_module.php:204
+#: functions/czr-base-fmk/czr-base-fmk.php:236
+#: functions/czr-base-fmk/czr-base-fmk.php:454
+#: functions/czr-base-fmk/czr-base-fmk.php:788
+#: functions/czr-modules/widget-zones/widget_zones_module.php:216
 msgid "Edit"
 msgstr "Edit"
 
 #: functions/czr/czr-resources.php:164
-#: functions/czr-base-fmk/czr-base-fmk.php:234
-#: functions/czr-base-fmk/czr-base-fmk.php:780
+#: functions/czr-base-fmk/czr-base-fmk.php:237
+#: functions/czr-base-fmk/czr-base-fmk.php:789
 msgid "Close"
 msgstr "Close"
 
@@ -1799,18 +1797,18 @@ msgstr ""
 "favicon with the new control below."
 
 #: functions/czr/czr-resources.php:166
-#: functions/czr-modules/widget-zones/widget_zones_module.php:188
-#: functions/czr-modules/widget-zones/widget_zones_module.php:229
+#: functions/czr-modules/widget-zones/widget_zones_module.php:200
+#: functions/czr-modules/widget-zones/widget_zones_module.php:241
 msgid "Location(s)"
 msgstr ""
 
 #: functions/czr/czr-resources.php:167
-#: functions/czr-modules/widget-zones/widget_zones_module.php:236
+#: functions/czr-modules/widget-zones/widget_zones_module.php:248
 msgid "Context(s)"
 msgstr ""
 
 #: functions/czr/czr-resources.php:168
-#: functions/czr-base-fmk/czr-base-fmk.php:235
+#: functions/czr-base-fmk/czr-base-fmk.php:238
 msgid "Not set"
 msgstr ""
 
@@ -1830,7 +1828,7 @@ msgid "Follow us on"
 msgstr ""
 
 #: functions/czr/czr-resources.php:172
-#: functions/czr-base-fmk/czr-base-fmk.php:236
+#: functions/czr-base-fmk/czr-base-fmk.php:239
 #: functions/czr-modules/social-links/social_links_module.php:80
 msgid "Done !"
 msgstr ""
@@ -1873,18 +1871,18 @@ msgid "A selected location is not available with the current settings."
 msgstr ""
 
 #: functions/czr/czr-resources.php:185
-#: functions/czr-base-fmk/czr-base-fmk.php:238
+#: functions/czr-base-fmk/czr-base-fmk.php:241
 msgid "Learn more about this in the documentation"
 msgstr ""
 
 #: functions/czr/czr-resources.php:186
-#: functions/czr-base-fmk/czr-base-fmk.php:239
+#: functions/czr-base-fmk/czr-base-fmk.php:242
 #, fuzzy
 msgid "Settings"
 msgstr "Global settings"
 
 #: functions/czr/czr-resources.php:187
-#: functions/czr-base-fmk/czr-base-fmk.php:240
+#: functions/czr-base-fmk/czr-base-fmk.php:243
 msgid "Options for"
 msgstr ""
 
@@ -2120,54 +2118,78 @@ msgstr "Press return or enter to open this section"
 msgid "Press return or enter to open this section"
 msgstr "Press return or enter to open this section"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:243
-#: functions/czr-base-fmk/czr-base-fmk.php:248
+#: functions/czr-base-fmk/czr-base-fmk.php:246
+#: functions/czr-base-fmk/czr-base-fmk.php:251
 msgid "Select Image"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:244
+#: functions/czr-base-fmk/czr-base-fmk.php:247
 msgid "Change Image"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:246
+#: functions/czr-base-fmk/czr-base-fmk.php:249
 msgid "Default"
 msgstr "Default"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:247
+#: functions/czr-base-fmk/czr-base-fmk.php:250
 msgid "No image selected"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:249
+#: functions/czr-base-fmk/czr-base-fmk.php:252
 msgid "Choose Image"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:391
+#: functions/czr-base-fmk/czr-base-fmk.php:254
+#, fuzzy
+msgid "Customizing"
+msgstr "customizer"
+
+#: functions/czr-base-fmk/czr-base-fmk.php:395
 msgid "ac_set_ajax_czr_tmpl => Security check failed."
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:432
+#: functions/czr-base-fmk/czr-base-fmk.php:436
 msgid "Add New"
 msgstr "Add New"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:437
+#: functions/czr-base-fmk/czr-base-fmk.php:441
 msgid "Cancel"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:437
+#: functions/czr-base-fmk/czr-base-fmk.php:441
 msgid "Add it"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:454
+#: functions/czr-base-fmk/czr-base-fmk.php:462
 msgid "Are you sure you want to remove : <strong>{{ data.title }} ?</strong>"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:455
+#: functions/czr-base-fmk/czr-base-fmk.php:463
 msgid "Yes"
 msgstr "Yes"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:455
+#: functions/czr-base-fmk/czr-base-fmk.php:463
 msgid "No"
 msgstr "No"
+
+#: functions/czr-base-fmk/czr-base-fmk.php:1496
+msgid "Set a custom url"
+msgstr ""
+
+#: functions/czr-base-fmk/czr-base-fmk.php:1530
+#: functions/czr-base-fmk/czr-base-fmk.php:1730
+msgid "ajax_load_available_items => Security check failed."
+msgstr ""
+
+#. translators: %d: ID of a post
+#: functions/czr-base-fmk/czr-base-fmk.php:1651
+#: functions/czr-base-fmk/czr-base-fmk.php:1860
+msgid "#%d (no title)"
+msgstr ""
+
+#: functions/czr-base-fmk/czr-base-fmk.php:1794
+msgid "No results found."
+msgstr ""
 
 #: functions/czr-modules/body-background/body_bg_module.php:75
 msgid "No Repeat"
@@ -2336,59 +2358,55 @@ msgstr ""
 msgid "Please fill the social link inputs with a valid URLs"
 msgstr ""
 
-#: functions/czr-modules/widget-zones/widget_zones_module.php:181
-#: functions/czr-modules/widget-zones/widget_zones_module.php:222
+#: functions/czr-modules/widget-zones/widget_zones_module.php:193
+#: functions/czr-modules/widget-zones/widget_zones_module.php:234
 msgid "Name"
 msgstr "Name"
 
-#: functions/czr-modules/widget-zones/widget_zones_module.php:183
+#: functions/czr-modules/widget-zones/widget_zones_module.php:195
 msgid "Give it a name"
 msgstr ""
 
-#: functions/czr-modules/widget-zones/widget_zones_module.php:185
-#: functions/czr-modules/widget-zones/widget_zones_module.php:226
+#: functions/czr-modules/widget-zones/widget_zones_module.php:197
+#: functions/czr-modules/widget-zones/widget_zones_module.php:238
 msgid "Personalizing the name of the widget zone will help you identify it."
 msgstr ""
 
-#: functions/czr-modules/widget-zones/widget_zones_module.php:189
-#: functions/czr-modules/widget-zones/widget_zones_module.php:230
+#: functions/czr-modules/widget-zones/widget_zones_module.php:201
+#: functions/czr-modules/widget-zones/widget_zones_module.php:242
 msgid ""
 "Select the pre-defined location(s) in which you will embed this widget zone."
 msgstr ""
 
-#: functions/czr-modules/widget-zones/widget_zones_module.php:217
+#: functions/czr-modules/widget-zones/widget_zones_module.php:229
 msgid "id"
 msgstr ""
 
-#: functions/czr-modules/widget-zones/widget_zones_module.php:219
+#: functions/czr-modules/widget-zones/widget_zones_module.php:231
 msgid "unique id"
 msgstr ""
 
-#: functions/czr-modules/widget-zones/widget_zones_module.php:224
+#: functions/czr-modules/widget-zones/widget_zones_module.php:236
 msgid "Enter a name"
 msgstr ""
 
-#: functions/czr-modules/widget-zones/widget_zones_module.php:237
+#: functions/czr-modules/widget-zones/widget_zones_module.php:249
 msgid "Pick the context(s) where this widget area will be displayed."
 msgstr ""
 
-#: functions/init-admin.php:61
-msgid "Need help with the Hueman theme ? Click here!"
-msgstr ""
-
-#: functions/init-admin.php:143
+#: functions/init-admin.php:124
 msgid "The Hueman theme requires the following plugin: %1$s."
 msgid_plural "This theme requires the following plugins: %1$s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: functions/init-admin.php:144
+#: functions/init-admin.php:125
 msgid "The Hueman theme recommends the Hueman Addons: %1$s."
 msgid_plural "This theme recommends the following plugins: %1$s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: functions/init-admin.php:145
+#: functions/init-admin.php:126
 msgid ""
 "Sorry, but you do not have the correct permissions to install the %s plugin. "
 "Contact the administrator of this site for help on getting the plugin "
@@ -2406,19 +2424,19 @@ msgstr[1] ""
 "plugins. Contact the administrator of this site for help on getting the "
 "plugins installed."
 
-#: functions/init-admin.php:146
+#: functions/init-admin.php:127
 msgid "The Hueman Addons required plugin is currently inactive: %1$s."
 msgid_plural "The following required plugins are currently inactive: %1$s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: functions/init-admin.php:147
+#: functions/init-admin.php:128
 msgid "The Hueman Addons plugin is currently inactive: %1$s."
 msgid_plural "The following recommended plugins are currently inactive: %1$s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: functions/init-admin.php:148
+#: functions/init-admin.php:129
 msgid ""
 "Sorry, but you do not have the correct permissions to activate the %s "
 "plugin. Contact the administrator of this site for help on getting the "
@@ -2436,7 +2454,7 @@ msgstr[1] ""
 "plugins. Contact the administrator of this site for help on getting the "
 "plugins activated."
 
-#: functions/init-admin.php:149
+#: functions/init-admin.php:130
 msgid ""
 "The Hueman Addons plugin needs to be updated to its latest version to ensure "
 "maximum compatibility with the Hueman theme: %1$s."
@@ -2446,7 +2464,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: functions/init-admin.php:150
+#: functions/init-admin.php:131
 msgid ""
 "Sorry, but you do not have the correct permissions to update the %s plugin. "
 "Contact the administrator of this site for help on getting the plugin "
@@ -2464,21 +2482,21 @@ msgstr[1] ""
 "Contact the administrator of this site for help on getting the plugins "
 "updated."
 
-#: functions/init-admin.php:152
+#: functions/init-admin.php:133
 msgid "Activate Hueman Addons"
 msgid_plural "Activate installed plugins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: functions/init-admin.php:155
+#: functions/init-admin.php:136
 msgid "All plugins installed and activated successfully. %s"
 msgstr ""
 
-#: functions/init-admin.php:202
+#: functions/init-admin.php:183
 msgid "Select a widget zone for the primary sidebar."
 msgstr ""
 
-#: functions/init-admin.php:202
+#: functions/init-admin.php:183
 msgid ""
 "Notes : 1)This will override any default settings of the customizer options "
 "panel. 2) The primary sidebar is placed on the left in a 3 columns layout. "
@@ -2486,31 +2504,31 @@ msgid ""
 "left."
 msgstr ""
 
-#: functions/init-admin.php:208
+#: functions/init-admin.php:189
 msgid "Select a widget zone for the secondary sidebar."
 msgstr ""
 
-#: functions/init-admin.php:208
+#: functions/init-admin.php:189
 msgid ""
 "Notes : 1)This will override any default settings of the customizer options "
 "panel. 2) The secondary sidebar is placed on the right in a 3 columns layout."
 msgstr ""
 
-#: functions/init-admin.php:225
+#: functions/init-admin.php:206
 msgid "Select a widget zone for the left sidebar."
 msgstr ""
 
-#: functions/init-admin.php:225 functions/init-admin.php:231
-#: functions/init-admin.php:287
+#: functions/init-admin.php:206 functions/init-admin.php:212
+#: functions/init-admin.php:268
 msgid ""
 "This will override any default settings of the customizer options panel."
 msgstr ""
 
-#: functions/init-admin.php:231
+#: functions/init-admin.php:212
 msgid "Select a widget zone for the right sidebar."
 msgstr ""
 
-#: functions/init-admin.php:287
+#: functions/init-admin.php:268
 msgid "Select a layout for this page."
 msgstr ""
 
@@ -2532,11 +2550,16 @@ msgstr "Header"
 msgid "Footer"
 msgstr "Footer"
 
-#: functions/init-after-setup-theme.php:144
+#: functions/init-after-setup-theme.php:155
 msgid "Social links"
 msgstr "Social links"
 
-#: functions/init-core.php:87
+#: functions/init-after-setup-theme.php:201
+#, fuzzy
+msgid "Site Wide Body Background"
+msgstr "Body Background"
+
+#: functions/init-core.php:80
 msgid "Theme Options [OLD]"
 msgstr ""
 
@@ -2615,43 +2638,43 @@ msgstr "Monthly Archive:"
 msgid "Yearly Archive:"
 msgstr "Yearly Archive:"
 
-#: functions/init-front.php:1565 functions/init-sidebars-widgets.php:134
+#: functions/init-front.php:1568 functions/init-sidebars-widgets.php:134
 msgid "Pages"
 msgstr "Pages"
 
-#: functions/init-front.php:1780
+#: functions/init-front.php:1783
 msgid "Welcome in the Hueman theme"
 msgstr ""
 
-#: functions/init-front.php:1783
+#: functions/init-front.php:1786
 msgid "The theme offers a wide range"
 msgstr ""
 
-#: functions/init-front.php:1785
+#: functions/init-front.php:1788
 msgid "of customization options"
 msgstr ""
 
-#: functions/init-front.php:1786
+#: functions/init-front.php:1789
 msgid "to let you create the best possible websites."
 msgstr ""
 
-#: functions/init-front.php:1789
+#: functions/init-front.php:1792
 msgid "If you need inspiration, you can visit our online demos"
 msgstr ""
 
-#: functions/init-front.php:1791
+#: functions/init-front.php:1794
 msgid "Hueman Demo 1"
 msgstr ""
 
-#: functions/init-front.php:1793
+#: functions/init-front.php:1796
 msgid "Hueman Demo 2"
 msgstr ""
 
-#: functions/init-front.php:1796
+#: functions/init-front.php:1799
 msgid "To help you getting started with Hueman, we have published"
 msgstr ""
 
-#: functions/init-front.php:1798
+#: functions/init-front.php:1801
 msgid "a short guide here."
 msgstr ""
 
@@ -2725,22 +2748,6 @@ msgstr ""
 
 #: functions/init-plugins-compat.php:445
 msgid "Featured pages"
-msgstr ""
-
-#: functions/init-prevdem.php:154
-msgid "Discover"
-msgstr ""
-
-#: functions/init-prevdem.php:169
-msgid "RECENT POSTS"
-msgstr ""
-
-#: functions/init-prevdem.php:182
-msgid "RECENT COMMENTS"
-msgstr ""
-
-#: functions/init-prevdem.php:200
-msgid "HIGHLIGHTS"
 msgstr ""
 
 #: functions/init-sidebars-widgets.php:17

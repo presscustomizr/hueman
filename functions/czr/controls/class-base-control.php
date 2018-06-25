@@ -188,33 +188,33 @@ if ( ! class_exists( 'HU_controls' ) ) :
    * fired by the parent Control class constructor
    *
    */
-    public function enqueue() {
-        if ( ! empty( self::$enqueued_resources ) )
-          return;
+    // public function enqueue() {
+    //     if ( ! empty( self::$enqueued_resources ) )
+    //       return;
 
-        self::$enqueued_resources = true;
+    //     self::$enqueued_resources = true;
 
-        wp_enqueue_script( 'wp-color-picker' );
-        wp_enqueue_style( 'wp-color-picker' );
+    //     wp_enqueue_script( 'wp-color-picker' );
+    //     wp_enqueue_style( 'wp-color-picker' );
 
-        wp_enqueue_style(
-          'font-awesome',
-          sprintf('%1$s/assets/front/css/font-awesome.min.css', get_template_directory_uri() ),
-          array(),
-          HUEMAN_VER,
-          $media = 'all'
-        );
+    //     wp_enqueue_style(
+    //       'font-awesome',
+    //       sprintf('%1$s/assets/front/css/font-awesome.min.css', get_template_directory_uri() ),
+    //       array(),
+    //       HUEMAN_VER,
+    //       $media = 'all'
+    //     );
 
-        //select2 stylesheet
-        //overriden by some specific style in theme-customzer-control.css
-        wp_enqueue_style(
-          'select2-css',
-          sprintf('%1$s/assets/czr/css/lib/select2.min.css', get_template_directory_uri() ),
-          array( 'customize-controls' ),
-          HUEMAN_VER,
-          $media = 'all'
-        );
-    }
+    //     //select2 stylesheet
+    //     //overriden by some specific style in theme-customzer-control.css
+    //     wp_enqueue_style(
+    //       'select2-css',
+    //       sprintf('%1$s/assets/czr/css/lib/select2.min.css', get_template_directory_uri() ),
+    //       array( 'customize-controls' ),
+    //       HUEMAN_VER,
+    //       $media = 'all'
+    //     );
+    // }
 
     /**
     * Refresh the parameters passed to the JavaScript via JSON.

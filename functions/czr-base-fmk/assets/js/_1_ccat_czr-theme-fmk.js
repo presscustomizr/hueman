@@ -89,7 +89,7 @@
                         'tc_font_customizer_settings',
 
                         //hueman pro
-                        'header_image_sec',
+                        'contx_header_bg',
                         'content_blog_sec',
                         'static_front_page',
                         'content_single_sec',
@@ -441,23 +441,9 @@ $.extend( CZRLayoutSelectMths , {
       api.bind( 'ready' , function() {
             if ( _.has( api, 'czr_ctrlDependencies') )
               return;
-            if ( serverControlParams.isSkopOn ) {
-                  // If skope is on, we need to wait for the initial setup to be finished
-                  // otherwise, we might refer to not instantiated skopes when processing silent updates further in the code
-                  //Skope is ready when :
-                  //1) the initial skopes collection has been populated
-                  //2) the initial skope has been switched to
-                  if ( 'resolved' != api.czr_skopeReady.state() ) {
-                        api.czr_skopeReady.done( function() {
-                              api.czr_ctrlDependencies = new api.CZR_ctrlDependencies();
-                              api.czr_CrtlDependenciesReady.resolve();
-                        });
-                  }
-            } else {
-                  api.czr_ctrlDependencies = new api.CZR_ctrlDependencies();
-                  api.czr_CrtlDependenciesReady.resolve();
-            }
 
+            api.czr_ctrlDependencies = new api.CZR_ctrlDependencies();
+            api.czr_CrtlDependenciesReady.resolve();
       } );
 
 
@@ -496,25 +482,10 @@ $.extend( CZRLayoutSelectMths , {
                     //    source : section_id from which the request for awaking has been done
                     // }
                     api.bind( 'awaken-section', function( target_source ) {
-                          //if skope on ( serverControlParams.isSkopOn ), then defer the visibility awakening after the silent updates
-                          if ( serverControlParams.isSkopOn && _.has( api ,'czr_skopeBase' ) ) {
-                                api.czr_skopeBase.processSilentUpdates( {
-                                      candidates : {},
-                                      section_id : target_source.target,
-                                      refresh : false
-                                } ).then( function() {
-                                      try {
-                                            self.setServiDependencies( target_source.target, target_source.source );
-                                      } catch( er ) {
-                                            api.errorLog( 'On awaken-section, ctrl deps : ' + er );
-                                      }
-                                });
-                          } else {
-                                try {
-                                      self.setServiDependencies( target_source.target, target_source.source );
-                                } catch( er ) {
-                                      api.errorLog( 'On awaken-section, ctrl deps : ' + er );
-                                }
+                          try {
+                                self.setServiDependencies( target_source.target, target_source.source );
+                          } catch( er ) {
+                                api.errorLog( 'On awaken-section, ctrl deps : ' + er );
                           }
                     });
 
