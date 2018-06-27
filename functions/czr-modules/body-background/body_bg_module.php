@@ -106,31 +106,31 @@ function hu_register_body_bg_module( $args ) {
             'item-inputs' => array(
                 'background-color'           => array(
                     'input_type'  => 'wp_color_alpha',
-                    'title'       => __('Color', 'text_domain_to_be_replaced'),
+                    'title'       => __('Color', 'hueman'),
                     'default'     => '#eaeaea',
                     'width-100'   => true
                 ),//"#000000",
                 'background-image'  => array(
                     'input_type'  => 'upload',
-                    'title'       => __('Background Image', 'text_domain_to_be_replaced'),
+                    'title'       => __('Background Image', 'hueman'),
                 ),
                 'background-repeat'  => array(
                     'input_type'  => 'select',
-                    'title'       => __('Repeat', 'text_domain_to_be_replaced'),
+                    'title'       => __('Repeat', 'hueman'),
                 ),
                 'background-attachment'  => array(
                     'input_type'  => 'select',
-                    'title'       => __('Background attachment', 'text_domain_to_be_replaced'),
+                    'title'       => __('Background attachment', 'hueman'),
                 ),
                 'background-position'  => array(
                     'input_type'  => 'select',
-                    'title'       => __('Background position', 'text_domain_to_be_replaced'),
+                    'title'       => __('Background position', 'hueman'),
                 ),
                 'background-size'  => array(
                     'input_type'  => 'text',
-                    'title'       => __('Background size', 'text_domain_to_be_replaced'),
+                    'title'       => __('Background size', 'hueman'),
                     'notice_after'   => sprintf( '%1$s %2$s',
-                        __('The background-size CSS property specifies the size of the background images. The size of the image can be fully constrained or only partially in order to preserve its intrinsic ratio.', 'text_domain_to_be_replaced'),
+                        __('The background-size CSS property specifies the size of the background images. The size of the image can be fully constrained or only partially in order to preserve its intrinsic ratio.', 'hueman'),
                         sprintf(' %1$s %2$s.',
                             __('Learn more', 'hueman'),
                             sprintf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('developer.mozilla.org/en-US/docs/Web/CSS/background-size'), __('here', 'hueman') )

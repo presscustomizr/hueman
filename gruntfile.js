@@ -20,6 +20,9 @@ module.exports = function(grunt) {
         czr_modules : 'functions/czr-modules/',
         lang : 'languages/'
       },
+      vars : {
+        textdomain : 'hueman'
+      },
 			//default less modifiers
 			is_rtl: 'true',
 			//https://www.npmjs.org/package/grunt-ssh
@@ -52,13 +55,11 @@ module.exports = function(grunt) {
             'lineending:front_js',
             'comments:front_assets_js'
         ],
-        'i18n' : [
-            'makepot',
-            'potomo',
-        ],
 				'hueman_build':  [
             'concurrent:hueman_pre_build',
-            'i18n',
+            'addtextdomain',
+            'makepot',
+            'potomo',
             'copy:free',
             'compress',
             'copy:pro',
