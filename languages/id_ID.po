@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Hueman v3.4.0\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2018-06-25 11:51:41+00:00\n"
+"POT-Creation-Date: 2018-06-28 08:35:53+00:00\n"
 "PO-Revision-Date: 2016-08-31 16:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: Press Customizr\n"
@@ -1869,7 +1869,7 @@ msgstr "Gambar Header"
 #: functions/czr-base-fmk/czr-base-fmk.php:236
 #: functions/czr-base-fmk/czr-base-fmk.php:454
 #: functions/czr-base-fmk/czr-base-fmk.php:788
-#: functions/czr-modules/widget-zones/widget_zones_module.php:216
+#: functions/czr-modules/widget-zones/widget_zones_module.php:227
 msgid "Edit"
 msgstr "Edit"
 
@@ -1890,18 +1890,21 @@ msgstr ""
 "kontrol baru dibawah."
 
 #: functions/czr/czr-resources.php:166
-#: functions/czr-modules/widget-zones/widget_zones_module.php:200
-#: functions/czr-modules/widget-zones/widget_zones_module.php:241
+#: functions/czr-modules/widget-zones/widget_zones_module.php:86
+#: functions/czr-modules/widget-zones/widget_zones_module.php:211
+#: functions/czr-modules/widget-zones/widget_zones_module.php:252
 msgid "Location(s)"
 msgstr "Lokasi"
 
 #: functions/czr/czr-resources.php:167
-#: functions/czr-modules/widget-zones/widget_zones_module.php:248
+#: functions/czr-modules/widget-zones/widget_zones_module.php:87
+#: functions/czr-modules/widget-zones/widget_zones_module.php:259
 msgid "Context(s)"
 msgstr "Konteks"
 
 #: functions/czr/czr-resources.php:168
 #: functions/czr-base-fmk/czr-base-fmk.php:238
+#: functions/czr-modules/widget-zones/widget_zones_module.php:88
 msgid "Not set"
 msgstr "Tidak di Atur"
 
@@ -1942,26 +1945,6 @@ msgstr ""
 #: functions/czr/czr-resources.php:177
 msgid "Select position property"
 msgstr ""
-
-#: functions/czr/czr-resources.php:179
-msgid "Widget Zone"
-msgstr ""
-
-#: functions/czr/czr-resources.php:180
-msgid "New Widget Zone created ! Scroll down to edit it."
-msgstr "Zona Baru Widget sudah dibuat ! Gulir kebawah untuk mengeditnya."
-
-#: functions/czr/czr-resources.php:181
-msgid "Inactive in current context/location"
-msgstr "Tidak aktif di lokasi/konteks baru"
-
-#: functions/czr/czr-resources.php:182
-msgid "Unavailable location. Some settings must be changed."
-msgstr "Lokasi tidak tersedia. Beberapa pengaturan harus diubah."
-
-#: functions/czr/czr-resources.php:183
-msgid "A selected location is not available with the current settings."
-msgstr "Lokasi terpilih tidak tersedia dengan pengaturan baru."
 
 #: functions/czr/czr-resources.php:185
 #: functions/czr-base-fmk/czr-base-fmk.php:241
@@ -2453,42 +2436,62 @@ msgstr ""
 msgid "Please fill the social link inputs with a valid URLs"
 msgstr ""
 
-#: functions/czr-modules/widget-zones/widget_zones_module.php:193
-#: functions/czr-modules/widget-zones/widget_zones_module.php:234
+#: functions/czr-modules/widget-zones/widget_zones_module.php:81
+msgid "Widget Zone"
+msgstr ""
+
+#: functions/czr-modules/widget-zones/widget_zones_module.php:82
+msgid "New Widget Zone created ! Scroll down to edit it."
+msgstr "Zona Baru Widget sudah dibuat ! Gulir kebawah untuk mengeditnya."
+
+#: functions/czr-modules/widget-zones/widget_zones_module.php:83
+msgid "Inactive in current context/location"
+msgstr "Tidak aktif di lokasi/konteks baru"
+
+#: functions/czr-modules/widget-zones/widget_zones_module.php:84
+msgid "Unavailable location. Some settings must be changed."
+msgstr "Lokasi tidak tersedia. Beberapa pengaturan harus diubah."
+
+#: functions/czr-modules/widget-zones/widget_zones_module.php:85
+msgid "A selected location is not available with the current settings."
+msgstr "Lokasi terpilih tidak tersedia dengan pengaturan baru."
+
+#: functions/czr-modules/widget-zones/widget_zones_module.php:204
+#: functions/czr-modules/widget-zones/widget_zones_module.php:245
 msgid "Name"
 msgstr "Nama"
 
-#: functions/czr-modules/widget-zones/widget_zones_module.php:195
+#: functions/czr-modules/widget-zones/widget_zones_module.php:206
 msgid "Give it a name"
 msgstr "Berikan nama"
 
-#: functions/czr-modules/widget-zones/widget_zones_module.php:197
-#: functions/czr-modules/widget-zones/widget_zones_module.php:238
+#: functions/czr-modules/widget-zones/widget_zones_module.php:208
+#: functions/czr-modules/widget-zones/widget_zones_module.php:249
 msgid "Personalizing the name of the widget zone will help you identify it."
 msgstr ""
 "Mempersonalisasikan nama sebuah zona widget akan membantu memberi identitas."
 
-#: functions/czr-modules/widget-zones/widget_zones_module.php:201
-#: functions/czr-modules/widget-zones/widget_zones_module.php:242
+#: functions/czr-modules/widget-zones/widget_zones_module.php:212
+#: functions/czr-modules/widget-zones/widget_zones_module.php:253
 msgid ""
 "Select the pre-defined location(s) in which you will embed this widget zone."
 msgstr ""
 "Pilih lokasi yang telah ditetapkan di manakah Anda ingin sematkan zona "
 "widget ini."
 
-#: functions/czr-modules/widget-zones/widget_zones_module.php:229
+#: functions/czr-modules/widget-zones/widget_zones_module.php:240
 msgid "id"
 msgstr "id"
 
-#: functions/czr-modules/widget-zones/widget_zones_module.php:231
+#: functions/czr-modules/widget-zones/widget_zones_module.php:242
 msgid "unique id"
 msgstr "id unik"
 
-#: functions/czr-modules/widget-zones/widget_zones_module.php:236
+#: functions/czr-modules/widget-zones/widget_zones_module.php:247
 msgid "Enter a name"
 msgstr "Masukkan nama"
 
-#: functions/czr-modules/widget-zones/widget_zones_module.php:249
+#: functions/czr-modules/widget-zones/widget_zones_module.php:260
 msgid "Pick the context(s) where this widget area will be displayed."
 msgstr "Pilih konteks dimana area widget ini akan ditampilkan."
 
