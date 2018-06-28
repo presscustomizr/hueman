@@ -41,14 +41,14 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                     //declares a default model
                     module.defaultItemModel = {
                             id : '',
-                            title : themeServerControlParams.i18n.widgetZone,
+                            title : widgetModuleLocalized.i18n.widgetZone,
                             contexts : _.without( _.keys(module.contexts), '_all_' ),//the server list of contexts is an object, we only need the keys, whitout _all_
                             locations : [ module.serverParams.defaultWidgetLocation ],
                             description : ''
                     };
 
                     //overrides the default success message
-                    this.itemAddedMessage = themeServerControlParams.i18n.widgetZoneAdded;
+                    this.itemAddedMessage = widgetModuleLocalized.i18n.widgetZoneAdded;
 
                     //Observe and react to sidebar insights from the preview frame
                     // SIDEBAR INSIGHTS => stores and observes the sidebars and widgets settings sent by the preview */

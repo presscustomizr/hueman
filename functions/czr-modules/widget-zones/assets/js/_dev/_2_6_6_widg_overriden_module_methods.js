@@ -46,8 +46,8 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                     var $_alert_el = $view.find('.czr-location-alert');
                     if ( ! $_alert_el.length ) {
                           var _html = [
-                            '<span>' + serverControlParams.i18n.locationWarning + '</span>',
-                            api.CZR_Helpers.getDocSearchLink( serverControlParams.i18n.locationWarning ),
+                            '<span>' + widgetModuleLocalized.i18n.locationWarning + '</span>',
+                            api.CZR_Helpers.getDocSearchLink( widgetModuleLocalized.i18n.locationWarning ),
                           ].join('');
 
                           $_alert_el = $('<div/>', {

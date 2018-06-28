@@ -41,14 +41,14 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                     //declares a default model
                     module.defaultItemModel = {
                             id : '',
-                            title : themeServerControlParams.i18n.widgetZone,
+                            title : widgetModuleLocalized.i18n.widgetZone,
                             contexts : _.without( _.keys(module.contexts), '_all_' ),//the server list of contexts is an object, we only need the keys, whitout _all_
                             locations : [ module.serverParams.defaultWidgetLocation ],
                             description : ''
                     };
 
                     //overrides the default success message
-                    this.itemAddedMessage = themeServerControlParams.i18n.widgetZoneAdded;
+                    this.itemAddedMessage = widgetModuleLocalized.i18n.widgetZoneAdded;
 
                     //Observe and react to sidebar insights from the preview frame
                     // SIDEBAR INSIGHTS => stores and observes the sidebars and widgets settings sent by the preview */
@@ -247,7 +247,7 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                                 if (! state.id) { return state.text; }
                                 if (  _.contains(available_locs, state.element.value) ) { return state.text; }
                                 var $state = $(
-                                  '<span class="czr-unavailable-location fas fa-ban" title="' + themeServerControlParams.i18n.unavailableLocation + '">&nbsp;&nbsp;' + state.text + '</span>'
+                                  '<span class="czr-unavailable-location fas fa-ban" title="' + widgetModuleLocalized.i18n.unavailableLocation + '">&nbsp;&nbsp;' + state.text + '</span>'
                                 );
                                 return $state;
                           }
@@ -414,9 +414,9 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                           }
 
                           //Translated strings
-                          var _locationText = themeServerControlParams.i18n.locations,
-                              _contextText = themeServerControlParams.i18n.contexts,
-                              _notsetText = themeServerControlParams.i18n.notset;
+                          var _locationText = widgetModuleLocalized.i18n.locations,
+                              _contextText = widgetModuleLocalized.i18n.contexts,
+                              _notsetText = widgetModuleLocalized.i18n.notset;
 
                           _locations = _.isEmpty( _locations ) ? '<span style="font-weight: bold;">' + _notsetText + '</span>' : _locations.join(', ');
                           _contexts = _.isEmpty( _contexts ) ? '<span style="font-weight: bold;">' + _notsetText + '</span>' : _contexts.join(', ');
@@ -803,7 +803,7 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                                       module.getViewEl( _model.id ).addClass('inactive');
                                       if ( ! module.getViewEl( _model.id ).find('.czr-inactive-alert').length ) {
                                             module.getViewEl( _model.id ).find('.czr-item-title').append(
-                                              $('<span/>', {class : "czr-inactive-alert", html : " [ " + serverControlParams.i18n.inactiveWidgetZone + " ]" })
+                                              $('<span/>', {class : "czr-inactive-alert", html : " [ " + widgetModuleLocalized.i18n.inactiveWidgetZone + " ]" })
                                             );
                                       }
                                 }
@@ -888,8 +888,8 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                     var $_alert_el = $view.find('.czr-location-alert');
                     if ( ! $_alert_el.length ) {
                           var _html = [
-                            '<span>' + serverControlParams.i18n.locationWarning + '</span>',
-                            api.CZR_Helpers.getDocSearchLink( serverControlParams.i18n.locationWarning ),
+                            '<span>' + widgetModuleLocalized.i18n.locationWarning + '</span>',
+                            api.CZR_Helpers.getDocSearchLink( widgetModuleLocalized.i18n.locationWarning ),
                           ].join('');
 
                           $_alert_el = $('<div/>', {

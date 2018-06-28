@@ -33,7 +33,7 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                                       module.getViewEl( _model.id ).addClass('inactive');
                                       if ( ! module.getViewEl( _model.id ).find('.czr-inactive-alert').length ) {
                                             module.getViewEl( _model.id ).find('.czr-item-title').append(
-                                              $('<span/>', {class : "czr-inactive-alert", html : " [ " + serverControlParams.i18n.inactiveWidgetZone + " ]" })
+                                              $('<span/>', {class : "czr-inactive-alert", html : " [ " + widgetModuleLocalized.i18n.inactiveWidgetZone + " ]" })
                                             );
                                       }
                                 }

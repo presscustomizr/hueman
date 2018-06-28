@@ -121,9 +121,9 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                           }
 
                           //Translated strings
-                          var _locationText = themeServerControlParams.i18n.locations,
-                              _contextText = themeServerControlParams.i18n.contexts,
-                              _notsetText = themeServerControlParams.i18n.notset;
+                          var _locationText = widgetModuleLocalized.i18n.locations,
+                              _contextText = widgetModuleLocalized.i18n.contexts,
+                              _notsetText = widgetModuleLocalized.i18n.notset;
 
                           _locations = _.isEmpty( _locations ) ? '<span style="font-weight: bold;">' + _notsetText + '</span>' : _locations.join(', ');
                           _contexts = _.isEmpty( _contexts ) ? '<span style="font-weight: bold;">' + _notsetText + '</span>' : _contexts.join(', ');

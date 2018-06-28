@@ -75,7 +75,18 @@ function hu_register_widget_zones_module( $args ) {
                     'defaultWidgetSidebar' => 'primary',//the one that will be cloned. Specific to each themes
                     'defaultWidgetLocation' => 's1',//Specific to each themes
                     'sidebar_contexts' => hu_get_contexts_list(),
-                    'sidebar_locations' => hu_get_widget_el_locations()
+                    'sidebar_locations' => hu_get_widget_el_locations(),
+
+                    'i18n' => array(
+                        'widgetZone' => __('Widget Zone', 'hueman'),
+                        'widgetZoneAdded' => __('New Widget Zone created ! Scroll down to edit it.', 'hueman'),
+                        'inactiveWidgetZone' => __('Inactive in current context/location', 'hueman'),
+                        'unavailableLocation' => __('Unavailable location. Some settings must be changed.', 'hueman'),
+                        'locationWarning' => __('A selected location is not available with the current settings.', 'hueman'),
+                        'locations' => __('Location(s)', 'hueman'),
+                        'contexts' => __('Context(s)', 'hueman'),
+                        'notset' => __('Not set', 'hueman'),
+                    )
                     //'default_zones' => hu_get_widget_el_default_zones()
                 )
             )

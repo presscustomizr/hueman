@@ -176,11 +176,11 @@ function hu_get_czr_translated_strings() {
               'selectBgAttachment'  => __('Select attachment property', 'hueman'),
               'selectBgPosition'  => __('Select position property', 'hueman'),
 
-              'widgetZone' => __('Widget Zone', 'hueman'),
-              'widgetZoneAdded' => __('New Widget Zone created ! Scroll down to edit it.', 'hueman'),
-              'inactiveWidgetZone' => __('Inactive in current context/location', 'hueman'),
-              'unavailableLocation' => __('Unavailable location. Some settings must be changed.', 'hueman'),
-              'locationWarning' => __('A selected location is not available with the current settings.', 'hueman'),
+              // 'widgetZone' => __('Widget Zone', 'hueman'),
+              // 'widgetZoneAdded' => __('New Widget Zone created ! Scroll down to edit it.', 'hueman'),
+              // 'inactiveWidgetZone' => __('Inactive in current context/location', 'hueman'),
+              // 'unavailableLocation' => __('Unavailable location. Some settings must be changed.', 'hueman'),
+              // 'locationWarning' => __('A selected location is not available with the current settings.', 'hueman'),
 
               'readDocumentation' => __('Learn more about this in the documentation', 'hueman'),
               'Settings' => __('Settings', 'hueman'),

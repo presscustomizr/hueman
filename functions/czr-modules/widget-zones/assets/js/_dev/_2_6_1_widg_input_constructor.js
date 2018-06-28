@@ -83,7 +83,7 @@ var WidgetAreaConstructor = WidgetAreaConstructor || {};
                                 if (! state.id) { return state.text; }
                                 if (  _.contains(available_locs, state.element.value) ) { return state.text; }
                                 var $state = $(
-                                  '<span class="czr-unavailable-location fas fa-ban" title="' + themeServerControlParams.i18n.unavailableLocation + '">&nbsp;&nbsp;' + state.text + '</span>'
+                                  '<span class="czr-unavailable-location fas fa-ban" title="' + widgetModuleLocalized.i18n.unavailableLocation + '">&nbsp;&nbsp;' + state.text + '</span>'
                                 );
                                 return $state;
                           }
