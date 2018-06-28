@@ -83,7 +83,7 @@ See headers of files for further details.
 
 ## Changelog
 = 3.4.0 June 27th 2018 =
-* Improvements : performance and UX enhancements to the live customizer. Compatibility with the contextualizer feature introduced in Hueman Addons v2.1.0.
+* Improvements : Performance and UX enhancements made to the live customizer. Compatibility with the contextualizer feature introduced in Hueman Addons v2.1.0.
 
 = 3.3.28 June 22nd 2018 =
 * Improvements : various fixes and improvement to stay compliant with the WordPress.org themes requirements : removed previewer dummy content and image, removed welcome note, removed help icon link in the admin bar
