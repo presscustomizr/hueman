@@ -147,7 +147,8 @@ function hu_load_social_links_module() {
                 'default'  => array(),
                 'transport' => hu_is_partial_refreshed_on() ? 'postMessage' : 'refresh',
                 'sanitize_callback' => 'hu_sanitize_callback__czr_social_module',
-                'validate_callback' => 'hu_validate_callback__czr_social_module'
+                // we only sanitize for now, to avoid : https://github.com/presscustomizr/social-links-modules/issues/1
+                'validate_callback' => ''//hu_validate_callback__czr_social_module'
             ),
 
             'section' => array(
