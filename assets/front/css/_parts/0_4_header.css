@@ -377,7 +377,7 @@ box-shadow: -1px 0 0 rgba(255,255,255,0.1); }
 */
 @media only screen and (max-width: 719px) {
   #header .nav-container .nav li a { color: #fff; color: rgba(255,255,255,0.9); border-top: 1px solid rgba(255,255,255,0.06); }
-  #header .hu-dropdown-toggle { color: #fff; color: rgba(255,255,255,0.9); border: 1px solid rgba(255,255,255,.06); border-right: none; }
+  #header .hu-dropdown-toggle { color: #fff; color: rgba(255,255,255,0.9); }
   /* level 1 */
   #header .nav-container .nav li > a:hover { background: rgba(0,0,0,0.15); color: #fff; }
   #header .nav-container .nav li.current_page_item > a,

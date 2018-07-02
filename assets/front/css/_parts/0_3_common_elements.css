@@ -372,8 +372,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
   */
   .submenu-click-expand.nav-wrap,
   .submenu-click-expand.nav-wrap li,
-  .submenu-click-expand  ul,
-  .hu-dropdown-toggle-wrapper { background: inherit; }
+  .submenu-click-expand  ul { background: inherit; }
 
   .submenu-click-expand .sub-menu,
   .submenu-click-expand .nav li {
@@ -396,11 +395,11 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 
   .hu-dropdown-toggle-wrapper {
     position: absolute;
-    top: 0;
+    top: 1px;
     right: 0;
     text-align: center;
     line-height: 1;
-    bottom: 0;
+    bottom: 1px;
   }
 
   .submenu-click-expand .hu-dropdown-toggle-wrapper {
