@@ -105,7 +105,10 @@ if ( ! function_exists( 'hu_get_layout_class' ) ) {
       array_walk_recursive(hu_is_real_home(), function(&$v) { $v = htmlspecialchars($v); }); */
 
     // Check for page/post specific layout
-    if ( ! hu_is_real_home() && ( is_page() || is_single() ) ) {
+    if ( hu_is_checked( 'force-layout-global' ) ) {
+        $layout = hu_get_option( 'layout-global' );
+    }
+    elseif ( ! hu_is_real_home() && ( is_page() || is_single() ) ) {
         // Reset post data
         wp_reset_postdata();
         global $post;

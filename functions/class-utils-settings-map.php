@@ -855,6 +855,14 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'choices'   => $this -> hu_get_content_layout_choices( 'global' ),
                 'notice'    => __('Other layouts will override this option if they are set' , 'hueman')
           ),
+          'force-layout-global' => array(
+                'default'   => 0,
+                'control'   => 'HU_controls',
+                'label'     => __("Force the global layout", 'hueman'),
+                'section'   => 'content_layout_sec',
+                'type'      => 'checkbox',
+                'notice'    => __('The global layout will be applied on every pages, even when a specific layout was set.' , 'hueman')
+          ),
           'layout-home' => array(
                 'default'   => 'inherit',
                 'control'   => 'HU_Customize_Layout_Control',
