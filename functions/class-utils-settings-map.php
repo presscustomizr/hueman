@@ -1002,6 +1002,22 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                     'priority' => '60'
                 )
           ),
+          'blog-use-original-image-size'  =>  array(
+                'default'   => 0,
+                'control'   => 'HU_controls' ,
+                'type'      => 'checkbox',
+                'label'     => __( "Use original blog posts featured image size" , 'hueman' ),
+                'section'   => 'content_blog_sec' ,
+
+                //'transport' => 'postMessage',
+                'notice'    => __( 'When checked, this option will force the use of the post featured image with its original size instead of using the theme default image sizes.', 'hueman'),
+                //'active_callback' => 'hu_is_post_list',
+                'priority'   => 22,
+                'ubq_section'   => array(
+                    'section' => 'static_front_page',
+                    'priority' => '65'
+                )
+          ),
           'excerpt-length'  =>  array(
                 'default'   => 34,
                 'control'   => 'HU_controls' ,

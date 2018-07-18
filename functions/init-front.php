@@ -1496,8 +1496,18 @@ function hu_get_template_part( $path ) {
 
 
 
+add_filter( 'hu_masonry_grid_thumb_size',  'hu_maybe_replace_blog_thumb_size_with_full' );
+add_filter( 'hu_grid_featured_thumb_size', 'hu_maybe_replace_blog_thumb_size_with_full' );
+add_filter( 'hu_grid_standard_thumb_size', 'hu_maybe_replace_blog_thumb_size_with_full' );
+add_filter( 'hu_grid_thumb_size',          'hu_maybe_replace_blog_thumb_size_with_full' );
 
-
+//@return string thumb-size
+//Filter to override the default grid thumb sizes
+//hook: 'hu_masonry_grid_thumb_size'
+//hook: 'hu_grid_thumb_size'
+function hu_maybe_replace_blog_thumb_size_with_full( $thumb_size ) {
+  return hu_is_checked( 'blog-use-original-image-size' ) ? 'full' : $thumb_size;
+}
 
 /* ------------------------------------------------------------------------- *
  *  Page Menu
