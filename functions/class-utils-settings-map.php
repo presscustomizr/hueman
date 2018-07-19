@@ -1023,6 +1023,16 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                     'priority' => '70'
                 )
           ),
+          'archive-title-with-icon' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __( 'Display the archive type and an icon next to the archive headings', 'hueman' ),
+                'section'   => 'content_blog_sec',
+                'type'      => 'checkbox',
+                'notice'    => __( 'In WordPress, archives are the pages listing posts by category, tag, author and date.' , 'hueman'),
+                //'active_callback' => 'hu_is_post_list',
+                'priority'   => 150
+          ),
           'featured-posts-enabled' => array(
                 'default'   => 1,
                 'title'       => __( 'Featured posts', 'hueman' ),
