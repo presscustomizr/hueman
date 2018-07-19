@@ -145,6 +145,7 @@ $.extend( CZRSocialModuleMths, {
                 'steam-square',
                 'stumbleupon',
                 'stumbleupon-circle',
+                'strava',
                 'telegram',
                 'tencent-weibo',
                 'trello',

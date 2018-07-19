@@ -1,4 +1,4 @@
-# Hueman v3.4.0
+# Hueman v3.4.1
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
@@ -82,6 +82,13 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 ## Changelog
+= 3.4.1 July 19th 2018 =
+* fixed : url validation broken in the social links module
+* added : new option to force the global column layout, even in contexts where it has been customized
+* added : new option to disable the icon + text before the archive titles
+* added : new option to use the original featured image size in grids.fixes #691
+* added : Strava social network in the list of icons. fixes #162
+
 = 3.4.0 June 27th 2018 =
 * Improvements : Performance and UX enhancements made to the live customizer. Compatibility with the contextualizer feature introduced in Hueman Addons v2.1.0.
 
