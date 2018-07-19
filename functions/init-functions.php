@@ -488,9 +488,11 @@ function hu_get_img_src_from_option( $option_name ) {
 *
 * @echo html
 */
-function hu_the_post_thumbnail( $size = 'post-thumbnail', $attr = '', $placeholder = true ) {
+function hu_the_post_thumbnail( $size = 'post-thumbnail', $attr = '', $placeholder = true, $placeholder_size = null ) {
     $html = '';
     $post = get_post();
+    $placeholder_size = is_null( $placeholder_size ) ? $size : $placeholder_size;
+
     $is_attachment = is_object( $post ) && isset( $post -> post_type ) && 'attachment' == $post -> post_type;
     if ( ! $post || ( ! $is_attachment && ! has_post_thumbnail() ) ) {
         if ( hu_is_checked('placeholder') && (bool)$placeholder ) {
