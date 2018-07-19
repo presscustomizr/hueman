@@ -861,7 +861,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'     => __("Force the global layout", 'hueman'),
                 'section'   => 'content_layout_sec',
                 'type'      => 'checkbox',
-                'notice'    => __('The global layout will be applied on every pages, even when a specific layout was set.' , 'hueman')
+                'notice'    => __('The global layout will be applied on every pages, even when a specific layout is set.' , 'hueman')
           ),
           'layout-home' => array(
                 'default'   => 'inherit',
@@ -1006,11 +1006,10 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'default'   => 0,
                 'control'   => 'HU_controls' ,
                 'type'      => 'checkbox',
-                'label'     => __( "Use original blog posts featured image size" , 'hueman' ),
+                'label'     => __( "Display featured images in their original dimensions in post lists" , 'hueman' ),
                 'section'   => 'content_blog_sec' ,
-
                 //'transport' => 'postMessage',
-                'notice'    => __( 'When checked, this option will force the use of the post featured image with its original size instead of using the theme default image sizes.', 'hueman'),
+                'notice'    => __( 'When checked, the post featured image are displayed in their original size, instead of the optimized image sizes of the theme. Make sure your original images are not too large, it could slow down your website.', 'hueman'),
                 //'active_callback' => 'hu_is_post_list',
                 'priority'   => 22,
                 'ubq_section'   => array(
