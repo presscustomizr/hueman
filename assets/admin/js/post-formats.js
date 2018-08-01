@@ -8,14 +8,27 @@
 */
 
 jQuery(document).ready(function($) {
+	// temporary workaround to make sure gutenberg elements have been rendered, see https://github.com/presscustomizr/hueman/issues/672#issuecomment-409481887
+	setTimeout( function() {
+		// Hide post format sections
+		function hide_statuses() {
+			$('#format-audio,#format-aside,#format-chat,#format-gallery,#format-image,#format-link,#format-quote,#format-status,#format-video').hide();
+		}
 
-	// Hide post format sections
-	function hide_statuses() {
-		$('#format-audio,#format-aside,#format-chat,#format-gallery,#format-image,#format-link,#format-quote,#format-status,#format-video').hide();
-	}
+		var _wpPostFormatsInputSelectorClassical    = '#post-formats-select input[name="post_format"]',
+		    _wpPostFormatsInputSelectorGutenberg    = '.editor-post-format select',
+		    _isClassical                            = $(_wpPostFormatsInputSelectorClassical).length > 0,
+		    _isGutenberg                            = $(_wpPostFormatsInputSelectorGutenberg).length > 0;
 
-	// Post Formats
-	if($("#post-formats-select").length) {
+		if ( !( _isClassical || _isGutenberg ) ) {
+			return;
+		}
+
+		var _currentPostFormatSelector              = _isClassical ? _wpPostFormatsInputSelectorClassical + ':checked' : _wpPostFormatsInputSelectorGutenberg,
+		    _onChangePostFromatSelector             = _isClassical ? _wpPostFormatsInputSelectorClassical + ':radio'   : _wpPostFormatsInputSelectorGutenberg;
+
+		// Post Formats
+
 		// Hide post format sections
 		hide_statuses();
 
@@ -23,7 +36,7 @@ jQuery(document).ready(function($) {
 		var post_formats = ['audio','aside','chat','gallery','image','link','quote','status','video'];
 
 		// Get selected post format
-		var selected_post_format = $("input[name='post_format']:checked").val();
+		var selected_post_format = $(_currentPostFormatSelector).val();
 
 		// Show post format meta box
 		if(jQuery.inArray(selected_post_format,post_formats) != '-1') {
@@ -31,7 +44,7 @@ jQuery(document).ready(function($) {
 		}
 
 		// Hide/show post format meta box when option changed
-		$("input[name='post_format']:radio").change(function() {
+		$(_onChangePostFromatSelector).change(function() {
 			// Hide post format sections
 			hide_statuses();
 			// Shoe selected section
@@ -39,6 +52,5 @@ jQuery(document).ready(function($) {
 				$('#format-'+$(this).val()).show();
 			}
 		});
-	}
-
+	}, 300);
 });
