@@ -2,9 +2,9 @@
 # This file is distributed under the GNU General Public License v3.0.=!>
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman 3.4.1\n"
+"Project-Id-Version: Hueman 3.4.2\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2018-07-19 15:39:11+00:00\n"
+"POT-Creation-Date: 2018-08-01 15:41:47+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1780,14 +1780,13 @@ msgstr ""
 #: functions/czr/czr-resources.php:163
 #: functions/czr-base-fmk/czr-base-fmk.php:236
 #: functions/czr-base-fmk/czr-base-fmk.php:450
-#: functions/czr-base-fmk/czr-base-fmk.php:804
+#: functions/czr-base-fmk/czr-base-fmk.php:805
 #: functions/czr-modules/widget-zones/widget_zones_module.php:227
 msgid "Edit"
 msgstr ""
 
 #: functions/czr/czr-resources.php:164
 #: functions/czr-base-fmk/czr-base-fmk.php:237
-#: functions/czr-base-fmk/czr-base-fmk.php:805
 msgid "Close"
 msgstr ""
 
@@ -2150,22 +2149,26 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1518
+#: functions/czr-base-fmk/czr-base-fmk.php:806
+msgid "Hide editor"
+msgstr ""
+
+#: functions/czr-base-fmk/czr-base-fmk.php:1520
 msgid "Set a custom url"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1552
-#: functions/czr-base-fmk/czr-base-fmk.php:1752
+#: functions/czr-base-fmk/czr-base-fmk.php:1554
+#: functions/czr-base-fmk/czr-base-fmk.php:1754
 msgid "ajax_load_available_items => Security check failed."
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1673
-#: functions/czr-base-fmk/czr-base-fmk.php:1882
+#: functions/czr-base-fmk/czr-base-fmk.php:1675
+#: functions/czr-base-fmk/czr-base-fmk.php:1884
 #. translators: %d: ID of a post
 msgid "#%d (no title)"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1816
+#: functions/czr-base-fmk/czr-base-fmk.php:1818
 msgid "No results found."
 msgstr ""
 

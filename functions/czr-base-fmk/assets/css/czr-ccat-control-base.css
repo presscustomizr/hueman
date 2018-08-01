@@ -229,10 +229,13 @@ li#customize-control-custom_css textarea {
 }
 .customize-control-title {
 	line-height: 19px;
+  font-family: Roboto;
+    font-weight: normal;
 }
 .customize-control span.customize-control-title:first-child {
-    position: relative;
-    padding: 3px 14px;
+  position: relative;
+  padding: 10px 0px 5px;
+  margin-left: 14px;
 }
 
 /* since v4.3 */
@@ -610,15 +613,20 @@ li#customize-control-tc_theme_options-tc_custom_css textarea {
   margin-bottom: 10px;
 }
 
-/* HOME BUTTON */
+/* NIMBLE */
+#customize-theme-controls #accordion-panel-__sektions__ {
+  margin-bottom: 10px;
+}
+
+/* HEADER => HOME AND ADD MODULE BUTTON */
 #customize-header-actions .customize-controls-close {
   left: 45px;
 }
 
-.customize-controls-home, .customize-controls-close {
+.customize-controls-home-or-add, .customize-controls-close {
   top: -1px;
 }
-.customize-controls-home {
+.customize-controls-home-or-add {
     display: block;
     position: absolute;
     left: 0;
@@ -640,15 +648,21 @@ li#customize-control-tc_theme_options-tc_custom_css textarea {
     -moz-box-sizing: content-box;
     box-sizing: content-box;
 }
+/* for the Nimble button */
+.customize-controls-home-or-add > .material-icons {
+  line-height: 39px;
+  text-align: center;
+  display: block;
+}
 
-.customize-controls-home:before {
+.customize-controls-home-or-add:before {
     font-size: 17px;
     line-height:45px;
     position: relative;
     top: -4px;
     left: 15px;
 }
-.customize-controls-home:hover {
+.customize-controls-home-or-add:hover {
     background: #fff;
     color: #0073aa;
     border-top-color: #0073aa;
@@ -661,12 +675,15 @@ li#customize-control-tc_theme_options-tc_custom_css textarea {
   right: 45px;
   left: auto;
 }
-.rtl.wp-customizer .customize-controls-home {
+.rtl.wp-customizer .customize-controls-home-or-add {
   left: auto;
   right: 0;
   border-right: 0;
   border-left: 1px solid #ddd;
 }
+
+
+
 
 /* HEADER MENU NOTICE */
 .control-panel-content .hu-menu-notice {
@@ -1674,7 +1691,7 @@ section .czr-sub-set:first-child {
 
 .tabs-style-topline nav a span {
   text-transform: uppercase;
-  letter-spacing: 1px;
+  /*letter-spacing: 1px;*/
   font-weight: 700;
 }
 
@@ -2152,6 +2169,11 @@ span.select2-results, body .select2-container {
 
 
 /* WP TEXT EDITOR */
+/* This CSS Code is inpired from the plugin customize-posts, GPLv2 or later licensed
+    Mostly class names have been modified.
+   Credits : xwp, westonruter, valendesigns, sayedwp, utkarshpatel.
+   Date of original code modification : July 2018
+*/
 #czr-customize-content_editor-pane {
   border-top: solid 1px #ddd;
   position: absolute;
@@ -2225,6 +2247,16 @@ body.mce-fullscreen.czr-customize-content_editor-pane-open div.mce-fullscreen {
   position: absolute;
   width: 100%;
   z-index: 21;
+  /* the following makes sure that the icon .czr-resize-handle is centered */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 body.czr-customize-content_editor-pane-resize #customize-preview:before {
   top: 0;
@@ -2271,7 +2303,12 @@ body.czr-customize-content_editor-pane-resize #customize-preview:before {
 .czr-customize-content_editor-pane-open.mce-fullscreen .wp-full-overlay.collapsed .collapse-sidebar {
   bottom: 8px !important;
 }
-
+.czr-resize-handle {
+  color: #23282d;
+  font-size: 12px;
+  position: relative;
+  bottom: 2px;
+}
 
 
 /* CONTENT PICKER */
@@ -2466,8 +2503,8 @@ input[type="range"]:focus + .rangeslider .rangeslider__handle {
 
 
 
-/* GUTENCHECK */
-/* Inspired from the Gutenberg plugin checkbox. @see here : https://github.com/WordPress/gutenberg */
+/* This custom checkbox input is inspired from the one used in the Gutenberg plugin ( https://github.com/WordPress/gutenberg ), released under GNU General Public License
+credits : Gutenberg team @wordpress */
 .czr-toggle-check {
   position: relative;
       float: right;

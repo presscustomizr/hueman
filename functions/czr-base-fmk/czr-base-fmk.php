@@ -566,6 +566,7 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                 'refresh_markup' => null,
                 'refresh_stylesheet' => null,
                 'refresh_fonts' => null,
+                'refresh_preview' => null,
 
                 'sanitize_cb' => '',
                 'validate_cb' => '',
@@ -771,7 +772,7 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                           <#
                             var _checked = ( false != data['<?php echo $input_id; ?>'] ) ? "checked=checked" : '';
                           #>
-                          <span class="czr-toggle-check"><input class="czr-toggle-check__input" id="pending-toggle-0" data-czrtype="<?php echo $input_id; ?>" type="checkbox" {{ _checked }}><span class="czr-toggle-check__track"></span><span class="czr-toggle-check__thumb"></span></span>
+                          <span class="czr-toggle-check"><input class="czr-toggle-check__input" data-czrtype="<?php echo $input_id; ?>" type="checkbox" {{ _checked }}><span class="czr-toggle-check__track"></span><span class="czr-toggle-check__thumb"></span></span>
                         <?php
                     break;
 
@@ -802,7 +803,7 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                         ?>
                           <# //console.log( 'IN php::ac_get_default_input_tmpl() => data sent to the tmpl => ', data ); #>
                           <button type="button" class="button text_editor-button" data-czr-control-id="{{ data.control_id }}" data-czr-input-id="<?php echo $input_id; ?>" data-czr-action="open-tinymce-editor"><?php _e('Edit', 'hueman' ); ?></button>&nbsp;
-                          <button type="button" class="button text_editor-button" data-czr-control-id="{{ data.control_id }}" data-czr-input-id="<?php echo $input_id; ?>" data-czr-action="close-tinymce-editor"><?php _e('Close', 'hueman' ); ?></button>
+                          <button type="button" class="button text_editor-button" data-czr-control-id="{{ data.control_id }}" data-czr-input-id="<?php echo $input_id; ?>" data-czr-action="close-tinymce-editor"><?php _e('Hide editor', 'hueman' ); ?></button>
                           <input data-czrtype="<?php echo $input_id; ?>" type="hidden" value="{{ data.value }}"/>
                         <?php
                     break;
@@ -811,6 +812,7 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                      *  RANGE
                     /* ------------------------------------------------------------------------- */
                     case 'range_slider' :
+                    case 'range' :
                       ?>
                         <# //console.log( 'IN php::ac_get_default_input_tmpl() => data range_slide => ', data ); #>
                         <?php

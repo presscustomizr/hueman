@@ -760,6 +760,16 @@ api.CZR_Helpers = $.extend( api.CZR_Helpers, {
                                     //console.log( 'api.CZR_Helpers.getModuleTmpl => ', _r_ );
                                     api.errare( 'api.CZR_Helpers.getModuleTmpl => Problem when fetching the ' + args.tmpl + ' tmpl from server for module : ' + args.module_id + ' ' + args.module_type, _r_);
                                     dfd.reject( _r_ );
+                                    // Nimble => display an error notification when
+                                    // - session has expired
+                                    // - when statusText is "Bad Request"
+                                    if ( _.isObject( _r_ ) ) {
+                                          if ( 'invalid_nonce' === _r_.code || 'Bad Request' === _r_.statusText ) {
+                                                if ( window.sektionsLocalizedData && sektionsLocalizedData.i18n ) {
+                                                      api.previewer.trigger( 'sek-notify', { type : 'error', duration : 30000, message : sektionsLocalizedData.i18n['Something went wrong, please refresh this page.'] });
+                                                }
+                                          }
+                                    }
                               });
                   }
             }
@@ -6062,10 +6072,31 @@ $.extend( CZRBaseModuleControlMths, {
             // });
 
             var fireHeaderButtons = function() {
-                  var $home_button = $('<span/>', { class:'customize-controls-home fas fa-home', html:'<span class="screen-reader-text">Home</span>' } );
-                  $.when( $('#customize-header-actions').append( $home_button ) )
+                  var $header_button;
+
+                  // Deactivated for the moment.
+                  // The + button has been moved in the Nimble top bar
+                  // if ( api.czr_sektions ) {
+                  //       var _title_ = ( window.sektionsLocalizedData && sektionsLocalizedData.i18n && sektionsLocalizedData.i18n['Drag and drop content'] ) ? sektionsLocalizedData.i18n['Drag and drop content'] : '';
+                  //       $header_button = $('<span/>', {
+                  //             class:'customize-controls-home-or-add',
+                  //             html:'<span class="screen-reader-text">Home</span><span class="material-icons" title="' + _title_ +'">add_circle_outline</span>'
+                  //       });
+                  // } else {
+                  //       $header_button = $('<span/>', {
+                  //             class:'customize-controls-home-or-add fas fa-home',
+                  //             html:'<span class="screen-reader-text">Home</span>'
+                  //       });
+                  // }
+
+                  $header_button = $('<span/>', {
+                        class:'customize-controls-home-or-add fas fa-home',
+                        html:'<span class="screen-reader-text">Home</span>'
+                  });
+
+                  $.when( $('#customize-header-actions').append( $header_button ) )
                         .done( function() {
-                              $home_button
+                              $header_button
                                     .keydown( function( event ) {
                                           if ( 9 === event.which ) // tab
                                             return;
@@ -6073,21 +6104,54 @@ $.extend( CZRBaseModuleControlMths, {
                                             this.click();
                                           event.preventDefault();
                                     })
-                                    .on( 'click.customize-controls-home', function() {
-                                          //event.preventDefault();
-                                          //close everything
-                                          if ( api.section.has( api.czr_activeSectionId() ) ) {
-                                                api.section( api.czr_activeSectionId() ).expanded( false );
+                                    .on( 'click.customize-controls-home-or-add', function() {
+                                          if ( api.czr_sektions ) {
+                                                api.previewer.trigger( 'sek-pick-module', {});
                                           } else {
-                                                api.section.each( function( _s ) {
-                                                    _s.expanded( false );
+                                                //event.preventDefault();
+                                                //close everything
+                                                if ( api.section.has( api.czr_activeSectionId() ) ) {
+                                                      api.section( api.czr_activeSectionId() ).expanded( false );
+                                                } else {
+                                                      api.section.each( function( _s ) {
+                                                          _s.expanded( false );
+                                                      });
+                                                }
+                                                api.panel.each( function( _p ) {
+                                                      _p.expanded( false );
                                                 });
                                           }
-                                          api.panel.each( function( _p ) {
-                                                _p.expanded( false );
-                                          });
+
                                     });
-                        });
+                              // animate on init
+                              // @use button-see-mee css class declared in core in /wp-admin/css/customize-controls.css
+                              _.delay( function() {
+                                    if ( $header_button.hasClass( 'button-see-me') )
+                                      return;
+                                    var _seeMe = function() {
+                                              return $.Deferred(function(){
+                                                    var dfd = this;
+                                                    $header_button.addClass('button-see-me');
+                                                    _.delay( function() {
+                                                          $header_button.removeClass('button-see-me');
+                                                          dfd.resolve();
+                                                    }, 800 );
+                                              });
+                                        },
+                                        i = 0,
+                                        _seeMeLoop = function() {
+                                              _seeMe().done( function() {
+                                                    i--;
+                                                    if ( i >= 0 ) {
+                                                          _.delay( function() {
+                                                                _seeMeLoop();
+                                                          }, 50 );
+                                                    }
+                                              });
+                                        };
+                                    _seeMeLoop();
+                              }, 2000 );
+                        });// done()
             };
 
             fireHeaderButtons();
