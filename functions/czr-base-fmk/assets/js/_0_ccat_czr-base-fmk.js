@@ -784,6 +784,15 @@ api.CZR_Helpers = $.extend( api.CZR_Helpers, {
 (function (api, $, _) {
       api.CZR_Helpers = api.CZR_Helpers || {};
       api.CZR_Helpers = $.extend( api.CZR_Helpers, {
+            // @params {}. Example :
+            // origin : 'nimble',
+            // what : 'section',
+            // id : params.id,
+            // title: sektionsLocalizedData.i18n['Content for'] + ' ' + moduleName,
+            // panel : sektionsLocalizedData.sektionsPanelId,
+            // priority : 1000,
+            // track : false//don't register in the self.registered()
+            // constructWith : MainSectionConstructor,
             register : function( params ) {
                   if ( ! _.has( params, 'id' ) ) {
                         api.errare( 'register => missing id ', params );
@@ -874,7 +883,7 @@ api.CZR_Helpers = $.extend( api.CZR_Helpers, {
                               }
 
                               if ( api.section.has( params.id ) ) {
-                                    //api.errare( 'registerSection => ' + params.id + ' is already registered');
+                                    //api.infoLog( 'registerSection => ' + params.id + ' is already registered');
                                     break;
                               }
 
@@ -1695,9 +1704,9 @@ $.extend( CZRInputMths , {
 
           //@hack => todo
           //for text area inputs, the synchronizer is buggy
-          if ( is_textarea ) {
-                api.errorLog('TO DO : THE TEXTAREA INPUT ARE NOT IMPLEMENTED YET IN THE SYNCHRONIZER!');
-          }
+          // if ( is_textarea ) {
+          //       api.errorLog('TO DO : THE TEXTAREA INPUT ARE NOT IMPLEMENTED YET IN THE SYNCHRONIZER!');
+          // }
 
           var syncElement = new api.Element( $_input_el );
           input_parent.syncElements = input_parent.syncElements || {};
@@ -6105,23 +6114,21 @@ $.extend( CZRBaseModuleControlMths, {
                                           event.preventDefault();
                                     })
                                     .on( 'click.customize-controls-home-or-add', function() {
-                                          if ( api.czr_sektions ) {
-                                                api.previewer.trigger( 'sek-pick-module', {});
+                                          // if ( api.czr_sektions ) {
+                                          //       api.previewer.trigger( 'sek-pick-content', {});
+                                          // }
+                                          //event.preventDefault();
+                                          //close everything
+                                          if ( api.section.has( api.czr_activeSectionId() ) ) {
+                                                api.section( api.czr_activeSectionId() ).expanded( false );
                                           } else {
-                                                //event.preventDefault();
-                                                //close everything
-                                                if ( api.section.has( api.czr_activeSectionId() ) ) {
-                                                      api.section( api.czr_activeSectionId() ).expanded( false );
-                                                } else {
-                                                      api.section.each( function( _s ) {
-                                                          _s.expanded( false );
-                                                      });
-                                                }
-                                                api.panel.each( function( _p ) {
-                                                      _p.expanded( false );
+                                                api.section.each( function( _s ) {
+                                                    _s.expanded( false );
                                                 });
                                           }
-
+                                          api.panel.each( function( _p ) {
+                                                _p.expanded( false );
+                                          });
                                     });
                               // animate on init
                               // @use button-see-mee css class declared in core in /wp-admin/css/customize-controls.css
