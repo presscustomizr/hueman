@@ -21,9 +21,12 @@
 
 
 
-
-
-
+/* ------------------------------------------------------------------------- *
+ *  Header with Nimble template
+/* ------------------------------------------------------------------------- */
+.nimble-template-enabled #header {padding-bottom:0px;}
+.nimble-template-enabled #page {padding-bottom:0px;margin-top:0px;}
+.nimble-template-enabled .main-inner {min-height: inherit;}
 
 
 

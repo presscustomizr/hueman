@@ -166,6 +166,33 @@ if ( hu_is_customizing() ) {
 }
 
 
+/* ------------------------------------------------------------------------- *
+ *  Nimble Integration
+/* ------------------------------------------------------------------------- */
+add_filter( 'nimble_get_locale_template_path', 'hu_set_specific_nimble_template', 10, 2 );
+function hu_set_specific_nimble_template( $path, $file_name ) {
+    if ( 'nimble_template' === $file_name ) {
+        $path = HU_BASE .'tmpl/nimble-tmpl.php';
+    }
+    return $path;
+}
+
+add_action( '__after_header', 'hu_render_nimble_sections_on_specific_hueman_hook', PHP_INT_MAX );
+function hu_render_nimble_sections_on_specific_hueman_hook() {
+    // this occurs only when user pick the nimble template for a given context
+    if ( function_exists( '\Nimble\sek_get_locale_template' ) && 'nimble-tmpl.php' === basename( \Nimble\sek_get_locale_template() ) ) {
+        \Nimble\render_content_sections_for_nimble_template();
+    }
+}
+
+add_filter( 'body_class', 'hu_body_class_for_nimble_template' );
+function hu_body_class_for_nimble_template( $classes ) {
+    if ( function_exists( '\Nimble\sek_get_locale_template' ) && 'nimble-tmpl.php' === basename( \Nimble\sek_get_locale_template() ) ) {
+        $classes[] = 'nimble-template-enabled';
+    }
+    return $classes;
+}
+
 
 /* ------------------------------------------------------------------------- *
  *  Loads Front End files
