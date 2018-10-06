@@ -228,12 +228,14 @@ function hu_print_dynamic_sidebars( $_id, $location ) {
         __('You can change or disable this setting by editing the options of the current post / page.', 'hueman')
       );
     }
-
-    if ( empty( $sidebars_widgets[ $_id ] ) || ! is_array( $sidebars_widgets[ $_id ] ) ) {
-      printf('<div class="widget"><div class="hu-placeholder-widget"><h3>%1$s<br/><span class="zone-name">"%2$s"</span></h3></div></div>',
-        __('Add widgets to the zone :', 'hueman'),
-        $wp_registered_sidebars[$_id]['name']
-      );
+    if ( 'header-ads' !== $_id ) {// we don't want to print a placeholder for the header ads widget zone.
+        if ( empty( $sidebars_widgets[ $_id ] ) || ! is_array( $sidebars_widgets[ $_id ] ) ) {
+          printf('<div class="widget" id="hu-widget-zone-when-customizing-%3$s"><div class="hu-placeholder-widget"><h3>%1$s<br/><span class="zone-name">"%2$s"</span></h3></div></div>',
+            __('Add widgets to the zone :', 'hueman'),
+            $wp_registered_sidebars[$_id]['name'],
+            $_id
+          );
+        }
     }
   }//end if customizing
 
