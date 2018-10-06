@@ -48,7 +48,7 @@ function hu_admin_style() {
 /* ------------------------------------------------------------------------- *
  *  Loads Required Plugin Class and Setup
 /* ------------------------------------------------------------------------- */
-if ( ! HU_IS_PRO_ADDONS && ! HU_IS_PRO && is_admin() && ! hu_is_customizing() ) {
+if ( is_admin() && ! hu_is_customizing() && hu_user_started_with_current_version() ) {
     /**
     * Include the TGM_Plugin_Activation class.
     */
@@ -91,8 +91,8 @@ function hu_register_required_plugins() {
 
     // This is an example of how to include a plugin from the WordPress Plugin Repository
     array(
-      'name'    => 'Hueman Addons',
-      'slug'    => 'hueman-addons',
+      'name'    => 'Nimble Builder',
+      'slug'    => 'nimble-builder',
       'required'  => false,
     ),
 
@@ -121,16 +121,16 @@ function hu_register_required_plugins() {
           'menu_title'                            => __( 'Install Plugins', 'hueman' ),
           'installing'                            => __( 'Installing Plugin: %s', 'hueman' ), // %1$s = plugin name
           'oops'                                  => __( 'Something went wrong with the plugin API.', 'hueman' ),
-          'notice_can_install_required'           => _n_noop( 'The Hueman theme requires the following plugin: %1$s.', 'This theme requires the following plugins: %1$s.', 'hueman' ), // %1$s = plugin name(s)
-          'notice_can_install_recommended'      => _n_noop( 'The Hueman theme recommends the Hueman Addons: %1$s.', 'This theme recommends the following plugins: %1$s.', 'hueman' ), // %1$s = plugin name(s)
+          'notice_can_install_required'           => _n_noop( 'The Hueman theme requires the following plugin: %1$s.', 'This theme requires the following plugins : %1$s.', 'hueman' ), // %1$s = plugin name(s)
+          'notice_can_install_recommended'      => _n_noop( 'The Hueman theme recommends the Nimble drag-and-drop section builder : %1$s.', 'This theme recommends the following plugins : %1$s.', 'hueman' ), // %1$s = plugin name(s)
           'notice_cannot_install'           => _n_noop( 'Sorry, but you do not have the correct permissions to install the %s plugin. Contact the administrator of this site for help on getting the plugin installed.', 'Sorry, but you do not have the correct permissions to install the %s plugins. Contact the administrator of this site for help on getting the plugins installed.', 'hueman' ), // %1$s = plugin name(s)
-          'notice_can_activate_required'          => _n_noop( 'The Hueman Addons required plugin is currently inactive: %1$s.', 'The following required plugins are currently inactive: %1$s.', 'hueman' ), // %1$s = plugin name(s)
-          'notice_can_activate_recommended'     => _n_noop( 'The Hueman Addons plugin is currently inactive: %1$s.', 'The following recommended plugins are currently inactive: %1$s.', 'hueman' ), // %1$s = plugin name(s)
+          'notice_can_activate_required'          => _n_noop( 'The Nimble Builder required plugin is currently inactive: %1$s.', 'The following required plugins are currently inactive: %1$s.', 'hueman' ), // %1$s = plugin name(s)
+          'notice_can_activate_recommended'     => _n_noop( 'The Nimble Builder plugin, recommended for the Hueman theme, is installed but currently inactive : %1$s.', 'The following recommended plugins are currently inactive: %1$s.', 'hueman' ), // %1$s = plugin name(s)
           'notice_cannot_activate'          => _n_noop( 'Sorry, but you do not have the correct permissions to activate the %s plugin. Contact the administrator of this site for help on getting the plugin activated.', 'Sorry, but you do not have the correct permissions to activate the %s plugins. Contact the administrator of this site for help on getting the plugins activated.', 'hueman' ), // %1$s = plugin name(s)
-          'notice_ask_to_update'            => _n_noop( 'The Hueman Addons plugin needs to be updated to its latest version to ensure maximum compatibility with the Hueman theme: %1$s.', 'The following plugins need to be updated to their latest version to ensure maximum compatibility with this theme: %1$s.', 'hueman' ), // %1$s = plugin name(s)
+          'notice_ask_to_update'            => _n_noop( 'The Nimble Builder plugin needs to be updated to its latest version to ensure maximum compatibility with the Hueman theme: %1$s.', 'The following plugins need to be updated to their latest version to ensure maximum compatibility with this theme: %1$s.', 'hueman' ), // %1$s = plugin name(s)
           'notice_cannot_update'            => _n_noop( 'Sorry, but you do not have the correct permissions to update the %s plugin. Contact the administrator of this site for help on getting the plugin updated.', 'Sorry, but you do not have the correct permissions to update the %s plugins. Contact the administrator of this site for help on getting the plugins updated.', 'hueman' ), // %1$s = plugin name(s)
           'install_link'                  => _n_noop( 'Begin installing plugin', 'Begin installing plugins', 'hueman' ),
-          'activate_link'                 => _n_noop( 'Activate Hueman Addons', 'Activate installed plugins', 'hueman' ),
+          'activate_link'                 => _n_noop( 'Activate Nimble Builder', 'Activate installed plugins', 'hueman' ),
           'return'                                => __( 'Return to Required Plugins Installer', 'hueman' ),
           'plugin_activated'                      => __( 'Plugin activated successfully.', 'hueman' ),
           'complete'                  => __( 'All plugins installed and activated successfully. %s', 'hueman' ), // %1$s = dashboard link

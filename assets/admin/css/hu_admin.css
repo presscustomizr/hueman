@@ -139,18 +139,41 @@ h1.need-help-title:before {
 }
 
 
-/* HUEMAN ADDONS NOTICE */
+
+/* TGMPA NOTICE */
 #setting-error-tgmpa {
   position: relative;
 }
 #setting-error-tgmpa .notice-dismiss {
   display: none;
 }
-#setting-error-tgmpa .hu-addons-img {
+#setting-error-tgmpa .czr-nimble-img {
   right: 4px;
   position: absolute;
   top: 4px;
+  max-height: 145px;
 }
+.czr-tgmpa-text-block {
+  width: calc( 100% - 230px );
+}
+.czr-tgmpa-heading {
+  display: block;
+  margin: 0.5em 0.5em 0 0;
+  padding-bottom: 5px;
+  clear: both;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+span.czr-tgmpa-heading a {
+  padding: 0px 7px;
+}
+
 
 /* GO PRO BTN */
 .wp-core-ui #hueman-admin-panel .hu-go-pro-btn, .wp-core-ui .updated .hu-go-pro-btn {
