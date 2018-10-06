@@ -9,6 +9,8 @@ iframe.wp-embedded-content{ max-width : 100%;width: 100%;}
 /* ------------------------------------ */
 .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
 .video-container iframe, .video-container object, .video-container embed, .video-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+/*Gutenberg compatibility, see: https://github.com/presscustomizr/hueman/issues/698 */
+.wp-block-embed[class*=wp-embed-aspect-] .video-container { position: static; padding: 0; height: 100%; }
 
 /*  common : responsive image + caption
 /* ------------------------------------ */
