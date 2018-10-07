@@ -193,6 +193,18 @@ function hu_body_class_for_nimble_template( $classes ) {
     return $classes;
 }
 
+/* ------------------------------------------------------------------------- *
+ *  Register locations for Nimble Builder when ^posts are featured on top of the blog
+ *  @see if ( hu_is_checked('featured-posts-enabled') ) { get_template_part('parts/featured'); }
+/* ------------------------------------------------------------------------- */
+add_action( 'init', 'czr_fn_maybe_register_nimble_location');
+function czr_fn_maybe_register_nimble_location() {
+    if ( function_exists('nimble_register_location') ) {
+        nimble_register_location('__before_featured');
+        nimble_register_location('__after_featured');
+    }
+}
+
 
 /* ------------------------------------------------------------------------- *
  *  Loads Front End files
