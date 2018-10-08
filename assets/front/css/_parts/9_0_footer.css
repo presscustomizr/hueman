@@ -122,9 +122,15 @@ box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
 
   /* common */
   #nav-footer .nav li a { color: #999; color: rgba(0,0,0,0.8); border-top: 1px solid #f2f2f2; }
+  #nav-footer .hu-dropdown-toggle { color: #999; color: rgba(0,0,0,0.8); }
   /* level 1 */
-  #nav-footer .nav li > a:hover { background: #f2f2f2; color: #444; }
+  #nav-footer .nav li > a:hover,
   #nav-footer .nav li.current_page_item > a,
   #nav-footer .nav li.current-menu-item > a,
   #nav-footer .nav li.current-post-parent > a { background: #f2f2f2; color: #444; }
+
+  #nav-footer .hu-dropdown-toggle:hover,
+  #nav-footer .nav li.current_page_item > .hu-dropdown-toggle,
+  #nav-footer .nav li.current-menu-item > .hu-dropdown-toggle,
+  #nav-footer .nav li.current-post-parent > .hu-dropdown-toggle { color: #444;  }
 }
