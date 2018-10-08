@@ -1337,7 +1337,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 
         //HU MODS
         $rendered = sprintf('<div class="czr-tgmpa-img-block"><img src="%1$s" alt="%2$s" title="%2$s" class="czr-nimble-img"/></div>%3$s',
-            sprintf('%1$sassets/admin/img/Nimble_interface-blanc-01.png', HU_BASE_URL ),
+            sprintf('%1$sassets/admin/img/nimble_and_hueman_145.gif', HU_BASE_URL ),
             __('Nimble Builder', 'hueman'),
             $rendered
         );

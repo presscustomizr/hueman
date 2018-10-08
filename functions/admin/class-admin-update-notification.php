@@ -9,6 +9,7 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
         function __construct () {
             self::$instance =& $this;
             //UPDATE NOTICE
+            if( ! defined( 'DISPLAY_UPDATE_NOTIFICATION' ) ) { define( 'DISPLAY_UPDATE_NOTIFICATION', false ); }
             add_action( 'admin_notices'         , array( $this, 'hu_may_be_display_update_notice') );
             //always add the ajax action
             add_action( 'wp_ajax_dismiss_hueman_update_notice'    , array( $this , 'hu_dismiss_update_notice_action' ) );
@@ -34,6 +35,9 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
         * hook : admin_notices
         */
         function hu_may_be_display_update_notice() {
+            if ( ! defined('DISPLAY_UPDATE_NOTIFICATION') || ! DISPLAY_UPDATE_NOTIFICATION )
+              return;
+
             $opt_name                   = 'last_update_notice';
             $last_update_notice_values  = hu_get_option($opt_name);
             $show_new_notice = false;
