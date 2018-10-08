@@ -1136,6 +1136,8 @@ if ( ! function_exists( 'hu_scripts' ) ) {
                     'desktop' => hu_normalize_stick_menu_opt( hu_get_option( 'header-desktop-sticky' ) ),
                     'mobile'  => hu_normalize_stick_menu_opt( hu_get_option( 'header-mobile-sticky' ) )
                 ),
+                'mobileSubmenuExpandOnClick' => esc_attr( hu_get_option( 'mobile-submenu-click' ) ),
+                'submenuTogglerIcon'   => '<i class="fas fa-angle-down"></i>',
                 'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('CZR_DEV') && true === CZR_DEV ),
                 //AJAX
                 'ajaxUrl'        => add_query_arg(
@@ -1150,7 +1152,11 @@ if ( ! function_exists( 'hu_scripts' ) ) {
                       'on' => is_object( $started_on ) ? (array)$started_on : $started_on
                 ),
                 'isWelcomeNoteOn' => $is_welcome_note_on,
-                'welcomeContent'  => $welcome_note_content
+                'welcomeContent'  => $welcome_note_content,
+                'i18n' => array(
+                  'collapsibleExpand'   => __( 'Expand', 'hueman' ),
+                  'collapsibleCollapse' => __( 'Collapse', 'hueman' )
+                ),
             )
         )//end of filter
        );//wp_localize_script()

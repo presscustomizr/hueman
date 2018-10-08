@@ -241,8 +241,7 @@ box-shadow: -1px 0 0 rgba(255,255,255,0.1); }
 }
 
 .mobile-menu .mobile-search {
-  width: calc(100% - 28px);
-  padding: 6px 14px 15px;
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;  padding: 6px 14px 15px;
 }
 .mobile-menu .mobile-search input.search {
   width: 100%
@@ -380,12 +379,18 @@ box-shadow: -1px 0 0 rgba(255,255,255,0.1); }
  => Applies to mobile menu if set to topnav, main or mobile
 */
 @media only screen and (max-width: 719px) {
-   #header .nav-container .nav li a { color: #fff; color: rgba(255,255,255,0.9); border-top: 1px solid rgba(255,255,255,0.06); }
+  #header .nav-container .nav li a { color: #fff; color: rgba(255,255,255,0.9); border-top: 1px solid rgba(255,255,255,0.06); }
+  #header .hu-dropdown-toggle { color: #fff; color: rgba(255,255,255,0.9); }
   /* level 1 */
   #header .nav-container .nav li > a:hover { background: rgba(0,0,0,0.15); color: #fff; }
   #header .nav-container .nav li.current_page_item > a,
   #header .nav-container .nav li.current-menu-item > a,
   #header .nav-container .nav li.current-post-parent > a { text-decoration: underline; background: rgba(0,0,0,0.15); color: #fff; }
+
+  #header .hu-dropdown-toggle:hover
+  #header .nav-container .nav li.current_page_item > .hu-dropdown-toggle,
+  #header .nav-container .nav li.current-menu-item > .hu-dropdown-toggle,
+  #header .nav-container .nav li.current-post-parent > .hu-dropdown-toggle { color: #fff }
 }
 
 
