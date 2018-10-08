@@ -803,7 +803,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 )
           ),
           'mobile-submenu-click' => array(
-                'default'   => hu_user_started_before_version( '3.3.28', '1.0.29' ) ? false : true,
+                'default'   => hu_user_started_before_version( '3.4.3', '1.1.4' ) ? false : true,
                 'control'   => 'HU_controls',
                 'label'     => sprintf( '%1$s : %2$s', __('Mobile devices', 'hueman' ) , __( 'Expand submenus on click', 'hueman') ),
                 'section'   => 'header_menus_sec',
