@@ -2150,7 +2150,8 @@ https://github.com/imakewebthings/waypoints/blob/master/licenses.txt
                           czrapp.errorLog( 'setupDOMListeners : selector must be a string not empty. Aborting setup of action(s) : ' + _event.actions.join(',') );
                           return;
                     }
-                    args.dom_el.on( _event.trigger , _event.selector, function( e, event_params ) {
+                    var once = _event.once ? _event.once : false;
+                    args.dom_el[ once ? 'one' : 'on' ]( _event.trigger , _event.selector, function( e, event_params ) {
                           e.stopPropagation();
                           if ( czrapp.isKeydownButNotEnterEvent( e ) ) {
                             return;
@@ -2734,7 +2735,18 @@ var czrapp = czrapp || {};
                   }, 100 ) );
             }, 10 ) );
 
-      }
+      },
+      onSlidingCompleteResetCSS : function( $_el ) {
+            $_el   = $_el ? $_el : $(this);
+            $_el.css({
+                  'display'    : '',
+                  'paddingTop' : '',
+                  'marginTop' : '',
+                  'paddingBottom' : '',
+                  'marginBottom' : '',
+                  'height' : ''
+            });
+      },
   };//_methods{}
 
   czrapp.methods.UserXP = czrapp.methods.UserXP || {};
@@ -2779,7 +2791,10 @@ var czrapp = czrapp || {};
                     var mobMenu = this;
                     czrapp.Value.prototype.initialize.call( mobMenu, null, constructor_options );
                     $.extend( mobMenu, constructor_options || {} );
-                    mobMenu( 'collapsed' );
+                    mobMenu( 'collapsed' ).button
+                        .toggleClass( 'collapsed', true )
+                        .toggleClass( 'active', false )
+                        .attr('aria-expanded', false );
                     mobMenu.bind( function( state ) {
                           return $.Deferred( function() {
                                 var dfd = this;
@@ -2822,6 +2837,24 @@ var czrapp = czrapp || {};
                           { dom_el: mobMenu.container },//dom scope
                           mobMenu //instance where to look for the cb methods
                     );
+                    if ( czrapp.localized.mobileSubmenuExpandOnClick ) {
+                          mobMenu.menu_wrapper.addClass( 'submenu-click-expand' );
+                          czrapp.setupDOMListeners(
+                                [
+                                      {
+                                            trigger   : 'click keydown',
+                                            selector  : mobMenu.button_selectors,
+                                            actions   : function() {
+                                                  var mobMenu = this;
+                                                  mobMenu._collapsibleSubmenu();
+                                            },
+                                            once      : true
+                                      }
+                                ],//actions to execute
+                                { dom_el: mobMenu.container },//dom scope
+                                mobMenu //instance where to look for the cb methods
+                          );
+                    }
                     czrapp.userXP.isResizing.bind( function( is_resizing ) {
                           if ( ! is_resizing )
                             return;
@@ -2850,11 +2883,102 @@ var czrapp = czrapp || {};
                                                   'overflow' : 'auto'
                                             });
                                       }
+                                      czrapp.userXP.onSlidingCompleteResetCSS($(this).toggleClass( 'expanded', expand ));
+
                                       dfd.resolve( expand );
                                 }
                           } );
                     });
                     return dfd.promise();
+              },
+              _collapsibleSubmenu : function() {
+                    var mobMenu     = this;
+
+                    var EVENT_KEY   = '.hu.submenu',
+                        Event       = {
+                          SHOW     : 'show' + EVENT_KEY,
+                          HIDE     : 'hide' + EVENT_KEY,
+                          CLICK    : 'click' + EVENT_KEY,
+                        },
+                        Classname   = {
+                          DD_TOGGLE_ON_CLICK    : 'submenu-click-expand',
+                          SHOWN                 : 'expanded',
+                          DD_TOGGLE             : 'hu-dropdown-toggle',
+                          DD_TOGGLE_WRAPPER     : 'hu-dropdown-toggle-wrapper',
+                          SCREEN_READER         : 'screen-reader-text',
+
+                        },
+                        Selector    = {
+                          DD_TOGGLE_PARENT      : '.menu-item-has-children, .page_item_has_children',
+                          CURRENT_ITEM_ANCESTOR : '.current-menu-ancestor',
+                          SUBMENU               : '.sub-menu'
+                        },
+                        dropdownToggle        = $( '<button />', { 'class': Classname.DD_TOGGLE, 'aria-expanded': false })
+                                                .append( czrapp.localized.submenuTogglerIcon )
+                                                .append( $( '<span />', { 'class': Classname.SCREEN_READER, text: czrapp.localized.i18n.collapsibleExpand } ) ),
+                        dropdownToggleWrapper = $( '<span />', { 'class': Classname.DD_TOGGLE_WRAPPER })
+                                                .append( dropdownToggle );
+                    mobMenu.menu_wrapper.find( Selector.DD_TOGGLE_PARENT ).children('a').after( dropdownToggleWrapper );
+                    mobMenu.menu_wrapper.find( Selector.CURRENT_ITEM_ANCESTOR +'>.'+ Classname.DD_TOGGLE_WRAPPER +' .'+ Classname.DD_TOGGLE )
+                      .addClass( Classname.SHOWN )
+                      .attr( 'aria-expanded', 'true' )
+                      .find( '.'+Classname.SCREEN_READER )
+                        .text( czrapp.localized.i18n.collapsibleCollapse );
+                    mobMenu.menu_wrapper.find( Selector.CURRENT_ITEM_ANCESTOR +'>'+ Selector.SUBMENU ).addClass( Classname.SHOWN );
+                    mobMenu.menu_wrapper.find( Selector.CURRENT_ITEM_ANCESTOR ).addClass( Classname.SHOWN );
+
+                    $(  mobMenu.menu_wrapper )
+                        .on( Event.CLICK, 'a[href="#"]', function(evt) {
+                              if ( ! czrapp.userXP._isMobileScreenSize() )
+                                    return;
+
+                              evt.preventDefault();
+                              evt.stopPropagation();
+                              $(this).next('.'+Classname.DD_TOGGLE_WRAPPER).find('.'+Classname.DD_TOGGLE).trigger( Event.CLICK );
+                        })
+                        .on( Event.CLICK, '.'+Classname.DD_TOGGLE, function( e ) {
+                              e.preventDefault();
+
+                              var $_this             = $( this );
+                              $_this.trigger( $_this.closest( Selector.DD_TOGGLE_PARENT ).hasClass( Classname.SHOWN ) ? Event.HIDE: Event.SHOW  );
+                              _clearMenus( mobMenu, $_this );
+                        })
+                        .on( Event.SHOW+' '+Event.HIDE, '.'+Classname.DD_TOGGLE, function( e ) {
+                              var $_this             = $( this );
+
+                              $_this.closest( Selector.DD_TOGGLE_PARENT ).toggleClass( Classname.SHOWN );
+
+                              $_this.closest('.'+Classname.DD_TOGGLE_WRAPPER).next( Selector.SUBMENU )
+                                .stop()[Event.SHOW == e.type + '.' + e.namespace  ? 'slideDown' : 'slideUp']( {
+                                    duration: 300,
+                                    complete: function() {
+                                      var _to_expand =  'false' === $_this.attr( 'aria-expanded' );
+                                          $submenu   = $(this);
+
+                                      $_this.attr( 'aria-expanded', _to_expand )
+                                            .find( '.'+Classname.SCREEN_READER )
+                                                .text( _to_expand ? czrapp.localized.i18n.collapsibleCollapse : czrapp.localized.i18n.collapsibleExpand );
+
+                                      $submenu.toggleClass( Classname.SHOWN );
+                                      czrapp.userXP.onSlidingCompleteResetCSS($submenu);
+                                    }
+                                });
+                        });
+                    var _clearMenus = function( mobMenu, $_toggle ) {
+                      var _parentsToNotClear = $.makeArray( $_toggle.parents( Selector.DD_TOGGLE_PARENT ) ),
+                          _toggles           = $.makeArray( $( '.'+Classname.DD_TOGGLE, mobMenu.menu_wrapper ) );
+
+                      for (var i = 0; i < _toggles.length; i++) {
+                           var _parent = $(_toggles[i]).closest( Selector.DD_TOGGLE_PARENT )[0];
+
+                           if (!$(_parent).hasClass( Classname.SHOWN ) || $.inArray(_parent, _parentsToNotClear ) > -1 ){
+                              continue;
+                           }
+
+                          $(_toggles[i]).trigger( Event.HIDE );
+                      }
+                    };
+
               }
         }//MobileCTOR
 
@@ -3901,21 +4025,22 @@ var czrapp = czrapp || {};
                           }, 1000 );
                     }
               );
-              $('.nav ul.sub-menu').hide();
               $('.nav li').hover(
                     function() {
                           if ( czrapp.userXP._isMobileScreenSize() )
                             return;
-                          $(this).children('ul.sub-menu').stop().slideDown('fast').css( 'opacity', 1 );
+                          $(this).children('ul.sub-menu').hide().stop().slideDown({
+                                  duration : 'fast',
+                                  complete : czrapp.userXP.onSlidingCompleteResetCSS
+                          })
+                          .css( 'opacity', 1 );
                     },
                     function() {
                           if ( czrapp.userXP._isMobileScreenSize() )
                             return;
                           $(this).children('ul.sub-menu').stop().css( 'opacity', '' ).slideUp( {
-                                duration : 'fast',
-                                complete : function() {
-                                      $(this).hide();
-                                }
+                                  duration : 'fast',
+                                  complete : czrapp.userXP.onSlidingCompleteResetCSS
                           });
                     }
               );

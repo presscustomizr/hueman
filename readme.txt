@@ -1,4 +1,4 @@
-# Hueman v3.4.2
+# Hueman v3.4.3
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
@@ -73,6 +73,9 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 # Changelog
+= 3.4.3 October 8th 2018 =
+* added : a new option for collapsible submenus in mobiles
+
 = 3.4.2 October 7th 2018 =
 * Fix: Gutenberg reponsive video embed compatiblity issue. fixes #698
 * Imp : better Nimble section builder integration
