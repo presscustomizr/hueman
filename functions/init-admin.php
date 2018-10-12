@@ -48,7 +48,7 @@ function hu_admin_style() {
 /* ------------------------------------------------------------------------- *
  *  Loads Required Plugin Class and Setup
 /* ------------------------------------------------------------------------- */
-if ( ( ! defined( 'HU_IS_PRO' ) || ! HU_IS_PRO ) && is_admin() && ! hu_is_customizing() && ! hu_user_started_with_current_version() ) {
+if ( ( ! defined( 'HU_IS_PRO' ) || ! HU_IS_PRO ) && is_admin() && ! hu_is_customizing() && ! hu_is_plugin_active('nimble-builder/nimble-builder.php') ) {
     /**
     * Include the TGM_Plugin_Activation class.
     */
