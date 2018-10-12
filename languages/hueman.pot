@@ -2,9 +2,9 @@
 # This file is distributed under the GNU General Public License v3.0.=!>
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman 3.4.3\n"
+"Project-Id-Version: Hueman 3.4.4\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2018-10-08 19:23:13+00:00\n"
+"POT-Creation-Date: 2018-10-12 12:10:17+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -209,37 +209,29 @@ msgid ""
 "(Mac)."
 msgstr ""
 
-#: functions/admin/class-admin-update-notification.php:92
+#: functions/admin/class-admin-update-notification.php:96
 msgid "Good, you've just upgraded to"
 msgstr ""
 
-#: functions/admin/class-admin-update-notification.php:94
+#: functions/admin/class-admin-update-notification.php:98
 msgid "version"
 msgstr ""
 
-#: functions/admin/class-admin-update-notification.php:103
+#: functions/admin/class-admin-update-notification.php:107
 msgid "We'd like to introduce the new features we've been working on."
 msgstr ""
 
-#: functions/admin/class-admin-update-notification.php:105
+#: functions/admin/class-admin-update-notification.php:109
 msgid "Read the latest release notes"
 msgstr ""
 
-#: functions/admin/class-admin-update-notification.php:108
+#: functions/admin/class-admin-update-notification.php:112
 #: functions/class-utils-settings-map.php:1694
 msgid "Upgrade to Hueman Pro"
 msgstr ""
 
-#: functions/admin/class-admin-update-notification.php:115
+#: functions/admin/class-admin-update-notification.php:119
 msgid "close"
-msgstr ""
-
-#: functions/admin/class-admin-update-notification.php:122
-msgid "If you like %1$s please leave us a %2$s rating. A huge thanks in advance!"
-msgstr ""
-
-#: functions/admin/class-admin-update-notification.php:123
-msgid "the Hueman theme"
 msgstr ""
 
 #: functions/admin/class-tgm-plugin-activation.php:508
@@ -379,10 +371,11 @@ msgstr ""
 
 #: functions/admin/class-tgm-plugin-activation.php:1328
 msgid ""
-"It allows you to drag and drop beautiful pre-designed sections, or create "
-"your own sections with modules like Google map or a contact form, in live "
-"preview from the WordPress customizer. You'll find a quick introduction of "
-"the plugin %1$s."
+"It allows you to drag and drop pre-built sections, or create your own "
+"sections in live preview from the WordPress customizer. You can easily "
+"create column layouts and add content like buttons, icons, Google map and "
+"even contact forms in any page.  You'll find a quick introduction of the "
+"plugin %1$s."
 msgstr ""
 
 #: functions/admin/class-tgm-plugin-activation.php:1329

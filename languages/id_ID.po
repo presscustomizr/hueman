@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman v3.4.3\n"
+"Project-Id-Version: Hueman v3.4.4\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2018-10-08 15:46:50+00:00\n"
+"POT-Creation-Date: 2018-10-12 12:10:17+00:00\n"
 "PO-Revision-Date: 2016-08-31 16:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: Press Customizr\n"
@@ -239,40 +239,30 @@ msgstr ""
 "Untuk menyalin informasi sistem, klik dibawah ini kemudian tekan Ctrl + C "
 "(PC) atau Cmd + C (Mac)."
 
-#: functions/admin/class-admin-update-notification.php:92
+#: functions/admin/class-admin-update-notification.php:96
 msgid "Good, you've just upgraded to"
 msgstr "Bagus, Anda baru saja upgrade ke"
 
-#: functions/admin/class-admin-update-notification.php:94
+#: functions/admin/class-admin-update-notification.php:98
 msgid "version"
 msgstr "versi"
 
-#: functions/admin/class-admin-update-notification.php:103
+#: functions/admin/class-admin-update-notification.php:107
 msgid "We'd like to introduce the new features we've been working on."
 msgstr "Kami ingin memperkenalkan fitur baru yang telah kami selesaikan."
 
-#: functions/admin/class-admin-update-notification.php:105
+#: functions/admin/class-admin-update-notification.php:109
 msgid "Read the latest release notes"
 msgstr "Bada catatan rilis terbaru"
 
-#: functions/admin/class-admin-update-notification.php:108
+#: functions/admin/class-admin-update-notification.php:112
 #: functions/class-utils-settings-map.php:1694
 msgid "Upgrade to Hueman Pro"
 msgstr ""
 
-#: functions/admin/class-admin-update-notification.php:115
+#: functions/admin/class-admin-update-notification.php:119
 msgid "close"
 msgstr "tutup"
-
-#: functions/admin/class-admin-update-notification.php:122
-msgid ""
-"If you like %1$s please leave us a %2$s rating. A huge thanks in advance!"
-msgstr ""
-
-#: functions/admin/class-admin-update-notification.php:123
-#, fuzzy
-msgid "the Hueman theme"
-msgstr "tema Hueman"
 
 #: functions/admin/class-tgm-plugin-activation.php:508
 #: functions/init-admin.php:120
@@ -414,10 +404,11 @@ msgstr "Pengaturan sidebar untuk tema Hueman."
 
 #: functions/admin/class-tgm-plugin-activation.php:1328
 msgid ""
-"It allows you to drag and drop beautiful pre-designed sections, or create "
-"your own sections with modules like Google map or a contact form, in live "
-"preview from the WordPress customizer. You'll find a quick introduction of "
-"the plugin %1$s."
+"It allows you to drag and drop pre-built sections, or create your own "
+"sections in live preview from the WordPress customizer. You can easily "
+"create column layouts and add content like buttons, icons, Google map and "
+"even contact forms in any page.  You'll find a quick introduction of the "
+"plugin %1$s."
 msgstr ""
 
 #: functions/admin/class-tgm-plugin-activation.php:1329
@@ -3208,6 +3199,10 @@ msgstr[1] ""
 msgctxt "as in: \"version nr unknown\""
 msgid "unknown"
 msgstr ""
+
+#, fuzzy
+#~ msgid "the Hueman theme"
+#~ msgstr "tema Hueman"
 
 #, fuzzy
 #~ msgid "Hueman Addons"

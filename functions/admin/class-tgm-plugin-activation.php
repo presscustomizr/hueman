@@ -1325,7 +1325,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
             $rendered,
             __( 'Nimble is a section builder companion plugin for the Hueman theme.',  'hueman'),
             sprintf(
-                __( 'It allows you to drag and drop beautiful pre-designed sections, or create your own sections with modules like Google map or a contact form, in live preview from the WordPress customizer. You\'ll find a quick introduction of the plugin %1$s.', 'hueman' ),
+                __( 'It allows you to drag and drop pre-built sections, or create your own sections in live preview from the WordPress customizer. You can easily create column layouts and add content like buttons, icons, Google map and even contact forms in any page.  You\'ll find a quick introduction of the plugin %1$s.', 'hueman' ),
                 sprintf('<a href="%1$s" target="_blank" title="%2$s">%2$s</a>', esc_url('docs.presscustomizr.com/article/337-getting-started-with-the-nimble-builder-plugin'), __('here', 'hueman') )
             ),
             __( "The plugin has been designed to integrate perfectly with the Hueman theme. Lightweight and safe.", 'hueman')

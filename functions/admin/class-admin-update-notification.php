@@ -37,8 +37,6 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
         function hu_may_be_display_update_notice() {
             if ( ! defined('DISPLAY_UPDATE_NOTIFICATION') || ! DISPLAY_UPDATE_NOTIFICATION )
               return;
-            if ( ! hu_is_plugin_active('nimble-builder/nimble-builder.php') && class_exists('TGM_Plugin_Activation') && ! TGM_Plugin_Activation::get_instance()->hu_is_notice_dismissed() )
-              return;
 
             $opt_name                   = 'last_update_notice';
             $last_update_notice_values  = hu_get_option($opt_name);
@@ -83,6 +81,9 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
             //$show_new_notice = ( defined( 'CZR_DEV' ) && CZR_DEV ) ? true : $show_new_notice;
 
             if ( ! $show_new_notice )
+              return;
+
+            if ( ! hu_is_plugin_active('nimble-builder/nimble-builder.php') && class_exists('TGM_Plugin_Activation') && ! TGM_Plugin_Activation::get_instance()->hu_is_notice_dismissed() )
               return;
 
             ob_start();
