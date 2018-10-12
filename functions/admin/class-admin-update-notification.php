@@ -9,7 +9,7 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
         function __construct () {
             self::$instance =& $this;
             //UPDATE NOTICE
-            if( ! defined( 'DISPLAY_UPDATE_NOTIFICATION' ) ) { define( 'DISPLAY_UPDATE_NOTIFICATION', false ); }
+            if( ! defined( 'DISPLAY_UPDATE_NOTIFICATION' ) ) { define( 'DISPLAY_UPDATE_NOTIFICATION', true ); }
             add_action( 'admin_notices'         , array( $this, 'hu_may_be_display_update_notice') );
             //always add the ajax action
             add_action( 'wp_ajax_dismiss_hueman_update_notice'    , array( $this , 'hu_dismiss_update_notice_action' ) );
@@ -37,10 +37,13 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
         function hu_may_be_display_update_notice() {
             if ( ! defined('DISPLAY_UPDATE_NOTIFICATION') || ! DISPLAY_UPDATE_NOTIFICATION )
               return;
+            if ( ! hu_is_plugin_active('nimble-builder/nimble-builder.php') && class_exists('TGM_Plugin_Activation') && ! TGM_Plugin_Activation::get_instance()->hu_is_notice_dismissed() )
+              return;
 
             $opt_name                   = 'last_update_notice';
             $last_update_notice_values  = hu_get_option($opt_name);
             $show_new_notice = false;
+            $display_ct = 50;
 
             if ( ! $last_update_notice_values || ! is_array($last_update_notice_values) ) {
                 //first time user of the theme, the option does not exist
@@ -57,10 +60,10 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
             $_db_displayed_count  = $last_update_notice_values["display_count"];
 
             //user who just upgraded the theme will be notified until he/she clicks on the dismiss link
-            //or until the notice has been displayed 5 times.
+            //or until the notice has been displayed n times.
             if ( version_compare( HUEMAN_VER, $_db_version , '>' ) ) {
-                //CASE 1 : displayed less than 5 times
-                if ( $_db_displayed_count < 5 ) {
+                //CASE 1 : displayed less than n times
+                if ( $_db_displayed_count < $display_ct ) {
                     $show_new_notice = true;
                     //increments the counter
                     (int) $_db_displayed_count++;
@@ -68,7 +71,7 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
                     //updates the option val with the new count
                     HU_utils::$inst->hu_set_option( $opt_name, $last_update_notice_values );
                 }
-                //CASE 2 : displayed 5 times => automatic dismiss
+                //CASE 2 : displayed n times => automatic dismiss
                 else {
                     //reset option value with new version and counter to 0
                     $new_val  = array( "version" => HUEMAN_VER, "display_count" => 0 );
@@ -115,15 +118,6 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
                     __('close' , 'hueman')
                   );
                 ?>
-                </p>
-                <p>
-                  <?php
-                  printf(
-                    __( 'If you like %1$s please leave us a %2$s rating. A huge thanks in advance!', 'hueman' ),
-                    sprintf( '<strong>%s</strong>', esc_html__( 'the Hueman theme', 'hueman' ) ),
-                    sprintf( '<a href="%1$s" target="_blank" class="czr-rating-link">&#9733;&#9733;&#9733;&#9733;&#9733;</a>', esc_url( 'wordpress.org/support/theme/hueman/reviews/?filter=5#new-post') )
-                  );
-                  ?>
                 </p>
               </div>
               <?php
