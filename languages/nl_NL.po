@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Hueman\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2018-10-12 12:10:17+00:00\n"
+"POT-Creation-Date: 2018-10-13 09:13:22+00:00\n"
 "PO-Revision-Date: 2016-11-04 13:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -242,18 +242,18 @@ msgid "close"
 msgstr "sluit"
 
 #: functions/admin/class-tgm-plugin-activation.php:508
-#: functions/init-admin.php:120
+#: functions/init-admin.php:121
 msgid "Install Required Plugins"
 msgstr "Installeer de benodigde plugins"
 
 #: functions/admin/class-tgm-plugin-activation.php:509
-#: functions/init-admin.php:121
+#: functions/init-admin.php:122
 msgid "Install Plugins"
 msgstr "Plugins installeren"
 
 #. translators: %s: plugin name.
 #: functions/admin/class-tgm-plugin-activation.php:511
-#: functions/init-admin.php:122
+#: functions/init-admin.php:123
 msgid "Installing Plugin: %s"
 msgstr "Plugin %s wordt ge&#239;nstalleerd."
 
@@ -263,13 +263,13 @@ msgid "Updating Plugin: %s"
 msgstr ""
 
 #: functions/admin/class-tgm-plugin-activation.php:514
-#: functions/init-admin.php:123
+#: functions/init-admin.php:124
 msgid "Something went wrong with the plugin API."
 msgstr "Er is iets fout gegaan met de plugin API."
 
 #. translators: 1: plugin name(s).
 #: functions/admin/class-tgm-plugin-activation.php:551
-#: functions/init-admin.php:132
+#: functions/init-admin.php:133
 msgid "Begin installing plugin"
 msgid_plural "Begin installing plugins"
 msgstr[0] "Begin met de installatie van de plugin"
@@ -288,7 +288,7 @@ msgstr[0] "Begin met activeren van plugin"
 msgstr[1] "Begin met activeren van plugins"
 
 #: functions/admin/class-tgm-plugin-activation.php:566
-#: functions/init-admin.php:134
+#: functions/init-admin.php:135
 msgid "Return to Required Plugins Installer"
 msgstr "Ga terug naar de Benodigde Plugins Installer"
 
@@ -301,7 +301,7 @@ msgstr "Ga terug naar het dashboard"
 
 #: functions/admin/class-tgm-plugin-activation.php:568
 #: functions/admin/class-tgm-plugin-activation.php:3377
-#: functions/init-admin.php:135
+#: functions/init-admin.php:136
 msgid "Plugin activated successfully."
 msgstr "Plugin succesvol geactiveerd."
 
@@ -2453,20 +2453,20 @@ msgstr ""
 msgid "Pick the context(s) where this widget area will be displayed."
 msgstr ""
 
-#: functions/init-admin.php:124
+#: functions/init-admin.php:125
 msgid "The Hueman theme requires the following plugin: %1$s."
 msgid_plural "This theme requires the following plugins : %1$s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: functions/init-admin.php:125
+#: functions/init-admin.php:126
 msgid ""
 "The Hueman theme recommends the Nimble drag-and-drop section builder : %1$s."
 msgid_plural "This theme recommends the following plugins : %1$s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: functions/init-admin.php:126
+#: functions/init-admin.php:127
 msgid ""
 "Sorry, but you do not have the correct permissions to install the %s plugin. "
 "Contact the administrator of this site for help on getting the plugin "
@@ -2482,13 +2482,13 @@ msgstr[1] ""
 "Je hebt geen toestemming om de plugins %s  te installeren. Neem contact op "
 "met de administrator"
 
-#: functions/init-admin.php:127
+#: functions/init-admin.php:128
 msgid "The Nimble Builder required plugin is currently inactive: %1$s."
 msgid_plural "The following required plugins are currently inactive: %1$s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: functions/init-admin.php:128
+#: functions/init-admin.php:129
 msgid ""
 "The Nimble Builder plugin, recommended for the Hueman theme, is installed "
 "but currently inactive : %1$s."
@@ -2496,7 +2496,7 @@ msgid_plural "The following recommended plugins are currently inactive: %1$s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: functions/init-admin.php:129
+#: functions/init-admin.php:130
 msgid ""
 "Sorry, but you do not have the correct permissions to activate the %s "
 "plugin. Contact the administrator of this site for help on getting the "
@@ -2512,7 +2512,7 @@ msgstr[1] ""
 "Je hebt niet de juiste rechten om de plugins  %s te activeren. Neem contact "
 "op met de administrator"
 
-#: functions/init-admin.php:130
+#: functions/init-admin.php:131
 #, fuzzy
 msgid ""
 "The Nimble Builder plugin needs to be updated to its latest version to "
@@ -2527,7 +2527,7 @@ msgstr[1] ""
 "De volgende plugins moeten bijgewerkt worden om goed te kunnen werken bij "
 "dit thema:  %1$s."
 
-#: functions/init-admin.php:131
+#: functions/init-admin.php:132
 msgid ""
 "Sorry, but you do not have the correct permissions to update the %s plugin. "
 "Contact the administrator of this site for help on getting the plugin "
@@ -2543,21 +2543,21 @@ msgstr[1] ""
 "Je hebt niet de juiste rechten om de plugins %s bij te werken. Neem contact "
 "op met de administrator"
 
-#: functions/init-admin.php:133
+#: functions/init-admin.php:134
 msgid "Activate Nimble Builder"
 msgid_plural "Activate installed plugins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: functions/init-admin.php:136
+#: functions/init-admin.php:137
 msgid "All plugins installed and activated successfully. %s"
 msgstr "Alle plugins zijn succesvol geïnstalleerd en geactiveerd. %s"
 
-#: functions/init-admin.php:183
+#: functions/init-admin.php:184
 msgid "Select a widget zone for the primary sidebar."
 msgstr "Selecteer een widget zone voor de primaire sidebar."
 
-#: functions/init-admin.php:183
+#: functions/init-admin.php:184
 msgid ""
 "Notes : 1)This will override any default settings of the customizer options "
 "panel. 2) The primary sidebar is placed on the left in a 3 columns layout. "
@@ -2569,11 +2569,11 @@ msgstr ""
 "layout. Kan rechts bij een tweekoloms layout wanneer de inhoud zich links "
 "bevindt."
 
-#: functions/init-admin.php:189
+#: functions/init-admin.php:190
 msgid "Select a widget zone for the secondary sidebar."
 msgstr "Selecteer een widget zone voor de tweede sidebar."
 
-#: functions/init-admin.php:189
+#: functions/init-admin.php:190
 msgid ""
 "Notes : 1)This will override any default settings of the customizer options "
 "panel. 2) The secondary sidebar is placed on the right in a 3 columns layout."
@@ -2582,21 +2582,21 @@ msgstr ""
 "opties paneel. 2) De tweede sidebar bevindt zich rechts in een driekoloms "
 "layout."
 
-#: functions/init-admin.php:206
+#: functions/init-admin.php:207
 msgid "Select a widget zone for the left sidebar."
 msgstr ""
 
-#: functions/init-admin.php:206 functions/init-admin.php:212
-#: functions/init-admin.php:268
+#: functions/init-admin.php:207 functions/init-admin.php:213
+#: functions/init-admin.php:269
 msgid ""
 "This will override any default settings of the customizer options panel."
 msgstr ""
 
-#: functions/init-admin.php:212
+#: functions/init-admin.php:213
 msgid "Select a widget zone for the right sidebar."
 msgstr ""
 
-#: functions/init-admin.php:268
+#: functions/init-admin.php:269
 msgid "Select a layout for this page."
 msgstr ""
 

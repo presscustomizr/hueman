@@ -1,4 +1,4 @@
-# Hueman v3.4.4
+# Hueman v3.4.5
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
@@ -73,6 +73,9 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 # Changelog
+= 3.4.5 October 13th 2018 =
+* fixed : prefixed TGMPA class with HU_ to fix potential collision with other plugins using the same class. see issue https://github.com/presscustomizr/customizr/issues/1603
+
 = 3.4.4 October 12th 2018 =
 * improved : display only one admin notification ( if any ) at a time
 * improved : various minor plugin compatibility improvements
