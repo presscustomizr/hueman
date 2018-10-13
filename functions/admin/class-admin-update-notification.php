@@ -82,8 +82,8 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
 
             if ( ! $show_new_notice )
               return;
-
-            if ( ! hu_is_plugin_active('nimble-builder/nimble-builder.php') && class_exists('TGM_Plugin_Activation') && ! TGM_Plugin_Activation::get_instance()->hu_is_notice_dismissed() )
+            //prefixed HU_Plugin_Activation because of the possible issue : https://github.com/presscustomizr/customizr/issues/1603
+            if ( ! hu_is_plugin_active('nimble-builder/nimble-builder.php') && class_exists('HU_Plugin_Activation') && ! HU_Plugin_Activation::get_instance()->hu_is_notice_dismissed() )
               return;
 
             ob_start();

@@ -31,8 +31,8 @@
   along with this program; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
-if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
+//prefixed HU_Plugin_Activation because of the possible issue : https://github.com/presscustomizr/customizr/issues/1603
+if ( ! class_exists( 'HU_Plugin_Activation' ) ) {
 
   /**
    * Automatic plugin installation and activation library.
@@ -47,7 +47,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
    * @author  Thomas Griffin
    * @author  Gary Jones
    */
-  class TGM_Plugin_Activation {
+  class HU_Plugin_Activation {
     /**
      * TGMPA version number.
      *
@@ -80,7 +80,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
      *
      * @since 1.0.0
      *
-     * @var TGM_Plugin_Activation
+     * @var HU_Plugin_Activation
      */
     public static $instance;
 
@@ -250,7 +250,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
      *
      * @since 1.0.0
      *
-     * @see TGM_Plugin_Activation::init()
+     * @see HU_Plugin_Activation::init()
      */
     public function __construct() {
       // Set the current WordPress version.
@@ -485,9 +485,9 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
      *
      * @since 2.0.0
      *
-     * @see TGM_Plugin_Activation::admin_menu()
-     * @see TGM_Plugin_Activation::notices()
-     * @see TGM_Plugin_Activation::styles()
+     * @see HU_Plugin_Activation::admin_menu()
+     * @see HU_Plugin_Activation::notices()
+     * @see HU_Plugin_Activation::styles()
      */
     public function init() {
       /**
@@ -786,8 +786,8 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
      *
      * @since 1.0.0
      *
-     * @see TGM_Plugin_Activation::init()
-     * @see TGM_Plugin_Activation::install_plugins_page()
+     * @see HU_Plugin_Activation::init()
+     * @see HU_Plugin_Activation::install_plugins_page()
      *
      * @return null Return early if user lacks capability to install a plugin.
      */
@@ -2209,7 +2209,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
      *
      * @since 2.4.0
      *
-     * @return \TGM_Plugin_Activation The TGM_Plugin_Activation object.
+     * @return \HU_Plugin_Activation The HU_Plugin_Activation object.
      */
     public static function get_instance() {
       if ( ! isset( self::$instance ) && ! ( self::$instance instanceof self ) ) {
@@ -2227,7 +2227,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
      * @since 2.5.0
      */
     function load_tgm_plugin_activation() {
-      $GLOBALS['tgmpa'] = TGM_Plugin_Activation::get_instance();
+      $GLOBALS['tgmpa'] = HU_Plugin_Activation::get_instance();
     }
   }
 
@@ -3216,15 +3216,15 @@ if ( ! class_exists( 'TGMPA_List_Table' ) ) {
      * Retrieve plugin data, given the plugin name.
      *
      * @since      2.2.0
-     * @deprecated 2.5.0 use {@see TGM_Plugin_Activation::_get_plugin_data_from_name()} instead.
-     * @see        TGM_Plugin_Activation::_get_plugin_data_from_name()
+     * @deprecated 2.5.0 use {@see HU_Plugin_Activation::_get_plugin_data_from_name()} instead.
+     * @see        HU_Plugin_Activation::_get_plugin_data_from_name()
      *
      * @param string $name Name of the plugin, as it was registered.
      * @param string $data Optional. Array key of plugin data to return. Default is slug.
      * @return string|boolean Plugin slug if found, false otherwise.
      */
     protected function _get_plugin_data_from_name( $name, $data = 'slug' ) {
-      _deprecated_function( __FUNCTION__, 'TGMPA 2.5.0', 'TGM_Plugin_Activation::_get_plugin_data_from_name()' );
+      _deprecated_function( __FUNCTION__, 'TGMPA 2.5.0', 'HU_Plugin_Activation::_get_plugin_data_from_name()' );
 
       return $this->tgmpa->_get_plugin_data_from_name( $name, $data );
     }

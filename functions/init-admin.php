@@ -50,8 +50,9 @@ function hu_admin_style() {
 /* ------------------------------------------------------------------------- */
 if ( ( ! defined( 'HU_IS_PRO' ) || ! HU_IS_PRO ) && is_admin() && ! hu_is_customizing() && ! hu_is_plugin_active('nimble-builder/nimble-builder.php') ) {
     /**
-    * Include the TGM_Plugin_Activation class.
+    * Include the HU_Plugin_Activation class.
     */
+   //prefixed HU_Plugin_Activation because of the possible issue : https://github.com/presscustomizr/customizr/issues/1603
     load_template( get_template_directory() . '/functions/admin/class-tgm-plugin-activation.php' );
     add_action( 'tgmpa_register', 'hu_register_required_plugins' );
 }
@@ -67,7 +68,7 @@ if ( ( ! defined( 'HU_IS_PRO' ) || ! HU_IS_PRO ) && is_admin() && ! hu_is_custom
  * arrays.
  *
  * This function is hooked into tgmpa_init, which is fired within the
- * TGM_Plugin_Activation class constructor.
+ * HU_Plugin_Activation class constructor.
  */
 function hu_register_required_plugins() {
 
