@@ -287,10 +287,17 @@ a + span.hu-external:after {
     width: 100vw;
     max-width: 100vw;
     position: relative;
-    left: 50%;
-    transform: translateX(-50%);
     margin-left: 0;
     margin-right: 0;
+}
+.full-width.col-1c .wp-block-cover-image.alignfull:not(.has-parallax) {
+    left: 50%;
+    -moz-transform: translateX(-50)
+    -webkit-transform: translateX(-50);
+    transform: translateX(-50%);
+}
+.full-width.col-1c .wp-block-cover-image.alignfull.has-parallax:not(.hu-alignfull-p) {
+    width: 100%;
 }
 /* alignwide and alignfull in boxed layouts */
 /* only reset the .pad container horizontal padding*/
