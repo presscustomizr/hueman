@@ -267,3 +267,37 @@ a + span.hu-external:after {
   text-rendering: auto;
   line-height: 1;
 }
+
+/*  Gutenberg
+/* ------------------------------------ */
+/* cover images */
+/*
+ * Real alignfull and alignwide
+ * allowed only in layouts with no sidebars and full-width
+ */
+.full-width.col-1c #wrapper {
+    overflow-x: hidden;
+}
+.content .post,
+.content .page {
+    overflow: visible;
+}
+/* alignfull */
+.full-width.col-1c .wp-block-cover-image.alignfull {
+    width: 100vw;
+    max-width: 100vw;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-left: 0;
+    margin-right: 0;
+}
+/* alignwide and alignfull in boxed layouts */
+/* only reset the .pad container horizontal padding*/
+.entry-inner > .wp-block-cover-image.alignfull,
+.entry-inner > .wp-block-cover-image.alignwide {
+    margin-right: -30px;
+    margin-left: -30px;
+    clear: both;
+    width: auto;
+}

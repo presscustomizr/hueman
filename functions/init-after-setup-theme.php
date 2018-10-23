@@ -84,6 +84,9 @@ if ( ! function_exists( 'hu_setup' ) ) {
       add_theme_support( 'customize-selective-refresh-widgets' );
     }
 
+    // Add support for Gutenberg cover image sizes
+    add_theme_support( 'align-wide' );
+
     // Thumbnail sizes
     add_image_size( 'thumb-small', 160, 160, true );
     add_image_size( 'thumb-standard', 320, 320, true );
