@@ -292,7 +292,7 @@ a + span.hu-external:after {
 }
 .full-width.col-1c .wp-block-cover-image.alignfull:not(.has-parallax) {
     left: 50%;
-    -moz-transform: translateX(-50)
+    -moz-transform: translateX(-50);
     -webkit-transform: translateX(-50);
     transform: translateX(-50%);
 }
