@@ -86,6 +86,8 @@ if ( ! function_exists( 'hu_setup' ) ) {
 
     // Add support for Gutenberg cover image sizes
     add_theme_support( 'align-wide' );
+    // Add support for Gutenberg responsive embeds
+    add_theme_support( 'responsive-embeds' );
 
     // Thumbnail sizes
     add_image_size( 'thumb-small', 160, 160, true );
