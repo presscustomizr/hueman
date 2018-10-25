@@ -141,6 +141,7 @@ if (!Array.from) {
     };
   }());
 }
+
 (function ( $ ) {
 
   var pluginPrefix = 'original',
@@ -4046,7 +4047,7 @@ var czrapp = czrapp || {};
               );
         },
         gutenbergAlignfull : function() {
-              var _coverImageSelector            = '.full-width.col-1c .wp-block-cover-image.alignfull',
+              var _coverImageSelector            = [ '.full-width.col-1c .wp-block-cover-image.alignfull', '.full-width.col-1c .wp-block-cover.alignfull' ].join(','),
                   _coverWParallaxImageSelector   = _coverImageSelector + '.has-parallax',
                   _classParallaxTreatmentApplied = 'hu-alignfull-p',
                   _styleId                       = 'hu-gutenberg-alignfull',

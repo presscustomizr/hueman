@@ -283,26 +283,32 @@ a + span.hu-external:after {
     overflow: visible;
 }
 /* alignfull */
-.full-width.col-1c .wp-block-cover-image.alignfull {
+/*
+the cover image block has been renamed cover. @see https://github.com/WordPress/gutenberg/pull/10659
+but posts created with the former cover-image block will still use the wp-block-cover-image class
+ */
+.full-width.col-1c .wp-block-cover-image.alignfull, .full-width.col-1c .wp-block-cover.alignfull {
     width: 100vw;
     max-width: 100vw;
     position: relative;
     margin-left: 0;
     margin-right: 0;
 }
-.full-width.col-1c .wp-block-cover-image.alignfull:not(.has-parallax) {
+.full-width.col-1c .wp-block-cover-image.alignfull:not(.has-parallax), .full-width.col-1c .wp-block-cover.alignfull:not(.has-parallax) {
     left: 50%;
     -moz-transform: translateX(-50);
     -webkit-transform: translateX(-50);
     transform: translateX(-50%);
 }
-.full-width.col-1c .wp-block-cover-image.alignfull.has-parallax:not(.hu-alignfull-p) {
+.full-width.col-1c .wp-block-cover-image.alignfull.has-parallax:not(.hu-alignfull-p), .full-width.col-1c .wp-block-cover.alignfull.has-parallax:not(.hu-alignfull-p) {
     width: 100%;
 }
 /* alignwide and alignfull in boxed layouts */
 /* only reset the .pad container horizontal padding*/
 .entry-inner > .wp-block-cover-image.alignfull,
-.entry-inner > .wp-block-cover-image.alignwide {
+.entry-inner > .wp-block-cover-image.alignwide,
+.entry-inner > .wp-block-cover.alignfull,
+.entry-inner > .wp-block-cover.alignwide {
     margin-right: -30px;
     margin-left: -30px;
     clear: both;
