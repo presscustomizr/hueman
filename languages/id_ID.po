@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman v3.4.5\n"
+"Project-Id-Version: Hueman v3.4.6\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2018-10-13 09:13:22+00:00\n"
+"POT-Creation-Date: 2018-10-25 09:20:14+00:00\n"
 "PO-Revision-Date: 2016-08-31 16:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: Press Customizr\n"
@@ -240,7 +240,8 @@ msgstr ""
 "(PC) atau Cmd + C (Mac)."
 
 #: functions/admin/class-admin-update-notification.php:96
-msgid "Good, you've just upgraded to"
+#, fuzzy
+msgid "Good, you've recently upgraded to"
 msgstr "Bagus, Anda baru saja upgrade ke"
 
 #: functions/admin/class-admin-update-notification.php:98
@@ -795,7 +796,7 @@ msgid "Body Background"
 msgstr "Background Body"
 
 #: functions/class-utils-settings-map.php:324
-#: functions/init-after-setup-theme.php:203
+#: functions/init-after-setup-theme.php:206
 msgid "Set the website background color"
 msgstr "Atur warna background website"
 
@@ -822,7 +823,7 @@ msgid "Open external links in a new tab"
 msgstr ""
 
 #: functions/class-utils-settings-map.php:388
-#: functions/init-after-setup-theme.php:163
+#: functions/init-after-setup-theme.php:166
 msgid "Create and organize your social links"
 msgstr "Buat dan organisir link medsos Anda"
 
@@ -1835,12 +1836,12 @@ msgid "SITE ICON"
 msgstr "IKON SITUS"
 
 #: functions/czr/class-czr-init.php:461
-#: functions/init-after-setup-theme.php:242
+#: functions/init-after-setup-theme.php:245
 msgid "Create And Order Widget Areas"
 msgstr "Buat dan Susun Area Widget"
 
 #: functions/czr/class-czr-init.php:465 functions/czr/class-czr-init.php:496
-#: functions/init-after-setup-theme.php:244
+#: functions/init-after-setup-theme.php:247
 msgid ""
 "You must save changes for the new areas to appear below. <br /><i>Warning: "
 "Make sure each area has a unique ID.</i>"
@@ -2651,29 +2652,29 @@ msgstr "Pilih zona widget untuk sidebar kanan."
 msgid "Select a layout for this page."
 msgstr "Pilih layout untuk laman ini."
 
-#: functions/init-after-setup-theme.php:97
+#: functions/init-after-setup-theme.php:100
 msgid "Topbar"
 msgstr ""
 
-#: functions/init-after-setup-theme.php:98
+#: functions/init-after-setup-theme.php:101
 msgid ""
 "Mobile. You can set a specific menu for mobile devices. If not set, the "
 "theme will use the menu assigned to the Topbar, or the Header."
 msgstr ""
 
-#: functions/init-after-setup-theme.php:99
+#: functions/init-after-setup-theme.php:102
 msgid "Header"
 msgstr "Header"
 
-#: functions/init-after-setup-theme.php:100
+#: functions/init-after-setup-theme.php:103
 msgid "Footer"
 msgstr "Footer"
 
-#: functions/init-after-setup-theme.php:156
+#: functions/init-after-setup-theme.php:159
 msgid "Social links"
 msgstr "Link Medsos"
 
-#: functions/init-after-setup-theme.php:202
+#: functions/init-after-setup-theme.php:205
 #, fuzzy
 msgid "Site Wide Body Background"
 msgstr "Background Body"

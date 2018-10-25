@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Hueman\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2018-10-13 09:13:22+00:00\n"
+"POT-Creation-Date: 2018-10-25 09:20:14+00:00\n"
 "PO-Revision-Date: 2016-11-04 13:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -217,7 +217,7 @@ msgid ""
 msgstr ""
 
 #: functions/admin/class-admin-update-notification.php:96
-msgid "Good, you've just upgraded to"
+msgid "Good, you've recently upgraded to"
 msgstr ""
 
 #: functions/admin/class-admin-update-notification.php:98
@@ -772,7 +772,7 @@ msgid "Body Background"
 msgstr "Body Achtergrond"
 
 #: functions/class-utils-settings-map.php:324
-#: functions/init-after-setup-theme.php:203
+#: functions/init-after-setup-theme.php:206
 msgid "Set the website background color"
 msgstr ""
 
@@ -799,7 +799,7 @@ msgid "Open external links in a new tab"
 msgstr ""
 
 #: functions/class-utils-settings-map.php:388
-#: functions/init-after-setup-theme.php:163
+#: functions/init-after-setup-theme.php:166
 msgid "Create and organize your social links"
 msgstr ""
 
@@ -1768,12 +1768,12 @@ msgid "SITE ICON"
 msgstr ""
 
 #: functions/czr/class-czr-init.php:461
-#: functions/init-after-setup-theme.php:242
+#: functions/init-after-setup-theme.php:245
 msgid "Create And Order Widget Areas"
 msgstr ""
 
 #: functions/czr/class-czr-init.php:465 functions/czr/class-czr-init.php:496
-#: functions/init-after-setup-theme.php:244
+#: functions/init-after-setup-theme.php:247
 msgid ""
 "You must save changes for the new areas to appear below. <br /><i>Warning: "
 "Make sure each area has a unique ID.</i>"
@@ -2600,29 +2600,29 @@ msgstr ""
 msgid "Select a layout for this page."
 msgstr ""
 
-#: functions/init-after-setup-theme.php:97
+#: functions/init-after-setup-theme.php:100
 msgid "Topbar"
 msgstr ""
 
-#: functions/init-after-setup-theme.php:98
+#: functions/init-after-setup-theme.php:101
 msgid ""
 "Mobile. You can set a specific menu for mobile devices. If not set, the "
 "theme will use the menu assigned to the Topbar, or the Header."
 msgstr ""
 
-#: functions/init-after-setup-theme.php:99
+#: functions/init-after-setup-theme.php:102
 msgid "Header"
 msgstr "Kop"
 
-#: functions/init-after-setup-theme.php:100
+#: functions/init-after-setup-theme.php:103
 msgid "Footer"
 msgstr "Voet"
 
-#: functions/init-after-setup-theme.php:156
+#: functions/init-after-setup-theme.php:159
 msgid "Social links"
 msgstr "Sociale links"
 
-#: functions/init-after-setup-theme.php:202
+#: functions/init-after-setup-theme.php:205
 #, fuzzy
 msgid "Site Wide Body Background"
 msgstr "Body Achtergrond"

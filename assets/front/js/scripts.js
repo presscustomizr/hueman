@@ -4044,6 +4044,41 @@ var czrapp = czrapp || {};
                           });
                     }
               );
+        },
+        gutenbergAlignfull : function() {
+              var _coverImageSelector            = '.full-width.col-1c .wp-block-cover-image.alignfull',
+                  _coverWParallaxImageSelector   = _coverImageSelector + '.has-parallax',
+                  _classParallaxTreatmentApplied = 'hu-alignfull-p',
+                  _styleId                       = 'hu-gutenberg-alignfull',
+                  $_RefWidthElement              = czrapp.$_body;
+
+              if ( $( _coverImageSelector ).length > 0 ) {
+                    _add_alignfull_style();
+                    _add_parallax_treatment_style();
+                    czrapp.userXP.windowWidth.bind( function() {
+                          _add_alignfull_style();
+                          _add_parallax_treatment_style();
+                    });
+              }
+              function _add_parallax_treatment_style() {
+                    $( _coverWParallaxImageSelector ).each(function() {
+                          $(this)
+                                .css( 'left', '' )
+                                .css( 'left', -1 * $(this).offset().left )
+                                .addClass(_classParallaxTreatmentApplied);
+                    });
+              }
+              function _add_alignfull_style() {
+                    var newWidth = $_RefWidthElement[0].getBoundingClientRect().width,
+                        $_style   = $( 'head #' + _styleId );
+
+                    if ( 1 > $_style.length ) {
+                          $_style = $('<style />', { 'id' : _styleId });
+                          $( 'head' ).append( $_style );
+                          $_style = $( 'head #' + _styleId );
+                    }
+                    $_style.html( _coverImageSelector + '{width:'+ newWidth +'px}' );
+              }
         }
 
   };//_methods{}
@@ -4270,6 +4305,7 @@ var czrapp = czrapp || {};
                             'dropdownMenu',
                             'mobileMenu',
                             'topNavToLife',
+                            'gutenbergAlignfull',
                             'mayBePrintWelcomeNote'
                       ]
                 }
