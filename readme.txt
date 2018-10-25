@@ -1,78 +1,26 @@
-# Hueman v3.4.5
-![Hueman - Free Wordpress Theme](/screenshot.png)
+=== Hueman ===
+Contributors: nikeo, alxmedia, d4z_c0nf
+Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
+Requires at least: 4.6
+Tested up to: 5.0
+Stable tag: 3.4.6
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-> The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
+> Good looking, fast and mobile friendly theme. Perfect for blogs and magazines websites.
 
-View more themes from this author: https://presscustomizr.com
+== Description ==
+The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
 
-## Demo and Documentation
-* DEMO : https://demo-hueman.presscustomizr.com/
-* DOCUMENTATION : https://hueman.presscustomizr.com/
+== Upgrade Notice ==
+= 3.4.6 =
+This new release improves the compatibility with the new WordPress editor that will be introduced in WP version 5.0.
 
+== Changelog ==
+= 3.4.6 October 24th 2018 =
+* added : support for new WordPress editor, block cover image alignwide/alignfull
+* improved : readme.txt file, according to the latest TRT requirements https://make.wordpress.org/themes/2015/04/29/a-revised-readme/
 
-## Theme License
-The **Hueman WordPress theme** theme itself is nothing but 100% GPLv3. See headers of files for further details.[GNU GPL v3.0 or later](http://www.gnu.org/licenses/gpl-3.0.en.html)
-
-
-## Font Awesome License
-Font License - http://fontawesome.io
-License: SIL OFL 1.1
-License URI: http://scripts.sil.org/OFL
-Copyright: Dave Gandy, http://fontawesome.io
-
-Code License - http://fontawesome.io
-License: MIT License
-License URI: http://opensource.org/licenses/mit-license.html
-Copyright: Dave Gandy, http://fontawesome.io
-
-Brand Icons
-All brand icons are trademarks of their respective owners.
-The use of these trademarks does not indicate endorsement of the trademark holder by Font Awesome, nor vice versa.
-
-
-## Titillium License
-Titillium Font - http://www.campivisivi.net/titillium/
-License: SIL OFL 1.1
-License URI: http://scripts.sil.org/OFL
-Copyright: Accademia di Belle Arti di Urbino, http://campivisivi.net
-
-
-## Theme screenshot images
-CC0-licensed (GPL-compatible) images from http://pixabay.com/ and http://unsplash.com/
-
-Left sidebar, top to bottom:
-
-1. unsplash - http://bit.ly/18NNxqe
-2. pixabay ID 210801
-3. pixabay ID 164985
-4. pixabay ID 181744
-5. pixabay ID 205220
-6. pixabay ID 74570
-7. pixabay ID 122694
-8. pixabay ID 97433
-
-Content, top to bottom, left to right:
-
-1. pixabay ID 74570
-2. unsplash - http://bit.ly/18NNxqe
-3. pixabay ID 166705
-4. pixabay ID 68827
-5. pixabay ID 171732
-
-Right sidebar, top to bottom:
-
-1. pixabay ID 9950
-2. pixabay ID 181744
-3. pixabay ID 122705
-4. pixabay ID 195684
-5. pixabay ID 83810
-6. pixabay ID 18279
-
-
-## Other Licenses
-See headers of files for further details.
-
-# Changelog
 = 3.4.5 October 13th 2018 =
 * fixed : prefixed TGMPA class with HU_ to fix potential collision with other plugins using the same class. see issue https://github.com/presscustomizr/customizr/issues/1603
 
@@ -807,3 +755,10 @@ See headers of files for further details.
 
 = October 31 2013 - 1.0.0 =
 * Theme released
+
+
+== Resources ==
+* Font Awesome Font : http://fontawesome.io, licensed SIL OFL 1.1, MIT License
+* Titillium Font : Licensed SIL OFL 1.1
+* Theme screenshot images : CC0-licensed (GPL-compatible) images from http://pixabay.com/ and http://unsplash.com/
+* Other resources licenses : see headers of assets files for further details.
