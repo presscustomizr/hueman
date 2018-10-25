@@ -93,7 +93,7 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
                   echo apply_filters(
                     'hu_update_notice',
                     sprintf('<h3>%1$s %2$s %3$s %4$s :D</h3>',
-                      __( "Good, you've just upgraded to", "hueman"),
+                      __( "Good, you've recently upgraded to", "hueman"),
                       'Hueman',
                       __( "version", "hueman"),
                       HUEMAN_VER
