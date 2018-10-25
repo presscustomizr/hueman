@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.0
-Stable tag: 3.4.6
+Stable tag: 3.4.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,10 +13,13 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
 
 == Upgrade Notice ==
-= 3.4.6 =
+= 3.4.7 =
 This new release improves the compatibility with the new WordPress editor that will be introduced in WP version 5.0.
 
 == Changelog ==
+= 3.4.7 October 24th 2018 =
+fixed : The "cover image" block of the new WP editor has been renamed "cover". See https://github.com/WordPress/gutenberg/pull/10659, but posts created with the former cover-image block will still use the wp-block-cover-image css class. related to #702
+
 = 3.4.6 October 24th 2018 =
 * added : support for new WordPress editor, block cover image alignwide/alignfull
 * improved : readme.txt file, according to the latest TRT requirements https://make.wordpress.org/themes/2015/04/29/a-revised-readme/

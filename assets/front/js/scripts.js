@@ -141,7 +141,6 @@ if (!Array.from) {
     };
   }());
 }
-
 (function ( $ ) {
 
   var pluginPrefix = 'original',

@@ -7,14 +7,10 @@ if ( did_action('nimble_base_fmk_loaded') ) {
     }
     return;
 }
-
-// Set the namsepace as a global so we can use it when fired from another theme/plugin using the fmk
 global $czr_base_fmk_namespace;
 $czr_base_fmk_namespace = __NAMESPACE__ . '\\';
 
 do_action( 'nimble_base_fmk_loaded' );
-////////////////////////////////////////////////////////////////
-// CZR_Fmk_Base
 if ( ! class_exists( 'CZR_Fmk_Base_Construct' ) ) :
     class CZR_Fmk_Base_Construct {
         static $instance;
@@ -33,10 +29,6 @@ if ( ! class_exists( 'CZR_Fmk_Base_Construct' ) ) :
             }
             return self::$instance;
         }
-
-        //@param $params = array(
-        //  'base_url' => '' <= path to root class folder
-        //)
         function __construct( $params = array() ) {
             if ( ! is_array( $params ) || empty( $params ) ) {
                 error_log( 'CZR_Fmk_Base => constructor => missing params');
@@ -46,34 +38,17 @@ if ( ! class_exists( 'CZR_Fmk_Base_Construct' ) ) :
                 error_log( 'CZR_Fmk_Base => constructor => wrong params');
                 return;
             }
-
-            // DEFINITIONS
             if ( ! defined( 'NIMBLE_FMK_BASE_URL' ) ) { define( 'NIMBLE_FMK_BASE_URL' , $params['base_url'] ); }
             if ( ! defined( 'NIMBLE_FMK_BASE_VERSION' ) ) { define( 'NIMBLE_FMK_BASE_VERSION' , isset( $params['version'] ) ? $params['version'] : '1.0.0' ); }
-
-            // Cache the css attr used in the tmpl builder and in the localized params
             $this -> czr_css_attr = $this -> czr_fmk_get_customizer_controls_css_attr();
-
-            // Cache the default dynamic params
             $this -> default_dynamic_setting_params = $this -> czr_fmk_get_default_dynamic_setting_params();
             $this -> default_dynamic_module_params = $this -> czr_fmk_get_default_dynamic_module_params();
-
-            // Enqueue the fmk control js + a module tmpl
             $this -> czr_enqueue_fmk_resources();
-
-            // ajax filters + template generator
             $this -> czr_setup_ajax_tmpl();
-
-            // Dynamic Module Registration
             $this -> czr_setup_dynamic_settings_registration();
             $this -> czr_setup_dynamic_modules_registration();
-
-            // Content picker
             $this -> czr_setup_content_picker_ajax_actions();
         }//__construct
-
-
-        // fired in the constructor to cache the params in a property
         private function czr_fmk_get_default_dynamic_setting_params() {
           return array(
                 'setting_id' => '',
@@ -105,8 +80,6 @@ if ( ! class_exists( 'CZR_Fmk_Base_Construct' ) ) :
                 )
             );
         }
-
-        // fired in the constructor to cache the params in a property
         private function czr_fmk_get_default_dynamic_module_params() {
           return array(
                 'dynamic_registration' => true,
@@ -122,8 +95,6 @@ if ( ! class_exists( 'CZR_Fmk_Base_Construct' ) ) :
                 'tmpl' => array()
             );
         }
-
-        // Copy of czr_fn_get_controls_css_attr() and the equivalent in Hueman Pro
         public function czr_fmk_get_customizer_controls_css_attr() {
           return apply_filters('czr_fmk_controls_css_attr',
             array(
@@ -144,15 +115,12 @@ if ( ! class_exists( 'CZR_Fmk_Base_Construct' ) ) :
               'item_title'        => 'czr-item-title',
               'item_btns'         => 'czr-item-btns',
               'item_sort_handle'   => 'czr-item-sort-handle',
-
-              //remove dialog
               'display_alert_btn' => 'czr-display-alert',
               'remove_alert_wrapper'   => 'czr-remove-alert-wrapper',
               'cancel_alert_btn'  => 'czr-cancel-button',
               'remove_view_btn'        => 'czr-remove-button',
 
               'edit_view_btn'     => 'czr-edit-view',
-              //pre add dialog
               'open_pre_add_btn'      => 'czr-open-pre-add-new',
               'adding_new'        => 'czr-adding-new',
               'pre_add_wrapper'   => 'czr-pre-add-wrapper',
@@ -167,37 +135,19 @@ if ( ! class_exists( 'CZR_Fmk_Base_Construct' ) ) :
 endif;
 
 ?><?php
-////////////////////////////////////////////////////////////////
-// CZR_Fmk_Base
 if ( ! class_exists( 'CZR_Fmk_Base_Load_Resources' ) ) :
     class CZR_Fmk_Base_Load_Resources extends CZR_Fmk_Base_Construct {
-
-        // fired in the constructor
         function czr_enqueue_fmk_resources() {
-            // Enqueue the fmk control js
             add_action ( 'customize_controls_enqueue_scripts' , array( $this, 'ac_load_additional_controls_js' ) );
             add_action ( 'customize_controls_enqueue_scripts' , array( $this, 'ac_load_additional_controls_css' ) );
-
-            // Enqueue the base preview js
-            //hook : customize_preview_init
             add_action ( 'customize_preview_init' , array( $this, 'ac_customize_load_preview_js' ) );
-
-            // adds specific js templates for the czr_module control
             add_action( 'customize_controls_print_footer_scripts', array( $this, 'ac_print_module_control_templates' ) , 1 );
         }
-
-
-        // hook : 'customize_controls_enqueue_scripts'
         function ac_load_additional_controls_js() {
-            // Enqueue scripts/styles for the color picker.
-            // Probably already enqueued by the theme controls, but let's make sure they are.
             wp_enqueue_script( 'wp-color-picker' );
             wp_enqueue_style( 'wp-color-picker' );
-
-            //'czr-customizer-fmk' will be enqueued as a dependency of 'font-customizer-control' only in plugin mode
             wp_enqueue_script(
                 'czr-customizer-fmk',
-                //dev / debug mode mode?
                 sprintf(
                     '%1$s/assets/js/%2$s',
                     NIMBLE_FMK_BASE_URL,
@@ -207,12 +157,9 @@ if ( ! class_exists( 'CZR_Fmk_Base_Load_Resources' ) ) :
                 ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : NIMBLE_FMK_BASE_VERSION,
                 $in_footer = true
             );
-
-            // When used with Customizr or Hueman, free and pro, we also need to load the theme js part
             if ( false !== strpos( czr_get_parent_theme_slug(), 'customizr' ) || false !== strpos( czr_get_parent_theme_slug(), 'hueman' ) ) {
                 wp_enqueue_script(
                     'czr-theme-customizer-fmk',
-                    //dev / debug mode mode?
                     sprintf(
                         '%1$s/assets/js/%2$s',
                         NIMBLE_FMK_BASE_URL,
@@ -223,9 +170,6 @@ if ( ! class_exists( 'CZR_Fmk_Base_Load_Resources' ) ) :
                     $in_footer = true
                 );
             }
-
-
-            //additional localized param when standalone plugin mode
             wp_localize_script(
                 'czr-customizer-fmk',
                 'serverControlParams',
@@ -243,8 +187,6 @@ if ( ! class_exists( 'CZR_Fmk_Base_Load_Resources' ) ) :
                             'readDocumentation' => __('Learn more about this in the documentation', 'hueman'),
                             'Settings' => __('Settings', 'hueman'),
                             'Options for' => __('Options for', 'hueman'),
-
-                            // img upload translation
                             'select_image'        => __( 'Select Image', 'hueman' ),
                             'change_image'        => __( 'Change Image', 'hueman' ),
                             'remove_image'        => __( 'Remove', 'hueman' ),
@@ -260,11 +202,6 @@ if ( ! class_exists( 'CZR_Fmk_Base_Load_Resources' ) ) :
                 )
             );
         }
-
-
-
-        // Enqueue the fmk css when standalone plugin
-        // hook : 'customize_controls_enqueue_scripts'
         function ac_load_additional_controls_css() {
             wp_enqueue_style(
                 'czr-fmk-controls-style',
@@ -273,9 +210,6 @@ if ( ! class_exists( 'CZR_Fmk_Base_Load_Resources' ) ) :
                 ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : NIMBLE_FMK_BASE_VERSION,
                 $media = 'all'
             );
-
-            //select2 stylesheet
-            //overriden by some specific style in czr-control-base.css
             wp_enqueue_style(
                 'select2-css',
                  sprintf('%1$s/assets/css/lib/select2.min.css', NIMBLE_FMK_BASE_URL, ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min'),
@@ -292,9 +226,6 @@ if ( ! class_exists( 'CZR_Fmk_Base_Load_Resources' ) ) :
                 $media = 'all'
             );
         }
-
-
-        //hook : customize_preview_init
         function ac_customize_load_preview_js() {
             global $wp_version;
 
@@ -309,15 +240,12 @@ if ( ! class_exists( 'CZR_Fmk_Base_Load_Resources' ) ) :
                   ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : NIMBLE_FMK_BASE_VERSION,
                   true
             );
-
-            //localizes
             wp_localize_script(
                   'czr-customizer-preview',
                   'serverPreviewParams',
                   apply_filters('czr_base_fmk_customizer_preview_params' ,
                       array(
                           'themeFolder'     => get_template_directory_uri(),
-                          //patch for old wp versions which don't trigger preview-ready signal => since WP 4.1
                           'preview_ready_event_exists'   => version_compare( $wp_version, '4.1' , '>=' ),
                           'blogname' => get_bloginfo('name'),
                           'isRTL'    => is_rtl()
@@ -325,17 +253,7 @@ if ( ! class_exists( 'CZR_Fmk_Base_Load_Resources' ) ) :
                   )
             );
         }
-
-        // DO WE STILL NEED TO PRINT THIS TMPL ?
-        /////////////////////////////////////////////////////
-        /// WHEN EMBEDDED IN A CONTROL //////////////////////
-        /////////////////////////////////////////////////////
-        //add specific js templates for the czr_module control
-        //this is usually called in the manager for "registered" controls that need to be rendered with js
-        //for this control, we'll do it another way because we need several js templates
-        //=> that's why this control has not been "registered" and js templates are printed with the following action
         function ac_print_module_control_templates() {
-            //Render the control wrapper for the CRUD types modules
             ?>
               <?php //Render the control wrapper for the CRUD types modules ?>
               <script type="text/html" id="tmpl-customize-control-czr_module-content">
@@ -355,23 +273,12 @@ if ( ! class_exists( 'CZR_Fmk_Base_Load_Resources' ) ) :
 endif;
 
 ?><?php
-////////////////////////////////////////////////////////////////
-// CZR_Fmk_Base
 if ( ! class_exists( 'CZR_Fmk_Base_Ajax_Filter' ) ) :
     class CZR_Fmk_Base_Ajax_Filter extends CZR_Fmk_Base_Load_Resources {
-
-        // fired in the constructor
         function czr_setup_ajax_tmpl() {
-            // this dynamic filter is declared on wp_ajax_ac_get_template
-            // It allows us to populate the server response with the relevant module html template
-            // $html = apply_filters( "ac_set_ajax_czr_tmpl___{$module_type}", '', $tmpl );
             add_filter( "ac_set_ajax_czr_tmpl___all_modules", array( $this, 'ac_get_all_modules_tmpl' ), 10, 3 );
-
-            // fetch templates
             add_action( 'wp_ajax_ac_get_template', array( $this, 'ac_set_ajax_czr_tmpl' ) );
         }
-
-        // hook : 'wp_ajax_ac_get_template'
         function ac_set_ajax_czr_tmpl() {
             if ( ! is_user_logged_in() ) {
                 wp_send_json_error( 'ac_set_ajax_czr_tmpl => unauthenticated' );
@@ -410,17 +317,6 @@ if ( ! class_exists( 'CZR_Fmk_Base_Ajax_Filter' ) ) :
                 wp_send_json_success( apply_filters( 'tmpl_results', $html, $tmpl ) );
             }
         }
-
-
-        // hook : ac_set_ajax_czr_tmpl___all_modules
-        // this dynamic filter is declared on wp_ajax_ac_get_template
-        // It allows us to populate the server response with the relevant module html template
-        // $html = apply_filters( "ac_set_ajax_czr_tmpl___{$module_type}", '', $tmpl );
-        //
-        // For all modules, there are 3 types of templates :
-        // 1) the pre-item, rendered when adding an item
-        // 2) the module meta options, or mod-opt
-        // 3) the item input options
         function ac_get_all_modules_tmpl( $html, $requested_tmpl = '', $posted_params = array() ) {
             $css_attr = $this -> czr_css_attr;
             if ( empty( $requested_tmpl ) ) {
@@ -461,8 +357,6 @@ if ( ! class_exists( 'CZR_Fmk_Base_Ajax_Filter' ) ) :
                       <span class="<?php echo $css_attr['remove_view_btn']; ?> button"><?php _e('Yes', 'hueman'); ?></span> <span class="<?php echo $css_attr['cancel_alert_btn']; ?> button"><?php _e('No', 'hueman'); ?></span>
                     <?php
                 break;
-
-                // this template is used in setupImageUploaderSaveAsId and setupImageUploaderSaveAsUrl
                 case 'img-uploader' :
                     ?>
                       <?php // case when a regular attachement object is provided, fetched from an id with wp.media.attachment( id ) ?>
@@ -526,16 +420,11 @@ if ( ! class_exists( 'CZR_Fmk_Base_Ajax_Filter' ) ) :
 endif;
 
 ?><?php
-////////////////////////////////////////////////////////////////
-// CZR_Fmk_Base
 if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
     class CZR_Fmk_Base_Tmpl_Builder extends CZR_Fmk_Base_Ajax_Filter {
         /*********************************************************
         ** TMPL BUILDER
         *********************************************************/
-        // This is the standard method to be used in a module to generate the item input template
-        // for pre-item, mod-opts and item-inputs
-        // fired in self::ac_get_ajax_module_tmpl
         function ac_generate_czr_tmpl_from_map( $tmpl_map ) {
             $html = '';
             $default_input_entries = array(
@@ -546,8 +435,6 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                 'notice_before' => '',
                 'notice_after' => '',
                 'placeholder' => '',
-
-                // typically used for the number and range inputs
                 'step' => '',
                 'min' => '',
                 'max' => '',
@@ -592,21 +479,15 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                     wp_send_json_error( __FUNCTION__ . ' => wrong var type for the input_data of input id : ' . $input_id );
                     break;
                 }
-                // check that we have no unknown entries in the provided input_data
                 $maybe_diff = array_diff_key( $input_data, $default_input_entries );
                 if ( ! empty( $maybe_diff ) ) {
                     error_log('<' . __FUNCTION__ . '>');
                     error_log( '=> at least one unknown param in the registered input params for input id : ' . $input_id );
                     error_log( print_r( $maybe_diff, true ) );
                     error_log('</' . __FUNCTION__ . '>');
-                    //wp_send_json_error( 'ac_generate_czr_tmpl_from_map => at least one unknow entry in the input data for input id : ' . $input_id );
                     break;
                 }
-
-                // we're clear, let's go
                 $input_data = wp_parse_args( $input_data, $default_input_entries );
-
-                // Do we have a specific template provided ?
                 if ( ! empty( $input_data[ 'tmpl_callback' ] ) && function_exists( $input_data[ 'tmpl_callback' ] ) ) {
                     $html .= call_user_func_array( $input_data[ 'tmpl_callback' ], array( $input_data ) );
                 } else {
@@ -616,17 +497,11 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
             }
             return $html;////will be sent by wp_send_json_success() in ::ac_set_ajax_czr_tmpl()
         }
-
-
-
-        // Fired in ac_generate_czr_tmpl_from_map
         function ac_get_default_input_tmpl( $input_id, $input_data ) {
             if ( ! array_key_exists( 'input_type', $input_data ) || empty( $input_data[ 'input_type' ] ) ) {
                  wp_send_json_error( 'ac_get_input_tmpl => missing input type for input id : ' . $input_id );
             }
             $input_type = $input_data[ 'input_type' ];
-
-            // some inputs have a width of 100% even if not specified in the input_data
             $is_width_100 = true === $input_data[ 'width-100' ];
             if ( in_array( $input_type, array( 'color', 'radio', 'textarea' ) ) ) {
                 $is_width_100 = true;
@@ -635,7 +510,6 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
             $css_attr = $this -> czr_css_attr;
 
             ob_start();
-            // <INPUT WRAPPER>
             printf( '<div class="%1$s %2$s %3$s" data-input-type="%4$s" %5$s>',
                 $css_attr['sub_set_wrapper'],
                 $is_width_100 ? 'width-100' : '',
@@ -643,7 +517,6 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                 $input_type,
                 ! empty( $input_data['transport'] ) ? 'data-transport="'. $input_data['transport'] .'"' : ''
             );
-            // no need to print a title for an hidden input
             if ( $input_type !== 'hidden' ) {
                 printf( '<div class="customize-control-title %1$s">%2$s</div>', ! empty( $input_data['title_width'] ) ? $input_data['title_width'] : '', $input_data['title'] );
             }
@@ -658,7 +531,6 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
             if ( ! empty( $input_data['input_template'] ) && is_string( $input_data['input_template'] ) ) {
                 echo $input_data['input_template'];
             } else {
-                // THIS IS WHERE THE ACTUAL INPUT CONTENT IS SET
                 $this -> ac_set_input_tmpl_content( $input_type, $input_id, $input_data );
             }
             ?>
@@ -668,29 +540,16 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
               <?php endif; ?>
             </div> <?php //class="$css_attr['sub_set_wrapper']" ?>
             <?php
-            // </INPUT WRAPPER>
 
             $tmpl_html = apply_filters( "czr_set_input_tmpl___{$input_type}", ob_get_clean(), $input_id, $input_data );
-            //error_log( print_r($tmpl_html, true ) );
             if ( empty( $tmpl_html ) ) {
                 wp_send_json_error( 'ac_get_input_tmpl => no html returned for input ' . $input_id );
             }
             return $tmpl_html;
         }//ac_get_input_tmpl()
-
-
-
-
-
-
-
-        // fired in ::ac_get_default_input_tmpl();
         private function ac_set_input_tmpl_content( $input_type, $input_id, $input_data ) {
             $css_attr = $this -> czr_css_attr;
             $input_tmpl_content = null;
-
-            // First fires a hook to allow the input content to be remotely set
-            // For example the module_picker, the spacing, h_text_alignment... are printed this way
             ob_start();
               do_action( 'czr_set_input_tmpl_content', $input_type, $input_id, $input_data );
             $input_tmpl_content = ob_get_clean();
@@ -698,7 +557,6 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
             if ( ! empty( $input_tmpl_content ) ) {
                 echo $input_tmpl_content;
             } else {
-                // Then, if we have no content yet, let's go thought the default input cases
                 switch ( $input_type ) {
                     /* ------------------------------------------------------------------------- *
                      *  HIDDEN
@@ -848,7 +706,6 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                      *  - no default input template is defined for the requested input type
                     /* ------------------------------------------------------------------------- */
                     default :
-                        // this input type has no template, this is a problem
                         wp_send_json_error( 'ERROR => ' . __CLASS__ . '::' . __FUNCTION__ . ' this input type has no template : ' . $input_type );
                     break;
                 }//switch ( $input_type ) {
@@ -859,57 +716,12 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
 endif;
 
 ?><?php
-////////////////////////////////////////////////////////////////
-// CZR_Fmk_Base
 if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
     class CZR_Fmk_Dyn_Setting_Registration extends CZR_Fmk_Base_Tmpl_Builder {
-
-        //fired in the constructor
         function czr_setup_dynamic_settings_registration() {
             add_action( 'customize_register', array( $this, 'czr_setup_dynamic_setting_registration' ), 10 );
-
-            // if we have dynamic setting params, let's add a filter to serverControlParams
-            // filter declared when localizing 'serverControlParams' @see resources
             add_filter( 'czr_fmk_dynamic_setting_js_params', array( $this, 'czr_setup_localized_params_for_dynamic_js_registration' ), 20 );
-
-            // when not dynamically registered
-            // TO DEPRECATE ?
-            //add_action( 'customize_register', array( $this, 'czr_register_not_dynamic_settings' ), 20 );
         }
-
-
-        ////////////////////////////////////////////////////////////////
-        // PRE REGISTRATION FOR SETTINGS
-        // Default params
-        // array(
-        //     'setting_id' => '',
-        //     'dynamic_registration' => true,
-        //     'module_type' => '',
-        //     'option_value' => array(),
-
-        //     'setting' => array(
-        //         'type' => 'option',
-        //         'default'  => array(),
-        //         'transport' => 'refresh',
-        //         'setting_class' => '',//array( 'path' => '', 'name' => '' )
-        //         'sanitize_callback' => '',
-        //         'validate_callback' => '',
-        //     ),
-
-        //     'section' => array(
-        //         'id' => '',
-        //         'title' => '',
-        //         'panel' => '',
-        //         'priority' => 10
-        //     ),
-
-        //     'control' => array(
-        //         'label' => '',
-        //         'type'  => 'czr_module',
-        //         'priority' => 10,
-        //         'control_class' => ''//array( 'path' => '', 'name' => '' )
-        //     )
-        // )
         function czr_pre_register_dynamic_setting( $setting_params ) {
             if ( ! is_array( $setting_params ) || empty( $setting_params ) ) {
                 error_log( 'czr_pre_register_dynamic_setting => empty $setting_params submitted' );
@@ -919,15 +731,10 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
                 error_log( 'czr_pre_register_dynamic_setting => missing setting id' );
                 return;
             }
-
-            // normalize
             $setting_params = wp_parse_args( $setting_params, $this -> default_dynamic_setting_params );
 
             $registered = $this->registered_settings;
             $setting_id_candidate = $setting_params['setting_id'];
-
-            // A setting id can be registered only once.
-            // Already registered ?
             if ( array_key_exists( $setting_id_candidate, $registered ) ) {
                 error_log( 'czr_pre_register_dynamic_setting => setting id already registered => ' . $setting_id_candidate );
                 return;
@@ -935,30 +742,15 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
             $registered[ $setting_id_candidate ] = $setting_params;
             $this->registered_settings = $registered;
         }
-
-
-
-        ////////////////////////////////////////////////////////////////
-        // FILTER DYNAMIC SETTING AND CLASS ARGS
-        // hook : customize_register
-        // Those filters are declared by WP core in class-wp-customize-manager.php
-        // in => add_action( 'customize_register', array( $this, 'register_dynamic_settings' ), 11 );
         function czr_setup_dynamic_setting_registration( $wp_customize ) {
             add_filter( 'customize_dynamic_setting_args', array( $this, 'czr_setup_customizer_dynamic_setting_args' ), 10, 2  );
             add_filter( 'customize_dynamic_setting_class', array( $this, 'czr_setup_customizer_dynamic_setting_class' ), 10, 3 );
         }
-
-        // hook : 'customize_dynamic_setting_args'
         function czr_setup_customizer_dynamic_setting_args( $setting_args, $setting_id ) {
-            //sek_error_log( __CLASS__ . '::' . __FUNCTION__ ,  $this->registered_settings );
 
             if ( ! is_array( $this->registered_settings ) || empty( $this->registered_settings ) )
               return $setting_args;
-
-            // let's initialize the args to the provided param
             $registered_setting_args = $setting_args;
-
-            // loop on each registered modules
             foreach ( $this->registered_settings as $registerered_setting_id => $params ) {
 
                 if ( array_key_exists('dynamic_registration', $params) && true !== $params['dynamic_registration'] ) {
@@ -978,8 +770,6 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
                     'sanitize_callback'    => '',
                     'validate_callback'    => ''
                 ) );
-
-                // Provide new setting args
                 $registered_setting_args = array(
                     'type'                 => empty( $setting_args[ 'type' ] ) ? 'option' : $setting_args[ 'type' ],
                     'default'              => array(),
@@ -987,10 +777,6 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
                     'sanitize_callback'    => ( ! empty( $setting_args[ 'sanitize_callback' ] ) && function_exists( $setting_args[ 'sanitize_callback' ] ) ) ? $setting_args[ 'sanitize_callback' ] : '',
                     'validate_callback'    => ( ! empty( $setting_args[ 'validate_callback' ] ) && function_exists( $setting_args[ 'validate_callback' ] ) ) ? $setting_args[ 'validate_callback' ] : ''
                 );
-
-                // if this is a module setting, it can have specific sanitize and validate callback set for the module
-                // Let's check if the module_type is registered, and if there are any callback set.
-                // If a match is found, we'll use those callback
                 $module_params = $this -> czr_get_registered_dynamic_module( $params[ 'module_type' ] );
                 if ( false !== $module_params  && is_array( $module_params ) ) {
                     if ( array_key_exists( 'validate_callback', $module_params ) && function_exists( $module_params[ 'validate_callback' ] ) ) {
@@ -1000,22 +786,13 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
                         $registered_setting_args[ 'sanitize_callback' ] = $module_params[ 'sanitize_callback' ];
                     }
                 }
-                //error_log( 'REGISTERING DYNAMICALLY for setting =>'. $setting_id );
             }
             return $registered_setting_args;
         }
-
-
-        // hook : 'customize_dynamic_setting_class'
         function czr_setup_customizer_dynamic_setting_class( $class, $setting_id, $args ) {
             if ( ! is_array( $this->registered_settings ) || empty( $this->registered_settings ) )
               return $class;
-
-
-            // let's initialize the args to the provided class
             $registered_setting_class = $class;//'WP_Customize_Setting' by default
-
-            // loop on each registered modules
             foreach ( $this->registered_settings as $registerered_setting_id => $params ) {
                 $params = wp_parse_args( $params, $this -> default_dynamic_setting_params );
                 if ( true !== $params['dynamic_registration'] ) {
@@ -1027,7 +804,6 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
                 $setting_args = $params['setting'];
 
                 if ( is_array( $setting_args ) && array_key_exists( 'setting_class', $setting_args ) ) {
-                    // provide new setting class if exists and not yet loaded
                     if ( is_array( $setting_args[ 'setting_class' ] ) && array_key_exists( 'name', $setting_args[ 'setting_class' ] ) && array_key_exists( 'path', $setting_args[ 'setting_class' ] ) ) {
                         if ( ! class_exists( $setting_args[ 'setting_class' ][ 'name' ] ) && file_exists( $setting_args[ 'setting_class' ]['path'] ) ) {
                             require_once(  $setting_args[ 'setting_class' ]['path'] );
@@ -1037,47 +813,18 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
                         }
                     }
                 }
-                //error_log( 'REGISTERING CLASS DYNAMICALLY for setting =>'. $setting_id );
             }
 
             return $registered_setting_class;
         }
-
-
-        ////////////////////////////////////////////////////////////////
-        // Print js params for dynamic control and section registration
-        // hook : czr_fmk_dynamic_setting_js_params'
-        // @param js_param = array()
         function czr_setup_localized_params_for_dynamic_js_registration( $js_params ) {
-            // error_log( '<REGISTERED SETTINGS>' );
-            // error_log( print_r( $this->registered_settings, true ) );
-            // error_log( '</REGISTERED SETTINGS>' );
             if ( ! is_array( $this->registered_settings ) || empty( $this->registered_settings ) )
               return $js_params;
             $js_params = ! is_array( $js_params ) ? array() : $js_params;
-
-            //  'localized_control_js' => array(
-            //     'deps' => 'czr-customizer-fmk',
-            //     'global_var_name' => 'socialLocalized',
-            //     'params' => array(
-            //         //Social Module
-            //         'defaultSocialColor' => 'rgb(90,90,90)',
-            //         'defaultSocialSize'  => 14,
-            //         //option value for dynamic registration
-            //
-            //     )
-            //     'dynamic_setting_registration' => array(
-            //         'values' => $args['option_value'],
-            //         'section' => $args['section']
-            //      )
-            // )
-            // loop on each registered modules
             foreach ( $this->registered_settings as $registerered_setting_id => $params ) {
                 $params = wp_parse_args( $params, $this -> default_dynamic_setting_params );
-                // We need the 'option_value' entry, even if empty
                 if ( ! array_key_exists( 'option_value', $params ) || ! is_array( $params['option_value'] ) )
                   continue;
-                // Check if not already setup
                 if ( array_key_exists( $registerered_setting_id, $params ) ) {
                     error_log( 'czr_setup_localized_params_for_dynamic_js_registration => js_params already setup for setting : ' . $registerered_setting_id );
                 }
@@ -1087,74 +834,24 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
                     'module_type' => $params[ 'module_type' ],
                     'module_registration_params' => $this -> czr_get_registered_dynamic_module( $params[ 'module_type' ] ),
                     'option_value'  => $params['option_value'],
-
-                    // 'setting' => array(
-                    //     'type' => 'option',
-                    //     'default'  => array(),
-                    //     'transport' => 'refresh',
-                    //     'setting_class' => '',//array( 'path' => '', 'name' => '' )
-                    //     'sanitize_callback' => '',
-                    //     'validate_callback' => '',
-                    // ),
                     'setting' => array_key_exists( 'setting', $params ) ? $params[ 'setting' ] : array(),
-
-                    // 'section' => array(
-                    //     'id' => '',
-                    //     'title' => '',
-                    //     'panel' => '',
-                    //     'priority' => 10
-                    // ),
                     'section' => array_key_exists( 'section', $params ) ? $params[ 'section' ] : array(),
-
-                    // 'control' => array(
-                    //     'label' => '',
-                    //     'type'  => 'czr_module',
-                    //     'priority' => 10,
-                    //     'control_class' => ''//array( 'path' => '', 'name' => '' )
-                    // ),
                     'control' => array_key_exists( 'control', $params ) ? $params[ 'control' ] : array(),
                 );
             }
             return $js_params;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        ////////////////////////////////////////////////////////////////
-        // TO DEPRECATE ?
-        // REGISTER IF NOT DYNAMIC
-        // hook : customize_register
         function czr_register_not_dynamic_settings( $wp_customize ) {
-            // error_log('<MODULE REGISTRATION>');
-            // error_log(print_r( $this->registered_settings, true ));
-            // error_log('</MODULE REGISTRATION>');
 
             if ( ! is_array( $this->registered_settings ) || empty( $this->registered_settings ) )
               return;
-
-            // loop on each registered modules
             foreach ( $this->registered_settings as $setting_id => $params ) {
                 $params = wp_parse_args( $params, $this -> default_dynamic_setting_params );
                 if ( true === $params['dynamic_registration'] )
                   continue;
-
-
-                // SETTING
                 $setting_args = $params['setting'];
                 $registered_setting_class = 'WP_Customize_Setting';
                 if ( is_array( $setting_args ) && array_key_exists( 'setting_class', $setting_args ) ) {
-                    // provide new setting class if exists and not yet loaded
                     if ( is_array( $setting_args[ 'setting_class' ] ) && array_key_exists( 'name', $setting_args[ 'setting_class' ] ) && array_key_exists( 'path', $setting_args[ 'setting_class' ] ) ) {
                         if ( ! class_exists( $setting_args[ 'setting_class' ][ 'name' ] ) && file_exists( $setting_args[ 'setting_class' ]['path'] ) ) {
                             require_once(  $setting_args[ 'setting_class' ]['path'] );
@@ -1170,13 +867,9 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
                     'type'  => $setting_args[ 'type' ],
                     'sanitize_callback' => isset( $settings_args[ 'sanitize_callback' ] ) ? $settings_args[ 'sanitize_callback' ] : ''
                 ) ) );
-
-
-                // CONTROL
                 $control_args = $params['control'];
                 $registered_control_class = 'WP_Customize_Control';
                 if ( is_array( $control_args ) && array_key_exists( 'control_class', $control_args ) ) {
-                    // provide new setting class if exists and not yet loaded
                     if ( is_array( $control_args[ 'control_class' ] ) && array_key_exists( 'name', $control_args[ 'control_class' ] ) && array_key_exists( 'path', $control_args[ 'control_class' ] ) ) {
                         if ( ! class_exists( $control_args[ 'control_class' ][ 'name' ] ) && file_exists( $control_args[ 'control_class' ]['path'] ) ) {
                             require_once(  $control_args[ 'control_class' ]['path'] );
@@ -1201,39 +894,13 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
 endif;
 
 ?><?php
-////////////////////////////////////////////////////////////////
-// CZR_Fmk_Base
 if ( ! class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
     class CZR_Fmk_Dyn_Module_Registration extends CZR_Fmk_Dyn_Setting_Registration {
-
-        //fired in the constructor
         function czr_setup_dynamic_modules_registration() {
-            // Dynamic Module Registration
             add_action( 'init', array( $this, 'czr_schedule_ajax_tmpl' ) );
-            // Enqueue the module customizer control assets
             add_action( 'customize_controls_enqueue_scripts' , array( $this, 'czr_register_dynamic_modules_customizer_control_assets' ) );
         }
-
-
-
-
-
-
-        ////////////////////////////////////////////////////////////////
-        // PRE REGISTRATION FOR MODULES
-        // Default params
-        // array(
-        //     'module_type' => '',
-        //     'customizer_assets' => array(
-        //         'control_js' => array(),
-        //         'localized_control_js' => array()
-        //     ),
-        //     'tmpl' => array()
-        // )
         function czr_pre_register_dynamic_module( $module_params ) {
-            // error_log( '<czr_pre_register_dynamic_module>' );
-            // error_log( print_r( $module_params, true ) );
-            // error_log( '</czr_pre_register_dynamic_module>' );
 
             if ( ! is_array( $module_params ) || empty( $module_params ) ) {
                 error_log( 'czr_pre_register_dynamic_module => empty $module_params submitted' );
@@ -1243,15 +910,10 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
                 error_log( 'czr_pre_register_dynamic_module => missing module_type' );
                 return;
             }
-
-            // normalize
             $module_params = wp_parse_args( $module_params, $this -> default_dynamic_module_params );
 
             $registered = $this->registered_modules;
             $module_type_candidate = $module_params['module_type'];
-
-            // A module type can be registered only once.
-            // Already registered ?
             if ( array_key_exists( $module_type_candidate, $registered ) ) {
                 error_log( 'czr_pre_register_dynamic_module => module type already registered => ' . $module_type_candidate );
                 return;
@@ -1259,62 +921,20 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
             $registered[ $module_type_candidate ] = $module_params;
             $this->registered_modules = $registered;
         }
-
-
-
-        // HELPER
-        // @return boolean or array of module params
         function czr_get_registered_dynamic_module( $module_type = '' ) {
             $registered = $this->registered_modules;
             if ( empty( $module_type ) || ! is_array( $registered ) || empty( $registered ) )
               return;
             return array_key_exists( $module_type , $registered ) ? $registered[ $module_type ] : false;
         }
-
-
-
-        ////////////////////////////////////////////////////////////////
-        // ENQUEUE ASSETS
-        // hook : customize_controls_enqueue_scripts
-        //
-        // 'customizer_assets' => array(
-        //     'control_js' => array(
-        //         // handle + params for wp_enqueue_script()
-        //         // @see https://developer.wordpress.org/reference/functions/wp_enqueue_script/
-        //         'czr-social-links-module' => array(
-        //             'src' => sprintf(
-        //                 '%1$s/assets/js/%2$s',
-        //                 $args['base_url_path'],
-        //                 '_2_7_socials_module.js'
-        //             ),
-        //             'deps' => array('customize-controls' , 'jquery', 'underscore'),
-        //             'ver' => ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : $args['version'],
-        //             'in_footer' => true
-        //         )
-        //     ),
-        //     'localized_control_js' => array(
-        //         'deps' => 'czr-customizer-fmk',
-        //         'global_var_name' => 'socialLocalized',
-        //         'params' => array(
-        //             //Social Module
-        //             'defaultSocialColor' => 'rgb(90,90,90)',
-        //             'defaultSocialSize'  => 14,
-        //             //option value for dynamic registration
-        //         )
-        //     )
-        // ),
         function czr_register_dynamic_modules_customizer_control_assets() {
             if ( ! is_array( $this->registered_modules ) || empty( $this->registered_modules ) )
               return;
 
             $wp_scripts = wp_scripts();
-
-            // loop on each registered modules
             foreach ( $this->registered_modules as $module_type => $params ) {
                 $params = wp_parse_args( $params, $this -> default_dynamic_module_params );
-                //error_log( print_r( $params, true ) );
                 $control_js_params = $params[ 'customizer_assets' ][ 'control_js' ];
-                // Enqueue the list of registered scripts
                 if ( ! empty( $control_js_params ) ) {
                     foreach ( $control_js_params as $handle => $script_args ) {
                         if ( ! isset( $wp_scripts->registered[$handle] ) ) {
@@ -1331,18 +951,6 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
                     }
 
                 }
-
-                //  'localized_control_js' => array(
-                //     'deps' => 'czr-customizer-fmk',
-                //     'global_var_name' => 'socialLocalized',
-                //     'params' => array(
-                //         //Social Module
-                //         'defaultSocialColor' => 'rgb(90,90,90)',
-                //         'defaultSocialSize'  => 14,
-                //         //option value for dynamic registration
-                //     )
-                // )
-                // Print localized params if any
                 if ( array_key_exists( 'localized_control_js', $params[ 'customizer_assets' ] ) ) {
                     $localized_control_js_params = is_array( $params[ 'customizer_assets' ][ 'localized_control_js' ] ) ? $params[ 'customizer_assets' ][ 'localized_control_js' ] : array();
 
@@ -1356,12 +964,6 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
                 }
             }//foreach
         }
-
-
-
-        ////////////////////////////////////////////////////////////////
-        // AJAX TEMPLATE FILTERS
-        // hook : init
         function czr_schedule_ajax_tmpl() {
             if ( ! is_array( $this->registered_modules ) || empty( $this->registered_modules ) )
               return;
@@ -1370,45 +972,17 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
                 $params = wp_parse_args( $params, $this -> default_dynamic_module_params );
                 if ( ! empty( $params['tmpl'] ) ) {
                     $module_type = $params['module_type'];
-                    // filter declared with $html = apply_filters( "ac_set_ajax_czr_tmpl___{$module_type}", '', $tmpl, $_POST );
                     add_filter( "ac_set_ajax_czr_tmpl___{$module_type}", array( $this, 'ac_get_ajax_module_tmpl'), 10, 3 );
                 }
             }//foreach
         }
-
-
-        // AJAX TMPL FILTERS
-        // this dynamic filter is declared on wp_ajax_ac_get_template
-        // It allows us to populate the server response with the relevant module html template
-        // $html = apply_filters( "ac_set_ajax_czr_tmpl___{$module_type}", '', $tmpl );
-        //
-        // Each template is built from a map, each input type having its own unique piece of tmpl
-        //
-        // 3 types of templates :
-        // 1) the pre-item, rendered when adding an item
-        // 2) the module meta options, or mod-opt
-        // 3) the item input options
-        // @param $posted_params is the $_POST
-        // hook : ac_set_ajax_czr_tmpl___{$module_type}
         function ac_get_ajax_module_tmpl( $html, $requested_tmpl = '', $posted_params = array() ) {
-            // error_log( '<REGISTERED MODULES>' );
-            // error_log( print_r( $this->registered_modules, true ) );
-            // error_log( '</REGISTERED MODULES>' );
-            // error_log( '<GET AJAX MODULE TMPL>' );
-            // error_log( print_r( $posted_params, true ) );
-            // error_log( '</GET AJAX MODULE TMPL>' );
-            // the module type is sent in the $posted_params
             if ( ! is_array( $posted_params ) || empty( $posted_params ) ) {
                 wp_send_json_error( 'ac_get_ajax_module_tmpl => empty posted_params' );
             }
             if ( ! array_key_exists( 'module_type', $posted_params  ) || empty( $posted_params['module_type'] ) ) {
                 wp_send_json_error( 'ac_get_ajax_module_tmpl => missing module_type' );
             }
-            // if ( ! array_key_exists( 'control_id', $posted_params  ) || empty( $posted_params['control_id'] ) ) {
-            //    wp_send_json_error( 'ac_get_ajax_module_tmpl => missing control_id' );
-            // }
-
-            // find the requested module_id in the list of registered modules
             $registered_modules = $this->registered_modules;
             $module_type = $posted_params['module_type'];
             if ( ! array_key_exists( $module_type, $registered_modules  ) || empty( $registered_modules[ $module_type ] ) ) {
@@ -1417,43 +991,13 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
 
             $module_params = $registered_modules[ $module_type ];
             $tmpl_params = $module_params[ 'tmpl' ];
-            // Enqueue the list of registered scripts
             if ( empty( $tmpl_params ) ) {
                 return;
             }
-            // the requested_tmpl can be pre-item, mod-opt or item-inputs
             $tmpl_map = array_key_exists( $requested_tmpl, $tmpl_params ) ? $tmpl_params[ $requested_tmpl ] : array();
             if ( empty( $tmpl_map ) ) {
                 return;
             }
-            // Do we have tabs ?
-            // With tabs
-            // 'tabs' => array(
-              // array(
-              //     'title' => __('Spacing', 'text_domain_to_be_replaced'),
-              //     'inputs' => array(
-              //         'padding' => array(
-              //             'input_type'  => 'number',
-              //             'title'       => __('Padding', 'text_domain_to_be_replaced')
-              //         ),
-              //         'margin' => array(
-              //             'input_type'  => 'number',
-              //             'title'       => __('Margin', 'text_domain_to_be_replaced')
-              //         )
-              //     )
-              // ),
-              // array( ... )
-              //
-              //
-              // Without tabs :
-              //  'padding' => array(
-              //       'input_type'  => 'number',
-              //       'title'       => __('Padding', 'text_domain_to_be_replaced')
-              //  ),
-              //   'margin' => array(
-              //      'input_type'  => 'number',
-              //      'title'       => __('Margin', 'text_domain_to_be_replaced')
-              //  )
             if ( array_key_exists( 'tabs', $tmpl_map ) ) {
                 ob_start();
                 ?>
@@ -1461,7 +1005,6 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
                   <nav>
                     <ul>
                       <?php
-                        // print the tabs nav
                         foreach ( $tmpl_map['tabs'] as $_key => $tab ) {
                           printf( '<li data-tab-id="section-topline-%1$s" %2$s><a href="#"><span>%3$s</span></a></li>',
                               $_key + 1,
@@ -1499,23 +1042,14 @@ endif;
 * Customizer ajax content picker actions
 *
 */
-// CZR_Fmk_Base
 if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
     class CZR_Fmk_Base extends CZR_Fmk_Dyn_Module_Registration {
-
-      //fired in the constructor
       public function czr_setup_content_picker_ajax_actions() {
           if ( current_user_can( 'edit_theme_options' ) ) {
               add_action( 'wp_ajax_load-available-content-items-customizer'   , array( $this, 'ajax_load_available_items' ) );
               add_action( 'wp_ajax_search-available-content-items-customizer' , array( $this, 'ajax_search_available_items' ) );
           }
-
-            // CONTENT PICKER INPUT
-            //add the _custom_ item to the content picker retrieved in ajax
-            //add_filter( 'content_picker_ajax_items', array( $this, 'czr_add_custom_item_to_ajax_results' ), 10, 3 );
       }
-
-      // hook : 'content_picker_ajax_items'
       function czr_add_custom_item_to_ajax_results( $items, $page, $context ) {
           if ( is_numeric( $page ) && $page < 1 ) {
               return array_merge(
@@ -1535,9 +1069,6 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
               return $items;
           }
       }
-
-
-      //hook : 'pre_post_link'
       function dont_use_fancy_permalinks() {
         return '';
       }
@@ -1570,31 +1101,11 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
                 wp_send_json_error( 'czr_ajax_content_picker_missing_pagination_param' );
             }
 
-            //error_log( print_r($_POST, true ) );
-
             $wp_object_types = json_decode( wp_unslash( $_POST['wp_object_types'] ), true );
-
-            //$wp_object_types should look like :
-            //array(
-            //      post : '',//<= all post types
-            //      taxonomy : ''//<= all taxonomy types
-            //) OR
-            //array(
-            //      post : [ 'page', 'cpt1', ...]
-            //      taxonomy : [ 'category', 'tag', 'Custom_Tax_1', ... ]
-            //) OR
-            //array(
-            //      post : [ 'page', 'cpt1', ...]
-            //      taxonomy : '_none_'//<= don't load or search taxonomies
-            //)
             if ( ! is_array( $wp_object_types ) || empty( $wp_object_types ) ) {
               wp_send_json_error( 'czr_ajax_content_picker_missing_object_types' );
             }
             $page = empty( $_POST['page'] ) ? 0 : absint( $_POST['page'] );
-            //do we need that ?
-            // if ( $page < 1 ) {
-            //   $page = 1;
-            // }
 
             $items = array();
 
@@ -1641,7 +1152,6 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
        * @return WP_Error|array Returns either a WP_Error object or an array of menu items.
        */
       public function load_available_items_query( $args ) {
-            //normalize args
             $args = wp_parse_args( $args, array(
                   'type'          => 'post',
                   'object_types'  => '_all_',//could be page, post, or any CPT
@@ -1654,7 +1164,6 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
 
             $items = array();
             if ( 'post' === $type ) {
-                  //What are the post types we need to fetch ?
                   if ( '_all_' == $object_types || ! is_array( $object_types ) || ( is_array( $object_types ) && empty( $object_types ) ) ) {
                       $post_types = get_post_types( array( 'public' => true ) );
                   } else {
@@ -1675,7 +1184,6 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
                   foreach ( $posts as $post ) {
                         $post_title = $post->post_title;
                         if ( '' === $post_title ) {
-                          // translators: %d: ID of a post
                           $post_title = sprintf( __( '#%d (no title)', 'hueman' ), $post->ID );
                         }
                         $items[] = array(
@@ -1689,7 +1197,6 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
                   }
 
             } elseif ( 'taxonomy' === $type ) {
-                  //What are the taxonomy types we need to fetch ?
                   if ( '_all_' == $object_types || ! is_array( $object_types ) || ( is_array( $object_types ) && empty( $object_types ) ) ) {
                       $taxonomies = get_taxonomies( array( 'show_in_nav_menus' => true ), 'names' );
                   } else {
@@ -1776,20 +1283,6 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
             $s = sanitize_text_field( wp_unslash( $_POST['search'] ) );
 
             $wp_object_types = json_decode( wp_unslash( $_POST['wp_object_types'] ), true );
-
-            //$wp_object_types should look like :
-            //array(
-            //      post : '',//<= all post types
-            //      taxonomy : ''//<= all taxonomy types
-            //) OR
-            //array(
-            //      post : [ 'page', 'cpt1', ...]
-            //      taxonomy : [ 'category', 'tag', 'Custom_Tax_1', ... ]
-            //) OR
-            //array(
-            //      post : [ 'page', 'cpt1', ...]
-            //      taxonomy : '_none_'//<= don't load or search taxonomies
-            //)
             if ( ! is_array( $wp_object_types ) || empty( $wp_object_types ) ) {
               wp_send_json_error( 'czr_ajax_content_picker_missing_object_types' );
             }
@@ -1840,7 +1333,6 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
        * @return array Menu items.
        */
       public function search_available_items_query( $args = array() ) {
-            //normalize args
             $args = wp_parse_args( $args, array(
                   'pagenum'       => 1,
                   's'             => '',
@@ -1848,11 +1340,8 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
                   'object_types'  => '_all_'//could be page, post, or any CPT
             ) );
             $object_types = $args['object_types'];
-
-            //TODO: need a search only on the allowed types
             $items = array();
             if ( 'post' === $args['type'] ) {
-                  //What are the post types we need to fetch ?
                   if ( '_all_' == $object_types || ! is_array( $object_types ) || ( is_array( $object_types ) && empty( $object_types ) ) ) {
                       $post_types = get_post_types( array( 'public' => true ) );
                   } else {
@@ -1876,10 +1365,7 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
                   if ( isset( $args['s'] ) ) {
                       $query['s'] = $args['s'];
                   }
-
-                  // Query posts.
                   $get_posts = new WP_Query( $query );
-                  // Check if any posts were found.
                   if ( $get_posts->post_count ) {
                       foreach ( $get_posts->posts as $post ) {
                             $post_title = $post->post_title;
@@ -1898,7 +1384,6 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
                       }
                   }
             } elseif ( 'taxonomy' === $args['type'] ) {
-                  //What are the taxonomy types we need to fetch ?
                   if ( '_all_' == $object_types || ! is_array( $object_types ) || ( is_array( $object_types ) && empty( $object_types ) ) ) {
                       $taxonomies = get_taxonomies( array( 'show_in_nav_menus' => true ), 'names' );
                   } else {
@@ -1912,8 +1397,6 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
                       'number'     => 10,
                       'offset'     => 10 * ( $args['pagenum'] - 1 )
                   ) );
-
-                  // Check if any taxonomies were found.
                   if ( ! empty( $terms ) ) {
                         foreach ( $terms as $term ) {
                               $items[] = array(
@@ -1947,11 +1430,8 @@ endif;
 */
 function czr_get_parent_theme_slug() {
     $theme_slug = get_option( 'stylesheet' );
-    // $_REQUEST['theme'] is set both in live preview and when we're customizing a non active theme
     $theme_slug = isset($_REQUEST['theme']) ? $_REQUEST['theme'] : $theme_slug; //old wp versions
     $theme_slug = isset($_REQUEST['customize_theme']) ? $_REQUEST['customize_theme'] : $theme_slug;
-
-    //gets the theme name (or parent if child)
     $theme_data = wp_get_theme( $theme_slug );
     if ( $theme_data -> parent() ) {
         $theme_slug = $theme_data -> parent() -> Name;
@@ -1959,9 +1439,6 @@ function czr_get_parent_theme_slug() {
 
     return sanitize_file_name( strtolower( $theme_slug ) );
 }
-
-
-//@return boolean
 function czr_is_multi_item_module( $module_type ) {
     $is_multi_item = false;
     $module_params = CZR_Fmk_Base() -> czr_get_registered_dynamic_module( $module_type );
@@ -1975,15 +1452,6 @@ function czr_is_multi_item_module( $module_type ) {
     }
     return $is_multi_item;
 }
-
-
-
-
-//Creates a new instance
-//@params ex :
-//array(
-//    'base_url' => NIMBLE_BASE_URL . '/inc/czr-base-fmk'
-// )
 function CZR_Fmk_Base( $params = array() ) {
     return CZR_Fmk_Base::czr_fmk_get_instance( $params );
 }

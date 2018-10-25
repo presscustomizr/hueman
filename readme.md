@@ -1,4 +1,4 @@
-# Hueman v3.4.6
+# Hueman v3.4.7
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
@@ -82,6 +82,9 @@ Right sidebar, top to bottom:
 See headers of files for further details.
 
 ## Changelog
+= 3.4.7 October 24th 2018 =
+fixed : The "cover image" block of the new WP editor has been renamed "cover". See https://github.com/WordPress/gutenberg/pull/10659, but posts created with the former cover-image block will still use the wp-block-cover-image css class. related to #702
+
 = 3.4.6 October 24th 2018 =
 * added : support for new WordPress editor, block cover image alignwide/alignfull
 
