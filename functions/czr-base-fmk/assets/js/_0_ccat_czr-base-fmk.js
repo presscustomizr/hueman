@@ -2321,6 +2321,21 @@ $.extend( CZRInputMths , {
                     input.container.find('select').append( $( '<option>', _attributes ) );
               }
 
+              // Stores the current ajax action
+              input.currentAjaxAction = input.currentAjaxAction || new api.Value();
+
+              // When the ajax action changes, reset the rendering status of the defaultContentPickerOption
+              // fixes "Set Custom Url" being printed multiple times, @see https://github.com/presscustomizr/nimble-builder/issues/207
+              input.currentAjaxAction.bind( function( ajaxAction ) {
+                    input.defaultValueHasBeenPushed = false;
+              });
+
+              // reset the rendering status of the defaultContentPickerOption
+              // fixes "Set Custom Url" being printed multiple times, @see https://github.com/presscustomizr/nimble-builder/issues/207
+              input.container.find( 'select' ).on('select2:select select2:unselect select2:close select2:open', function (e) {
+                    input.defaultValueHasBeenPushed = false;
+              });
+
               input.container.find( 'select' ).select2( {
                     placeholder: {
                           id: '-1', // the value of the option
@@ -2338,8 +2353,12 @@ $.extend( CZRInputMths , {
                                 //for some reason I'm not getting at the moment the params.page returned when searching is different
                                 var page = params.page ? params.page : 0;
                                 page = params.term ? params.page : page;
+
+                                // Set the current ajax action now
+                                input.currentAjaxAction( params.term ? "search-available-content-items-customizer" : "load-available-content-items-customizer" );
+
                                 return {
-                                      action          : params.term ? "search-available-content-items-customizer" : "load-available-content-items-customizer",
+                                      action          : input.currentAjaxAction(),
                                       search          : params.term,
                                       wp_customize    : 'on',
                                       page            : page,
@@ -2359,15 +2378,20 @@ $.extend( CZRInputMths , {
                           //   return $request;
                           // },
                           processResults: function ( data, params ) {
-
                                 //allows us to remotely set a default option like custom link when initializing the content picker input.
-                                var defaultContentPickerOption = { defaultOption : [] };
+                                var defaultContentPickerOption = { defaultOption : {
+                                            id          : '',
+                                            title       : '',
+                                            type_label  : '',
+                                            object_type : '',
+                                            url         : ''
+                                      }
+                                };
                                 if ( input.input_parent && input.input_parent.module ) {
                                       input.input_parent.module.trigger( 'set_default_content_picker_options', { defaultContentPickerOption : defaultContentPickerOption } );
                                 } else {
                                       api.infoLog(' content_picker input => ::processResults => event "set_default_content_picker_option" not triggered when in pre-item');
                                 }
-
 
                                 if ( ! data.success ) {
                                       api.errare('request failure in setupContentPicker => processResults', data );
@@ -2377,8 +2401,16 @@ $.extend( CZRInputMths , {
                                 var items   = data.data.items,
                                     _results = [];
 
-                                if ( ! _.isEmpty( defaultContentPickerOption.defaultOption ) ) {
-                                    _results.push( defaultContentPickerOption.defaultOption );
+                                // cast items to an array
+                                items = !_.isArray( items ) ? [] : items;
+
+                                input.defaultValueHasBeenPushed = input.defaultValueHasBeenPushed || false;
+
+                                if ( 'load-available-content-items-customizer' === input.currentAjaxAction() && ! _.isEmpty( defaultContentPickerOption.defaultOption ) ) {
+                                      if ( defaultContentPickerOption.defaultOption.id && ! input.defaultValueHasBeenPushed ) {
+                                            _results.push( defaultContentPickerOption.defaultOption );
+                                            input.defaultValueHasBeenPushed = true;
+                                      }
                                 }
 
                                 _.each( items, function( item ) {
@@ -2390,10 +2422,12 @@ $.extend( CZRInputMths , {
                                             url         : item.url
                                       });
                                 });
+
                                 return {
                                       results: _results,
                                       //The pagination param will trigger the infinite load
-                                      pagination: { more: data.data.items.length >= 10 }//<= the pagination boolean param can be tricky => here set to >= 10 because we query 10 + add a custom link item on the first query
+                                      //@to be improved
+                                      pagination:  { more: items.length >= 1 }//<= the pagination boolean param can be tricky => here set to >= 10 because we query 10 + add a custom link item on the first query
                                 };
                           },
                     },//ajax

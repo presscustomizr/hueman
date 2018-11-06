@@ -179,23 +179,23 @@ if ( ! class_exists( 'CZR_Fmk_Base_Load_Resources' ) ) :
                       'isDevMode' => ( defined('WP_DEBUG') && true === WP_DEBUG ) || ( defined('CZR_DEV') && true === CZR_DEV ),
                       'docURL'          => esc_url('docs.presscustomizr.com/'),
                       'i18n' => array(
-                            'edit' => __('Edit', 'hueman'),
-                            'close' => __('Close', 'hueman'),
-                            'notset' => __('Not set', 'hueman'),
-                            'successMessage' => __('Done !', 'hueman'),
+                            'edit' => __('Edit', 'text_domain_to_be_replaced'),
+                            'close' => __('Close', 'text_domain_to_be_replaced'),
+                            'notset' => __('Not set', 'text_domain_to_be_replaced'),
+                            'successMessage' => __('Done !', 'text_domain_to_be_replaced'),
 
-                            'readDocumentation' => __('Learn more about this in the documentation', 'hueman'),
-                            'Settings' => __('Settings', 'hueman'),
-                            'Options for' => __('Options for', 'hueman'),
-                            'select_image'        => __( 'Select Image', 'hueman' ),
-                            'change_image'        => __( 'Change Image', 'hueman' ),
-                            'remove_image'        => __( 'Remove', 'hueman' ),
-                            'default_image'       => __( 'Default', 'hueman'  ),
-                            'placeholder_image'   => __( 'No image selected', 'hueman' ),
-                            'frame_title_image'   => __( 'Select Image', 'hueman' ),
-                            'frame_button_image'  => __( 'Choose Image', 'hueman' ),
+                            'readDocumentation' => __('Learn more about this in the documentation', 'text_domain_to_be_replaced'),
+                            'Settings' => __('Settings', 'text_domain_to_be_replaced'),
+                            'Options for' => __('Options for', 'text_domain_to_be_replaced'),
+                            'select_image'        => __( 'Select Image', 'text_domain_to_be_replaced' ),
+                            'change_image'        => __( 'Change Image', 'text_domain_to_be_replaced' ),
+                            'remove_image'        => __( 'Remove', 'text_domain_to_be_replaced' ),
+                            'default_image'       => __( 'Default', 'text_domain_to_be_replaced'  ),
+                            'placeholder_image'   => __( 'No image selected', 'text_domain_to_be_replaced' ),
+                            'frame_title_image'   => __( 'Select Image', 'text_domain_to_be_replaced' ),
+                            'frame_button_image'  => __( 'Choose Image', 'text_domain_to_be_replaced' ),
 
-                            'Customizing' => __('Customizing', 'hueman'),
+                            'Customizing' => __('Customizing', 'text_domain_to_be_replaced'),
                       ),
                       'paramsForDynamicRegistration' => apply_filters( 'czr_fmk_dynamic_setting_js_params', array() )
                   )
@@ -297,7 +297,7 @@ if ( ! class_exists( 'CZR_Fmk_Base_Ajax_Filter' ) ) :
             if ( ! check_ajax_referer( $action, 'nonce', false ) ) {
                  wp_send_json_error( array(
                   'code' => 'invalid_nonce',
-                  'message' => __( 'ac_set_ajax_czr_tmpl => Security check failed.', 'hueman' ),
+                  'message' => __( 'ac_set_ajax_czr_tmpl => Security check failed.' ),
                 ) );
             }
 
@@ -327,12 +327,12 @@ if ( ! class_exists( 'CZR_Fmk_Base_Ajax_Filter' ) ) :
             switch ( $requested_tmpl ) {
                 case 'crud-module-part' :
                     ?>
-                      <button class="<?php echo $css_attr['open_pre_add_btn']; ?>"><?php _e('Add New', 'hueman'); ?> <span class="fas fa-plus-square"></span></button>
+                      <button class="<?php echo $css_attr['open_pre_add_btn']; ?>"><?php _e('Add New', 'text_domain_to_be_replaced'); ?> <span class="fas fa-plus-square"></span></button>
                       <div class="<?php echo $css_attr['pre_add_wrapper']; ?>">
                         <div class="<?php echo $css_attr['pre_add_success']; ?>"><p></p></div>
                         <div class="<?php echo $css_attr['pre_add_item_content']; ?>">
 
-                          <span class="<?php echo $css_attr['cancel_pre_add_btn']; ?> button"><?php _e('Cancel', 'hueman'); ?></span> <span class="<?php echo $css_attr['add_new_btn']; ?> button"><?php _e('Add it', 'hueman'); ?></span>
+                          <span class="<?php echo $css_attr['cancel_pre_add_btn']; ?> button"><?php _e('Cancel', 'text_domain_to_be_replaced'); ?></span> <span class="<?php echo $css_attr['add_new_btn']; ?> button"><?php _e('Add it', 'text_domain_to_be_replaced'); ?></span>
                         </div>
                       </div>
                     <?php
@@ -345,7 +345,7 @@ if ( ! class_exists( 'CZR_Fmk_Base_Ajax_Filter' ) ) :
                         <# } else { #>
                           <div class="<?php echo $css_attr['item_title']; ?>"><h4>{{ data.title }}</h4></div>
                         <# } #>
-                        <div class="<?php echo $css_attr['item_btns']; ?>"><a title="<?php _e('Edit', 'hueman'); ?>" href="javascript:void(0);" class="fas fa-pencil-alt <?php echo $css_attr['edit_view_btn']; ?>"></a>&nbsp;<a title="<?php _e('Remove', 'hueman'); ?>" href="javascript:void(0);" class="fas fa-trash <?php echo $css_attr['display_alert_btn']; ?>"></a></div>
+                        <div class="<?php echo $css_attr['item_btns']; ?>"><a title="<?php _e('Edit', 'text_domain_to_be_replaced'); ?>" href="javascript:void(0);" class="fas fa-pencil-alt <?php echo $css_attr['edit_view_btn']; ?>"></a>&nbsp;<a title="<?php _e('Remove', 'text_domain_to_be_replaced'); ?>" href="javascript:void(0);" class="fas fa-trash <?php echo $css_attr['display_alert_btn']; ?>"></a></div>
                         <div class="<?php echo $css_attr['remove_alert_wrapper']; ?>"></div>
                       </div>
                     <?php
@@ -353,8 +353,8 @@ if ( ! class_exists( 'CZR_Fmk_Base_Ajax_Filter' ) ) :
 
                 case 'rud-item-alert-part' :
                     ?>
-                      <p class="czr-item-removal-title"><?php _e('Are you sure you want to remove : <strong>{{ data.title }} ?</strong>', 'hueman'); ?></p>
-                      <span class="<?php echo $css_attr['remove_view_btn']; ?> button"><?php _e('Yes', 'hueman'); ?></span> <span class="<?php echo $css_attr['cancel_alert_btn']; ?> button"><?php _e('No', 'hueman'); ?></span>
+                      <p class="czr-item-removal-title"><?php _e('Are you sure you want to remove : <strong>{{ data.title }} ?</strong>', 'text_domain_to_be_replaced'); ?></p>
+                      <span class="<?php echo $css_attr['remove_view_btn']; ?> button"><?php _e('Yes', 'text_domain_to_be_replaced'); ?></span> <span class="<?php echo $css_attr['cancel_alert_btn']; ?> button"><?php _e('No', 'text_domain_to_be_replaced'); ?></span>
                     <?php
                 break;
                 case 'img-uploader' :
@@ -664,8 +664,8 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                     case 'tiny_mce_editor' :
                         ?>
                           <# //console.log( 'IN php::ac_get_default_input_tmpl() => data sent to the tmpl => ', data ); #>
-                          <button type="button" class="button text_editor-button" data-czr-control-id="{{ data.control_id }}" data-czr-input-id="<?php echo $input_id; ?>" data-czr-action="open-tinymce-editor"><?php _e('Edit', 'hueman' ); ?></button>&nbsp;
-                          <button type="button" class="button text_editor-button" data-czr-control-id="{{ data.control_id }}" data-czr-input-id="<?php echo $input_id; ?>" data-czr-action="close-tinymce-editor"><?php _e('Hide editor', 'hueman' ); ?></button>
+                          <button type="button" class="button text_editor-button" data-czr-control-id="{{ data.control_id }}" data-czr-input-id="<?php echo $input_id; ?>" data-czr-action="open-tinymce-editor"><?php _e('Edit', 'text_domain_to_be_replaced' ); ?></button>&nbsp;
+                          <button type="button" class="button text_editor-button" data-czr-control-id="{{ data.control_id }}" data-czr-input-id="<?php echo $input_id; ?>" data-czr-action="close-tinymce-editor"><?php _e('Hide editor', 'text_domain_to_be_replaced' ); ?></button>
                           <input data-czrtype="<?php echo $input_id; ?>" type="hidden" value="{{ data.value }}"/>
                         <?php
                     break;
@@ -1055,7 +1055,7 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
               return array_merge(
                   array(
                       array(
-                         'title'      => sprintf( '<span style="font-weight:bold">%1$s</span>', __('Set a custom url', 'hueman') ),
+                         'title'      => sprintf( '<span style="font-weight:bold">%1$s</span>', __('Set a custom url', 'text_domain_to_be_replaced') ),
                          'type'       => '',
                          'type_label' => '',
                          'object'     => '',
@@ -1086,7 +1086,7 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
             if ( ! check_ajax_referer( $action, 'nonce', false ) ) {
                  wp_send_json_error( array(
                   'code' => 'invalid_nonce',
-                  'message' => __( 'ajax_load_available_items => Security check failed.', 'hueman' ),
+                  'message' => __( 'ajax_load_available_items => Security check failed.' ),
                 ) );
             }
 
@@ -1170,7 +1170,7 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
                       $post_types = $object_types;
                   }
                   if ( ! $post_types || ! is_array( $post_types ) || empty( $post_types ) ) {
-                      return new WP_Error( 'czr_contents_invalid_post_type' );
+                      return new \WP_Error( 'czr_contents_invalid_post_type' );
                   }
 
                   $posts = get_posts( array(
@@ -1184,7 +1184,7 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
                   foreach ( $posts as $post ) {
                         $post_title = $post->post_title;
                         if ( '' === $post_title ) {
-                          $post_title = sprintf( __( '#%d (no title)', 'hueman' ), $post->ID );
+                          $post_title = sprintf( __( '#%d (no title)', 'text_domain_to_be_replaced' ), $post->ID );
                         }
                         $items[] = array(
                             'title'      => html_entity_decode( $post_title, ENT_QUOTES, get_bloginfo( 'charset' ) ),
@@ -1203,7 +1203,7 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
                       $taxonomies = $object_types;
                   }
                   if ( ! $taxonomies || ! is_array( $taxonomies ) || empty( $taxonomies ) ) {
-                      return new WP_Error( 'czr_contents_invalid_post_type' );
+                      return new \WP_Error( 'czr_contents_invalid_post_type' );
                   }
                   $terms = get_terms( $taxonomies, array(
                       'child_of'     => 0,
@@ -1262,7 +1262,7 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
             if ( ! check_ajax_referer( $action, 'nonce', false ) ) {
                 wp_send_json_error( array(
                     'code' => 'invalid_nonce',
-                    'message' => __( 'ajax_load_available_items => Security check failed.', 'hueman' ),
+                    'message' => __( 'ajax_load_available_items => Security check failed.' ),
                 ) );
             }
 
@@ -1312,7 +1312,7 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
             remove_filter( 'pre_post_link', array( $this, 'dont_use_fancy_permalinks' ), 999 );
 
             if ( empty( $items ) ) {
-                wp_send_json_error( array( 'message' => __( 'No results found.', 'hueman') ) );
+                wp_send_json_success( array( 'message' => __( 'No results found.', 'text_domain_to_be_replaced') ) );
             } else {
                 wp_send_json_success( array(
                     'items' => apply_filters( 'content_picker_ajax_items', $items, $p, 'ajax_search_available_items' )
@@ -1348,7 +1348,7 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
                       $post_types = $object_types;
                   }
                   if ( ! $post_types || empty( $post_types ) ) {
-                      return new WP_Error( 'czr_contents_invalid_post_type' );
+                      return new \WP_Error( 'czr_contents_invalid_post_type' );
                   }
 
                   $query = array(
@@ -1365,13 +1365,13 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
                   if ( isset( $args['s'] ) ) {
                       $query['s'] = $args['s'];
                   }
-                  $get_posts = new WP_Query( $query );
+                  $get_posts = new \WP_Query( $query );
                   if ( $get_posts->post_count ) {
                       foreach ( $get_posts->posts as $post ) {
                             $post_title = $post->post_title;
                             if ( '' === $post_title ) {
                               /* translators: %d: ID of a post */
-                              $post_title = sprintf( __( '#%d (no title)', 'hueman' ), $post->ID );
+                              $post_title = sprintf( __( '#%d (no title)', 'text_domain_to_be_replaced' ), $post->ID );
                             }
                             $items[] = array(
                                 'title'      => html_entity_decode( $post_title, ENT_QUOTES, get_bloginfo( 'charset' ) ),
@@ -1390,7 +1390,7 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
                       $taxonomies = $object_types;
                   }
                   if ( ! $taxonomies || ! is_array( $taxonomies ) || empty( $taxonomies ) ) {
-                      return new WP_Error( 'czr_contents_invalid_post_type' );
+                      return new \WP_Error( 'czr_contents_invalid_post_type' );
                   }
                   $terms = get_terms( $taxonomies, array(
                       'name__like' => $args['s'],

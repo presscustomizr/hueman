@@ -1419,7 +1419,7 @@ body.czr-editing-modopt #customize-controls  {
   overflow-x: hidden;
   overflow-y: auto;
   margin: 0;
-  z-index: 4;
+  z-index: 999999;/* has to be greater than the Nimble top bar so we can click on the close "x" */
   width: 60%;
   min-width: 300px;
   padding: 1% 2%;
