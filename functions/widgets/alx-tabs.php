@@ -136,7 +136,7 @@ class AlxTabs extends WP_Widget {
 
 					<?php if($instance['recent_thumbs']) { // Thumbnails enabled? ?>
 					<div class="tab-item-thumbnail">
-						<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+						<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute( array( 'before' => __( 'Permalink to ', 'hueman' ) ) ); ?>">
 							<?php hu_the_post_thumbnail('thumb-small'); ?>
 							<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fas fa-play"></i></span>'; ?>
 							<?php if ( has_post_format('audio') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fas fa-volume-up"></i></span>'; ?>
@@ -147,7 +147,7 @@ class AlxTabs extends WP_Widget {
 
 					<div class="tab-item-inner group">
 						<?php if($instance['tabs_category']) { ?><p class="tab-item-category"><?php the_category(' / '); ?></p><?php } ?>
-						<p class="tab-item-title"><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title(); ?>"><?php the_title(); ?></a></p>
+						<p class="tab-item-title"><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute( array( 'before' => __( 'Permalink to ', 'hueman' ) ) ); ?>"><?php the_title(); ?></a></p>
 						<?php if($instance['tabs_date']) { ?><p class="tab-item-date"><?php the_time('j M, Y'); ?></p><?php } ?>
 					</div>
 
@@ -183,7 +183,7 @@ class AlxTabs extends WP_Widget {
 
 					<?php if($instance['popular_thumbs']) { // Thumbnails enabled? ?>
 					<div class="tab-item-thumbnail">
-						<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+						<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute( array( 'before' => __( 'Permalink to ', 'hueman' ) ) ); ?>">
 							<?php hu_the_post_thumbnail('thumb-small'); ?>
 							<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fas fa-play"></i></span>'; ?>
 							<?php if ( has_post_format('audio') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fas fa-volume-up"></i></span>'; ?>
@@ -194,7 +194,7 @@ class AlxTabs extends WP_Widget {
 
 					<div class="tab-item-inner group">
 						<?php if($instance['tabs_category']) { ?><p class="tab-item-category"><?php the_category(' / '); ?></p><?php } ?>
-						<p class="tab-item-title"><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title(); ?>"><?php the_title(); ?></a></p>
+						<p class="tab-item-title"><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute( array( 'before' => __( 'Permalink to ', 'hueman' ) ) ); ?>"><?php the_title(); ?></a></p>
 						<?php if($instance['tabs_date']) { ?><p class="tab-item-date"><?php the_time('j M, Y'); ?></p><?php } ?>
 					</div>
 
