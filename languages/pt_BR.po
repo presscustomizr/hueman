@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman v3.4.7\n"
+"Project-Id-Version: Hueman v3.4.8\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2018-10-25 10:44:13+00:00\n"
+"POT-Creation-Date: 2018-11-07 14:52:34+00:00\n"
 "PO-Revision-Date: 2016-05-30 08:47+0200\n"
 "Last-Translator: Elvis Henrique Pereira <elvishp2006@gmail.com>\n"
 "Language-Team: Press Customizr\n"
@@ -40,6 +40,15 @@ msgstr "Comentários"
 
 #: comments.php:11
 msgid "Pingbacks"
+msgstr ""
+
+#: content-featured.php:20 content-featured.php:37 content-standard.php:5
+#: content-standard.php:24 content.php:5 content.php:22
+#: functions/widgets/alx-posts.php:86 functions/widgets/alx-posts.php:97
+#: functions/widgets/alx-tabs.php:139 functions/widgets/alx-tabs.php:150
+#: functions/widgets/alx-tabs.php:186 functions/widgets/alx-tabs.php:197
+#: parts/related-posts.php:16 parts/related-posts.php:30
+msgid "Permalink to "
 msgstr ""
 
 #: footer.php:115 functions/czr/czr-resources.php:38
@@ -244,142 +253,142 @@ msgstr ""
 msgid "close"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:508
+#: functions/admin/class-tgm-plugin-activation.php:511
 #: functions/init-admin.php:121
 msgid "Install Required Plugins"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:509
+#: functions/admin/class-tgm-plugin-activation.php:512
 #: functions/init-admin.php:122
 msgid "Install Plugins"
 msgstr ""
 
 #. translators: %s: plugin name.
-#: functions/admin/class-tgm-plugin-activation.php:511
+#: functions/admin/class-tgm-plugin-activation.php:514
 #: functions/init-admin.php:123
 msgid "Installing Plugin: %s"
 msgstr ""
 
 #. translators: %s: plugin name.
-#: functions/admin/class-tgm-plugin-activation.php:513
+#: functions/admin/class-tgm-plugin-activation.php:516
 msgid "Updating Plugin: %s"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:514
+#: functions/admin/class-tgm-plugin-activation.php:517
 #: functions/init-admin.php:124
 msgid "Something went wrong with the plugin API."
 msgstr ""
 
 #. translators: 1: plugin name(s).
-#: functions/admin/class-tgm-plugin-activation.php:551
+#: functions/admin/class-tgm-plugin-activation.php:554
 #: functions/init-admin.php:133
 msgid "Begin installing plugin"
 msgid_plural "Begin installing plugins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: functions/admin/class-tgm-plugin-activation.php:556
+#: functions/admin/class-tgm-plugin-activation.php:559
 msgid "Begin updating plugin"
 msgid_plural "Begin updating plugins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: functions/admin/class-tgm-plugin-activation.php:561
+#: functions/admin/class-tgm-plugin-activation.php:564
 msgid "Begin activating plugin"
 msgid_plural "Begin activating plugins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: functions/admin/class-tgm-plugin-activation.php:566
+#: functions/admin/class-tgm-plugin-activation.php:569
 #: functions/init-admin.php:135
 msgid "Return to Required Plugins Installer"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:567
-#: functions/admin/class-tgm-plugin-activation.php:1014
-#: functions/admin/class-tgm-plugin-activation.php:2751
-#: functions/admin/class-tgm-plugin-activation.php:3798
+#: functions/admin/class-tgm-plugin-activation.php:570
+#: functions/admin/class-tgm-plugin-activation.php:1017
+#: functions/admin/class-tgm-plugin-activation.php:2754
+#: functions/admin/class-tgm-plugin-activation.php:3801
 msgid "Return to the Dashboard"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:568
-#: functions/admin/class-tgm-plugin-activation.php:3377
+#: functions/admin/class-tgm-plugin-activation.php:571
+#: functions/admin/class-tgm-plugin-activation.php:3380
 #: functions/init-admin.php:136
 msgid "Plugin activated successfully."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:569
-#: functions/admin/class-tgm-plugin-activation.php:3170
+#: functions/admin/class-tgm-plugin-activation.php:572
+#: functions/admin/class-tgm-plugin-activation.php:3173
 msgid "The following plugin was activated successfully:"
 msgstr ""
 
 #. translators: 1: plugin name.
-#: functions/admin/class-tgm-plugin-activation.php:571
+#: functions/admin/class-tgm-plugin-activation.php:574
 msgid "No action taken. Plugin %1$s was already active."
 msgstr ""
 
 #. translators: 1: plugin name.
-#: functions/admin/class-tgm-plugin-activation.php:573
+#: functions/admin/class-tgm-plugin-activation.php:576
 msgid ""
 "Plugin not activated. A higher version of %s is needed for this theme. "
 "Please update the plugin."
 msgstr ""
 
 #. translators: 1: dashboard link.
-#: functions/admin/class-tgm-plugin-activation.php:575
+#: functions/admin/class-tgm-plugin-activation.php:578
 msgid "All plugins installed and activated successfully. %1$s"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:576
+#: functions/admin/class-tgm-plugin-activation.php:579
 msgid "Dismiss this notice"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:577
+#: functions/admin/class-tgm-plugin-activation.php:580
 msgid "Remind me later"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:578
+#: functions/admin/class-tgm-plugin-activation.php:581
 msgid ""
 "There are one or more required or recommended plugins to install, update or "
 "activate."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:579
+#: functions/admin/class-tgm-plugin-activation.php:582
 msgid "Please contact the administrator of this site for help."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:704
+#: functions/admin/class-tgm-plugin-activation.php:707
 msgid "This plugin needs to be updated to be compatible with your theme."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:705
+#: functions/admin/class-tgm-plugin-activation.php:708
 msgid "Update Required"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:1121
+#: functions/admin/class-tgm-plugin-activation.php:1124
 msgid ""
 "The remote plugin package does not contain a folder with the desired slug "
 "and renaming did not work."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:1121
 #: functions/admin/class-tgm-plugin-activation.php:1124
+#: functions/admin/class-tgm-plugin-activation.php:1127
 msgid ""
 "Please contact the plugin provider and ask them to package their plugin "
 "according to the WordPress guidelines."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:1124
+#: functions/admin/class-tgm-plugin-activation.php:1127
 msgid ""
 "The remote plugin package consists of more than one file, but the files are "
 "not packaged in a folder."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:1326
+#: functions/admin/class-tgm-plugin-activation.php:1329
 msgid "Nimble is a section builder companion plugin for the Hueman theme."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:1328
+#: functions/admin/class-tgm-plugin-activation.php:1331
 msgid ""
 "It allows you to drag and drop pre-built sections, or create your own "
 "sections in live preview from the WordPress customizer. You can easily "
@@ -388,251 +397,251 @@ msgid ""
 "plugin %1$s."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:1329
+#: functions/admin/class-tgm-plugin-activation.php:1332
 #: functions/class-utils-settings-map.php:193
 #: functions/class-utils-settings-map.php:643
 #: functions/czr-modules/body-background/body_bg_module.php:136
 msgid "here"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:1331
+#: functions/admin/class-tgm-plugin-activation.php:1334
 msgid ""
 "The plugin has been designed to integrate perfectly with the Hueman theme. "
 "Lightweight and safe."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:1341
+#: functions/admin/class-tgm-plugin-activation.php:1344
 msgid "Nimble Builder"
 msgstr ""
 
 #. translators: %s: version number
-#: functions/admin/class-tgm-plugin-activation.php:2200
+#: functions/admin/class-tgm-plugin-activation.php:2203
 msgid "TGMPA v%s"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2491
+#: functions/admin/class-tgm-plugin-activation.php:2494
 msgid "Required"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2494
+#: functions/admin/class-tgm-plugin-activation.php:2497
 #, fuzzy
 msgid "Recommended"
 msgstr "Comentários Recentes"
 
-#: functions/admin/class-tgm-plugin-activation.php:2510
+#: functions/admin/class-tgm-plugin-activation.php:2513
 msgid "WordPress Repository"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2513
+#: functions/admin/class-tgm-plugin-activation.php:2516
 msgid "External Source"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2516
+#: functions/admin/class-tgm-plugin-activation.php:2519
 msgid "Pre-Packaged"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2533
+#: functions/admin/class-tgm-plugin-activation.php:2536
 msgid "Not Installed"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2537
+#: functions/admin/class-tgm-plugin-activation.php:2540
 msgid "Installed But Not Activated"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2539
+#: functions/admin/class-tgm-plugin-activation.php:2542
 msgid "Active"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2545
+#: functions/admin/class-tgm-plugin-activation.php:2548
 msgid "Required Update not Available"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2548
+#: functions/admin/class-tgm-plugin-activation.php:2551
 msgid "Requires Update"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2551
+#: functions/admin/class-tgm-plugin-activation.php:2554
 msgid "Update recommended"
 msgstr ""
 
 #. translators: 1: number of plugins.
-#: functions/admin/class-tgm-plugin-activation.php:2610
+#: functions/admin/class-tgm-plugin-activation.php:2613
 msgid "To Install <span class=\"count\">(%s)</span>"
 msgid_plural "To Install <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: 1: number of plugins.
-#: functions/admin/class-tgm-plugin-activation.php:2614
+#: functions/admin/class-tgm-plugin-activation.php:2617
 msgid "Update Available <span class=\"count\">(%s)</span>"
 msgid_plural "Update Available <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: 1: number of plugins.
-#: functions/admin/class-tgm-plugin-activation.php:2618
+#: functions/admin/class-tgm-plugin-activation.php:2621
 msgid "To Activate <span class=\"count\">(%s)</span>"
 msgid_plural "To Activate <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2708
+#: functions/admin/class-tgm-plugin-activation.php:2711
 msgid "Installed version:"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2716
+#: functions/admin/class-tgm-plugin-activation.php:2719
 msgid "Minimum required version:"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2728
+#: functions/admin/class-tgm-plugin-activation.php:2731
 msgid "Available version:"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2751
+#: functions/admin/class-tgm-plugin-activation.php:2754
 msgid "No plugins to install, update or activate."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2765
+#: functions/admin/class-tgm-plugin-activation.php:2768
 msgid "Plugin"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2766
+#: functions/admin/class-tgm-plugin-activation.php:2769
 msgid "Source"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2767
+#: functions/admin/class-tgm-plugin-activation.php:2770
 msgid "Type"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2771
+#: functions/admin/class-tgm-plugin-activation.php:2774
 msgid "Version"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2772
+#: functions/admin/class-tgm-plugin-activation.php:2775
 msgid "Status"
 msgstr ""
 
 #. translators: %2$s: plugin name in screen reader markup
-#: functions/admin/class-tgm-plugin-activation.php:2821
+#: functions/admin/class-tgm-plugin-activation.php:2824
 msgid "Install %2$s"
 msgstr ""
 
 #. translators: %2$s: plugin name in screen reader markup
-#: functions/admin/class-tgm-plugin-activation.php:2826
+#: functions/admin/class-tgm-plugin-activation.php:2829
 msgid "Update %2$s"
 msgstr ""
 
 #. translators: %2$s: plugin name in screen reader markup
-#: functions/admin/class-tgm-plugin-activation.php:2832
+#: functions/admin/class-tgm-plugin-activation.php:2835
 msgid "Activate %2$s"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2902
+#: functions/admin/class-tgm-plugin-activation.php:2905
 msgid "Upgrade message from the plugin author:"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2935
+#: functions/admin/class-tgm-plugin-activation.php:2938
 msgid "Install"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2941
+#: functions/admin/class-tgm-plugin-activation.php:2944
 msgid "Update"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2944
+#: functions/admin/class-tgm-plugin-activation.php:2947
 msgid "Activate"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2975
+#: functions/admin/class-tgm-plugin-activation.php:2978
 msgid "No plugins were selected to be installed. No action taken."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2977
+#: functions/admin/class-tgm-plugin-activation.php:2980
 msgid "No plugins were selected to be updated. No action taken."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:3018
+#: functions/admin/class-tgm-plugin-activation.php:3021
 msgid "No plugins are available to be installed at this time."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:3020
+#: functions/admin/class-tgm-plugin-activation.php:3023
 msgid "No plugins are available to be updated at this time."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:3126
+#: functions/admin/class-tgm-plugin-activation.php:3129
 msgid "No plugins were selected to be activated. No action taken."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:3152
+#: functions/admin/class-tgm-plugin-activation.php:3155
 msgid "No plugins are available to be activated at this time."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:3376
+#: functions/admin/class-tgm-plugin-activation.php:3379
 msgid "Plugin activation failed."
 msgstr ""
 
 #. translators: 1: plugin name, 2: action number 3: total number of actions.
-#: functions/admin/class-tgm-plugin-activation.php:3716
+#: functions/admin/class-tgm-plugin-activation.php:3719
 msgid "Updating Plugin %1$s (%2$d/%3$d)"
 msgstr ""
 
 #. translators: 1: plugin name, 2: error message.
-#: functions/admin/class-tgm-plugin-activation.php:3719
+#: functions/admin/class-tgm-plugin-activation.php:3722
 msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
 msgstr ""
 
 #. translators: 1: plugin name.
-#: functions/admin/class-tgm-plugin-activation.php:3721
+#: functions/admin/class-tgm-plugin-activation.php:3724
 msgid "The installation of %1$s failed."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:3725
+#: functions/admin/class-tgm-plugin-activation.php:3728
 msgid ""
 "The installation and activation process is starting. This process may take a "
 "while on some hosts, so please be patient."
 msgstr ""
 
 #. translators: 1: plugin name.
-#: functions/admin/class-tgm-plugin-activation.php:3727
+#: functions/admin/class-tgm-plugin-activation.php:3730
 msgid "%1$s installed and activated successfully."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:3727
-#: functions/admin/class-tgm-plugin-activation.php:3735
+#: functions/admin/class-tgm-plugin-activation.php:3730
+#: functions/admin/class-tgm-plugin-activation.php:3738
 msgid "Show Details"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:3727
-#: functions/admin/class-tgm-plugin-activation.php:3735
+#: functions/admin/class-tgm-plugin-activation.php:3730
+#: functions/admin/class-tgm-plugin-activation.php:3738
 msgid "Hide Details"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:3728
+#: functions/admin/class-tgm-plugin-activation.php:3731
 msgid "All installations and activations have been completed."
 msgstr ""
 
 #. translators: 1: plugin name, 2: action number 3: total number of actions.
-#: functions/admin/class-tgm-plugin-activation.php:3730
+#: functions/admin/class-tgm-plugin-activation.php:3733
 msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:3733
+#: functions/admin/class-tgm-plugin-activation.php:3736
 msgid ""
 "The installation process is starting. This process may take a while on some "
 "hosts, so please be patient."
 msgstr ""
 
 #. translators: 1: plugin name.
-#: functions/admin/class-tgm-plugin-activation.php:3735
+#: functions/admin/class-tgm-plugin-activation.php:3738
 msgid "%1$s installed successfully."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:3736
+#: functions/admin/class-tgm-plugin-activation.php:3739
 msgid "All installations have been completed."
 msgstr ""
 
 #. translators: 1: plugin name, 2: action number 3: total number of actions.
-#: functions/admin/class-tgm-plugin-activation.php:3738
+#: functions/admin/class-tgm-plugin-activation.php:3741
 msgid "Installing Plugin %1$s (%2$d/%3$d)"
 msgstr ""
 
@@ -759,7 +768,7 @@ msgid "Body Background"
 msgstr ""
 
 #: functions/class-utils-settings-map.php:324
-#: functions/init-after-setup-theme.php:206
+#: functions/init-after-setup-theme.php:208
 msgid "Set the website background color"
 msgstr ""
 
@@ -786,7 +795,7 @@ msgid "Open external links in a new tab"
 msgstr ""
 
 #: functions/class-utils-settings-map.php:388
-#: functions/init-after-setup-theme.php:166
+#: functions/init-after-setup-theme.php:168
 msgid "Create and organize your social links"
 msgstr ""
 
@@ -1733,12 +1742,12 @@ msgid "SITE ICON"
 msgstr ""
 
 #: functions/czr/class-czr-init.php:461
-#: functions/init-after-setup-theme.php:245
+#: functions/init-after-setup-theme.php:247
 msgid "Create And Order Widget Areas"
 msgstr ""
 
 #: functions/czr/class-czr-init.php:465 functions/czr/class-czr-init.php:496
-#: functions/init-after-setup-theme.php:247
+#: functions/init-after-setup-theme.php:249
 msgid ""
 "You must save changes for the new areas to appear below. <br /><i>Warning: "
 "Make sure each area has a unique ID.</i>"
@@ -2524,29 +2533,29 @@ msgstr ""
 msgid "Select a layout for this page."
 msgstr ""
 
-#: functions/init-after-setup-theme.php:100
+#: functions/init-after-setup-theme.php:102
 msgid "Topbar"
 msgstr ""
 
-#: functions/init-after-setup-theme.php:101
+#: functions/init-after-setup-theme.php:103
 msgid ""
 "Mobile. You can set a specific menu for mobile devices. If not set, the "
 "theme will use the menu assigned to the Topbar, or the Header."
 msgstr ""
 
-#: functions/init-after-setup-theme.php:102
+#: functions/init-after-setup-theme.php:104
 msgid "Header"
 msgstr ""
 
-#: functions/init-after-setup-theme.php:103
+#: functions/init-after-setup-theme.php:105
 msgid "Footer"
 msgstr ""
 
-#: functions/init-after-setup-theme.php:159
+#: functions/init-after-setup-theme.php:161
 msgid "Social links"
 msgstr ""
 
-#: functions/init-after-setup-theme.php:205
+#: functions/init-after-setup-theme.php:207
 msgid "Site Wide Body Background"
 msgstr ""
 
@@ -3031,27 +3040,27 @@ msgstr ""
 msgid "Child Menu"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:1309
-#: functions/admin/class-tgm-plugin-activation.php:3166
+#: functions/admin/class-tgm-plugin-activation.php:1312
+#: functions/admin/class-tgm-plugin-activation.php:3169
 msgctxt "plugin A *and* plugin B"
 msgid "and"
 msgstr ""
 
 #. translators: 1: install status, 2: update status
-#: functions/admin/class-tgm-plugin-activation.php:2560
+#: functions/admin/class-tgm-plugin-activation.php:2563
 msgctxt "Install/Update Status"
 msgid "%1$s, %2$s"
 msgstr ""
 
 #. translators: 1: number of plugins.
-#: functions/admin/class-tgm-plugin-activation.php:2606
+#: functions/admin/class-tgm-plugin-activation.php:2609
 msgctxt "plugins"
 msgid "All <span class=\"count\">(%s)</span>"
 msgid_plural "All <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: functions/admin/class-tgm-plugin-activation.php:2700
+#: functions/admin/class-tgm-plugin-activation.php:2703
 msgctxt "as in: \"version nr unknown\""
 msgid "unknown"
 msgstr ""

@@ -1,4 +1,4 @@
-# Hueman v3.4.7
+# Hueman v3.4.8
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
@@ -9,79 +9,20 @@ View more themes from this author: https://presscustomizr.com
 * **Demo** : https://demo-hueman.presscustomizr.com/
 * **Documentation** : https://docs.presscustomizr.com/article/236-first-steps-with-the-hueman-wordpress-theme
 
-## Hueman Addons plugin
-The Hueman Addons plugin is a free WordPress plugin which includes cool additional features specifically designed for the Hueman WordPress :
-* Shortcodes to help you style your content ( columns, dropcaps, ...)
-* A social sharing bar for your posts with count boxes for Twitter, Facebook, Google Plus, Pinterest
+## Nimble Builder plugin
+The Nimble Builder is a free plugin hosted on [wordpress.org](https://wordpress.org/plugins/nimble-builder/). It’s a lightweight section builder intended to be the content creation companion of the Hueman theme. It allows you to drag and drop pre-built sections, or create your own sections, in live preview from the WordPress customizer.
 
-**Download the plugin : [hueman-addons.zip](http://08bcf6c59e1667b0c11e-d508f833103a9ef76bbbec804d0292d4.r24.cf1.rackcdn.com/hueman-addons.zip)**
-
-The Hueman Addons plugin is documented [here](https://github.com/presscustomizr/hueman-addons)
-
+The Nimble Builder plugin is documented [here](https://docs.presscustomizr.com/collection/334-nimble-builder)
 
 ## Theme License
-The **Hueman WordPress theme** theme itself is nothing but 100% GPLv3. See headers of files for further details.[GNU GPL v3.0 or later](http://www.gnu.org/licenses/gpl-3.0.en.html)
-
-
-## Font Awesome License
-Font License - http://fontawesome.io
-License: SIL OFL 1.1
-License URI: http://scripts.sil.org/OFL
-Copyright: Dave Gandy, http://fontawesome.io
-
-Code License - http://fontawesome.io
-License: MIT License
-License URI: http://opensource.org/licenses/mit-license.html
-Copyright: Dave Gandy, http://fontawesome.io
-
-Brand Icons
-All brand icons are trademarks of their respective owners.
-The use of these trademarks does not indicate endorsement of the trademark holder by Font Awesome, nor vice versa.
-
-
-## Titillium License
-Titillium Font - http://www.campivisivi.net/titillium/
-License: SIL OFL 1.1
-License URI: http://scripts.sil.org/OFL
-Copyright: Accademia di Belle Arti di Urbino, http://campivisivi.net
-
-
-## Theme screenshot images
-CC0-licensed (GPL-compatible) images from http://pixabay.com/ and http://unsplash.com/
-
-Left sidebar, top to bottom:
-
-1. unsplash - http://bit.ly/18NNxqe
-2. pixabay ID 210801
-3. pixabay ID 164985
-4. pixabay ID 181744
-5. pixabay ID 205220
-6. pixabay ID 74570
-7. pixabay ID 122694
-8. pixabay ID 97433
-
-Content, top to bottom, left to right:
-
-1. pixabay ID 74570
-2. unsplash - http://bit.ly/18NNxqe
-3. pixabay ID 166705
-4. pixabay ID 68827
-5. pixabay ID 171732
-
-Right sidebar, top to bottom:
-
-1. pixabay ID 9950
-2. pixabay ID 181744
-3. pixabay ID 122705
-4. pixabay ID 195684
-5. pixabay ID 83810
-6. pixabay ID 18279
-
-
-## Other Licenses
-See headers of files for further details.
+The **Hueman WordPress theme** theme is nothing but 100% GPLv3. See headers of files for further details.[GNU GPL v3.0 or later](http://www.gnu.org/licenses/gpl-3.0.en.html)
 
 ## Changelog
+= 3.4.8 November 7th 2018 =
+* improved : make sure to use the more proper the_title_attribute wp function. fixes #713
+* improved : add responsive embeds (videos) support for the new WordPress editor. fixes #708
+* added : social icons line, map, discord
+
 = 3.4.7 October 24th 2018 =
 fixed : The "cover image" block of the new WP editor has been renamed "cover". See https://github.com/WordPress/gutenberg/pull/10659, but posts created with the former cover-image block will still use the wp-block-cover-image css class. related to #702
 
