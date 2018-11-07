@@ -41,6 +41,7 @@ $.extend( CZRSocialModuleMths, {
                 'delicious',
                 'deviantart',
                 'digg',
+                'discord',
                 'dribbble',
                 'dropbox',
                 'drupal',
@@ -88,6 +89,7 @@ $.extend( CZRSocialModuleMths, {
                 'lastfm',
                 'lastfm-square',
                 'leanpub',
+                'line',
                 'linkedin',
                 //'linkedin-square', //<-  removed in fa5
                 'linkedin-in', //<- added in fa5
@@ -97,6 +99,7 @@ $.extend( CZRSocialModuleMths, {
                 'meetup',
                 'medium',
                 'mixcloud',
+                'map-marker',
                 'mobile',
                 'mobile-alt',//<- added in fa5
                 'modx',
