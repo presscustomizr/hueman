@@ -17,7 +17,7 @@ $featured_img_size = array_key_exists( $sb_layout, $map ) ? $map[ $sb_layout ] :
 <article id="post-<?php the_ID(); ?>" <?php post_class('group'); ?>>
 	<div class="post-inner post-hover">
 		<div class="post-thumbnail featured-img-<?php echo $featured_img_size; ?>">
-			<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+			<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute( array( 'before' => __( 'Permalink to ', 'hueman' ) ) ); ?>">
 				<?php hu_the_post_thumbnail( apply_filters( 'hu_grid_featured_thumb_size', $featured_img_size ), '', $placeholder = true, $placeholder_size = apply_filters( 'hu_grid_featured_placeholder_size', $featured_img_size ) ); ?>
 				<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon"><i class="fas fa-play"></i></span>'; ?>
 				<?php if ( has_post_format('audio') && !is_sticky() ) echo'<span class="thumb-icon"><i class="fas fa-volume-up"></i></span>'; ?>
@@ -34,7 +34,7 @@ $featured_img_size = array_key_exists( $sb_layout, $map ) ? $map[ $sb_layout ] :
 		</div><!--/.post-meta-->
 
 		<h2 class="post-title entry-title">
-			<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title(); ?>"><?php the_title(); ?></a>
+			<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute( array( 'before' => __( 'Permalink to ', 'hueman' ) ) ); ?>"><?php the_title(); ?></a>
 		</h2><!--/.post-title-->
 
 		<?php if ( ! hu_is_checked('featured-posts-full-content') ) : ?>

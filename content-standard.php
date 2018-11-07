@@ -2,7 +2,7 @@
 	<div class="post-inner post-hover">
 
 		<div class="post-thumbnail">
-			<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+			<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute( array( 'before' => __( 'Permalink to ', 'hueman' ) ) ); ?>">
 				<?php hu_the_post_thumbnail( apply_filters( 'hu_grid_standard_thumb_size', 'thumb-standard' ), '', $placeholder = true, $placeholder_size = apply_filters( 'hu_grid_standard_placeholder_size', 'thumb-standard' ) ); ?>
 				<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon"><i class="fas fa-play"></i></span>'; ?>
 				<?php if ( has_post_format('audio') && !is_sticky() ) echo'<span class="thumb-icon"><i class="fas fa-volume-up"></i></span>'; ?>
@@ -21,7 +21,7 @@
 			</div><!--/.post-meta-->
 
 			<h2 class="post-title entry-title">
-				<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title(); ?>"><?php the_title(); ?></a>
+				<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute( array( 'before' => __( 'Permalink to ', 'hueman' ) ) ); ?>"><?php the_title(); ?></a>
 			</h2><!--/.post-title-->
 
 			<?php if (hu_get_option('excerpt-length') != '0'): ?>

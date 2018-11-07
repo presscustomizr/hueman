@@ -83,7 +83,7 @@ class AlxPosts extends WP_Widget {
 
 			<?php if($instance['posts_thumb']) { // Thumbnails enabled? ?>
 			<div class="post-item-thumbnail">
-				<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+				<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute( array( 'before' => __( 'Permalink to ', 'hueman' ) ) ); ?>">
 					<?php hu_the_post_thumbnail('thumb-medium'); ?>
 					<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fas fa-play"></i></span>'; ?>
 					<?php if ( has_post_format('audio') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fas fa-volume-up"></i></span>'; ?>
@@ -94,7 +94,7 @@ class AlxPosts extends WP_Widget {
 
 			<div class="post-item-inner group">
 				<?php if($instance['posts_category']) { ?><p class="post-item-category"><?php the_category(' / '); ?></p><?php } ?>
-				<p class="post-item-title"><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title(); ?>"><?php the_title(); ?></a></p>
+				<p class="post-item-title"><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute( array( 'before' => __( 'Permalink to ', 'hueman' ) ) ); ?>"><?php the_title(); ?></a></p>
 				<?php if($instance['posts_date']) { ?><p class="post-item-date"><?php the_time( $date_format ); ?></p><?php } ?>
 			</div>
 
