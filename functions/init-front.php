@@ -759,7 +759,7 @@ if ( ! function_exists( 'hu_print_placeholder_thumb' ) ) {
     printf( ' %1$s<img class="hu-img-placeholder" src="%2$s" alt="%3$s" data-hu-post-id="%4$s" />',
       false !== $filter ? $filter : '',
       $_img_src,
-      get_the_title(),
+      the_title_attribute( 'echo=0' ),
       $_unique_id
     );
   }
