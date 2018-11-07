@@ -241,7 +241,7 @@ if ( ! class_exists( 'HU_Plugin_Activation' ) ) {
     public $page_hook;
 
     // @nikeo addon, HU MODS
-    public $dismiss_meta_name = "hueman_last_tgmpa_notice";
+    public $dismiss_meta_name = "hu_last_tgmpa_notice";
 
     /**
      * Adds a reference of this object to $instance, populates default strings,
