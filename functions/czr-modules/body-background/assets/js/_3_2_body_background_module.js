@@ -57,8 +57,8 @@ var BodyBGConstructor = BodyBGConstructor || {};
 
                               $( 'select[data-czrtype]', input.container ).append( $('<option>', _attributes) );
                         });
-                        //fire select2
-                        $( 'select[data-czrtype]', input.container ).select2();
+                        //fire czrSelect2
+                        $( 'select[data-czrtype]', input.container ).czrSelect2();
                   }
             },
 
