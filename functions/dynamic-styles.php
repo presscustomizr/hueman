@@ -208,6 +208,13 @@ if ( ! function_exists( 'hu_get_user_defined_inline_css_rules' ) ) {
         $styles[] = 'img { -webkit-border-radius: '.hu_get_option('image-border-radius').'px; border-radius: '.hu_get_option('image-border-radius').'px; }';
       }
 
+      // sidebars background
+      $sidebars_bg = maybe_hash_hex_color( hu_get_option('sidebar-background') );
+      if ( '#f0f0f0' !== $sidebars_bg ) {
+        $styles[] = '.sidebar.expanding, .sidebar.collapsing, .sidebar .sidebar-content, .sidebar .sidebar-toggle, .container-inner > .main::before,.container-inner > .main::after { background-color: '.$sidebars_bg.'; }';
+        $styles[] = '@media only screen and (min-width: 480px) and (max-width: 1200px) { .s2.expanded { background-color: '.$sidebars_bg.'; } }';
+        $styles[] = '@media only screen and (min-width: 480px) and (max-width: 960px) { .s1.expanded { background-color: '.$sidebars_bg.'; } }';
+      }
 
       // // body background (old)
       // if ( hu_get_option('body-background') != '#eaeaea' ) {

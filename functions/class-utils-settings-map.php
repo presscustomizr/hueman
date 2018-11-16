@@ -1278,6 +1278,16 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'notice'    => __('Display boxes at the top of the sidebars' , 'hueman'),
                 'priority'  => 1
           ),
+          'sidebar-background' => array(
+                'default'   => '#f0f0f0',
+                'control'   => 'WP_Customize_Color_Control',
+                'label'     => __('Sidebars background color', 'hueman'),
+                'section'   => 'sidebars_design_sec',
+                'type'      =>  'color' ,
+                'sanitize_callback'    => 'maybe_hash_hex_color',
+                'sanitize_js_callback' => 'maybe_hash_hex_color',
+                'priority'  => 2
+          ),
           'desktop-sticky-sb' => array(
                 'default'   => hu_user_started_before_version( '3.3.9', '1.0.3' ) ? 1 : 0,
                 'control'   => 'HU_controls',
