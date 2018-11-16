@@ -57,8 +57,20 @@ if ( ! class_exists( 'HU_customize' ) ) :
             //$this -> hu_load_module_data_resources();
 
             locate_template( 'functions/czr/czr-resources.php', true, true );
+
+            // WP 5.0.0 compat. until the bug is fixed
+            // this hook fires before the customize changeset is inserter / updated in database
+            // Removing the wp_targeted_link_rel callback from the 'content_save_pre' filter prevents corrupting the changeset JSON
+            // more details in this ticket : https://core.trac.wordpress.org/ticket/45292
+            add_action( 'customize_save_validation_before', array( $this, 'hu_remove_callback_wp_targeted_link_rel' ) );
         }
 
+        // Fired @'customize_save_validation_before'
+        function hu_remove_callback_wp_targeted_link_rel( $wp_customize ) {
+            if ( false !== has_filter( 'content_save_pre', 'wp_targeted_link_rel' ) ) {
+                remove_filter( 'content_save_pre', 'wp_targeted_link_rel' );
+            }
+        }
 
         /* ------------------------------------------------------------------------- *
          *  DEPRECATED OPTIONS

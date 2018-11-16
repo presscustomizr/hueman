@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.0
-Stable tag: 3.4.8
+Stable tag: 3.4.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,16 +13,16 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
 
 == Upgrade Notice ==
-= 3.4.8 =
-* improved : make sure to use the more proper the_title_attribute wp function. fixes #713
-* improved : add responsive embeds (videos) support for the new WordPress editor. fixes #708
-* added : social icons line, map, discord
+= 3.4.9 =
+* fixed : set only the featured posts thumbnail img width to 100%. fixes #703
+* fixed : hu_is_customize_left_panel() => the check on $pagenow does not work on multisite install
+* improved : replace select2 with our namespaced czrSelect2
 
 == Changelog ==
-= 3.4.8 November 7th 2018 =
-* improved : make sure to use the more proper the_title_attribute wp function. fixes #713
-* improved : add responsive embeds (videos) support for the new WordPress editor. fixes #708
-* added : social icons line, map, discord
+= 3.4.9 November 16th 2018 =
+* fixed : set only the featured posts thumbnail img width to 100%. fixes #703
+* fixed : hu_is_customize_left_panel() => the check on $pagenow does not work on multisite install
+* improved : replace select2 with our namespaced czrSelect2
 
 = 3.4.7 October 24th 2018 =
 fixed : The "cover image" block of the new WP editor has been renamed "cover". See https://github.com/WordPress/gutenberg/pull/10659, but posts created with the former cover-image block will still use the wp-block-cover-image css class. related to #702

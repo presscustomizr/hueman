@@ -382,7 +382,7 @@ $.extend( CZRSocialModuleMths, {
                     }
 
                     //fire select2
-                    $( 'select[data-czrtype="social-icon"]', input.container ).select2( {
+                    $( 'select[data-czrtype="social-icon"]', input.container ).czrSelect2( {
                             templateResult: addIcon,
                             templateSelection: addIcon
                     });

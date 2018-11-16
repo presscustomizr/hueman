@@ -168,7 +168,7 @@ $.extend( CZRMultiplePickerMths , {
                 _select  = this.container.find('select');
 
 
-            _select.select2({
+            _select.czrSelect2({
                   closeOnSelect: false,
                   templateSelection: czrEscapeMarkup
             });
@@ -388,8 +388,8 @@ $.extend( CZRLayoutSelectMths , {
             //destroy selected if set
             //$_select.selecter("destroy");
 
-            //fire select2
-            $_select.select2( {
+            //fire czrSelect2
+            $_select.czrSelect2( {
                   templateResult: addImg,
                   templateSelection: addImg,
                   minimumResultsForSearch: Infinity

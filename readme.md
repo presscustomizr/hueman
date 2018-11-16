@@ -1,4 +1,4 @@
-# Hueman v3.4.8
+# Hueman v3.4.9
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
@@ -18,6 +18,11 @@ The Nimble Builder plugin is documented [here](https://docs.presscustomizr.com/c
 The **Hueman WordPress theme** theme is nothing but 100% GPLv3. See headers of files for further details.[GNU GPL v3.0 or later](http://www.gnu.org/licenses/gpl-3.0.en.html)
 
 ## Changelog
+= 3.4.9 November 16th 2018 =
+* fixed : set only the featured posts thumbnail img width to 100%. fixes #703
+* fixed : hu_is_customize_left_panel() => the check on $pagenow does not work on multisite install
+* improved : replace select2 with our namespaced czrSelect2
+
 = 3.4.8 November 7th 2018 =
 * improved : make sure to use the more proper the_title_attribute wp function. fixes #713
 * improved : add responsive embeds (videos) support for the new WordPress editor. fixes #708

@@ -211,8 +211,8 @@ if ( ! class_exists( 'CZR_Fmk_Base_Load_Resources' ) ) :
                 $media = 'all'
             );
             wp_enqueue_style(
-                'select2-css',
-                 sprintf('%1$s/assets/css/lib/select2.min.css', NIMBLE_FMK_BASE_URL, ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min'),
+                'czr-select2-css',
+                 sprintf('%1$s/assets/css/lib/czrSelect2.min.css', NIMBLE_FMK_BASE_URL, ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min'),
                 array( 'customize-controls' ),
                 ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : NIMBLE_FMK_BASE_VERSION,
                 $media = 'all'

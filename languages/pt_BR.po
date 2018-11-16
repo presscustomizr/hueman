@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman v3.4.8\n"
+"Project-Id-Version: Hueman v3.4.9\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2018-11-07 14:52:34+00:00\n"
+"POT-Creation-Date: 2018-11-16 11:22:14+00:00\n"
 "PO-Revision-Date: 2016-05-30 08:47+0200\n"
 "Last-Translator: Elvis Henrique Pereira <elvishp2006@gmail.com>\n"
 "Language-Team: Press Customizr\n"
@@ -679,7 +679,7 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:216
 #: functions/class-utils-settings-map.php:1383
-#: functions/czr/class-czr-init.php:111
+#: functions/czr/class-czr-init.php:123
 msgid ""
 "Upload your custom logo image. Supported formats : .jpg, .png, .gif, svg, "
 "svgz"
@@ -1716,52 +1716,52 @@ msgstr ""
 msgid "Page %s"
 msgstr "Páginas:"
 
-#: functions/czr/class-czr-init.php:100
+#: functions/czr/class-czr-init.php:112
 msgid "Custom Header Logo"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:278
+#: functions/czr/class-czr-init.php:290
 msgid "Front Page Content"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:287
+#: functions/czr/class-czr-init.php:299
 msgid "Don't show any posts or page"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:288
+#: functions/czr/class-czr-init.php:300
 #, fuzzy
 msgid "Your latest posts"
 msgstr "Posts Populares"
 
-#: functions/czr/class-czr-init.php:289
+#: functions/czr/class-czr-init.php:301
 msgid "A static page"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:404
+#: functions/czr/class-czr-init.php:416
 msgid "SITE ICON"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:461
+#: functions/czr/class-czr-init.php:473
 #: functions/init-after-setup-theme.php:247
 msgid "Create And Order Widget Areas"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:465 functions/czr/class-czr-init.php:496
+#: functions/czr/class-czr-init.php:477 functions/czr/class-czr-init.php:508
 #: functions/init-after-setup-theme.php:249
 msgid ""
 "You must save changes for the new areas to appear below. <br /><i>Warning: "
 "Make sure each area has a unique ID.</i>"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:492
+#: functions/czr/class-czr-init.php:504
 msgid "Create And Manage Widget Areas"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:503
+#: functions/czr/class-czr-init.php:515
 msgid "Create and manage widget zones"
 msgstr ""
 
-#: functions/czr/class-czr-init.php:524
+#: functions/czr/class-czr-init.php:536
 msgid "Dynamic Sidebars and Widgets"
 msgstr ""
 
