@@ -83,7 +83,20 @@ function hu_get_sidebar_position( $sidebar = 's1' ) {
 */
 function hu_is_customize_left_panel() {
     global $pagenow;
-    return is_admin() && isset( $pagenow ) && 'customize.php' == $pagenow;
+    // the check on $pagenow does NOT work on multisite install @see https://github.com/presscustomizr/nimble-builder/issues/240
+    // That's why we also check with other global vars
+    // @see wp-includes/theme.php, _wp_customize_include()
+    $is_customize_php_page = ( is_admin() && 'customize.php' == basename( $_SERVER['PHP_SELF'] ) );
+    $is_customize_admin_page_one = (
+      $is_customize_php_page
+      ||
+      ( isset( $_REQUEST['wp_customize'] ) && 'on' == $_REQUEST['wp_customize'] )
+      ||
+      ( ! empty( $_GET['customize_changeset_uuid'] ) || ! empty( $_POST['customize_changeset_uuid'] ) )
+    );
+    $is_customize_admin_page_two = is_admin() && isset( $pagenow ) && 'customize.php' == $pagenow;
+
+    return $is_customize_admin_page_one || $is_customize_admin_page_two;
 }
 
 
