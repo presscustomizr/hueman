@@ -4046,18 +4046,49 @@ var czrapp = czrapp || {};
               );
         },
         gutenbergAlignfull : function() {
-              var _coverImageSelector            = [ '.full-width.col-1c .wp-block-cover-image.alignfull', '.full-width.col-1c .wp-block-cover.alignfull' ].join(','),
+              var _isPage                        = czrapp.$_body.hasClass( 'page' ),
+                  _isSingle                      = czrapp.$_body.hasClass( 'single' ),
+                  _coverImageSelector            = '.full-width.col-1c .alignfull[class*=wp-block-cover]',
+                  _alignFullSelector             = '.full-width.col-1c .alignfull[class*=wp-block-]',
+                  _alignTableSelector            = [
+                                        '.boxed .themeform .wp-block-table.alignfull',
+                                        '.boxed .themeform .wp-block-table.alignwide',
+                                        '.full-width.col-1c .themeform .wp-block-table.alignwide'
+                                      ],
                   _coverWParallaxImageSelector   = _coverImageSelector + '.has-parallax',
                   _classParallaxTreatmentApplied = 'hu-alignfull-p',
                   _styleId                       = 'hu-gutenberg-alignfull',
-                  $_RefWidthElement              = czrapp.$_body;
+                  $_refWidthElement              = czrapp.$_body,
+                  $_refContainedWidthElement     = $( 'section.content', $_refWidthElement );
+              if ( ! ( _isPage || _isSingle ) ) {
+                    return;
+              }
 
-              if ( $( _coverImageSelector ).length > 0 ) {
-                    _add_alignfull_style();
-                    _add_parallax_treatment_style();
-                    czrapp.userXP.windowWidth.bind( function() {
-                          _add_alignfull_style();
+              if ( _isSingle ) {
+                    _coverImageSelector = '.single' + _coverImageSelector;
+                    _alignFullSelector  = '.single' + _alignFullSelector;
+                    _alignTableSelector = '.single' + _alignTableSelector.join(',.single');
+              } else {
+                    _coverImageSelector = '.page' + _coverImageSelector;
+                    _alignFullSelector  = '.page' + _alignFullSelector;
+                    _alignTableSelector = '.page' + _alignTableSelector.join(',.page');
+              }
+
+              if ( $( _alignFullSelector ).length > 0 ) {
+                    _add_alignelement_style( $_refWidthElement, _alignFullSelector, 'hu-gb-alignfull' );
+                    console.log($(_coverWParallaxImageSelector));
+                    if ( $(_coverWParallaxImageSelector).length > 0 ) {
                           _add_parallax_treatment_style();
+                    }
+                    czrapp.userXP.windowWidth.bind( function() {
+                          _add_alignelement_style( $_refWidthElement, _alignFullSelector, 'hu-gb-alignfull' );
+                          _add_parallax_treatment_style();
+                    });
+              }
+              if ( $( _alignTableSelector ).length > 0 ) {
+                    _add_alignelement_style( $_refContainedWidthElement, _alignTableSelector, 'hu-gb-aligntable' );
+                    czrapp.userXP.windowWidth.bind( function() {
+                          _add_alignelement_style( $_refContainedWidthElement, _alignTableSelector, 'hu-gb-aligntable' );
                     });
               }
               function _add_parallax_treatment_style() {
@@ -4068,16 +4099,16 @@ var czrapp = czrapp || {};
                                 .addClass(_classParallaxTreatmentApplied);
                     });
               }
-              function _add_alignfull_style() {
-                    var newWidth = $_RefWidthElement[0].getBoundingClientRect().width,
-                        $_style   = $( 'head #' + _styleId );
+              function _add_alignelement_style( $_refElement, _selector, _styleId ) {
+                    var newElementWidth = $_refElement[0].getBoundingClientRect().width,
+                        $_style         = $( 'head #' + _styleId );
 
                     if ( 1 > $_style.length ) {
                           $_style = $('<style />', { 'id' : _styleId });
                           $( 'head' ).append( $_style );
                           $_style = $( 'head #' + _styleId );
                     }
-                    $_style.html( _coverImageSelector + '{width:'+ newWidth +'px}' );
+                    $_style.html( _selector + '{width:'+ newElementWidth +'px}' );
               }
         }
 
