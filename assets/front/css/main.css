@@ -408,7 +408,7 @@ h1, h2, h3, h4, h5, h6 { color: #444; font-weight: 600; -ms-word-wrap: break-wor
 .main { background-color: #fff!important; position: relative; }
 .sidebar-expanding .main, .sidebar-collapsing .main { overflow: hidden;}
 
-.main-inner { position: relative; min-height: 600px; /* instead of sticky footer */ }
+.main-inner { z-index: 1; position: relative; min-height: 600px; /* instead of sticky footer */ }
 .content {
   width: 100%;
   position: relative;
@@ -429,34 +429,45 @@ position: relative;}
 
 /*  base : layout columns
 /* ------------------------------------ */
+.container-inner > .main::before,
+.container-inner > .main::after { background-color: #f0f0f0;  position: absolute; top: 0; bottom: 0; content: ''; display: block; z-index: 0;}
 
 /* 2 column, content left */
-.col-2cl .main-inner { background: url(../img/sidebar/s-right-s1.png) repeat-y right 0; padding-right: 340px; }
+.col-2cl .main-inner { padding-right: 340px; }
+.col-2cl .container-inner > .main::after { right: 0; padding-right: 340px; }
 .col-2cl .sidebar.s1 { float: right; margin-right: -340px; }
 .col-2cl .content { float: left; }
 
 /* 2 column, content right */
-.col-2cr .main-inner { background: url(../img/sidebar/s-left.png) repeat-y left 0; padding-left: 340px; }
+.col-2cr .main-inner { padding-left: 340px; }
+.col-2cr .container-inner > .main::before { left: 0; padding-left: 340px; }
 .col-2cr .sidebar.s1 { float: left; margin-left: -340px; }
 .col-2cr .content { float: right; }
 
 /* 3 column, content middle */
-.col-3cm .main { background: url(../img/sidebar/s-right-s2.png) repeat-y right 0; }
-.col-3cm .main-inner { background: url(../img/sidebar/s-left.png) repeat-y left 0; padding-left: 340px; padding-right: 260px; }
+.col-3cm .container-inner > .main::before { left: 0; padding-left: 340px; }
+.col-3cm .container-inner > .main::after { right: 0; padding-right: 260px; }
+.col-3cm .main-inner { padding-left: 340px; padding-right: 260px; }
+
 .col-3cm .sidebar.s1 { float: left; margin-left: -340px; }
 .col-3cm .sidebar.s2 { float: right; margin-right: -260px; /* ingenuity! */ position: relative; right: -100%; }
 .col-3cm .content { float: right; }
 
 /* 3 column, content left */
 .col-3cl .main { background-image: none; }
-.col-3cl .main-inner { background: url(../img/sidebar/s-right-dual-full-expand.png) repeat-y right 0; padding-right: 600px; }
+.col-3cl .main-inner { padding-right: 600px; }
+.col-3cl .container-inner > .main::after { right: 0px; padding-right: 600px; }
+
 .col-3cl .sidebar.s1 { float: right; margin-right: -600px; }
 .col-3cl .sidebar.s2 { float: right; margin-right: -260px; }
 .col-3cl .content { float: left; }
 
 /* 3 column, content right */
 .col-3cr .main { background-image: none; }
-.col-3cr .main-inner { background: url(../img/sidebar/s-left-dual-full-expand.png) repeat-y left 0; padding-left: 600px; }
+.col-3cr .main-inner { padding-left: 600px; }
+.col-3cr .container-inner > .main::before { left: 0px; padding-left: 600px; }
+
+
 .col-3cr .sidebar.s1 { float: left; margin-left: -600px; }
 .col-3cr .sidebar.s2 { float: left; margin-left: -260px; }
 .col-3cr .content { float: right; }
@@ -1900,7 +1911,13 @@ a + span.hu-external:after {
 
 /*  Gutenberg
 /* ------------------------------------ */
-/* cover images */
+.alignfull.wp-block-audio audio,
+.alignwide.wp-block-audio audio,
+.alignfull.wp-block-video video,
+.alignwide.wp-block-video video {
+    width: 100%;
+}
+
 /*
  * Real alignfull and alignwide
  * allowed only in layouts with no sidebars and full-width
@@ -1917,32 +1934,39 @@ a + span.hu-external:after {
 the cover image block has been renamed cover. @see https://github.com/WordPress/gutenberg/pull/10659
 but posts created with the former cover-image block will still use the wp-block-cover-image class
  */
-.full-width.col-1c .wp-block-cover-image.alignfull, .full-width.col-1c .wp-block-cover.alignfull {
+.full-width.col-1c .themeform .alignfull[class*=wp-block-] {
     width: 100vw;
     max-width: 100vw;
     position: relative;
     margin-left: 0;
     margin-right: 0;
 }
-.full-width.col-1c .wp-block-cover-image.alignfull:not(.has-parallax), .full-width.col-1c .wp-block-cover.alignfull:not(.has-parallax) {
+.full-width.col-1c .themeform .alignfull[class*=wp-block-]:not(.has-parallax) {
     left: 50%;
     -moz-transform: translateX(-50);
     -webkit-transform: translateX(-50);
     transform: translateX(-50%);
 }
-.full-width.col-1c .wp-block-cover-image.alignfull.has-parallax:not(.hu-alignfull-p), .full-width.col-1c .wp-block-cover.alignfull.has-parallax:not(.hu-alignfull-p) {
+.full-width.col-1c .themeform .alignfull[class*=wp-block-].has-parallax:not(.hu-alignfull-p) {
     width: 100%;
 }
 /* alignwide and alignfull in boxed layouts */
 /* only reset the .pad container horizontal padding*/
-.entry-inner > .wp-block-cover-image.alignfull,
-.entry-inner > .wp-block-cover-image.alignwide,
-.entry-inner > .wp-block-cover.alignfull,
-.entry-inner > .wp-block-cover.alignwide {
+.themeform .alignfull[class*=wp-block-],
+.themeform .alignwide[class*=wp-block-] {
     margin-right: -30px;
     margin-left: -30px;
     clear: both;
     width: auto;
+    max-width: 100vw;
+    min-width: 100%;
+}
+/* inherit the .main background color */
+.alignfull[class*=wp-block-]:not(.wp-block-cover):not(.wp-block-cover-image):not(.wp-block-image) {
+    background-color: #fff;
+}
+.entry .wp-block-gallery {
+    margin: 0;
 }/* ------------------------------------------------------------------------- *
  *  Post Formats
 /* ------------------------------------------------------------------------- */
@@ -2812,7 +2836,7 @@ box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
   }
 
 	/* s2 3 column, content middle */
-	.col-3cm .main { background: url(../img/sidebar/s-right-collapse.png) repeat-y right; }
+    .col-3cm .container-inner > .main::after,
 	.col-3cm .main-inner { padding-right: 50px; }
 	/*.col-3cm .s2 { margin-right: -50px; }*/
   .col-3cm .s2.collapsed { margin-right: -50px;}
@@ -2828,14 +2852,16 @@ box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
 
 	/* 3 column, content right */
 	.col-3cl .main { background-image: none; }
-	.col-3cl .main-inner { background: url(../img/sidebar/s-right-dual-half-collapse.png) repeat-y right; padding-right: 390px; }
+    .col-3cl .container-inner > .main::after,
+	.col-3cl .main-inner { padding-right: 390px; }
 	.col-3cl .s1.collapsed { margin-right: -390px; }
 	.col-3cl .s2.collapsed { margin-right: -50px;}
   /*.col-3cl .s2.expanded { right: 340px; }*/
 
 	/* 3 column, content left */
 	.col-3cr .main { background-image: none; }
-	.col-3cr .main-inner { background: url(../img/sidebar/s-left-dual-half-collapse.png) repeat-y left; padding-left: 390px; }
+    .col-3cr .container-inner > .main::before,
+	.col-3cr .main-inner { padding-left: 390px; }
 	.col-3cr .s1.collapsed { margin-left: -390px; }
 	.col-3cr .s2.collapsed { margin-left: -50px; }
   .col-3cr .s2.expanded { }
@@ -2876,20 +2902,25 @@ box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
     color: #000!important;
   }
 
+
 	/* 2 column, content right */
-	.col-2cr .main-inner { background-position: -290px 0!important; padding-left: 50px; }
+	.col-2cr .container-inner > .main::before,
+	.col-2cr .main-inner { padding-left: 50px; }
   .col-2cr .s1.collapsed { left: 0;margin-left: -50px; }
   .col-2cr .s1.expanded { left: 0;}
 
+
 	/* 2 column, content left */
-	.col-2cl .main-inner { background-image: url(../img/sidebar/s-right-collapse.png); padding-right: 50px; }
+	.col-2cl .container-inner > .main::after,
+	.col-2cl .main-inner { padding-right: 50px; }
   /*.col-2cl .s1.collapsed { margin-right: 0px; right: 0;  }*/
   .col-2cl .s1.collapsed { margin-right: -50px; right: 0;  }
   .col-2cl .s1.expanded { right: 0; }
   .col-2cl .s1.expanded .sidebar-toggle { float: right; }
 
 	/* 3 column, content middle */
-	.col-3cm .main-inner { background-position: -290px 0!important; padding-left: 50px; }
+    .col-3cm .container-inner > .main::before,
+	.col-3cm .main-inner { padding-left: 50px; }
   .col-3cm .s1.collapsed { margin-left: -50px;}
   .col-3cm .s1.expanded { left: 0; }
   .col-3cm .s2.collapsed { margin-right: -50px;}
@@ -2898,7 +2929,8 @@ box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
 
 	/* 3 column, content left */
 	.col-3cl .main { background-image: none; }
-	.col-3cl .main-inner { background: url(../img/sidebar/s-right-dual-full-collapse.png) repeat-y right; padding-right: 100px; }
+    .col-3cl .container-inner > .main::after,
+	.col-3cl .main-inner { padding-right: 100px; }
   .col-3cl .s1.collapsed { margin-right: -100px;}
   .col-3cl .s2.collapsed { margin-right: -50px;}
   .col-3cl .s1.expanded {  margin-right: -390px; }
@@ -2909,7 +2941,8 @@ box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
 
 	/* 3 column, content right */
 	.col-3cr .main { background-image: none; }
-	.col-3cr .main-inner { background: url(../img/sidebar/s-left-dual-full-collapse.png) repeat-y left; padding-left: 100px; }
+    .col-3cr .container-inner > .main::before,
+	.col-3cr .main-inner { padding-left: 100px; }
   .col-3cr .s1.collapsed { margin-left: -100px;}
 	.col-3cr .s2.collapsed { margin-left: -50px; }
   .col-3cr .s1.expanded  { margin-left: -390px;}
@@ -3037,7 +3070,8 @@ box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
 	.main,
 	.main-inner { background-image: none!important; padding: 0!important;  }
 	.sidebar.s2 { right: 0!important; left: 0!important; }
-
+	.container-inner > .main::before,
+	.container-inner > .main::after { display: none; }
 	/* hide */
 	.mobile-sidebar-hide-s1 .sidebar.s1,
 	.mobile-sidebar-hide-s2 .s2,

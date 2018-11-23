@@ -16,12 +16,20 @@ The Hueman theme helps you increase your traffic and engage your visitors. It lo
 = 3.4.9 =
 * fixed : set only the featured posts thumbnail img width to 100%. fixes #703
 * fixed : hu_is_customize_left_panel() => the check on $pagenow does not work on multisite install
+* added : add sidebars background color option. fixes #718
+* improved : add wp 5.0 compatibility patch. fixes #719
+* improved : improve gutenberg alignment compatibility. fixes #702
+* improved : Nimble Builder compatibility. Don't load css and javascript front assets when using the full Nimble template
 * improved : replace select2 with our namespaced czrSelect2
 
 == Changelog ==
-= 3.4.9 November 16th 2018 =
+= 3.4.9 November 23rd 2018 =
 * fixed : set only the featured posts thumbnail img width to 100%. fixes #703
 * fixed : hu_is_customize_left_panel() => the check on $pagenow does not work on multisite install
+* added : add sidebars background color option. fixes #718
+* improved : add wp 5.0 compatibility patch. fixes #719
+* improved : improve gutenberg alignment compatibility. fixes #702
+* improved : Nimble Builder compatibility. Don't load css and javascript front assets when using the full Nimble template
 * improved : replace select2 with our namespaced czrSelect2
 
 = 3.4.7 October 24th 2018 =
