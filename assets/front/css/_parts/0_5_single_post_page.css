@@ -270,7 +270,13 @@ a + span.hu-external:after {
 
 /*  Gutenberg
 /* ------------------------------------ */
-/* cover images */
+.alignfull.wp-block-audio audio,
+.alignwide.wp-block-audio audio,
+.alignfull.wp-block-video video,
+.alignwide.wp-block-video video {
+    width: 100%;
+}
+
 /*
  * Real alignfull and alignwide
  * allowed only in layouts with no sidebars and full-width
@@ -287,30 +293,37 @@ a + span.hu-external:after {
 the cover image block has been renamed cover. @see https://github.com/WordPress/gutenberg/pull/10659
 but posts created with the former cover-image block will still use the wp-block-cover-image class
  */
-.full-width.col-1c .wp-block-cover-image.alignfull, .full-width.col-1c .wp-block-cover.alignfull {
+.full-width.col-1c .themeform .alignfull[class*=wp-block-] {
     width: 100vw;
     max-width: 100vw;
     position: relative;
     margin-left: 0;
     margin-right: 0;
 }
-.full-width.col-1c .wp-block-cover-image.alignfull:not(.has-parallax), .full-width.col-1c .wp-block-cover.alignfull:not(.has-parallax) {
+.full-width.col-1c .themeform .alignfull[class*=wp-block-]:not(.has-parallax) {
     left: 50%;
     -moz-transform: translateX(-50);
     -webkit-transform: translateX(-50);
     transform: translateX(-50%);
 }
-.full-width.col-1c .wp-block-cover-image.alignfull.has-parallax:not(.hu-alignfull-p), .full-width.col-1c .wp-block-cover.alignfull.has-parallax:not(.hu-alignfull-p) {
+.full-width.col-1c .themeform .alignfull[class*=wp-block-].has-parallax:not(.hu-alignfull-p) {
     width: 100%;
 }
 /* alignwide and alignfull in boxed layouts */
 /* only reset the .pad container horizontal padding*/
-.entry-inner > .wp-block-cover-image.alignfull,
-.entry-inner > .wp-block-cover-image.alignwide,
-.entry-inner > .wp-block-cover.alignfull,
-.entry-inner > .wp-block-cover.alignwide {
+.themeform .alignfull[class*=wp-block-],
+.themeform .alignwide[class*=wp-block-] {
     margin-right: -30px;
     margin-left: -30px;
     clear: both;
     width: auto;
+    max-width: 100vw;
+    min-width: 100%;
+}
+/* inherit the .main background color */
+.alignfull[class*=wp-block-]:not(.wp-block-cover):not(.wp-block-cover-image):not(.wp-block-image) {
+    background-color: #fff;
+}
+.entry .wp-block-gallery {
+    margin: 0;
 }
