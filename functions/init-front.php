@@ -1025,6 +1025,8 @@ add_filter( 'hu_front_js_localized_params', 'hu_add_fittext_js_front_params' );
 //hook : wp_enqueue_scripts
 if ( ! function_exists( 'hu_scripts' ) ) {
   function hu_scripts() {
+    if ( hu_is_full_nimble_tmpl() )
+      return;
     if ( hu_is_checked( 'js-mobile-detect') ) {
       wp_enqueue_script(
         'mobile-detect',
@@ -1201,6 +1203,8 @@ function hu_normalize_stick_menu_opt( $opt_val = 'stick_up' ) {
 /* ------------------------------------ */
 if ( ! function_exists( 'hu_styles' ) ) {
   function hu_styles() {
+    if ( hu_is_full_nimble_tmpl() )
+      return;
     //Registered only if child theme => will be loaded as a dependency when enqueuing wp child style.css
     if ( is_child_theme() ) {
         wp_register_style(

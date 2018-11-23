@@ -557,3 +557,14 @@ function hu_is_comment_icon_displayed_on_grid_item_thumbnails() {
     }
     return comments_open() && hu_is_checked( 'comment-count') && $are_comments_contextually_enabled;
 }
+
+// @return string
+function hu_is_full_nimble_tmpl() {
+  $bool = false;
+  if ( function_exists('Nimble\sek_get_locale_template') ) {
+    $tmpl_name = \Nimble\sek_get_locale_template();
+    $tmpl_name = ( !empty( $tmpl_name ) && is_string( $tmpl_name ) ) ? basename( $tmpl_name ) : '';
+    $bool = 'nimble_full_tmpl_ghf.php' === $tmpl_name;
+  }
+  return $bool;
+}
