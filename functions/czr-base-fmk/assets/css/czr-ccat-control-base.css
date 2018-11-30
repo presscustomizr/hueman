@@ -2292,7 +2292,7 @@ body.czr-customize-content_editor-pane-resize #customize-preview:before {
   bottom: 8px !important;
 }
 .czr-resize-handle {
-  color: #23282d;
+  color: #33b3db;
   font-size: 12px;
   position: relative;
   bottom: 2px;
