@@ -1703,7 +1703,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                   'go_pro_sec'   => array(
                       'title'         => esc_html__( 'Upgrade to Hueman Pro', 'hueman' ),
                       'pro_text'      => esc_html__( 'Go Pro', 'hueman' ),
-                      'pro_url'       => esc_url( 'presscustomizr.com/hueman-pro?ref=c' ),
+                      'pro_url'       => esc_url('presscustomizr.com/hueman-pro') . '?ref=c&utm_source=usersite&utm_medium=link&utm_campaign=hueman-customizer-btn',
                       'priority'      => 0,
                       'section_class' => 'HU_Customize_Section_Pro',
                       'active_callback' => array( $this, 'hu_pro_section_active_cb' )

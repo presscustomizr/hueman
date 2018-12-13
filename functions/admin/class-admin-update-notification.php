@@ -108,7 +108,7 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
                       HU_WEBSITE . "/category/hueman-releases/",
                       __( "Read the latest release notes" , "hueman" ),
                       ! HU_IS_PRO ? sprintf( '<p style="position: absolute;right: 7px;top: 4px;"><a class="button button-primary upgrade-to-pro" href="%1$s" title="%2$s" target="_blank">%2$s &raquo;</a></p>',
-                        esc_url('presscustomizr.com/hueman-pro?ref=a'),
+                        esc_url('presscustomizr.com/hueman-pro?ref=a&utm_source=usersite&utm_medium=link&utm_campaign=hueman-update-notice'),
                         __( "Upgrade to Hueman Pro", "hueman" )
                       ) : ''
                     )
