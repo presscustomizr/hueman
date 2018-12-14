@@ -564,7 +564,14 @@ function hu_is_full_nimble_tmpl() {
   if ( function_exists('Nimble\sek_get_locale_template') ) {
     $tmpl_name = \Nimble\sek_get_locale_template();
     $tmpl_name = ( !empty( $tmpl_name ) && is_string( $tmpl_name ) ) ? basename( $tmpl_name ) : '';
+    // kept for retro-compat.
+    // since Nimble Builder v1.4.0, the 'nimble_full_tmpl_ghf.php' has been deprecated
     $bool = 'nimble_full_tmpl_ghf.php' === $tmpl_name;
+
+    // "is full Nimble template" when header, footer and content use Nimble templates.
+    if ( function_exists('Nimble\sek_page_uses_nimble_header_footer') ) {
+        $bool = ( 'nimble_template.php' === $tmpl_name || 'nimble-tmpl.php' === $tmpl_name ) && Nimble\sek_page_uses_nimble_header_footer();
+    }
   }
   return $bool;
 }

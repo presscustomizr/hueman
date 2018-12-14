@@ -183,10 +183,10 @@ function hu_render_nimble_sections_on_specific_hueman_hook() {
     // this occurs only when user pick the nimble template for a given context
     // 'nimble-tmpl.php' is the Hueman theme template overriding the Nimble one. Located in HU_BASE .'tmpl/nimble-tmpl.php'
     if ( function_exists( 'Nimble\sek_get_locale_template' ) && 'nimble-tmpl.php' === basename( \Nimble\sek_get_locale_template() ) ) {
-        if ( function_exists('Nimble\Nimble_Manager') && function_exists('Nimble\sek_get_local_locations') ) {
+        if ( function_exists('Nimble\Nimble_Manager') && function_exists('Nimble\sek_get_local_content_locations') ) {
             if ( method_exists( \Nimble\Nimble_Manager(), 'render_nimble_locations') ) {
                 \Nimble\Nimble_Manager()->render_nimble_locations(
-                    array_keys( \Nimble\sek_get_local_locations() ),//array( 'loop_start', 'before_content', 'after_content', 'loop_end'),
+                    array_keys( \Nimble\sek_get_local_content_locations() ),//array( 'loop_start', 'before_content', 'after_content', 'loop_end'),
                     array(
                         // the location rendered even if empty.
                         // This way, the user starts customizing with only one location for the content instead of four
