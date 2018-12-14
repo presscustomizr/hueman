@@ -3785,6 +3785,26 @@ $.extend( CZRModuleMths, {
                   });
             }
 
+            /*-----------------------------------------------
+            * Maybe resolve isReady() on custom control event
+            // To be specified when registering the control
+            // used in Nimble to delay the instantiation of the input when the control accordion is expanded
+            ------------------------------------------------*/
+            var _control_event = api.czrModuleMap[ module.module_type ].ready_on_control_event;
+            if ( ! _.isUndefined( _control_event ) ) {
+                  // defer the expanded callback when the section is instantiated
+                  api.control( module.control.id, function( _control_ ) {
+                        _control_.container.on( _control_event, function(evt) {
+                              //set module ready on module accordion expansion
+                              if ( 'resolved' != module.isReady.state() ) {
+                                    module.embedded.then( function() {
+                                          module.ready();
+                                    });
+                              }
+                        });
+                  });
+            }
+
             // Maybe instantiate and bind the api.Value() controlling the module option panel, for the module using it ( has_mod_opt : true on registration )
             this.maybeAwakeAndBindSharedModOpt();
       },//initialize()

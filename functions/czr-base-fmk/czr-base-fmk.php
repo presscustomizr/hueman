@@ -432,6 +432,7 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                 'title'        => '',
                 'default'  => '',
 
+                'notice_before_title' => '',
                 'notice_before' => '',
                 'notice_after' => '',
                 'placeholder' => '',
@@ -517,13 +518,19 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                 $input_type,
                 ! empty( $input_data['transport'] ) ? 'data-transport="'. $input_data['transport'] .'"' : ''
             );
+            ?>
+            <?php if ( ! empty( $input_data['notice_before_title'] ) ) : ?>
+                <span class="czr-notice"><?php echo $input_data['notice_before_title']; ?></span><br/>
+            <?php endif; ?>
+
+            <?php
             if ( $input_type !== 'hidden' ) {
                 printf( '<div class="customize-control-title %1$s">%2$s</div>', ! empty( $input_data['title_width'] ) ? $input_data['title_width'] : '', $input_data['title'] );
             }
             ?>
-              <?php if ( ! empty( $input_data['notice_before'] ) ) : ?>
-                  <span class="czr-notice"><?php echo $input_data['notice_before']; ?></span>
-              <?php endif; ?>
+            <?php if ( ! empty( $input_data['notice_before'] ) ) : ?>
+                <span class="czr-notice"><?php echo $input_data['notice_before']; ?></span>
+            <?php endif; ?>
 
             <?php printf( '<div class="czr-input %1$s">', ! empty( $input_data['input_width'] ) ? $input_data['input_width'] : '' ); ?>
 

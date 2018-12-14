@@ -368,6 +368,18 @@ input:-ms-input-placeholder {
 }
 
 
+.customize-control select {
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
 .czr-customizr-title {
 	/* color: #555; */
 	text-transform: uppercase;
