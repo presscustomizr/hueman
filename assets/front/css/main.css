@@ -2504,7 +2504,17 @@ box-shadow: 0 1px 0 rgba(0,0,0,0.04); }
 .wpcf7 div.wpcf7-mail-sent-ng { border: none; }
 .wpcf7 div.wpcf7-response-output { margin: 0; padding: 0; }
 .wpcf7 span.wpcf7-form-control-wrap { display: block; position: relative; }
-.wpcf7 span.wpcf7-not-valid-tip { background: #f2dede; border-color: #e3bfbf; color: #b94a48; padding: 4px 14px; font-size: 0.75em; }/* ------------------------------------------------------------------------- *
+.wpcf7 span.wpcf7-not-valid-tip { background: #f2dede; border-color: #e3bfbf; color: #b94a48; padding: 4px 14px; font-size: 0.75em; }
+
+/*  plugin : woocommnerce
+/* ------------------------------------ */
+/**
+ * see https://github.com/presscustomizr/hueman/issues/729
+ */
+.woocommerce section.related, 
+.woocommerce section.up-sells {
+    clear: both;
+} /* ------------------------------------------------------------------------- *
  *  Flexslider
 /* ------------------------------------------------------------------------- */
 

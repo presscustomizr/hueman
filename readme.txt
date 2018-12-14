@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.0
-Stable tag: 3.4.9
+Stable tag: 3.4.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,16 +13,17 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
 
 == Upgrade Notice ==
-= 3.4.9 =
-* fixed : set only the featured posts thumbnail img width to 100%. fixes #703
-* fixed : hu_is_customize_left_panel() => the check on $pagenow does not work on multisite install
-* added : add sidebars background color option. fixes #718
-* improved : add wp 5.0 compatibility patch. fixes #719
-* improved : improve gutenberg alignment compatibility. fixes #702
-* improved : Nimble Builder compatibility. Don't load css and javascript front assets when using the full Nimble template
-* improved : replace select2 with our namespaced czrSelect2
+= 3.4.10 =
+Updated FontAwesome to v5.5.0 ( latest ). Improved compatibility with WooCommerce and the Nimble Builder plugins.
 
 == Changelog ==
+= 3.4.10 December 15th, 2018 =
+* fixed : admin style not compatible with WP5.0
+* fixed : WooCommerce related product position in some cases. fixes #729
+* improved : update FontAwesome to v5.5.0. fixes #727
+* improved : compatibility with Nimble Builder v1.4.0
+* improved : analytics params to external links
+
 = 3.4.9 November 23rd 2018 =
 * fixed : set only the featured posts thumbnail img width to 100%. fixes #703
 * fixed : hu_is_customize_left_panel() => the check on $pagenow does not work on multisite install

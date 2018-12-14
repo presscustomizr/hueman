@@ -2,9 +2,9 @@
 # This file is distributed under the GNU General Public License v3.0.=!>
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman 3.4.9\n"
+"Project-Id-Version: Hueman 3.4.10\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2018-11-25 17:35:36+00:00\n"
+"POT-Creation-Date: 2018-12-14 21:55:38+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -139,7 +139,7 @@ msgid "read the latest release notes"
 msgstr ""
 
 #: functions/admin/class-admin-page.php:148
-#: functions/admin/class-admin-page.php:273
+#: functions/admin/class-admin-page.php:277
 msgid "Changelog"
 msgstr ""
 
@@ -179,11 +179,11 @@ msgstr ""
 msgid "Go Hueman Pro"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:208
+#: functions/admin/class-admin-page.php:211
 msgid "Easily take your web design one step further"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:210
+#: functions/admin/class-admin-page.php:213
 msgid ""
 "The Hueman Pro WordPress theme allows anyone to create a beautiful, "
 "professional and mobile friendly website in a few minutes. In the Pro "
@@ -192,27 +192,27 @@ msgid ""
 "your websites."
 msgstr ""
 
-#: functions/admin/class-admin-page.php:213
+#: functions/admin/class-admin-page.php:216
 msgid "Discover Hueman Pro"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:223
+#: functions/admin/class-admin-page.php:227
 msgid "Go to Dashboard &rarr; Home"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:223
+#: functions/admin/class-admin-page.php:227
 msgid "Go to Dashboard"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:295
+#: functions/admin/class-admin-page.php:299
 msgid "System Informations"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:296
+#: functions/admin/class-admin-page.php:300
 msgid "Please include the following informations when posting support requests"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:297
+#: functions/admin/class-admin-page.php:301
 msgid ""
 "To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C "
 "(Mac)."
@@ -1786,7 +1786,7 @@ msgstr ""
 #: functions/czr/czr-resources.php:163
 #: functions/czr-base-fmk/czr-base-fmk.php:182
 #: functions/czr-base-fmk/czr-base-fmk.php:348
-#: functions/czr-base-fmk/czr-base-fmk.php:667
+#: functions/czr-base-fmk/czr-base-fmk.php:674
 #: functions/czr-modules/widget-zones/widget_zones_module.php:227
 msgid "Edit"
 msgstr ""
@@ -2155,26 +2155,26 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:668
+#: functions/czr-base-fmk/czr-base-fmk.php:675
 msgid "Hide editor"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1058
+#: functions/czr-base-fmk/czr-base-fmk.php:1065
 msgid "Set a custom url"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1089
-#: functions/czr-base-fmk/czr-base-fmk.php:1265
+#: functions/czr-base-fmk/czr-base-fmk.php:1096
+#: functions/czr-base-fmk/czr-base-fmk.php:1272
 msgid "ajax_load_available_items => Security check failed."
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1187
-#: functions/czr-base-fmk/czr-base-fmk.php:1374
+#: functions/czr-base-fmk/czr-base-fmk.php:1194
+#: functions/czr-base-fmk/czr-base-fmk.php:1381
 #. translators: %d: ID of a post
 msgid "#%d (no title)"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1315
+#: functions/czr-base-fmk/czr-base-fmk.php:1322
 msgid "No results found."
 msgstr ""
 
