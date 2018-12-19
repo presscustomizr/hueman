@@ -434,24 +434,41 @@ function hu_custom_meta_boxes() {
 
 
 if ( is_admin() && ! hu_is_customizing() ) {
-    add_action( 'after_setup_theme' , 'hu_add_editor_style' );
+    add_action( 'init' , 'hu_add_editor_style' );
     //@return void()
-    //hook : after_setup_theme
+    //hook : init
+    // It used to be after_setup_theme, but, don't know from whic WP version, is_rtl() always returns false at that stage.
     function hu_add_editor_style() {
         //we need only the relative path, otherwise get_editor_stylesheets() will treat this as external CSS
         //which means:
         //a) child-themes cannot override it
         //b) no check on the file existence will be made (producing the rtl error, for instance : https://github.com/presscustomizr/customizr/issues/926)
         $_stylesheets = array(
+            'assets/admin/css/block-editor-style.css', //block editor style
             'assets/admin/css/editor-style.css',
             //hu_get_front_style_url(),
             //get_stylesheet_uri()
         );
+
+        // Workaround to avoid loading the classic edito style in the block editor
+        // this filter is documented in wp-admin/edit-form-blocks.php
+        // basically there's no real action hook we can use to modify the global editor_styles array
+        // before gutenberg will use if. Also there seems to be no way to determine which editor we're about to use at this stage (after_setup_theme).
+        // All this could be avoided if Gutenberg would use the filterable get_editor_stylesheets() instead of using
+        add_filter( 'block_editor_preload_paths', 'hu_remove_classic_editor_style', -100 );
+
         $gfont_src = hu_maybe_add_gfonts_to_editor();
         if ( apply_filters( 'hu_add_user_fonts_to_editor' , false != $gfont_src ) )
           $_stylesheets = array_merge( $_stylesheets , $gfont_src );
 
         add_editor_style( $_stylesheets );
+    }
+
+
+    function hu_remove_classic_editor_style( $paths ) {
+        global $editor_styles;
+        $editor_styles = array_diff( $editor_styles, array( 'assets/admin/css/editor-style.css' ) );
+        return $paths;
     }
 
 
