@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.0
-Stable tag: 3.4.10
+Stable tag: 3.4.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,10 +13,13 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
 
 == Upgrade Notice ==
-= 3.4.10 =
-Updated FontAwesome to v5.5.0 ( latest ). Improved compatibility with WooCommerce and the Nimble Builder plugins.
+= 3.4.11 =
+Improved the new block editor style. Especially to enlarge the editor content width.
 
 == Changelog ==
+= 3.4.11 December 19th, 2018 =
+* improved : the new block editor style. Especially to enlarge the editor content width. fixes #732
+
 = 3.4.10 December 15th, 2018 =
 * fixed : admin style not compatible with WP5.0
 * fixed : WooCommerce related product position in some cases. fixes #729

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman v3.4.10\n"
+"Project-Id-Version: Hueman v3.4.11\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2018-12-14 21:55:38+00:00\n"
+"POT-Creation-Date: 2018-12-19 12:55:09+00:00\n"
 "PO-Revision-Date: 2016-05-30 08:47+0200\n"
 "Last-Translator: Elvis Henrique Pereira <elvishp2006@gmail.com>\n"
 "Language-Team: Press Customizr\n"
@@ -768,7 +768,7 @@ msgid "Body Background"
 msgstr ""
 
 #: functions/class-utils-settings-map.php:324
-#: functions/init-after-setup-theme.php:208
+#: functions/init-after-setup-theme.php:210
 msgid "Set the website background color"
 msgstr ""
 
@@ -795,7 +795,7 @@ msgid "Open external links in a new tab"
 msgstr ""
 
 #: functions/class-utils-settings-map.php:388
-#: functions/init-after-setup-theme.php:168
+#: functions/init-after-setup-theme.php:170
 msgid "Create and organize your social links"
 msgstr ""
 
@@ -1142,7 +1142,7 @@ msgid ""
 "layout is set."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:880 functions/init-front.php:1571
+#: functions/class-utils-settings-map.php:880 functions/init-front.php:1573
 #: functions/init-sidebars-widgets.php:132
 msgid "Home"
 msgstr ""
@@ -1746,12 +1746,12 @@ msgid "SITE ICON"
 msgstr ""
 
 #: functions/czr/class-czr-init.php:461
-#: functions/init-after-setup-theme.php:247
+#: functions/init-after-setup-theme.php:249
 msgid "Create And Order Widget Areas"
 msgstr ""
 
 #: functions/czr/class-czr-init.php:465 functions/czr/class-czr-init.php:496
-#: functions/init-after-setup-theme.php:249
+#: functions/init-after-setup-theme.php:251
 msgid ""
 "You must save changes for the new areas to appear below. <br /><i>Warning: "
 "Make sure each area has a unique ID.</i>"
@@ -2537,29 +2537,29 @@ msgstr ""
 msgid "Select a layout for this page."
 msgstr ""
 
-#: functions/init-after-setup-theme.php:102
+#: functions/init-after-setup-theme.php:104
 msgid "Topbar"
 msgstr ""
 
-#: functions/init-after-setup-theme.php:103
+#: functions/init-after-setup-theme.php:105
 msgid ""
 "Mobile. You can set a specific menu for mobile devices. If not set, the "
 "theme will use the menu assigned to the Topbar, or the Header."
 msgstr ""
 
-#: functions/init-after-setup-theme.php:104
+#: functions/init-after-setup-theme.php:106
 msgid "Header"
 msgstr ""
 
-#: functions/init-after-setup-theme.php:105
+#: functions/init-after-setup-theme.php:107
 msgid "Footer"
 msgstr ""
 
-#: functions/init-after-setup-theme.php:161
+#: functions/init-after-setup-theme.php:163
 msgid "Social links"
 msgstr ""
 
-#: functions/init-after-setup-theme.php:207
+#: functions/init-after-setup-theme.php:209
 msgid "Site Wide Body Background"
 msgstr ""
 
@@ -2650,43 +2650,43 @@ msgstr "Expandir Sidebar"
 msgid "Collapse"
 msgstr ""
 
-#: functions/init-front.php:1619 functions/init-sidebars-widgets.php:134
+#: functions/init-front.php:1621 functions/init-sidebars-widgets.php:134
 msgid "Pages"
 msgstr ""
 
-#: functions/init-front.php:1834
+#: functions/init-front.php:1836
 msgid "Welcome in the Hueman theme"
 msgstr ""
 
-#: functions/init-front.php:1837
+#: functions/init-front.php:1839
 msgid "The theme offers a wide range"
 msgstr ""
 
-#: functions/init-front.php:1839
+#: functions/init-front.php:1841
 msgid "of customization options"
 msgstr ""
 
-#: functions/init-front.php:1840
+#: functions/init-front.php:1842
 msgid "to let you create the best possible websites."
 msgstr ""
 
-#: functions/init-front.php:1843
+#: functions/init-front.php:1845
 msgid "If you need inspiration, you can visit our online demos"
 msgstr ""
 
-#: functions/init-front.php:1845
+#: functions/init-front.php:1847
 msgid "Hueman Demo 1"
 msgstr ""
 
-#: functions/init-front.php:1847
+#: functions/init-front.php:1849
 msgid "Hueman Demo 2"
 msgstr ""
 
-#: functions/init-front.php:1850
+#: functions/init-front.php:1852
 msgid "To help you getting started with Hueman, we have published"
 msgstr ""
 
-#: functions/init-front.php:1852
+#: functions/init-front.php:1854
 msgid "a short guide here."
 msgstr ""
 
