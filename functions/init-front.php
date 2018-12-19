@@ -1203,8 +1203,10 @@ function hu_normalize_stick_menu_opt( $opt_val = 'stick_up' ) {
 /* ------------------------------------ */
 if ( ! function_exists( 'hu_styles' ) ) {
   function hu_styles() {
-    if ( hu_is_full_nimble_tmpl() )
-      return;
+    // Dec 2018 : When using the full nimble template, header + content + footer, we still need to load the Hueman stylesheet to have the Hueman widgets style
+    // if ( hu_is_full_nimble_tmpl() )
+    //   return;
+
     //Registered only if child theme => will be loaded as a dependency when enqueuing wp child style.css
     if ( is_child_theme() ) {
         wp_register_style(
