@@ -6,7 +6,6 @@ module.exports = {
     tasks: [
       'pre_front_css',
       'pre_front_js',
-      'cssmin:admin_css',
 
       'concat:widget_areas_modules_js',
 
