@@ -81,10 +81,6 @@ module.exports = {
         'copy:czr_js_in_hueman_addons'
     ],
 	},
-	admin_css : {
-		files : ['<%= paths.admin_css %>*.css'],
-		tasks : ['cssmin:admin_css'],
-	},
 	php : {
 		files: ['**/*.php' , '!build/**.*.php'],
 		tasks: []

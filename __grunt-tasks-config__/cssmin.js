@@ -17,14 +17,7 @@ module.exports = {
     files: [
       {'<%= paths.front_css %>font-awesome.min.css' : '<%= paths.front_css %>dev-font-awesome.css'}
     ]
-  },
-	admin_css: {
-		expand: true,
-		cwd: '<%= paths.admin_css %>',
-		src: ['*.css', '!*.min.css'],
-		dest: '<%= paths.admin_css %>',
-		ext: '.min.css'
-	}
+  }
   // czr_css: {
   //   expand: true,
   //   cwd: '<%= paths.czr_assets %>fmk/css',
