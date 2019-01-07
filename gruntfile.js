@@ -32,7 +32,7 @@ module.exports = function(grunt) {
 				//DEV : clean the build and watch changes (see watch task)
 				'hueman_dev': [
             'replace:czr_fmk_namespace',
-            'clean',
+            'clean:free',
             'watch'
         ],
 
