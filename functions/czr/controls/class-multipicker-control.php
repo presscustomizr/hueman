@@ -57,7 +57,7 @@ if ( ! class_exists( 'HU_Customize_Multipicker_Categories_Control' ) ) :
               'echo'               => 0 ,
               'walker'             => new HU_Walker_CategoryDropdown_Multipicker(),
               'hierarchical'       => 1,
-              'class'              => 'select2 '.$this->type,
+              'class'              => 'czrSelect2 no-selecter-js '.$this->type,
               'selected'           => implode(',', $this->value() )
           )
       );
