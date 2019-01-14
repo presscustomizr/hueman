@@ -1810,7 +1810,40 @@ function hu_include_cpt_in_lists( $query ) {
     $query->set('post_type', $post_types );
 }
 
+/* ------------------------------------------------------------------------- *
+ *  Filter home/blog posts by category
+/* ------------------------------------------------------------------------- */
+add_action( 'pre_get_posts', 'ha_filter_home_blog_posts_by_tax' );
+/**
+ * hook : pre_get_posts
+ * Filter home/blog posts by tax: cat
+*/
+function ha_filter_home_blog_posts_by_tax( $query ) {
+  // when we have to filter?
+  // in home and blog page
+  if ( ! $query->is_main_query() || ! ( ( is_home() && 'posts' == get_option('show_on_front') ) || $query->is_posts_page ) ) {
+      return;
+  }
 
+  // temp: do not filter in when classic grid enabled and infinite scroll enabled in home/blog
+  // we do something similar in Customizr.
+  // The problem is that in our infinite scroll "binding" we have a code to modify the main query
+  // when the classic-grid layout is selected, in order to fill all the grid rows.
+  // For some reason, setting the query category__in var below makes the query (hence the whole page) act like a category archive,
+  if ( 'classic-grid' === esc_attr( hu_get_option( 'pro_post_list_design' ) ) &&
+           class_exists( 'PC_HAPINF' ) && esc_attr( hu_get_option( 'infinite-scroll' ) ) ) {
+      return;
+  }
+
+  // categories
+  // we have to ignore sticky posts (do not prepend them)
+  $cats = hu_get_option( 'blog-restrict-by-cat' );
+  $cats = array_filter( $cats, 'hu_category_id_exists' );
+  if ( is_array( $cats ) && ! empty( $cats ) ){
+      $query->set( 'category__in', $cats );
+      $query->set( 'ignore_sticky_posts', 1 );
+  }
+}
 
 
 
