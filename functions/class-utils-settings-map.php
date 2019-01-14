@@ -998,6 +998,27 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                     'priority' => '50'
                 )
           ),
+          'blog-restrict-by-cat' => array(
+            'default'   => array(),
+            'type'   => 'czr_multiple_picker',
+            'label'     => __( 'Apply a category filter to your home / blog posts', 'hueman' ),
+            'section'   => 'content_blog_sec',
+            'control'   => 'HU_Customize_Multipicker_Categories_Control',
+            'priority'   => 18,
+            'notice' => sprintf( '%1$s <a href="%2$s" target="_blank">%3$s<span style="font-size: 17px;" class="dashicons dashicons-external"></span></a><br>%4$s' ,
+                              __( 'Click inside the above field and pick post categories you want to display. No filter will be applied if empty.', 'hueman' ),
+                              esc_url('codex.wordpress.org/Posts_Categories_SubPanel'),
+                              __('Learn more about post categories in WordPress' , 'hueman' ),
+                              sprintf( '<strong>%1$s</strong> %2$s',
+                                    __( 'Note:', 'hueman'),
+                                    __( 'The category filter will be not applied when using the <strong>Classic grid</strong> post list design if the <strong>infinite scroll</strong> option is active', 'hueman' )
+                              )
+            ),
+            'ubq_section'   => array(
+                  'section' => 'static_front_page',
+                  'priority' => '55'
+            )
+          ),
           'blog-standard' => array(
                 'default'   => 0,
                 'control'   => 'HU_controls',

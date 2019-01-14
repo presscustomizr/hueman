@@ -20,6 +20,8 @@ function hu_set_plugins_supported() {
   add_theme_support( 'wc-product-gallery-lightbox' );
   add_theme_support( 'wc-product-gallery-slider' );
   add_theme_support( 'wp-pagenavi' );///WP PageNavi
+  add_theme_support( 'polylang' );
+  add_theme_support( 'wpml' );
 }
 
 
@@ -54,6 +56,14 @@ function hu_plugins_compatibility() {
   /* WP PageNavi */
   if ( current_theme_supports( 'wp-pagenavi' ) && hu_is_plugin_active('wp-pagenavi/wp-pagenavi.php') )
     hu_set_wp_pagenavi_compat();
+
+  /* Polylang */
+  if ( current_theme_supports( 'polylang' ) && ( hu_is_plugin_active('polylang/polylang.php') || hu_is_plugin_active('polylang-pro/polylang.php') ) )
+    hu_set_polylang_compat();
+
+  /* WPML */
+  if ( current_theme_supports( 'wpml' ) && hu_is_plugin_active('sitepress-multilingual-cms/sitepress.php') )
+    hu_set_wpml_compat();
 }
 
 
@@ -490,3 +500,62 @@ function hu_set_fp_position_compatibility( $_option_value ) {
   return $_option_value;
 }
 /*End FPU Compatibility */
+
+
+/**
+ * Polylang compat hooks
+ */
+function hu_set_polylang_compat() {
+    /**
+    * Tax filtering (home/blog posts filtered by cat)
+    * @param array of term ids
+    */
+    function hu_pll_translate_tax( $term_ids ){
+      if ( ! ( is_array( $term_ids ) && ! empty( $term_ids ) ) || ! function_exists( 'pll_get_term' ) )
+        return $term_ids;
+
+      $translated_terms = array();
+      foreach ( $term_ids as $id ){
+          $translated_term = pll_get_term( $id );
+          $translated_terms[] = $translated_term ? $translated_term : $id;
+      }
+      return array_unique( $translated_terms );
+    }
+    if ( ! is_admin() ) {
+      //Translate category ids for the filtered posts in home/blog
+      add_filter('hu_opt_blog-restrict-by-cat', 'hu_pll_translate_tax');
+    }
+    /*end tax filtering*/
+}
+
+/**
+ * WPML compat hooks
+ */
+function hu_set_wpml_compat() {
+    //Wras wpml_object_id in a more convenient function which recursevely translates array of values
+    //$object can be an array or a single value
+    function hu_fn_wpml_object_id( $object_id, $type ) {
+      if ( empty( $object_id ) )
+        return $object_id;
+      if ( is_array( $object_id ) )
+        return array_map( 'hu_fn_wpml_object_id', $object_id, array_fill( 0, sizeof( $object_id ), $type ) );
+      return apply_filters( 'wpml_object_id', $object_id, $type, true );
+    }
+    /**
+    * Cat filtering (home/blog posts filtered by cat)
+    *
+    * AFAIK wpml needs to exactly know which kind of tax we're looking for, category, tag ecc..
+    * @param array of term ids
+    */
+    function hu_wpml_translate_cat( $cat_ids ){
+      if ( ! ( is_array( $cat_ids ) && ! empty( $cat_ids ) ) )
+        return $cat_ids;
+      return array_unique( hu_fn_wpml_object_id( $cat_ids, 'category' ) );
+    }
+
+    if ( ! is_admin() ) {
+      //Translate category ids for the filtered posts in home/blog
+      add_filter('hu_opt_blog-restrict-by-cat', 'hu_wpml_translate_cat');
+    }
+    /*end tax filtering*/
+}

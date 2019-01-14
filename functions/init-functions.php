@@ -575,3 +575,17 @@ function hu_is_full_nimble_tmpl() {
   }
   return $bool;
 }
+
+
+/**
+* Check whether a category exists.
+* (wp category_exists isn't available in pre_get_posts)
+*
+* @see term_exists()
+*
+* @param int $cat_id.
+* @return bool
+*/
+function hu_category_id_exists( $cat_id ) {
+    return term_exists( (int) $cat_id, 'category' );
+}
