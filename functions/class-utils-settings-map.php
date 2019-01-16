@@ -1006,7 +1006,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
             'control'   => 'HU_Customize_Multipicker_Categories_Control',
             'priority'   => 18,
             'notice' => sprintf( '%1$s <a href="%2$s" target="_blank">%3$s<span style="font-size: 17px;" class="dashicons dashicons-external"></span></a><br>%4$s' ,
-                              __( 'Click inside the above field and pick post categories you want to display. No filter will be applied if empty.', 'hueman' ),
+                              __( 'Click inside the above field and pick post categories you want to display. No filter will be applied when empty.', 'hueman' ),
                               esc_url('codex.wordpress.org/Posts_Categories_SubPanel'),
                               __('Learn more about post categories in WordPress' , 'hueman' ),
                               sprintf( '<strong>%1$s</strong> %2$s',
