@@ -1,4 +1,4 @@
-# Hueman v3.4.11
+# Hueman v3.4.12
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
@@ -18,6 +18,10 @@ The Nimble Builder plugin is documented [here](https://docs.presscustomizr.com/c
 The **Hueman WordPress theme** theme is nothing but 100% GPLv3. See headers of files for further details.[GNU GPL v3.0 or later](http://www.gnu.org/licenses/gpl-3.0.en.html)
 
 ## Changelog
+= 3.4.12 January 16th, 2019 =
+* improved : use default browser title tooltip for the social icons. fixes #731
+* added : the option to filter the home/blog posts by category. fixes #659
+
 = 3.4.11 December 19th, 2018 =
 * improved : the new block editor style. Especially to enlarge the editor content width. fixes #732
 
