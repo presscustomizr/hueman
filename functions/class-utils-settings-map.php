@@ -1010,8 +1010,8 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                               esc_url('codex.wordpress.org/Posts_Categories_SubPanel'),
                               __('Learn more about post categories in WordPress' , 'hueman' ),
                               sprintf( '<strong>%1$s</strong> %2$s',
-                                    __( 'Note:', 'hueman'),
-                                    __( 'The category filter will be not applied when using the <strong>Classic grid</strong> post list design if the <strong>infinite scroll</strong> option is active', 'hueman' )
+                                    __( 'Note for Pro users:', 'hueman'),
+                                    __( 'The category filter will not be applied when using the <strong>Classic grid</strong> post list design if the <strong>infinite scroll</strong> option is active.', 'hueman' )
                               )
             ),
             'ubq_section'   => array(
