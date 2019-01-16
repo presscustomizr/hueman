@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Hueman\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2019-01-16 20:31:47+00:00\n"
+"POT-Creation-Date: 2019-01-16 20:44:49+00:00\n"
 "PO-Revision-Date: 2016-11-04 13:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1266,7 +1266,7 @@ msgstr ""
 #: functions/class-utils-settings-map.php:1009
 msgid ""
 "Click inside the above field and pick post categories you want to display. "
-"No filter will be applied if empty."
+"No filter will be applied when empty."
 msgstr ""
 
 #: functions/class-utils-settings-map.php:1011
