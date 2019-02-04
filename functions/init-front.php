@@ -1819,30 +1819,58 @@ add_action( 'pre_get_posts', 'ha_filter_home_blog_posts_by_tax' );
  * Filter home/blog posts by tax: cat
 */
 function ha_filter_home_blog_posts_by_tax( $query ) {
-  // when we have to filter?
-  // in home and blog page
-  if ( ! $query->is_main_query() || ! ( ( is_home() && 'posts' == get_option('show_on_front') ) || $query->is_posts_page ) ) {
-      return;
-  }
+    _ha_filter_home_blog_posts_by_tax( $query );
+}
 
-  // temp: do not filter in when classic grid enabled and infinite scroll enabled in home/blog
-  // we do something similar in Customizr.
-  // The problem is that in our infinite scroll "binding" we have a code to modify the main query
-  // when the classic-grid layout is selected, in order to fill all the grid rows.
-  // For some reason, setting the query category__in var below makes the query (hence the whole page) act like a category archive,
-  if ( 'classic-grid' === esc_attr( hu_get_option( 'pro_post_list_design' ) ) &&
-           class_exists( 'PC_HAPINF' ) && esc_attr( hu_get_option( 'infinite-scroll' ) ) ) {
-      return;
-  }
+//Make sure the infinite scroll query object is filtered as well
+add_filter ( 'infinite_scroll_query_object' , 'ha_filter_home_blog_infinite_posts_by_tax' );
+/**
+ * hook : infinite_scroll_query_object
+ * Filter infinite home/blog posts by tax: cat
+*/
+function ha_filter_home_blog_infinite_posts_by_tax( $query ) {
+    return _ha_filter_home_blog_posts_by_tax( $query, $reset_cat_category_name = true );
+}
 
-  // categories
-  // we have to ignore sticky posts (do not prepend them)
-  $cats = hu_get_option( 'blog-restrict-by-cat' );
-  $cats = array_filter( $cats, 'hu_category_id_exists' );
-  if ( is_array( $cats ) && ! empty( $cats ) ){
-      $query->set( 'category__in', $cats );
-      $query->set( 'ignore_sticky_posts', 1 );
-  }
+function _ha_filter_home_blog_posts_by_tax( $query, $reset_cat_category_name = false ) {
+    // when we have to filter?
+    // in home and blog page
+    if ( is_admin() || ! $query->is_main_query() || ! ( ( is_home() && 'posts' == get_option('show_on_front') ) || $query->is_posts_page ) ) {
+        return $query;
+    }
+
+    // temp: do not filter in when classic grid enabled and infinite scroll enabled in home/blog
+    // we do something similar in Customizr.
+    // The problem is that in our infinite scroll "binding" we have a code to modify the main query
+    // when the classic-grid layout is selected, in order to fill all the grid rows.
+    // For some reason, setting the query category__in var below makes the query (hence the whole page) act like a category archive,
+    if ( 'classic-grid' === esc_attr( hu_get_option( 'pro_post_list_design' ) ) &&
+            class_exists( 'PC_HAPINF' ) && esc_attr( hu_get_option( 'infinite-scroll' ) ) ) {
+        return $query;
+    }
+
+    // categories
+    // we have to ignore sticky posts (do not prepend them)
+    $cats = hu_get_option( 'blog-restrict-by-cat' );
+    $cats = array_filter( $cats, 'hu_category_id_exists' );
+    if ( is_array( $cats ) && ! empty( $cats ) ){
+        // Fix for https://github.com/presscustomizr/hueman-pro/issues/25
+        // Basically when we filtering the blog with more than one category
+        // "infinte posts" are filtered by the category with the smaller ID defined in $cats.
+        // The reason is that the infinite scroll query takes ar arguments the query vars of the
+        // "first page" query, that are localized and then sent back in the ajax request, and
+        // when we apply the category__in 'filter' to the blog page, for some reason, the main wp_query
+        // vars "cat" and "category_name" are set as the ID and the name of the smaller ID defined in $cats.
+        // With the if block below we vaoid this unwanted behavior.
+        if ( $reset_cat_category_name ) {
+            $query->set( 'cat', '' );
+            $query->set( 'category_name', '' );
+        }
+        $query->set( 'category__in', $cats );
+        $query->set( 'ignore_sticky_posts', 1 );
+    }
+
+    return $query;
 }
 
 
