@@ -961,7 +961,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'     => __("Display a custom heading for your blog.", 'hueman'),
                 'section'   => 'content_blog_sec',
                 'type'      => 'checkbox',
-                'active_callback' => 'is_home',
+                //'active_callback' => 'is_home',
                 'priority'   => 5,
                 'ubq_section'   => array(
                     'section' => 'static_front_page',
@@ -976,7 +976,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'content_blog_sec',
                 'notice'    => __( 'Your blog heading. Html is allowed. Note : write a blank space to hide the default content.', 'hueman'),
                 'sanitize_callback' => array( $this, 'hu_sanitize_html_text_input' ),
-                'active_callback' => 'is_home',
+                //'active_callback' => 'is_home',
                 'priority'   => 10,
                 'ubq_section'   => array(
                     'section' => 'static_front_page',
@@ -991,7 +991,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'content_blog_sec',
                 'notice'    => __( 'Your blog sub-heading. Html is allowed. Note : write a blank space to hide the default content.', 'hueman'),
                 'sanitize_callback' => array( $this, 'hu_sanitize_html_text_input' ),
-                'active_callback' => 'is_home',
+                //'active_callback' => 'is_home',
                 'priority'   => 15,
                 'ubq_section'   => array(
                     'section' => 'static_front_page',
@@ -1088,7 +1088,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'content_blog_sec',
                 'type'      => 'checkbox',
                 'notice'    => __( 'Check this box to display a selection of posts with a slideshow, on top of your blog.' , 'hueman'),
-                'active_callback' => 'is_home',
+                //'active_callback' => 'is_home',
                 'priority'   => 30,
                 'ubq_section'   => array(
                     'section' => 'static_front_page',
@@ -1103,7 +1103,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'type'      => 'select',//@todo create a simple cat picker with select type. => evolve to multipicker? Retrocompat ?
                 'choices'   => $this -> hu_get_the_cat_list(),
                 'notice'    => __( 'If no specific category is selected, the featured posts block will display your latest post(s) from all categories.' , 'hueman'),
-                'active_callback' => 'is_home',
+                //'active_callback' => 'is_home',
                 'priority'   => 35,
                 'ubq_section'   => array(
                     'section' => 'static_front_page',
@@ -1121,7 +1121,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'min'       => 0,
                 //'transport' => 'postMessage',
                 'notice'    => __( "Max number of featured posts to display. <br /><i>Set to 1 and it will show it without any slider script</i><br /><i>Set it to 0 to disable</i>" , "hueman" ),//@todo sprintf split translation
-                'active_callback' => 'is_home',
+                //'active_callback' => 'is_home',
                 'priority'   => 40,
                 'ubq_section'   => array(
                     'section' => 'static_front_page',
@@ -1135,7 +1135,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'content_blog_sec',
                 'type'      => 'checkbox',
                 'notice'    => __( 'By default, your featured posts display the first words of their content ( the "excerpt"). Check this box to display the full content.' , 'hueman'),
-                'active_callback' => 'is_home',
+                //'active_callback' => 'is_home',
                 'priority'   => 45,
                 'ubq_section'   => array(
                     'section' => 'static_front_page',
@@ -1149,7 +1149,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'content_blog_sec',
                 'type'      => 'checkbox',
                 'notice'    => __( 'Enables the automatic animation of the featured posts carousel.' , 'hueman'),
-                'active_callback' => 'is_home',
+                //'active_callback' => 'is_home',
                 'priority'   => 50,
                 'ubq_section'   => array(
                     'section' => 'static_front_page',
@@ -1167,7 +1167,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'min'       => 500,
                 'transport' => 'postMessage',
                 'notice'    => __( "Speed of the automatic slideshow animation" , "hueman" ),
-                'active_callback' => 'is_home',
+                //'active_callback' => 'is_home',
                 'priority'   => 55,
                 'ubq_section'   => array(
                     'section' => 'static_front_page',
@@ -1181,7 +1181,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'content_blog_sec',
                 'type'      => 'checkbox',
                 'notice'    => __( 'If this box is checked, your featured posts will be displayed both in the featured slider and in the post list below. Usually not recommended because a given post might appear two times on the same page.' , 'hueman'),
-                'active_callback' => 'is_home',
+                //'active_callback' => 'is_home',
                 'priority'   => 60,
                 'ubq_section'   => array(
                     'section' => 'static_front_page',
