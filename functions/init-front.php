@@ -341,11 +341,22 @@ if ( ! function_exists( 'hu_print_social_links' ) ) {
         }
         $icon_class            = "{$fa_group} {$icon_class}";
 
+        // links like tel:*** or skype:**** or call:**** should work
+        // implemented for https://github.com/presscustomizr/social-links-modules/issues/7
+        $social_link = 'javascript:void(0)';
+        if ( isset($item['social-link']) && ! empty( $item['social-link'] ) ) {
+            if ( false !== strpos($item['social-link'], 'callto:') || false !== strpos($item['social-link'], 'tel:') || false !== strpos($item['social-link'], 'skype:') ) {
+                $social_link = esc_attr( $item['social-link'] );
+            } else {
+                $social_link = esc_url( $item['social-link'] );
+            }
+        }
+
         // Put them together
         printf( '<li><a rel="nofollow" class="social-tooltip" %1$s title="%2$s" aria-label="%2$s" href="%3$s" %4$s %5$s><i class="%6$s"></i></a></li>',
             ! hu_is_customizing() ? '' : sprintf( 'data-model-id="%1$s"', ! isset( $item['id'] ) ? 'hu_socials_'. $key : $item['id'] ),
             isset($item['title']) ? esc_attr( $item['title'] ) : '',
-            ( isset($item['social-link']) && ! empty( $item['social-link'] ) ) ? esc_url( $item['social-link'] ) : 'javascript:void(0)',
+            $social_link,
             ( isset($item['social-target']) && false != $item['social-target'] ) ? 'target="_blank"' : '',
             $style_attr,
             $icon_class

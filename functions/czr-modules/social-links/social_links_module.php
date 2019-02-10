@@ -49,7 +49,7 @@ function hu_register_social_links_module( $args ) {
         'module_type' => 'czr_social_module',
 
         'sanitize_callback' => 'hu_sanitize_callback__czr_social_module',
-        'validate_callback' => 'hu_validate_callback__czr_social_module',
+        //'validate_callback' => 'hu_validate_callback__czr_social_module',
 
         'customizer_assets' => array(
             'control_js' => array(
@@ -157,10 +157,9 @@ function hu_sanitize_callback__czr_social_module( $socials ) {
 
   //sanitize urls and titles for the db
   foreach ( $socials as $index => &$social ) {
-    if ( ! is_array( $social ) || ! ( array_key_exists( 'social-link', $social) &&  array_key_exists( 'title', $social) ) )
+    if ( ! is_array( $social ) || ! array_key_exists( 'title', $social) )
       continue;
 
-    $social['social-link']  = esc_url_raw( $social['social-link'] );
     $social['title']        = esc_attr( $social['title'] );
   }
   return $socials;
