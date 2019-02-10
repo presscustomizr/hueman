@@ -20,7 +20,7 @@
 					<?php if ( is_sticky() ) echo'<span class="thumb-icon small"><i class="fas fa-star"></i></span>'; ?>
 				</a>
 				<?php if ( comments_open() && ( hu_is_checked( 'comment-count' ) ) ): ?>
-					<a class="post-comments" href="<?php comments_link(); ?>"><span><i class="far fa-comments"></i><?php comments_number( '0', '1', '%' ); ?></span></a>
+					<a class="post-comments" href="<?php comments_link(); ?>"><i class="far fa-comments"></i><?php comments_number( '0', '1', '%' ); ?></a>
 				<?php endif; ?>
 			</div><!--/.post-thumbnail-->
 

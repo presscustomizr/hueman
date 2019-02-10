@@ -369,7 +369,7 @@ function hu_get_second_color_style() {
   $styles[] = $_secondary_color_background_color_prop_selectors ? $_secondary_color_background_color_prop_selectors . '{ background-color: '.hu_get_option('color-2').'; }'."{$glue}" : '';
 
   $styles[] ='.sidebar.s2 .alx-tabs-nav li.active a { border-bottom-color: '.hu_get_option('color-2').'; }
-.post-comments span:before { border-right-color: '.hu_get_option('color-2').'; }
+.post-comments::before { border-right-color: '.hu_get_option('color-2').'; }
       ';
     return $styles;
 }//hu_get_second_color_style

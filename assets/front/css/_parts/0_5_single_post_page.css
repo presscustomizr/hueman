@@ -92,11 +92,13 @@ box-shadow: 0 1px 1px rgba(0,0,0,0.1); }
 
 .post-comments { background: #efb93f; font-size: 0.75rem; line-height: 1.66rem; color: #fff; display: block; position: absolute; top: 10px; right: 0;
 -webkit-box-shadow: inset -1px 0 1px rgba(0,0,0,0.2);
-box-shadow: inset -1px 0 1px rgba(0,0,0,0.2); }
-.post-comments > span { display: block; position: relative; padding: 2px 7px; }
-.post-comments > span:before { content:''; display: inline-block; border-left: 9px solid transparent; border-right: 9px solid #efb93f; border-top: 9px solid transparent; border-bottom: 9px solid transparent; position: absolute; top: 3px; left: -16px; }
+box-shadow: inset -1px 0 1px rgba(0,0,0,0.2);
+padding: 2px 7px;
+z-index:2;
+}
+.post-comments::before { content:''; display: inline-block; border-left: 9px solid transparent; border-right: 9px solid #efb93f; border-top: 9px solid transparent; border-bottom: 9px solid transparent; position: absolute; top: 3px; left: -16px; }
 .post-comments i { margin-right: 4px; font-size: .95em;}
-.post-comments:hover { color: #fff!important; padding-right: 4px; }
+.post-comments:hover { color: #fff!important; padding-right: 11px;}
 /* don't display the comments on attachment in a search result page */
 .search-results .attachment a.post-comments {display: none!important; }
 

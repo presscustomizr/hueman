@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Hueman v3.4.12\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2019-01-16 20:44:49+00:00\n"
+"POT-Creation-Date: 2019-02-10 18:50:58+00:00\n"
 "PO-Revision-Date: 2016-08-31 16:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: Press Customizr\n"
@@ -2496,11 +2496,11 @@ msgstr "Target link"
 msgid "Check this option to open the link in a another tab of the browser."
 msgstr "Centang opsi ini untuk membuka link di tab baru browser."
 
-#: functions/czr-modules/social-links/social_links_module.php:173
+#: functions/czr-modules/social-links/social_links_module.php:172
 msgid "An error occurred: malformed social links"
 msgstr ""
 
-#: functions/czr-modules/social-links/social_links_module.php:217
+#: functions/czr-modules/social-links/social_links_module.php:216
 msgid "Please fill the social link inputs with a valid URLs"
 msgstr ""
 
@@ -2816,42 +2816,42 @@ msgstr ""
 msgid "Pages"
 msgstr "Laman"
 
-#: functions/init-front.php:1869
+#: functions/init-front.php:1897
 #, fuzzy
 msgid "Welcome in the Hueman theme"
 msgstr "Ulas tema Hueman"
 
-#: functions/init-front.php:1872
+#: functions/init-front.php:1900
 msgid "The theme offers a wide range"
 msgstr ""
 
-#: functions/init-front.php:1874
+#: functions/init-front.php:1902
 msgid "of customization options"
 msgstr ""
 
-#: functions/init-front.php:1875
+#: functions/init-front.php:1903
 msgid "to let you create the best possible websites."
 msgstr ""
 
-#: functions/init-front.php:1878
+#: functions/init-front.php:1906
 msgid "If you need inspiration, you can visit our online demos"
 msgstr ""
 
-#: functions/init-front.php:1880
+#: functions/init-front.php:1908
 #, fuzzy
 msgid "Hueman Demo 1"
 msgstr "Hueman Video"
 
-#: functions/init-front.php:1882
+#: functions/init-front.php:1910
 #, fuzzy
 msgid "Hueman Demo 2"
 msgstr "Hueman Video"
 
-#: functions/init-front.php:1885
+#: functions/init-front.php:1913
 msgid "To help you getting started with Hueman, we have published"
 msgstr ""
 
-#: functions/init-front.php:1887
+#: functions/init-front.php:1915
 msgid "a short guide here."
 msgstr ""
 
