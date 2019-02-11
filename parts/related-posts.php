@@ -13,7 +13,7 @@
 		<article <?php post_class(); ?>>
 
 			<div class="post-thumbnail">
-				<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute( array( 'before' => __( 'Permalink to ', 'hueman' ) ) ); ?>">
+				<a href="<?php the_permalink(); ?>">
 					<?php hu_the_post_thumbnail('thumb-medium'); ?>
 					<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fas fa-play"></i></span>'; ?>
 					<?php if ( has_post_format('audio') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fas fa-volume-up"></i></span>'; ?>
