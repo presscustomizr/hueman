@@ -172,8 +172,18 @@ z-index:2;
 /* ------------------------------------ */
 .post-tags { margin-bottom: 40px; }
 .post-tags span { font-size: 0.875em; color: #999; display: inline-block; margin: 0 7px 0 0; }
-.post-tags a { background: #f2f2f2; display: inline-block; line-height: 1.666em; white-space: nowrap; font-size: 0.75em; color: #999; padding: 3px 7px; margin: 0 5px 2px 0;
--webkit-border-radius: 2px; border-radius: 2px; }
+.post-tags a {
+  background: #f2f2f2;
+  display: inline-block;
+  line-height: 1.666em;
+  white-space: normal;/* fixed problem with long tag https://github.com/presscustomizr/hueman/issues/764 */
+  font-size: 0.75em;
+  color: #999;
+  padding: 3px 7px;
+  margin: 0 5px 2px 0;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}
 .post-tags a:hover { background-color: #16cfc1; color: #fff; }
 
 /*  single : author bio
