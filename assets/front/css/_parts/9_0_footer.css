@@ -30,7 +30,11 @@
 -webkit-border-radius: 0 0 3px 3px; border-radius: 0 0 3px 3px;
 -webkit-box-shadow: inset 0 1px 0 rgba(0,0,0,0.05);
 box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
-#footer-bottom #back-to-top i { font-size: 2em; position: relative; top: -2px; }
+#footer-bottom #back-to-top i {
+  font-size: 32px;/* font size in px to fix https://github.com/presscustomizr/hueman/issues/758 */
+  position: relative;
+  top: -2px;
+}
 #footer-bottom #back-to-top:hover { color: #444; }
 #footer-bottom .social-links { padding-top: 10px; }
 #footer-bottom .social-links a { color: rgba(255,255,255,0.6); }
