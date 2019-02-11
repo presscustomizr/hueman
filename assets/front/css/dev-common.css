@@ -1809,8 +1809,18 @@ z-index:2;
 /* ------------------------------------ */
 .post-tags { margin-bottom: 40px; }
 .post-tags span { font-size: 0.875em; color: #999; display: inline-block; margin: 0 7px 0 0; }
-.post-tags a { background: #f2f2f2; display: inline-block; line-height: 1.666em; white-space: nowrap; font-size: 0.75em; color: #999; padding: 3px 7px; margin: 0 5px 2px 0;
--webkit-border-radius: 2px; border-radius: 2px; }
+.post-tags a {
+  background: #f2f2f2;
+  display: inline-block;
+  line-height: 1.666em;
+  white-space: normal;/* fixed problem with long tag https://github.com/presscustomizr/hueman/issues/764 */
+  font-size: 0.75em;
+  color: #999;
+  padding: 3px 7px;
+  margin: 0 5px 2px 0;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}
 .post-tags a:hover { background-color: #16cfc1; color: #fff; }
 
 /*  single : author bio
@@ -2688,7 +2698,11 @@ svg.hu-svg-placeholder {
 -webkit-border-radius: 0 0 3px 3px; border-radius: 0 0 3px 3px;
 -webkit-box-shadow: inset 0 1px 0 rgba(0,0,0,0.05);
 box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
-#footer-bottom #back-to-top i { font-size: 2em; position: relative; top: -2px; }
+#footer-bottom #back-to-top i {
+  font-size: 32px;/* font size in px to fix https://github.com/presscustomizr/hueman/issues/758 */
+  position: relative;
+  top: -2px;
+}
 #footer-bottom #back-to-top:hover { color: #444; }
 #footer-bottom .social-links { padding-top: 10px; }
 #footer-bottom .social-links a { color: rgba(255,255,255,0.6); }
