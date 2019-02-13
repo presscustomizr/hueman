@@ -295,20 +295,20 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           ),
           'color-1' => array(
                 'default'     => hu_user_started_before_version( '3.3.8' ) ? '#3b8dbd' : '#16cfc1',
-                'control'     => 'WP_Customize_Color_Control',
+                'control'     => 'HU_Customize_Color_Alpha_Control',
                 'label'       => __( 'Primary Color' , 'hueman' ),
                 'section'     => 'general_design_sec',
-                'type'        =>  'color' ,
+                'type'        =>  'wp_color_alpha' ,
                 'sanitize_callback'    => 'maybe_hash_hex_color',
                 'sanitize_js_callback' => 'maybe_hash_hex_color'
                 //'transport'   => 'postMessage'
           ),
           'color-2' => array(
                 'default'     =>  hu_user_started_before_version( '3.3.8' ) ? '#82b965' : '#efb93f',
-                'control'     => 'WP_Customize_Color_Control',
+                'control'     => 'HU_Customize_Color_Alpha_Control',
                 'label'       => __( 'Secondary Color' , 'hueman' ),
                 'section'     => 'general_design_sec',
-                'type'        =>  'color' ,
+                'type'        =>  'wp_color_alpha' ,
                 'sanitize_callback'    => 'maybe_hash_hex_color',
                 'sanitize_js_callback' => 'maybe_hash_hex_color'
                 //'transport'   => 'postMessage'
@@ -1314,10 +1314,10 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           ),
           'sidebar-background' => array(
                 'default'   => '#f0f0f0',
-                'control'   => 'WP_Customize_Color_Control',
+                'control'   => 'HU_Customize_Color_Alpha_Control',
                 'label'     => __('Sidebars background color', 'hueman'),
                 'section'   => 'sidebars_design_sec',
-                'type'      =>  'color' ,
+                'type'      =>  'wp_color_alpha' ,
                 'sanitize_callback'    => 'maybe_hash_hex_color',
                 'sanitize_js_callback' => 'maybe_hash_hex_color',
                 'priority'  => 2
@@ -1428,10 +1428,10 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           ),
           'color-footer' => array(
                 'default'     => '#33363b',
-                'control'     => 'WP_Customize_Color_Control',
+                'control'     => 'HU_Customize_Color_Alpha_Control',
                 'label'       => __( 'Footer Background' , 'hueman' ),
                 'section'     => 'footer_design_sec',
-                'type'        =>  'color' ,
+                'type'        =>  'wp_color_alpha' ,
                 'sanitize_callback'    => 'maybe_hash_hex_color',
                 'sanitize_js_callback' => 'maybe_hash_hex_color',
                 'priority'  => 30,
