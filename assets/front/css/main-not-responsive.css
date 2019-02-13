@@ -2519,10 +2519,16 @@ box-shadow: 0 1px 0 rgba(0,0,0,0.04); }
 /**
  * see https://github.com/presscustomizr/hueman/issues/729
  */
-.woocommerce section.related, 
+.woocommerce section.related,
 .woocommerce section.up-sells {
     clear: both;
-} /* ------------------------------------------------------------------------- *
+}
+
+/*  plugin : bbpress
+/* ------------------------------------ */
+body #buddypress .users-nav li, body #buddypress .user-subnav li {
+list-style: none;
+}/* ------------------------------------------------------------------------- *
  *  Flexslider
 /* ------------------------------------------------------------------------- */
 

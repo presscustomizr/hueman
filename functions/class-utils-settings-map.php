@@ -576,7 +576,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'header_design_sec',
                 'type'      => 'checkbox',
                 //'active_callback' => 'hu_is_pro',
-                'notice' => sprintf( __('This can be used to ensure your background colors are applied when designing a header with a background image in %1$s'),
+                'notice' => sprintf( __('This can be used to ensure your background colors are applied when designing a header with a background image in %1$s', 'hueman'),
                     sprintf('<a href="https://docs.presscustomizr.com/article/284-pro-designing-header-background-and-slider-with-hueman-pro" target="_blank">%1$s</a>',
                         __('Hueman Pro', 'hueman')
                     )

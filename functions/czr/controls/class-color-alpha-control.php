@@ -23,7 +23,7 @@ if ( ! class_exists( 'HU_Customize_Color_Alpha_Control' ) ) :
      * @param array                $args    Optional. Arguments to override class property defaults.
      */
     public function __construct( $manager, $id, $args = array() ) {
-      $this->statuses = array( '' => __('Default') );
+      $this->statuses = array( '' => __('Default', 'hueman') );
       parent::__construct( $manager, $id, $args );
     }
 
