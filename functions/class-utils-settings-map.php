@@ -569,42 +569,55 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                     'priority' => '15'
                 )
           ),
+          'user-header-bg-color-important' => array(
+                'default'   => 0,
+                'control'   => 'HU_controls',
+                'label'     => __( 'Apply your custom background colors in priority for the topbar and the mobile menu' , 'hueman' ),
+                'section'   => 'header_design_sec',
+                'type'      => 'checkbox',
+                //'active_callback' => 'hu_is_pro',
+                'notice' => sprintf( __('This can be used to ensure your background colors are applied when designing a header with a background image in %1$s'),
+                    sprintf('<a href="https://docs.presscustomizr.com/article/284-pro-designing-header-background-and-slider-with-hueman-pro" target="_blank">%1$s</a>',
+                        __('Hueman Pro', 'hueman')
+                    )
+                )
+          ),
           'color-topbar' => array(
                 'default'     => hu_user_started_before_version( '3.3.8' ) ? '#26272b' : '#121d30',
-                'control'     => 'WP_Customize_Color_Control',
+                'control'     => 'HU_Customize_Color_Alpha_Control',
                 'label'       => __( 'Topbar Background' , 'hueman' ),
                 'section'     => 'header_design_sec',
-                'type'        =>  'color' ,
+                'type'        =>  'wp_color_alpha',
                 'sanitize_callback'    => 'maybe_hash_hex_color',
                 'sanitize_js_callback' => 'maybe_hash_hex_color'
                 //'transport'   => 'postMessage'
           ),
           'color-header' => array(
                 'default'     => hu_user_started_before_version( '3.3.8' ) ? '#33363b' : '#454e5c',
-                'control'     => 'WP_Customize_Color_Control',
+                'control'     => 'HU_Customize_Color_Alpha_Control',
                 'label'       => __( 'Header Background' , 'hueman' ),
                 'section'     => 'header_design_sec',
-                'type'        =>  'color' ,
+                'type'        =>  'wp_color_alpha',
                 'sanitize_callback'    => 'maybe_hash_hex_color',
                 'sanitize_js_callback' => 'maybe_hash_hex_color',
                 'transport'   => ( ( defined( 'HU_IS_PRO_ADDONS' ) && HU_IS_PRO_ADDONS ) || ( defined('HU_IS_PRO') && HU_IS_PRO  ) ) ? 'refresh' : 'postMessage'
           ),
           'color-header-menu' => array(
                 'default'     => hu_user_started_before_version( '3.3.8' ) ? '#33363b' : '#454e5c',
-                'control'     => 'WP_Customize_Color_Control',
+                'control'     => 'HU_Customize_Color_Alpha_Control',
                 'label'       => __( 'Header Menu Background' , 'hueman' ),
                 'section'     => 'header_design_sec',
-                'type'        =>  'color' ,
+                'type'        =>  'wp_color_alpha',
                 'sanitize_callback'    => 'maybe_hash_hex_color',
                 'sanitize_js_callback' => 'maybe_hash_hex_color',
                 'transport'   => ( ( defined( 'HU_IS_PRO_ADDONS' ) && HU_IS_PRO_ADDONS ) || ( defined('HU_IS_PRO') && HU_IS_PRO  ) ) ? 'refresh' : 'postMessage'
           ),
           'color-mobile-menu' => array(
                 'default'     => hu_user_started_before_version( '3.3.8' ) ? '#33363b' : '#454e5c',
-                'control'     => 'WP_Customize_Color_Control',
+                'control'     => 'HU_Customize_Color_Alpha_Control',
                 'label'       => __( 'Mobile Menu Background' , 'hueman' ),
                 'section'     => 'header_design_sec',
-                'type'        =>  'color' ,
+                'type'        =>  'wp_color_alpha',
                 'sanitize_callback'    => 'maybe_hash_hex_color',
                 'sanitize_js_callback' => 'maybe_hash_hex_color',
                 //'transport'   => 'postMessage'

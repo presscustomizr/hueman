@@ -8,6 +8,10 @@
 if ( ! function_exists( 'hu_hex2rgb' ) ) {
 
   function hu_hex2rgb( $hex, $array = false ) {
+    // skip if already rgb
+    if ( hu_is_rgb_color($hex) )
+      return $hex;
+
     $hex = str_replace("#", "", $hex);
 
     if ( strlen($hex) == 3 ) {
@@ -27,6 +31,10 @@ if ( ! function_exists( 'hu_hex2rgb' ) ) {
 
 }
 
+// @return bool
+function hu_is_rgb_color( $color = '' ) {
+  return is_string( $color ) && false !== strpos($color, 'rgb');
+}
 
 /*  Google fonts
 /* ------------------------------------ */
@@ -128,28 +136,33 @@ if ( ! function_exists( 'hu_get_user_defined_inline_css_rules' ) ) {
       // what is the transparency setting to be applied to both topbar and mobile menu on scroll ?
       $is_transparent = hu_is_checked( 'transparent-fixed-topnav' );
 
+      // Background color are important ?
+      // implemented for https://github.com/presscustomizr/hueman-pro-addons/issues/181
+      $header_bg_colors_important = hu_is_checked( 'user-header-bg-color-important' ) ? '!important' : '';
+
       // topbar color
       // The default background is #121d30  / semi transparent because hu_is_checked( 'transparent-fixed-topnav' ) : rgba(18, 29, 48, 0.8)
       // those default css rules are hard coded in the theme main stylesheed.
       // If user settings are different, let's write a custom rule
       $tb_color = maybe_hash_hex_color( hu_get_option('color-topbar') );
       $is_transparent = hu_is_checked( 'transparent-fixed-topnav' );
+
       //$def_tb_col = hu_user_started_before_version( '3.3.8' ) ? '#26272b' : '#121d30';
       if ( $tb_color != '#121d30' || ! $is_transparent ) {
           if ( $tb_color != '#121d30' ) {
               $styles[] = '.search-expand,
-              #nav-topbar.nav-container { background-color: '.$tb_color.'}';
+              #nav-topbar.nav-container { background-color: '.$tb_color.$header_bg_colors_important.'}';
               $styles[] = '@media only screen and (min-width: 720px) {
-                #nav-topbar .nav ul { background-color: '.$tb_color.'; }
+                #nav-topbar .nav ul { background-color: '.$tb_color.$header_bg_colors_important.'; }
               }';
           }
-          if ( $is_transparent ) {
+          if ( $is_transparent && !hu_is_rgb_color($tb_color) ) {
               $sticky_color_rgba = 'rgba(' . hu_hex2rgb( $tb_color ) . ',0.90)';
               $sticky_color_rgba_dark = 'rgba(' . hu_hex2rgb( $tb_color ) . ',0.95)';
 
               $styles[] = '.is-scrolled #header .nav-container.desktop-sticky,
-              .is-scrolled #header .search-expand { background-color: '.$tb_color.'; background-color: '.$sticky_color_rgba.' }';
-              $styles[] = '.is-scrolled .topbar-transparent #nav-topbar.desktop-sticky .nav ul { background-color: '.$tb_color.'; background-color: '.$sticky_color_rgba_dark.' }';
+              .is-scrolled #header .search-expand { background-color: '.$tb_color.$header_bg_colors_important.'; background-color: '.$sticky_color_rgba.$header_bg_colors_important.' }';
+              $styles[] = '.is-scrolled .topbar-transparent #nav-topbar.desktop-sticky .nav ul { background-color: '.$tb_color.$header_bg_colors_important.'; background-color: '.$sticky_color_rgba_dark.$header_bg_colors_important.' }';
           }
       }
 
@@ -168,13 +181,13 @@ if ( ! function_exists( 'hu_get_user_defined_inline_css_rules' ) ) {
       // Mobile menu color
       $mm_color = maybe_hash_hex_color( hu_get_option('color-mobile-menu') );
       if ( $mm_color != '#454e5c' ) {
-        $styles[] = '#header #nav-mobile { background-color: '.$mm_color.'; }';
+        $styles[] = '#header #nav-mobile { background-color: '.$mm_color.$header_bg_colors_important.'; }';
       }
-      if ( $is_transparent ) {
+      if ( $is_transparent && !hu_is_rgb_color($mm_color) ) {
           $mm_color_rgba = 'rgba(' . hu_hex2rgb( $mm_color ) . ',0.90)';
           //$mm_color_rgba_dark = 'rgba(' . hu_hex2rgb( $mm_color ) . ',0.95)';
 
-          $styles[] = '.is-scrolled #header #nav-mobile { background-color: '.$mm_color.'; background-color: '.$mm_color_rgba.' }';
+          $styles[] = '.is-scrolled #header #nav-mobile { background-color: '.$mm_color.$header_bg_colors_important.'; background-color: '.$mm_color_rgba.$header_bg_colors_important.' }';
           //$styles[] = '.is-scrolled .topbar-transparent #nav-topbar.desktop-sticky .nav ul { background-color: '.$tb_color.'; background-color: '.$mm_color_rgba_dark.' }';
       }
 
