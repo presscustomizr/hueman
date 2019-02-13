@@ -339,8 +339,10 @@ function hu_is_home() {
 */
 if ( ! function_exists( 'hu_is_real_home') ) {
     function hu_is_real_home() {
+        // Warning : when show_on_front is a page, but no page_on_front has been picked yet, is_home() is true
+        // beware of https://github.com/presscustomizr/nimble-builder/issues/349
         return ( is_home() && ( 'posts' == get_option( 'show_on_front' ) || '__nothing__' == get_option( 'show_on_front' ) ) )
-        || ( 0 == get_option( 'page_on_front' ) && 'page' == get_option( 'show_on_front' ) )//<= this is the case when the user want to display a page on home but did not pick a page yet
+        || ( is_home() && 0 == get_option( 'page_on_front' ) && 'page' == get_option( 'show_on_front' ) )//<= this is the case when the user want to display a page on home but did not pick a page yet
         || is_front_page();
     }
 }
@@ -588,4 +590,9 @@ function hu_is_full_nimble_tmpl() {
 */
 function hu_category_id_exists( $cat_id ) {
     return term_exists( (int) $cat_id, 'category' );
+}
+
+// @return bool
+function hu_is_pro() {
+    return ( defined( 'HU_IS_PRO' ) && HU_IS_PRO ) || ( defined('HU_IS_PRO_ADDONS') && HU_IS_PRO_ADDONS );
 }
