@@ -1439,13 +1439,13 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           ),
           'copyright' => array(
                 'control'   => 'HU_controls',
-                'default'   => '',
+                'default'   => sprintf( '{{site_title}} &copy; {{year}}. %1$s', __( 'All Rights Reserved.', 'hueman' ) ),
                 'label'     => __( 'Replace the footer copyright text', 'hueman'),
                 'type'      => 'text',
                 'section'   => 'footer_design_sec',
                 'sanitize_callback' => array( $this, 'hu_sanitize_html_text_input' ),
                 'priority'  => 35,
-                'notice'    => __( 'Note : Html is allowed.', 'hueman')
+                'notice'    => __( 'Note : Html is allowed. The following template tags can be used : {{year}}, {{site_title}}, {{home_url}}.', 'hueman')
           ),
           'credit' => array(
                 'control'   => 'HU_controls',

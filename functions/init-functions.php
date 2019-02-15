@@ -596,3 +596,37 @@ function hu_category_id_exists( $cat_id ) {
 function hu_is_pro() {
     return ( defined( 'HU_IS_PRO' ) && HU_IS_PRO ) || ( defined('HU_IS_PRO_ADDONS') && HU_IS_PRO_ADDONS );
 }
+
+/* ------------------------------------------------------------------------- *
+ * Template tags parsing
+/* ------------------------------------------------------------------------- */
+function hu_get_year() {
+    return esc_attr( date('Y') );
+}
+
+function hu_find_pattern_match($matches) {
+    $replace_values = array(
+        'home_url' => 'home_url',
+        'year' => 'hu_get_year',
+        'site_title' => 'get_bloginfo'
+    );
+
+    if ( array_key_exists( $matches[1], $replace_values ) ) {
+      $dyn_content = $replace_values[$matches[1]];
+      if ( function_exists( $dyn_content ) ) {
+        return call_user_func( $dyn_content ); //$dyn_content();//<= @todo handle the case when the callback is a method
+      } else if ( is_string($dyn_content) ) {
+        return $dyn_content;
+      } else {
+        return null;
+      }
+    }
+    return null;
+}
+// fired @filter 'hu_parse_template_tags'
+function hu_parse_template_tags( $val ) {
+    //the pattern could also be '!\{\{(\w+)\}\}!', but adding \s? allows us to allow spaces around the term inside curly braces
+    //see https://stackoverflow.com/questions/959017/php-regex-templating-find-all-occurrences-of-var#comment71815465_959026
+    return is_string( $val ) ? preg_replace_callback( '!\{\{\s?(\w+)\s?\}\}!', 'hu_find_pattern_match', $val) : $val;
+}
+add_filter( 'hu_parse_template_tags', 'hu_parse_template_tags' );
