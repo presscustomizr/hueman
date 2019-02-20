@@ -94,6 +94,8 @@ li #reply-title { font-size: 0; margin: 0!important; padding: 0; height: 0; bord
 #commentform p.comment-form-url,
 #commentform p.comment-form-comment { clear: both; }
 #commentform label { padding: 6px 0; font-weight: 600; display: block; }
+#commentform .comment-form-cookies-consent { padding: 10px 0; }
+#commentform .comment-form-cookies-consent label { display: inline; }
 #commentform input[type="text"],
 #commentform textarea { max-width: 100%; width: 100%; }
 #commentform textarea { height: 100px; }
