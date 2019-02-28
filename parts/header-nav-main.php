@@ -6,7 +6,7 @@ $headernav_classes = array(
     'desktop-menu',
     hu_has_nav_menu( 'header' ) ? '' : 'no-menu-assigned'
 );
-$display_search = ( 'header' == hu_get_option( 'desktop-search' ) ) && ( 'both_menus' != $mobile_menu_opt || ! wp_is_mobile() ) && ( hu_has_nav_menu( 'header' ) || ! empty( $fallback_cb ) );
+$display_search = ( 'header' == hu_get_option( 'desktop-search' ) ) && ( hu_has_nav_menu( 'header' ) || ! empty( $fallback_cb ) );
 ?>
 <nav class="<?php echo implode(' ', $headernav_classes ); ?>" id="nav-header" data-menu-id="<?php echo hu_get_menu_id( 'header'); ?>">
   <?php if ( 'both_menus' == $mobile_menu_opt ) { hu_print_mobile_btn(); } ?>
