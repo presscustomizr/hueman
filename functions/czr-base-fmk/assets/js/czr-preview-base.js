@@ -1,71 +1,6 @@
 
 ( function( api, $, _ ) {
         wp.customize.bind( 'preview-ready', function() {
-              // wp.customize.preview.bind('edit_module', function(o) {
-              //       if ( ! _.has( o, 'id') || ! $('[data-module-id="' + o.id +'"]').length )
-              //         return;
-              //       $('html, body').animate({
-              //             scrollTop : $('[data-module-id="' + o.id +'"]').offset().top - 50
-              //       }, 'slow');
-              // });
-
-              // wp.customize.preview.bind('start_hovering_module', function(o) {
-              //       if ( ! _.has( o, 'id') || ! $('[data-module-id="' + o.id +'"]').length )
-              //         return;
-              //       var $_module = $('[data-module-id="' + o.id +'"]'),
-              //           _width = $_module.outerWidth(),
-              //           _height = $_module.outerHeight();
-              //       $_module.closest('.czr-sektion').find('.czr-hover-placeholder').each( function(){ $(this).remove(); } );
-              //       $.when( $_module.append( $( '<div/>', {
-              //             class : 'czr-hover-placeholder',
-              //             style : 'width:' + _width +'px;height:' + _height +'px;line-height:' + _height +'px;',
-              //             html : '<i class="material-icons">create</i>'
-              //         })
-              //       ) ).done( function() {
-              //             $('.czr-hover-placeholder').css('opacity', 1).fitText( 0.3, { minFontSize: '50px', maxFontSize: '100px' } );
-              //       });
-              // });
-
-              // wp.customize.preview.bind('stop_hovering_module', function(o) {
-              //       if ( ! _.has( o, 'id') || ! $('[data-module-id="' + o.id +'"]').length )
-              //         return;
-
-              //       var $_module = $('[data-module-id="' + o.id +'"]');
-              //       $.when( $_module.find('.czr-hover-placeholder').fadeOut(200) ).done( function() {$_module.find('.czr-hover-placeholder').remove(); });
-              // });
-
-              // wp.customize.preview.bind('edit_sek', function(o) {
-              //       if ( ! _.has( o, 'id') || ! $('[data-sek-id="' + o.id +'"]').length )
-              //         return;
-              //       $('html, body').animate({
-              //             scrollTop : $('[data-sek-id="' + o.id +'"]').offset().top - 50
-              //       }, 'slow');
-              // });
-
-              // wp.customize.preview.bind('start_hovering_sek', function(o) {
-              //       if ( ! _.has( o, 'id') || ! $('[data-sek-id="' + o.id +'"]').length )
-              //         return;
-              //       var $_sek = $('[data-sek-id="' + o.id +'"]'),
-              //           _width = $_sek.outerWidth(),
-              //           _height = $_sek.outerHeight();
-              //       $_sek.closest('.czr-sektion').find('.czr-hover-placeholder').each( function(){ $(this).remove(); } );
-              //       $.when( $_sek.append( $( '<div/>', {
-              //             class : 'czr-hover-placeholder',
-              //             style : 'width:' + _width +'px;height:' + _height +'px;line-height:' + _height +'px;',
-              //             html : '<i class="material-icons">create</i>'
-              //         })
-              //       ) ).done( function() {
-              //             $('.czr-hover-placeholder').css('opacity', 1).fitText( 0.3, { minFontSize: '50px', maxFontSize: '100px' } );
-              //       });
-              // });
-
-              // wp.customize.preview.bind('stop_hovering_sek', function(o) {
-              //       if ( ! _.has( o, 'id') || ! $('[data-sek-id="' + o.id +'"]').length )
-              //         return;
-
-              //       var $_sek = $('[data-sek-id="' + o.id +'"]');
-              //       $.when( $_sek.find('.czr-hover-placeholder').fadeOut(200) ).done( function() {$_sek.find('.czr-hover-placeholder').remove(); });
-              // });
         });// 'preview-ready'
 
 
@@ -168,8 +103,6 @@
                     var self = this;
                     if ( _.isEmpty( window.themeServerPreviewParams ) )
                       return name;
-
-                    // do nothing if part of the the wp builtins setting
                     if ( ! _.isArray( themeServerPreviewParams.wpBuiltinSettings ) || _.contains( themeServerPreviewParams.wpBuiltinSettings, name ) )
                       return name;
 
