@@ -75,13 +75,15 @@ if ( ! class_exists( 'HU_utils' ) ) :
                       60*60*24*3650
                   );
               }
-              if ( ! get_transient( 'hu_start_date' ) && class_exists( 'DateTime' ) ) {
-                  set_transient(
-                      'hu_start_date',
-                      new DateTime("now"),
-                      60*60*24*3650
-                  );
-              }
+              // Commented since https://github.com/presscustomizr/hueman/issues/775
+              // was not used anyway since the removal of the welcome note
+              // if ( ! get_transient( 'hu_start_date' ) && class_exists( 'DateTime' ) ) {
+              //     set_transient(
+              //         'hu_start_date',
+              //         new DateTime("now"),
+              //         60*60*24*3650
+              //     );
+              // }
         }
         //the db updates for retro compat can be done now.
         //=> @see functions/init-retro-compat.php

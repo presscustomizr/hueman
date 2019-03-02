@@ -1102,9 +1102,6 @@ if ( ! function_exists( 'hu_scripts' ) ) {
         }
     }
 
-    //user started with
-    $started_on = get_transient( 'hu_start_date' );
-
     wp_localize_script(
           'hu-front-scripts',
           'HUParams',
@@ -1160,10 +1157,6 @@ if ( ! function_exists( 'hu_scripts' ) ) {
                 'frontNonce'   => array( 'id' => 'HuFrontNonce', 'handle' => wp_create_nonce( 'hu-front-nonce' ) ),
 
                 //Welcome
-                'userStarted' => array(
-                      'with' => get_transient( HU_IS_PRO ? 'started_using_hueman_pro' : 'started_using_hueman' ),
-                      'on' => is_object( $started_on ) ? (array)$started_on : $started_on
-                ),
                 'isWelcomeNoteOn' => $is_welcome_note_on,
                 'welcomeContent'  => $welcome_note_content,
                 'i18n' => array(
