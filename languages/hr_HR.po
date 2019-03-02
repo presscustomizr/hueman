@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman v3.4.15\n"
+"Project-Id-Version: Hueman v3.4.16\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2019-02-28 09:01:38+00:00\n"
+"POT-Creation-Date: 2019-03-02 22:43:38+00:00\n"
 "PO-Revision-Date: 2016-05-30 08:47+0200\n"
 "Last-Translator: zcuric <zcuric@gmail.com>\n"
 "Language-Team: Press Customizr\n"
@@ -1153,7 +1153,7 @@ msgid ""
 "layout is set."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:893 functions/init-front.php:1584
+#: functions/class-utils-settings-map.php:893 functions/init-front.php:1577
 #: functions/init-sidebars-widgets.php:132
 msgid "Home"
 msgstr ""
@@ -1758,7 +1758,7 @@ msgstr ""
 msgid "Choose Sidebar"
 msgstr ""
 
-#: functions/class-utils.php:213
+#: functions/class-utils.php:215
 #, fuzzy
 msgid "Page %s"
 msgstr "Stranice:"
@@ -2685,52 +2685,52 @@ msgstr "Mjesečna arhiva:"
 msgid "Yearly Archive:"
 msgstr "Godišnja arhiva:"
 
-#: functions/init-front.php:1170
+#: functions/init-front.php:1163
 #, fuzzy
 msgid "Expand"
 msgstr "Proširi sidebar:"
 
-#: functions/init-front.php:1171
+#: functions/init-front.php:1164
 msgid "Collapse"
 msgstr ""
 
-#: functions/init-front.php:1632 functions/init-sidebars-widgets.php:134
+#: functions/init-front.php:1625 functions/init-sidebars-widgets.php:134
 msgid "Pages"
 msgstr ""
 
-#: functions/init-front.php:1908
+#: functions/init-front.php:1901
 msgid "Welcome in the Hueman theme"
 msgstr ""
 
-#: functions/init-front.php:1911
+#: functions/init-front.php:1904
 msgid "The theme offers a wide range"
 msgstr ""
 
-#: functions/init-front.php:1913
+#: functions/init-front.php:1906
 msgid "of customization options"
 msgstr ""
 
-#: functions/init-front.php:1914
+#: functions/init-front.php:1907
 msgid "to let you create the best possible websites."
 msgstr ""
 
-#: functions/init-front.php:1917
+#: functions/init-front.php:1910
 msgid "If you need inspiration, you can visit our online demos"
 msgstr ""
 
-#: functions/init-front.php:1919
+#: functions/init-front.php:1912
 msgid "Hueman Demo 1"
 msgstr ""
 
-#: functions/init-front.php:1921
+#: functions/init-front.php:1914
 msgid "Hueman Demo 2"
 msgstr ""
 
-#: functions/init-front.php:1924
+#: functions/init-front.php:1917
 msgid "To help you getting started with Hueman, we have published"
 msgstr ""
 
-#: functions/init-front.php:1926
+#: functions/init-front.php:1919
 msgid "a short guide here."
 msgstr ""
 

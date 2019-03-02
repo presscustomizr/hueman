@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.1
-Stable tag: 3.4.15
+Stable tag: 3.4.16
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,10 +13,13 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
 
 == Upgrade Notice ==
-= 3.4.15 =
-Blockquotes are now styled properly when inserted in a comment. The search button is now displayed in tablet devices. The style of the consent checkbox has been improved in the comment form. The footer credits now uses parsable tags like {{year}}.
+= 3.4.16 =
+Blockquotes are now styled properly when inserted in a comment. The search button is now displayed in tablet devices. The style of the consent checkbox has been improved in the comment form. The footer credits now uses parsable tags like {{year}}. Fixed possible PHP error when upgrading server to PHP 7.0+.
 
 == Changelog ==
+= 3.4.16 March 2nd, 2019 =
+* fixed : possible PHP error when upgrading server to PHP 7.0+. fixes #775
+
 = 3.4.15 February 27th, 2019 =
 * fixed : wp commentform cookies consent checkbox style. fixes #770
 * fixed : search button in the topbar menu now displayed on tablet. fixes #653
