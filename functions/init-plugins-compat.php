@@ -212,6 +212,7 @@ function hu_set_woocommerce_compat() {
           <?php if ( is_single() ):
                   global $product;
                   if ( isset($product) ) :
+                    $product        = ! ( is_object ($product ) && ( $product instanceof WC_Product ) ) ? wc_get_product( get_the_ID() ) : $product;
                     $review_enabled = get_option( 'woocommerce_enable_review_rating' ) !== 'no';
                     $review_count   = $review_enabled ? $product->get_review_count() : '';
                     $product_id     = method_exists( $product, 'get_id' ) ? $product->get_id() : $product->id;
