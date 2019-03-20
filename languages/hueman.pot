@@ -2,9 +2,9 @@
 # This file is distributed under the GNU General Public License v3.0.=!>
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman 3.4.16\n"
+"Project-Id-Version: Hueman 3.4.17\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2019-03-02 22:45:41+00:00\n"
+"POT-Creation-Date: 2019-03-20 17:39:43+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1458,7 +1458,7 @@ msgid "Display comment count on thumbnails"
 msgstr ""
 
 #: functions/class-utils-settings-map.php:1309
-#: functions/init-plugins-compat.php:441
+#: functions/init-plugins-compat.php:442
 msgid "Sidebar Top Boxes"
 msgstr ""
 
@@ -1833,7 +1833,6 @@ msgstr ""
 #: functions/czr/czr-resources.php:163
 #: functions/czr-base-fmk/czr-base-fmk.php:238
 #: functions/czr-base-fmk/czr-base-fmk.php:452
-#: functions/czr-base-fmk/czr-base-fmk.php:816
 #: functions/czr-modules/widget-zones/widget_zones_module.php:227
 msgid "Edit"
 msgstr ""
@@ -2198,26 +2197,22 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:817
-msgid "Hide editor"
-msgstr ""
-
-#: functions/czr-base-fmk/czr-base-fmk.php:1538
+#: functions/czr-base-fmk/czr-base-fmk.php:1530
 msgid "Set a custom url"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1572
-#: functions/czr-base-fmk/czr-base-fmk.php:1772
+#: functions/czr-base-fmk/czr-base-fmk.php:1564
+#: functions/czr-base-fmk/czr-base-fmk.php:1764
 msgid "ajax_load_available_items => Security check failed."
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1693
-#: functions/czr-base-fmk/czr-base-fmk.php:1902
+#: functions/czr-base-fmk/czr-base-fmk.php:1685
+#: functions/czr-base-fmk/czr-base-fmk.php:1894
 #. translators: %d: ID of a post
 msgid "#%d (no title)"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1836
+#: functions/czr-base-fmk/czr-base-fmk.php:1828
 msgid "No results found."
 msgstr ""
 
@@ -2716,75 +2711,75 @@ msgstr ""
 msgid "a short guide here."
 msgstr ""
 
-#: functions/init-plugins-compat.php:424
+#: functions/init-plugins-compat.php:425
 msgid "Top-Menu items"
 msgstr ""
 
-#: functions/init-plugins-compat.php:425
+#: functions/init-plugins-compat.php:426
 msgid "Slider title"
 msgstr ""
 
-#: functions/init-plugins-compat.php:426
+#: functions/init-plugins-compat.php:427
 msgid "Slider subtitle"
 msgstr ""
 
-#: functions/init-plugins-compat.php:427
+#: functions/init-plugins-compat.php:428
 msgid "Slider button"
 msgstr ""
 
-#: functions/init-plugins-compat.php:429
+#: functions/init-plugins-compat.php:430
 msgid "Single Post titles"
 msgstr ""
 
-#: functions/init-plugins-compat.php:430
+#: functions/init-plugins-compat.php:431
 msgid "Single Page titles"
 msgstr ""
 
-#: functions/init-plugins-compat.php:431
+#: functions/init-plugins-compat.php:432
 msgid "Post/Page content"
 msgstr ""
 
-#: functions/init-plugins-compat.php:432
+#: functions/init-plugins-compat.php:433
 msgid "Post/Page excerpt"
 msgstr ""
 
-#: functions/init-plugins-compat.php:433
+#: functions/init-plugins-compat.php:434
 msgid "Lists in post/pages"
 msgstr ""
 
-#: functions/init-plugins-compat.php:434
+#: functions/init-plugins-compat.php:435
 msgid "Single Post Categories meta"
 msgstr ""
 
-#: functions/init-plugins-compat.php:435
+#: functions/init-plugins-compat.php:436
 msgid "Single Post tags"
 msgstr ""
 
-#: functions/init-plugins-compat.php:436
+#: functions/init-plugins-compat.php:437
 msgid "Archive Type Title"
 msgstr ""
 
-#: functions/init-plugins-compat.php:437
+#: functions/init-plugins-compat.php:438
 msgid "Post list post metas"
 msgstr ""
 
-#: functions/init-plugins-compat.php:438
+#: functions/init-plugins-compat.php:439
 msgid "Post list category meta"
 msgstr ""
 
-#: functions/init-plugins-compat.php:439
+#: functions/init-plugins-compat.php:440
 msgid "Single post tags"
 msgstr ""
 
-#: functions/init-plugins-compat.php:440
+#: functions/init-plugins-compat.php:441
 msgid "Comments metas"
 msgstr ""
 
-#: functions/init-plugins-compat.php:442
+#: functions/init-plugins-compat.php:443
 msgid "Footer Social Links"
 msgstr ""
 
-#: functions/init-plugins-compat.php:455
+#: functions/init-plugins-compat.php:456
 msgid "Featured pages"
 msgstr ""
 

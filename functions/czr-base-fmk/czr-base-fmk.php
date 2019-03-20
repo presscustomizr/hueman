@@ -582,7 +582,9 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
 
                 'has_device_switcher' => false, // <= indicates if the input value shall be saved by device or not
 
-                'scope' => 'local'// <= used when resetting the sections
+                'scope' => 'local',// <= used when resetting the sections
+                // introduced for https://github.com/presscustomizr/nimble-builder/issues/403
+                'editor_params' => array()
             );
             foreach( $tmpl_map as $input_id => $input_data ) {
                 if ( ! is_string( $input_id ) || empty( $input_id ) ) {
@@ -791,8 +793,10 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                      *  TEXTAREA
                     /* ------------------------------------------------------------------------- */
                     case 'textarea' :
+                      // Added an id attribute for https://github.com/presscustomizr/nimble-builder/issues/403
+                      // needed to instantiate wp.editor.initialize(...)
                       ?>
-                        <textarea data-czrtype="<?php echo $input_id; ?>" class="width-100" name="textarea" rows="10" cols="">{{ data.value }}</textarea>
+                        <textarea id="textarea-{{ data.id }}" data-czrtype="<?php echo $input_id; ?>" class="width-100" name="textarea" rows="10" cols="">{{ data.value }}</textarea>
                       <?php
                     break;
 
@@ -808,24 +812,12 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                     break;
 
                     /* ------------------------------------------------------------------------- *
-                     *  TINY MCE EDITOR
-                    /* ------------------------------------------------------------------------- */
-                    case 'tiny_mce_editor' :
-                        ?>
-                          <# //console.log( 'IN php::ac_get_default_input_tmpl() => data sent to the tmpl => ', data ); #>
-                          <button type="button" class="button text_editor-button" data-czr-control-id="{{ data.control_id }}" data-czr-input-id="<?php echo $input_id; ?>" data-czr-action="open-tinymce-editor"><?php _e('Edit', 'hueman' ); ?></button>&nbsp;
-                          <button type="button" class="button text_editor-button" data-czr-control-id="{{ data.control_id }}" data-czr-input-id="<?php echo $input_id; ?>" data-czr-action="close-tinymce-editor"><?php _e('Hide editor', 'hueman' ); ?></button>
-                          <input data-czrtype="<?php echo $input_id; ?>" type="hidden" value="{{ data.value }}"/>
-                        <?php
-                    break;
-
-                    /* ------------------------------------------------------------------------- *
                      *  RANGE
                     /* ------------------------------------------------------------------------- */
                     case 'range_slider' :
                     case 'range' :
                       ?>
-                        <# //console.log( 'IN php::ac_get_default_input_tmpl() => data range_slide => ', data ); #>
+                        <?php //<# //console.log( 'IN php::ac_get_default_input_tmpl() => data range_slide => ', data ); #> ?>
                         <?php
                         printf( '<input data-czrtype="%5$s" type="range" %1$s %2$s %3$s %4$s value="{{ data[\'%5$s\'] }}" />',
                           ! empty( $input_data['orientation'] ) ? 'data-orientation="'. $input_data['orientation'] .'"' : '',
