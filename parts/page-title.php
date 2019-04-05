@@ -23,6 +23,10 @@
     		<h1><?php echo hu_get_term_page_title(); ?></h1>
     	<?php elseif ( is_day() || is_month() || is_year() ) : ?>
     		<h1><?php echo hu_get_date_archive_title(); ?></h1>
+    	<?php elseif ( is_tax() ) : ?>
+    		<h1><?php the_archive_title(); ?></h1>
+    	<?php elseif ( is_post_type_archive() ) : ?>
+    		<h1><?php post_type_archive_title(); ?></h1>
     	<?php else: ?>
         <?php if ( ! is_home() && ! hu_is_checked('blog-heading-enabled') ) : ?>
     		  <h2><?php the_title(); ?></h2>
