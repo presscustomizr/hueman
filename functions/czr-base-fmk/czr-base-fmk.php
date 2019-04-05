@@ -543,10 +543,12 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                 'title'        => '',
                 'default'  => '',
 
+                'html_before' => '',
                 'notice_before_title' => '',
                 'notice_before' => '',
                 'notice_after' => '',
                 'placeholder' => '',
+                'html_after' => '',
 
                 // typically used for the number and range inputs
                 'step' => '',
@@ -647,6 +649,10 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                 ! empty( $input_data['transport'] ) ? 'data-transport="'. $input_data['transport'] .'"' : ''
             );
             ?>
+            <?php if ( ! empty( $input_data['html_before'] ) ) : ?>
+                <div class="czr-html-before"><?php echo $input_data['html_before']; ?></div>
+            <?php endif; ?>
+
             <?php if ( ! empty( $input_data['notice_before_title'] ) ) : ?>
                 <span class="czr-notice"><?php echo $input_data['notice_before_title']; ?></span><br/>
             <?php endif; ?>
@@ -675,6 +681,11 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
               <?php if ( ! empty( $input_data['notice_after'] ) ) : ?>
                   <span class="czr-notice"><?php echo $input_data['notice_after']; ?></span>
               <?php endif; ?>
+
+              <?php if ( ! empty( $input_data['html_after'] ) ) : ?>
+                <div class="czr-html-after"><?php echo $input_data['html_after']; ?></div>
+              <?php endif; ?>
+
             </div> <?php //class="$css_attr['sub_set_wrapper']" ?>
             <?php
             // </INPUT WRAPPER>
@@ -722,9 +733,17 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                      *  SELECT
                     /* ------------------------------------------------------------------------- */
                     case 'czr_layouts'://<= specific to the hueman theme
-                    case 'select':
+                    case 'select'://<= used in the customizr and hueman theme
+                    case 'simpleselect'://<=used in Nimble Builder
                       ?>
                         <select data-czrtype="<?php echo $input_id; ?>"></select>
+                      <?php
+                    break;
+                    // multiselect with select2() js library
+                    case 'multiselect':
+                    case 'category_picker':
+                      ?>
+                        <select multiple="multiple" data-czrtype="<?php echo $input_id; ?>"></select>
                       <?php
                     break;
 
@@ -780,12 +799,25 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                       <?php
                     break;
 
+                    // DEPRECATED since april 2nd 2019
                     case 'gutencheck' :
                         ?>
                           <#
                             var _checked = ( false != data['<?php echo $input_id; ?>'] ) ? "checked=checked" : '';
                           #>
                           <span class="czr-toggle-check"><input class="czr-toggle-check__input" data-czrtype="<?php echo $input_id; ?>" type="checkbox" {{ _checked }}><span class="czr-toggle-check__track"></span><span class="czr-toggle-check__thumb"></span></span>
+                        <?php
+                    break;
+
+                    case 'nimblecheck' :
+                        ?>
+                          <#
+                            var _checked = ( false != data['<?php echo $input_id; ?>'] ) ? "checked=checked" : '';
+                          #>
+                          <div class="nimblecheck-wrap">
+                            <input id="nimblecheck-<?php echo $input_id; ?>" data-czrtype="<?php echo $input_id; ?>" type="checkbox" {{ _checked }} class="nimblecheck-input">
+                            <label for="nimblecheck-<?php echo $input_id; ?>" class="nimblecheck-label">Switch</label>
+                          </div>
                         <?php
                     break;
 

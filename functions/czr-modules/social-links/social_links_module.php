@@ -130,10 +130,11 @@ function hu_register_social_links_module( $args ) {
                     'transport' => 'postMessage'
                 ),
                 'social-target' => array(
-                    'input_type'  => 'check',
+                    'input_type'  => 'nimblecheck',
                     'title'       => __('Link target', 'hueman'),
                     'notice_after'      => __('Check this option to open the link in a another tab of the browser.', 'hueman'),
-                    'width-100'   => true
+                    'title_width' => 'width-80',
+                    'input_width' => 'width-20',
                 )
             )
         )

@@ -939,7 +939,7 @@ $.extend( CZRLayoutSelectMths , {
             /* CHECKBOXES */
             api.czrSetupCheckbox = function( controlId, refresh ) {
                   var _ctrl = api.control( controlId );
-                  $('input[type=checkbox]', _ctrl.container ).each( function() {
+                  $('input[type=checkbox]:not(.nimblecheck-input)', _ctrl.container ).each( function() {
                         //Exclude font customizer
                         if ( 'tc_font_customizer_settings' == _ctrl.params.section )
                           return;

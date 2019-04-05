@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.1
-Stable tag: 3.4.17
+Stable tag: 3.4.18
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,10 +13,14 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
 
 == Upgrade Notice ==
-= 3.4.17 =
-Fixed possible fatal error in WooCommerce single products.
+= 3.4.18 =
+Minor fix to correctly display taxonomy/post_type_archive title. New unififed style for the checkboxes in the customizer. 
 
 == Changelog ==
+= 3.4.18 April 5th 2019 =
+* fixed : display correctly taxonomy/post_type_archive titles. fixes #750
+* improved : new style for checkboxes in customizer controls. 
+
 = 3.4.17 March 20th, 2019 =
 * fixed : possible fatal error in WooCommerce single products. fixes #780
 

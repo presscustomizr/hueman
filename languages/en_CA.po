@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Hueman\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2019-03-20 17:39:43+00:00\n"
+"POT-Creation-Date: 2019-04-05 20:14:46+00:00\n"
 "PO-Revision-Date: 2016-11-04 13:55+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -2236,22 +2236,22 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1530
+#: functions/czr-base-fmk/czr-base-fmk.php:1562
 msgid "Set a custom url"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1564
-#: functions/czr-base-fmk/czr-base-fmk.php:1764
+#: functions/czr-base-fmk/czr-base-fmk.php:1596
+#: functions/czr-base-fmk/czr-base-fmk.php:1796
 msgid "ajax_load_available_items => Security check failed."
 msgstr ""
 
 #. translators: %d: ID of a post
-#: functions/czr-base-fmk/czr-base-fmk.php:1685
-#: functions/czr-base-fmk/czr-base-fmk.php:1894
+#: functions/czr-base-fmk/czr-base-fmk.php:1717
+#: functions/czr-base-fmk/czr-base-fmk.php:1926
 msgid "#%d (no title)"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1828
+#: functions/czr-base-fmk/czr-base-fmk.php:1860
 msgid "No results found."
 msgstr ""
 
@@ -2414,11 +2414,11 @@ msgstr "Link target"
 msgid "Check this option to open the link in a another tab of the browser."
 msgstr ""
 
-#: functions/czr-modules/social-links/social_links_module.php:172
+#: functions/czr-modules/social-links/social_links_module.php:173
 msgid "An error occurred: malformed social links"
 msgstr ""
 
-#: functions/czr-modules/social-links/social_links_module.php:216
+#: functions/czr-modules/social-links/social_links_module.php:217
 msgid "Please fill the social link inputs with a valid URLs"
 msgstr ""
 
