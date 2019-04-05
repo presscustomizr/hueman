@@ -174,7 +174,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __( 'Display the site title in the header' , 'hueman' ),
                 'section'   => 'title_tagline',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( 'The site title is displayed when there is no logo uploaded', 'hueman' ),
                 'ubq_section'   => array(
                     'section' => 'header_design_sec',
@@ -187,7 +187,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __( 'Display a logo in the header' , 'hueman' ),
                 'section'   => 'title_tagline',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => sprintf( '%3$s <strong><a href="%1$s" title="%3$s">%2$s</a><strong>',
                     "javascript:wp.customize.section('title_tagline').focus();",
                     __("here" , "hueman"),
@@ -274,7 +274,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __('Boxed Layout', 'hueman'),
                 'section'   => 'general_design_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( 'Use a boxed layout' , 'hueman' )
           ),
           'sidebar-padding' => array(
@@ -348,7 +348,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'       => 'HU_controls' ,
                 'label'         => __( "Display an icon next to external links" , "hueman" ),
                 'section'       => 'general_design_sec' ,
-                'type'          => 'checkbox' ,
+                'type'          => 'nimblecheck' ,
                 'notice'    => __( 'This will be applied to the links included in post or page content only.' , 'hueman' ),
                 //'transport'     => 'postMessage'
           ),
@@ -358,7 +358,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'       => 'HU_controls' ,
                 'label'         => __( "Open external links in a new tab" , "hueman" ),
                 'section'       => 'general_design_sec' ,
-                'type'          => 'checkbox' ,
+                'type'          => 'nimblecheck' ,
                 'notice'    => __( 'This will be applied to the links included in post or page content only.' , 'hueman' ),
                 //'transport'     => 'postMessage'
           )
@@ -406,7 +406,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __('Posts Comments', 'hueman'),
                 'section'   => 'comments_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( 'Comments on posts' , 'hueman' ),
                 //'active_callback' => 'hu_is_single'
           ),
@@ -415,7 +415,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __('Pages Comments', 'hueman'),
                 'section'   => 'comments_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( 'Comments on pages' , 'hueman' ),
                 //'active_callback' => 'hu_is_page'
           )
@@ -432,7 +432,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __('Enable Smooth Scrolling', 'hueman'),
                 'section'   => 'smoothscroll_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( "This option enables a smoother page scroll." , 'hueman' )
 
           )
@@ -450,7 +450,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __('Enable the Mobile Friendly (or Responsive) layout', 'hueman'),
                 'section'   => 'mobiles_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( "Hueman is a mobile friendly WordPress theme out of the box. This means that it will adapt and render nicely on any devices : desktops, laptops, tablets, smartphones. <br/>If you uncheck this box, this adaptive (or reponsive) behaviour will not be working anymore. In most of the cases, you won't need to disable this option, and it is not recommended." , 'hueman' )
           ),
           'fittext' => array(
@@ -458,7 +458,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __('Make font sizes flexible. Enable this option to achieve scalable headlines that fill the width of a parent element.', 'hueman'),
                 'section'   => 'mobiles_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( "This option is good if you want to display a perfect font-size for your headings on any mobile devices. Note : it might override the css rules previously set in your custom stylesheet." , 'hueman' )
           ),
       );
@@ -474,7 +474,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __('Include images in search results', 'hueman'),
                 'section'   => 'search_sec',
-                'type'      => 'checkbox'
+                'type'      => 'nimblecheck'
           )
       );
     }
@@ -489,7 +489,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __('Use a minified stylesheet', 'hueman'),
                 'section'   => 'performance_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( "Unchecking this option is not recommended. Minifying css stylesheets improves performance for your website overall by decreasing the load time." , 'hueman' )
           ),
           'structured-data' => array(
@@ -497,7 +497,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __('Use Structured Data Markup for your posts', 'hueman'),
                 'section'   => 'performance_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( '"Structured data markup" is a standard way to annotate your content so machines can understand it. Implementing it will help your website rank higher in search engines.' , 'hueman' )
           ),
           'smart_load_img'  =>  array(
@@ -505,7 +505,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'     =>  'HU_controls',
                 'label'       => __( 'Load images on scroll' , 'hueman' ),
                 'section'     => 'performance_sec',
-                'type'        => 'checkbox',
+                'type'        => 'nimblecheck',
                 'notice'      => __('Check this option to delay the loading of non visible images. Images below the viewport will be loaded dynamically on scroll. This can really boost speed performances by reducing the weight of long pages that include many images.' , 'hueman')
           ),
           'js-mobile-detect'  =>  array(
@@ -513,7 +513,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'     =>  'HU_controls',
                 'label'       => __( 'Mobile device detection' , 'hueman' ),
                 'section'     => 'performance_sec',
-                'type'        => 'checkbox',
+                'type'        => 'nimblecheck',
                 'notice'      => __('When checked, this option loads a small javascript file ( 30 kb ) to detect if your site is being displayed by a mobile device like a phone or a tablet. It is recommended to check this option if you are using a cache plugin.' , 'hueman')
           )
 
@@ -531,7 +531,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __('Display the "About Hueman" page in the "Appearance" admin menu', 'hueman'),
                 'section'   => 'admin_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( 'This page is intended to provide informations about the Hueman theme : changelog, release note, documentation link. It also display informations about your current install that can be useful if you need to report an issue.' , 'hueman' )
           ),
           'help-button' => array(
@@ -539,7 +539,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __('Display a Help button in the admin bar', 'hueman'),
                 'section'   => 'admin_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( 'This button links to the "About Hueman" page.' , 'hueman' )
           )
       );
@@ -562,7 +562,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __("Display your site's description (tagline)", 'hueman'),
                 'section'   => 'header_design_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( 'The description that appears next to your logo' , 'hueman' ),
                 'ubq_section'   => array(
                     'section' => 'title_tagline',
@@ -574,7 +574,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __( 'Apply your custom background colors in priority for the topbar and the mobile menu' , 'hueman' ),
                 'section'   => 'header_design_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 //'active_callback' => 'hu_is_pro',
                 'notice' => sprintf( __('This can be used to ensure your background colors are applied when designing a header with a background image in %1$s', 'hueman'),
                     sprintf('<a href="https://docs.presscustomizr.com/article/284-pro-designing-header-background-and-slider-with-hueman-pro" target="_blank">%1$s</a>',
@@ -627,7 +627,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __( 'Apply a semi-transparent filter to the topbar and mobile menu on scroll' , 'hueman' ),
                 'section'   => 'header_design_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
           ),
         );
     }
@@ -642,7 +642,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __( 'Use a header banner image' , 'hueman' ),
                 'section'   => 'header_image_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __('Upload a header image (supported formats : .jpg, .png, .gif, svg, svgz). This will disable header title/logo, site description, header ads widget' , 'hueman')
           ),
           'logo-title-on-header-image' => array(
@@ -650,7 +650,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __( 'Display your logo or site title, and tagline on top of the header image' , 'hueman' ),
                 'section'   => 'header_image_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => sprintf( '%3$s <strong><a href="%1$s" title="%3$s">%2$s</a><strong>',
                     "javascript:wp.customize.section('title_tagline').focus();",
                     __("here" , "hueman"),
@@ -670,7 +670,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __("Display a widget in your header", 'hueman'),
                 'section'   => 'header_widget_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( 'Header widget area, perfect to insert advertisements. Note : this feature is not available when a header image is being displayed.' , 'hueman')
           ),
           'header-ads-desktop' => array(
@@ -678,7 +678,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __("Display the header widget zone on desktop devices", 'hueman'),
                 'section'   => 'header_widget_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( 'This will display your widget zone on devices with a width greater than 720 pixels : laptops and desktops.' , 'hueman')
           ),
           'header-ads-mobile' => array(
@@ -686,7 +686,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __("Display the header widget zone on mobile devices", 'hueman'),
                 'section'   => 'header_widget_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( 'This will display your widget zone on devices with a width smaller than 720 pixels : tablets, smartphones.' , 'hueman')
           )
 
@@ -720,7 +720,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __("Topbar menu", 'hueman') . ' : ' . __("Use a default page menu if no menu has been assigned.", 'hueman'),
                 'section'   => 'header_menus_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => $header_nav_notice,
                 'ubq_section'   => array(
                     'section' => 'menu_locations',
@@ -820,7 +820,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => sprintf( '%1$s : %2$s', __('Mobile devices', 'hueman' ) , __( 'Expand submenus on click', 'hueman') ),
                 'section'   => 'header_menus_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'ubq_section' => array(
                       'section' => 'footer_design_sec',
                       'priority' => '18'
@@ -831,7 +831,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => sprintf( '%1$s : %2$s', __('Mobile devices', 'hueman' ) , __('display a search field', 'hueman') ),
                 'section'   => 'header_menus_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'ubq_section'   => array(
                     'section' => 'menu_locations',
                     'priority' => '120'
@@ -884,7 +884,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __("Force the global layout", 'hueman'),
                 'section'   => 'content_layout_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __('The global layout will be applied on every pages, even when a specific layout is set.' , 'hueman')
           ),
           'layout-home' => array(
@@ -973,7 +973,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'title'     => __( 'Blog Heading', 'hueman' ),
                 'label'     => __("Display a custom heading for your blog.", 'hueman'),
                 'section'   => 'content_blog_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 //'active_callback' => 'is_home',
                 'priority'   => 5,
                 'ubq_section'   => array(
@@ -1038,7 +1038,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'title'     => __( 'Post List Design', 'hueman' ),
                 'label'     => __("Display your blog posts as a standard list.", 'hueman'),
                 'section'   => 'content_blog_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( 'While the default blog design is a grid of posts, you can check this option and display one post per row, whith the thumbnail beside the text.' , 'hueman'),
                 //'active_callback' => 'hu_is_post_list',
                 'priority'   => 20,
@@ -1050,7 +1050,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           'blog-use-original-image-size'  =>  array(
                 'default'   => 0,
                 'control'   => 'HU_controls' ,
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'label'     => __( "Display featured images in their original dimensions in post lists" , 'hueman' ),
                 'section'   => 'content_blog_sec' ,
                 //'transport' => 'postMessage',
@@ -1088,7 +1088,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __( 'Display the archive type and an icon next to the archive headings', 'hueman' ),
                 'section'   => 'content_blog_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( 'In WordPress, archives are the pages listing posts by category, tag, author and date.' , 'hueman'),
                 //'active_callback' => 'hu_is_post_list',
                 'priority'   => 150
@@ -1099,7 +1099,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __("Feature posts on top of your blog", 'hueman'),
                 'section'   => 'content_blog_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( 'Check this box to display a selection of posts with a slideshow, on top of your blog.' , 'hueman'),
                 //'active_callback' => 'is_home',
                 'priority'   => 30,
@@ -1146,7 +1146,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __("Display the full post content", 'hueman'),
                 'section'   => 'content_blog_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( 'By default, your featured posts display the first words of their content ( the "excerpt"). Check this box to display the full content.' , 'hueman'),
                 //'active_callback' => 'is_home',
                 'priority'   => 45,
@@ -1160,7 +1160,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __("Animate your featured posts with a slideshow", 'hueman'),
                 'section'   => 'content_blog_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( 'Enables the automatic animation of the featured posts carousel.' , 'hueman'),
                 //'active_callback' => 'is_home',
                 'priority'   => 50,
@@ -1192,7 +1192,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __("Display the featured posts also in the list of posts", 'hueman'),
                 'section'   => 'content_blog_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( 'If this box is checked, your featured posts will be displayed both in the featured slider and in the post list below. Usually not recommended because a given post might appear two times on the same page.' , 'hueman'),
                 //'active_callback' => 'is_home',
                 'priority'   => 60,
@@ -1216,7 +1216,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __("Single - Author Bio", 'hueman'),
                 'section'   => 'content_single_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'priority'  => 10,
                 'notice'    => __( 'Display post author description, if it exists' , 'hueman'),
                 //'active_callback' => function_exists('HU_AD') ? 'hu_is_single' : ''//enabled when hueman-addons is enabled
@@ -1272,7 +1272,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __("Thumbnail Placeholder", 'hueman'),
                 'section'   => 'content_thumbnail_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( 'Display featured image placeholders if no featured image is set' , 'hueman')
           ),
           'comment-count' => array(
@@ -1280,7 +1280,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __("Thumbnail Comment Count", 'hueman'),
                 'section'   => 'content_thumbnail_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( 'Display comment count on thumbnails' , 'hueman'),
                 'ubq_section'   => array(
                     'section' => 'comments_sec',
@@ -1308,7 +1308,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __('Sidebar Top Boxes', 'hueman'),
                 'section'   => 'sidebars_design_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __('Display boxes at the top of the sidebars' , 'hueman'),
                 'priority'  => 1
           ),
@@ -1327,7 +1327,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => sprintf( '%1$s : %2$s', __('Desktop devices', 'hueman' ) , __('make sidebars sticky on scroll', 'hueman') ),
                 'section'   => 'sidebars_design_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __("Glues your website's sidebars on top of the page, making them permanently visible when scrolling up and down. Useful when a sidebar is too tall or too short compared to the rest of the content." , 'hueman')
           ),
           'mobile-sticky-sb' => array(
@@ -1335,7 +1335,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => sprintf( '%1$s : %2$s', __('Mobile devices', 'hueman' ) , __('make sidebars sticky on scroll', 'hueman') ),
                 'section'   => 'sidebars_design_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __( "Decide if your sidebars should be sticky on tablets and smartphones devices." , 'hueman' )
           ),
           'mobile-sidebar-hide' => array(
@@ -1388,7 +1388,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __("Display a full width widget area in your footer", 'hueman'),
                 'section'   => 'footer_design_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'notice'    => __('This zone is located before the other footer widgets and takes 100% of the width. Very appropriate to display a Google Map or an advertisement banner.', 'hueman')
           ),
           'default-menu-footer' => array(
@@ -1396,7 +1396,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'label'     => __("Use a default page menu if no menu has been assigned.", 'hueman'),
                 'section'   => 'footer_design_sec',
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'priority'  => 15,
                 'notice'    => $nav_section_desc
           ),
@@ -1451,7 +1451,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'control'   => 'HU_controls',
                 'default'   => 1,
                 'label'     => __( 'Footer credit text', 'hueman'),
-                'type'      => 'checkbox',
+                'type'      => 'nimblecheck',
                 'section'   => 'footer_design_sec',
                 'priority'  => 40,
                 'transport' => 'postMessage'
