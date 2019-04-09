@@ -280,7 +280,8 @@ if ( ! class_exists( 'HU_utils' ) ) :
           $option_name = $key;
           //write default option in array
           if( isset($options['default']) )
-            $defaults[$option_name] = ( 'checkbox' == $options['type'] ) ? (bool) $options['default'] : $options['default'];
+            // added check on 'nimblecheck' to fix https://github.com/presscustomizr/customizr/issues/1732
+            $defaults[$option_name] = in_array( $options['type'], array( 'checkbox', 'nimblecheck' ) ) ? (bool)$options['default'] : $options['default'];
           else
             $defaults[$option_name] = null;
         }//end foreach
