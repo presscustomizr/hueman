@@ -1864,6 +1864,12 @@ $.extend( CZRInputMths , {
     //       _do_();
     // },
 
+    // when input and label are tied by an id - for relationship
+    // clicking on any of them changes the input
+    // => We need a unique ID here so that input and label are tied by a unique link
+    // The unique ID is generated server side as a GUID
+    // @see https://www.w3.org/TR/html401/interact/forms.html#h-17.9.1
+    // @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Input/checkbox
     setupNimbleCheck : function( params ) {
           var input      = this;
           var $input = input.container.find('input[type=checkbox]'),

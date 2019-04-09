@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Hueman\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2019-04-05 20:14:46+00:00\n"
+"POT-Creation-Date: 2019-04-09 11:21:03+00:00\n"
 "PO-Revision-Date: 2016-11-04 13:55+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -2236,22 +2236,22 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1562
+#: functions/czr-base-fmk/czr-base-fmk.php:1570
 msgid "Set a custom url"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1596
-#: functions/czr-base-fmk/czr-base-fmk.php:1796
+#: functions/czr-base-fmk/czr-base-fmk.php:1604
+#: functions/czr-base-fmk/czr-base-fmk.php:1804
 msgid "ajax_load_available_items => Security check failed."
 msgstr ""
 
 #. translators: %d: ID of a post
-#: functions/czr-base-fmk/czr-base-fmk.php:1717
-#: functions/czr-base-fmk/czr-base-fmk.php:1926
+#: functions/czr-base-fmk/czr-base-fmk.php:1725
+#: functions/czr-base-fmk/czr-base-fmk.php:1934
 msgid "#%d (no title)"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1860
+#: functions/czr-base-fmk/czr-base-fmk.php:1868
 msgid "No results found."
 msgstr ""
 

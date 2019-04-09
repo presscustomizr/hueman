@@ -814,9 +814,17 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                           <#
                             var _checked = ( false != data['<?php echo $input_id; ?>'] ) ? "checked=checked" : '';
                           #>
+                          <?php
+                          // when input and label are tied by an id - for relationship
+                          // clicking on any of them changes the input
+                          // => We need a unique ID here so that input and label are tied by a unique link
+                          // @see https://www.w3.org/TR/html401/interact/forms.html#h-17.9.1
+                          // @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Input/checkbox
+                          $unique_id = sprintf('%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535));
+                          ?>
                           <div class="nimblecheck-wrap">
-                            <input id="nimblecheck-<?php echo $input_id; ?>" data-czrtype="<?php echo $input_id; ?>" type="checkbox" {{ _checked }} class="nimblecheck-input">
-                            <label for="nimblecheck-<?php echo $input_id; ?>" class="nimblecheck-label">Switch</label>
+                            <input id="nimblecheck-<?php echo $unique_id; ?>" data-czrtype="<?php echo $input_id; ?>" type="checkbox" {{ _checked }} class="nimblecheck-input">
+                            <label for="nimblecheck-<?php echo $unique_id; ?>" class="nimblecheck-label">Switch</label>
                           </div>
                         <?php
                     break;
