@@ -27,6 +27,8 @@ if ( ! class_exists( 'CZR_Fmk_Base_Construct' ) ) :
 
         public $czr_css_attr = array();
 
+        public $current_module_params_when_ajaxing;// store the params when ajaxing and allows us to access the currently requested module params at any point of the ajax action
+
         public static function czr_fmk_get_instance( $params ) {
             if ( ! isset( self::$instance ) && ! ( self::$instance instanceof CZR_Fmk_Base ) ) {
               self::$instance = new CZR_Fmk_Base( $params );
@@ -586,7 +588,11 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
 
                 'scope' => 'local',// <= used when resetting the sections
                 // introduced for https://github.com/presscustomizr/nimble-builder/issues/403
-                'editor_params' => array()
+                'editor_params' => array(),
+
+                // introduced for https://github.com/presscustomizr/nimble-builder/issues/431
+                'section_collection' => array(),
+                'section_type' => 'content'
             );
             foreach( $tmpl_map as $input_id => $input_data ) {
                 if ( ! is_string( $input_id ) || empty( $input_id ) ) {
@@ -1462,6 +1468,9 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
             }
 
             $module_params = $registered_modules[ $module_type ];
+            // Store the params now, so we can access them when rendering the input templates
+            $this->current_module_params_when_ajaxing = $module_params;
+
             $tmpl_params = $module_params[ 'tmpl' ];
             // Enqueue the list of registered scripts
             if ( empty( $tmpl_params ) ) {
