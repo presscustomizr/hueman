@@ -795,8 +795,15 @@ if ( ! function_exists( 'hu_body_class' ) ) {
     $classes[] = hu_is_checked( 'boxed' ) ? 'boxed' : 'full-width';
     if ( hu_has_nav_menu('topbar') ) { $classes[] = 'topbar-enabled'; }
     if ( hu_get_option( 'mobile-sidebar-hide' ) == 's1' ) { $classes[] = 'mobile-sidebar-hide-s1'; }
-    if ( hu_get_option( 'mobile-sidebar-hide' ) == 's2' ) { $classes[] = 'mobile-sidebar-hide-s2'; }
-    if ( hu_get_option( 'mobile-sidebar-hide' ) == 's1-s2' ) { $classes[] = 'mobile-sidebar-hide'; }
+    elseif ( hu_get_option( 'mobile-sidebar-hide' ) == 's2' ) { $classes[] = 'mobile-sidebar-hide-s2'; }
+    elseif ( hu_get_option( 'mobile-sidebar-hide' ) == 's1-s2' ) { $classes[] = 'mobile-sidebar-hide'; }
+    if ( hu_is_checked( 'mobile-sidebar-primary-first' ) ) {
+      // Add a class to force the primary sidebar showing as first block in smartphone mobile devices only
+      // if a primary sidebar is actually shown for them.
+      if ( ! in_array( hu_get_option( 'mobile-sidebar-hide' ), array( 's1', 's1-s2' ) ) ) {
+        $classes[] = 'mobile-primary-sidebar-first';
+      }
+    }
     if ( wp_is_mobile() ) { $classes[] = 'wp-is-mobile'; };
 
     //Stickyness of menus

@@ -1351,8 +1351,18 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                   's2'          => __( 'Hide secondary sidebar' , 'hueman' ),
                   's1-s2'       => __( 'Hide both sidebars' , 'hueman' )
                 ),
-                'notice'    => __('Control how the sidebar content is displayed on smartphone mobile devices (320px). Note : on smartphones the sidebars are displayed below the content.' , 'hueman')
-          )
+                'notice'    => __('Control how the sidebar content is displayed on smartphone mobile devices (480px).' , 'hueman')
+            ),
+            'mobile-sidebar-primary-first' => array(
+                  'default'   => 0,
+                  'control'   => 'HU_controls',
+                  'label'     => 'Mobile devices: display your primary sidebar first',
+                  'section'   => 'sidebars_design_sec',
+                  'type'      => 'nimblecheck',
+                  'priority'  => 110,
+                  'notice'     => __( 'Display the primary sidebar above the content column on smartphone mobile devices (480px).', 'hueman' ),
+            )
+
       );
     }
 
