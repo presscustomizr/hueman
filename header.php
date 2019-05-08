@@ -10,7 +10,14 @@
 </head>
 
 <body <?php body_class(); ?>>
-
+<?php
+//see https://github.com/presscustomizr/hueman/issues/784
+if ( function_exists( 'wp_body_open' ) ) {
+    wp_body_open();
+} else {
+    do_action( 'wp_body_open' );
+}
+?>
 <div id="wrapper">
 
   <?php do_action('__before_header') ; ?>
