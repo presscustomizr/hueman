@@ -1785,7 +1785,7 @@ z-index:2;
 .sharrre-container span { color: #aaa; display: block; text-align: center; text-transform: uppercase; font-size: 0.6875em; }
 .sharrre { padding: 10px 0 0; }
 .sharrre .box { width: 50px; display: block; }
-.sharrre .count { background: #eee; color: #333; display: block; font-size: 0.9375em; font-weight: 600; line-height: 30px; position: relative; text-align: center;
+.sharrre .count { background: #eee; color: #333; display: block; font-size: 15px; font-weight: 900; line-height: 30px; position: relative; text-align: center;
 -webkit-border-radius: 4px; border-radius: 4px; }
 .sharrre .count:after { content:''; display: block; position: absolute; left: 49%; width: 0; height: 0; border: solid 6px transparent; border-top-color: #eee; margin-left: -6px; bottom: -12px; }
 .sharrre .share { display: block; font-size: 1.75em; font-weight: 600; line-height: 32px; margin-top: 12px; padding: 0; text-align: center; text-decoration: none; }
@@ -1801,6 +1801,8 @@ z-index:2;
 .sharrre#googleplus .box .count { color: #cd483c; }
 .sharrre#pinterest .share,
 .sharrre#pinterest .box .count { color: #ca2128; }
+.sharrre#linkedin .share,
+.sharrre#linkedin .box .count { color: #15669a; }
 .sharrre-container.no-counter .box .count {display:none;}
 
 /*  single : post pages

@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.1
-Stable tag: 3.4.20
+Stable tag: 3.4.21
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,10 +13,13 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
 
 == Upgrade Notice ==
-= 3.4.20 =
-New option to display the primary sidebar before the content in mobile view.
+= 3.4.21 =
+Added new wp_body_open theme Hook. 100% compatible with WordPress 5.2
 
 == Changelog ==
+= 3.4.21 May 8th, 2019 =
+* added : new wp_body_open theme Hook. fixes #784
+
 = 3.4.20 April 24th, 2019 =
 * fixed : smooth scroll throwing JS errors in latest chrome. fixes #787
 * improved : sidebar => add an option to set an order on mobile devices. fixes #779
