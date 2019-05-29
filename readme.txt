@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.1
-Stable tag: 3.4.21
+Stable tag: 3.4.22
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,10 +13,14 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
 
 == Upgrade Notice ==
-= 3.4.21 =
-Added new wp_body_open theme Hook. 100% compatible with WordPress 5.2
+= 3.4.22 =
+Added image dimensions into header image customization using the standard wp function get_header_image_tag. Added an option to control the featured image visibility for singular page disabled by default.
 
 == Changelog ==
+= 3.4.22 May 29th, 2019 =
+* fixed : add image dimensions into header image customization using the standard wp function get_header_image_tag. fixes #790 #300
+* improved : add an option to control the singular page featured image visibility disabled by default. fixes #793
+
 = 3.4.21 May 8th, 2019 =
 * added : new wp_body_open theme Hook. fixes #784
 
