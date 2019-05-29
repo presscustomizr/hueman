@@ -48,7 +48,7 @@ function hu_admin_style() {
 /* ------------------------------------------------------------------------- *
  *  Loads Required Plugin Class and Setup
 /* ------------------------------------------------------------------------- */
-if ( ( ! defined( 'HU_IS_PRO' ) || ! HU_IS_PRO ) && is_admin() && ! hu_is_customizing() && ! hu_is_plugin_active('nimble-builder/nimble-builder.php') ) {
+if ( is_admin() && ! hu_is_customizing() && ! hu_is_plugin_active('nimble-builder/nimble-builder.php') ) {
     /**
     * Include the HU_Plugin_Activation class.
     */
