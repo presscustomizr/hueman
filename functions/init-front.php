@@ -370,10 +370,18 @@ if ( ! function_exists( 'hu_print_social_links' ) ) {
 /* ------------------------------------ */
 if ( ! function_exists( 'hu_render_header_image' ) ) {
   function hu_render_header_image( $_header_img_src = null ) {
-    echo sprintf('<a href="%1$s" rel="home"><img class="site-image" src="%2$s" alt="%3$s"></a>',
+    $attr = array(
+      'class' => 'site-image'
+    );
+
+    $_header_img_src = trim( $_header_img_src );
+    if ( $_header_img_src ) {
+      $attr['src'] = $_header_img_src;
+    }
+
+    printf('<a href="%1$s" rel="home">%2$s</a>',
         home_url('/'),
-        get_header_image(),
-        get_bloginfo('name')
+        get_header_image_tag( $attr )
     );
   }
 }
