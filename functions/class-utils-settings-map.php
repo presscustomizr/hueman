@@ -1275,7 +1275,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'     => __( 'Featured image', 'hueman' ),
                 'section'   => 'content_page_sec',
                 'type'      => 'nimblecheck',
-                'notice'    => __( 'Display the page\'s featured image, if it exists' , 'hueman')
+                'notice'    => __( 'Display the page\'s featured image when it is set' , 'hueman')
           ),
       );
     }
