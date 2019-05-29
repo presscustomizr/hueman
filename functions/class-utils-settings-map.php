@@ -113,6 +113,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           //CONTENT
           //'hu_content_home_sec',
           'hu_content_blog_sec',
+          'hu_content_page_sec',
           'hu_content_single_sec',
           'hu_content_thumbnail_sec',
           'hu_content_layout_sec',
@@ -1262,6 +1263,25 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     }
 
 
+
+    /*-----------------------------------------------------------------------------------------------------
+                                   SINGLE PAGE SECTION
+    ------------------------------------------------------------------------------------------------------*/
+    function hu_content_page_sec() {
+      return array(
+          'singular-page-featured-image' => array(
+                'default'   => 0,
+                'control'   => 'HU_controls',
+                'label'     => __( 'Featured image', 'hueman' ),
+                'section'   => 'content_page_sec',
+                'type'      => 'nimblecheck',
+                'notice'    => __( 'Display the page\'s featured image, if it exists' , 'hueman')
+          ),
+      );
+    }
+
+
+
     /*-----------------------------------------------------------------------------------------------------
                                    THUMBNAIL SECTION
     ------------------------------------------------------------------------------------------------------*/
@@ -1679,6 +1699,11 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
               'priority' => 30,
               'panel'   => 'hu-content-panel',
               //'active_callback' => 'hu_is_post_list'
+        ),
+        'content_page_sec'         => array(
+            'title'    => __( 'Single Pages Settings', 'hueman' ),
+            'priority' => 35,
+            'panel'   => 'hu-content-panel',
         ),
         'content_single_sec'         => array(
               'title'    => __( 'Single Posts Settings', 'hueman' ),

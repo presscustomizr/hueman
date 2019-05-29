@@ -2,7 +2,7 @@
 
   <article <?php post_class('group'); ?>>
 
-    <?php hu_get_template_part('parts/page-image'); ?>
+    <?php if ( hu_is_checked( 'singular-page-featured-image' ) ) { hu_get_template_part('parts/page-image'); } ?>
 
     <div class="entry themeform">
       <?php the_content(); ?>
