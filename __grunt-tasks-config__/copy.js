@@ -61,7 +61,7 @@ module.exports = {
       '!readme.txt',
       '!screenshot.png',
       '!style.css',
-      '!functions/admin/class-tgm-plugin-activation.php',
+      //'!functions/admin/class-tgm-plugin-activation.php',
       '!assets/front/css/dev-common.css',
       '!assets/front/css/_parts/**',
       '!assets/front/css/dev-responsive.css',
