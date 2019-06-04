@@ -46,6 +46,7 @@ if( ! defined( 'HU_WEBSITE' ) )         define( 'HU_WEBSITE' , $hu_base_data['au
 //define useful constants
 if( ! defined( 'HU_DYN_WIDGETS_SECTION' ) )      define( 'HU_DYN_WIDGETS_SECTION' , 'dyn_widgets_section' );
 
+if( ! defined( 'REC_NOTICE_ID' ) )  define( 'REC_NOTICE_ID' , 'rec-notice-hueman-0519' );
 
 /* ------------------------------------------------------------------------- *
  *  Loads Pluggable Functions
