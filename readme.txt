@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.1
-Stable tag: 3.4.23
+Stable tag: 3.4.24
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,10 +13,13 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
 
 == Upgrade Notice ==
-= 3.4.23 =
-Added image dimensions into header image customization using the standard wp function get_header_image_tag. Added an option to control the featured image visibility for singular page disabled by default.
+= 3.4.24 =
+Hueman custom widgets can now be overriden from a child theme.
 
 == Changelog ==
+= 3.4.24 June 4th, 2019 =
+* improved : Hueman custom widgets can now be overriden from a child theme. fixes #798
+
 = 3.4.23 May 29th, 2019 =
 * fixed : possible fatal error in admin
 

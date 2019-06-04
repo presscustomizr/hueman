@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Hueman\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2019-05-29 14:26:20+00:00\n"
+"POT-Creation-Date: 2019-06-04 13:31:14+00:00\n"
 "PO-Revision-Date: 2016-11-04 13:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -219,435 +219,72 @@ msgid ""
 "(Mac)."
 msgstr ""
 
-#: functions/admin/class-admin-update-notification.php:96
+#: functions/admin/class-admin-update-notification.php:97
 msgid "Good, you've recently upgraded to"
 msgstr ""
 
-#: functions/admin/class-admin-update-notification.php:98
+#: functions/admin/class-admin-update-notification.php:99
 msgid "version"
 msgstr "versie"
 
-#: functions/admin/class-admin-update-notification.php:107
+#: functions/admin/class-admin-update-notification.php:108
 msgid "We'd like to introduce the new features we've been working on."
 msgstr ""
 
-#: functions/admin/class-admin-update-notification.php:109
+#: functions/admin/class-admin-update-notification.php:110
 msgid "Read the latest release notes"
 msgstr ""
 
-#: functions/admin/class-admin-update-notification.php:112
+#: functions/admin/class-admin-update-notification.php:113
 #: functions/class-utils-settings-map.php:1773
 msgid "Upgrade to Hueman Pro"
 msgstr ""
 
-#: functions/admin/class-admin-update-notification.php:119
+#: functions/admin/class-admin-update-notification.php:120
 msgid "close"
 msgstr "sluit"
 
-#: functions/admin/class-tgm-plugin-activation.php:511
-#: functions/init-admin.php:121
-msgid "Install Required Plugins"
-msgstr "Installeer de benodigde plugins"
-
-#: functions/admin/class-tgm-plugin-activation.php:512
-#: functions/init-admin.php:122
-msgid "Install Plugins"
-msgstr "Plugins installeren"
-
-#. translators: %s: plugin name.
-#: functions/admin/class-tgm-plugin-activation.php:514
-#: functions/init-admin.php:123
-msgid "Installing Plugin: %s"
-msgstr "Plugin %s wordt ge&#239;nstalleerd."
-
-#. translators: %s: plugin name.
-#: functions/admin/class-tgm-plugin-activation.php:516
-msgid "Updating Plugin: %s"
+#: functions/admin/class-plugin-rec.php:22
+msgid "Hueman theme recommends %1$s."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:517
-#: functions/init-admin.php:124
-msgid "Something went wrong with the plugin API."
-msgstr "Er is iets fout gegaan met de plugin API."
+#: functions/admin/class-plugin-rec.php:25
+msgid "Nimble Page Builder"
+msgstr ""
 
-#. translators: 1: plugin name(s).
-#: functions/admin/class-tgm-plugin-activation.php:554
-#: functions/init-admin.php:133
-msgid "Begin installing plugin"
-msgid_plural "Begin installing plugins"
-msgstr[0] "Begin met de installatie van de plugin"
-msgstr[1] "Begin met de installatie van de plugins"
-
-#: functions/admin/class-tgm-plugin-activation.php:559
-msgid "Begin updating plugin"
-msgid_plural "Begin updating plugins"
-msgstr[0] "Begin bijwerken plugin"
-msgstr[1] "Begin bijwerken plugins"
-
-#: functions/admin/class-tgm-plugin-activation.php:564
-msgid "Begin activating plugin"
-msgid_plural "Begin activating plugins"
-msgstr[0] "Begin met activeren van plugin"
-msgstr[1] "Begin met activeren van plugins"
-
-#: functions/admin/class-tgm-plugin-activation.php:569
-#: functions/init-admin.php:135
-msgid "Return to Required Plugins Installer"
-msgstr "Ga terug naar de Benodigde Plugins Installer"
-
-#: functions/admin/class-tgm-plugin-activation.php:570
-#: functions/admin/class-tgm-plugin-activation.php:1017
-#: functions/admin/class-tgm-plugin-activation.php:2754
-#: functions/admin/class-tgm-plugin-activation.php:3801
-msgid "Return to the Dashboard"
-msgstr "Ga terug naar het dashboard"
-
-#: functions/admin/class-tgm-plugin-activation.php:571
-#: functions/admin/class-tgm-plugin-activation.php:3380
-#: functions/init-admin.php:136
-msgid "Plugin activated successfully."
-msgstr "Plugin succesvol geactiveerd."
-
-#: functions/admin/class-tgm-plugin-activation.php:572
-#: functions/admin/class-tgm-plugin-activation.php:3173
-msgid "The following plugin was activated successfully:"
-msgstr "De volgende plugin is succesvol geactiveerd:"
-
-#. translators: 1: plugin name.
-#: functions/admin/class-tgm-plugin-activation.php:574
-msgid "No action taken. Plugin %1$s was already active."
-msgstr "Geen actie ondernomen. Plugin %1$s was al actief."
-
-#. translators: 1: plugin name.
-#: functions/admin/class-tgm-plugin-activation.php:576
+#: functions/admin/class-plugin-rec.php:30
 msgid ""
-"Plugin not activated. A higher version of %s is needed for this theme. "
-"Please update the plugin."
-msgstr ""
-"Plugin niet geactiveerd. Een nieuwere versie van %s is nodig voor dit thema. "
-"Werk de plugin bij."
-
-#. translators: 1: dashboard link.
-#: functions/admin/class-tgm-plugin-activation.php:578
-msgid "All plugins installed and activated successfully. %1$s"
+"Nimble Page Builder is a free, easy to use yet powerful page builder used by "
+"30K+ WordPress websites."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:579
-msgid "Dismiss this notice"
-msgstr "Negeer deze melding"
-
-#: functions/admin/class-tgm-plugin-activation.php:580
-msgid "Remind me later"
-msgstr ""
-
-#: functions/admin/class-tgm-plugin-activation.php:581
+#: functions/admin/class-plugin-rec.php:32
 msgid ""
-"There are one or more required or recommended plugins to install, update or "
-"activate."
+"It allows you to create mobile ready column layouts, and to drag-and-drop "
+"modules like post grids, buttons, widget zones, maps, icons, or beautiful "
+"pre-built sections with engaging %1$s, in any page of your site. Nimble "
+"Builder uses the live customizer which is the native WordPress interface for "
+"real-time design."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:582
-msgid "Please contact the administrator of this site for help."
-msgstr "Neem voor hulp contact op met de beheerder van deze website."
+#: functions/admin/class-plugin-rec.php:33
+#, fuzzy
+msgid "parallax backgrounds"
+msgstr "Topbalk Achtergrond"
 
-#: functions/admin/class-tgm-plugin-activation.php:707
-msgid "This plugin needs to be updated to be compatible with your theme."
-msgstr "Deze plugin moet bijgewerkt worden om geschikt te zijn voor je thema."
-
-#: functions/admin/class-tgm-plugin-activation.php:708
-msgid "Update Required"
-msgstr "Update vereist"
-
-#: functions/admin/class-tgm-plugin-activation.php:1124
+#: functions/admin/class-plugin-rec.php:35
 msgid ""
-"The remote plugin package does not contain a folder with the desired slug "
-"and renaming did not work."
-msgstr ""
-
-#: functions/admin/class-tgm-plugin-activation.php:1124
-#: functions/admin/class-tgm-plugin-activation.php:1127
-msgid ""
-"Please contact the plugin provider and ask them to package their plugin "
-"according to the WordPress guidelines."
-msgstr ""
-
-#: functions/admin/class-tgm-plugin-activation.php:1127
-msgid ""
-"The remote plugin package consists of more than one file, but the files are "
-"not packaged in a folder."
-msgstr ""
-
-#: functions/admin/class-tgm-plugin-activation.php:1329
-msgid "Nimble is a section builder companion plugin for the Hueman theme."
-msgstr ""
-
-#: functions/admin/class-tgm-plugin-activation.php:1331
-msgid ""
-"It allows you to drag and drop pre-built sections, or create your own "
-"sections in live preview from the WordPress customizer. You can easily "
-"create column layouts and add content like buttons, icons, Google map and "
-"even contact forms in any page.  You'll find a quick introduction of the "
-"plugin %1$s."
-msgstr ""
-
-#: functions/admin/class-tgm-plugin-activation.php:1332
-#: functions/class-utils-settings-map.php:194
-#: functions/class-utils-settings-map.php:657
-#: functions/czr-modules/body-background/body_bg_module.php:136
-msgid "here"
-msgstr "hier"
-
-#: functions/admin/class-tgm-plugin-activation.php:1334
-msgid ""
-"The plugin has been designed to integrate perfectly with the Hueman theme. "
+"The plugin has been designed to integrate perfectly with Hueman theme. "
 "Lightweight and safe."
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:1344
-msgid "Nimble Builder"
+#: functions/admin/class-plugin-rec.php:42
+msgid "Activate Nimble Builder Now"
 msgstr ""
 
-#. translators: %s: version number
-#: functions/admin/class-tgm-plugin-activation.php:2203
-msgid "TGMPA v%s"
+#: functions/admin/class-plugin-rec.php:48
+msgid "Install Nimble Builder Now"
 msgstr ""
-
-#: functions/admin/class-tgm-plugin-activation.php:2494
-msgid "Required"
-msgstr "Verplicht"
-
-#: functions/admin/class-tgm-plugin-activation.php:2497
-msgid "Recommended"
-msgstr "Aanbevolen"
-
-#: functions/admin/class-tgm-plugin-activation.php:2513
-msgid "WordPress Repository"
-msgstr "WordPress Archief"
-
-#: functions/admin/class-tgm-plugin-activation.php:2516
-msgid "External Source"
-msgstr "Externe bron"
-
-#: functions/admin/class-tgm-plugin-activation.php:2519
-msgid "Pre-Packaged"
-msgstr "Voorverpakt"
-
-#: functions/admin/class-tgm-plugin-activation.php:2536
-msgid "Not Installed"
-msgstr "Niet geïnstalleerd"
-
-#: functions/admin/class-tgm-plugin-activation.php:2540
-msgid "Installed But Not Activated"
-msgstr "Geïnstalleerd maar niet geactiveerd"
-
-#: functions/admin/class-tgm-plugin-activation.php:2542
-msgid "Active"
-msgstr "Activeer"
-
-#: functions/admin/class-tgm-plugin-activation.php:2548
-msgid "Required Update not Available"
-msgstr "Vereiste update niet beschikbaar"
-
-#: functions/admin/class-tgm-plugin-activation.php:2551
-msgid "Requires Update"
-msgstr "Vereiste update"
-
-#: functions/admin/class-tgm-plugin-activation.php:2554
-msgid "Update recommended"
-msgstr "Update aangeraden"
-
-#. translators: 1: number of plugins.
-#: functions/admin/class-tgm-plugin-activation.php:2613
-msgid "To Install <span class=\"count\">(%s)</span>"
-msgid_plural "To Install <span class=\"count\">(%s)</span>"
-msgstr[0] "Te installeren <span class=\"count\">(%s)</span>"
-msgstr[1] "Te installeren <span class=\"count\">(%s)</span>"
-
-#. translators: 1: number of plugins.
-#: functions/admin/class-tgm-plugin-activation.php:2617
-msgid "Update Available <span class=\"count\">(%s)</span>"
-msgid_plural "Update Available <span class=\"count\">(%s)</span>"
-msgstr[0] "Update beschikbaar <span class=\"count\">(%s)</span>"
-msgstr[1] "Updates beschikbaar <span class=\"count\">(%s)</span>"
-
-#. translators: 1: number of plugins.
-#: functions/admin/class-tgm-plugin-activation.php:2621
-msgid "To Activate <span class=\"count\">(%s)</span>"
-msgid_plural "To Activate <span class=\"count\">(%s)</span>"
-msgstr[0] "Te activeren <span class=\"count\">(%s)</span>"
-msgstr[1] "Te activeren <span class=\"count\">(%s)</span>"
-
-#: functions/admin/class-tgm-plugin-activation.php:2711
-msgid "Installed version:"
-msgstr "Geïnstalleerde versie:"
-
-#: functions/admin/class-tgm-plugin-activation.php:2719
-msgid "Minimum required version:"
-msgstr "Minimaal vereiste versie:"
-
-#: functions/admin/class-tgm-plugin-activation.php:2731
-msgid "Available version:"
-msgstr "Beschikbare versie:"
-
-#: functions/admin/class-tgm-plugin-activation.php:2754
-msgid "No plugins to install, update or activate."
-msgstr ""
-
-#: functions/admin/class-tgm-plugin-activation.php:2768
-msgid "Plugin"
-msgstr "Plugin"
-
-#: functions/admin/class-tgm-plugin-activation.php:2769
-msgid "Source"
-msgstr "Bron"
-
-#: functions/admin/class-tgm-plugin-activation.php:2770
-msgid "Type"
-msgstr "Type"
-
-#: functions/admin/class-tgm-plugin-activation.php:2774
-msgid "Version"
-msgstr ""
-
-#: functions/admin/class-tgm-plugin-activation.php:2775
-msgid "Status"
-msgstr "Status"
-
-#. translators: %2$s: plugin name in screen reader markup
-#: functions/admin/class-tgm-plugin-activation.php:2824
-msgid "Install %2$s"
-msgstr ""
-
-#. translators: %2$s: plugin name in screen reader markup
-#: functions/admin/class-tgm-plugin-activation.php:2829
-msgid "Update %2$s"
-msgstr ""
-
-#. translators: %2$s: plugin name in screen reader markup
-#: functions/admin/class-tgm-plugin-activation.php:2835
-msgid "Activate %2$s"
-msgstr ""
-
-#: functions/admin/class-tgm-plugin-activation.php:2905
-msgid "Upgrade message from the plugin author:"
-msgstr "Upgrade bericht van de plugin auteur:"
-
-#: functions/admin/class-tgm-plugin-activation.php:2938
-msgid "Install"
-msgstr "Installeren"
-
-#: functions/admin/class-tgm-plugin-activation.php:2944
-msgid "Update"
-msgstr "Bijwerken"
-
-#: functions/admin/class-tgm-plugin-activation.php:2947
-msgid "Activate"
-msgstr "Activeren"
-
-#: functions/admin/class-tgm-plugin-activation.php:2978
-msgid "No plugins were selected to be installed. No action taken."
-msgstr ""
-"Er zijn geen plugins geselecteerd om te installeren. Er is geen actie "
-"ondernomen."
-
-#: functions/admin/class-tgm-plugin-activation.php:2980
-msgid "No plugins were selected to be updated. No action taken."
-msgstr ""
-"Er zijn geen plugins geselecteerd om bijgewerkt te worden. Er is geen actie "
-"ondernomen."
-
-#: functions/admin/class-tgm-plugin-activation.php:3021
-msgid "No plugins are available to be installed at this time."
-msgstr "Er zijn geen plugins om te installeren op dit moment."
-
-#: functions/admin/class-tgm-plugin-activation.php:3023
-msgid "No plugins are available to be updated at this time."
-msgstr "Er zijn op dit moment geen plugins beschikbaar om bij te werken."
-
-#: functions/admin/class-tgm-plugin-activation.php:3129
-msgid "No plugins were selected to be activated. No action taken."
-msgstr ""
-"Er zijn geen plugins geselecteerd om geactiveerd te worden. Er is geen actie "
-"ondernomen."
-
-#: functions/admin/class-tgm-plugin-activation.php:3155
-msgid "No plugins are available to be activated at this time."
-msgstr "Er zijn geen plugins om te activeren op dit moment."
-
-#: functions/admin/class-tgm-plugin-activation.php:3379
-msgid "Plugin activation failed."
-msgstr "Plugin activatie mislukt."
-
-#. translators: 1: plugin name, 2: action number 3: total number of actions.
-#: functions/admin/class-tgm-plugin-activation.php:3719
-msgid "Updating Plugin %1$s (%2$d/%3$d)"
-msgstr "Plugin %1$s bijwerken (%2$d/%3$d)"
-
-#. translators: 1: plugin name, 2: error message.
-#: functions/admin/class-tgm-plugin-activation.php:3722
-msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
-msgstr ""
-"Er is een fout opgetreden tijdens de installatie van %1$s: <strong> %2$s</"
-"strong>."
-
-#. translators: 1: plugin name.
-#: functions/admin/class-tgm-plugin-activation.php:3724
-msgid "The installation of %1$s failed."
-msgstr "De installatie van %1$s is mislukt."
-
-#: functions/admin/class-tgm-plugin-activation.php:3728
-msgid ""
-"The installation and activation process is starting. This process may take a "
-"while on some hosts, so please be patient."
-msgstr ""
-"Het installatie- en activeringsproces is begonnen. Dit proces kan een tijdje "
-"duren afhankelijk van uw webhost, een moment geduld a.u.b."
-
-#. translators: 1: plugin name.
-#: functions/admin/class-tgm-plugin-activation.php:3730
-msgid "%1$s installed and activated successfully."
-msgstr "%1$s succesvol geïnstalleerd en geactiveerd."
-
-#: functions/admin/class-tgm-plugin-activation.php:3730
-#: functions/admin/class-tgm-plugin-activation.php:3738
-msgid "Show Details"
-msgstr "Details tonen"
-
-#: functions/admin/class-tgm-plugin-activation.php:3730
-#: functions/admin/class-tgm-plugin-activation.php:3738
-msgid "Hide Details"
-msgstr "Details verbergen"
-
-#: functions/admin/class-tgm-plugin-activation.php:3731
-msgid "All installations and activations have been completed."
-msgstr "Alle installaties en activeringen zijn voltooid."
-
-#. translators: 1: plugin name, 2: action number 3: total number of actions.
-#: functions/admin/class-tgm-plugin-activation.php:3733
-msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
-msgstr "Plugin %1$s (%2$d/%3$d) wordt geïnstalleerd en geactiveerd."
-
-#: functions/admin/class-tgm-plugin-activation.php:3736
-msgid ""
-"The installation process is starting. This process may take a while on some "
-"hosts, so please be patient."
-msgstr ""
-"Het installatieproces is begonnen. Dit proces kan een tijdje duren "
-"afhankelijk van uw webhost, een moment geduld a.u.b."
-
-#. translators: 1: plugin name.
-#: functions/admin/class-tgm-plugin-activation.php:3738
-msgid "%1$s installed successfully."
-msgstr "%1$s is succesvol geïnstalleerd."
-
-#: functions/admin/class-tgm-plugin-activation.php:3739
-msgid "All installations have been completed."
-msgstr "Alle installaties zijn voltooid."
-
-#. translators: 1: plugin name, 2: action number 3: total number of actions.
-#: functions/admin/class-tgm-plugin-activation.php:3741
-msgid "Installing Plugin %1$s (%2$d/%3$d)"
-msgstr "Plugin  %1$s (%2$d/%3$d) wordt geïnstalleerd"
 
 #: functions/class-utils-settings-map.php:165
 msgid "Favicon Upload (supported formats : .ico, .png, .gif)"
@@ -670,6 +307,12 @@ msgstr ""
 #, fuzzy
 msgid "Display a logo in the header"
 msgstr "Toon een logo in de header"
+
+#: functions/class-utils-settings-map.php:194
+#: functions/class-utils-settings-map.php:657
+#: functions/czr-modules/body-background/body_bg_module.php:136
+msgid "here"
+msgstr "hier"
 
 #: functions/class-utils-settings-map.php:195
 msgid "Set your logo below or"
@@ -2525,111 +2168,11 @@ msgstr ""
 msgid "Pick the context(s) where this widget area will be displayed."
 msgstr ""
 
-#: functions/init-admin.php:125
-msgid "The Hueman theme requires the following plugin: %1$s."
-msgid_plural "This theme requires the following plugins : %1$s."
-msgstr[0] ""
-msgstr[1] ""
-
-#: functions/init-admin.php:126
-msgid ""
-"The Hueman theme recommends the Nimble drag-and-drop section builder : %1$s."
-msgid_plural "This theme recommends the following plugins : %1$s."
-msgstr[0] ""
-msgstr[1] ""
-
-#: functions/init-admin.php:127
-msgid ""
-"Sorry, but you do not have the correct permissions to install the %s plugin. "
-"Contact the administrator of this site for help on getting the plugin "
-"installed."
-msgid_plural ""
-"Sorry, but you do not have the correct permissions to install the %s "
-"plugins. Contact the administrator of this site for help on getting the "
-"plugins installed."
-msgstr[0] ""
-"Je hebt geen toestemming om de plugin %s  te installeren. Neem contact op "
-"met de administrator"
-msgstr[1] ""
-"Je hebt geen toestemming om de plugins %s  te installeren. Neem contact op "
-"met de administrator"
-
-#: functions/init-admin.php:128
-msgid "The Nimble Builder required plugin is currently inactive: %1$s."
-msgid_plural "The following required plugins are currently inactive: %1$s."
-msgstr[0] ""
-msgstr[1] ""
-
-#: functions/init-admin.php:129
-msgid ""
-"The Nimble Builder plugin, recommended for the Hueman theme, is installed "
-"but currently inactive : %1$s."
-msgid_plural "The following recommended plugins are currently inactive: %1$s."
-msgstr[0] ""
-msgstr[1] ""
-
-#: functions/init-admin.php:130
-msgid ""
-"Sorry, but you do not have the correct permissions to activate the %s "
-"plugin. Contact the administrator of this site for help on getting the "
-"plugin activated."
-msgid_plural ""
-"Sorry, but you do not have the correct permissions to activate the %s "
-"plugins. Contact the administrator of this site for help on getting the "
-"plugins activated."
-msgstr[0] ""
-"Je hebt niet de juiste rechten om de plugin  %s te activeren. Neem contact "
-"op met de administrator"
-msgstr[1] ""
-"Je hebt niet de juiste rechten om de plugins  %s te activeren. Neem contact "
-"op met de administrator"
-
-#: functions/init-admin.php:131
-#, fuzzy
-msgid ""
-"The Nimble Builder plugin needs to be updated to its latest version to "
-"ensure maximum compatibility with the Hueman theme: %1$s."
-msgid_plural ""
-"The following plugins need to be updated to their latest version to ensure "
-"maximum compatibility with this theme: %1$s."
-msgstr[0] ""
-"De volgende plugin moet bijgewerkt worden om goed te kunnen werken bij dit "
-"thema:  %1$s."
-msgstr[1] ""
-"De volgende plugins moeten bijgewerkt worden om goed te kunnen werken bij "
-"dit thema:  %1$s."
-
-#: functions/init-admin.php:132
-msgid ""
-"Sorry, but you do not have the correct permissions to update the %s plugin. "
-"Contact the administrator of this site for help on getting the plugin "
-"updated."
-msgid_plural ""
-"Sorry, but you do not have the correct permissions to update the %s plugins. "
-"Contact the administrator of this site for help on getting the plugins "
-"updated."
-msgstr[0] ""
-"Je hebt niet de juiste rechten om de plugin %s bij te werken. Neem contact "
-"op met de administrator"
-msgstr[1] ""
-"Je hebt niet de juiste rechten om de plugins %s bij te werken. Neem contact "
-"op met de administrator"
-
-#: functions/init-admin.php:134
-msgid "Activate Nimble Builder"
-msgid_plural "Activate installed plugins"
-msgstr[0] ""
-msgstr[1] ""
-
-#: functions/init-admin.php:137
-msgid "All plugins installed and activated successfully. %s"
-msgstr "Alle plugins zijn succesvol geïnstalleerd en geactiveerd. %s"
-
-#: functions/init-admin.php:184
+#: functions/init-admin.php:91
 msgid "Select a widget zone for the primary sidebar."
 msgstr "Selecteer een widget zone voor de primaire sidebar."
 
-#: functions/init-admin.php:184
+#: functions/init-admin.php:91
 msgid ""
 "Notes : 1)This will override any default settings of the customizer options "
 "panel. 2) The primary sidebar is placed on the left in a 3 columns layout. "
@@ -2641,11 +2184,11 @@ msgstr ""
 "layout. Kan rechts bij een tweekoloms layout wanneer de inhoud zich links "
 "bevindt."
 
-#: functions/init-admin.php:190
+#: functions/init-admin.php:97
 msgid "Select a widget zone for the secondary sidebar."
 msgstr "Selecteer een widget zone voor de tweede sidebar."
 
-#: functions/init-admin.php:190
+#: functions/init-admin.php:97
 msgid ""
 "Notes : 1)This will override any default settings of the customizer options "
 "panel. 2) The secondary sidebar is placed on the right in a 3 columns layout."
@@ -2654,21 +2197,21 @@ msgstr ""
 "opties paneel. 2) De tweede sidebar bevindt zich rechts in een driekoloms "
 "layout."
 
-#: functions/init-admin.php:207
+#: functions/init-admin.php:114
 msgid "Select a widget zone for the left sidebar."
 msgstr ""
 
-#: functions/init-admin.php:207 functions/init-admin.php:213
-#: functions/init-admin.php:269
+#: functions/init-admin.php:114 functions/init-admin.php:120
+#: functions/init-admin.php:176
 msgid ""
 "This will override any default settings of the customizer options panel."
 msgstr ""
 
-#: functions/init-admin.php:213
+#: functions/init-admin.php:120
 msgid "Select a widget zone for the right sidebar."
 msgstr ""
 
-#: functions/init-admin.php:269
+#: functions/init-admin.php:176
 msgid "Select a layout for this page."
 msgstr ""
 
@@ -2699,7 +2242,7 @@ msgstr "Sociale links"
 msgid "Site Wide Body Background"
 msgstr "Body Achtergrond"
 
-#: functions/init-core.php:80
+#: functions/init-core.php:81
 msgid "Theme Options [OLD]"
 msgstr ""
 
@@ -3190,30 +2733,300 @@ msgstr ""
 msgid "Child Menu"
 msgstr ""
 
-#: functions/admin/class-tgm-plugin-activation.php:1312
-#: functions/admin/class-tgm-plugin-activation.php:3169
-msgctxt "plugin A *and* plugin B"
-msgid "and"
-msgstr "en"
+#~ msgid "Install Required Plugins"
+#~ msgstr "Installeer de benodigde plugins"
 
-#. translators: 1: install status, 2: update status
-#: functions/admin/class-tgm-plugin-activation.php:2563
-msgctxt "Install/Update Status"
-msgid "%1$s, %2$s"
-msgstr ""
+#~ msgid "Install Plugins"
+#~ msgstr "Plugins installeren"
 
-#. translators: 1: number of plugins.
-#: functions/admin/class-tgm-plugin-activation.php:2609
-msgctxt "plugins"
-msgid "All <span class=\"count\">(%s)</span>"
-msgid_plural "All <span class=\"count\">(%s)</span>"
-msgstr[0] "Alle <span class=\"count\">(%s)</span>"
-msgstr[1] "Alle <span class=\"count\">(%s)</span>"
+#~ msgid "Installing Plugin: %s"
+#~ msgstr "Plugin %s wordt ge&#239;nstalleerd."
 
-#: functions/admin/class-tgm-plugin-activation.php:2703
-msgctxt "as in: \"version nr unknown\""
-msgid "unknown"
-msgstr "onbekend"
+#~ msgid "Something went wrong with the plugin API."
+#~ msgstr "Er is iets fout gegaan met de plugin API."
+
+#~ msgid "Begin installing plugin"
+#~ msgid_plural "Begin installing plugins"
+#~ msgstr[0] "Begin met de installatie van de plugin"
+#~ msgstr[1] "Begin met de installatie van de plugins"
+
+#~ msgid "Begin updating plugin"
+#~ msgid_plural "Begin updating plugins"
+#~ msgstr[0] "Begin bijwerken plugin"
+#~ msgstr[1] "Begin bijwerken plugins"
+
+#~ msgid "Begin activating plugin"
+#~ msgid_plural "Begin activating plugins"
+#~ msgstr[0] "Begin met activeren van plugin"
+#~ msgstr[1] "Begin met activeren van plugins"
+
+#~ msgid "Return to Required Plugins Installer"
+#~ msgstr "Ga terug naar de Benodigde Plugins Installer"
+
+#~ msgid "Return to the Dashboard"
+#~ msgstr "Ga terug naar het dashboard"
+
+#~ msgid "Plugin activated successfully."
+#~ msgstr "Plugin succesvol geactiveerd."
+
+#~ msgid "The following plugin was activated successfully:"
+#~ msgstr "De volgende plugin is succesvol geactiveerd:"
+
+#~ msgid "No action taken. Plugin %1$s was already active."
+#~ msgstr "Geen actie ondernomen. Plugin %1$s was al actief."
+
+#~ msgid ""
+#~ "Plugin not activated. A higher version of %s is needed for this theme. "
+#~ "Please update the plugin."
+#~ msgstr ""
+#~ "Plugin niet geactiveerd. Een nieuwere versie van %s is nodig voor dit "
+#~ "thema. Werk de plugin bij."
+
+#~ msgid "Dismiss this notice"
+#~ msgstr "Negeer deze melding"
+
+#~ msgid "Please contact the administrator of this site for help."
+#~ msgstr "Neem voor hulp contact op met de beheerder van deze website."
+
+#~ msgid "This plugin needs to be updated to be compatible with your theme."
+#~ msgstr ""
+#~ "Deze plugin moet bijgewerkt worden om geschikt te zijn voor je thema."
+
+#~ msgid "Update Required"
+#~ msgstr "Update vereist"
+
+#~ msgid "Required"
+#~ msgstr "Verplicht"
+
+#~ msgid "Recommended"
+#~ msgstr "Aanbevolen"
+
+#~ msgid "WordPress Repository"
+#~ msgstr "WordPress Archief"
+
+#~ msgid "External Source"
+#~ msgstr "Externe bron"
+
+#~ msgid "Pre-Packaged"
+#~ msgstr "Voorverpakt"
+
+#~ msgid "Not Installed"
+#~ msgstr "Niet geïnstalleerd"
+
+#~ msgid "Installed But Not Activated"
+#~ msgstr "Geïnstalleerd maar niet geactiveerd"
+
+#~ msgid "Active"
+#~ msgstr "Activeer"
+
+#~ msgid "Required Update not Available"
+#~ msgstr "Vereiste update niet beschikbaar"
+
+#~ msgid "Requires Update"
+#~ msgstr "Vereiste update"
+
+#~ msgid "Update recommended"
+#~ msgstr "Update aangeraden"
+
+#~ msgid "To Install <span class=\"count\">(%s)</span>"
+#~ msgid_plural "To Install <span class=\"count\">(%s)</span>"
+#~ msgstr[0] "Te installeren <span class=\"count\">(%s)</span>"
+#~ msgstr[1] "Te installeren <span class=\"count\">(%s)</span>"
+
+#~ msgid "Update Available <span class=\"count\">(%s)</span>"
+#~ msgid_plural "Update Available <span class=\"count\">(%s)</span>"
+#~ msgstr[0] "Update beschikbaar <span class=\"count\">(%s)</span>"
+#~ msgstr[1] "Updates beschikbaar <span class=\"count\">(%s)</span>"
+
+#~ msgid "To Activate <span class=\"count\">(%s)</span>"
+#~ msgid_plural "To Activate <span class=\"count\">(%s)</span>"
+#~ msgstr[0] "Te activeren <span class=\"count\">(%s)</span>"
+#~ msgstr[1] "Te activeren <span class=\"count\">(%s)</span>"
+
+#~ msgid "Installed version:"
+#~ msgstr "Geïnstalleerde versie:"
+
+#~ msgid "Minimum required version:"
+#~ msgstr "Minimaal vereiste versie:"
+
+#~ msgid "Available version:"
+#~ msgstr "Beschikbare versie:"
+
+#~ msgid "Plugin"
+#~ msgstr "Plugin"
+
+#~ msgid "Source"
+#~ msgstr "Bron"
+
+#~ msgid "Type"
+#~ msgstr "Type"
+
+#~ msgid "Status"
+#~ msgstr "Status"
+
+#~ msgid "Upgrade message from the plugin author:"
+#~ msgstr "Upgrade bericht van de plugin auteur:"
+
+#~ msgid "Install"
+#~ msgstr "Installeren"
+
+#~ msgid "Update"
+#~ msgstr "Bijwerken"
+
+#~ msgid "Activate"
+#~ msgstr "Activeren"
+
+#~ msgid "No plugins were selected to be installed. No action taken."
+#~ msgstr ""
+#~ "Er zijn geen plugins geselecteerd om te installeren. Er is geen actie "
+#~ "ondernomen."
+
+#~ msgid "No plugins were selected to be updated. No action taken."
+#~ msgstr ""
+#~ "Er zijn geen plugins geselecteerd om bijgewerkt te worden. Er is geen "
+#~ "actie ondernomen."
+
+#~ msgid "No plugins are available to be installed at this time."
+#~ msgstr "Er zijn geen plugins om te installeren op dit moment."
+
+#~ msgid "No plugins are available to be updated at this time."
+#~ msgstr "Er zijn op dit moment geen plugins beschikbaar om bij te werken."
+
+#~ msgid "No plugins were selected to be activated. No action taken."
+#~ msgstr ""
+#~ "Er zijn geen plugins geselecteerd om geactiveerd te worden. Er is geen "
+#~ "actie ondernomen."
+
+#~ msgid "No plugins are available to be activated at this time."
+#~ msgstr "Er zijn geen plugins om te activeren op dit moment."
+
+#~ msgid "Plugin activation failed."
+#~ msgstr "Plugin activatie mislukt."
+
+#~ msgid "Updating Plugin %1$s (%2$d/%3$d)"
+#~ msgstr "Plugin %1$s bijwerken (%2$d/%3$d)"
+
+#~ msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
+#~ msgstr ""
+#~ "Er is een fout opgetreden tijdens de installatie van %1$s: <strong> %2$s</"
+#~ "strong>."
+
+#~ msgid "The installation of %1$s failed."
+#~ msgstr "De installatie van %1$s is mislukt."
+
+#~ msgid ""
+#~ "The installation and activation process is starting. This process may "
+#~ "take a while on some hosts, so please be patient."
+#~ msgstr ""
+#~ "Het installatie- en activeringsproces is begonnen. Dit proces kan een "
+#~ "tijdje duren afhankelijk van uw webhost, een moment geduld a.u.b."
+
+#~ msgid "%1$s installed and activated successfully."
+#~ msgstr "%1$s succesvol geïnstalleerd en geactiveerd."
+
+#~ msgid "Show Details"
+#~ msgstr "Details tonen"
+
+#~ msgid "Hide Details"
+#~ msgstr "Details verbergen"
+
+#~ msgid "All installations and activations have been completed."
+#~ msgstr "Alle installaties en activeringen zijn voltooid."
+
+#~ msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
+#~ msgstr "Plugin %1$s (%2$d/%3$d) wordt geïnstalleerd en geactiveerd."
+
+#~ msgid ""
+#~ "The installation process is starting. This process may take a while on "
+#~ "some hosts, so please be patient."
+#~ msgstr ""
+#~ "Het installatieproces is begonnen. Dit proces kan een tijdje duren "
+#~ "afhankelijk van uw webhost, een moment geduld a.u.b."
+
+#~ msgid "%1$s installed successfully."
+#~ msgstr "%1$s is succesvol geïnstalleerd."
+
+#~ msgid "All installations have been completed."
+#~ msgstr "Alle installaties zijn voltooid."
+
+#~ msgid "Installing Plugin %1$s (%2$d/%3$d)"
+#~ msgstr "Plugin  %1$s (%2$d/%3$d) wordt geïnstalleerd"
+
+#~ msgid ""
+#~ "Sorry, but you do not have the correct permissions to install the %s "
+#~ "plugin. Contact the administrator of this site for help on getting the "
+#~ "plugin installed."
+#~ msgid_plural ""
+#~ "Sorry, but you do not have the correct permissions to install the %s "
+#~ "plugins. Contact the administrator of this site for help on getting the "
+#~ "plugins installed."
+#~ msgstr[0] ""
+#~ "Je hebt geen toestemming om de plugin %s  te installeren. Neem contact op "
+#~ "met de administrator"
+#~ msgstr[1] ""
+#~ "Je hebt geen toestemming om de plugins %s  te installeren. Neem contact "
+#~ "op met de administrator"
+
+#~ msgid ""
+#~ "Sorry, but you do not have the correct permissions to activate the %s "
+#~ "plugin. Contact the administrator of this site for help on getting the "
+#~ "plugin activated."
+#~ msgid_plural ""
+#~ "Sorry, but you do not have the correct permissions to activate the %s "
+#~ "plugins. Contact the administrator of this site for help on getting the "
+#~ "plugins activated."
+#~ msgstr[0] ""
+#~ "Je hebt niet de juiste rechten om de plugin  %s te activeren. Neem "
+#~ "contact op met de administrator"
+#~ msgstr[1] ""
+#~ "Je hebt niet de juiste rechten om de plugins  %s te activeren. Neem "
+#~ "contact op met de administrator"
+
+#, fuzzy
+#~ msgid ""
+#~ "The Nimble Builder plugin needs to be updated to its latest version to "
+#~ "ensure maximum compatibility with the Hueman theme: %1$s."
+#~ msgid_plural ""
+#~ "The following plugins need to be updated to their latest version to "
+#~ "ensure maximum compatibility with this theme: %1$s."
+#~ msgstr[0] ""
+#~ "De volgende plugin moet bijgewerkt worden om goed te kunnen werken bij "
+#~ "dit thema:  %1$s."
+#~ msgstr[1] ""
+#~ "De volgende plugins moeten bijgewerkt worden om goed te kunnen werken bij "
+#~ "dit thema:  %1$s."
+
+#~ msgid ""
+#~ "Sorry, but you do not have the correct permissions to update the %s "
+#~ "plugin. Contact the administrator of this site for help on getting the "
+#~ "plugin updated."
+#~ msgid_plural ""
+#~ "Sorry, but you do not have the correct permissions to update the %s "
+#~ "plugins. Contact the administrator of this site for help on getting the "
+#~ "plugins updated."
+#~ msgstr[0] ""
+#~ "Je hebt niet de juiste rechten om de plugin %s bij te werken. Neem "
+#~ "contact op met de administrator"
+#~ msgstr[1] ""
+#~ "Je hebt niet de juiste rechten om de plugins %s bij te werken. Neem "
+#~ "contact op met de administrator"
+
+#~ msgid "All plugins installed and activated successfully. %s"
+#~ msgstr "Alle plugins zijn succesvol geïnstalleerd en geactiveerd. %s"
+
+#~ msgctxt "plugin A *and* plugin B"
+#~ msgid "and"
+#~ msgstr "en"
+
+#~ msgctxt "plugins"
+#~ msgid "All <span class=\"count\">(%s)</span>"
+#~ msgid_plural "All <span class=\"count\">(%s)</span>"
+#~ msgstr[0] "Alle <span class=\"count\">(%s)</span>"
+#~ msgstr[1] "Alle <span class=\"count\">(%s)</span>"
+
+#~ msgctxt "as in: \"version nr unknown\""
+#~ msgid "unknown"
+#~ msgstr "onbekend"
 
 #, fuzzy
 #~ msgid "Hide editor"
