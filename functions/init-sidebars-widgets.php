@@ -1,11 +1,11 @@
 <?php
 /*  Loads Custom Widgets
 /* ------------------------------------ */
-load_template( get_template_directory() . '/functions/widgets/alx-tabs.php' );
-load_template( get_template_directory() . '/functions/widgets/alx-video.php' );
-load_template( get_template_directory() . '/functions/widgets/alx-posts.php' );
-
-
+// June 2019 : Hueman widgets can now be overriden from a child theme
+// @see https://github.com/presscustomizr/hueman/issues/798
+locate_template( 'functions/widgets/alx-tabs.php', true );
+locate_template( 'functions/widgets/alx-video.php', true );
+locate_template( 'functions/widgets/alx-posts.php', true );
 
 
 /*  Register sidebars
