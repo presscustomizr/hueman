@@ -8,8 +8,9 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
 
         function __construct () {
             self::$instance =& $this;
+
             //UPDATE NOTICE
-            if( ! defined( 'DISPLAY_UPDATE_NOTIFICATION' ) ) { define( 'DISPLAY_UPDATE_NOTIFICATION', true ); }
+            if( ! defined( 'DISPLAY_UPDATE_NOTIFICATION' ) ) { define( 'DISPLAY_UPDATE_NOTIFICATION', HUEMAN_VER !== '3.4.24' ); }
             add_action( 'admin_notices'         , array( $this, 'hu_may_be_display_update_notice') );
             //always add the ajax action
             add_action( 'wp_ajax_dismiss_hueman_update_notice'    , array( $this , 'hu_dismiss_update_notice_action' ) );
