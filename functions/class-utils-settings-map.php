@@ -1258,7 +1258,26 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                     'section' => 'sidebars_design_sec',
                     'priority' => '2'
                 )
-          )
+          ),
+          'post-meta-author' => array(
+            'default'   => 1,
+            'control'   => 'HU_controls',
+            'title'     => __('Post Metas', 'hueman'),
+            'label'     => __('Single - Author post meta', 'hueman'),
+            'section'   => 'content_single_sec',
+            'type'      => 'nimblecheck',
+            'notice'    => __( 'Display the author post meta below the post title.' , 'hueman'),
+            'priority'  => 31,
+          ),
+          'post-meta-date' => array(
+            'default'   => 1,
+            'control'   => 'HU_controls',
+            'label'     => __('Single - Date post meta', 'hueman'),
+            'section'   => 'content_single_sec',
+            'type'      => 'nimblecheck',
+            'notice'    => __( 'Display the date post meta below the post title.' , 'hueman'),
+            'priority'  => 32,
+          ),
         );
     }
 
