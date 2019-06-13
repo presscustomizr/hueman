@@ -1258,7 +1258,17 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                     'section' => 'sidebars_design_sec',
                     'priority' => '2'
                 )
-          )
+          ),
+          'post-tags' => array(
+            'default'   => 1,
+            'control'   => 'HU_controls',
+            'title'     => __('Post Tags', 'hueman'),
+            'label'     => __('Single - Post tags', 'hueman'),
+            'section'   => 'content_single_sec',
+            'type'      => 'nimblecheck',
+            'notice'    => __( 'Display the post tags below the content.' , 'hueman'),
+            'priority'  => 33,
+          ),
         );
     }
 
