@@ -2,7 +2,7 @@
  *  Comments
 /* ------------------------------------------------------------------------- */
 /* woocommerce */
-.entry .woocommerce .woocommerce-tabs.wc-tabs-wrapper #comments { margin-top: 0;},
+.entry .woocommerce .woocommerce-tabs.wc-tabs-wrapper #comments { margin-top: 0;}
 /* end woocoommerce */
 #comments { margin-top: 20px; }
 #pinglist-container { display: none; }
