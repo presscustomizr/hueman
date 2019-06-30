@@ -199,8 +199,6 @@ if ( ! function_exists('hu_print_widgets_in_location') ) {
       return;
     }
 
-    error_log(print_r( $_eligible_zones, true ) );
-
     foreach ( $_eligible_zones as $_id ) {
       hu_print_dynamic_sidebars( $_id, $location );
     }
