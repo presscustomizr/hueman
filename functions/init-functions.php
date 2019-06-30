@@ -483,6 +483,42 @@ function hu_get_img_src( $img ) {
 
 
 /**
+* helper ensuring backward compatibility with the previous option system
+* @return (false|array) returns an array (url, width, height), or false, if no image is available.
+*/
+function hu_get_img_source( $img ) {
+    if ( ! $img )
+      return;
+
+    $_image_src     = '';
+    $_width         = false;
+    $_height        = false;
+    $_attachment_id = '';
+
+    //Get the img src
+    if ( is_numeric( $img ) ) {
+        $_attachment_id     = $img;
+        $_attachment_data   = apply_filters( "hu_attachment_img" , wp_get_attachment_image_src( $_attachment_id, 'full' ), $_attachment_id );
+        $_img_src           = $_attachment_data[0];
+        $_width             = ( isset($_attachment_data[1]) && $_attachment_data[1] > 1 ) ? $_attachment_data[1] : $_width;
+        $_height            = ( isset($_attachment_data[2]) && $_attachment_data[2] > 1 ) ? $_attachment_data[2] : $_height;
+    } else { //old treatment
+        //rebuild the img path : check if the full path is already saved in DB. If not, then rebuild it.
+        $upload_dir         = wp_upload_dir();
+        $_saved_path        = esc_url ( $img );
+        $_img_src           = ( false !== strpos( $_saved_path , '/wp-content/' ) ) ? $_saved_path : $upload_dir['baseurl'] . $_saved_path;
+        $width              = '';
+        $height             = '';
+    }
+
+    //return img source + make ssl compliant
+    $_img_src = is_ssl() ? str_replace('http://', 'https://', $_img_src) : $_img_src;
+    return $_img_src ? array( $_img_src, $_width, $_height ) : false;
+}
+
+
+
+/**
 * wrapper of hu_get_img_src specific for theme options
 * @return logo src string
 */
@@ -494,6 +530,22 @@ function hu_get_img_src_from_option( $option_name ) {
     $_src      = hu_get_img_src( $_img_option );
     //hook
     return apply_filters( "hu_img_src_from_option" , $_src, $option_name ) ;
+}
+
+
+/**
+* wrapper of hu_get_img_source specific for theme options
+* @return (false|array) returns an array (url, width, height), or false, if no image is available.
+*/
+function hu_get_img_source_from_option( $option_name ) {
+    $_img_option    = esc_attr( hu_get_option( $option_name ) );
+    if ( ! $_img_option )
+      $_source = false;
+
+    $_source      = hu_get_img_source( $_img_option );
+
+    //hook
+    return apply_filters( "hu_img_source_from_option" , $_source, $option_name ) ;
 }
 
 

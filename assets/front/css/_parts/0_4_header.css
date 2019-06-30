@@ -9,7 +9,7 @@
 
 .site-title { font-size: 2.625em; font-weight: 600; letter-spacing: -0.5px; float: left; line-height: 1.4285em; padding: 10px 0; }
 .site-title a { display: block; color: #fff; max-width: 100%; }
-.site-title a img { display: block; max-width: 100%; max-height: 60px; height: auto; padding: 0; margin: 0 auto; -webkit-border-radius: 0; border-radius: 0; }
+.site-title a img { display: block; max-width: 100%; max-height: 60px; height: auto; padding: 0; margin: 0 auto; -webkit-border-radius: 0; border-radius: 0; width: auto; }
 .site-description { font-size: 1em; font-style: italic; color: #fff; color: rgba(255,255,255,0.5); float: left; margin-left: 20px; line-height: 60px; padding: 10px 0; }
 .site-image { display: block; margin: 0 auto; max-height: 400px; width: auto;}
 
