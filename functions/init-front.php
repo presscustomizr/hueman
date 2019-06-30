@@ -398,7 +398,7 @@ if ( ! function_exists( 'hu_render_header_image' ) ) {
 function hu_get_logo_title( $is_mobile_menu = false ) {
     // Text or image?
     // Since v3.2.4, uses the WP 'custom_logo' theme mod option. Set with a filter.
-    $logo_src = false;
+    $logo_source = false;
     $is_logo_src_set = false;
     $logo_or_title = hu_is_checked( 'display-header-title' ) ? get_bloginfo( 'name' ) : '';
 
@@ -407,16 +407,21 @@ function hu_get_logo_title( $is_mobile_menu = false ) {
     if ( apply_filters( 'hu_display_header_logo', hu_is_checked( 'display-header-logo' ) ) ) {
         //if $is_mobile_menu, let's check if we have a specific logo for mobile set
         if ( $is_mobile_menu ) {
-            $logo_src = hu_get_img_src_from_option( 'mobile-header-logo' );
-            $is_logo_src_set = false !== $logo_src && ! empty( $logo_src );
+            $logo_source = hu_get_img_source_from_option( 'mobile-header-logo' );
+            $is_logo_src_set = false !== $logo_source && ! empty( $logo_source[0] );
         }
         if ( ( $is_mobile_menu && ! $is_logo_src_set ) || ! $is_mobile_menu ) {
-            $logo_src = hu_get_img_src_from_option( 'custom-logo' );
-            $is_logo_src_set = false !== $logo_src && ! empty( $logo_src );
+            $logo_source = hu_get_img_source_from_option( 'custom-logo' );
+            $is_logo_src_set = false !== $logo_source && ! empty( $logo_source[0] );
         }
         if ( $is_logo_src_set ) {
-            $logo_src = apply_filters( 'hu_header_logo_src' , $logo_src, $is_mobile_menu );
-            $logo_or_title = '<img src="'. $logo_src . '" alt="' . get_bloginfo('name'). '">';
+            $logo_source = apply_filters( 'hu_header_logo_source' , $logo_source, $is_mobile_menu );
+            $logo_or_title = sprintf( '<img src="%1$s" alt="%2$s" %3$s %4$s"/>',
+                esc_url( $logo_source[0] ),
+                esc_attr( get_bloginfo('name') ),
+                $logo_source[1] ? sprintf( 'width="%1$s"', esc_attr( $logo_source[1] ) ) : '',
+                $logo_source[2] ? sprintf( 'height="%1$s"', esc_attr( $logo_source[2] ) ): ''
+            );
         }
     }//if apply_filters( 'hu_display_header_logo', hu_is_checked( 'display-header-logo' )
     return $logo_or_title;
@@ -861,10 +866,10 @@ if ( ! function_exists( 'hu_set_custom_logo' ) ) {
     if ( false == $custom_logo_id || empty($custom_logo_id) )
       return $_src;
 
-    return hu_get_img_src( $custom_logo_id );
+    return hu_get_img_source( $custom_logo_id );
   }
 }
-add_filter( 'hu_img_src_from_option', 'hu_set_custom_logo', 10, 2 );
+add_filter( 'hu_img_source_from_option', 'hu_set_custom_logo', 10, 2 );
 
 
 
