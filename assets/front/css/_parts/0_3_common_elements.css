@@ -437,9 +437,6 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     backface-visibility: hidden;
-    -webkit-perspective: 1000px;
-    -moz-perspective: 1000px;
-    perspective: 1000px;
     width: 100%;
     font-size: 13px;
   }
