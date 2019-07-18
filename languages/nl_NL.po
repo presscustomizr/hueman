@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Hueman\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2019-06-30 16:35:55+00:00\n"
+"POT-Creation-Date: 2019-07-18 14:55:08+00:00\n"
 "PO-Revision-Date: 2016-11-04 13:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1550,7 +1550,7 @@ msgid "Dynamic Sidebars and Widgets"
 msgstr ""
 
 #: functions/czr/controls/class-color-alpha-control.php:26
-#: functions/czr-base-fmk/czr-base-fmk.php:253
+#: functions/czr-base-fmk/czr-base-fmk.php:255
 msgid "Default"
 msgstr "Standaard"
 
@@ -1559,8 +1559,8 @@ msgid "Upload"
 msgstr "Uploaden"
 
 #: functions/czr/controls/class-upload-control.php:68
-#: functions/czr-base-fmk/czr-base-fmk.php:252
-#: functions/czr-base-fmk/czr-base-fmk.php:454
+#: functions/czr-base-fmk/czr-base-fmk.php:254
+#: functions/czr-base-fmk/czr-base-fmk.php:543
 msgid "Remove"
 msgstr "Weghalen"
 
@@ -1584,14 +1584,14 @@ msgid "Header Panel"
 msgstr "Kop"
 
 #: functions/czr/czr-resources.php:163
-#: functions/czr-base-fmk/czr-base-fmk.php:240
-#: functions/czr-base-fmk/czr-base-fmk.php:454
+#: functions/czr-base-fmk/czr-base-fmk.php:242
+#: functions/czr-base-fmk/czr-base-fmk.php:543
 #: functions/czr-modules/widget-zones/widget_zones_module.php:227
 msgid "Edit"
 msgstr "Bewerken"
 
 #: functions/czr/czr-resources.php:164
-#: functions/czr-base-fmk/czr-base-fmk.php:241
+#: functions/czr-base-fmk/czr-base-fmk.php:243
 msgid "Close"
 msgstr "Sluiten"
 
@@ -1616,7 +1616,7 @@ msgid "Context(s)"
 msgstr ""
 
 #: functions/czr/czr-resources.php:168
-#: functions/czr-base-fmk/czr-base-fmk.php:242
+#: functions/czr-base-fmk/czr-base-fmk.php:244
 #: functions/czr-modules/widget-zones/widget_zones_module.php:88
 msgid "Not set"
 msgstr "Niet ingesteld"
@@ -1637,7 +1637,7 @@ msgid "Follow us on"
 msgstr "Volg ons op"
 
 #: functions/czr/czr-resources.php:172
-#: functions/czr-base-fmk/czr-base-fmk.php:243
+#: functions/czr-base-fmk/czr-base-fmk.php:245
 #: functions/czr-modules/social-links/social_links_module.php:80
 msgid "Done !"
 msgstr "Klaar"
@@ -1660,18 +1660,18 @@ msgid "Select position property"
 msgstr "Selecteer eigenschappen voor positie"
 
 #: functions/czr/czr-resources.php:185
-#: functions/czr-base-fmk/czr-base-fmk.php:245
+#: functions/czr-base-fmk/czr-base-fmk.php:247
 msgid "Learn more about this in the documentation"
 msgstr "Leer meer hierover in de documentatie"
 
 #: functions/czr/czr-resources.php:186
-#: functions/czr-base-fmk/czr-base-fmk.php:246
+#: functions/czr-base-fmk/czr-base-fmk.php:248
 #, fuzzy
 msgid "Settings"
 msgstr "Globale instellingen"
 
 #: functions/czr/czr-resources.php:187
-#: functions/czr-base-fmk/czr-base-fmk.php:247
+#: functions/czr-base-fmk/czr-base-fmk.php:249
 msgid "Options for"
 msgstr ""
 
@@ -1909,71 +1909,71 @@ msgstr "Klik op enter om deze sectie te openen"
 msgid "Press return or enter to open this section"
 msgstr "Klik op enter om deze sectie te openen"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:250
-#: functions/czr-base-fmk/czr-base-fmk.php:255
+#: functions/czr-base-fmk/czr-base-fmk.php:252
+#: functions/czr-base-fmk/czr-base-fmk.php:257
 msgid "Select Image"
 msgstr "Selecteer afbeelding"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:251
+#: functions/czr-base-fmk/czr-base-fmk.php:253
 msgid "Change Image"
 msgstr "Aanpassen afbeelding"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:254
+#: functions/czr-base-fmk/czr-base-fmk.php:256
 msgid "No image selected"
 msgstr "Geen afbeelding geselecteerd"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:256
+#: functions/czr-base-fmk/czr-base-fmk.php:258
 msgid "Choose Image"
 msgstr "Kies afbeelding"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:258
+#: functions/czr-base-fmk/czr-base-fmk.php:260
 msgid "Customizing"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:395
+#: functions/czr-base-fmk/czr-base-fmk.php:453
 msgid "ac_set_ajax_czr_tmpl => Security check failed."
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:436
+#: functions/czr-base-fmk/czr-base-fmk.php:525
 msgid "Add New"
 msgstr "Toevoegen"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:441
+#: functions/czr-base-fmk/czr-base-fmk.php:530
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:441
+#: functions/czr-base-fmk/czr-base-fmk.php:530
 msgid "Add it"
 msgstr "Toevoegen"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:462
+#: functions/czr-base-fmk/czr-base-fmk.php:551
 msgid "Are you sure you want to remove : <strong>{{ data.title }} ?</strong>"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:463
+#: functions/czr-base-fmk/czr-base-fmk.php:552
 msgid "Yes"
 msgstr "Ja"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:463
+#: functions/czr-base-fmk/czr-base-fmk.php:552
 msgid "No"
 msgstr "Nee"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1578
+#: functions/czr-base-fmk/czr-base-fmk.php:1667
 msgid "Set a custom url"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1612
-#: functions/czr-base-fmk/czr-base-fmk.php:1812
+#: functions/czr-base-fmk/czr-base-fmk.php:1701
+#: functions/czr-base-fmk/czr-base-fmk.php:1901
 msgid "ajax_load_available_items => Security check failed."
 msgstr ""
 
 #. translators: %d: ID of a post
-#: functions/czr-base-fmk/czr-base-fmk.php:1733
-#: functions/czr-base-fmk/czr-base-fmk.php:1942
+#: functions/czr-base-fmk/czr-base-fmk.php:1822
+#: functions/czr-base-fmk/czr-base-fmk.php:2031
 msgid "#%d (no title)"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1876
+#: functions/czr-base-fmk/czr-base-fmk.php:1965
 msgid "No results found."
 msgstr ""
 

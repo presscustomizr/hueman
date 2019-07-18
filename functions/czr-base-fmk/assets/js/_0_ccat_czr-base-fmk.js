@@ -2176,19 +2176,27 @@ $.extend( CZRInputMths , {
               canUpload     : true
         };
 
-        api.CZR_Helpers.getModuleTmpl( {
-              tmpl : 'img-uploader',
-              module_type: 'all_modules',
-              module_id : input.module.id
-        } ).done( function( _serverTmpl_ ) {
-              //console.log( 'renderModuleParts => success response =>', input.module.id, _serverTmpl_);
-              $_view_el.html( api.CZR_Helpers.parseTemplate( _serverTmpl_ )( _template_params ) );
+        if ( $('#tmpl-czr-img-uploader').length > 0 ) {
+              $_view_el.html( wp.template( 'czr-img-uploader' )( _template_params ) );
               input.tmplRendered.resolve();
               input.container.trigger( input.id + ':content_rendered' );
-        }).fail( function( _r_ ) {
-              //console.log( 'renderModuleParts => fail response =>', _r_);
-              input.tmplRendered.reject( 'renderImageUploaderTemplate => Problem when fetching the tmpl from server for module : '+ input.module.id );
-        });
+        } else {
+              api.CZR_Helpers.getModuleTmpl( {
+                    tmpl : 'img-uploader',
+                    module_type: 'all_modules',
+                    module_id : input.module.id
+              } ).done( function( _serverTmpl_ ) {
+                    //console.log( 'renderModuleParts => success response =>', input.module.id, _serverTmpl_);
+                    $_view_el.html( api.CZR_Helpers.parseTemplate( _serverTmpl_ )( _template_params ) );
+                    input.tmplRendered.resolve();
+                    input.container.trigger( input.id + ':content_rendered' );
+              }).fail( function( _r_ ) {
+                    //console.log( 'renderModuleParts => fail response =>', _r_);
+                    input.tmplRendered.reject( 'renderImageUploaderTemplate => Problem when fetching the tmpl from server for module : '+ input.module.id );
+              });
+        }
+
+
         return true;
   },
 
@@ -2563,11 +2571,7 @@ $.extend( CZRItemMths , {
                         trigger   : 'click keydown',
                         selector  : [ '.' + item.module.control.css_attr.display_alert_btn, '.' + item.module.control.css_attr.cancel_alert_btn ].join(','),
                         name      : 'toggle_remove_alert',
-                        actions   : function() {
-                              var _isVisible = this.removeDialogVisible();
-                              this.module.closeRemoveDialogs();
-                              this.removeDialogVisible( ! _isVisible );
-                        }
+                        actions   : ['toggleRemoveAlert']
                   },
                   //removes item and destroys its view
                   {
@@ -2745,11 +2749,20 @@ $.extend( CZRItemMths , {
             });
       },
 
+      // fired on click event
+      // @see initialize()
+      toggleRemoveAlert : function() {
+            var _isVisible = this.removeDialogVisible();
+            this.module.closeRemoveDialogs();
+            this.removeDialogVisible( ! _isVisible );
+      },
+
       //fired on click dom event
       //for dynamic multi input modules
       //@return void()
       //@param params : { dom_el : {}, dom_event : {}, event : {}, model {} }
       removeItem : function( params ) {
+            params = params || {};
             var item = this,
                 module = this.module,
                 _new_collection = _.clone( module.itemCollection() );
@@ -2882,7 +2895,7 @@ $.extend( CZRItemMths , {
                         if ( 1 > $( '#tmpl-' + _template_selector ).length ) {
                             dfd.reject( 'Missing template for item ' + item.id + '. The provided template script has no been found : #tmpl-' + _template_selector );
                         }
-                        appendAndResolve( wp.template( _template_selector )( item_model_for_template_injection ) );
+                        appendAndResolve( wp.template( _template_selector )( $.extend( item_model_for_template_injection, { is_sortable : module.sortable } ) ) );
                   } else {
 
                         // allow plugin to alter the ajax params before fetching
@@ -2907,7 +2920,7 @@ $.extend( CZRItemMths , {
                         } else {
                               api.CZR_Helpers.getModuleTmpl( requestParams ).done( function( _serverTmpl_ ) {
                                     //console.log( 'renderItemWrapper => success response =>', module.id, _serverTmpl_);
-                                    appendAndResolve( api.CZR_Helpers.parseTemplate( _serverTmpl_ )( { is_sortable : module.sortable } ) );
+                                    appendAndResolve( api.CZR_Helpers.parseTemplate( _serverTmpl_ )(  $.extend( item_model_for_template_injection, { is_sortable : module.sortable } ) ) );
                               }).fail( function( _r_ ) {
                                     //console.log( 'renderItemWrapper => fail response =>', _r_);
                                     dfd.reject( 'renderItemWrapper => Problem when fetching the rud-item-part tmpl from server for module : '+ module.id );
@@ -3152,7 +3165,7 @@ $.extend( CZRItemMths , {
                   if ( 1 > $( '#tmpl-' + tmplSelectorSuffix ).length ) {
                         dfd.reject( 'renderItemContent => No itemInputList content template defined for module ' + module.id + '. The template script id should be : #tmpl-' + tmplSelectorSuffix );
                   } else {
-                        appendAndResolve( wp.template( tmplSelectorSuffix )( item_model_for_template_injection ) );
+                        appendAndResolve( wp.template( tmplSelectorSuffix )( $.extend( item_model_for_template_injection, { control_id : module.control.id } ) ) );
                   }
 
             } else {
@@ -3607,13 +3620,14 @@ $.extend( CZRModuleMths, {
             $.extend( module, constructorOptions || {} );
 
             //extend the module with new template Selectors
+            //can have been overriden at this stage from a module constructor
             $.extend( module, {
-                  crudModulePart : '', //'czr-crud-module-part',//create, read, update, delete
-                  rudItemPart : '',// 'czr-rud-item-part',//read, update, delete
-                  ruItemPart : '',// 'czr-ru-item-part',//read, update <= ONLY USED IN THE WIDGET MODULE
-                  alertPart : '',// 'czr-rud-item-alert-part',//used both for items and modules removal
-                  itemInputList : '',//is specific for each crud module
-                  modOptInputList : ''//is specific for each module
+                  crudModulePart : module.crudModulePart || '', //'czr-crud-module-part',//create, read, update, delete
+                  rudItemPart : module.rudItemPart || '',// 'czr-rud-item-part',//read, update, delete
+                  ruItemPart : module.ruItemPart || '',// 'czr-ru-item-part',//read, update <= ONLY USED IN THE WIDGET MODULE
+                  alertPart : module.alertPart || '',// 'czr-rud-item-alert-part',//used both for items and modules removal
+                  itemInputList : module.itemInputList || '',//is specific for each crud module
+                  modOptInputList : module.modOptInputList || ''//is specific for each module
             } );
 
             //embed : define a container, store the embed state, fire the render method
@@ -4722,6 +4736,11 @@ $.extend( CZRModuleMths, {
                     if ( module.czr_Item.has(_item.id) && 'expanded' == module.czr_Item(_item.id)._getViewState(_item.id) )
                       module.czr_Item( _item.id ).viewState.set( 'closed' ); // => will fire the cb toggleItemExpansion
               } );
+
+              // 'czr-all-items-closed' has been introduced when coding the Simple Nimble slider module. @see https://github.com/presscustomizr/nimble-builder/issues/82
+              // When using the text editor in the items of in a multi-item module
+              // We need to clear the editor instances each time all items are closed, before opening a new one
+              api.trigger('czr-all-items-closed', { module_id : module.id } );
               return this;
       },
 
@@ -5052,6 +5071,14 @@ $.extend( CZRDynModuleMths, {
             module.trigger( 'pre-item-input-collection-ready' );
       },
 
+      // Intended to be overriden in a module
+      // introduced in July 2019 to allow a multi-item module to set a default pre-item
+      // typically, in the slider image, this is a way to have a default image when adding an item
+      // @see https://github.com/presscustomizr/nimble-builder/issues/479
+      getPreItem : function() {
+            return this.preItem();
+      },
+
 
       // overridable method introduced with the flat skope
       // problem to solve in skope => an item, can't always be instantiated in a given context.
@@ -5069,7 +5096,7 @@ $.extend( CZRDynModuleMths, {
                   return dfd.reject().promise();
             }
             var module = this,
-                item_candidate = module.preItem(),
+                item_candidate = module.getPreItem(),
                 collapsePreItem = function() {
                       module.preItemExpanded.set( false );
                       //module.toggleSuccessMessage('off');

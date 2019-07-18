@@ -370,6 +370,7 @@ input:-ms-input-placeholder {
 
 .customize-control select {
   cursor: pointer;
+  width: 99%;
 }
 
 
@@ -1023,7 +1024,7 @@ li.customize-control[data-module] .czr-notice {
 /* Display a thin outline around opened item, for multi-items modules */
 #customize-theme-controls .czr-single-item.open {
   /*border: 1px solid #dedede;*/
-  outline: 1px solid #ccc;
+  outline: 1px solid #22a0d2;
 }
 /* Keep the normal border for single module, mono items controls */
 #customize-theme-controls .mono-item-mod .czr-single-item {
