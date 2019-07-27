@@ -202,6 +202,20 @@ span.czr-rec-button a {
   line-height: 1.6em;
 }
 
+@media screen and (max-width: 782px) {
+    .czr-rec-text-block {width: 100%;}
+    .notice.czr-nimble-rec-notice p { text-align: center;}
+    .czr-nimble-rec-notice .czr-nimble-rec-notice-icon{top:auto }
+    .notice.czr-nimble-rec-notice h3 {margin: 0 0 16px;text-align: center;}
+    .czr-rec-button{
+      text-align: center;
+      width: 100%;
+      display: block;
+      margin-top: 10px;
+    }
+    .czr-nimble-rec-notice .czr-tgmpa-img-block{ display: none;}
+}
+
 
 /* GO PRO BTN */
 .wp-core-ui #hueman-admin-panel .hu-go-pro-btn, .wp-core-ui .updated .hu-go-pro-btn {
