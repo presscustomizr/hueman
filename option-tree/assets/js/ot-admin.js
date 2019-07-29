@@ -143,8 +143,8 @@
         if (agree) {
           var list = $(this).parents('ul');
           OT_UI.remove(this);
-          setTimeout( function() {
-            OT_UI.update_ids(list);
+          setTimeout( function() { 
+            OT_UI.update_ids(list); 
           }, 200 );
         }
         return false;
@@ -168,7 +168,7 @@
       });
     },
     init_activate_layout: function() {
-      $(document).on('click', '.option-tree-layout-activate', function() {
+      $(document).on('click', '.option-tree-layout-activate', function() { 
         var active = $(this).parents('.option-tree-setting').find('.open').text();
         $('.option-tree-layout-activate').removeClass('active');
         $(this).toggleClass('active');
@@ -186,12 +186,12 @@
       });
     },
     add: function(elm,type) {
-      var self = this,
-          list = '',
+      var self = this, 
+          list = '', 
           list_class = '',
-          name = '',
-          post_id = 0,
-          get_option = '',
+          name = '', 
+          post_id = 0, 
+          get_option = '', 
           settings = '';
       if ( type == 'the_contextual_help' ) {
         list = $(elm).parent().find('ul:last');
@@ -241,7 +241,8 @@
             post_id: post_id,
             get_option: get_option,
             settings: settings,
-            type: type
+            type: type,
+            nonce: option_tree.nonce
           },
           complete: function( data ) {
             if ( type == 'choice' || type == 'list_item_setting' ) {
@@ -428,11 +429,11 @@
             title: $(this).attr('title'),
             button: {
               text: option_tree.upload_text
-            },
+            }, 
             multiple: false
           });
           window.ot_media_frame.on('select', function() {
-            var attachment = window.ot_media_frame.state().get('selection').first(),
+            var attachment = window.ot_media_frame.state().get('selection').first(), 
                 href = attachment.attributes.url,
                 attachment_id = attachment.attributes.id,
                 mime = attachment.attributes.mime,
@@ -449,19 +450,19 @@
           }).open();
         } else {
           var backup = window.send_to_editor,
-              intval = window.setInterval(
+              intval = window.setInterval( 
                 function() {
                   if ( $('#TB_iframeContent').length > 0 && $('#TB_iframeContent').attr('src').indexOf( "&field_id=" ) !== -1 ) {
                     $('#TB_iframeContent').contents().find('#tab-type_url').hide();
                   }
-                  $('#TB_iframeContent').contents().find('.savesend .button').val(option_tree.upload_text);
+                  $('#TB_iframeContent').contents().find('.savesend .button').val(option_tree.upload_text); 
                 }, 50);
           tb_show('', 'media-upload.php?post_id='+post_id+'&field_id='+field_id+'&type=image&TB_iframe=1');
           window.send_to_editor = function(html) {
             var href = $(html).find('img').attr('src');
             if ( typeof href == 'undefined') {
               href = $(html).attr('src');
-            }
+            } 
             if ( typeof href == 'undefined') {
               href = $(html).attr('href');
             }
@@ -534,7 +535,7 @@
           min: hidden.data("min"),
           max: hidden.data("max"),
           step: hidden.data("step"),
-          value: value,
+          value: value, 
           slide: function(event, ui) {
             hidden.add(helper).val(ui.value).trigger('change');
           },
@@ -548,9 +549,9 @@
       });
     },
     init_tabs: function() {
-      $(".wrap.settings-wrap .ui-tabs").tabs({
-        fx: {
-          opacity: "toggle",
+      $(".wrap.settings-wrap .ui-tabs").tabs({ 
+        fx: { 
+          opacity: "toggle", 
           duration: "fast"
         }
       });
@@ -618,7 +619,8 @@
           data: {
             action: 'ot_google_font',
             family: input.val(),
-            field_id: input.attr('id')
+            field_id: input.attr( 'id' ),
+            nonce: option_tree.nonce
           }
         }).done(function(response) {
           if ( response.hasOwnProperty('variants') ) {
@@ -635,7 +637,7 @@
             $clone = $el_clone.clone(true),
             $count = $group.length ? $group.length : 0;
         $clone.attr('class', 'type-google-font-group');
-        var replacer = function(index, elm) {
+        var replacer = function(index, elm) { 
           return elm.replace('%key%', $count);
         }
         $('select', $clone).each( function() {
@@ -659,17 +661,12 @@
       $('#'+field_id).wpColorPicker({
         change: function() {
           OT_UI.parse_condition();
-        },
+        }, 
         clear: function() {
           OT_UI.parse_condition();
         }
       });
     },
-    /* Hueman doesn't need date and time picker jquery plugins 
-    * we remove them for compatibility reasons. 
-    * See : https://github.com/presscustomizr/hueman/issues/454
-    */
-    /*
     bind_date_picker: function(field_id, date_format) {
       $('#'+field_id).datepicker({
         showOtherMonths: true,
@@ -686,7 +683,6 @@
         dateFormat: date_format
       });
     },
-    */
     fix_upload_parent: function() {
       $('.option-tree-ui-upload-input').not('.ot-upload-attachment-id').on('focus blur', function(){
         $(this).parent('.option-tree-ui-upload-parent').toggleClass('focus');
@@ -750,7 +746,7 @@
         editor.setTheme("ace/theme/chrome");
         editor.getSession().setMode("ace/mode/javascript");
         editor.setShowPrintMargin( false );
-
+    
         editor.getSession().setValue(this_textarea.val());
         editor.getSession().on('change', function(){
           this_textarea.val(editor.getSession().getValue());
@@ -788,13 +784,13 @@
 
 /* Gallery */
 !function ($) {
-
+  
   ot_gallery = {
-
+      
     frame: function (elm) {
-
+      
       var selection = this.select(elm)
-
+      
       this._frame = wp.media({
         id:         'ot-gallery-frame'
       , frame:      'post'
@@ -804,7 +800,7 @@
       , multiple:   true
       , selection:  selection
       })
-
+      
       this._frame.on('update', function () {
         var controller = ot_gallery._frame.states.get('gallery-edit')
           , library = controller.get('library')
@@ -812,19 +808,20 @@
           , parent = $(elm).parents('.format-setting-inner')
           , input = parent.children('.ot-gallery-value')
           , shortcode = wp.media.gallery.shortcode( selection ).string().replace(/\"/g,"'")
-
+        
         input.attr('value', ids)
-
+                        
         if ( parent.children('.ot-gallery-list').length <= 0 )
           input.after('<ul class="ot-gallery-list" />')
-
+        
         $.ajax({
           type: 'POST',
           url: ajaxurl,
           dataType: 'html',
           data: {
-            action: 'gallery_update'
-          , ids: ids
+            action: 'gallery_update',
+            ids: ids,
+            nonce: option_tree.nonce
           },
           success: function(res) {
             parent.children('.ot-gallery-list').html(res);
@@ -839,11 +836,11 @@
           }
         })
       })
-
+        
       return this._frame
-
+      
     }
-
+      
   , select: function (elm) {
       var input = $(elm).parents('.format-setting-inner').children('.ot-gallery-value')
         , ids = input.attr('value')
@@ -852,17 +849,17 @@
         , defaultPostId = wp.media.gallery.defaults.id
         , attachments
         , selection
-
+        
       // Bail if we didn't match the shortcode or all of the content.
       if ( ! shortcode )
         return
-
+      
       // Ignore the rest of the match object.
       shortcode = shortcode.shortcode
-
+      
       if ( _.isUndefined( shortcode.get('id') ) && ! _.isUndefined( defaultPostId ) )
         shortcode.set( 'id', defaultPostId )
-
+      
       if ( _.isUndefined( shortcode.get('ids') ) && ! input.hasClass('ot-gallery-shortcode') && ids )
         shortcode.set( 'ids', ids )
 
@@ -930,7 +927,7 @@
  */
 !function ($) {
 
-  $(document).on('ready', function () {
+  $( document ).ready( function() {
 
     // Loop over the metaboxes
     $('.ot-metabox-wrapper').each( function() {
@@ -1002,7 +999,7 @@
  */
 !function ($) {
 
-  $(document).on('ready', function () {
+  $( document ).ready( function() {
 
     // Loop over the theme options
     $('#option-tree-settings-api .inside').each( function() {
@@ -1064,16 +1061,16 @@
  */
 !function ($) {
 
-  $(document).on('ready', function () {
+  $( document ).ready( function() {
 
     // detect mousedown and store all checked radio buttons
     $('.hndle').on('mousedown', function () {
-
-      // get parent element of .hndle selected.
+      
+      // get parent element of .hndle selected. 
       // We only need to monitor radios insde the object that is being moved.
       var parent_id = $(this).closest('div').attr('id')
-
-      // set live event listener for mouse up on the content .wrap
+      
+      // set live event listener for mouse up on the content .wrap 
       // then give the dragged div time to settle before firing the reclick function
       $('.wrap').on('mouseup', function () {
 
@@ -1093,8 +1090,8 @@
           $(document).data('ot_checked_radios', ot_checked_radios)
 
         })
-
-        // restore all checked radio buttons
+        
+        // restore all checked radio buttons 
         setTimeout( function () {
 
           // get object of checked radio button names and values
