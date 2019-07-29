@@ -49,15 +49,15 @@ if ( ! function_exists( 'ot_register_theme_options_page' ) ) {
 							array(
 								'id'              => 'ot_theme_options',
 								'parent_slug'     => apply_filters( 'ot_theme_options_parent_slug', 'themes.php' ),
-								'page_title'      => apply_filters( 'ot_theme_options_page_title', esc_html__( 'Theme Options', 'option-tree' ) ),
-								'menu_title'      => apply_filters( 'ot_theme_options_menu_title', esc_html__( 'Theme Options', 'option-tree' ) ),
+								'page_title'      => apply_filters( 'ot_theme_options_page_title', esc_html__( 'Theme Options', 'hueman' ) ),
+								'menu_title'      => apply_filters( 'ot_theme_options_menu_title', esc_html__( 'Theme Options', 'hueman' ) ),
 								'capability'      => $caps,
 								'menu_slug'       => apply_filters( 'ot_theme_options_menu_slug', 'ot-theme-options' ),
 								'icon_url'        => apply_filters( 'ot_theme_options_icon_url', null ),
 								'position'        => apply_filters( 'ot_theme_options_position', null ),
-								'updated_message' => apply_filters( 'ot_theme_options_updated_message', esc_html__( 'Theme Options updated.', 'option-tree' ) ),
-								'reset_message'   => apply_filters( 'ot_theme_options_reset_message', esc_html__( 'Theme Options reset.', 'option-tree' ) ),
-								'button_text'     => apply_filters( 'ot_theme_options_button_text', esc_html__( 'Save Changes', 'option-tree' ) ),
+								'updated_message' => apply_filters( 'ot_theme_options_updated_message', esc_html__( 'Theme Options updated.', 'hueman' ) ),
+								'reset_message'   => apply_filters( 'ot_theme_options_reset_message', esc_html__( 'Theme Options reset.', 'hueman' ) ),
+								'button_text'     => apply_filters( 'ot_theme_options_button_text', esc_html__( 'Save Changes', 'hueman' ) ),
 								'contextual_help' => apply_filters( 'ot_theme_options_contextual_help', $contextual_help ),
 								'sections'        => apply_filters( 'ot_theme_options_sections', $sections ),
 								'settings'        => apply_filters( 'ot_theme_options_settings', $settings ),
@@ -101,7 +101,7 @@ if ( ! function_exists( 'ot_register_settings_page' ) ) {
 			 * Error message for custom theme options.
 			 */
 			function ot_has_custom_theme_options() {
-				echo '<div class="error"><p>' . esc_html__( 'The Theme Options UI Builder is being overridden by a custom file in your theme. Any changes you make via the UI Builder will not be saved.', 'option-tree' ) . '</p></div>';
+				echo '<div class="error"><p>' . esc_html__( 'The Theme Options UI Builder is being overridden by a custom file in your theme. Any changes you make via the UI Builder will not be saved.', 'hueman' ) . '</p></div>';
 			}
 
 			add_action( 'admin_notices', 'ot_has_custom_theme_options' );
@@ -111,8 +111,8 @@ if ( ! function_exists( 'ot_register_settings_page' ) ) {
 		$ot_register_pages_array = array(
 			array(
 				'id'          => 'ot',
-				'page_title'  => esc_html__( 'OptionTree', 'option-tree' ),
-				'menu_title'  => esc_html__( 'OptionTree', 'option-tree' ),
+				'page_title'  => esc_html__( 'OptionTree', 'hueman' ),
+				'menu_title'  => esc_html__( 'OptionTree', 'hueman' ),
 				'capability'  => 'edit_theme_options',
 				'menu_slug'   => 'ot-settings',
 				'icon_url'    => null,
@@ -122,86 +122,86 @@ if ( ! function_exists( 'ot_register_settings_page' ) ) {
 			array(
 				'id'              => 'settings',
 				'parent_slug'     => 'ot-settings',
-				'page_title'      => esc_html__( 'Settings', 'option-tree' ),
-				'menu_title'      => esc_html__( 'Settings', 'option-tree' ),
+				'page_title'      => esc_html__( 'Settings', 'hueman' ),
+				'menu_title'      => esc_html__( 'Settings', 'hueman' ),
 				'capability'      => 'edit_theme_options',
 				'menu_slug'       => 'ot-settings',
 				'icon_url'        => null,
 				'position'        => null,
-				'updated_message' => esc_html__( 'Theme Options updated.', 'option-tree' ),
-				'reset_message'   => esc_html__( 'Theme Options reset.', 'option-tree' ),
-				'button_text'     => esc_html__( 'Save Settings', 'option-tree' ),
+				'updated_message' => esc_html__( 'Theme Options updated.', 'hueman' ),
+				'reset_message'   => esc_html__( 'Theme Options reset.', 'hueman' ),
+				'button_text'     => esc_html__( 'Save Settings', 'hueman' ),
 				'show_buttons'    => false,
 				'sections'        => array(
 					array(
 						'id'    => 'create_setting',
-						'title' => esc_html__( 'Theme Options UI', 'option-tree' ),
+						'title' => esc_html__( 'Theme Options UI', 'hueman' ),
 					),
 					array(
 						'id'    => 'import',
-						'title' => esc_html__( 'Import', 'option-tree' ),
+						'title' => esc_html__( 'Import', 'hueman' ),
 					),
 					array(
 						'id'    => 'export',
-						'title' => esc_html__( 'Export', 'option-tree' ),
+						'title' => esc_html__( 'Export', 'hueman' ),
 					),
 					array(
 						'id'    => 'layouts',
-						'title' => esc_html__( 'Layouts', 'option-tree' ),
+						'title' => esc_html__( 'Layouts', 'hueman' ),
 					),
 				),
 				'settings'        => array(
 					array(
 						'id'      => 'theme_options_ui_text',
-						'label'   => esc_html__( 'Theme Options UI Builder', 'option-tree' ),
+						'label'   => esc_html__( 'Theme Options UI Builder', 'hueman' ),
 						'type'    => 'theme_options_ui',
 						'section' => 'create_setting',
 					),
 					array(
 						'id'      => 'import_settings_text',
-						'label'   => esc_html__( 'Settings', 'option-tree' ),
+						'label'   => esc_html__( 'Settings', 'hueman' ),
 						'type'    => 'import-settings',
 						'section' => 'import',
 					),
 					array(
 						'id'      => 'import_data_text',
-						'label'   => esc_html__( 'Theme Options', 'option-tree' ),
+						'label'   => esc_html__( 'Theme Options', 'hueman' ),
 						'type'    => 'import-data',
 						'section' => 'import',
 					),
 					array(
 						'id'      => 'import_layouts_text',
-						'label'   => esc_html__( 'Layouts', 'option-tree' ),
+						'label'   => esc_html__( 'Layouts', 'hueman' ),
 						'type'    => 'import-layouts',
 						'section' => 'import',
 					),
 					array(
 						'id'      => 'export_settings_file_text',
-						'label'   => esc_html__( 'Settings PHP File', 'option-tree' ),
+						'label'   => esc_html__( 'Settings PHP File', 'hueman' ),
 						'type'    => 'export-settings-file',
 						'section' => 'export',
 					),
 					array(
 						'id'      => 'export_settings_text',
-						'label'   => esc_html__( 'Settings', 'option-tree' ),
+						'label'   => esc_html__( 'Settings', 'hueman' ),
 						'type'    => 'export-settings',
 						'section' => 'export',
 					),
 					array(
 						'id'      => 'export_data_text',
-						'label'   => esc_html__( 'Theme Options', 'option-tree' ),
+						'label'   => esc_html__( 'Theme Options', 'hueman' ),
 						'type'    => 'export-data',
 						'section' => 'export',
 					),
 					array(
 						'id'      => 'export_layout_text',
-						'label'   => esc_html__( 'Layouts', 'option-tree' ),
+						'label'   => esc_html__( 'Layouts', 'hueman' ),
 						'type'    => 'export-layouts',
 						'section' => 'export',
 					),
 					array(
 						'id'      => 'modify_layouts_text',
-						'label'   => esc_html__( 'Layout Management', 'option-tree' ),
+						'label'   => esc_html__( 'Layout Management', 'hueman' ),
 						'type'    => 'modify-layouts',
 						'section' => 'layouts',
 					),
@@ -210,92 +210,92 @@ if ( ! function_exists( 'ot_register_settings_page' ) ) {
 			array(
 				'id'              => 'documentation',
 				'parent_slug'     => 'ot-settings',
-				'page_title'      => esc_html__( 'Documentation', 'option-tree' ),
-				'menu_title'      => esc_html__( 'Documentation', 'option-tree' ),
+				'page_title'      => esc_html__( 'Documentation', 'hueman' ),
+				'menu_title'      => esc_html__( 'Documentation', 'hueman' ),
 				'capability'      => 'edit_theme_options',
 				'menu_slug'       => 'ot-documentation',
 				'icon_url'        => null,
 				'position'        => null,
-				'updated_message' => esc_html__( 'Theme Options updated.', 'option-tree' ),
-				'reset_message'   => esc_html__( 'Theme Options reset.', 'option-tree' ),
-				'button_text'     => esc_html__( 'Save Settings', 'option-tree' ),
+				'updated_message' => esc_html__( 'Theme Options updated.', 'hueman' ),
+				'reset_message'   => esc_html__( 'Theme Options reset.', 'hueman' ),
+				'button_text'     => esc_html__( 'Save Settings', 'hueman' ),
 				'show_buttons'    => false,
 				'sections'        => array(
 					array(
 						'id'    => 'creating_options',
-						'title' => esc_html__( 'Creating Options', 'option-tree' ),
+						'title' => esc_html__( 'Creating Options', 'hueman' ),
 					),
 					array(
 						'id'    => 'option_types',
-						'title' => esc_html__( 'Option Types', 'option-tree' ),
+						'title' => esc_html__( 'Option Types', 'hueman' ),
 					),
 					array(
 						'id'    => 'functions',
-						'title' => esc_html__( 'Function References', 'option-tree' ),
+						'title' => esc_html__( 'Function References', 'hueman' ),
 					),
 					array(
 						'id'    => 'theme_mode',
-						'title' => esc_html__( 'Theme Mode', 'option-tree' ),
+						'title' => esc_html__( 'Theme Mode', 'hueman' ),
 					),
 					array(
 						'id'    => 'meta_boxes',
-						'title' => esc_html__( 'Meta Boxes', 'option-tree' ),
+						'title' => esc_html__( 'Meta Boxes', 'hueman' ),
 					),
 					array(
 						'id'    => 'examples',
-						'title' => esc_html__( 'Code Examples', 'option-tree' ),
+						'title' => esc_html__( 'Code Examples', 'hueman' ),
 					),
 					array(
 						'id'    => 'layouts_overview',
-						'title' => esc_html__( 'Layouts Overview', 'option-tree' ),
+						'title' => esc_html__( 'Layouts Overview', 'hueman' ),
 					),
 				),
 				'settings'        => array(
 					array(
 						'id'      => 'creating_options_text',
-						'label'   => esc_html__( 'Overview of available Theme Option fields.', 'option-tree' ),
+						'label'   => esc_html__( 'Overview of available Theme Option fields.', 'hueman' ),
 						'type'    => 'creating-options',
 						'section' => 'creating_options',
 					),
 					array(
 						'id'      => 'option_types_text',
-						'label'   => esc_html__( 'Option types in alphabetical order & hooks to filter them.', 'option-tree' ),
+						'label'   => esc_html__( 'Option types in alphabetical order & hooks to filter them.', 'hueman' ),
 						'type'    => 'option-types',
 						'section' => 'option_types',
 					),
 					array(
 						'id'      => 'functions_ot_get_option',
-						'label'   => esc_html__( 'Function Reference:ot_get_option()', 'option-tree' ),
+						'label'   => esc_html__( 'Function Reference:ot_get_option()', 'hueman' ),
 						'type'    => 'ot-get-option',
 						'section' => 'functions',
 					),
 					array(
 						'id'      => 'functions_get_option_tree',
-						'label'   => esc_html__( 'Function Reference:get_option_tree()', 'option-tree' ),
+						'label'   => esc_html__( 'Function Reference:get_option_tree()', 'hueman' ),
 						'type'    => 'get-option-tree',
 						'section' => 'functions',
 					),
 					array(
 						'id'      => 'theme_mode_text',
-						'label'   => esc_html__( 'Theme Mode', 'option-tree' ),
+						'label'   => esc_html__( 'Theme Mode', 'hueman' ),
 						'type'    => 'theme-mode',
 						'section' => 'theme_mode',
 					),
 					array(
 						'id'      => 'meta_boxes_text',
-						'label'   => esc_html__( 'Meta Boxes', 'option-tree' ),
+						'label'   => esc_html__( 'Meta Boxes', 'hueman' ),
 						'type'    => 'meta-boxes',
 						'section' => 'meta_boxes',
 					),
 					array(
 						'id'      => 'example_text',
-						'label'   => esc_html__( 'Code examples for front-end development.', 'option-tree' ),
+						'label'   => esc_html__( 'Code examples for front-end development.', 'hueman' ),
 						'type'    => 'examples',
 						'section' => 'examples',
 					),
 					array(
 						'id'      => 'layouts_overview_text',
-						'label'   => esc_html__( 'What\'s a layout anyhow?', 'option-tree' ),
+						'label'   => esc_html__( 'What\'s a layout anyhow?', 'hueman' ),
 						'type'    => 'layouts-overview',
 						'section' => 'layouts_overview',
 					),
@@ -463,7 +463,7 @@ if ( ! function_exists( 'ot_validate_setting' ) ) {
 		}
 
 		/* translators: %1$s: the input id, %2$s: the field id */
-		$string_nums = esc_html__( 'The %1$s input field for %2$s only allows numeric values.', 'option-tree' );
+		$string_nums = esc_html__( 'The %1$s input field for %2$s only allows numeric values.', 'hueman' );
 
 		if ( 'background' === $type ) {
 
@@ -535,7 +535,7 @@ if ( ! function_exists( 'ot_validate_setting' ) ) {
 			if ( is_string( $input ) ) {
 
 				/* translators: %s: the field id */
-				$string_color = esc_html__( 'The %s Colorpicker only allows valid hexadecimal or rgba values depending on the setting type.', 'option-tree' );
+				$string_color = esc_html__( 'The %s Colorpicker only allows valid hexadecimal or rgba values depending on the setting type.', 'hueman' );
 
 				if ( 0 === preg_match( '/^#([a-f0-9]{6}|[a-f0-9]{3})$/i', $input ) && 0 === preg_match( '/^rgba\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9\.]{1,4})\s*\)/i', $input ) ) {
 					add_settings_error( 'option-tree', 'invalid_hex_or_rgba', sprintf( $string_color, '<code>' . $field_id . '</code>' ), 'error' );
@@ -683,7 +683,7 @@ if ( ! function_exists( 'ot_validate_setting' ) ) {
 
 			if ( ! empty( $input ) ) {
 				if ( ! is_numeric( $input ) ) {
-					add_settings_error( 'option-tree', 'invalid_numeric_slider', sprintf( $string_nums, '<code>' . esc_html__( 'slider', 'option-tree' ) . '</code>', '<code>' . $field_id . '</code>' ), 'error' );
+					add_settings_error( 'option-tree', 'invalid_numeric_slider', sprintf( $string_nums, '<code>' . esc_html__( 'slider', 'hueman' ) . '</code>', '<code>' . $field_id . '</code>' ), 'error' );
 				} else {
 					$input_safe = sanitize_text_field( $input );
 				}
@@ -743,7 +743,7 @@ if ( ! function_exists( 'ot_validate_setting' ) ) {
 		} else {
 
 			/* translators: %1$s: the calling function, %2$s the filter name, %3$s the option type, %4$s the version number */
-			$string_error = esc_html__( 'Notice: %1$s was called incorrectly. All stored data must be filtered through %2$s, the %3$s option type is not using this filter. This is required since version %4$s.', 'option-tree' );
+			$string_error = esc_html__( 'Notice: %1$s was called incorrectly. All stored data must be filtered through %2$s, the %3$s option type is not using this filter. This is required since version %4$s.', 'hueman' );
 
 			// Log a user notice that things have changed since the last version.
 			add_settings_error( 'option-tree', 'ot_validate_setting_error', sprintf( $string_error, '<code>ot_validate_setting</code>', '<code>ot_validate_setting_input_safe</code>', '<code>' . $type . '</code>', '<code>2.7.0</code>' ), 'error' );
@@ -949,22 +949,22 @@ if ( ! function_exists( 'ot_admin_scripts' ) ) {
 		$localized_array = array(
 			'ajax'                  => admin_url( 'admin-ajax.php' ),
 			'nonce'                 => wp_create_nonce( 'option_tree' ),
-			'upload_text'           => apply_filters( 'ot_upload_text', __( 'Send to OptionTree', 'option-tree' ) ),
-			'remove_media_text'     => esc_html__( 'Remove Media', 'option-tree' ),
-			'reset_agree'           => esc_html__( 'Are you sure you want to reset back to the defaults?', 'option-tree' ),
-			'remove_no'             => esc_html__( 'You can\'t remove this! But you can edit the values.', 'option-tree' ),
-			'remove_agree'          => esc_html__( 'Are you sure you want to remove this?', 'option-tree' ),
-			'activate_layout_agree' => esc_html__( 'Are you sure you want to activate this layout?', 'option-tree' ),
-			'setting_limit'         => esc_html__( 'Sorry, you can\'t have settings three levels deep.', 'option-tree' ),
-			'delete'                => esc_html__( 'Delete Gallery', 'option-tree' ),
-			'edit'                  => esc_html__( 'Edit Gallery', 'option-tree' ),
-			'create'                => esc_html__( 'Create Gallery', 'option-tree' ),
-			'confirm'               => esc_html__( 'Are you sure you want to delete this Gallery?', 'option-tree' ),
-			'date_current'          => esc_html__( 'Today', 'option-tree' ),
-			'date_time_current'     => esc_html__( 'Now', 'option-tree' ),
-			'date_close'            => esc_html__( 'Close', 'option-tree' ),
-			'replace'               => esc_html__( 'Featured Image', 'option-tree' ),
-			'with'                  => esc_html__( 'Image', 'option-tree' ),
+			'upload_text'           => apply_filters( 'ot_upload_text', __( 'Send to OptionTree', 'hueman' ) ),
+			'remove_media_text'     => esc_html__( 'Remove Media', 'hueman' ),
+			'reset_agree'           => esc_html__( 'Are you sure you want to reset back to the defaults?', 'hueman' ),
+			'remove_no'             => esc_html__( 'You can\'t remove this! But you can edit the values.', 'hueman' ),
+			'remove_agree'          => esc_html__( 'Are you sure you want to remove this?', 'hueman' ),
+			'activate_layout_agree' => esc_html__( 'Are you sure you want to activate this layout?', 'hueman' ),
+			'setting_limit'         => esc_html__( 'Sorry, you can\'t have settings three levels deep.', 'hueman' ),
+			'delete'                => esc_html__( 'Delete Gallery', 'hueman' ),
+			'edit'                  => esc_html__( 'Edit Gallery', 'hueman' ),
+			'create'                => esc_html__( 'Create Gallery', 'hueman' ),
+			'confirm'               => esc_html__( 'Are you sure you want to delete this Gallery?', 'hueman' ),
+			'date_current'          => esc_html__( 'Today', 'hueman' ),
+			'date_time_current'     => esc_html__( 'Now', 'hueman' ),
+			'date_close'            => esc_html__( 'Close', 'hueman' ),
+			'replace'               => esc_html__( 'Featured Image', 'hueman' ),
+			'with'                  => esc_html__( 'Image', 'hueman' ),
 		);
 
 		// Localized script attached to 'option_tree'.
@@ -1026,7 +1026,7 @@ if ( ! function_exists( 'ot_create_media_post' ) ) {
 		register_post_type(
 			'option-tree',
 			array(
-				'labels'              => array( 'name' => esc_html__( 'Option Tree', 'option-tree' ) ),
+				'labels'              => array( 'name' => esc_html__( 'Option Tree', 'hueman' ) ),
 				'public'              => false,
 				'show_ui'             => false,
 				'capability_type'     => 'post',
@@ -1174,14 +1174,14 @@ if ( ! function_exists( 'ot_default_settings' ) ) {
 					'sections' => array(
 						array(
 							'id'    => 'general',
-							'title' => esc_html__( 'General', 'option-tree' ),
+							'title' => esc_html__( 'General', 'hueman' ),
 						),
 					),
 					'settings' => array(
 						array(
 							'id'        => 'sample_text',
-							'label'     => esc_html__( 'Sample Text Field Label', 'option-tree' ),
-							'desc'      => esc_html__( 'Description for the sample text field.', 'option-tree' ),
+							'label'     => esc_html__( 'Sample Text Field Label', 'hueman' ),
+							'desc'      => esc_html__( 'Description for the sample text field.', 'hueman' ),
 							'section'   => 'general',
 							'type'      => 'text',
 							'std'       => '',
@@ -2200,64 +2200,64 @@ if ( ! function_exists( 'ot_alert_message' ) ) {
 
 			if ( 'success' === $message ) {
 
-				return '<div id="message" class="updated fade below-h2"><p>' . esc_html__( 'Settings updated.', 'option-tree' ) . '</p></div>';
+				return '<div id="message" class="updated fade below-h2"><p>' . esc_html__( 'Settings updated.', 'hueman' ) . '</p></div>';
 
 			} elseif ( 'failed' === $message ) {
 
-				return '<div id="message" class="error fade below-h2"><p>' . esc_html__( 'Settings could not be saved.', 'option-tree' ) . '</p></div>';
+				return '<div id="message" class="error fade below-h2"><p>' . esc_html__( 'Settings could not be saved.', 'hueman' ) . '</p></div>';
 
 			}
 		} elseif ( 'import-xml' === $action || 'import-settings' === $action ) {
 
 			if ( 'success' === $message ) {
 
-				return '<div id="message" class="updated fade below-h2"><p>' . esc_html__( 'Settings Imported.', 'option-tree' ) . '</p></div>';
+				return '<div id="message" class="updated fade below-h2"><p>' . esc_html__( 'Settings Imported.', 'hueman' ) . '</p></div>';
 
 			} elseif ( 'failed' === $message ) {
 
-				return '<div id="message" class="error fade below-h2"><p>' . esc_html__( 'Settings could not be imported.', 'option-tree' ) . '</p></div>';
+				return '<div id="message" class="error fade below-h2"><p>' . esc_html__( 'Settings could not be imported.', 'hueman' ) . '</p></div>';
 
 			}
 		} elseif ( 'import-data' === $action ) {
 
 			if ( 'success' === $message ) {
 
-				return '<div id="message" class="updated fade below-h2"><p>' . esc_html__( 'Data Imported.', 'option-tree' ) . '</p></div>';
+				return '<div id="message" class="updated fade below-h2"><p>' . esc_html__( 'Data Imported.', 'hueman' ) . '</p></div>';
 
 			} elseif ( 'failed' === $message ) {
 
-				return '<div id="message" class="error fade below-h2"><p>' . esc_html__( 'Data could not be imported.', 'option-tree' ) . '</p></div>';
+				return '<div id="message" class="error fade below-h2"><p>' . esc_html__( 'Data could not be imported.', 'hueman' ) . '</p></div>';
 
 			}
 		} elseif ( 'import-layouts' === $action ) {
 
 			if ( 'success' === $message ) {
 
-				return '<div id="message" class="updated fade below-h2"><p>' . esc_html__( 'Layouts Imported.', 'option-tree' ) . '</p></div>';
+				return '<div id="message" class="updated fade below-h2"><p>' . esc_html__( 'Layouts Imported.', 'hueman' ) . '</p></div>';
 
 			} elseif ( 'failed' === $message ) {
 
-				return '<div id="message" class="error fade below-h2"><p>' . esc_html__( 'Layouts could not be imported.', 'option-tree' ) . '</p></div>';
+				return '<div id="message" class="error fade below-h2"><p>' . esc_html__( 'Layouts could not be imported.', 'hueman' ) . '</p></div>';
 
 			}
 		} elseif ( 'save-layouts' === $action ) {
 
 			if ( 'success' === $message ) {
 
-				return '<div id="message" class="updated fade below-h2"><p>' . esc_html__( 'Layouts Updated.', 'option-tree' ) . '</p></div>';
+				return '<div id="message" class="updated fade below-h2"><p>' . esc_html__( 'Layouts Updated.', 'hueman' ) . '</p></div>';
 
 			} elseif ( 'failed' === $message ) {
 
-				return '<div id="message" class="error fade below-h2"><p>' . esc_html__( 'Layouts could not be updated.', 'option-tree' ) . '</p></div>';
+				return '<div id="message" class="error fade below-h2"><p>' . esc_html__( 'Layouts could not be updated.', 'hueman' ) . '</p></div>';
 
 			} elseif ( 'deleted' === $message ) {
 
-				return '<div id="message" class="updated fade below-h2"><p>' . esc_html__( 'Layouts have been deleted.', 'option-tree' ) . '</p></div>';
+				return '<div id="message" class="updated fade below-h2"><p>' . esc_html__( 'Layouts have been deleted.', 'hueman' ) . '</p></div>';
 
 			}
 		} elseif ( 'layout' === $updated ) {
 
-			return '<div id="message" class="updated fade below-h2"><p>' . esc_html__( 'Layout activated.', 'option-tree' ) . '</p></div>';
+			return '<div id="message" class="updated fade below-h2"><p>' . esc_html__( 'Layout activated.', 'hueman' ) . '</p></div>';
 
 		} elseif ( 'reset' === $action ) {
 
@@ -2294,51 +2294,51 @@ if ( ! function_exists( 'ot_option_types_array' ) ) {
 		return apply_filters(
 			'ot_option_types_array',
 			array(
-				'background'                => esc_html__( 'Background', 'option-tree' ),
-				'border'                    => esc_html__( 'Border', 'option-tree' ),
-				'box-shadow'                => esc_html__( 'Box Shadow', 'option-tree' ),
-				'category-checkbox'         => esc_html__( 'Category Checkbox', 'option-tree' ),
-				'category-select'           => esc_html__( 'Category Select', 'option-tree' ),
-				'checkbox'                  => esc_html__( 'Checkbox', 'option-tree' ),
-				'colorpicker'               => esc_html__( 'Colorpicker', 'option-tree' ),
-				'colorpicker-opacity'       => esc_html__( 'Colorpicker Opacity', 'option-tree' ),
-				'css'                       => esc_html__( 'CSS', 'option-tree' ),
-				'custom-post-type-checkbox' => esc_html__( 'Custom Post Type Checkbox', 'option-tree' ),
-				'custom-post-type-select'   => esc_html__( 'Custom Post Type Select', 'option-tree' ),
-				'date-picker'               => esc_html__( 'Date Picker', 'option-tree' ),
-				'date-time-picker'          => esc_html__( 'Date Time Picker', 'option-tree' ),
-				'dimension'                 => esc_html__( 'Dimension', 'option-tree' ),
-				'gallery'                   => esc_html__( 'Gallery', 'option-tree' ),
-				'google-fonts'              => esc_html__( 'Google Fonts', 'option-tree' ),
-				'javascript'                => esc_html__( 'JavaScript', 'option-tree' ),
-				'link-color'                => esc_html__( 'Link Color', 'option-tree' ),
-				'list-item'                 => esc_html__( 'List Item', 'option-tree' ),
-				'measurement'               => esc_html__( 'Measurement', 'option-tree' ),
-				'numeric-slider'            => esc_html__( 'Numeric Slider', 'option-tree' ),
-				'on-off'                    => esc_html__( 'On/Off', 'option-tree' ),
-				'page-checkbox'             => esc_html__( 'Page Checkbox', 'option-tree' ),
-				'page-select'               => esc_html__( 'Page Select', 'option-tree' ),
-				'post-checkbox'             => esc_html__( 'Post Checkbox', 'option-tree' ),
-				'post-select'               => esc_html__( 'Post Select', 'option-tree' ),
-				'radio'                     => esc_html__( 'Radio', 'option-tree' ),
-				'radio-image'               => esc_html__( 'Radio Image', 'option-tree' ),
-				'select'                    => esc_html__( 'Select', 'option-tree' ),
-				'sidebar-select'            => esc_html__( 'Sidebar Select', 'option-tree' ),
-				'slider'                    => esc_html__( 'Slider', 'option-tree' ),
-				'social-links'              => esc_html__( 'Social Links', 'option-tree' ),
-				'spacing'                   => esc_html__( 'Spacing', 'option-tree' ),
-				'tab'                       => esc_html__( 'Tab', 'option-tree' ),
-				'tag-checkbox'              => esc_html__( 'Tag Checkbox', 'option-tree' ),
-				'tag-select'                => esc_html__( 'Tag Select', 'option-tree' ),
-				'taxonomy-checkbox'         => esc_html__( 'Taxonomy Checkbox', 'option-tree' ),
-				'taxonomy-select'           => esc_html__( 'Taxonomy Select', 'option-tree' ),
-				'text'                      => esc_html__( 'Text', 'option-tree' ),
-				'textarea'                  => esc_html__( 'Textarea', 'option-tree' ),
-				'textarea-simple'           => esc_html__( 'Textarea Simple', 'option-tree' ),
-				'textblock'                 => esc_html__( 'Textblock', 'option-tree' ),
-				'textblock-titled'          => esc_html__( 'Textblock Titled', 'option-tree' ),
-				'typography'                => esc_html__( 'Typography', 'option-tree' ),
-				'upload'                    => esc_html__( 'Upload', 'option-tree' ),
+				'background'                => esc_html__( 'Background', 'hueman' ),
+				'border'                    => esc_html__( 'Border', 'hueman' ),
+				'box-shadow'                => esc_html__( 'Box Shadow', 'hueman' ),
+				'category-checkbox'         => esc_html__( 'Category Checkbox', 'hueman' ),
+				'category-select'           => esc_html__( 'Category Select', 'hueman' ),
+				'checkbox'                  => esc_html__( 'Checkbox', 'hueman' ),
+				'colorpicker'               => esc_html__( 'Colorpicker', 'hueman' ),
+				'colorpicker-opacity'       => esc_html__( 'Colorpicker Opacity', 'hueman' ),
+				'css'                       => esc_html__( 'CSS', 'hueman' ),
+				'custom-post-type-checkbox' => esc_html__( 'Custom Post Type Checkbox', 'hueman' ),
+				'custom-post-type-select'   => esc_html__( 'Custom Post Type Select', 'hueman' ),
+				'date-picker'               => esc_html__( 'Date Picker', 'hueman' ),
+				'date-time-picker'          => esc_html__( 'Date Time Picker', 'hueman' ),
+				'dimension'                 => esc_html__( 'Dimension', 'hueman' ),
+				'gallery'                   => esc_html__( 'Gallery', 'hueman' ),
+				'google-fonts'              => esc_html__( 'Google Fonts', 'hueman' ),
+				'javascript'                => esc_html__( 'JavaScript', 'hueman' ),
+				'link-color'                => esc_html__( 'Link Color', 'hueman' ),
+				'list-item'                 => esc_html__( 'List Item', 'hueman' ),
+				'measurement'               => esc_html__( 'Measurement', 'hueman' ),
+				'numeric-slider'            => esc_html__( 'Numeric Slider', 'hueman' ),
+				'on-off'                    => esc_html__( 'On/Off', 'hueman' ),
+				'page-checkbox'             => esc_html__( 'Page Checkbox', 'hueman' ),
+				'page-select'               => esc_html__( 'Page Select', 'hueman' ),
+				'post-checkbox'             => esc_html__( 'Post Checkbox', 'hueman' ),
+				'post-select'               => esc_html__( 'Post Select', 'hueman' ),
+				'radio'                     => esc_html__( 'Radio', 'hueman' ),
+				'radio-image'               => esc_html__( 'Radio Image', 'hueman' ),
+				'select'                    => esc_html__( 'Select', 'hueman' ),
+				'sidebar-select'            => esc_html__( 'Sidebar Select', 'hueman' ),
+				'slider'                    => esc_html__( 'Slider', 'hueman' ),
+				'social-links'              => esc_html__( 'Social Links', 'hueman' ),
+				'spacing'                   => esc_html__( 'Spacing', 'hueman' ),
+				'tab'                       => esc_html__( 'Tab', 'hueman' ),
+				'tag-checkbox'              => esc_html__( 'Tag Checkbox', 'hueman' ),
+				'tag-select'                => esc_html__( 'Tag Select', 'hueman' ),
+				'taxonomy-checkbox'         => esc_html__( 'Taxonomy Checkbox', 'hueman' ),
+				'taxonomy-select'           => esc_html__( 'Taxonomy Select', 'hueman' ),
+				'text'                      => esc_html__( 'Text', 'hueman' ),
+				'textarea'                  => esc_html__( 'Textarea', 'hueman' ),
+				'textarea-simple'           => esc_html__( 'Textarea Simple', 'hueman' ),
+				'textblock'                 => esc_html__( 'Textblock', 'hueman' ),
+				'textblock-titled'          => esc_html__( 'Textblock Titled', 'hueman' ),
+				'typography'                => esc_html__( 'Typography', 'hueman' ),
+				'upload'                    => esc_html__( 'Upload', 'hueman' ),
 			)
 		);
 	}
@@ -3130,32 +3130,32 @@ if ( ! function_exists( 'ot_radio_images' ) ) {
 			array(
 				array(
 					'value' => 'left-sidebar',
-					'label' => esc_html__( 'Left Sidebar', 'option-tree' ),
+					'label' => esc_html__( 'Left Sidebar', 'hueman' ),
 					'src'   => OT_URL . 'assets/images/layout/left-sidebar.png',
 				),
 				array(
 					'value' => 'right-sidebar',
-					'label' => esc_html__( 'Right Sidebar', 'option-tree' ),
+					'label' => esc_html__( 'Right Sidebar', 'hueman' ),
 					'src'   => OT_URL . 'assets/images/layout/right-sidebar.png',
 				),
 				array(
 					'value' => 'full-width',
-					'label' => esc_html__( 'Full Width (no sidebar)', 'option-tree' ),
+					'label' => esc_html__( 'Full Width (no sidebar)', 'hueman' ),
 					'src'   => OT_URL . 'assets/images/layout/full-width.png',
 				),
 				array(
 					'value' => 'dual-sidebar',
-					'label' => esc_html__( 'Dual Sidebar', 'option-tree' ),
+					'label' => esc_html__( 'Dual Sidebar', 'hueman' ),
 					'src'   => OT_URL . 'assets/images/layout/dual-sidebar.png',
 				),
 				array(
 					'value' => 'left-dual-sidebar',
-					'label' => esc_html__( 'Left Dual Sidebar', 'option-tree' ),
+					'label' => esc_html__( 'Left Dual Sidebar', 'hueman' ),
 					'src'   => OT_URL . 'assets/images/layout/left-dual-sidebar.png',
 				),
 				array(
 					'value' => 'right-dual-sidebar',
-					'label' => esc_html__( 'Right Dual Sidebar', 'option-tree' ),
+					'label' => esc_html__( 'Right Dual Sidebar', 'hueman' ),
 					'src'   => OT_URL . 'assets/images/layout/right-dual-sidebar.png',
 				),
 			),
@@ -3190,7 +3190,7 @@ if ( ! function_exists( 'ot_list_item_settings' ) ) {
 			array(
 				array(
 					'id'        => 'image',
-					'label'     => esc_html__( 'Image', 'option-tree' ),
+					'label'     => esc_html__( 'Image', 'hueman' ),
 					'desc'      => '',
 					'std'       => '',
 					'type'      => 'upload',
@@ -3201,7 +3201,7 @@ if ( ! function_exists( 'ot_list_item_settings' ) ) {
 				),
 				array(
 					'id'        => 'link',
-					'label'     => esc_html__( 'Link', 'option-tree' ),
+					'label'     => esc_html__( 'Link', 'hueman' ),
 					'desc'      => '',
 					'std'       => '',
 					'type'      => 'text',
@@ -3212,7 +3212,7 @@ if ( ! function_exists( 'ot_list_item_settings' ) ) {
 				),
 				array(
 					'id'        => 'description',
-					'label'     => esc_html__( 'Description', 'option-tree' ),
+					'label'     => esc_html__( 'Description', 'hueman' ),
 					'desc'      => '',
 					'std'       => '',
 					'type'      => 'textarea-simple',
@@ -3255,19 +3255,19 @@ if ( ! function_exists( 'ot_slider_settings' ) ) {
 				array(
 					'name'  => 'image',
 					'type'  => 'image',
-					'label' => esc_html__( 'Image', 'option-tree' ),
+					'label' => esc_html__( 'Image', 'hueman' ),
 					'class' => '',
 				),
 				array(
 					'name'  => 'link',
 					'type'  => 'text',
-					'label' => esc_html__( 'Link', 'option-tree' ),
+					'label' => esc_html__( 'Link', 'hueman' ),
 					'class' => '',
 				),
 				array(
 					'name'  => 'description',
 					'type'  => 'textarea',
-					'label' => esc_html__( 'Description', 'option-tree' ),
+					'label' => esc_html__( 'Description', 'hueman' ),
 					'class' => '',
 				),
 			),
@@ -3324,14 +3324,14 @@ if ( ! function_exists( 'ot_social_links_settings' ) ) {
 	function ot_social_links_settings( $field_id ) {
 
 		/* translators: %s: the http protocol */
-		$string   = esc_html__( 'Enter a link to the profile or page on the social website. Remember to add the %s part to the front of the link.', 'option-tree' );
+		$string   = esc_html__( 'Enter a link to the profile or page on the social website. Remember to add the %s part to the front of the link.', 'hueman' );
 		$settings = apply_filters(
 			'ot_social_links_settings',
 			array(
 				array(
 					'id'    => 'name',
-					'label' => esc_html__( 'Name', 'option-tree' ),
-					'desc'  => esc_html__( 'Enter the name of the social website.', 'option-tree' ),
+					'label' => esc_html__( 'Name', 'hueman' ),
+					'desc'  => esc_html__( 'Enter the name of the social website.', 'hueman' ),
 					'std'   => '',
 					'type'  => 'text',
 					'class' => 'option-tree-setting-title',
@@ -3339,7 +3339,7 @@ if ( ! function_exists( 'ot_social_links_settings' ) ) {
 				array(
 					'id'    => 'title',
 					'label' => 'Title',
-					'desc'  => esc_html__( 'Enter the text shown in the title attribute of the link.', 'option-tree' ),
+					'desc'  => esc_html__( 'Enter the text shown in the title attribute of the link.', 'hueman' ),
 					'type'  => 'text',
 				),
 				array(
@@ -3713,7 +3713,7 @@ if ( ! function_exists( 'ot_insert_css_with_markers' ) ) {
 			// Can't write to the file so we error out.
 			if ( ! is_writable( $filepath ) ) {
 				/* translators: %s: file path */
-				$string = esc_html__( 'Unable to write to file %s.', 'option-tree' );
+				$string = esc_html__( 'Unable to write to file %s.', 'hueman' );
 				add_settings_error( 'option-tree', 'dynamic_css', sprintf( $string, '<code>' . $filepath . '</code>' ), 'error' );
 				return false;
 			}
@@ -3724,7 +3724,7 @@ if ( ! function_exists( 'ot_insert_css_with_markers' ) ) {
 			// Can't write to the file return false.
 			if ( ! $f ) {
 				/* translators: %s: file path */
-				$string = esc_html__( 'Unable to open the %s file in write mode.', 'option-tree' );
+				$string = esc_html__( 'Unable to open the %s file in write mode.', 'hueman' );
 				add_settings_error( 'option-tree', 'dynamic_css', sprintf( $string, '<code>' . $filepath . '</code>' ), 'error' );
 				return false;
 			}
@@ -3817,7 +3817,7 @@ if ( ! function_exists( 'ot_remove_old_css' ) ) {
 			// Can't write to the file return false.
 			if ( ! $f ) {
 				/* translators: %s: file path */
-				$string = esc_html__( 'Unable to open the %s file in write mode.', 'option-tree' );
+				$string = esc_html__( 'Unable to open the %s file in write mode.', 'hueman' );
 				add_settings_error( 'option-tree', 'dynamic_css', sprintf( $string, '<code>' . $filepath . '</code>' ), 'error' );
 				return false;
 			}
@@ -3997,26 +3997,26 @@ if ( ! function_exists( 'ot_sections_view' ) ) {
 	function ot_sections_view( $name, $key, $section = array() ) {
 
 		/* translators: %s: Section Title emphasized */
-		$str_title = esc_html__( '%s: Displayed as a menu item on the Theme Options page.', 'option-tree' );
+		$str_title = esc_html__( '%s: Displayed as a menu item on the Theme Options page.', 'hueman' );
 
 		/* translators: %s: Section ID emphasized */
-		$str_id = esc_html__( '%s: A unique lower case alphanumeric string, underscores allowed.', 'option-tree' );
+		$str_id = esc_html__( '%s: A unique lower case alphanumeric string, underscores allowed.', 'hueman' );
 
 		return '
 		<div class="option-tree-setting is-section">
 			<div class="open">' . ( isset( $section['title'] ) ? esc_attr( $section['title'] ) : 'Section ' . ( absint( $key ) + 1 ) ) . '</div>
 			<div class="button-section">
-				<a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button button left-item" title="' . esc_html__( 'edit', 'option-tree' ) . '">
-					<span class="icon ot-icon-pencil"></span>' . esc_html__( 'Edit', 'option-tree' ) . '
+				<a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button button left-item" title="' . esc_html__( 'edit', 'hueman' ) . '">
+					<span class="icon ot-icon-pencil"></span>' . esc_html__( 'Edit', 'hueman' ) . '
 				</a>
-				<a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="' . esc_html__( 'Delete', 'option-tree' ) . '">
-					<span class="icon ot-icon-trash-o"></span>' . esc_html__( 'Delete', 'option-tree' ) . '
+				<a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="' . esc_html__( 'Delete', 'hueman' ) . '">
+					<span class="icon ot-icon-trash-o"></span>' . esc_html__( 'Delete', 'hueman' ) . '
 				</a>
 			</div>
 			<div class="option-tree-setting-body">
 				<div class="format-settings">
 					<div class="format-setting type-text">
-						<div class="description">' . sprintf( $str_title, '<strong>' . esc_html__( 'Section Title', 'option-tree' ) . '</strong>', 'option-tree' ) . '</div>
+						<div class="description">' . sprintf( $str_title, '<strong>' . esc_html__( 'Section Title', 'hueman' ) . '</strong>', 'option-tree' ) . '</div>
 						<div class="format-setting-inner">
 							<input type="text" name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . '][title]" value="' . ( isset( $section['title'] ) ? esc_attr( $section['title'] ) : '' ) . '" class="widefat option-tree-ui-input option-tree-setting-title section-title" autocomplete="off" />
 						</div>
@@ -4024,7 +4024,7 @@ if ( ! function_exists( 'ot_sections_view' ) ) {
 				</div>
 				<div class="format-settings">
 					<div class="format-setting type-text">
-						<div class="description">' . sprintf( $str_id, '<strong>' . esc_html__( 'Section ID', 'option-tree' ) . '</strong>', 'option-tree' ) . '</div>
+						<div class="description">' . sprintf( $str_id, '<strong>' . esc_html__( 'Section ID', 'hueman' ) . '</strong>', 'option-tree' ) . '</div>
 						<div class="format-setting-inner">
 							<input type="text" name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . '][id]" value="' . ( isset( $section['id'] ) ? esc_attr( $section['id'] ) : '' ) . '" class="widefat option-tree-ui-input section-id" autocomplete="off" />
 						</div>
@@ -4071,62 +4071,62 @@ if ( ! function_exists( 'ot_settings_view' ) ) {
 		}
 
 		/* translators: %s: Label emphasized */
-		$str_label = esc_html__( '%s: Displayed as the label of a form element on the Theme Options page.', 'option-tree' );
+		$str_label = esc_html__( '%s: Displayed as the label of a form element on the Theme Options page.', 'hueman' );
 
 		/* translators: %s: ID emphasized */
-		$str_id = esc_html__( '%s: A unique lower case alphanumeric string, underscores allowed.', 'option-tree' );
+		$str_id = esc_html__( '%s: A unique lower case alphanumeric string, underscores allowed.', 'hueman' );
 
 		/* translators: %s: Type emphasized */
-		$str_type = esc_html__( '%s: Choose one of the available option types from the dropdown.', 'option-tree' );
+		$str_type = esc_html__( '%s: Choose one of the available option types from the dropdown.', 'hueman' );
 
 		/* translators: %s: Description emphasized */
-		$str_desc = esc_html__( '%s: Enter a detailed description for the users to read on the Theme Options page, HTML is allowed. This is also where you enter content for both the Textblock & Textblock Titled option types.', 'option-tree' );
+		$str_desc = esc_html__( '%s: Enter a detailed description for the users to read on the Theme Options page, HTML is allowed. This is also where you enter content for both the Textblock & Textblock Titled option types.', 'hueman' );
 
 		/* translators: %s: Choices emphasized */
-		$str_choices = esc_html__( '%s: This will only affect the following option types: Checkbox, Radio, Select & Select Image.', 'option-tree' );
+		$str_choices = esc_html__( '%s: This will only affect the following option types: Checkbox, Radio, Select & Select Image.', 'hueman' );
 
 		/* translators: %s: Settings emphasized */
-		$str_settings = esc_html__( '%s: This will only affect the List Item option type.', 'option-tree' );
+		$str_settings = esc_html__( '%s: This will only affect the List Item option type.', 'hueman' );
 
 		/* translators: %1$s: Standard emphasized, %2$s: visual path to documentation */
-		$str_standard = esc_html__( '%1$s: Setting the standard value for your option only works for some option types. Read the %2$s for more information on which ones.', 'option-tree' );
+		$str_standard = esc_html__( '%1$s: Setting the standard value for your option only works for some option types. Read the %2$s for more information on which ones.', 'hueman' );
 
 		/* translators: %s: Rows emphasized */
-		$str_rows = esc_html__( '%s: Enter a numeric value for the number of rows in your textarea. This will only affect the following option types: CSS, Textarea, & Textarea Simple.', 'option-tree' );
+		$str_rows = esc_html__( '%s: Enter a numeric value for the number of rows in your textarea. This will only affect the following option types: CSS, Textarea, & Textarea Simple.', 'hueman' );
 
 		/* translators: %s: Post Type emphasized */
-		$str_post_type = esc_html__( '%s: Add a comma separated list of post type like \'post,page\'. This will only affect the following option types: Custom Post Type Checkbox, & Custom Post Type Select.', 'option-tree' );
+		$str_post_type = esc_html__( '%s: Add a comma separated list of post type like \'post,page\'. This will only affect the following option types: Custom Post Type Checkbox, & Custom Post Type Select.', 'hueman' );
 
 		/* translators: %s: Taxonomy emphasized */
-		$str_taxonomy = esc_html__( '%s: Add a comma separated list of any registered taxonomy like \'category,post_tag\'. This will only affect the following option types: Taxonomy Checkbox, & Taxonomy Select.', 'option-tree' );
+		$str_taxonomy = esc_html__( '%s: Add a comma separated list of any registered taxonomy like \'category,post_tag\'. This will only affect the following option types: Taxonomy Checkbox, & Taxonomy Select.', 'hueman' );
 
 		/* translators: %1$s: Min, Max, & Step emphasized, %2$s: format, %3$s: range, %4$s: minimum interval */
-		$str_min_max_step = esc_html__( '%1$s: Add a comma separated list of options in the following format %2$s (slide from %3$s in intervals of %4$s). The three values represent the minimum, maximum, and step options and will only affect the Numeric Slider option type.', 'option-tree' );
+		$str_min_max_step = esc_html__( '%1$s: Add a comma separated list of options in the following format %2$s (slide from %3$s in intervals of %4$s). The three values represent the minimum, maximum, and step options and will only affect the Numeric Slider option type.', 'hueman' );
 
 		/* translators: %s: CSS Class emphasized */
-		$str_css_class = esc_html__( '%s: Add and optional class to this option type.', 'option-tree' );
+		$str_css_class = esc_html__( '%s: Add and optional class to this option type.', 'hueman' );
 
 		/* translators: %1$s: Condition emphasized, %2$s: example value, %3$s: list of valid conditions */
-		$str_condition = esc_html__( '%1$s: Add a comma separated list (no spaces) of conditions in which the field will be visible, leave this setting empty to always show the field. In these examples, %2$s is a placeholder for your condition, which can be in the form of %3$s.', 'option-tree' );
+		$str_condition = esc_html__( '%1$s: Add a comma separated list (no spaces) of conditions in which the field will be visible, leave this setting empty to always show the field. In these examples, %2$s is a placeholder for your condition, which can be in the form of %3$s.', 'hueman' );
 
 		/* translators: %s: Operator emphasized */
-		$str_operator = esc_html__( '%s: Choose the logical operator to compute the result of the conditions.', 'option-tree' );
+		$str_operator = esc_html__( '%s: Choose the logical operator to compute the result of the conditions.', 'hueman' );
 
 		return '
 		<div class="option-tree-setting">
 			<div class="open">' . ( isset( $setting['label'] ) ? esc_attr( $setting['label'] ) : 'Setting ' . ( absint( $key ) + 1 ) ) . '</div>
 			<div class="button-section">
-				<a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button button left-item" title="' . esc_html__( 'Edit', 'option-tree' ) . '">
-					<span class="icon ot-icon-pencil"></span>' . esc_html__( 'Edit', 'option-tree' ) . '
+				<a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button button left-item" title="' . esc_html__( 'Edit', 'hueman' ) . '">
+					<span class="icon ot-icon-pencil"></span>' . esc_html__( 'Edit', 'hueman' ) . '
 				</a>
-				<a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="' . esc_html__( 'Delete', 'option-tree' ) . '">
-					<span class="icon ot-icon-trash-o"></span>' . esc_html__( 'Delete', 'option-tree' ) . '
+				<a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="' . esc_html__( 'Delete', 'hueman' ) . '">
+					<span class="icon ot-icon-trash-o"></span>' . esc_html__( 'Delete', 'hueman' ) . '
 				</a>
 			</div>
 			<div class="option-tree-setting-body">
 				<div class="format-settings">
 					<div class="format-setting type-text wide-desc">
-						<div class="description">' . sprintf( $str_label, '<strong>' . esc_html__( 'Label', 'option-tree' ) . '</strong>' ) . '</div>
+						<div class="description">' . sprintf( $str_label, '<strong>' . esc_html__( 'Label', 'hueman' ) . '</strong>' ) . '</div>
 						<div class="format-setting-inner">
 							<input type="text" name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . '][label]" value="' . ( isset( $setting['label'] ) ? esc_attr( $setting['label'] ) : '' ) . '" class="widefat option-tree-ui-input option-tree-setting-title" autocomplete="off" />
 						</div>
@@ -4134,7 +4134,7 @@ if ( ! function_exists( 'ot_settings_view' ) ) {
 				</div>
 				<div class="format-settings">
 					<div class="format-setting type-text wide-desc">
-						<div class="description">' . sprintf( $str_id, '<strong>' . esc_html__( 'ID', 'option-tree' ) . '</strong>' ) . '</div>
+						<div class="description">' . sprintf( $str_id, '<strong>' . esc_html__( 'ID', 'hueman' ) . '</strong>' ) . '</div>
 						<div class="format-setting-inner">
 							<input type="text" name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . '][id]" value="' . ( isset( $setting['id'] ) ? esc_attr( $setting['id'] ) : '' ) . '" class="widefat option-tree-ui-input" autocomplete="off" />
 						</div>
@@ -4142,7 +4142,7 @@ if ( ! function_exists( 'ot_settings_view' ) ) {
 				</div>
 				<div class="format-settings">
 					<div class="format-setting type-select wide-desc">
-						<div class="description">' . sprintf( $str_type, '<strong>' . esc_html__( 'Type', 'option-tree' ) . '</strong>' ) . '</div>
+						<div class="description">' . sprintf( $str_type, '<strong>' . esc_html__( 'Type', 'hueman' ) . '</strong>' ) . '</div>
 						<div class="format-setting-inner">
 							<select name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . '][type]" value="' . esc_attr( $type ) . '" class="option-tree-ui-select">
 								' . ot_loop_through_option_types( $type, $child ) . '
@@ -4152,7 +4152,7 @@ if ( ! function_exists( 'ot_settings_view' ) ) {
 				</div>
 				<div class="format-settings">
 					<div class="format-setting type-textarea wide-desc">
-						<div class="description">' . sprintf( $str_desc, '<strong>' . esc_html__( 'Description', 'option-tree' ) . '</strong>' ) . '</div>
+						<div class="description">' . sprintf( $str_desc, '<strong>' . esc_html__( 'Description', 'hueman' ) . '</strong>' ) . '</div>
 						<div class="format-setting-inner">
 							<textarea class="textarea" rows="10" cols="40" name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . '][desc]">' . ( isset( $setting['desc'] ) ? esc_html( $setting['desc'] ) : '' ) . '</textarea>
 						</div>
@@ -4160,29 +4160,29 @@ if ( ! function_exists( 'ot_settings_view' ) ) {
 				</div>
 				<div class="format-settings">
 					<div class="format-setting type-textblock wide-desc">
-						<div class="description">' . sprintf( $str_choices, '<strong>' . esc_html__( 'Choices', 'option-tree' ) . '</strong>' ) . '</div>
+						<div class="description">' . sprintf( $str_choices, '<strong>' . esc_html__( 'Choices', 'hueman' ) . '</strong>' ) . '</div>
 						<div class="format-setting-inner">
 							<ul class="option-tree-setting-wrap option-tree-sortable" data-name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . ']">
 								' . ( isset( $setting['choices'] ) ? ot_loop_through_choices( $name . '[' . $key . ']', $setting['choices'] ) : '' ) . '
 							</ul>
-							<a href="javascript:void(0);" class="option-tree-choice-add option-tree-ui-button button hug-left">' . esc_html__( 'Add Choice', 'option-tree' ) . '</a>
+							<a href="javascript:void(0);" class="option-tree-choice-add option-tree-ui-button button hug-left">' . esc_html__( 'Add Choice', 'hueman' ) . '</a>
 						</div>
 					</div>
 				</div>
 				<div class="format-settings">
 					<div class="format-setting type-textblock wide-desc">
-						<div class="description">' . sprintf( $str_settings, '<strong>' . esc_html__( 'Settings', 'option-tree' ) . '</strong>' ) . '</div>
+						<div class="description">' . sprintf( $str_settings, '<strong>' . esc_html__( 'Settings', 'hueman' ) . '</strong>' ) . '</div>
 						<div class="format-setting-inner">
 							<ul class="option-tree-setting-wrap option-tree-sortable" data-name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . ']">
 								' . ( isset( $setting['settings'] ) ? ot_loop_through_sub_settings( $name . '[' . $key . '][settings]', $setting['settings'] ) : '' ) . '
 							</ul>
-							<a href="javascript:void(0);" class="option-tree-list-item-setting-add option-tree-ui-button button hug-left">' . esc_html__( 'Add Setting', 'option-tree' ) . '</a>
+							<a href="javascript:void(0);" class="option-tree-list-item-setting-add option-tree-ui-button button hug-left">' . esc_html__( 'Add Setting', 'hueman' ) . '</a>
 						</div>
 					</div>
 				</div>
 				<div class="format-settings">
 					<div class="format-setting type-text wide-desc">
-						<div class="description">' . sprintf( $str_standard, '<strong>' . esc_html__( 'Standard', 'option-tree' ) . '</strong>', '<code>' . esc_html__( 'OptionTree->Documentation', 'option-tree' ) . '</code>' ) . '</div>
+						<div class="description">' . sprintf( $str_standard, '<strong>' . esc_html__( 'Standard', 'hueman' ) . '</strong>', '<code>' . esc_html__( 'OptionTree->Documentation', 'hueman' ) . '</code>' ) . '</div>
 						<div class="format-setting-inner">
 							' . $std_form_element . '
 						</div>
@@ -4190,7 +4190,7 @@ if ( ! function_exists( 'ot_settings_view' ) ) {
 				</div>
 				<div class="format-settings">
 					<div class="format-setting type-text wide-desc">
-						<div class="description">' . sprintf( $str_rows, '<strong>' . esc_html__( 'Rows', 'option-tree' ) . '</strong>' ) . '</div>
+						<div class="description">' . sprintf( $str_rows, '<strong>' . esc_html__( 'Rows', 'hueman' ) . '</strong>' ) . '</div>
 						<div class="format-setting-inner">
 							<input type="text" name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . '][rows]" value="' . ( isset( $setting['rows'] ) ? esc_attr( $setting['rows'] ) : '' ) . '" class="widefat option-tree-ui-input" />
 						</div>
@@ -4198,7 +4198,7 @@ if ( ! function_exists( 'ot_settings_view' ) ) {
 				</div>
 				<div class="format-settings">
 					<div class="format-setting type-text wide-desc">
-						<div class="description">' . sprintf( $str_post_type, '<strong>' . esc_html__( 'Post Type', 'option-tree' ) . '</strong>' ) . '</div>
+						<div class="description">' . sprintf( $str_post_type, '<strong>' . esc_html__( 'Post Type', 'hueman' ) . '</strong>' ) . '</div>
 						<div class="format-setting-inner">
 							<input type="text" name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . '][post_type]" value="' . ( isset( $setting['post_type'] ) ? esc_attr( $setting['post_type'] ) : '' ) . '" class="widefat option-tree-ui-input" autocomplete="off" />
 						</div>
@@ -4206,7 +4206,7 @@ if ( ! function_exists( 'ot_settings_view' ) ) {
 				</div>
 				<div class="format-settings">
 					<div class="format-setting type-text wide-desc">
-						<div class="description">' . sprintf( $str_taxonomy, '<strong>' . esc_html__( 'Taxonomy', 'option-tree' ) . '</strong>' ) . '</div>
+						<div class="description">' . sprintf( $str_taxonomy, '<strong>' . esc_html__( 'Taxonomy', 'hueman' ) . '</strong>' ) . '</div>
 						<div class="format-setting-inner">
 							<input type="text" name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . '][taxonomy]" value="' . ( isset( $setting['taxonomy'] ) ? esc_attr( $setting['taxonomy'] ) : '' ) . '" class="widefat option-tree-ui-input" autocomplete="off" />
 						</div>
@@ -4214,7 +4214,7 @@ if ( ! function_exists( 'ot_settings_view' ) ) {
 				</div>
 				<div class="format-settings">
 					<div class="format-setting type-text wide-desc">
-						<div class="description">' . sprintf( $str_min_max_step, '<strong>' . esc_html__( 'Min, Max, & Step', 'option-tree' ) . '</strong>', '<code>0,100,1</code>', '<code>0-100</code>', '<code>1</code>' ) . '</div>
+						<div class="description">' . sprintf( $str_min_max_step, '<strong>' . esc_html__( 'Min, Max, & Step', 'hueman' ) . '</strong>', '<code>0,100,1</code>', '<code>0-100</code>', '<code>1</code>' ) . '</div>
 						<div class="format-setting-inner">
 							<input type="text" name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . '][min_max_step]" value="' . ( isset( $setting['min_max_step'] ) ? esc_attr( $setting['min_max_step'] ) : '' ) . '" class="widefat option-tree-ui-input" autocomplete="off" />
 						</div>
@@ -4222,7 +4222,7 @@ if ( ! function_exists( 'ot_settings_view' ) ) {
 				</div>
 				<div class="format-settings">
 					<div class="format-setting type-text wide-desc">
-						<div class="description">' . sprintf( $str_css_class, '<strong>' . esc_html__( 'CSS Class', 'option-tree' ) . '</strong>' ) . '</div>
+						<div class="description">' . sprintf( $str_css_class, '<strong>' . esc_html__( 'CSS Class', 'hueman' ) . '</strong>' ) . '</div>
 						<div class="format-setting-inner">
 							<input type="text" name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . '][class]" value="' . ( isset( $setting['class'] ) ? esc_attr( $setting['class'] ) : '' ) . '" class="widefat option-tree-ui-input" autocomplete="off" />
 						</div>
@@ -4230,7 +4230,7 @@ if ( ! function_exists( 'ot_settings_view' ) ) {
 				</div>
 				<div class="format-settings">
 					<div class="format-setting type-text wide-desc">
-						<div class="description">' . sprintf( $str_condition, '<strong>' . esc_html__( 'Condition', 'option-tree' ) . '</strong>', '<code>value</code>', '<code>field_id:is(value)</code>, <code>field_id:not(value)</code>, <code>field_id:contains(value)</code>, <code>field_id:less_than(value)</code>, <code>field_id:less_than_or_equal_to(value)</code>, <code>field_id:greater_than(value)</code>, or <code>field_id:greater_than_or_equal_to(value)</code>' ) . '</div>
+						<div class="description">' . sprintf( $str_condition, '<strong>' . esc_html__( 'Condition', 'hueman' ) . '</strong>', '<code>value</code>', '<code>field_id:is(value)</code>, <code>field_id:not(value)</code>, <code>field_id:contains(value)</code>, <code>field_id:less_than(value)</code>, <code>field_id:less_than_or_equal_to(value)</code>, <code>field_id:greater_than(value)</code>, or <code>field_id:greater_than_or_equal_to(value)</code>' ) . '</div>
 						<div class="format-setting-inner">
 							<input type="text" name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . '][condition]" value="' . ( isset( $setting['condition'] ) ? esc_attr( $setting['condition'] ) : '' ) . '" class="widefat option-tree-ui-input" autocomplete="off" />
 						</div>
@@ -4238,11 +4238,11 @@ if ( ! function_exists( 'ot_settings_view' ) ) {
 				</div>
 				<div class="format-settings">
 					<div class="format-setting type-select wide-desc">
-						<div class="description">' . sprintf( $str_operator, '<strong>' . esc_html__( 'Operator', 'option-tree' ) . '</strong>' ) . '</div>
+						<div class="description">' . sprintf( $str_operator, '<strong>' . esc_html__( 'Operator', 'hueman' ) . '</strong>' ) . '</div>
 						<div class="format-setting-inner">
 							<select name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . '][operator]" value="' . esc_attr( $operator ) . '" class="option-tree-ui-select">
-								<option value="and" ' . selected( $operator, 'and', false ) . '>' . esc_html__( 'and', 'option-tree' ) . '</option>
-								<option value="or" ' . selected( $operator, 'or', false ) . '>' . esc_html__( 'or', 'option-tree' ) . '</option>
+								<option value="and" ' . selected( $operator, 'and', false ) . '>' . esc_html__( 'and', 'hueman' ) . '</option>
+								<option value="or" ' . selected( $operator, 'or', false ) . '>' . esc_html__( 'or', 'hueman' ) . '</option>
 							</select>
 						</div>
 					</div>
@@ -4276,17 +4276,17 @@ if ( ! function_exists( 'ot_choices_view' ) ) {
 		<div class="option-tree-setting">
 			<div class="open">' . ( isset( $choice['label'] ) ? esc_attr( $choice['label'] ) : 'Choice ' . ( absint( $key ) + 1 ) ) . '</div>
 			<div class="button-section">
-				<a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button button left-item" title="' . esc_html__( 'Edit', 'option-tree' ) . '">
-					<span class="icon ot-icon-pencil"></span>' . esc_html__( 'Edit', 'option-tree' ) . '
+				<a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button button left-item" title="' . esc_html__( 'Edit', 'hueman' ) . '">
+					<span class="icon ot-icon-pencil"></span>' . esc_html__( 'Edit', 'hueman' ) . '
 				</a>
-				<a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="' . esc_html__( 'Delete', 'option-tree' ) . '">
-					<span class="icon ot-icon-trash-o"></span>' . esc_html__( 'Delete', 'option-tree' ) . '
+				<a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="' . esc_html__( 'Delete', 'hueman' ) . '">
+					<span class="icon ot-icon-trash-o"></span>' . esc_html__( 'Delete', 'hueman' ) . '
 				</a>
 			</div>
 			<div class="option-tree-setting-body">
 				<div class="format-settings">
 					<div class="format-setting-label">
-						<h5>' . esc_html__( 'Label', 'option-tree' ) . '</h5>
+						<h5>' . esc_html__( 'Label', 'hueman' ) . '</h5>
 					</div>
 					<div class="format-setting type-text wide-desc">
 						<div class="format-setting-inner">
@@ -4296,7 +4296,7 @@ if ( ! function_exists( 'ot_choices_view' ) ) {
 				</div>
 				<div class="format-settings">
 					<div class="format-setting-label">
-						<h5>' . esc_html__( 'Value', 'option-tree' ) . '</h5>
+						<h5>' . esc_html__( 'Value', 'hueman' ) . '</h5>
 					</div>
 					<div class="format-setting type-text wide-desc">
 						<div class="format-setting-inner">
@@ -4306,7 +4306,7 @@ if ( ! function_exists( 'ot_choices_view' ) ) {
 				</div>
 				<div class="format-settings">
 					<div class="format-setting-label">
-						<h5>' . esc_html__( 'Image Source (Radio Image only)', 'option-tree' ) . '</h5>
+						<h5>' . esc_html__( 'Image Source (Radio Image only)', 'hueman' ) . '</h5>
 					</div>
 					<div class="format-setting type-text wide-desc">
 						<div class="format-setting-inner">
@@ -4340,29 +4340,29 @@ if ( ! function_exists( 'ot_contextual_help_view' ) ) {
 	function ot_contextual_help_view( $name, $key, $content = array() ) {
 
 		/* translators: %s: Title emphasized */
-		$str_title = esc_html__( '%s: Displayed as a contextual help menu item on the Theme Options page.', 'option-tree' );
+		$str_title = esc_html__( '%s: Displayed as a contextual help menu item on the Theme Options page.', 'hueman' );
 
 		/* translators: %s: ID emphasized */
-		$str_id = esc_html__( '%s: A unique lower case alphanumeric string, underscores allowed.', 'option-tree' );
+		$str_id = esc_html__( '%s: A unique lower case alphanumeric string, underscores allowed.', 'hueman' );
 
 		/* translators: %s: Content emphasized */
-		$str_content = esc_html__( '%s: Enter the HTML content about this contextual help item displayed on the Theme Option page for end users to read.', 'option-tree' );
+		$str_content = esc_html__( '%s: Enter the HTML content about this contextual help item displayed on the Theme Option page for end users to read.', 'hueman' );
 
 		return '
 		<div class="option-tree-setting">
 			<div class="open">' . ( isset( $content['title'] ) ? esc_attr( $content['title'] ) : 'Content ' . ( absint( $key ) + 1 ) ) . '</div>
 			<div class="button-section">
-				<a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button button left-item" title="' . esc_html__( 'Edit', 'option-tree' ) . '">
-					<span class="icon ot-icon-pencil"></span>' . esc_html__( 'Edit', 'option-tree' ) . '
+				<a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button button left-item" title="' . esc_html__( 'Edit', 'hueman' ) . '">
+					<span class="icon ot-icon-pencil"></span>' . esc_html__( 'Edit', 'hueman' ) . '
 				</a>
-				<a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="' . esc_html__( 'Delete', 'option-tree' ) . '">
-					<span class="icon ot-icon-trash-o"></span>' . esc_html__( 'Delete', 'option-tree' ) . '
+				<a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="' . esc_html__( 'Delete', 'hueman' ) . '">
+					<span class="icon ot-icon-trash-o"></span>' . esc_html__( 'Delete', 'hueman' ) . '
 				</a>
 			</div>
 			<div class="option-tree-setting-body">
 				<div class="format-settings">
 					<div class="format-setting type-text no-desc">
-						<div class="description">' . sprintf( $str_title, '<strong>' . esc_html__( 'Title', 'option-tree' ) . '</strong>' ) . '</div>
+						<div class="description">' . sprintf( $str_title, '<strong>' . esc_html__( 'Title', 'hueman' ) . '</strong>' ) . '</div>
 						<div class="format-setting-inner">
 							<input type="text" name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . '][title]" value="' . ( isset( $content['title'] ) ? esc_attr( $content['title'] ) : '' ) . '" class="widefat option-tree-ui-input option-tree-setting-title" autocomplete="off" />
 						</div>
@@ -4370,7 +4370,7 @@ if ( ! function_exists( 'ot_contextual_help_view' ) ) {
 				</div>
 				<div class="format-settings">
 					<div class="format-setting type-text no-desc">
-						<div class="description">' . sprintf( $str_id, '<strong>' . esc_html__( 'ID', 'option-tree' ) . '</strong>' ) . '</div>
+						<div class="description">' . sprintf( $str_id, '<strong>' . esc_html__( 'ID', 'hueman' ) . '</strong>' ) . '</div>
 						<div class="format-setting-inner">
 							<input type="text" name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . '][id]" value="' . ( isset( $content['id'] ) ? esc_attr( $content['id'] ) : '' ) . '" class="widefat option-tree-ui-input" autocomplete="off" />
 						</div>
@@ -4378,7 +4378,7 @@ if ( ! function_exists( 'ot_contextual_help_view' ) ) {
 				</div>
 				<div class="format-settings">
 					<div class="format-setting type-textarea no-desc">
-						<div class="description">' . sprintf( $str_content, '<strong>' . esc_html__( 'Content', 'option-tree' ) . '</strong>' ) . '</div>
+						<div class="description">' . sprintf( $str_content, '<strong>' . esc_html__( 'Content', 'hueman' ) . '</strong>' ) . '</div>
 						<div class="format-setting-inner">
 							<textarea class="textarea" rows="15" cols="40" name="' . esc_attr( $name ) . '[' . esc_attr( $key ) . '][content]">' . ( isset( $content['content'] ) ? esc_textarea( $content['content'] ) : '' ) . '</textarea>
 						</div>
@@ -4408,13 +4408,13 @@ if ( ! function_exists( 'ot_layout_view' ) ) {
 
 		return '
 		<div class="option-tree-setting">
-			<div class="open">' . ( isset( $key ) ? esc_attr( $key ) : esc_html__( 'Layout', 'option-tree' ) ) . '</div>
+			<div class="open">' . ( isset( $key ) ? esc_attr( $key ) : esc_html__( 'Layout', 'hueman' ) ) . '</div>
 			<div class="button-section">
-				<a href="javascript:void(0);" class="option-tree-layout-activate option-tree-ui-button button left-item' . ( $active_layout === $key ? ' active' : '' ) . '" title="' . esc_html__( 'Activate', 'option-tree' ) . '">
-					<span class="icon ot-icon-square-o"></span>' . esc_html__( 'Activate', 'option-tree' ) . '
+				<a href="javascript:void(0);" class="option-tree-layout-activate option-tree-ui-button button left-item' . ( $active_layout === $key ? ' active' : '' ) . '" title="' . esc_html__( 'Activate', 'hueman' ) . '">
+					<span class="icon ot-icon-square-o"></span>' . esc_html__( 'Activate', 'hueman' ) . '
 				</a>
-				<a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="' . esc_html__( 'Delete', 'option-tree' ) . '">
-					<span class="icon ot-icon-trash-o"></span>' . esc_html__( 'Delete', 'option-tree' ) . '
+				<a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="' . esc_html__( 'Delete', 'hueman' ) . '">
+					<span class="icon ot-icon-trash-o"></span>' . esc_html__( 'Delete', 'hueman' ) . '
 				</a>
 			</div>
 			<input type="hidden" name="' . esc_attr( ot_layouts_id() ) . '[' . esc_attr( $key ) . ']" value="' . esc_attr( $data ) . '" />
@@ -4447,7 +4447,7 @@ if ( ! function_exists( 'ot_list_item_view' ) ) {
 		$required_setting = array(
 			array(
 				'id'        => 'title',
-				'label'     => __( 'Title', 'option-tree' ),
+				'label'     => __( 'Title', 'hueman' ),
 				'desc'      => '',
 				'std'       => '',
 				'type'      => 'text',
@@ -4475,11 +4475,11 @@ if ( ! function_exists( 'ot_list_item_view' ) ) {
 		<div class="option-tree-setting">
 			<div class="open">' . ( isset( $list_item['title'] ) ? esc_attr( $list_item['title'] ) : '' ) . '</div>
 			<div class="button-section">
-				<a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button button left-item" title="' . esc_html__( 'Edit', 'option-tree' ) . '">
-					<span class="icon ot-icon-pencil"></span>' . esc_html__( 'Edit', 'option-tree' ) . '
+				<a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button button left-item" title="' . esc_html__( 'Edit', 'hueman' ) . '">
+					<span class="icon ot-icon-pencil"></span>' . esc_html__( 'Edit', 'hueman' ) . '
 				</a>
-				<a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="' . esc_html__( 'Delete', 'option-tree' ) . '">
-					<span class="icon ot-icon-trash-o"></span>' . esc_html__( 'Delete', 'option-tree' ) . '
+				<a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="' . esc_html__( 'Delete', 'hueman' ) . '">
+					<span class="icon ot-icon-trash-o"></span>' . esc_html__( 'Delete', 'hueman' ) . '
 				</a>
 			</div>
 			<div class="option-tree-setting-body">
@@ -4618,11 +4618,11 @@ if ( ! function_exists( 'ot_social_links_view' ) ) {
 		<div class="option-tree-setting">
 			<div class="open">' . ( isset( $list_item['name'] ) ? esc_attr( $list_item['name'] ) : '' ) . '</div>
 			<div class="button-section">
-				<a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button button left-item" title="' . esc_html__( 'Edit', 'option-tree' ) . '">
-					<span class="icon ot-icon-pencil"></span>' . esc_html__( 'Edit', 'option-tree' ) . '
+				<a href="javascript:void(0);" class="option-tree-setting-edit option-tree-ui-button button left-item" title="' . esc_html__( 'Edit', 'hueman' ) . '">
+					<span class="icon ot-icon-pencil"></span>' . esc_html__( 'Edit', 'hueman' ) . '
 				</a>
-				<a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="' . esc_html__( 'Delete', 'option-tree' ) . '">
-					<span class="icon ot-icon-trash-o"></span>' . esc_html__( 'Delete', 'option-tree' ) . '
+				<a href="javascript:void(0);" class="option-tree-setting-remove option-tree-ui-button button button-secondary light right-item" title="' . esc_html__( 'Delete', 'hueman' ) . '">
+					<span class="icon ot-icon-trash-o"></span>' . esc_html__( 'Delete', 'hueman' ) . '
 				</a>
 			</div>
 			<div class="option-tree-setting-body">
@@ -4765,7 +4765,7 @@ if ( ! function_exists( 'ot_theme_options_layouts_form' ) ) {
 		/* add new layout */
 		echo '<input type="text" name="' . esc_attr( ot_layouts_id() ) . '[_add_new_layout_]" value="" class="widefat option-tree-ui-input" autocomplete="off" />';
 
-		echo '<button type="submit" class="option-tree-ui-button button button-primary save-layout" title="' . esc_html__( 'New Layout', 'option-tree' ) . '">' . esc_html__( 'New Layout', 'option-tree' ) . '</button>';
+		echo '<button type="submit" class="option-tree-ui-button button button-primary save-layout" title="' . esc_html__( 'New Layout', 'hueman' ) . '">' . esc_html__( 'New Layout', 'hueman' ) . '</button>';
 
 		echo '</div>';
 
@@ -5475,7 +5475,7 @@ if ( ! function_exists( 'ot_meta_box_post_format_gallery' ) ) {
 			'ot_meta_box_post_format_gallery',
 			array(
 				'id'       => 'ot-post-format-gallery',
-				'title'    => esc_html__( 'Gallery', 'option-tree' ),
+				'title'    => esc_html__( 'Gallery', 'hueman' ),
 				'desc'     => '',
 				'pages'    => $pages,
 				'context'  => 'side',
@@ -5523,7 +5523,7 @@ if ( ! function_exists( 'ot_meta_box_post_format_link' ) ) {
 			'ot_meta_box_post_format_link',
 			array(
 				'id'       => 'ot-post-format-link',
-				'title'    => esc_html__( 'Link', 'option-tree' ),
+				'title'    => esc_html__( 'Link', 'hueman' ),
 				'desc'     => '',
 				'pages'    => $pages,
 				'context'  => 'side',
@@ -5532,14 +5532,14 @@ if ( ! function_exists( 'ot_meta_box_post_format_link' ) ) {
 					array(
 						'id'    => '_format_link_url',
 						'label' => '',
-						'desc'  => esc_html__( 'Link URL', 'option-tree' ),
+						'desc'  => esc_html__( 'Link URL', 'hueman' ),
 						'std'   => '',
 						'type'  => 'text',
 					),
 					array(
 						'id'    => '_format_link_title',
 						'label' => '',
-						'desc'  => esc_html__( 'Link Title', 'option-tree' ),
+						'desc'  => esc_html__( 'Link Title', 'hueman' ),
 						'std'   => '',
 						'type'  => 'text',
 					),
@@ -5577,7 +5577,7 @@ if ( ! function_exists( 'ot_meta_box_post_format_quote' ) ) {
 			'ot_meta_box_post_format_quote',
 			array(
 				'id'       => 'ot-post-format-quote',
-				'title'    => esc_html__( 'Quote', 'option-tree' ),
+				'title'    => esc_html__( 'Quote', 'hueman' ),
 				'desc'     => '',
 				'pages'    => $pages,
 				'context'  => 'side',
@@ -5586,28 +5586,28 @@ if ( ! function_exists( 'ot_meta_box_post_format_quote' ) ) {
 					array(
 						'id'    => '_format_quote_source_name',
 						'label' => '',
-						'desc'  => esc_html__( 'Source Name (ex. author, singer, actor)', 'option-tree' ),
+						'desc'  => esc_html__( 'Source Name (ex. author, singer, actor)', 'hueman' ),
 						'std'   => '',
 						'type'  => 'text',
 					),
 					array(
 						'id'    => '_format_quote_source_url',
 						'label' => '',
-						'desc'  => esc_html__( 'Source URL', 'option-tree' ),
+						'desc'  => esc_html__( 'Source URL', 'hueman' ),
 						'std'   => '',
 						'type'  => 'text',
 					),
 					array(
 						'id'    => '_format_quote_source_title',
 						'label' => '',
-						'desc'  => esc_html__( 'Source Title (ex. book, song, movie)', 'option-tree' ),
+						'desc'  => esc_html__( 'Source Title (ex. book, song, movie)', 'hueman' ),
 						'std'   => '',
 						'type'  => 'text',
 					),
 					array(
 						'id'    => '_format_quote_source_date',
 						'label' => '',
-						'desc'  => esc_html__( 'Source Date', 'option-tree' ),
+						'desc'  => esc_html__( 'Source Date', 'hueman' ),
 						'std'   => '',
 						'type'  => 'text',
 					),
@@ -5643,13 +5643,13 @@ if ( ! function_exists( 'ot_meta_box_post_format_video' ) ) {
 		}
 
 		/* translators: %1$s: link to WorPress Codex, %2$s: video shortcode */
-		$string = esc_html__( 'Embed video from services like Youtube, Vimeo, or Hulu. You can find a list of supported oEmbed sites in the %1$s. Alternatively, you could use the built-in %2$s shortcode.', 'option-tree' );
+		$string = esc_html__( 'Embed video from services like Youtube, Vimeo, or Hulu. You can find a list of supported oEmbed sites in the %1$s. Alternatively, you could use the built-in %2$s shortcode.', 'hueman' );
 
 		return apply_filters(
 			'ot_meta_box_post_format_video',
 			array(
 				'id'       => 'ot-post-format-video',
-				'title'    => __( 'Video', 'option-tree' ),
+				'title'    => __( 'Video', 'hueman' ),
 				'desc'     => '',
 				'pages'    => $pages,
 				'context'  => 'side',
@@ -5658,7 +5658,7 @@ if ( ! function_exists( 'ot_meta_box_post_format_video' ) ) {
 					array(
 						'id'    => '_format_video_embed',
 						'label' => '',
-						'desc'  => sprintf( $string, '<a href="https://codex.wordpress.org/Embeds" target="_blank">' . esc_html__( 'WordPress Codex', 'option-tree' ) . '</a>', '<code>[video]</code>' ),
+						'desc'  => sprintf( $string, '<a href="https://codex.wordpress.org/Embeds" target="_blank">' . esc_html__( 'WordPress Codex', 'hueman' ) . '</a>', '<code>[video]</code>' ),
 						'std'   => '',
 						'type'  => 'textarea',
 					),
@@ -5693,13 +5693,13 @@ if ( ! function_exists( 'ot_meta_box_post_format_audio' ) ) {
 		}
 
 		/* translators: %1$s: link to WorPress Codex, %2$s: audio shortcode */
-		$string = esc_html__( 'Embed audio from services like SoundCloud and Radio. You can find a list of supported oEmbed sites in the %1$s. Alternatively, you could use the built-in %2$s shortcode.', 'option-tree' );
+		$string = esc_html__( 'Embed audio from services like SoundCloud and Radio. You can find a list of supported oEmbed sites in the %1$s. Alternatively, you could use the built-in %2$s shortcode.', 'hueman' );
 
 		return apply_filters(
 			'ot_meta_box_post_format_audio',
 			array(
 				'id'       => 'ot-post-format-audio',
-				'title'    => esc_html__( 'Audio', 'option-tree' ),
+				'title'    => esc_html__( 'Audio', 'hueman' ),
 				'desc'     => '',
 				'pages'    => $pages,
 				'context'  => 'side',
@@ -5708,7 +5708,7 @@ if ( ! function_exists( 'ot_meta_box_post_format_audio' ) ) {
 					array(
 						'id'    => '_format_audio_embed',
 						'label' => '',
-						'desc'  => sprintf( $string, '<a href="https://codex.wordpress.org/Embeds" target="_blank">' . esc_html__( 'WordPress Codex', 'option-tree' ) . '</a>', '<code>[audio]</code>' ),
+						'desc'  => sprintf( $string, '<a href="https://codex.wordpress.org/Embeds" target="_blank">' . esc_html__( 'WordPress Codex', 'hueman' ) . '</a>', '<code>[audio]</code>' ),
 						'std'   => '',
 						'type'  => 'textarea',
 					),

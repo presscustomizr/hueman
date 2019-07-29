@@ -360,7 +360,7 @@ if ( ! function_exists( 'ot_register_theme_options_admin_bar_menu' ) ) {
 			array(
 				'parent' => 'appearance',
 				'id'     => apply_filters( 'ot_theme_options_menu_slug', 'ot-theme-options' ),
-				'title'  => apply_filters( 'ot_theme_options_page_title', __( 'Theme Options', 'option-tree' ) ),
+				'title'  => apply_filters( 'ot_theme_options_page_title', __( 'Theme Options', 'hueman' ) ),
 				'href'   => admin_url( apply_filters( 'ot_theme_options_parent_slug', 'themes.php' ) . '?page=' . apply_filters( 'ot_theme_options_menu_slug', 'ot-theme-options' ) ),
 			)
 		);
