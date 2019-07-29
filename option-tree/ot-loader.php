@@ -20,7 +20,9 @@ if ( class_exists( 'OT_Loader' ) && defined( 'OT_PLUGIN_MODE' ) && true === OT_P
 	 * Forces Plugin Mode when OptionTree is already loaded and displays an admin notice.
 	 */
 	function ot_conflict_notice() {
-		echo '<div class="error"><p>' . esc_html__( 'OptionTree is installed as a plugin and also embedded in your current theme. Please deactivate the plugin to load the theme dependent version of OptionTree, and remove this warning.', 'option-tree' ) . '</p></div>';
+		// @hu_addon: do not print any conflict notice
+		// echo '<div class="error"><p>' . esc_html__( 'OptionTree is installed as a plugin and also embedded in your current theme. Please deactivate the plugin to load the theme dependent version of OptionTree, and remove this warning.', 'option-tree' ) . '</p></div>';
+		echo '';
 	}
 
 	add_action( 'admin_notices', 'ot_conflict_notice' );
@@ -272,7 +274,8 @@ if ( ! class_exists( 'OT_Loader' ) && defined( 'ABSPATH' ) ) {
 				'ot-functions-admin',
 				'ot-functions-option-types',
 				'ot-functions-compat',
-				'class-ot-settings',
+				// @hu_custom: do not includ
+				// 'class-ot-settings',
 			);
 
 			// Include the meta box api.
@@ -282,25 +285,29 @@ if ( ! class_exists( 'OT_Loader' ) && defined( 'ABSPATH' ) ) {
 
 			// Include the post formats api.
 			if ( true === OT_META_BOXES && true === OT_POST_FORMATS ) {
-				$files[] = 'class-ot-post-formats';
+				// @hu_custom: do not load.
+				//$files[] = 'class-ot-post-formats';
 			}
 
 			// Include the settings & docs pages.
 			if ( true === OT_SHOW_PAGES ) {
-				$files[] = 'ot-functions-settings-page';
-				$files[] = 'ot-functions-docs-page';
+				// @hu_custom: do not load.
+				//$files[] = 'ot-functions-settings-page';
+				//$files[] = 'ot-functions-docs-page';
 			}
 
 			// Include the cleanup api.
-			$files[] = 'class-ot-cleanup';
+			// @hu_custom: do not load.
+			//$files[] = 'class-ot-cleanup';
 
 			// Require the files.
 			foreach ( $files as $file ) {
 				$this->load_file( OT_DIR . 'includes' . DIRECTORY_SEPARATOR . "{$file}.php" );
 			}
 
+			// @hu_custom: do not do.
 			// Registers the Theme Option page.
-			add_action( 'init', 'ot_register_theme_options_page' );
+			// add_action( 'init', 'ot_register_theme_options_page' );
 
 			// Registers the Settings page.
 			if ( true === OT_SHOW_PAGES ) {
@@ -372,27 +379,38 @@ if ( ! class_exists( 'OT_Loader' ) && defined( 'ABSPATH' ) ) {
 			// Adds the Theme Option page to the admin bar.
 			add_action( 'admin_bar_menu', 'ot_register_theme_options_admin_bar_menu', 999 );
 
+			// @hu_custom: do not do.
 			// Prepares the after save do_action.
-			add_action( 'admin_init', 'ot_after_theme_options_save', 1 );
+			// add_action( 'admin_init', 'ot_after_theme_options_save', 1 );
 
+			// @hu_custom: do not do.
 			// default settings.
-			add_action( 'admin_init', 'ot_default_settings', 2 );
+			// add_action( 'admin_init', 'ot_default_settings', 2 );
 
+			// @hu_custom: do not do.
 			// Import.
-			add_action( 'admin_init', 'ot_import', 4 );
+			// add_action( 'admin_init', 'ot_import', 4 );
 
+			// @hu_custom: do not do.
 			// Export.
-			add_action( 'admin_init', 'ot_export', 5 );
+			// add_action( 'admin_init', 'ot_export', 5 );
 
-			// Save settings.
-			add_action( 'admin_init', 'ot_save_settings', 6 );
+			// @hu_custom
+			// Managing plugins on jetpack's wordpress.com dashboard fix
+			// https://github.com/presscustomizr/hueman/issues/541
+			// For some reason admin_init is fired but is_admin() returns false
+			// so some required admin files are not loaded:
+			// see $this->admin_includes() : it returns if not is_admin()
+			if ( is_admin() ) {
+				// Save settings.
+				add_action( 'admin_init', 'ot_save_settings', 6 );
 
-			// Save layouts.
-			add_action( 'admin_init', 'ot_modify_layouts', 7 );
+				// Save layouts.
+				add_action( 'admin_init', 'ot_modify_layouts', 7 );
 
-			// Create media post.
-			add_action( 'admin_init', 'ot_create_media_post', 8 );
-
+				// Create media post.
+				add_action( 'admin_init', 'ot_create_media_post', 8 );
+			}
 			// Google Fonts front-end CSS.
 			add_action( 'wp_enqueue_scripts', 'ot_load_google_fonts_css', 1 );
 
@@ -494,9 +512,12 @@ if ( ! class_exists( 'OT_Loader' ) && defined( 'ABSPATH' ) ) {
 			check_ajax_referer( 'option_tree', 'nonce' );
 
 			$count  = isset( $_REQUEST['count'] ) ? absint( $_REQUEST['count'] ) : 0;
+			// @hu_custom: do not do.
+			/*
 			$output = ot_sections_view( ot_settings_id() . '[sections]', $count );
 
 			echo $output; // phpcs:ignore
+			*/
 			wp_die();
 		}
 

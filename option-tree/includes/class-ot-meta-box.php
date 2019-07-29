@@ -175,7 +175,8 @@ if ( ! class_exists( 'OT_Meta_Box' ) ) {
 				// Don't show title with textblocks.
 				if ( 'textblock' !== $_args['type'] && ! empty( $field['label'] ) ) {
 					echo '<div class="format-setting-label">';
-					echo '<label for="' . esc_attr( $field['id'] ) . '" class="label">' . esc_html( $field['label'] ) . '</label>';
+					// @hu_custom: allow html in the label field
+					echo '<label for="' . esc_attr( $field['id'] ) . '" class="label">' . $field['label'] . '</label>';
 					echo '</div>';
 				}
 

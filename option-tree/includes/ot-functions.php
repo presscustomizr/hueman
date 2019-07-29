@@ -77,6 +77,11 @@ if ( ! function_exists( 'ot_get_option' ) ) {
 	 */
 	function ot_get_option( $option_id, $default = '' ) {
 
+		// @hu_custom Temporary hack.
+		if ( ! apply_filters( 'use_option_tree' , true ) && class_exists( 'HU_utils' ) ) {
+			return HU_utils::$inst->hu_opt( $option_id );
+		}
+
 		// Get the saved options.
 		$options = get_option( ot_options_id() );
 

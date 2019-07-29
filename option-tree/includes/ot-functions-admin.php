@@ -837,8 +837,9 @@ if ( ! function_exists( 'ot_admin_styles' ) ) {
 		// Load WP colorpicker.
 		wp_enqueue_style( 'wp-color-picker' );
 
+		// @hu_custom: version as time().
 		// Load admin styles.
-		wp_enqueue_style( 'ot-admin-css', OT_URL . 'assets/css/ot-admin.css', false, OT_VERSION );
+		wp_enqueue_style( 'ot-admin-css', OT_URL . 'assets/css/ot-admin.css', false, time() );
 
 		// Load the RTL stylesheet.
 		$wp_styles->add_data( 'ot-admin-css', 'rtl', true );
@@ -903,8 +904,14 @@ if ( ! function_exists( 'ot_admin_scripts' ) ) {
 		// Load jQuery-ui slider.
 		wp_enqueue_script( 'jquery-ui-slider' );
 
+		/**
+	 	 * @hu_custom
+		 * Hueman doesn't need date and time picker jquery plugins
+		 * we remove them for compatibility reasons.
+		 * See : https://github.com/presscustomizr/hueman/issues/454
+		 */
 		// Load jQuery-ui datepicker.
-		wp_enqueue_script( 'jquery-ui-datepicker' );
+		// wp_enqueue_script( 'jquery-ui-datepicker' );
 
 		// Load WP colorpicker.
 		wp_enqueue_script( 'wp-color-picker' );
@@ -913,15 +920,30 @@ if ( ! function_exists( 'ot_admin_scripts' ) ) {
 		wp_enqueue_script( 'ace-editor', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js', null, '1.1.3', false );
 
 		// Load jQuery UI timepicker addon.
-		wp_enqueue_script( 'jquery-ui-timepicker', OT_URL . 'assets/js/vendor/jquery/jquery-ui-timepicker.js', array( 'jquery', 'jquery-ui-slider', 'jquery-ui-datepicker' ), '1.4.3', false );
+		// wp_enqueue_script( 'jquery-ui-timepicker', OT_URL . 'assets/js/vendor/jquery/jquery-ui-timepicker.js', array( 'jquery', 'jquery-ui-slider', 'jquery-ui-datepicker' ), '1.4.3', false );
 
 		// Load the post formats.
 		if ( true === OT_META_BOXES && true === OT_POST_FORMATS ) {
 			wp_enqueue_script( 'ot-postformats', OT_URL . 'assets/js/ot-postformats.js', array( 'jquery' ), '1.0.1', false );
 		}
 
+		/**
+	 	 * @hu_custom
+		 * Hueman doesn't need date and time picker jquery plugins
+		 * we remove them for compatibility reasons.
+		 * See : https://github.com/presscustomizr/hueman/issues/454
+		 */
 		// Load all the required scripts.
-		wp_enqueue_script( 'ot-admin-js', OT_URL . 'assets/js/ot-admin.js', array( 'jquery', 'jquery-ui-tabs', 'jquery-ui-sortable', 'jquery-ui-slider', 'wp-color-picker', 'ace-editor', 'jquery-ui-datepicker', 'jquery-ui-timepicker' ), OT_VERSION, false );
+		wp_enqueue_script( 'ot-admin-js', OT_URL . 'assets/js/ot-admin.js', array(
+			'jquery',
+			'jquery-ui-tabs',
+			'jquery-ui-sortable',
+			'jquery-ui-slider',
+			'wp-color-picker',
+			'ace-editor',
+			// 'jquery-ui-datepicker',
+			// 'jquery-ui-timepicker'
+		), OT_VERSION, false );
 
 		// Create localized JS array.
 		$localized_array = array(
@@ -1675,7 +1697,7 @@ add_action( 'init', 'custom_theme_options' );
  * Build the custom settings & update OptionTree.
  */
 function custom_theme_options() {
-  
+
 	// OptionTree is not loaded yet, or this is not an admin request.
 	if ( ! function_exists( 'ot_settings_id' ) || ! is_admin() ) {
 		return false;
@@ -1693,7 +1715,7 @@ function custom_theme_options() {
 
 	// Settings are not the same update the DB.
 	if ( \$saved_settings !== \$custom_settings ) {
-		update_option( ot_settings_id(), \$custom_settings ); 
+		update_option( ot_settings_id(), \$custom_settings );
 	}
 
 	// Lets OptionTree know the UI Builder is being overridden.

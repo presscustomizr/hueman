@@ -1,7 +1,7 @@
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: OptionTree Font
   ---------------------------------------------------*/
-.ui-tabs li > a [class^="ot-icon-"], 
+.ui-tabs li > a [class^="ot-icon-"],
 .ui-tabs li > a [class*=" ot-icon-"] {
   display: block;
   height: 14px;
@@ -9,7 +9,7 @@
   padding: 2px 0px 0 9px;
 }
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: Messages
   ---------------------------------------------------*/
 .wrap.settings-wrap div.error,
@@ -17,7 +17,7 @@
   margin: 9px 2px 0px 5px !important;
 }
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: OptionTree Wrappers
   ---------------------------------------------------*/
 #option-tree-settings-api > .ui-tabs {
@@ -27,7 +27,7 @@
           box-shadow: inset -146px 0 0 #f1f1f1, inset -147px 0 0 #ccc, 0 1px 3px rgba(0,0,0,0.05);
 }
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: Header
   ---------------------------------------------------*/
 #option-tree-header {
@@ -143,32 +143,32 @@
   border-right-color: #e75546;
 }
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: Sub Header
   ---------------------------------------------------*/
-#option-tree-sub-header { 
+#option-tree-sub-header {
   margin: 0 2px 0 5px;
 }
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: Tabs
   ---------------------------------------------------*/
-.wrap.settings-wrap .ui-tabs-nav { 
-  float: right; 
+.wrap.settings-wrap .ui-tabs-nav {
+  float: right;
   margin: 0 -4px 0 0;
 }
-.wrap.settings-wrap .ui-tabs-nav li { 
+.wrap.settings-wrap .ui-tabs-nav li {
   border-left-width: 0;
   border-right-width: 1px;
   -webkit-border-radius: 0 2px 2px 0;
      -moz-border-radius: 0 2px 2px 0;
-          border-radius: 0 2px 2px 0; 
+          border-radius: 0 2px 2px 0;
 }
 .wrap.settings-wrap .ui-tabs-nav li a {
-  padding: 5px 12px 5px 5px; 
+  padding: 5px 12px 5px 5px;
 }
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: Format Setting
   ---------------------------------------------------*/
 .format-setting .format-setting-inner {
@@ -203,7 +203,7 @@
   top: 10px;
 }
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: Input & Upload
   ---------------------------------------------------*/
 input.option-tree-ui-upload-input,
@@ -217,7 +217,7 @@ input.option-tree-ui-input {
   width: 99.9%; /* fixes a strange bug with input with */
 }
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: Upload
   ---------------------------------------------------*/
 div.option-tree-ui-media-wrap {
@@ -239,7 +239,7 @@ div.option-tree-ui-media-wrap {
   left: -55px;
 }
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: Setting Item with Drag & Drop
   ---------------------------------------------------*/
 .option-tree-setting .open {
@@ -254,7 +254,7 @@ div.option-tree-ui-media-wrap {
   left: 0px;
 }
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: Layouts
   ---------------------------------------------------*/
 #option-tree-options-layouts-form {
@@ -286,7 +286,7 @@ div.option-tree-ui-media-wrap {
   margin: 0 10px 0 0 !important;
 }
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: Option Group
   ---------------------------------------------------*/
 .ot-option-group {
@@ -318,7 +318,7 @@ div.option-tree-ui-media-wrap {
   float: right;
 }
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: Select
   ---------------------------------------------------*/
 .select-wrapper {
@@ -349,15 +349,15 @@ div.option-tree-ui-media-wrap {
   };
 }
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: Measurement
   ---------------------------------------------------*/
-.option-tree-ui-measurement-input-wrap { 
+.option-tree-ui-measurement-input-wrap {
   margin-right: 0;
   margin-left: 80px;
 }
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: Checkbox & Radio
   ---------------------------------------------------*/
 .format-setting.type-checkbox input,
@@ -373,8 +373,8 @@ div.option-tree-ui-media-wrap {
 #option-tree-settings-api .format-setting.type-radio p {
   float: right;
 }
-    
-/* -------------------------------------------------- 
+
+/* --------------------------------------------------
   :: Radio Images
   ---------------------------------------------------*/
 .type-radio-image .option-tree-ui-radio-images {
@@ -382,7 +382,7 @@ div.option-tree-ui-media-wrap {
   margin: 0 0px 10px 10px;
 }
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: Numeric Slider
   ---------------------------------------------------*/
 .ot-numeric-slider-wrap {
@@ -394,11 +394,11 @@ div.option-tree-ui-media-wrap {
 }
 .ot-numeric-slider.ui-slider {
   -webkit-box-shadow: inset -1px 1px 1px rgba(0, 0, 0, 0.05);
-     -moz-box-shadow: inset -1px 1px 1px rgba(0, 0, 0, 0.05); 
+     -moz-box-shadow: inset -1px 1px 1px rgba(0, 0, 0, 0.05);
           box-shadow: inset -1px 1px 1px rgba(0, 0, 0, 0.05);
 }
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: Colorpicker
   ---------------------------------------------------*/
 .option-tree-ui-colorpicker-input-wrap {
@@ -419,7 +419,7 @@ div.option-tree-ui-media-wrap {
   margin: 0px 0px 5px 5px;
 }
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: Google Font
   ---------------------------------------------------*/
 .js-remove-google-font.option-tree-ui-button.button {
@@ -428,8 +428,8 @@ div.option-tree-ui-media-wrap {
   margin-top: 0;
 }
 
-/* -------------------------------------------------- 
-  :: OptionTree UI Buttons 
+/* --------------------------------------------------
+  :: OptionTree UI Buttons
   ---------------------------------------------------*/
 .option-tree-ui-button {
   float: right !important;
@@ -468,8 +468,8 @@ button.reset-settings {
   right: 8px;
 }
 
-/* -------------------------------------------------- 
-  :: OptionTree UI Button Icons 
+/* --------------------------------------------------
+  :: OptionTree UI Button Icons
   ---------------------------------------------------*/
 .option-tree-ui-button .icon {
   float: right;
@@ -479,8 +479,8 @@ button.reset-settings {
   margin-left: 10px;
   float: left;
 }
-  
-/* -------------------------------------------------- 
+
+/* --------------------------------------------------
   :: Gallery
   ---------------------------------------------------*/
 ul.ot-gallery-list {
@@ -494,7 +494,7 @@ ul.ot-gallery-list li {
   float: right;
 }
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: Google Fonts
   ---------------------------------------------------*/
 .option-tree-google-font-family,
@@ -505,7 +505,7 @@ ul.ot-gallery-list li {
   float: right;
 }
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: On/Off Switch
   ---------------------------------------------------*/
 @media only screen {
@@ -517,7 +517,7 @@ ul.ot-gallery-list li {
   .on-off-switch label {
     float: right;
   }
-  .on-off-switch .slide-button {   
+  .on-off-switch .slide-button {
     left: auto;
     right: -1px;
   }
@@ -527,88 +527,21 @@ ul.ot-gallery-list li {
   }
 }
 
-/* -------------------------------------------------- 
+/**
+ * @hu_custom
+ * Hueman doesn't need date and time picker jquery plugins
+ * we remove them for compatibility reasons.
+ * See : https://github.com/presscustomizr/hueman/issues/454
+ */
+/* --------------------------------------------------
   :: Date Picker
   ---------------------------------------------------*/
-.ui-datepicker {
-  direction: rtl;
-}
-.ui-datepicker .ui-widget-header {
-  left: auto;
-  right: -1px;
-}
-.ui-datepicker-prev:before {
-  border-right: 0px;
-  border-left: 1px solid #555;
-  content: "\f105";
-  float: left;
-  width: 31px;
-  height: 30px;
-}
-.ui-datepicker-prev {
-  border-right: 0px;
-  border-left: 1px solid #333;
-  float: right;
-  width: 31px;
-}
-.ui-datepicker-next:before {
-  border-left: 0px;
-  border-right: 1px solid #333;
-  content: "\f104";
-  float: right;
-  width: 30px;
-  height: 30px;
-}
-.ui-datepicker-next {
-  border-left: 0px;
-  border-right: 1px solid #555;
-  float: left;
-  width: 30px;
-}
-.ui-datepicker thead th:last-child {
-  border-left: 1px solid #ccc;
-}
-.ui-datepicker tbody td {
-  border-left: 1px solid #ccc;
-}
-.ui-datepicker tbody td:first-child {
-  border-left: 0px;
-}
-.ui-datepicker .ui-datepicker-buttonpane button {
-  float: left;
-}
-.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current {
-  float: right;
-}
-@-moz-document url-prefix() {
-  .ui-datepicker-calendar {
-    position: relative;
-    right: -1px;
-  }
-  .ui-datepicker-calendar thead {
-    border-right: 1px solid #ccc;
-  }
-}
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: Time Picker
   ---------------------------------------------------*/
-.ui-timepicker-div { 
-  direction: rtl; 
-}
-.ui-timepicker-div dl { 
-  text-align: right; 
-  padding: 0 5px 0 0; 
-}
-.ui-timepicker-div dl dt { 
-  float: right; 
-  clear: right; 
-}
-.ui-timepicker-div dl dd { 
-  margin: 0 45% 10px 10px; 
-}
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: Meta Box Tabs
   ---------------------------------------------------*/
 .ot-metabox-tabs.ui-tabs .ot-metabox-nav.ui-tabs-nav {
@@ -625,7 +558,7 @@ ul.ot-gallery-list li {
   padding: 5px 12px 5px 5px;
 }
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
   :: Theme Option & Side Metabox Tabs
   ---------------------------------------------------*/
 .ot-theme-option-tabs.ui-tabs .ot-theme-option-nav.ui-tabs-nav li.ui-state-default,
