@@ -5,7 +5,11 @@ html { -webkit-font-smoothing: antialiased; /* safari font rendering issue fix *
 body { background: #eaeaea; font-size: 1rem; line-height: 1.5em; color: #666; font-weight: 300; }
 ::selection { background: #16cfc1; color: #fff; }
 ::-moz-selection { background: #16cfc1; color: #fff; }
-a { color: #16cfc1; text-decoration: none; outline: 0; }
+a {
+  color: #16cfc1;
+  text-decoration: none;
+  /*outline: 0; <= commented in August 2019 for https://github.com/presscustomizr/hueman/issues/819 */
+}
 a:hover { color: #444; }
 img { max-width: 100%; height: auto; }
 a,
