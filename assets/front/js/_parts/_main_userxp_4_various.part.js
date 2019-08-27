@@ -369,7 +369,6 @@ var czrapp = czrapp || {};
               // Allow Tab navigation
               // @fixes https://github.com/presscustomizr/hueman/issues/819
               // Trick => the focusout event is delayed so it occurs after the next focusin
-              // @todo => collapse submenus when no child is focused
               $('.nav li').on('focusin', 'a', function() {
 
                     if ( czrapp.userXP._isMobileScreenSize() )
@@ -388,6 +387,16 @@ var czrapp = czrapp || {};
                         $el.removeClass('hu-focused');
                         if ( czrapp.userXP._isMobileScreenSize() )
                           return;
+
+                        // Clean => collapse any menu in which no item is currently focused
+                        if ( $('.nav li').find('.hu-focused').length > 0 ) {
+                              $('.nav li').each( function() {
+                                    $(this).children('ul.sub-menu').stop().css( 'opacity', '' ).slideUp( {
+                                            duration : 'fast'
+                                    });
+                              });
+                        }
+
                         // if a child is currently focused, don't close
                         if( $el.closest('.nav li').children('ul.sub-menu').find('.hu-focused').length < 1 ) {
                               $el.closest('.nav li').children('ul.sub-menu').stop().css( 'opacity', '' ).slideUp( {

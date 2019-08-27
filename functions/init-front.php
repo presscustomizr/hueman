@@ -79,13 +79,13 @@ if ( ! function_exists( 'hu_print_mobile_btn' ) ) {
             <span class="ham-toggler-menu__span"></span>
           </div>
         </div> -->
-        <div class="ham__navbar-toggler-two collapsed" title="Menu" aria-expanded="false">
+        <button class="ham__navbar-toggler-two collapsed" title="Menu" aria-expanded="false">
           <div class="ham__navbar-span-wrapper">
             <span class="line line-1"></span>
             <span class="line line-2"></span>
             <span class="line line-3"></span>
           </div>
-        </div>
+        </button>
       <?php endif; ?>
       <?php
     }

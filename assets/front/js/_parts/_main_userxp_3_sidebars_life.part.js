@@ -284,7 +284,7 @@ var czrapp = czrapp || {};
                     czrapp.setupDOMListeners(
                           [
                                 {
-                                      trigger   : 'click keydown',
+                                      trigger   : 'focusin mousedown keydown',
                                       selector  : sb.button_selectors,
                                       actions   : function() {
                                             var sb = this;

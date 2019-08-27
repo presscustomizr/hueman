@@ -137,7 +137,10 @@ input[type="submit"],
 .themeform input[type="tel"],
 .themeform input[type="number"],
 .themeform select,
-.themeform textarea { background: #fff; border: 2px solid #ddd; color: #777; display: block; max-width: 100%; outline: none; padding: 7px 8px; }
+.themeform textarea { background: #fff; border: 2px solid #ddd; color: #777; display: block; max-width: 100%;
+  /*outline: none; <= Commented in august 2019 for https://github.com/presscustomizr/hueman/issues/819*/
+  padding: 7px 8px;
+}
 .themeform input[type="text"]:focus,
 .themeform input[type="password"]:focus,
 .themeform input[type="email"]:focus,

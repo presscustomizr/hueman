@@ -202,7 +202,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
     vertical-align: middle;
     border-radius: 0;
     cursor: pointer;
-
+    padding: 0;
 /*    -webkit-transition: all 0.2s, 0.3s 0.2s;
     transition: all 0.2s, 0.3s 0.2s;*/
 }

@@ -97,7 +97,7 @@ var czrapp = czrapp || {};
                     czrapp.setupDOMListeners(
                           [
                                 {
-                                      trigger   : 'click keydown',
+                                      trigger   : 'mousedown focusin keydown',
                                       selector  : mobMenu.button_selectors,
                                       actions   : function() {
                                             var mobMenu = this;
@@ -132,7 +132,7 @@ var czrapp = czrapp || {};
                           czrapp.setupDOMListeners(
                                 [
                                       {
-                                            trigger   : 'click keydown',
+                                            trigger   : 'mousedown focusin keydown',
                                             selector  : mobMenu.button_selectors,
                                             actions   : function() {
                                                   var mobMenu = this;
@@ -198,7 +198,9 @@ var czrapp = czrapp || {};
                         Event       = {
                           SHOW     : 'show' + EVENT_KEY,
                           HIDE     : 'hide' + EVENT_KEY,
-                          CLICK    : 'click' + EVENT_KEY,
+                          CLICK    : 'mousedown' + EVENT_KEY,
+                          FOCUSIN  : 'focusin' + EVENT_KEY,
+                          FOCUSOUT : 'focusout' + EVENT_KEY
                         },
                         Classname   = {
                           DD_TOGGLE_ON_CLICK    : 'submenu-click-expand',
@@ -250,7 +252,7 @@ var czrapp = czrapp || {};
                         .on( Event.CLICK, '.'+Classname.DD_TOGGLE, function( e ) {
                               e.preventDefault();
 
-                              var $_this             = $( this );
+                              var $_this = $( this );
                               $_this.trigger( $_this.closest( Selector.DD_TOGGLE_PARENT ).hasClass( Classname.SHOWN ) ? Event.HIDE: Event.SHOW  );
 
                               //close other submenus
@@ -264,7 +266,7 @@ var czrapp = czrapp || {};
                         //2.3) clear any inline CSS applied by the slideDown/slideUp jQuery functions : the visibility is completely handled via CSS (expanded class)
                         //     we use the aforementioned method only for the animations
                         .on( Event.SHOW+' '+Event.HIDE, '.'+Classname.DD_TOGGLE, function( e ) {
-                              var $_this             = $( this );
+                              var $_this = $( this );
 
                               $_this.closest( Selector.DD_TOGGLE_PARENT ).toggleClass( Classname.SHOWN );
 
@@ -283,6 +285,58 @@ var czrapp = czrapp || {};
                                       czrapp.userXP.onSlidingCompleteResetCSS($submenu);
                                     }
                                 });
+                        })
+
+                        // Keyboard navigation ( August 2019 )
+                        // https://github.com/presscustomizr/hueman/issues/819
+                        //when focusin on a menu item whose href is just a "#", let's emulate a click on the caret dropdown
+                        .on( Event.FOCUSIN, 'a[href="#"]', function(evt) {
+                              if ( ! czrapp.userXP._isMobileScreenSize() )
+                                    return;
+
+                              evt.preventDefault();
+                              evt.stopPropagation();
+                              $(this).next('.'+Classname.DD_TOGGLE_WRAPPER).find('.'+Classname.DD_TOGGLE).trigger( Event.FOCUSIN );
+                        })
+                        .on( Event.FOCUSOUT, 'a[href="#"]', function(evt) {
+                              if ( ! czrapp.userXP._isMobileScreenSize() )
+                                    return;
+                              evt.preventDefault();
+                              evt.stopPropagation();
+                              _.delay( function() {
+                                    $(this).next('.'+Classname.DD_TOGGLE_WRAPPER).find('.'+Classname.DD_TOGGLE).trigger( Event.FOCUSOUT );
+                              }, 250 );
+                        })
+                        //when focusin on the toggle button
+                        //1) trigger the appropriate "internal" event: hide or show
+                        //2) maybe collapse all other open submenus within this menu
+                        .on( Event.FOCUSIN, '.'+Classname.DD_TOGGLE, function( e ) {
+                              e.preventDefault();
+
+                              var $_this = $( this );
+                              $_this.trigger( Event.SHOW );
+                              //close other submenus
+                              //_clearMenus( mobMenu, $_this );
+                        })
+                        .on( Event.FOCUSIN, function( evt ) {
+                              evt.preventDefault();
+                              if ( $(evt.target).length > 0 ) {
+                                    $(evt.target).addClass( 'hu-mm-focused');
+                              }
+                        })
+                        .on( Event.FOCUSOUT,function( evt ) {
+                              evt.preventDefault();
+
+                              var $_this = $( this );
+                              _.delay( function() {
+                                    if ( $(evt.target).length > 0 ) {
+                                          $(evt.target).removeClass( 'hu-mm-focused');
+                                    }
+                                    if ( mobMenu.container.find('.hu-mm-focused').length < 1 ) {
+                                          mobMenu( 'collapsed');
+                                    }
+                              }, 200 );
+
                         });
 
                     //bs dropdown inspired
