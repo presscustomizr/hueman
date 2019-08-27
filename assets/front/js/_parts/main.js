@@ -3312,7 +3312,7 @@ var czrapp = czrapp || {};
                           return;
 
                         // Clean => collapse any menu in which no item is currently focused
-                        if ( $('.nav li').find('.hu-focused').length > 0 ) {
+                        if ( $('.nav li').find('.hu-focused').length < 1 ) {
                               $('.nav li').each( function() {
                                     $(this).children('ul.sub-menu').stop().css( 'opacity', '' ).slideUp( {
                                             duration : 'fast'
