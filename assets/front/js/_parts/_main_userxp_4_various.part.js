@@ -439,7 +439,6 @@ var czrapp = czrapp || {};
 
               if ( $( _alignFullSelector ).length > 0 ) {
                     _add_alignelement_style( $_refWidthElement, _alignFullSelector, 'hu-gb-alignfull' );
-                    console.log($(_coverWParallaxImageSelector));
                     if ( $(_coverWParallaxImageSelector).length > 0 ) {
                           _add_parallax_treatment_style();
                     }
