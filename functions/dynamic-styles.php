@@ -323,7 +323,7 @@ function hu_get_primary_color_style() {
       $styles[] = $_primary_color_color_prop_selectors ? $_primary_color_color_prop_selectors . '{ color: '.$prim_color.'; }'."{$glue}" : '';
 
       $_primary_color_background_color_prop_selectors = array(
-          '.themeform input[type="submit"]',
+          'input[type="submit"]',
           '.themeform button[type="submit"]',
           '.sidebar.s1 .sidebar-top',
           '.sidebar.s1 .sidebar-toggle',

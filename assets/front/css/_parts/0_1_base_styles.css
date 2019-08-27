@@ -118,10 +118,11 @@ input, textarea, button, select, label { font-family: inherit; }
 .themeform .woocommerce button.button,
 .themeform .woocommerce input.button,
 /* end woocommerce */
-.themeform input[type="submit"],
+input[type="submit"],
 .themeform select,
 .themeform button,
 .themeform textarea { margin: 0; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; -webkit-border-radius: 0; border-radius: 0; }
+input[type="submit"],
 .themeform input,
 .themeform select,
 .themeform textarea,
@@ -147,7 +148,7 @@ input, textarea, button, select, label { font-family: inherit; }
 .themeform textarea:focus { border-color: #ccc; color: #444; -webkit-box-shadow: 0 0 3px rgba(0,0,0,0.1); box-shadow: 0 0 3px rgba(0,0,0,0.1); }
 .themeform label .required { color: #16cfc1; }
 
-.themeform input[type="submit"],
+input[type="submit"],
 .themeform button[type="submit"] { background: #16cfc1; color: #fff; padding: 8px 14px; font-weight: 600; display: inline-block; border: none; cursor: pointer; -webkit-border-radius: 3px; border-radius: 3px; }
 
 /* woocommerce */
@@ -176,7 +177,7 @@ input, textarea, button, select, label { font-family: inherit; }
 .themeform .woocommerce button.button.alt:hover,
 .themeform .woocommerce input.button.alt:hover
 /* end woocommerce */
-.themeform input[type="submit"]:hover,
+input[type="submit"]:hover,
 .themeform button[type="submit"]:hover { background: #444; color: #fff; }
 /* woocommerce checkout button specific */
 .themeform #add_payment_method .wc-proceed-to-checkout a.checkout-button,
