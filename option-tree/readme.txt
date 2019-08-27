@@ -1,11 +1,13 @@
 === OptionTree ===
 Contributors: valendesigns
-Donate link: http://bit.ly/NuXI3T
-Tags: options, theme options, meta boxes
+Tags: options, theme options, meta boxes, settings
 Requires at least: 3.8
-Tested up to: 4.2
-Stable tag: 2.5.5
-License: GPLv3
+Tested up to: 5.2
+Stable tag: 2.7.3
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Donate link: https://bit.ly/2TBvksV
+Requires PHP: 5.3.0
 
 Theme Options UI Builder for WordPress. A simple way to create & save Theme Options and Meta Boxes for free or premium themes.
 
@@ -92,7 +94,8 @@ This is a complete list of all the available option types that come shipped with
 1. You must deactivate and/or delete the plugin version of OptionTree.
 1. Add the following code to the beginning of your `functions.php`.
 
-`/**
+```
+/**
  * Required: set 'ot_theme_mode' filter to true.
  */
 add_filter( 'ot_theme_mode', '__return_true' );
@@ -100,7 +103,8 @@ add_filter( 'ot_theme_mode', '__return_true' );
 /**
  * Required: include OptionTree.
  */
-require( trailingslashit( get_template_directory() ) . 'option-tree/ot-loader.php' );`
+require( trailingslashit( get_template_directory() ) . 'option-tree/ot-loader.php' );
+```
 
 For a list of all the OptionTree UI display filters refer to the `demo-functions.php` file found in the `/assets/theme-mode/` directory of this plugin. This file is the starting point for developing themes with Theme Mode.
 
@@ -109,10 +113,6 @@ For a list of all the OptionTree UI display filters refer to the `demo-functions
 = Is there a demo theme I can install? =
 
 There sure is, and I'm glad you asked. Download and activate the [OptionTree Theme](https://github.com/valendesigns/option-tree-theme) and get some experience setting up OptionTree on your own with detailed directions and tips.
-
-= Why are my translation files not loading? =
-
-It is important to note that when you use OptionTree as a plugin, you must store your language files in the `option-tree/languages` directory and use file names like `option-tree-es_ES.mo` & `option-tree-es_ES.po`. However, when using OptionTree in Theme Mode you must also create a `theme-mode` directory inside the `option-tree/languages` directory and store your files there with names like `es_ES.mo` & `es_ES.po`. This is due to the different naming conventions of the `load_plugin_textdomain()` and `load_theme_textdomain()` functions.
 
 = I get errors or a blank screen when I activate the plugin. What's the deal? =
 
@@ -125,6 +125,43 @@ The most likely scenario is your theme already has OptionTree installed in Theme
 3. Documentation
 
 == Changelog ==
+
+= 2.7.3 =
+* Hotfix - Update regex for Object Injection check to include `+` bypass and PHP serialized classes. props @erwanlr
+
+= 2.7.2 =
+* Hotfix - Extend the `unfiltered_html` `iframe` capabilities to support additional `style` attributes.
+
+= 2.7.1 =
+* Hotfix - Fix error cannot redeclare `_sanitize_recursive()`. props @shramee
+* Hotfix - Ensure `iframe` supports the `style` attribute for users with `unfiltered_html` capabilities.
+* Hotfix - Ensure `noscript` is supported for users with `unfiltered_html` capabilities.
+
+= 2.7.0 =
+* Require PHP 5.3+
+* Fix all PHPCS errors and warnings.
+* Fix a vulnerability where Object Injection could take place if someone has a valid nonce.
+* Force all settings to be sanitized and escaped before saving and during display.
+* Add filter `ot_validate_setting_input_safe` which is used to validate the input value of a custom setting type. All values must be validated!
+* Add a notice to let users know that a custom setting type is not properly validating saved data and do a best-effort sanitize of the user data before saving it.
+* Fix issue with Composer autoload and only load OptionTree if we have access to WordPress. props @infomaniac50
+* Fix deprecated `create_function` notice in PHP 7.2+. props @modesthatred
+* Fix notice "Only variables should be passed by reference". props @SergeAx
+* Add `wordpress-plugin` project type to composer file. props @egifford
+* Removed translation files.
+* Removed the deprecated XML file import method.
+* Fix SQL syntax issue. props @ryanlabelle
+* Fix metabox radio & checkbox style issues. props @ryanlabelle
+
+= 2.6.0 =
+* Fix a reflected XSS vulnerability with the `add_list_item` & `add_social_links` Ajax requests.
+* Fix the Google Fonts URL so it passed the W3 Validator. props @BassemN
+* Fix `global_admin_css` so it's only enqueued when needed.
+* Fix `dynamic.css` so that a child theme doesn't load the styles saved to the parent theme.
+* Add filter `ot_recognized_post_format_meta_boxes` to support additional post formats meta boxes. props @BassemN
+* Add action `ot_do_settings_fields_before` & `ot_do_settings_fields_after`. props @BassemN, @valendesigns
+* Add Text Domain to plugin file to fully support the new translate.wordpress.org Language Packs.
+* Fix notice in PHP 7.0.0 props @Zackio
 
 = 2.5.5 =
 * Hotfix - Allow a `0` value to be saved with certain option types. Contributors via github @BassemN.
@@ -541,7 +578,7 @@ The most likely scenario is your theme already has OptionTree installed in Theme
 * Revert functions.load.php, will fix and update in next version
 
 = 1.1.7 =
-* Added layout (theme variation) support with save/delete/activate/import/export capabilities. Contributions form Brian of flauntbooks.com
+* Added layout (theme variation) support with save/delete/activate/import/export capabilities.
 * Allow layout change on Theme Options page.
 * Full Multisite compatibility by manually adding xml mime type for import options.
 * Replaced eregi() with preg_match() for 5.3+ compatibility.
@@ -594,6 +631,9 @@ The most likely scenario is your theme already has OptionTree installed in Theme
 * Initial version
 
 == Upgrade Notice ==
+
+= 2.7.0 =
+All custom setting types must use the `ot_validate_setting_input_safe` filter to sanitize user input data. OptionTree will attempt to sanitize the data, but data loss could happen with custom setting types when saving — so please update them. Additionally, please install OptionTree on a test server, or backup your database, before upgrading your live site. This version contains breaking changes!
 
 = 2.3.0 =
 As with each major release, please install OptionTree on a test server before upgrading your live site.
