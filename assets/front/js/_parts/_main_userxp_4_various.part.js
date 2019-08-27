@@ -189,6 +189,7 @@ var czrapp = czrapp || {};
                                             height : czrapp.userXP.topNavExpanded() ? ( 1 == $topbar.find('.nav-wrap').length ? $topbar.find('.nav-wrap').height() : 'auto' ) : ''
                                       });
                                 }
+
                                 $('.search-expand', '#header').stop()[ ! exp ? 'slideUp' : 'slideDown' ]( {
                                       duration : 250,
                                       complete : function() {
@@ -211,7 +212,7 @@ var czrapp = czrapp || {};
               czrapp.setupDOMListeners(
                     [
                           {
-                                trigger   : 'click keydown',
+                                trigger   : 'mousedown keydown',
                                 selector  : _sel,
                                 actions   : function() {
                                       czrapp.userXP.headerSearchExpanded( ! czrapp.userXP.headerSearchExpanded() );
@@ -235,7 +236,7 @@ var czrapp = czrapp || {};
               }
 
               // Allow tab navigation, see https://github.com/presscustomizr/hueman/issues/819
-              $( _sel, '#header' ).on('focusin focusout', function( evt ) {
+              $( _sel, '#header' ).on('focusin', function( evt ) {
                     self.headerSearchExpanded( true );
               });
         },//toggleHeaderSearch
