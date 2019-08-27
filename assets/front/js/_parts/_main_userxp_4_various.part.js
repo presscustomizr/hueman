@@ -233,6 +233,11 @@ var czrapp = czrapp || {};
                           self.headerSearchExpanded( false );
                     });
               }
+
+              // Allow tab navigation, see https://github.com/presscustomizr/hueman/issues/819
+              $( _sel, '#header' ).on('focusin focusout', function( evt ) {
+                    self.headerSearchExpanded( true );
+              });
         },//toggleHeaderSearch
 
 

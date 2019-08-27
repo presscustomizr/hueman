@@ -36,7 +36,10 @@
 /* Search in topbar + default styling */
 .toggle-search { color: #fff; font-size: 18px; line-height: 24px; cursor: pointer; padding: 13px 20px; display: block; position: absolute; right: 0; top: -50px;
 -webkit-box-shadow: -1px 0 0 rgba(255,255,255,0.1);
-box-shadow: -1px 0 0 rgba(255,255,255,0.1); }
+box-shadow: -1px 0 0 rgba(255,255,255,0.1);
+background: none;
+border: none;
+}
 .toggle-search:hover,
 .toggle-search.active { background: rgba(0,0,0,0.15); color: #fff; }
 

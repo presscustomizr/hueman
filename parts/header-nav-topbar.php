@@ -38,7 +38,7 @@ $display_search = ( 'topbar' == hu_get_option( 'desktop-search' ) ) &&  ( hu_has
   <?php if ( $display_search ) : ?>
     <div id="topbar-header-search" class="container">
       <div class="container-inner">
-        <div class="toggle-search"><i class="fas fa-search"></i></div>
+        <button class="toggle-search"><i class="fas fa-search"></i></button>
         <div class="search-expand">
           <div class="search-expand-inner"><?php get_search_form(); ?></div>
         </div>
