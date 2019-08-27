@@ -984,43 +984,7 @@ if ( ! function_exists( 'ot_create_media_post' ) ) {
 	 * @access public
 	 * @since  2.0
 	 */
-	function ot_create_media_post() {
-
-		register_post_type(
-			'option-tree',
-			array(
-				'labels'              => array( 'name' => esc_html__( 'Option Tree', 'hueman' ) ),
-				'public'              => false,
-				'show_ui'             => false,
-				'capability_type'     => 'post',
-				'exclude_from_search' => true,
-				'hierarchical'        => false,
-				'rewrite'             => false,
-				'supports'            => array( 'title', 'editor' ),
-				'can_export'          => false,
-				'show_in_nav_menus'   => false,
-			)
-		);
-
-		// Look for custom page.
-		$post_id = ot_get_media_post_ID();
-
-		// No post exists.
-		if ( 0 === $post_id ) {
-
-			// Insert the post into the database.
-			wp_insert_post(
-				array(
-					'post_title'     => 'Media',
-					'post_name'      => 'media',
-					'post_status'    => 'private',
-					'post_type'      => 'option-tree',
-					'comment_status' => 'closed',
-					'ping_status'    => 'closed',
-				)
-			);
-		}
-	}
+	function ot_create_media_post() {}
 }
 
 if ( ! function_exists( 'ot_default_settings' ) ) {
