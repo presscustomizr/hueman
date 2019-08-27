@@ -1618,6 +1618,7 @@ li.tab-inactive::after {
   display: none;
   margin: 0 auto;
   max-width: 1200px;
+  padding-top: 10px;
 }
 
 section .czr-sub-set:first-child {

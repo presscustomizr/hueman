@@ -3058,6 +3058,7 @@ var czrapp = czrapp || {};
                                             height : czrapp.userXP.topNavExpanded() ? ( 1 == $topbar.find('.nav-wrap').length ? $topbar.find('.nav-wrap').height() : 'auto' ) : ''
                                       });
                                 }
+
                                 $('.search-expand', '#header').stop()[ ! exp ? 'slideUp' : 'slideDown' ]( {
                                       duration : 250,
                                       complete : function() {
@@ -3080,7 +3081,7 @@ var czrapp = czrapp || {};
               czrapp.setupDOMListeners(
                     [
                           {
-                                trigger   : 'click keydown',
+                                trigger   : 'mousedown keydown',
                                 selector  : _sel,
                                 actions   : function() {
                                       czrapp.userXP.headerSearchExpanded( ! czrapp.userXP.headerSearchExpanded() );
@@ -3102,6 +3103,11 @@ var czrapp = czrapp || {};
                           self.headerSearchExpanded( false );
                     });
               }
+
+              // Allow tab navigation, see https://github.com/presscustomizr/hueman/issues/819
+              $( _sel, '#header' ).on('focusin', function( evt ) {
+                    self.headerSearchExpanded( true );
+              });
         },//toggleHeaderSearch
 
 
@@ -3167,6 +3173,9 @@ var czrapp = czrapp || {};
         },
 
 
+
+
+
         /*  Dropdown menu animation
         /* ------------------------------------ */
         dropdownMenu : function() {
@@ -3225,7 +3234,41 @@ var czrapp = czrapp || {};
                           });
                     }
               );
+
+              // Allow Tab navigation
+              // @fixes https://github.com/presscustomizr/hueman/issues/819
+              // Trick => the focusout event is delayed so it occurs after the next focusin
+              // @todo => collapse submenus when no child is focused
+              $('.nav li').on('focusin', 'a', function() {
+
+                    if ( czrapp.userXP._isMobileScreenSize() )
+                      return;
+
+                    $(this).addClass('hu-focused');
+                    $(this).closest('.nav li').children('ul.sub-menu').hide().stop().slideDown({
+                            duration : 'fast'
+                    })
+                    .css( 'opacity', 1 );
+
+              });
+              $('.nav li').on('focusout', 'a', function() {
+                    var $el = $(this);
+                    _.delay( function() {
+                        $el.removeClass('hu-focused');
+                        if ( czrapp.userXP._isMobileScreenSize() )
+                          return;
+                        // if a child is currently focused, don't close
+                        if( $el.closest('.nav li').children('ul.sub-menu').find('.hu-focused').length < 1 ) {
+                              $el.closest('.nav li').children('ul.sub-menu').stop().css( 'opacity', '' ).slideUp( {
+                                      duration : 'fast'
+                              });
+                        }
+                    }, 250 );
+              });
         },
+
+
+
 
         /*  Gutenberg fine alignfull cover image width fine tuning
         /* ------------------------------------ */
@@ -3265,7 +3308,6 @@ var czrapp = czrapp || {};
 
               if ( $( _alignFullSelector ).length > 0 ) {
                     _add_alignelement_style( $_refWidthElement, _alignFullSelector, 'hu-gb-alignfull' );
-                    console.log($(_coverWParallaxImageSelector));
                     if ( $(_coverWParallaxImageSelector).length > 0 ) {
                           _add_parallax_treatment_style();
                     }
