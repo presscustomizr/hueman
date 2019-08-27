@@ -407,9 +407,6 @@ if ( ! class_exists( 'OT_Loader' ) && defined( 'ABSPATH' ) ) {
 
 				// Save layouts.
 				add_action( 'admin_init', 'ot_modify_layouts', 7 );
-
-				// Create media post.
-				add_action( 'admin_init', 'ot_create_media_post', 8 );
 			}
 			// Google Fonts front-end CSS.
 			add_action( 'wp_enqueue_scripts', 'ot_load_google_fonts_css', 1 );
