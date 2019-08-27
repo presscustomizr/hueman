@@ -2816,7 +2816,7 @@ var czrapp = czrapp || {};
                     czrapp.setupDOMListeners(
                           [
                                 {
-                                      trigger   : 'click keydown',
+                                      trigger   : 'mousedown focusin keydown',
                                       selector  : mobMenu.button_selectors,
                                       actions   : function() {
                                             var mobMenu = this;
@@ -2848,7 +2848,7 @@ var czrapp = czrapp || {};
                           czrapp.setupDOMListeners(
                                 [
                                       {
-                                            trigger   : 'click keydown',
+                                            trigger   : 'mousedown focusin keydown',
                                             selector  : mobMenu.button_selectors,
                                             actions   : function() {
                                                   var mobMenu = this;
@@ -2904,7 +2904,9 @@ var czrapp = czrapp || {};
                         Event       = {
                           SHOW     : 'show' + EVENT_KEY,
                           HIDE     : 'hide' + EVENT_KEY,
-                          CLICK    : 'click' + EVENT_KEY,
+                          CLICK    : 'mousedown' + EVENT_KEY,
+                          FOCUSIN  : 'focusin' + EVENT_KEY,
+                          FOCUSOUT : 'focusout' + EVENT_KEY
                         },
                         Classname   = {
                           DD_TOGGLE_ON_CLICK    : 'submenu-click-expand',
@@ -2945,12 +2947,12 @@ var czrapp = czrapp || {};
                         .on( Event.CLICK, '.'+Classname.DD_TOGGLE, function( e ) {
                               e.preventDefault();
 
-                              var $_this             = $( this );
+                              var $_this = $( this );
                               $_this.trigger( $_this.closest( Selector.DD_TOGGLE_PARENT ).hasClass( Classname.SHOWN ) ? Event.HIDE: Event.SHOW  );
                               _clearMenus( mobMenu, $_this );
                         })
                         .on( Event.SHOW+' '+Event.HIDE, '.'+Classname.DD_TOGGLE, function( e ) {
-                              var $_this             = $( this );
+                              var $_this = $( this );
 
                               $_this.closest( Selector.DD_TOGGLE_PARENT ).toggleClass( Classname.SHOWN );
 
@@ -2969,6 +2971,49 @@ var czrapp = czrapp || {};
                                       czrapp.userXP.onSlidingCompleteResetCSS($submenu);
                                     }
                                 });
+                        })
+                        .on( Event.FOCUSIN, 'a[href="#"]', function(evt) {
+                              if ( ! czrapp.userXP._isMobileScreenSize() )
+                                    return;
+
+                              evt.preventDefault();
+                              evt.stopPropagation();
+                              $(this).next('.'+Classname.DD_TOGGLE_WRAPPER).find('.'+Classname.DD_TOGGLE).trigger( Event.FOCUSIN );
+                        })
+                        .on( Event.FOCUSOUT, 'a[href="#"]', function(evt) {
+                              if ( ! czrapp.userXP._isMobileScreenSize() )
+                                    return;
+                              evt.preventDefault();
+                              evt.stopPropagation();
+                              _.delay( function() {
+                                    $(this).next('.'+Classname.DD_TOGGLE_WRAPPER).find('.'+Classname.DD_TOGGLE).trigger( Event.FOCUSOUT );
+                              }, 250 );
+                        })
+                        .on( Event.FOCUSIN, '.'+Classname.DD_TOGGLE, function( e ) {
+                              e.preventDefault();
+
+                              var $_this = $( this );
+                              $_this.trigger( Event.SHOW );
+                        })
+                        .on( Event.FOCUSIN, function( evt ) {
+                              evt.preventDefault();
+                              if ( $(evt.target).length > 0 ) {
+                                    $(evt.target).addClass( 'hu-mm-focused');
+                              }
+                        })
+                        .on( Event.FOCUSOUT,function( evt ) {
+                              evt.preventDefault();
+
+                              var $_this = $( this );
+                              _.delay( function() {
+                                    if ( $(evt.target).length > 0 ) {
+                                          $(evt.target).removeClass( 'hu-mm-focused');
+                                    }
+                                    if ( mobMenu.container.find('.hu-mm-focused').length < 1 ) {
+                                          mobMenu( 'collapsed');
+                                    }
+                              }, 200 );
+
                         });
                     var _clearMenus = function( mobMenu, $_toggle ) {
                       var _parentsToNotClear = $.makeArray( $_toggle.parents( Selector.DD_TOGGLE_PARENT ) ),
@@ -3406,7 +3451,7 @@ var czrapp = czrapp || {};
                     czrapp.setupDOMListeners(
                           [
                                 {
-                                      trigger   : 'click keydown',
+                                      trigger   : 'focusin mousedown keydown',
                                       selector  : sb.button_selectors,
                                       actions   : function() {
                                             var sb = this;
@@ -4072,6 +4117,13 @@ var czrapp = czrapp || {};
                         $el.removeClass('hu-focused');
                         if ( czrapp.userXP._isMobileScreenSize() )
                           return;
+                        if ( $('.nav li').find('.hu-focused').length > 0 ) {
+                              $('.nav li').each( function() {
+                                    $(this).children('ul.sub-menu').stop().css( 'opacity', '' ).slideUp( {
+                                            duration : 'fast'
+                                    });
+                              });
+                        }
                         if( $el.closest('.nav li').children('ul.sub-menu').find('.hu-focused').length < 1 ) {
                               $el.closest('.nav li').children('ul.sub-menu').stop().css( 'opacity', '' ).slideUp( {
                                       duration : 'fast'
