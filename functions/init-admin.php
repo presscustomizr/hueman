@@ -11,7 +11,15 @@ if ( ! function_exists( 'hu_post_formats_script' ) ) {
     // Only load on posts, pages
     if ( !in_array($hook, array('post.php','post-new.php')) )
       return;
+
+    global $post;
     wp_enqueue_script('post-formats', get_template_directory_uri() . '/assets/admin/js/post-formats.js', array( 'jquery' ));
+    wp_localize_script( 'post-formats',
+      'HUPostFormatsParams' ,
+      array(
+        'currentPostFormat' => get_post_format( $post ),
+      )
+    );
   }
 
 }
