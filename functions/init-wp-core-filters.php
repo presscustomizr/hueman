@@ -75,8 +75,15 @@ add_filter( 'video_embed_html', 'hu_embed_html_jp' );
 
 /*  Add shortcode support to text widget
 /* ------------------------------------ */
-add_filter( 'widget_text', 'do_shortcode' );
-
+global $wp_version;
+if ( version_compare( $wp_version, '4.8.0', '<' ) ) {
+    add_action( 'after_setup_theme', 'hu_widget_text_do_shortcode' );
+    function hu_widget_text_do_shortcode() {
+        if ( ! has_filter( 'widget_text', 'do_shortcode' ) ) {
+            add_filter( 'widget_text', 'do_shortcode' );
+        }
+    }
+}
 
 // WP 5.0.0 compat. until the bug is fixed
 // this hook fires before the customize changeset is inserter / updated in database
