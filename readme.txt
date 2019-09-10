@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.2.2
-Stable tag: 3.4.27
+Stable tag: 3.4.28
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,10 +13,14 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
 
 == Upgrade Notice ==
-= 3.4.27 =
-Better keyboard navigation to comply with new TRT requirements : https://make.wordpress.org/themes/2019/08/03/planning-for-keyboard-navigation/. Option Tree updated to its latest version, v2.7.3.
+= 3.4.28 =
+Fixes an issue with Super Form plugin. Better support for post fomat meta boxes with Gutenberg block editor.
 
 == Changelog ==
+= 3.4.28 September 10th, 2019 =
+* fixed : add do_shortcode filter cb to widget_text filter hook only if needed. fixes #823
+* fixed : post format meta boxes for the block editor. fixes #821
+
 = 3.4.27 August 27th, 2019 =
 * fixed : admin notice style on mobile. fixes #816
 * improved : better keyboard navigation to comply with new TRT requirements : https://make.wordpress.org/themes/2019/08/03/planning-for-keyboard-navigation/

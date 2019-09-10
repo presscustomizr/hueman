@@ -2,9 +2,9 @@
 # This file is distributed under the GNU General Public License v3.0.=!>
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman 3.4.27\n"
+"Project-Id-Version: Hueman 3.4.28\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2019-08-27 17:42:47+00:00\n"
+"POT-Creation-Date: 2019-09-10 09:44:22+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2171,11 +2171,11 @@ msgstr ""
 msgid "Pick the context(s) where this widget area will be displayed."
 msgstr ""
 
-#: functions/init-admin.php:91
+#: functions/init-admin.php:99
 msgid "Select a widget zone for the primary sidebar."
 msgstr ""
 
-#: functions/init-admin.php:91
+#: functions/init-admin.php:99
 msgid ""
 "Notes : 1)This will override any default settings of the customizer options "
 "panel. 2) The primary sidebar is placed on the left in a 3 columns layout. "
@@ -2183,31 +2183,31 @@ msgid ""
 "left."
 msgstr ""
 
-#: functions/init-admin.php:97
+#: functions/init-admin.php:105
 msgid "Select a widget zone for the secondary sidebar."
 msgstr ""
 
-#: functions/init-admin.php:97
+#: functions/init-admin.php:105
 msgid ""
 "Notes : 1)This will override any default settings of the customizer options "
 "panel. 2) The secondary sidebar is placed on the right in a 3 columns "
 "layout."
 msgstr ""
 
-#: functions/init-admin.php:114
+#: functions/init-admin.php:122
 msgid "Select a widget zone for the left sidebar."
 msgstr ""
 
-#: functions/init-admin.php:114 functions/init-admin.php:120
-#: functions/init-admin.php:176
+#: functions/init-admin.php:122 functions/init-admin.php:128
+#: functions/init-admin.php:184
 msgid "This will override any default settings of the customizer options panel."
 msgstr ""
 
-#: functions/init-admin.php:120
+#: functions/init-admin.php:128
 msgid "Select a widget zone for the right sidebar."
 msgstr ""
 
-#: functions/init-admin.php:176
+#: functions/init-admin.php:184
 msgid "Select a layout for this page."
 msgstr ""
 
