@@ -5,7 +5,7 @@ Template Name: Child Menu
 ?>
 <?php get_header(); ?>
 
-<section class="content">
+<section class="content" id="content">
 
 	<?php hu_get_template_part('parts/page-title'); ?>
 

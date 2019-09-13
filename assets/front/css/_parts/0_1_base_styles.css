@@ -328,3 +328,21 @@ h1, h2, h3, h4, h5, h6 { color: #444; font-weight: 600; -ms-word-wrap: break-wor
   overflow: visible;
   clip: auto;
 }
+
+.screen-reader-text.skip-link {
+  background-color: #f1f1f1;
+  box-shadow: 0 0 2px 2px rgba(0,0,0,.6);
+  color: #21759b;
+  font-weight: 700;
+  height: auto;
+  width: auto;
+  left: 5px;
+  line-height: normal;
+  padding: 15px 23px 14px;
+  text-decoration: none;
+  top: 5px;
+}
+.screen-reader-text.skip-link:focus {
+    position: absolute;
+    z-index: 100000;
+}
