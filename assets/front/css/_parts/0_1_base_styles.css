@@ -214,6 +214,8 @@ input[type="submit"]:hover,
 .entry ol ul ol li { list-style: decimal; }
 .entry dt { font-weight: 600;}
 .entry address { margin-bottom: 1em; }
+/* Gutenberg compatibility, see: https://github.com/presscustomizr/hueman/issues/831 */
+.wp-block-quote.is-style-large,
 .comment blockquote, .entry blockquote { position: relative; color: #777; font-style: italic; margin: 0 0 20px 0; padding-left: 50px; }
 .comment blockquote { padding-left: 35px }
 .comment blockquote, .entry blockquote p { margin-bottom: 0.75em; }
