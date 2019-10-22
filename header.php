@@ -19,7 +19,9 @@ if ( function_exists( 'wp_body_open' ) ) {
 }
 ?>
 <div id="wrapper">
-
+<?php if ( apply_filters( 'hu_skip_link', true ) ) : ?>
+  <a class="screen-reader-text skip-link" href="<?php echo apply_filters( 'hu_skip_link_anchor', '#content' ); ?>"><?php esc_html_e( 'Skip to content', 'hueman' ) ?></a>
+<?php endif ?>
   <?php do_action('__before_header') ; ?>
 
   <?php hu_get_template_part('parts/header-main'); ?>

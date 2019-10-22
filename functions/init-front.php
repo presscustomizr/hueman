@@ -18,7 +18,7 @@ if ( ! function_exists( 'hu_get_content') ) {
     ob_start();
     ?>
       <?php do_action( '__before_content_section', $tmpl ); ?>
-        <section class="content">
+        <section class="content" id="content">
           <?php hu_get_template_part('parts/page-title'); ?>
           <div class="pad group">
             <?php
