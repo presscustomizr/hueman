@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Hueman\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2019-09-10 09:44:22+00:00\n"
+"POT-Creation-Date: 2019-10-22 10:49:45+00:00\n"
 "PO-Revision-Date: 2016-11-04 13:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -2683,6 +2683,10 @@ msgstr "Mogelijk gemaakt door"
 
 #: functions.php:27
 msgid "The <strong>%1$s</strong> theme requires at least %2$s version %3$s"
+msgstr ""
+
+#: header.php:23
+msgid "Skip to content"
 msgstr ""
 
 #: option-tree/includes/ot-functions-admin.php:52

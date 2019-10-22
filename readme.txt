@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.2.2
-Stable tag: 3.4.29
+Stable tag: 3.4.30
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,10 +13,14 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
 
 == Upgrade Notice ==
-= 3.4.29 =
-Fixed shortcodes not processed in html widgets.
+= 3.4.30 =
+Improves compatibility with WordPress block editor. Implements skip to content for TRT requirement.
 
 == Changelog ==
+= 3.4.30 October 22nd, 2019 =
+* fixed : block editor quote "style large" issue. fixes #831
+* improved : implement skip to content for TRT requirement. fixes #824
+
 = 3.4.29 September 13th, 2019 =
 * fixed : shortcodes not processed in html widgets
 
