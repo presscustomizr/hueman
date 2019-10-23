@@ -289,10 +289,13 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
     function hu_config_infos() {
       global $wpdb;
       //get WP_Theme
-      $_theme                     = wp_get_theme();
-
-      //Get infos from parent theme if using a child theme
-      $_theme = $_theme -> parent() ? $_theme -> parent() : $_theme;
+      $theme_data   = wp_get_theme();
+      $theme        = $theme_data->Name . ' ' . $theme_data->Version;
+      $parent_theme = $theme_data->Template;
+      if ( ! empty( $parent_theme ) ) {
+        $parent_theme_data = wp_get_theme( $parent_theme );
+        $parent_theme      = $parent_theme_data->Name . ' ' . $parent_theme_data->Version;
+      }
 
       ?>
 <div class="wrap">
@@ -304,7 +307,10 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
 # HOME_URL:               <?php echo home_url() . "\n"; ?>
 # IS MULTISITE :          <?php echo is_multisite() ? 'Yes' . "\n" : 'No' . "\n" ?>
 
-# THEME | VERSION :       <?php echo sprintf( '%1$s | v%2$s', $_theme -> name , HUEMAN_VER ) . "\n"; ?>
+# ACTIVE THEME :          <?php echo $theme . "\n"; ?>
+<?php if ( $parent_theme !== $theme ) : ?>
+# PARENT THEME :          <?php echo $parent_theme . "\n"; ?>
+<?php endif; ?>
 # WP VERSION :            <?php echo get_bloginfo( 'version' ) . "\n"; ?>
 # PERMALINK STRUCTURE :   <?php echo get_option( 'permalink_structure' ) . "\n"; ?>
 <?php
