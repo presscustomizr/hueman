@@ -9,7 +9,7 @@
        url("../../front/webfonts/fa-regular-400.ttf") format("truetype"),
        url("../../front/webfonts/fa-regular-400.svg#fontawesome") format("svg");
 }
-
+.hu-config-info { clear: both;}
 .about-wrap h3 {
   line-height: 26px;
 }

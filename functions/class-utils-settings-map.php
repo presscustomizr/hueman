@@ -533,7 +533,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'label'     => __('Display the "About Hueman" page in the "Appearance" admin menu', 'hueman'),
                 'section'   => 'admin_sec',
                 'type'      => 'nimblecheck',
-                'notice'    => __( 'This page is intended to provide informations about the Hueman theme : changelog, release note, documentation link. It also display informations about your current install that can be useful if you need to report an issue.' , 'hueman' )
+                'notice'    => __( 'This page is intended to provide information about the Hueman theme : changelog, release note, documentation link. It also display information about your current install that can be useful if you need to report an issue.' , 'hueman' )
           ),
           'help-button' => array(
                 'default'   => 1,

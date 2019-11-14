@@ -35,7 +35,7 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
             <?php
               printf(
                 __( '<h2>As per the WordPress themes guidelines (%1$s), all the Hueman theme options have been moved to the %2$s.</h2>', 'hueman' ),
-                sprintf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://make.wordpress.org/themes/handbook/review/required/#options-and-settings'), __('more informations here', 'hueman') ),
+                sprintf('<a href="%1$s" target="_blank">%2$s</a>', esc_url('https://make.wordpress.org/themes/handbook/review/required/#options-and-settings'), __('more information here', 'hueman') ),
                 sprintf('<a href="%1$s">%2$s</a>', admin_url('customize.php'), __('customizer', 'hueman') )
               );
             ?>
@@ -142,7 +142,7 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
                 printf( '<p>%1$s %2$s</p> <p>%3$s. <strong>%4$s</strong></p>',
                   sprintf( __( "Thank you for using the %s theme for your website.", 'hueman' ), $_theme_name ),
                   sprintf( __( "%s %s has more features, is safer and more stable than ever to help you designing an awesome webdesign.", 'hueman' ), $_theme_name, HUEMAN_VER ),
-                  sprintf( __( "For more informations about this new version of the theme, %s or check the changelog below", "hueman" ),
+                  sprintf( __( "For more information about this new version of the theme, %s or check the changelog below", "hueman" ),
                     sprintf('<a href="%1$s" target="_blank">%2$s</a>', HU_WEBSITE . "/category/hueman-releases/", __( "read the latest release notes" , "hueman" ) )
                   ),
                   sprintf('<a href="#hueman-changelog" title="%1$s">%1$s</a>', __( 'Changelog' , 'hueman' ) )
@@ -192,7 +192,7 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
 
                     <div class="last-feature col">
                       <h3 style="font-size:1.3em;"><?php _e( 'Follow us','hueman' ); ?></h3>
-                      <p class="tc-follow"><a href="<?php echo esc_url( HU_WEBSITE . '/blog' ); ?>" target="_blank"><img style="border:none;width:auto;" src="<?php echo HU_BASE_URL .'assets/admin/img/pc.png' ?>" alt="Press Customizr" /></a></p>
+                      <p class="tc-follow"><a href="<?php echo esc_url( HU_WEBSITE . '/blog' ); ?>" target="_blank"><img style="border:none;width:auto;" src="<?php echo HU_BASE_URL .'assets/admin/img/pc.png?' . HUEMAN_VER ?>" alt="Press Customizr" /></a></p>
                       <!-- Place this tag where you want the widget to render. -->
 
                     </div><!-- .feature-section -->
@@ -298,9 +298,9 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
       }
 
       ?>
-<div class="wrap">
-<h3><?php _e( 'System Informations', 'hueman' ); ?></h3>
-<h4 style="text-align: left"><?php _e( 'Please include the following informations when posting support requests' , 'hueman' ) ?></h4>
+<div class="wrap hu-config-info">
+<h3><?php _e( 'System Information', 'hueman' ); ?></h3>
+<h4 style="text-align: left"><?php _e( 'Please include the following information when posting support requests' , 'hueman' ) ?></h4>
 <textarea readonly="readonly" onclick="this.focus();this.select()" id="system-info-textarea" name="tc-sysinfo" title="<?php _e( 'To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'hueman' ); ?>" style="width: 800px;min-height: 800px;font-family: Menlo,Monaco,monospace;background: 0 0;white-space: pre;overflow: auto;display:block;">
 <?php do_action( '__system_config_before' ); ?>
 # SITE_URL:               <?php echo site_url() . "\n"; ?>
@@ -377,7 +377,7 @@ $mysql_ver =  ( ! empty( $wpdb->use_mysqli ) && $wpdb->use_mysqli ) ? @mysqli_ge
 # Page For Posts:         <?php $id = get_option( 'page_for_posts' ); echo get_the_title( $id ) . '(#' . $id . ')' . "\n" ?>
 <?php do_action( '__system_config_after' ); ?>
 </textarea>
-</div>
+</div><?php // .wrap ?>
 </div>
       <?php
       }//end of function
