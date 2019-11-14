@@ -160,6 +160,7 @@ $.extend( CZRSocialModuleMths, {
                 'twitter-square',
                 'usb',
                 'viacoin',
+                'viber',
                 'vimeo',
                 'vimeo-square',
                 'vine',

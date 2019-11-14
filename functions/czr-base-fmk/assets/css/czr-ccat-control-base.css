@@ -373,7 +373,10 @@ input:-ms-input-placeholder {
   width: 99%;
 }
 
-
+/* Nov 2019 => adapt for WP 5.3 */
+.wp-picker-container .wp-color-result.button {
+  border-color: #ccc;
+}
 
 
 
@@ -2510,93 +2513,6 @@ input[type="range"]:focus + .rangeslider .rangeslider__handle {
 
 
 
-/* DEPRECATED since april 2nd 2019 */
-/* GUTENCHECK */
-/* This custom checkbox input is inspired from the one used in the Gutenberg plugin ( https://github.com/WordPress/gutenberg ), released under GNU General Public License
-credits : Gutenberg team @wordpress */
-/*.czr-toggle-check {
-  position: relative;
-      float: right;
-}
-.czr-toggle-check__input[type=checkbox] {
-    cursor: pointer;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    margin: 0;
-    padding: 0;
-    z-index: 1;
-}
-.czr-toggle-check__input[type="checkbox"]:checked:before {
-    content: "\f147";
-    margin: -3px 0 0 -4px;
-    color: #1e8cbe;
-    float: left;
-    display: inline-block;
-    vertical-align: middle;
-    width: 16px;
-    font: normal 21px/1 dashicons;
-    speak: none;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-.czr-toggle-check .czr-toggle-check__track {
-    content: "";
-    display: inline-block;
-    vertical-align: top;
-    box-sizing: border-box;
-    background-color: #fff;
-    border: 2px solid #6c7781;
-    width: 36px;
-    height: 18px;
-    border-radius: 9px;
-    transition: background .2s ease;
-}
-.czr-toggle-check.is-checked .czr-toggle-check__track {
-    background-color: #33b3db;
-    border: 2px solid #33b3db;
-    border: 9px solid transparent;
-}
-.czr-toggle-check .czr-toggle-check__thumb {
-    display: block;
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    transition: transform .1s ease;
-    background-color: #6c7781;
-    border: 5px solid #6c7781;
-    box-sizing: border-box;
-}
-.czr-toggle-check.is-checked .czr-toggle-check__thumb {
-    background-color: #fff;
-    border-width: 0;
-    transform: translateX(18px);
-}
-.czr-toggle-check .czr-toggle-check__off {
-    color: #6c7781;
-    fill: currentColor;
-    right: 6px;
-}
-.czr-toggle-check .czr-toggle-check__on {
-    left: 8px;
-    -webkit-filter: invert(100%) contrast(500%);
-    filter: invert(100%) contrast(500%);
-    outline: 1px solid transparent;
-    outline-offset: -1px;
-}
-.czr-toggle-check .czr-toggle-check__off, .czr-toggle-check .czr-toggle-check__on {
-    position: absolute;
-    top: 6px;
-}*/
-
-
 
 /* NIMBLECHECK */
 /* ALIGNEMENT IN MODULES */
@@ -2708,3 +2624,93 @@ credits : Gutenberg team @wordpress */
 .nimblecheck-wrap .nimblecheck-input:checked + .nimblecheck-label:after {
   left: 16px
 }
+
+
+
+
+
+/* DEPRECATED since april 2nd 2019 */
+/* GUTENCHECK */
+/* This custom checkbox input is inspired from the one used in the Gutenberg plugin ( https://github.com/WordPress/gutenberg ), released under GNU General Public License
+credits : Gutenberg team @wordpress */
+/*.czr-toggle-check {
+  position: relative;
+      float: right;
+}
+.czr-toggle-check__input[type=checkbox] {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+}
+.czr-toggle-check__input[type="checkbox"]:checked:before {
+    content: "\f147";
+    margin: -3px 0 0 -4px;
+    color: #1e8cbe;
+    float: left;
+    display: inline-block;
+    vertical-align: middle;
+    width: 16px;
+    font: normal 21px/1 dashicons;
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.czr-toggle-check .czr-toggle-check__track {
+    content: "";
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+    background-color: #fff;
+    border: 2px solid #6c7781;
+    width: 36px;
+    height: 18px;
+    border-radius: 9px;
+    transition: background .2s ease;
+}
+.czr-toggle-check.is-checked .czr-toggle-check__track {
+    background-color: #33b3db;
+    border: 2px solid #33b3db;
+    border: 9px solid transparent;
+}
+.czr-toggle-check .czr-toggle-check__thumb {
+    display: block;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    transition: transform .1s ease;
+    background-color: #6c7781;
+    border: 5px solid #6c7781;
+    box-sizing: border-box;
+}
+.czr-toggle-check.is-checked .czr-toggle-check__thumb {
+    background-color: #fff;
+    border-width: 0;
+    transform: translateX(18px);
+}
+.czr-toggle-check .czr-toggle-check__off {
+    color: #6c7781;
+    fill: currentColor;
+    right: 6px;
+}
+.czr-toggle-check .czr-toggle-check__on {
+    left: 8px;
+    -webkit-filter: invert(100%) contrast(500%);
+    filter: invert(100%) contrast(500%);
+    outline: 1px solid transparent;
+    outline-offset: -1px;
+}
+.czr-toggle-check .czr-toggle-check__off, .czr-toggle-check .czr-toggle-check__on {
+    position: absolute;
+    top: 6px;
+}*/

@@ -2,9 +2,9 @@
 # This file is distributed under the GNU General Public License v3.0.=!>
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman 3.4.30\n"
+"Project-Id-Version: Hueman 3.4.31\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2019-10-22 10:53:39+00:00\n"
+"POT-Creation-Date: 2019-11-14 15:07:43+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -75,7 +75,7 @@ msgid ""
 msgstr ""
 
 #: functions/admin/class-admin-page.php:38
-msgid "more informations here"
+msgid "more information here"
 msgstr ""
 
 #: functions/admin/class-admin-page.php:39
@@ -124,7 +124,7 @@ msgstr ""
 
 #: functions/admin/class-admin-page.php:145
 msgid ""
-"For more informations about this new version of the theme, %s or check the "
+"For more information about this new version of the theme, %s or check the "
 "changelog below"
 msgstr ""
 
@@ -198,15 +198,15 @@ msgstr ""
 msgid "Go to Dashboard"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:299
-msgid "System Informations"
+#: functions/admin/class-admin-page.php:302
+msgid "System Information"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:300
-msgid "Please include the following informations when posting support requests"
+#: functions/admin/class-admin-page.php:303
+msgid "Please include the following information when posting support requests"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:301
+#: functions/admin/class-admin-page.php:304
 msgid ""
 "To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C "
 "(Mac)."
@@ -248,7 +248,7 @@ msgstr ""
 #: functions/admin/class-plugin-rec.php:30
 msgid ""
 "Nimble Page Builder is a free, easy to use yet powerful page builder used "
-"by 30K+ WordPress websites."
+"by 40K+ WordPress websites."
 msgstr ""
 
 #: functions/admin/class-plugin-rec.php:32
@@ -542,8 +542,8 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:536
 msgid ""
-"This page is intended to provide informations about the Hueman theme : "
-"changelog, release note, documentation link. It also display informations "
+"This page is intended to provide information about the Hueman theme : "
+"changelog, release note, documentation link. It also display information "
 "about your current install that can be useful if you need to report an "
 "issue."
 msgstr ""

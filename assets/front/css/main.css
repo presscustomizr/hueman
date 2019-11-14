@@ -484,6 +484,10 @@ position: relative;}
 .col-3cm .sidebar.s2 { float: right; margin-right: -260px; /* ingenuity! */ position: relative; right: -100%; }
 .col-3cm .content { float: right; }
 
+/* fix chrome bug in nov 2019 for https://github.com/presscustomizr/hueman/issues/834 */
+.col-3cm { overflow-x: hidden }
+
+
 /* 3 column, content left */
 .col-3cl .main { background-image: none; }
 .col-3cl .main-inner { padding-right: 600px; }
