@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.3
-Stable tag: 3.4.31
+Stable tag: 3.4.32
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,6 +17,10 @@ The Hueman theme helps you increase your traffic and engage your visitors. It lo
 Successfully tested with the latest WordPress 5.3. Fixes a bug with the latest version of Chrome browser which displayed an horizontal scrollbar in some cases.
 
 == Changelog ==
+= 3.4.32 November 19th, 2019 =
+* fixed : class-oembed.php is deprecated in 5.3, use class-wp-oembed.php instead. Fixes #836
+* fixed : adapt image caption style for block editor. Fixes #835
+
 = 3.4.31 November 14th, 2019 =
 * fixed : a bug with the latest version of Chrome browser which displayed an horizontal scrollbar in some cases. fixes #834
 * improved : provide child theme info in config page
