@@ -251,6 +251,9 @@ input[type="submit"]:hover,
 .entry .wp-caption.alignnone img { margin: 0 auto; max-width: 100%!important; }
 .entry .wp-caption-text { color: #999; font-size: 0.8125em; padding: 0 0 8px 0; margin: 0; }
 
+/* Gutenberg Compat @see https://github.com/presscustomizr/hueman/issues/835 */
+.wp-block-image figcaption { color: #999; font-size: 0.8125em; padding: 0 0 8px 0; margin: 0; font-style: italic;text-align: center;}
+
 /* table */
 .entry table { font-size: 0.875em; margin-bottom: 1.5em; width: 100%; text-align: center; }
 .entry table tr.alt { background: #f1f1f1; }
