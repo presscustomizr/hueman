@@ -43,7 +43,9 @@ add_filter( 'embed_oembed_html', 'hu_embed_wmode_transparent', 10, 3 );
 /* ------------------------------------ */
 if ( ! function_exists( 'hu_embed_html' ) ) {
   function hu_embed_html( $html, $url ) {
-    require_once( ABSPATH . WPINC . '/class-oembed.php' );
+    if ( !file_exists( ABSPATH . WPINC . '/class-wp-oembed.php' ))
+      return $html;
+    require_once( ABSPATH . WPINC . '/class-wp-oembed.php' );
     $wp_oembed = _wp_oembed_get_object();
     $provider = $wp_oembed -> get_provider( $url, $args = '' );
     if ( ! $provider || false === $data = $wp_oembed->fetch( $provider, $url, $args ) ) {
