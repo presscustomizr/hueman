@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.3
-Stable tag: 3.4.32
+Stable tag: 3.4.33
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,10 +13,15 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
 
 == Upgrade Notice ==
-= 3.4.31 =
-Successfully tested with the latest WordPress 5.3. Fixes a bug with the latest version of Chrome browser which displayed an horizontal scrollbar in some cases.
+= 3.4.33 =
+This new release allows posts query in Tabs widget to be filtered. + Various minor improvements. Safe for child theme developers.
 
 == Changelog ==
+= 3.4.33 December 2nd, 2019 =
+* added : filters to WP_Query in Tabs widgets. fixes #838
+* improved : reduce theme folder size. fixes #837
+* updated : Nimble Builder recommendation notification in admin, and allow deactivation with a php constant
+
 = 3.4.32 November 19th, 2019 =
 * fixed : class-oembed.php is deprecated in 5.3, use class-wp-oembed.php instead. Fixes #836
 * fixed : adapt image caption style for block editor. Fixes #835

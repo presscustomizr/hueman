@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Hueman\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2019-11-14 14:58:28+00:00\n"
+"POT-Creation-Date: 2019-12-02 15:57:52+00:00\n"
 "PO-Revision-Date: 2016-11-04 13:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -36,8 +36,8 @@ msgid "Pingbacks"
 msgstr ""
 
 #: content-featured.php:37 content-standard.php:24 content.php:22
-#: functions/widgets/alx-posts.php:97 functions/widgets/alx-tabs.php:150
-#: functions/widgets/alx-tabs.php:186 functions/widgets/alx-tabs.php:197
+#: functions/widgets/alx-posts.php:98 functions/widgets/alx-tabs.php:157
+#: functions/widgets/alx-tabs.php:194 functions/widgets/alx-tabs.php:205
 #: parts/related-posts.php:30
 msgid "Permalink to "
 msgstr ""
@@ -244,45 +244,54 @@ msgstr ""
 msgid "close"
 msgstr "sluit"
 
-#: functions/admin/class-plugin-rec.php:22
+#: functions/admin/class-plugin-rec.php:25
 msgid "Hueman theme recommends %1$s."
 msgstr ""
 
-#: functions/admin/class-plugin-rec.php:25
+#: functions/admin/class-plugin-rec.php:28
 msgid "Nimble Page Builder"
 msgstr ""
 
-#: functions/admin/class-plugin-rec.php:30
-msgid ""
-"Nimble Page Builder is a free, easy to use yet powerful page builder used by "
-"40K+ WordPress websites."
-msgstr ""
-
-#: functions/admin/class-plugin-rec.php:32
-msgid ""
-"It allows you to create mobile ready column layouts, and to drag-and-drop "
-"modules like post grids, buttons, widget zones, maps, icons, or beautiful "
-"pre-built sections with engaging %1$s, in any page of your site. Nimble "
-"Builder uses the live customizer which is the native WordPress interface for "
-"real-time design."
-msgstr ""
-
 #: functions/admin/class-plugin-rec.php:33
-#, fuzzy
-msgid "parallax backgrounds"
-msgstr "Topbalk Achtergrond"
-
-#: functions/admin/class-plugin-rec.php:35
 msgid ""
-"The plugin has been designed to integrate perfectly with Hueman theme. "
-"Lightweight and safe."
+"Developers of the Hueman theme have created Nimble Builder, a free, powerful "
+"yet easy-to-use page builder already active on 40K+ WordPress websites."
 msgstr ""
 
-#: functions/admin/class-plugin-rec.php:42
+#: functions/admin/class-plugin-rec.php:34
+msgid ""
+"It allows you to drag and drop mobile-ready sections on <i>really</i> any "
+"page of your site, including home, posts, pages, products, archives, 404, "
+"search pages, ..."
+msgstr ""
+
+#: functions/admin/class-plugin-rec.php:36
+msgid ""
+"You can insert simple text zones, but also create %1$s, insert post grids, "
+"column structures, buttons, widget zones, maps, icons, and much more, or use "
+"pre-designed sections with professional %2$s."
+msgstr ""
+
+#: functions/admin/class-plugin-rec.php:37
+#, fuzzy
+msgid "video backgrounds"
+msgstr "Header Achtergrond"
+
+#: functions/admin/class-plugin-rec.php:38
+msgid "parallax effect"
+msgstr ""
+
+#: functions/admin/class-plugin-rec.php:40
+msgid ""
+"The plugin is lightweight and has been designed to integrate seamlessly with "
+"Hueman and any WordPress theme."
+msgstr ""
+
+#: functions/admin/class-plugin-rec.php:47
 msgid "Activate Nimble Builder Now"
 msgstr ""
 
-#: functions/admin/class-plugin-rec.php:48
+#: functions/admin/class-plugin-rec.php:53
 msgid "Install Nimble Builder Now"
 msgstr ""
 
@@ -2661,7 +2670,7 @@ msgstr "Recente reacties"
 msgid "Tags"
 msgstr "Tags"
 
-#: functions/widgets/alx-tabs.php:227
+#: functions/widgets/alx-tabs.php:235
 msgid "says:"
 msgstr "zegt:"
 
@@ -3878,6 +3887,10 @@ msgstr ""
 msgctxt "color picker"
 msgid "Focus"
 msgstr ""
+
+#, fuzzy
+#~ msgid "parallax backgrounds"
+#~ msgstr "Topbalk Achtergrond"
 
 #, fuzzy
 #~ msgid "Single - Post tags"
