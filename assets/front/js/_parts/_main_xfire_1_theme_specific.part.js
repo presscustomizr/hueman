@@ -46,7 +46,8 @@ var czrapp = czrapp || {};
                             'mobileMenu',
                             'topNavToLife',
                             'gutenbergAlignfull',
-                            'mayBePrintWelcomeNote'
+                            'mayBePrintWelcomeNote',
+                            'triggerResizeEventsToAjustHeaderHeightOnInit' // for https://github.com/presscustomizr/hueman/issues/839
                       ]
                 }
       };//map

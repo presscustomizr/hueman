@@ -481,6 +481,42 @@ var czrapp = czrapp || {};
                     }
                     $_style.html( _selector + '{width:'+ newElementWidth +'px}' );
               }
+        },
+
+
+        /* Trigger resizes event to make sure header height is properly calculated :
+        - when logo image is loaded
+        - after a few seconds
+        fixes https://github.com/presscustomizr/hueman/issues/839
+        /* ------------------------------------ */
+        triggerResizeEventsToAjustHeaderHeightOnInit : function() {
+              var $logoImg = $('.site-title').find('img');
+              // 1 - Always trigger resize
+              if ( $logoImg.length > 0 ) {
+                    //If the image status is "complete", then trigger the custom event right away, else bind the "load" event
+                    //http://stackoverflow.com/questions/1948672/how-to-tell-if-an-image-is-loaded-or-cached-in-jquery
+                    if ( $logoImg[0].complete ) {
+                          czrapp.$_window.trigger('resize');
+                    } else {
+                      $logoImg.load( function( img ) {
+                            czrapp.$_window.trigger('resize');
+                      });
+                    }
+              }
+
+              // Trigger 3 resizes during the 9 first seconds
+              var _triggerResize = function( n ) {
+                    n = n || 1;
+                    if ( n > 3 )
+                      return;
+
+                    _.delay( function() {
+                          n++;
+                          czrapp.$_window.trigger('resize');
+                          _triggerResize(n);
+                    }, 3000 );
+              };
+              _triggerResize();
         }
 
   };//_methods{}

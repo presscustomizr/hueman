@@ -7,7 +7,11 @@
 #wrapper { min-width: 1024px; height: 100%; }
 .container { padding: 0 20px; }
 .container-inner { max-width: 1380px; min-width: 1380px; width: 100%; margin: 0 auto; }
-.main { background-color: #fff!important; position: relative; }
+.main {
+  background-color: #fff!important;
+  position: relative;
+  width: 100%;/* <= fixes post content problem in https://github.com/presscustomizr/hueman/issues/839 */
+}
 .sidebar-expanding .main, .sidebar-collapsing .main { overflow: hidden;}
 
 .main-inner { z-index: 1; position: relative; min-height: 600px; /* instead of sticky footer */ }
