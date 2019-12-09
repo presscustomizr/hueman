@@ -4196,6 +4196,30 @@ var czrapp = czrapp || {};
                     }
                     $_style.html( _selector + '{width:'+ newElementWidth +'px}' );
               }
+        },
+        triggerResizeEventsToAjustHeaderHeightOnInit : function() {
+              var $logoImg = $('.site-title').find('img');
+              if ( $logoImg.length > 0 ) {
+                    if ( $logoImg[0].complete ) {
+                          czrapp.$_window.trigger('resize');
+                    } else {
+                      $logoImg.load( function( img ) {
+                            czrapp.$_window.trigger('resize');
+                      });
+                    }
+              }
+              var _triggerResize = function( n ) {
+                    n = n || 1;
+                    if ( n > 3 )
+                      return;
+
+                    _.delay( function() {
+                          n++;
+                          czrapp.$_window.trigger('resize');
+                          _triggerResize(n);
+                    }, 3000 );
+              };
+              _triggerResize();
         }
 
   };//_methods{}
@@ -4423,7 +4447,8 @@ var czrapp = czrapp || {};
                             'mobileMenu',
                             'topNavToLife',
                             'gutenbergAlignfull',
-                            'mayBePrintWelcomeNote'
+                            'mayBePrintWelcomeNote',
+                            'triggerResizeEventsToAjustHeaderHeightOnInit' // for https://github.com/presscustomizr/hueman/issues/839
                       ]
                 }
       };//map

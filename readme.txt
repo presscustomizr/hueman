@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.3
-Stable tag: 3.4.33
+Stable tag: 3.4.34
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,10 +13,14 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
 
 == Upgrade Notice ==
-= 3.4.33 =
+= 3.4.34 =
 This new release allows posts query in Tabs widget to be filtered. + Various minor improvements. Safe for child theme developers.
 
 == Changelog ==
+= 3.4.34 December 9th, 2019 =
+* fixed : header's height and single post content layout can be broken in some cases. fixes #839
+* fixed : removed spurious quote in the logo img tag. fixes #840
+
 = 3.4.33 December 2nd, 2019 =
 * added : filters to WP_Query in Tabs widgets. fixes #838
 * improved : reduce theme folder size. fixes #837
