@@ -414,7 +414,7 @@ function hu_get_logo_title( $is_mobile_menu = false ) {
         }
         if ( $is_logo_src_set ) {
             $logo_source = apply_filters( 'hu_header_logo_source' , $logo_source, $is_mobile_menu );
-            $logo_or_title = sprintf( '<img src="%1$s" alt="%2$s" %3$s %4$s"/>',
+            $logo_or_title = sprintf( '<img src="%1$s" alt="%2$s" %3$s %4$s/>',
                 esc_url( $logo_source[0] ),
                 esc_attr( get_bloginfo('name') ),
                 $logo_source[1] ? sprintf( 'width="%1$s"', esc_attr( $logo_source[1] ) ) : '',
