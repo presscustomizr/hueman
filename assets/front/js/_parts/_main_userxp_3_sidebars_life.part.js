@@ -179,7 +179,7 @@ var czrapp = czrapp || {};
                           container : $container,
                           position : _position,//can take left, middle-left, middle-right, right
                           layout : _userLayout,//can take : col-2cr, co-2cl, col-3cr, col-3cm, col-3cl
-                          extended_width : 's1' == _id ? 340 : 260//<= hard coded in the base CSS, could be made dynamic in the future
+                          extended_width : 's1' == _id ? HUParams.sidebarOneWidth : HUParams.sidebarTwoWidth//<= hard coded in the base CSS, could be made dynamic in the future
                     }));
               });//$( '.s1, .s2', '#wrapper' ).each()
 

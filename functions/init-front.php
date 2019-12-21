@@ -1161,6 +1161,8 @@ if ( ! function_exists( 'hu_scripts' ) ) {
                     'desktop' => hu_is_checked('desktop-sticky-sb'),
                     'mobile' => hu_is_checked( 'mobile-sticky-sb' )
                 ),
+                'sidebarOneWidth' => apply_filters( 'hu_s1_width' , 340 ),
+                'sidebarTwoWidth' => apply_filters( 'hu_s2_with' , 260 ),
                 'isWPMobile' => wp_is_mobile(),
                 'menuStickyUserSettings' => array(
                     'desktop' => hu_normalize_stick_menu_opt( hu_get_option( 'header-desktop-sticky' ) ),
