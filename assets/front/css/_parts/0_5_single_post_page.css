@@ -120,8 +120,6 @@ z-index:2;
 .single .post-standard,
 .archive .post-standard,
 .search .post-standard { margin-bottom: 20px; }
-.page.post-standard .post-inner { padding-left: 0; }
-.page.post-standard .post-thumbnail { display: none; }
 
 .post-standard .post-inner { padding-left: 230px; padding-bottom: 20px; float: left; border-bottom: 1px solid #eee; }
 .post-standard .post-thumbnail { margin-left: -230px; max-width: 200px; margin-bottom: 0; float: left; }
