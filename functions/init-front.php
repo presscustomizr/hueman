@@ -344,22 +344,37 @@ if ( ! function_exists( 'hu_print_social_links' ) ) {
         // links like tel:*** or skype:**** or call:**** should work
         // implemented for https://github.com/presscustomizr/social-links-modules/issues/7
         $social_link = 'javascript:void(0)';
+
+        $is_blank_target = ( isset($item['social-target']) && false != $item['social-target'] );
+
+        // set the relationship attribute
+        // fixes : https://github.com/presscustomizr/social-links-modules/issues/8
+        // fixes : https://github.com/presscustomizr/hueman/issues/842
+        $rel_attr = 'rel="nofollow"';
+        if ( $is_blank_target ) {
+            // fix potential performance and security issues with other attributes
+            // @see https://web.dev/external-anchors-use-rel-noopener
+            $rel_attr = 'rel="nofollow noopener noreferrer"';
+        }
+
         if ( isset($item['social-link']) && ! empty( $item['social-link'] ) ) {
             if ( false !== strpos($item['social-link'], 'callto:') || false !== strpos($item['social-link'], 'tel:') || false !== strpos($item['social-link'], 'skype:') ) {
                 $social_link = esc_attr( $item['social-link'] );
+                $rel_attr = '';//we don't need to set a relationship attribute in this case
             } else {
                 $social_link = esc_url( $item['social-link'] );
             }
         }
 
         // Put them together
-        printf( '<li><a rel="nofollow" class="social-tooltip" %1$s title="%2$s" aria-label="%2$s" href="%3$s" %4$s %5$s><i class="%6$s"></i></a></li>',
+        printf( '<li><a %7$s class="social-tooltip" %1$s title="%2$s" aria-label="%2$s" href="%3$s" %4$s %5$s><i class="%6$s"></i></a></li>',
             ! hu_is_customizing() ? '' : sprintf( 'data-model-id="%1$s"', ! isset( $item['id'] ) ? 'hu_socials_'. $key : $item['id'] ),
             isset($item['title']) ? esc_attr( $item['title'] ) : '',
             $social_link,
-            ( isset($item['social-target']) && false != $item['social-target'] ) ? 'target="_blank"' : '',
+            $is_blank_target ? 'target="_blank"' : '',
             $style_attr,
-            $icon_class
+            $icon_class,
+            $rel_attr
         );
       }
     echo '</ul>';
