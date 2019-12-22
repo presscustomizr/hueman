@@ -152,6 +152,18 @@ var czrapp = czrapp || {};
                             return;
                           mobMenu( 'collapsed' );
                     });
+
+                    //when clicking on a menu item, always collapse the menu
+                    //@fixes https://github.com/presscustomizr/hueman/issues/830
+                    $(  mobMenu.container )
+                          .on( 'mouseup', '.menu-item a', function(evt) {
+                                if ( ! czrapp.userXP._isMobileScreenSize() )
+                                      return;
+                                evt.preventDefault();
+                                evt.stopPropagation();
+                                mobMenu( 'collapsed');
+                          });
+
               },
 
               //@return dfd promise()
