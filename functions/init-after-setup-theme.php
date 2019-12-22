@@ -90,6 +90,9 @@ if ( ! function_exists( 'hu_setup' ) ) {
     add_theme_support( 'responsive-embeds' );
     // Add support for Block editor styles.
     add_theme_support( 'editor-styles' );
+    // Implemented for https://github.com/presscustomizr/hueman/issues/842
+    // documented : https://codex.wordpress.org/Theme_Markup
+    add_theme_support( 'html5', array( 'search-form' ) );
 
     // Thumbnail sizes
     add_image_size( 'thumb-small', 160, 160, true );

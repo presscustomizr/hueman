@@ -106,6 +106,7 @@ input, textarea, button, select, label { font-family: inherit; }
 .themeform label { font-size: 0.875em; }
 .themeform input::-moz-focus-inner,
 .themeform button::-moz-focus-inner { border: 0; padding: 0; }
+.search-form input[type="search"],/* added for https://github.com/presscustomizr/hueman/issues/842 */
 .themeform input[type="text"],
 .themeform input[type="password"],
 .themeform input[type="email"],
@@ -122,6 +123,7 @@ input[type="submit"],
 .themeform select,
 .themeform button,
 .themeform textarea { margin: 0; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; -webkit-border-radius: 0; border-radius: 0; }
+
 input[type="submit"],
 .themeform input,
 .themeform select,
@@ -130,6 +132,8 @@ input[type="submit"],
 .themeform input[type="checkbox"] { -moz-appearance: checkbox; -webkit-appearance: checkbox; }
 .themeform input[type="radio"] { -moz-appearance: radio; -webkit-appearance: radio; }
 .themeform label { font-weight: 600; color: #444; }
+
+.search-form input[type="search"],/* added for https://github.com/presscustomizr/hueman/issues/842 */
 .themeform input[type="text"],
 .themeform input[type="password"],
 .themeform input[type="email"],
@@ -141,6 +145,8 @@ input[type="submit"],
   /*outline: none; <= Commented in august 2019 for https://github.com/presscustomizr/hueman/issues/819*/
   padding: 7px 8px;
 }
+
+.search-form input[type="search"]:focus,/* added for https://github.com/presscustomizr/hueman/issues/842 */
 .themeform input[type="text"]:focus,
 .themeform input[type="password"]:focus,
 .themeform input[type="email"]:focus,
@@ -152,7 +158,7 @@ input[type="submit"],
 .themeform label .required { color: #16cfc1; }
 
 input[type="submit"],
-.themeform button[type="submit"] { background: #16cfc1; color: #fff; padding: 8px 14px; font-weight: 600; display: inline-block; border: none; cursor: pointer; -webkit-border-radius: 3px; border-radius: 3px; }
+.themeform button[type="submit"] { background: #16cfc1; color: #fff; padding: 10px 10px; font-weight: 600; display: inline-block; border: none; cursor: pointer; -webkit-border-radius: 3px; border-radius: 3px; }
 
 /* woocommerce */
 /* secondary color for the normal buttons */
@@ -180,6 +186,7 @@ input[type="submit"],
 .themeform .woocommerce button.button.alt:hover,
 .themeform .woocommerce input.button.alt:hover
 /* end woocommerce */
+
 input[type="submit"]:hover,
 .themeform button[type="submit"]:hover { background: #444; color: #fff; }
 /* woocommerce checkout button specific */
@@ -187,9 +194,27 @@ input[type="submit"]:hover,
 .woocommerce-cart .themeform .wc-proceed-to-checkout a.checkout-button,
 .woocommerce-checkout .themeform .wc-proceed-to-checkout a.checkout-button { display: block; padding: 1em; }
 /* end woocommerce */
-.themeform.searchform div { position: relative; }
-.themeform.searchform div input { padding-left: 26px; line-height: 20px; }
-.themeform.searchform div:after { color: #ccc; line-height: 1.714em; font-family: 'Font Awesome 5 Free'; font-size: 0.875em; content: "\f002"; position: absolute; left: 10px; top: 8px; font-weight: 900; -moz-osx-font-smoothing: grayscale; -webkit-font-smoothing: antialiased; font-style: normal; font-variant: normal; text-rendering: auto;}
+
+[role=search].search-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+[role=search].search-form label {
+  position: relative;
+  width: calc(75% - 5px );
+  margin-right: 5px;
+}
+[role=search].search-form label input {
+  padding-left: 26px;
+  line-height: 20px;
+  width: 100%;
+}
+[role=search].search-form input[type=submit] {
+  line-height: 15px;
+  width: 25%;
+}
+[role=search].search-form label:after { color: #ccc; line-height: 1.714em; font-family: 'Font Awesome 5 Free'; font-size: 0.875em; content: "\f002"; position: absolute; left: 10px; top: 8px; font-weight: 900; -moz-osx-font-smoothing: grayscale; -webkit-font-smoothing: antialiased; font-style: normal; font-variant: normal; text-rendering: auto;}
 
 /*  base : entry and comment
 /* ------------------------------------ */
