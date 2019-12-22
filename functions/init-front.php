@@ -181,6 +181,9 @@ if ( ! function_exists('hu_print_widgets_in_location') ) {
     if ( false != hu_get_singular_meta_widget_zone( $location ) ) {
       $_eligible_zones[] = hu_get_singular_meta_widget_zone( $location );
     } else {
+      // filtered in :
+      // add_filter('hu_eligible_widget_zones', 'hu_get_widget_zones_in_location', 3, 10);
+      // add_filter('hu_eligible_widget_zones', 'hu_get_widget_zones_in_context', 3, 20);
       $_eligible_zones    = apply_filters(
           'hu_eligible_widget_zones',
           array(),
@@ -1490,7 +1493,7 @@ function hu_get_widget_zones_in_context( $_eligible_zones = array(), $location, 
   $_map_conditionals = array(
     'home'              => 'hu_is_home',
     'blog-page'         => 'hu_is_blogpage',
-    'page'              => 'is_page',
+    'page'              => 'is_page_but_not_frontpage',// @see https://github.com/presscustomizr/hueman/issues/759
     'single'            => 'is_single',
     'archive'           => 'is_archive',
     'archive-category'  => 'is_category',
@@ -1543,7 +1546,12 @@ function hu_get_widget_zone_allowed_contexts( $id, $_user_option = null ) {
 }
 
 
-
+// @return bool
+// introduced in dec 2019 to make sure that a static front page doesn't display widget zones assigned to "Pages"
+// @see https://github.com/presscustomizr/hueman/issues/759
+function is_page_but_not_frontpage() {
+    return is_page() && !hu_is_home();
+}
 
 
 //helper
