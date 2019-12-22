@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.3
-Stable tag: 3.4.34
+Stable tag: 3.4.35
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,6 +17,16 @@ The Hueman theme helps you increase your traffic and engage your visitors. It lo
 This new release allows posts query in Tabs widget to be filtered. + Various minor improvements. Safe for child theme developers.
 
 == Changelog ==
+= 3.4.35 December 22nd, 2019 =
+* fixed : old option favicon still printed, no way to remove it from the customizer. fixes #619
+* fixed : social media links in the sidebar and footer should be using rel="noopener" or rel="noreferrer" when using target _blank. fixes #842
+* fixed : search results as standard post list layout do not display page featured image. fixes #748
+* fixed : Sidebar icon toggles: namespace their CSS class name to avoid conflicting plugins issues. fixes #749
+* fixed : custom widget zones: a static front page shows widget zones assigned to "Pages". fixes #759
+* fixed : The mobile menu doesn't automatically close when clicking on an internal anchor link item. fixes #830
+* fixed : searchform input not compliant with latest accessibility standards + generating problems with cache plugins. fixes #826
+* fixed : sidebar width in js code => localize width values instead of using hardcoded values. fixes #843
+
 = 3.4.34 December 9th, 2019 =
 * fixed : header's height and single post content layout can be broken in some cases. fixes #839
 * fixed : removed spurious quote in the logo img tag. fixes #840

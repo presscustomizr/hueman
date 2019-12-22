@@ -2866,6 +2866,15 @@ var czrapp = czrapp || {};
                             return;
                           mobMenu( 'collapsed' );
                     });
+                    $(  mobMenu.container )
+                          .on( 'mouseup', '.menu-item a', function(evt) {
+                                if ( ! czrapp.userXP._isMobileScreenSize() )
+                                      return;
+                                evt.preventDefault();
+                                evt.stopPropagation();
+                                mobMenu( 'collapsed');
+                          });
+
               },
               _toggleMobileMenu : function()  {
                     var mobMenu = this,
@@ -3391,7 +3400,7 @@ var czrapp = czrapp || {};
                           container : $container,
                           position : _position,//can take left, middle-left, middle-right, right
                           layout : _userLayout,//can take : col-2cr, co-2cl, col-3cr, col-3cm, col-3cl
-                          extended_width : 's1' == _id ? 340 : 260//<= hard coded in the base CSS, could be made dynamic in the future
+                          extended_width : 's1' == _id ? HUParams.sidebarOneWidth : HUParams.sidebarTwoWidth//<= hard coded in the base CSS, could be made dynamic in the future
                     }));
               });//$( '.s1, .s2', '#wrapper' ).each()
 
@@ -3660,7 +3669,7 @@ var czrapp = czrapp || {};
                                             transform: _translate,
                                       });
                                       sb.container.find('.sidebar-content').css('opacity', expanded ? 0 : 1 );
-                                      sb.container.find('.icon-sidebar-toggle').css('opacity', 0);
+                                      sb.container.find('.sidebar-toggle-arrows').css('opacity', 0);
                                       _.delay( function() {
                                             _dfd.resolve();
                                       }, 350 );//transition: width .35s ease-in-out;
@@ -3678,7 +3687,7 @@ var czrapp = czrapp || {};
                                             'margin-left' : '',
                                             height : expanded ? sb._getExpandedHeight() + 'px' : '',
                                       });
-                                sb.container.find('.icon-sidebar-toggle').css('opacity', 1);
+                                sb.container.find('.sidebar-toggle-arrows').css('opacity', 1);
                                 sb.container.find('.sidebar-content')
                                     .css({
                                           opacity : '',
