@@ -1,6 +1,6 @@
 <div class="sidebar s2 collapsed" data-position="<?php echo hu_get_sidebar_position( 's2' ); ?>" data-layout="<?php echo hu_get_layout_class(); ?>" data-sb-id="s2">
 
-	<button class="sidebar-toggle" title="<?php _e('Expand Sidebar','hueman'); ?>"><i class="fas icon-sidebar-toggle"></i></button>
+	<button class="sidebar-toggle" title="<?php _e('Expand Sidebar','hueman'); ?>"><i class="fas sidebar-toggle-arrows"></i></button>
 
 	<div class="sidebar-content">
 

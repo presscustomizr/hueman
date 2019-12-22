@@ -41,12 +41,12 @@
 
 
 	/* s2 toggle icon */
-  .sidebar[data-position="right"].expanded .icon-sidebar-toggle:before,
-  .sidebar[data-position="middle-right"].expanded .icon-sidebar-toggle:before {
+  .sidebar[data-position="right"].expanded .sidebar-toggle-arrows:before,
+  .sidebar[data-position="middle-right"].expanded .sidebar-toggle-arrows:before {
     content: "\f101";
   }
-  .sidebar[data-position="left"].expanded .icon-sidebar-toggle:before,
-  .sidebar[data-position="middle-left"].expanded .icon-sidebar-toggle:before {
+  .sidebar[data-position="left"].expanded .sidebar-toggle-arrows:before,
+  .sidebar[data-position="middle-left"].expanded .sidebar-toggle-arrows:before {
     content: "\f100";
   }
 

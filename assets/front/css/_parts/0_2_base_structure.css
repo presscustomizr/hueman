@@ -154,9 +154,9 @@ padding: 0;
   opacity:0!important;
 }
 /* toggle icon */
-.icon-sidebar-toggle {  opacity: 0;/* <= revealed with js */ }
-.collapsed .icon-sidebar-toggle {  opacity: 1; }
-.icon-sidebar-toggle {
+.sidebar-toggle-arrows {  opacity: 0;/* <= revealed with js */ }
+.collapsed .sidebar-toggle-arrows {  opacity: 1; }
+.sidebar-toggle-arrows {
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   -moz-osx-font-smoothing: grayscale;
@@ -173,24 +173,24 @@ padding: 0;
 
 
 /* the position is set server side depending on the choosen layout */
-.sidebar[data-position="right"] .icon-sidebar-toggle:before,
-.sidebar[data-position="middle-right"] .icon-sidebar-toggle:before {content: "\f100";}
-.sidebar[data-position="left"] .icon-sidebar-toggle:before,
-.sidebar[data-position="middle-left"] .icon-sidebar-toggle:before {content: "\f101";}
+.sidebar[data-position="right"] .sidebar-toggle-arrows:before,
+.sidebar[data-position="middle-right"] .sidebar-toggle-arrows:before {content: "\f100";}
+.sidebar[data-position="left"] .sidebar-toggle-arrows:before,
+.sidebar[data-position="middle-left"] .sidebar-toggle-arrows:before {content: "\f101";}
 
-.sidebar[data-position="right"].collapsed .hovering .icon-sidebar-toggle,
-.sidebar[data-position="middle-right"].collapsed .hovering .icon-sidebar-toggle,
-.sidebar[data-position="left"].expanded .hovering .icon-sidebar-toggle,
-.sidebar[data-position="middle-left"].expanded .hovering .icon-sidebar-toggle {
+.sidebar[data-position="right"].collapsed .hovering .sidebar-toggle-arrows,
+.sidebar[data-position="middle-right"].collapsed .hovering .sidebar-toggle-arrows,
+.sidebar[data-position="left"].expanded .hovering .sidebar-toggle-arrows,
+.sidebar[data-position="middle-left"].expanded .hovering .sidebar-toggle-arrows {
   -webkit-transform: translateX(-3px);
   -moz-transform: translateX(-3px);
   -o-transform: translateX(-3px);
   transform: translateX(-3px);
 }
-.sidebar[data-position="left"].collapsed .hovering .icon-sidebar-toggle,
-.sidebar[data-position="middle-left"].collapsed .hovering .icon-sidebar-toggle,
-.sidebar[data-position="right"].expanded .hovering .icon-sidebar-toggle,
-.sidebar[data-position="middle-right"].expanded .hovering .icon-sidebar-toggle {
+.sidebar[data-position="left"].collapsed .hovering .sidebar-toggle-arrows,
+.sidebar[data-position="middle-left"].collapsed .hovering .sidebar-toggle-arrows,
+.sidebar[data-position="right"].expanded .hovering .sidebar-toggle-arrows,
+.sidebar[data-position="middle-right"].expanded .hovering .sidebar-toggle-arrows {
   -webkit-transform: translateX(3px);
   -moz-transform: translateX(3px);
   -o-transform: translateX(3px);

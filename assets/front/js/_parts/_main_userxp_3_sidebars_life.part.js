@@ -596,7 +596,7 @@ var czrapp = czrapp || {};
 
                                       //OPACITY
                                       sb.container.find('.sidebar-content').css('opacity', expanded ? 0 : 1 );
-                                      sb.container.find('.icon-sidebar-toggle').css('opacity', 0);
+                                      sb.container.find('.sidebar-toggle-arrows').css('opacity', 0);
 
                                       //DO
                                       _.delay( function() {
@@ -620,7 +620,7 @@ var czrapp = czrapp || {};
                                       });
 
                                 //END SIDEBAR ANIMATION + CLEAN CLASSES
-                                sb.container.find('.icon-sidebar-toggle').css('opacity', 1);
+                                sb.container.find('.sidebar-toggle-arrows').css('opacity', 1);
 
                                 //sidebar content
                                 sb.container.find('.sidebar-content')

@@ -3,7 +3,7 @@
 
 	<div class="sidebar s1 collapsed" data-position="<?php echo hu_get_sidebar_position( 's1' ); ?>" data-layout="<?php echo $layout ?>" data-sb-id="s1">
 
-		<button class="sidebar-toggle" title="<?php _e('Expand Sidebar','hueman'); ?>"><i class="fas icon-sidebar-toggle"></i></button>
+		<button class="sidebar-toggle" title="<?php _e('Expand Sidebar','hueman'); ?>"><i class="fas sidebar-toggle-arrows"></i></button>
 
 		<div class="sidebar-content">
 
