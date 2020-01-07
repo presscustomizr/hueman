@@ -57,6 +57,7 @@ $.extend( CZRSocialModuleMths, {
                 'facebook-square',
                 'firefox',
                 'flickr',
+                'flipboard',
                 'fonticons',
                 'fort-awesome',
                 'forumbee',
