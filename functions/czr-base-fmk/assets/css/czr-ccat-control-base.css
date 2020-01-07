@@ -1478,7 +1478,7 @@ body.czr-editing-modopt .czr-mod-opt-wrapper {
 
 
 /* OPTIONS STYLE */
-.czr-mod-opt-wrapper .czr-sub-set {
+body .czr-mod-opt-wrapper .czr-sub-set {
     /*border: 1px dotted #ccc;*/
     background: rgba(238, 238, 238, 0.13);
     padding: 3% 2%;
@@ -1627,7 +1627,7 @@ li.tab-inactive::after {
   display: none;
   margin: 0 auto;
   max-width: 1200px;
-  padding-top: 10px;
+  /*padding-top: 10px; commented for https://github.com/presscustomizr/hueman-pro-addons/issues/200 */
 }
 
 section .czr-sub-set:first-child {
