@@ -164,6 +164,13 @@
                               return true;
                         }
                   },
+                  {
+                        dominus : 'sidebar-top',
+                        servi : [ 'primary-sb-text', 'secondary-sb-text' ],
+                        visibility : function( to ) {
+                              return _is_checked(to);
+                        }
+                  }
             ]//dominiDeps {}
       );//_.extend()
 

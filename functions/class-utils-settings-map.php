@@ -1374,6 +1374,26 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'notice'    => __('Display boxes at the top of the sidebars' , 'hueman'),
                 'priority'  => 1
           ),
+          'primary-sb-text' => array(
+                'control'   => 'HU_controls',
+                'default'   => __( 'Follow:', 'hueman' ),
+                'label'     => __( 'Primary sidebar title', 'hueman'),
+                'type'      => 'text',
+                'section'   => 'sidebars_design_sec',
+                'sanitize_callback' => array( $this, 'hu_sanitize_html_text_input' ),
+                'priority'  => 2,
+                'notice'    => __( 'Html is allowed.', 'hueman')
+          ),
+          'secondary-sb-text' => array(
+                'control'   => 'HU_controls',
+                'default'   => __( 'More', 'hueman' ),
+                'label'     => __( 'Secondary sidebar title', 'hueman'),
+                'type'      => 'text',
+                'section'   => 'sidebars_design_sec',
+                'sanitize_callback' => array( $this, 'hu_sanitize_html_text_input' ),
+                'priority'  => 2,
+                'notice'    => __( 'Html is allowed.', 'hueman')
+          ),
           'sidebar-background' => array(
                 'default'   => '#f0f0f0',
                 'control'   => 'HU_Customize_Color_Alpha_Control',
@@ -1382,7 +1402,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'type'      =>  'wp_color_alpha' ,
                 'sanitize_callback'    => 'maybe_hash_hex_color',
                 'sanitize_js_callback' => 'maybe_hash_hex_color',
-                'priority'  => 2
+                'priority'  => 4
           ),
           'desktop-sticky-sb' => array(
                 'default'   => hu_user_started_before_version( '3.3.9', '1.0.3' ) ? 1 : 0,
