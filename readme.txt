@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.3.2
-Stable tag: 3.4.36
+Stable tag: 3.4.37
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,10 +13,13 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
 
 == Upgrade Notice ==
-= 3.4.36 =
-Added an option for SEO allowing users to wrap the site title or logo in an H1 tag. Added the Flipboard icon to the list of social icons. Improved footer credit links security by adding noreferrer relationship attributes.
+= 3.4.37 =
+Added for sidebars, new options to customize the topbox default texts "Follow" and "More". Can be contextualized on per-page basis with Hueman Pro.
 
 == Changelog ==
+= 3.4.37 January 20th, 2020 =
+* added : sidebars => new options to customize the topbox default texts "Follow" and "More". Fixes #845
+
 = 3.4.36 January 7th, 2020 =
 * fixed : added noopener noreferrer relationship attributes to footer credit link
 * added : an option allowing users to wrap the site title or logo in an H1 tag. fixes #844
