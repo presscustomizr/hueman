@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.3.2
-Stable tag: 3.4.37
+Stable tag: 3.4.38
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,10 +13,15 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
 
 == Upgrade Notice ==
-= 3.4.37 =
-Added for sidebars, new options to customize the topbox default texts "Follow" and "More". Can be contextualized on per-page basis with Hueman Pro.
+= 3.4.38 =
+Added new options to control the display of the featured image on singular posts and pages.
 
 == Changelog ==
+= 3.4.38 January 31st, 2020 =
+* added : single post featured image => added new options, similar to the one of the page. fixes #846
+* added : allow users to chose if featured image is cropped or not when displayed in a single post or page. for #846
+* improved : implemented a CSS flexbox display for the search button
+
 = 3.4.37 January 20th, 2020 =
 * added : sidebars => new options to customize the topbox default texts "Follow" and "More". Fixes #845
 

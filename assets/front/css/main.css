@@ -281,7 +281,9 @@ input[type="submit"]:hover,
 }
 [role=search].search-form label {
   position: relative;
-  width: calc(75% - 5px );
+  -webkit-box-flex:1;
+  -ms-flex:1;
+  flex:1;
   margin-right: 5px;
 }
 [role=search].search-form label input {
@@ -291,7 +293,7 @@ input[type="submit"]:hover,
 }
 [role=search].search-form input[type=submit] {
   line-height: 15px;
-  width: 25%;
+  /*width: 25%;*/
 }
 [role=search].search-form label:after { color: #ccc; line-height: 1.714em; font-family: 'Font Awesome 5 Free'; font-size: 0.875em; content: "\f002"; position: absolute; left: 10px; top: 8px; font-weight: 900; -moz-osx-font-smoothing: grayscale; -webkit-font-smoothing: antialiased; font-style: normal; font-variant: normal; text-rendering: auto;}
 
