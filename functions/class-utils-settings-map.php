@@ -1235,6 +1235,25 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'notice'    => __( 'Display post author description, if it exists' , 'hueman'),
                 //'active_callback' => function_exists('HU_AD') ? 'hu_is_single' : ''//enabled when hueman-addons is enabled
           ),
+          'singular-post-featured-image' => array(
+                'default'   => 0,
+                'control'   => 'HU_controls',
+                'label'     => __( 'Featured image', 'hueman' ),
+                'section'   => 'content_single_sec',
+                'type'      => 'nimblecheck',
+                'priority'  => 10,
+                'notice'    => __( 'Display the post\'s featured image when it is set. Note that audio and image post formats automatically display the featured image.' , 'hueman'),
+                'skoped' => false// implemented initally not skopable in jan-2020, see ctx_get_excluded_settings()
+          ),
+          'singular-post-cropped-feat-img' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __( 'Used cropped image (720x340 pixels on desktops)', 'hueman' ),
+                'section'   => 'content_single_sec',
+                'type'      => 'nimblecheck',
+                'priority'  => 10,
+                'skoped' => false// implemented initally not skopable in jan-2020, see ctx_get_excluded_settings()
+          ),
           'related-posts' => array(
                 'default'   => 'categories',
                 'control'   => 'HU_controls',
@@ -1318,6 +1337,13 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'content_page_sec',
                 'type'      => 'nimblecheck',
                 'notice'    => __( 'Display the page\'s featured image when it is set' , 'hueman')
+          ),
+          'singular-page-cropped-feat-img' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __( 'Used cropped image (720x340 pixels on desktops)', 'hueman' ),
+                'section'   => 'content_page_sec',
+                'type'      => 'nimblecheck'
           ),
       );
     }

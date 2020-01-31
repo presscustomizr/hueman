@@ -1,7 +1,10 @@
 <?php if ( has_post_thumbnail() ): ?>
   <div class="page-image">
   	<div class="image-container">
-  		<?php hu_the_post_thumbnail('thumb-large', '', false );//no attr and no placeholder ?>
+  		<?php
+      $image_size = hu_is_checked( 'singular-page-cropped-feat-img' ) ? 'thumb-large' : 'full';
+      hu_the_post_thumbnail($image_size, '', false );//no attr and no placeholder
+      ?>
   		<?php
   			$caption = get_post(get_post_thumbnail_id())->post_excerpt;
   			$description = get_post(get_post_thumbnail_id())->post_content;

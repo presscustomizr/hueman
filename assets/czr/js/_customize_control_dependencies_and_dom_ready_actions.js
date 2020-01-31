@@ -170,7 +170,25 @@
                         visibility : function( to ) {
                               return _is_checked(to);
                         }
-                  }
+                  },
+                  {
+                        dominus : 'singular-post-featured-image',
+                        servi : [
+                              'singular-post-cropped-feat-img'
+                        ],
+                        visibility : function ( to ) {
+                              return _is_checked(to);
+                        }
+                  },
+                  {
+                        dominus : 'singular-page-featured-image',
+                        servi : [
+                              'singular-page-cropped-feat-img'
+                        ],
+                        visibility : function ( to ) {
+                              return _is_checked(to);
+                        }
+                  },
             ]//dominiDeps {}
       );//_.extend()
 
