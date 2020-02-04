@@ -211,6 +211,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
     height: 12px;
     margin: 19px 5px;
     position: relative;
+    display: block;
 }
 .ham__navbar-toggler-two .line {
   display: block;
