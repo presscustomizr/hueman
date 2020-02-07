@@ -361,7 +361,7 @@ if ( ! function_exists( 'hu_print_social_links' ) ) {
         }
 
         if ( isset($item['social-link']) && ! empty( $item['social-link'] ) ) {
-            if ( false !== strpos($item['social-link'], 'callto:') || false !== strpos($item['social-link'], 'tel:') || false !== strpos($item['social-link'], 'skype:') ) {
+            if ( false !== strpos($item['social-link'], 'callto:') || false !== strpos($item['social-link'], 'tel:') || false !== strpos($item['social-link'], 'skype:') || false !== strpos($item['social-link'], 'viber:') ) {
                 $social_link = esc_attr( $item['social-link'] );
                 $rel_attr = '';//we don't need to set a relationship attribute in this case
             } else {
