@@ -57,9 +57,9 @@ box-shadow: 0 1px 1px rgba(0,0,0,0.1); }
 
 /* Featured Image */
 /* @see the add_image_size() definitions in functions/init-after-setup-theme.php */
-#flexslider-featured .featured-img-thumb-xxlarge img { max-height: 500px; }
-#flexslider-featured .featured-img-thumb-xlarge img { max-height: 450px; }
-#flexslider-featured .featured-img-thumb-large img { max-height: 360px; }
+#flexslider-featured .featured-img-thumb-xxlarge { height: 500px;overflow: hidden; }
+#flexslider-featured .featured-img-thumb-xlarge { height: 450px;overflow: hidden; }
+#flexslider-featured .featured-img-thumb-large { height: 360px;overflow: hidden; }
 
 /* woocommerce */
 .products .featured { border-bottom: none }
