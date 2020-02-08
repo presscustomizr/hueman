@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.3.2
-Stable tag: 3.4.38
+Stable tag: 3.4.39
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,10 +13,18 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
 
 == Upgrade Notice ==
-= 3.4.38 =
-Added new options to control the display of the featured image on singular posts and pages.
+= 3.4.39 =
+Added new options to control the visibility of post metas ( date and categories ) in post lists. Style improvements for featured posts images. Fixed minor HTML validation errors.
 
 == Changelog ==
+= 3.4.39 February 8th, 2020 =
+* fixed : [html] element div not allowed as child of element button
+* fixed : [html] Bad value for attribute datetime on element time as per HTML specs : the literal did not satisfy the time-datetime format.
+* fixed : adapt social links for Viber link type. reported : https://secure.helpscout.net/conversation/1076331224/220109?folderId=607547
+* fixed : style for .entry h2 span not compliant with accessibility standards. fixes #850
+* fixed : featured image can be stretched when displayed in featured posts. fixes #851
+* added : new options to control the visibility of post metas ( date and categories ) in post lists. fixes #849
+
 = 3.4.38 January 31st, 2020 =
 * added : single post featured image => added new options, similar to the one of the page. fixes #846
 * added : allow users to chose if featured image is cropped or not when displayed in a single post or page. for #846

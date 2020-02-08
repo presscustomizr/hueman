@@ -385,7 +385,7 @@ transition: all .2s ease;
 /*  base : headings
 /* ------------------------------------ */
 h1, h2, h3, h4, h5, h6 { color: #444; font-weight: 600; -ms-word-wrap: break-word; word-wrap: break-word; }
-.entry h1 span, .entry h2 span, .entry h3 span, .entry h4 span, .entry h5 span, .entry h6 span { color: #bbb; }
+.entry h1 span, .entry h2 span, .entry h3 span, .entry h4 span, .entry h5 span, .entry h6 span { color: #666; }
 /* woocommerce */
 .woocommerce div.product h1.product_title,
 .woocommerce-Tabs-panel.entry-content h2,
@@ -939,6 +939,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
     height: 12px;
     margin: 19px 5px;
     position: relative;
+    display: block;
 }
 .ham__navbar-toggler-two .line {
   display: block;
@@ -1766,9 +1767,9 @@ box-shadow: 0 1px 1px rgba(0,0,0,0.1); }
 
 /* Featured Image */
 /* @see the add_image_size() definitions in functions/init-after-setup-theme.php */
-#flexslider-featured .featured-img-thumb-xxlarge img { max-height: 500px; }
-#flexslider-featured .featured-img-thumb-xlarge img { max-height: 450px; }
-#flexslider-featured .featured-img-thumb-large img { max-height: 360px; }
+#flexslider-featured .featured-img-thumb-xxlarge { height: 500px;overflow: hidden; }
+#flexslider-featured .featured-img-thumb-xlarge { height: 450px;overflow: hidden; }
+#flexslider-featured .featured-img-thumb-large { height: 360px;overflow: hidden; }
 
 /* woocommerce */
 .products .featured { border-bottom: none }
