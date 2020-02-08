@@ -1214,7 +1214,24 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                     'section' => 'static_front_page',
                     'priority' => '140'
                 )
-          )
+          ),
+          'post-list-meta-category' => array(
+            'default'   => 1,
+            'control'   => 'HU_controls',
+            'title'     => __('Post Metas', 'hueman'),
+            'label'     => __('Display categories', 'hueman'),
+            'section'   => 'content_blog_sec',
+            'type'      => 'nimblecheck',
+            'priority'  => 70,
+          ),
+          'post-list-meta-date' => array(
+            'default'   => 1,
+            'control'   => 'HU_controls',
+            'label'     => __('Display post date', 'hueman'),
+            'section'   => 'content_blog_sec',
+            'type'      => 'nimblecheck',
+            'priority'  => 71,
+          ),
       );
     }
 

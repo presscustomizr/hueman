@@ -12,12 +12,16 @@
 				<a class="post-comments" href="<?php comments_link(); ?>"><i class="far fa-comments"></i><?php comments_number( '0', '1', '%' ); ?></a>
 			<?php endif; ?>
 		</div><!--/.post-thumbnail-->
-
-		<div class="post-meta group">
-			<p class="post-category"><?php the_category(' / '); ?></p>
-			<?php get_template_part('parts/post-list-author-date'); ?>
-		</div><!--/.post-meta-->
-
+    <?php if ( hu_is_checked( 'post-list-meta-category' ) || hu_is_checked( 'post-list-meta-date' ) ) : ?>
+  		<div class="post-meta group">
+        <?php if ( hu_is_checked( 'post-list-meta-category' ) ) : ?>
+  			  <p class="post-category"><?php the_category(' / '); ?></p>
+        <?php endif; ?>
+        <?php if ( hu_is_checked( 'post-list-meta-date' ) ) : ?>
+  			  <?php get_template_part('parts/post-list-author-date'); ?>
+        <?php endif; ?>
+  		</div><!--/.post-meta-->
+    <?php endif; ?>
 		<h2 class="post-title entry-title">
 			<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute( array( 'before' => __( 'Permalink to ', 'hueman' ) ) ); ?>"><?php the_title(); ?></a>
 		</h2><!--/.post-title-->
