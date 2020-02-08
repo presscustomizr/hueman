@@ -22,7 +22,7 @@ https://github.com/presscustomizr/hueman/releases
 = 3.4.39 February 8th, 2020 =
 * fixed : [html] element div not allowed as child of element button
 * fixed : [html] Bad value for attribute datetime on element time as per HTML specs : the literal did not satisfy the time-datetime format.
-* fixed : adapt social links for Viber link type. reported : https://secure.helpscout.net/conversation/1076331224/220109?folderId=607547
+* fixed : adapt social links for Viber link type.
 * fixed : style for .entry h2 span not compliant with accessibility standards. fixes #850
 * fixed : featured image can be stretched when displayed in featured posts. fixes #851
 * added : new options to control the visibility of post metas ( date and categories ) in post lists. fixes #849
