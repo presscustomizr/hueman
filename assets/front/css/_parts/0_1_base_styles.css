@@ -306,7 +306,7 @@ transition: all .2s ease;
 /*  base : headings
 /* ------------------------------------ */
 h1, h2, h3, h4, h5, h6 { color: #444; font-weight: 600; -ms-word-wrap: break-word; word-wrap: break-word; }
-.entry h1 span, .entry h2 span, .entry h3 span, .entry h4 span, .entry h5 span, .entry h6 span { color: #bbb; }
+.entry h1 span, .entry h2 span, .entry h3 span, .entry h4 span, .entry h5 span, .entry h6 span { color: #666; }
 /* woocommerce */
 .woocommerce div.product h1.product_title,
 .woocommerce-Tabs-panel.entry-content h2,
