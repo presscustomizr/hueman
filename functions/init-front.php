@@ -1098,7 +1098,7 @@ if ( ! function_exists( 'hu_scripts' ) ) {
       );
     }
 
-    if ( has_post_format( 'gallery' ) || ( is_home() && ! is_paged() && ( hu_get_option('featured-posts-count') != '0' ) ) ) {
+    if ( has_post_format( 'gallery' ) || ( is_home() && ! is_paged() && ( hu_is_checked('featured-posts-enabled') && hu_get_option('featured-posts-count') != '0' ) ) ) {
       wp_enqueue_script(
         'flexslider',
         get_template_directory_uri() . '/assets/front/js/libs/jquery.flexslider.min.js',
