@@ -40,6 +40,15 @@ module.exports = {
       ext: '.min.js'
     }]
   },
+  front_init_js: {
+    files: [{
+      expand: true,
+      cwd: '<%= paths.front_js %>',
+      src: ['hu-init.js'],
+      dest: '<%= paths.front_js %>',
+      ext: '.min.js'
+    }]
+  },
   flexslider_js: {
     files: {
       '<%= paths.front_js %>libs/jquery.flexslider.min.js': ['<%= paths.front_js %>libs/jquery.flexslider.js']

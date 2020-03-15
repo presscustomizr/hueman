@@ -47,7 +47,8 @@ var czrapp = czrapp || {};
                             'topNavToLife',
                             'gutenbergAlignfull',
                             'mayBePrintWelcomeNote',
-                            'triggerResizeEventsToAjustHeaderHeightOnInit' // for https://github.com/presscustomizr/hueman/issues/839
+                            'triggerResizeEventsToAjustHeaderHeightOnInit', // for https://github.com/presscustomizr/hueman/issues/839
+                            'mayBeLoadFontAwesome'
                       ]
                 }
       };//map

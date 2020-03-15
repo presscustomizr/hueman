@@ -529,6 +529,22 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'     => 'performance_sec',
                 'type'        => 'nimblecheck',
                 'notice'      => __('When checked, this option loads a small javascript file ( 30 kb ) to detect if your site is being displayed by a mobile device like a phone or a tablet. It is recommended to check this option if you are using a cache plugin.' , 'hueman')
+          ),
+
+          // added for https://github.com/presscustomizr/hueman/issues/863
+          'defer_front_script'  =>  array(
+                'default'       => 0,
+                'control'     =>  'HU_controls',
+                'label'       => __( 'Defer loading javascript files to avoid render blocking issues' , 'hueman' ),
+                'section'     => 'performance_sec',
+                'type'        => 'nimblecheck'
+          ),
+          'defer_font_awesome'  =>  array(
+                'default'       => 1,
+                'control'     =>  'HU_controls',
+                'label'       => __( 'Defer loading Font Awesome icons' , 'hueman' ),
+                'section'     => 'performance_sec',
+                'type'        => 'nimblecheck'
           )
 
       );

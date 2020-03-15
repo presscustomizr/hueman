@@ -36,6 +36,13 @@ module.exports = {
         'comments:front_assets_js'
     ],
 	},
+  front_init_js : {
+    files : ['<%= paths.front_js %>hu-init.js'],
+    tasks : [
+        //'replace:czr_fmk_namespace',// always make sure that we have the correct namespace in case it's been copied from Nimble
+        'uglify:front_init_js'
+    ],
+  },
   global_js : {
     files : ['<%= paths.global_js %>*.js', '!*.min.js'],
     tasks : [
