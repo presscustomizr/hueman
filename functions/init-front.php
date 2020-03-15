@@ -1269,7 +1269,7 @@ if ( ! function_exists( 'hu_styles' ) ) {
             'hueman-main-style',
             hu_get_front_style_url(),//defined in init-core
             array(),
-            ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
+            ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : get_stylesheet()->version,
             'all'
         );
     } else {
