@@ -121,7 +121,9 @@ z-index:2;
 .archive .post-standard,
 .search .post-standard { margin-bottom: 20px; }
 
-.post-standard .post-inner { padding-left: 230px; padding-bottom: 20px; float: left; border-bottom: 1px solid #eee; }
+.post-standard .post-inner { padding-bottom: 20px; float: left; border-bottom: 1px solid #eee; }
+.post-standard.excerpt .post-inner { padding-left: 230px; padding-bottom: 20px; float: left; border-bottom: 1px solid #eee; }
+
 .post-standard .post-thumbnail { margin-left: -230px; max-width: 200px; margin-bottom: 0; float: left; }
 .post-standard .post-content { float: left; }
 

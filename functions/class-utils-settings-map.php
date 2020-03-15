@@ -1061,6 +1061,33 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                     'priority' => '60'
                 )
           ),
+          // added for https://github.com/presscustomizr/hueman/issues/859
+          'blog-standard-full-content' => array(
+                'default'   => 0,
+                'control'   => 'HU_controls',
+                'label'     => __("Display your blog posts in full content", 'hueman'),
+                'section'   => 'content_blog_sec',
+                'type'      => 'nimblecheck',
+                //'active_callback' => 'hu_is_post_list',
+                'priority'   => 22,
+                'ubq_section'   => array(
+                    'section' => 'static_front_page',
+                    'priority' => '62'
+                )
+          ),
+          'blog-standard-show-thumb' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __("Display the post thumbnail", 'hueman'),
+                'section'   => 'content_blog_sec',
+                'type'      => 'nimblecheck',
+                //'active_callback' => 'hu_is_post_list',
+                'priority'   => 23,
+                'ubq_section'   => array(
+                    'section' => 'static_front_page',
+                    'priority' => '63'
+                )
+          ),
           'blog-use-original-image-size'  =>  array(
                 'default'   => 0,
                 'control'   => 'HU_controls' ,
@@ -1070,7 +1097,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 //'transport' => 'postMessage',
                 'notice'    => __( 'When checked, the post featured image are displayed in their original size, instead of the optimized image sizes of the theme. Make sure your original images are not too large, it could slow down your website.', 'hueman'),
                 //'active_callback' => 'hu_is_post_list',
-                'priority'   => 22,
+                'priority'   => 25,
                 'ubq_section'   => array(
                     'section' => 'static_front_page',
                     'priority' => '65'

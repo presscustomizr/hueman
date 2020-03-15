@@ -189,6 +189,15 @@
                               return _is_checked(to);
                         }
                   },
+                  {
+                        dominus : 'blog-standard',
+                        servi : [
+                              'blog-standard-full-content'
+                        ],
+                        visibility : function ( to ) {
+                              return _is_checked(to);
+                        }
+                  },
             ]//dominiDeps {}
       );//_.extend()
 
