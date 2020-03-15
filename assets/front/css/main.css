@@ -482,7 +482,7 @@ h1, h2, h3, h4, h5, h6 { color: #444; font-weight: 600; -ms-word-wrap: break-wor
   -o-transition: -o-transform, .35s ease;
   transition: transform, .35s ease;
 }
-.pad { padding: 30px 30px 20px; }
+.hu-pad { padding: 30px 30px 20px; }
 
 /* boxed */
 .boxed #wrapper { max-width: 1380px; margin: 0 auto;
@@ -563,7 +563,7 @@ position: relative;}
   transform: translate3d(0,0,0);/* @see => https://stanko.github.io/ios-safari-scoll-position-fixed/ */
   background: #f0f0f0;
 }
-.sidebar .pad { padding-left: 20px; padding-right: 20px; }
+.sidebar .hu-pad { padding-left: 20px; padding-right: 20px; }
 .sidebar-top { padding: 15px 30px; }
 .sidebar-top p { float: left; color: #fff; color: rgba(255,255,255,0.8); font-size: 1rem; font-weight: 600; text-transform: uppercase; line-height: 1.5rem; padding: 3px 0; }
 .sidebar-toggle { display: none; text-align: center; cursor: pointer; width: 100%; height: 60px;
@@ -1183,7 +1183,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 /* ------------------------------------------------------------------------- */
 #header { background: #454e5c; position: relative; padding-bottom: 60px;}
 /*.is-scrolling #header{z-index: 100; }*/
-#header .pad { padding-top: 30px; padding-bottom: 30px; }
+#header .hu-pad { padding-top: 30px; padding-bottom: 30px; }
 #header .container-inner { position: relative; }
 .mobile-title-logo-in-header { display: none;}
 
@@ -1831,7 +1831,9 @@ z-index:2;
 .archive .post-standard,
 .search .post-standard { margin-bottom: 20px; }
 
-.post-standard .post-inner { padding-left: 230px; padding-bottom: 20px; float: left; border-bottom: 1px solid #eee; }
+.post-standard .post-inner { padding-bottom: 20px; float: left; border-bottom: 1px solid #eee; }
+.post-standard.excerpt .post-inner { padding-left: 230px; padding-bottom: 20px; float: left; border-bottom: 1px solid #eee; }
+
 .post-standard .post-thumbnail { margin-left: -230px; max-width: 200px; margin-bottom: 0; float: left; }
 .post-standard .post-content { float: left; }
 
@@ -2031,7 +2033,7 @@ but posts created with the former cover-image block will still use the wp-block-
     width: 100%;
 }
 /* alignwide and alignfull in boxed layouts */
-/* only reset the .pad container horizontal padding*/
+/* only reset the .hu-pad container horizontal padding*/
 .themeform .alignfull[class*=wp-block-],
 .themeform .alignwide[class*=wp-block-] {
     margin-right: -30px;
@@ -2284,7 +2286,7 @@ box-shadow: inset 0 1px 0 rgba(255,255,255,0.25); }
 .widget_calendar th { font-weight: 600; }
 .widget_calendar th,
 .widget_calendar td { padding: 3px 0; text-align: center; border: 1px solid #e2e2e2; }
-.widget_calendar .pad { padding: 0!important; }
+.widget_calendar .hu-pad { padding: 0!important; }
 
 .sidebar.s1 .widget_calendar a,
 #footer .widget_calendar a { color: #16cfc1; }
@@ -2769,7 +2771,7 @@ svg.hu-svg-placeholder {
 }
 
 #footer-bottom { background: #33363b; }
-#footer-bottom .pad { padding-top: 30px; }
+#footer-bottom .hu-pad { padding-top: 30px; }
 #footer-bottom a { color: #fff; color: rgba(255,255,255,0.7); }
 #footer-bottom a:hover { color: #fff; }
 #footer-bottom #footer-logo { display: block; margin-bottom: 20px; max-height: 50px; -webkit-border-radius: 0; border-radius: 0; }

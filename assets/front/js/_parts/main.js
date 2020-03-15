@@ -3452,6 +3452,24 @@ var czrapp = czrapp || {};
                     }, 3000 );
               };
               _triggerResize();
+        },
+        mayBeLoadFontAwesome : function() {
+              jQuery( function() {
+                    if ( ! HUParams.deferFontAwesome )
+                      return;
+                    var $candidates = $('[class*=fa-]');
+                    if ( $candidates.length < 1 )
+                      return;
+                    // assets/shared/fonts/fa/css/fontawesome-all.min.css?
+                    if ( $('head').find( '[href*="font-awesome.min.css"]' ).length < 1 ) {
+                        var link = document.createElement('link');
+                        link.setAttribute('href', HUParams.fontAwesomeUrl );
+                        link.setAttribute('id', 'hu-font-awesome');
+                        link.setAttribute('rel', 'stylesheet' );
+                        link.setAttribute('as', 'style');
+                        document.getElementsByTagName('head')[0].appendChild(link);
+                    }
+              });
         }
 
   };//_methods{}
@@ -3762,7 +3780,8 @@ var czrapp = czrapp || {};
                             'topNavToLife',
                             'gutenbergAlignfull',
                             'mayBePrintWelcomeNote',
-                            'triggerResizeEventsToAjustHeaderHeightOnInit' // for https://github.com/presscustomizr/hueman/issues/839
+                            'triggerResizeEventsToAjustHeaderHeightOnInit', // for https://github.com/presscustomizr/hueman/issues/839
+                            'mayBeLoadFontAwesome'
                       ]
                 }
       };//map

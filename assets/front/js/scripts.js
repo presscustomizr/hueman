@@ -736,48 +736,7 @@ if (!Array.from) {
                 }
             });
         };
-})( jQuery, window, _ );
-(function ( $, window, document, _ ) {
-  var pluginName = 'animateSvg',
-      defaults = {
-        filter_opacity : 0.8,
-        svg_opacity : 0.8,
-        animation_duration : 400
-      },
-      _drawSvgIcon = function(options) {
-          var id = $(this).attr('id');
-          if ( _.isUndefined(id) || _.isEmpty(id) || 'function' != typeof( Vivus ) ) {
-            if ( window.czrapp )
-              czrapp.consoleLog( 'An svg icon could not be animated with Vivus.');
-            return;
-          }
-          if ( $('[id=' + id + ']').length > 1 ) {
-            if ( window.czrapp )
-              czrapp.consoleLog( 'Svg icons must have a unique css #id to be animated. Multiple id found for : ' + id );
-          }
-          var set_opacity = function() {
-            if ( $('#' + id ).siblings('.filter-placeholder').length )
-              return $('#' + id ).css('opacity', options.svg_opacity ).siblings('.filter-placeholder').css('opacity', options.filter_opacity);
-            else
-              return $('#' + id ).css('opacity', options.svg_opacity );
-          };
-          $.when( set_opacity() ).done( function() {
-              new Vivus( id, {type: 'delayed', duration: options.animation_duration } );
-          });
-      };
-  $.fn[pluginName] = function ( options ) {
-      options  = $.extend( {}, defaults, options) ;
-      return this.each(function () {
-          if ( ! $.data(this, 'plugin_' + pluginName) ) {
-              $.data(
-                this,
-                'plugin_' + pluginName,
-                _drawSvgIcon.call( this, options )
-              );
-          }
-      });
-  };
-})( jQuery, window, document, _ );// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+})( jQuery, window, _ );// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
 (function() {
     var lastTime = 0;
     var vendors = ['ms', 'moz', 'webkit', 'o'];
@@ -4229,6 +4188,23 @@ var czrapp = czrapp || {};
                     }, 3000 );
               };
               _triggerResize();
+        },
+        mayBeLoadFontAwesome : function() {
+              jQuery( function() {
+                    if ( ! HUParams.deferFontAwesome )
+                      return;
+                    var $candidates = $('[class*=fa-]');
+                    if ( $candidates.length < 1 )
+                      return;
+                    if ( $('head').find( '[href*="font-awesome.min.css"]' ).length < 1 ) {
+                        var link = document.createElement('link');
+                        link.setAttribute('href', HUParams.fontAwesomeUrl );
+                        link.setAttribute('id', 'hu-font-awesome');
+                        link.setAttribute('rel', 'stylesheet' );
+                        link.setAttribute('as', 'style');
+                        document.getElementsByTagName('head')[0].appendChild(link);
+                    }
+              });
         }
 
   };//_methods{}
@@ -4457,7 +4433,8 @@ var czrapp = czrapp || {};
                             'topNavToLife',
                             'gutenbergAlignfull',
                             'mayBePrintWelcomeNote',
-                            'triggerResizeEventsToAjustHeaderHeightOnInit' // for https://github.com/presscustomizr/hueman/issues/839
+                            'triggerResizeEventsToAjustHeaderHeightOnInit', // for https://github.com/presscustomizr/hueman/issues/839
+                            'mayBeLoadFontAwesome'
                       ]
                 }
       };//map

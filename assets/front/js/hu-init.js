@@ -10,7 +10,7 @@
                   var _headTag = document.getElementsByTagName('head')[0];
                   var _script = document.createElement("script");
                   _script.setAttribute('src', HUParams.mainScriptUrl );
-                  _script.setAttribute('id', 'tc-scripts' );
+                  _script.setAttribute('id', 'hu-scripts' );
                   _script.setAttribute('defer', 'defer');
                   if ( _headTag ) {
                       _headTag.appendChild(_script);
