@@ -131,7 +131,7 @@
 .widget_calendar th { font-weight: 600; }
 .widget_calendar th,
 .widget_calendar td { padding: 3px 0; text-align: center; border: 1px solid #e2e2e2; }
-.widget_calendar .pad { padding: 0!important; }
+.widget_calendar .hu-pad { padding: 0!important; }
 
 .sidebar.s1 .widget_calendar a,
 #footer .widget_calendar a { color: #16cfc1; }

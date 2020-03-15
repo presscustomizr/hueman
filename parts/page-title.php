@@ -1,5 +1,5 @@
 <?php if ( ! hu_is_home_empty() ) : ?>
-    <div class="page-title pad group">
+    <div class="page-title hu-pad group">
       <?php //prints the relevant metas (cat, tag, author, date, ...) for a given context : home, single post, page, 404, search, archive...  ?>
     	<?php if ( is_home() && hu_is_checked('blog-heading-enabled') ) : ?>
     		<h2><?php echo hu_blog_title(); ?></h2>

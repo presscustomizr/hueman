@@ -321,7 +321,7 @@ but posts created with the former cover-image block will still use the wp-block-
     width: 100%;
 }
 /* alignwide and alignfull in boxed layouts */
-/* only reset the .pad container horizontal padding*/
+/* only reset the .hu-pad container horizontal padding*/
 .themeform .alignfull[class*=wp-block-],
 .themeform .alignwide[class*=wp-block-] {
     margin-right: -30px;

@@ -155,7 +155,7 @@
 
 <?php if ( has_post_format( 'quote' ) ): // Quote @fromfull ?>
     <div class="post-format">
-      <div class="format-container pad">
+      <div class="format-container hu-pad">
         <i class="fas fa-quote-right"></i>
         <blockquote><?php echo isset($meta['_quote'][0])?wpautop($meta['_quote'][0]):''; ?></blockquote>
         <p class="quote-author"><?php echo (isset($meta['_quote_author'][0])?'&mdash; '.$meta['_quote_author'][0]:''); ?></p>
@@ -165,7 +165,7 @@
 
 <?php if ( has_post_format( 'chat' ) ): // Chat @fromfull?>
   	<div class="post-format">
-      <div class="format-container pad">
+      <div class="format-container hu-pad">
         <i class="far fa-comments"></i>
         <blockquote>
           <?php echo (isset($meta['_chat'][0])?wpautop($meta['_chat'][0]):''); ?>
@@ -176,7 +176,7 @@
 
 <?php if ( has_post_format( 'link' ) ): // Link @fromfull ?>
   	<div class="post-format">
-      <div class="format-container pad">
+      <div class="format-container hu-pad">
         <p><a href="<?php echo (isset($meta['_link_url'][0])?$meta['_link_url'][0]:'#'); ?>">
           <i class="fas fa-link"></i>
           <?php echo (isset($meta['_link_title'][0])?$meta['_link_title'][0]:get_the_title()); ?> &rarr;

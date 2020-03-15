@@ -50,7 +50,7 @@
     <div class="container-inner">
 
       <?php if ( ! $_print_header_img ) : ?>
-              <div class="group pad central-header-zone">
+              <div class="group hu-pad central-header-zone">
                   <div class="logo-tagline-group">
                       <?php hu_print_logo_or_title();//gets the logo or the site title ?>
                       <?php if ( hu_is_checked('site-description') ) : ?>
@@ -66,7 +66,7 @@
               </div>
       <?php else :  ?>
           <div id="header-image-wrap">
-              <div class="group pad central-header-zone">
+              <div class="group hu-pad central-header-zone">
                   <?php if ( hu_is_checked( 'logo-title-on-header-image' ) ) : ?>
                       <div class="logo-tagline-group">
                           <?php hu_print_logo_or_title();//gets the logo or the site title ?>

@@ -208,7 +208,7 @@ function hu_set_woocommerce_compat() {
     function hu_print_woocommerce_page_title( $title ) {
       if ( function_exists('is_woocommerce') && is_woocommerce() && function_exists('woocommerce_page_title') ) {
       ?>
-        <div class="page-title pad group">
+        <div class="page-title hu-pad group">
           <?php if ( is_single() ):
                   global $product;
                   if ( isset($product) ) :
@@ -398,7 +398,7 @@ function hu_theme_wrapper_start() {
   echo '<section class="content" id="content">';
   if ( $page_title = apply_filters( 'hu_in_wrapper_page_title', '' ) )
     echo $page_title;
-  echo '<div class="pad themeform">';
+  echo '<div class="hu-pad themeform">';
   printf( '<div class="%s">', implode(' ', apply_filters( 'hu_in_wrapper_container_class', array('group', 'entry' ) ) ) );
 }
 

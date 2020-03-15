@@ -19,7 +19,7 @@
 }
 
 #footer-bottom { background: #33363b; }
-#footer-bottom .pad { padding-top: 30px; }
+#footer-bottom .hu-pad { padding-top: 30px; }
 #footer-bottom a { color: #fff; color: rgba(255,255,255,0.7); }
 #footer-bottom a:hover { color: #fff; }
 #footer-bottom #footer-logo { display: block; margin-bottom: 20px; max-height: 50px; -webkit-border-radius: 0; border-radius: 0; }

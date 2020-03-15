@@ -60,7 +60,7 @@
         <section class="container" id="footer-widgets">
           <div class="container-inner">
 
-            <div class="pad group">
+            <div class="hu-pad group">
 
               <?php for ($i = 1; $i <= $_footer_columns ;$i++ ) : ?>
                   <div class="footer-widget-<?php echo $i; ?> grid <?php echo $class; ?> <?php if ( $i == $_footer_columns ) { echo 'last'; } ?>">
@@ -68,7 +68,7 @@
                   </div>
               <?php endfor; ?>
 
-            </div><!--/.pad-->
+            </div><!--/.hu-pad-->
 
           </div><!--/.container-inner-->
         </section><!--/.container-->
@@ -100,7 +100,7 @@
 
         <a id="back-to-top" href="#"><i class="fas fa-angle-up"></i></a>
 
-        <div class="pad group">
+        <div class="hu-pad group">
 
           <div class="grid one-half">
             <?php $_footer_logo_img_src = apply_filters( 'hu_footer_logo_src', hu_get_img_src_from_option('footer-logo') ); ?>
@@ -145,7 +145,7 @@
             <?php endif; ?>
           </div>
 
-        </div><!--/.pad-->
+        </div><!--/.hu-pad-->
 
       </div><!--/.container-inner-->
     </section><!--/.container-->

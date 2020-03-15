@@ -23,7 +23,7 @@
   -o-transition: -o-transform, .35s ease;
   transition: transform, .35s ease;
 }
-.pad { padding: 30px 30px 20px; }
+.hu-pad { padding: 30px 30px 20px; }
 
 /* boxed */
 .boxed #wrapper { max-width: 1380px; margin: 0 auto;
@@ -104,7 +104,7 @@ position: relative;}
   transform: translate3d(0,0,0);/* @see => https://stanko.github.io/ios-safari-scoll-position-fixed/ */
   background: #f0f0f0;
 }
-.sidebar .pad { padding-left: 20px; padding-right: 20px; }
+.sidebar .hu-pad { padding-left: 20px; padding-right: 20px; }
 .sidebar-top { padding: 15px 30px; }
 .sidebar-top p { float: left; color: #fff; color: rgba(255,255,255,0.8); font-size: 1rem; font-weight: 600; text-transform: uppercase; line-height: 1.5rem; padding: 3px 0; }
 .sidebar-toggle { display: none; text-align: center; cursor: pointer; width: 100%; height: 60px;

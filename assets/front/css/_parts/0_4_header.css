@@ -3,7 +3,7 @@
 /* ------------------------------------------------------------------------- */
 #header { background: #454e5c; position: relative; padding-bottom: 60px;}
 /*.is-scrolling #header{z-index: 100; }*/
-#header .pad { padding-top: 30px; padding-bottom: 30px; }
+#header .hu-pad { padding-top: 30px; padding-bottom: 30px; }
 #header .container-inner { position: relative; }
 .mobile-title-logo-in-header { display: none;}
 

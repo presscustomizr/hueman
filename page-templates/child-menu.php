@@ -9,7 +9,7 @@ Template Name: Child Menu
 
 	<?php hu_get_template_part('parts/page-title'); ?>
 
-	<div class="pad group">
+	<div class="hu-pad group">
 
 		<?php while ( have_posts() ): the_post(); ?>
 
@@ -37,7 +37,7 @@ Template Name: Child Menu
 
 		<?php endwhile; ?>
 
-	</div><!--/.pad-->
+	</div><!--/.hu-pad-->
 
 </section><!--/.content-->
 

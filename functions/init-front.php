@@ -20,7 +20,7 @@ if ( ! function_exists( 'hu_get_content') ) {
       <?php do_action( '__before_content_section', $tmpl ); ?>
         <section class="content" id="content">
           <?php hu_get_template_part('parts/page-title'); ?>
-          <div class="pad group">
+          <div class="hu-pad group">
             <?php
               foreach ( $seks as $_id ) {
                   if ( 'wp' == $_id )
@@ -29,7 +29,7 @@ if ( ! function_exists( 'hu_get_content') ) {
                     hu_print_sek( $_id );
               }
             ?>
-          </div><!--/.pad-->
+          </div><!--/.hu-pad-->
         </section><!--/.content-->
       <?php do_action( '__after_content_section', $tmpl ); ?>
     <?php
