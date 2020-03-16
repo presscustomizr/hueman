@@ -1302,7 +1302,7 @@ if ( ! function_exists( 'hu_styles' ) ) {
             'hueman-main-style',
             hu_get_front_style_url(),//defined in init-core
             array(),
-            ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : get_stylesheet()->version,
+            ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
             'all'
         );
     } else {
@@ -1326,7 +1326,7 @@ if ( ! function_exists( 'hu_styles' ) ) {
             'theme-stylesheet',
             get_stylesheet_uri(),
             array('hueman-main-style'),
-            ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
+            ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : wp_get_theme()->get('Version'),
             'all'
         );
     }
