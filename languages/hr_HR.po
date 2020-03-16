@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman v3.5.0\n"
+"Project-Id-Version: Hueman v3.5.1\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
 "POT-Creation-Date: 2020-03-15 16:34:41+00:00\n"
 "PO-Revision-Date: 2016-05-30 08:47+0200\n"

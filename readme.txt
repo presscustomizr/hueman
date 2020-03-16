@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.4
-Stable tag: 3.5.0
+Stable tag: 3.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,12 +12,12 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 == Description ==
 The Hueman theme loads fast and is 100% mobile-friendly according to Google. One of the best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
 
-== Upgrade Notice ==
-= 3.5.0 =
-Added new options to control the visibility of post metas ( date and categories ) in post lists. Style improvements for featured posts images. Fixed minor HTML validation errors.
-
 == Changelog ==
 https://github.com/presscustomizr/hueman/releases
+= 3.5.1 March 16th, 2020 =
+* fixed : Use the child-theme version when enqueueing its style. fixes #868
+* fixed : remaining .pad classes to be turned into .hu-pad
+
 = 3.5.0 March 15th, 2020 =
 * fixed : [performance] flexslider.js can be loaded on blog page even when featured posts are disabled. fixes #856
 * fixed : [CSS] prefix .pad class more specifically to avoid potential conflict with plugins. fixes #862

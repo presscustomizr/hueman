@@ -2756,7 +2756,7 @@ svg.hu-svg-placeholder {
 #footer { background: #fff; color: #777; width: 100%; position: relative; }
 #footer a { color: #777; }
 #footer a:hover { color: #ccc; }
-#footer .pad { padding-bottom: 30px; }
+#footer .hu-pad { padding-bottom: 30px; }
 
 #footer-full-width-widget { text-align: center; padding: 10px 0; border-bottom: 1px solid #eee; }
 

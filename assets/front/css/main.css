@@ -2756,7 +2756,7 @@ svg.hu-svg-placeholder {
 #footer { background: #fff; color: #777; width: 100%; position: relative; }
 #footer a { color: #777; }
 #footer a:hover { color: #ccc; }
-#footer .pad { padding-bottom: 30px; }
+#footer .hu-pad { padding-bottom: 30px; }
 
 #footer-full-width-widget { text-align: center; padding: 10px 0; border-bottom: 1px solid #eee; }
 
@@ -3070,7 +3070,7 @@ box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
 	.grid { width: 100%; margin: 0 0 10px; }
 
 	/* sidebar toggle 60 > 50px height */
-	.page-title.pad { padding-top: 12px; padding-bottom: 12px; }
+	.page-title.hu-pad { padding-top: 12px; padding-bottom: 12px; }
 	.sidebar-toggle { height: 50px; }
 	.sidebar-toggle i { padding: 10px 0; }
 
@@ -3079,7 +3079,7 @@ box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
 	.image-caption { display: none; }
 
 	/* base */
-	.pad { padding: 20px 20px 10px; }
+	.hu-pad { padding: 20px 20px 10px; }
 	.notebox { margin-bottom: 20px; }
 	#flexslider-featured { margin-top: 10px; }
 	.entry { font-size: 0.9375em; }
@@ -3095,7 +3095,7 @@ box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
 	/* header */
 	#header { padding-bottom: 0; }
 	.topbar-enabled #header { padding-top: 0; }
-	#header .pad { padding-top: 0; padding-bottom: 0; }
+	#header .hu-pad { padding-top: 0; padding-bottom: 0; }
 	.site-title { padding: 30px 0; width: 100%; float: none; line-height: 1.19em; font-size: 2.2em; }
 	.site-title a { text-align: center; }
 	.toggle-search { right: auto; left: 0; top: 0;
@@ -3104,7 +3104,7 @@ box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
 	.search-expand { left: 0; right: auto; top: 50px; width: 320px; }
 
 	/* footer */
-	#footer-bottom .pad { padding-top: 50px; padding-bottom: 40px; }
+	#footer-bottom .hu-pad { padding-top: 50px; padding-bottom: 40px; }
 	#footer-bottom .one-half.last { margin-bottom: 0; }
 	#footer-bottom { text-align: center; }
 	#footer-bottom #footer-logo { margin-left: auto; margin-right: auto; }
@@ -3203,7 +3203,7 @@ box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
 		        order: -1;
 	}
 	/* base */
-	.pad { padding: 15px 15px 5px; }
+	.hu-pad { padding: 15px 15px 5px; }
 	.sidebar-top,
 	.sidebar .widget { padding-left: 15px!important; padding-right: 15px!important; }
 	.notebox { margin-bottom: 15px; }
