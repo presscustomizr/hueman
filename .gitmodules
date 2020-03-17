@@ -1,6 +1,3 @@
 [submodule "assets/front/js/libs/jquery-plugins"]
 	path = assets/front/js/libs/jquery-plugins
 	url = https://github.com/presscustomizr/front-jquery-plugins.git
-[submodule "assets/front/js/_front_js_fmk"]
-  path = assets/front/js/_front_js_fmk
-  url = https://github.com/presscustomizr/themes-front-js-fmk.git
