@@ -145,6 +145,7 @@ var czrapp = czrapp || {};
       //             czrapp.ready.done( _do );
       //       }
       // }
-
+      czrapp.customMap = new czrapp.Value( {} );
+      czrapp.customMap.bind( _instantianteAndFireOnDomReady );//<=THE CUSTOM MAP IS LISTENED TO HERE
 
 })( czrapp, jQuery, _ );
