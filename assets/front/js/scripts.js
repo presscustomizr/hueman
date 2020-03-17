@@ -141,6 +141,7 @@ if (!Array.from) {
     };
   }());
 }
+
 (function ( $ ) {
 
   var pluginPrefix = 'original',
@@ -4339,6 +4340,9 @@ var czrapp = czrapp || {};
       czrapp.Base           = czrapp.Root.extend( czrapp.methods.Base );
       czrapp.ready          = $.Deferred();
       czrapp.bind( 'czrapp-ready', function() {
+            var _evt = document.createEvent('Event');
+            _evt.initEvent('czrapp-is-ready', true, true); //can bubble, and is cancellable
+            document.dispatchEvent(_evt);
             czrapp.ready.resolve();
       });
       var _instantianteAndFireOnDomReady = function( newMap, previousMap, isInitial ) {

@@ -3629,6 +3629,9 @@ var czrapp = czrapp || {};
       //2) all methods have been fired on DOM ready;
       czrapp.ready          = $.Deferred();
       czrapp.bind( 'czrapp-ready', function() {
+            var _evt = document.createEvent('Event');
+            _evt.initEvent('czrapp-is-ready', true, true); //can bubble, and is cancellable
+            document.dispatchEvent(_evt);
             czrapp.ready.resolve();
       });
 
