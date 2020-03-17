@@ -88,6 +88,7 @@ var czrapp = czrapp || {};
             });
 
             //Fire on DOM ready
+            //implemented for https://github.com/presscustomizr/hueman/issues/863
             $(function () {
                   _.each( newMap, function( params, name ) {
                         //bail if already fired
@@ -144,8 +145,6 @@ var czrapp = czrapp || {};
       //             czrapp.ready.done( _do );
       //       }
       // }
-      czrapp.customMap = new czrapp.Value( {} );
-      czrapp.customMap.bind( _instantianteAndFireOnDomReady );//<=THE CUSTOM MAP IS LISTENED TO HERE
 
 
 })( czrapp, jQuery, _ );
