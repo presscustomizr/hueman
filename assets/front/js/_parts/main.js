@@ -4,7 +4,7 @@ var czrapp = czrapp || {};
 * JS LOG VARIOUS UTILITIES
 *************************/
 (function($, czrapp) {
-      //Utility : print a js log on front
+      //Utility : print a js log on frontd
       czrapp._printLog = function( log ) {
             var _render = function() {
                   return $.Deferred( function() {
@@ -3674,6 +3674,7 @@ var czrapp = czrapp || {};
             });
 
             //Fire on DOM ready
+            //implemented for https://github.com/presscustomizr/hueman/issues/863
             $(function () {
                   _.each( newMap, function( params, name ) {
                         //bail if already fired
@@ -3732,7 +3733,6 @@ var czrapp = czrapp || {};
       // }
       czrapp.customMap = new czrapp.Value( {} );
       czrapp.customMap.bind( _instantianteAndFireOnDomReady );//<=THE CUSTOM MAP IS LISTENED TO HERE
-
 
 })( czrapp, jQuery, _ );var czrapp = czrapp || {};
 //@global HUParams

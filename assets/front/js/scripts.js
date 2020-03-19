@@ -141,7 +141,6 @@ if (!Array.from) {
     };
   }());
 }
-
 (function ( $ ) {
 
   var pluginPrefix = 'original',
@@ -4394,7 +4393,6 @@ var czrapp = czrapp || {};
       czrapp.appMap.bind( _instantianteAndFireOnDomReady );//<=THE MAP IS LISTENED TO HERE
       czrapp.customMap = new czrapp.Value( {} );
       czrapp.customMap.bind( _instantianteAndFireOnDomReady );//<=THE CUSTOM MAP IS LISTENED TO HERE
-
 
 })( czrapp, jQuery, _ );var czrapp = czrapp || {};
 ( function ( czrapp, $, _ ) {

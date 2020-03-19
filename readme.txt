@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.4
-Stable tag: 3.5.1
+Stable tag: 3.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,10 @@ The Hueman theme loads fast and is 100% mobile-friendly according to Google. One
 
 == Changelog ==
 https://github.com/presscustomizr/hueman/releases
+= 3.5.2 March 19th, 2020 =
+* fixed : [standard grid] left padding broken on mobile devices. fixes #871
+* improved : [performance] lazyloading threshold set to 0 instead of 200px by default
+
 = 3.5.1 March 16th, 2020 =
 * fixed : Use the child-theme version when enqueueing its style. fixes #868
 * fixed : remaining .pad classes to be turned into .hu-pad
@@ -35,11 +39,6 @@ https://github.com/presscustomizr/hueman/releases
 * fixed : style for .entry h2 span not compliant with accessibility standards. fixes #850
 * fixed : featured image can be stretched when displayed in featured posts. fixes #851
 * added : new options to control the visibility of post metas ( date and categories ) in post lists. fixes #849
-
-= 3.4.38 January 31st, 2020 =
-* added : single post featured image => added new options, similar to the one of the page. fixes #846
-* added : allow users to chose if featured image is cropped or not when displayed in a single post or page. for #846
-* improved : implemented a CSS flexbox display for the search button
 
 == Resources ==
 * Font Awesome Font : http://fontawesome.io, licensed SIL OFL 1.1, MIT License

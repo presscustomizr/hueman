@@ -3130,8 +3130,8 @@ box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
 	.post-list .page	{ width: 100%; }
 	.post-list .post-row { margin-left: 0; padding-left: 0; margin-bottom: 0; border: 0; }
 	.post-list .post-inner { margin-right: 0; }
-	.post-standard .post-inner { padding-left: 120px; }
-	.post-standard .post-thumbnail { margin-left: -120px; max-width: 100px; }
+	#grid-wrapper .post-standard.excerpt .post-inner { padding-left: 120px; }
+	#grid-wrapper .post-standard.excerpt .post-thumbnail { margin-left: -120px; max-width: 100px; }
 
 	.featured .post-title,
 	.single .post-title { font-size: 1.375em; line-height: 1.5em; letter-spacing: 0; }
@@ -3214,8 +3214,8 @@ box-shadow: inset 0 1px 0 rgba(0,0,0,0.05); }
 	.site-title { font-size: 2em; }
 
 	/* blog */
-	.post-standard .post-inner { padding-left: 82px; }
-	.post-standard .post-thumbnail { margin-left: -82px; max-width: 72px; }
+	#grid-wrapper .post-standard.excerpt .post-inner { padding-left: 82px; }
+	#grid-wrapper .post-standard.excerpt .post-thumbnail { margin-left: -82px; max-width: 72px; }
 	.format-link .post-format p { margin-bottom: 5px; }
 
   /* Don't display the sharre bar */
