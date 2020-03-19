@@ -1205,7 +1205,8 @@ if ( ! function_exists( 'hu_scripts' ) ) {
                       ),
                       'opts'     => array(
                           'excludeImg' => array( '.tc-holder-img' ),
-                          'fadeIn_options' => 100
+                          'fadeIn_options' => 100,
+                          'threshold' => 0
                       )
                 )),
                 'goldenRatio'         => apply_filters( 'hu_grid_golden_ratio' , 1.618 ),
