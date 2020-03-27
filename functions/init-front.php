@@ -389,7 +389,9 @@ if ( ! function_exists( 'hu_print_social_links' ) ) {
 if ( ! function_exists( 'hu_render_header_image' ) ) {
   function hu_render_header_image( $_header_img_src = null ) {
     $attr = array(
-      'class' => 'site-image'
+        //'class' => hu_user_started_before_version( '3.5.3' ) ? 'site-image' : 'new-site-image',//<= if the new CSS class breaks websites, we might use this condition
+        // introduced March 2020 for https://github.com/presscustomizr/hueman/issues/852
+        'class' => 'new-site-image'
     );
 
     $_header_img_src = trim( $_header_img_src );
