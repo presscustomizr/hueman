@@ -682,3 +682,11 @@ function hu_parse_template_tags( $val ) {
     return is_string( $val ) ? preg_replace_callback( '!\{\{\s?(\w+)\s?\}\}!', 'hu_find_pattern_match', $val) : $val;
 }
 add_filter( 'hu_parse_template_tags', 'hu_parse_template_tags' );
+
+/* ------------------------------------------------------------------------- *
+ * FLEXSLIDER SCRIPT
+/* ------------------------------------------------------------------------- */
+// March 2020, introduced for https://github.com/presscustomizr/hueman/issues/869
+function hu_front_needs_flexslider() {
+  return has_post_format( 'gallery' ) || ( is_home() && ! is_paged() && ( hu_is_checked('featured-posts-enabled') && hu_get_option('featured-posts-count') != '0' ) );
+}

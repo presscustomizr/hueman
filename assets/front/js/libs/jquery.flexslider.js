@@ -1250,3 +1250,4 @@
     }
   };
 })(jQuery);
+jQuery('body').trigger('hu-flexslider-parsed');

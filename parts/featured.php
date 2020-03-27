@@ -23,41 +23,6 @@ $featured = new WP_Query(
 
 <?php elseif ( is_home() && !is_paged() && ( '0' != hu_get_option('featured-posts-count') ) && $featured->have_posts() ): // Show slider if posts are not 1 or 0 ?>
 
-	<script type="text/javascript">
-		// Check if first slider image is loaded, and load flexslider on document ready
-		jQuery(function($){
-		 var firstImage = $('#flexslider-featured').find('img').filter(':first'),
-			checkforloaded = setInterval(function() {
-				var image = firstImage.get(0);
-				if (image.complete || image.readyState == 'complete' || image.readyState == 4) {
-					clearInterval(checkforloaded);
-
-					$.when( $('#flexslider-featured').flexslider({
-						animation: "slide",
-						useCSS: false, // Fix iPad flickering issue
-						directionNav: true,
-						controlNav: true,
-						pauseOnHover: true,
-						animationSpeed: 400,
-						smoothHeight: true,
-            rtl: <?php echo json_encode( is_rtl() ) ?>,
-						touch: <?php echo apply_filters('hu_flexslider_touch_support' , true); ?>,
-						slideshow: <?php echo hu_is_checked('featured-slideshow') ? 'true' : 'false'; ?>,
-						slideshowSpeed: <?php echo hu_get_option('featured-slideshow-speed', 5000); ?>,
-					}) ).done( function() {
-            var $_self = $(this);
-                _trigger = function( $_self ) {
-              $_self.trigger('featured-slider-ready');
-            };
-            _trigger = _.debounce( _trigger, 100 );
-            _trigger( $_self );
-          } );
-
-				}
-			}, 20);
-		});
-	</script>
-
 	<div class="featured flexslider" id="flexslider-featured">
 		<ul class="slides">
 			<?php while ( $featured->have_posts() ): $featured->the_post(); ?>

@@ -1104,19 +1104,21 @@ if ( ! function_exists( 'hu_scripts' ) ) {
         'mobile-detect',
         get_template_directory_uri() . '/assets/front/js/libs/mobile-detect.min.js',
         array(),
-        '',
+        ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
         false
       );
+      wp_script_add_data( 'mobile-detect', 'defer', true );
     }
 
-    if ( has_post_format( 'gallery' ) || ( is_home() && ! is_paged() && ( hu_is_checked('featured-posts-enabled') && hu_get_option('featured-posts-count') != '0' ) ) ) {
+    if ( hu_front_needs_flexslider() ) {
       wp_enqueue_script(
         'flexslider',
         get_template_directory_uri() . '/assets/front/js/libs/jquery.flexslider.min.js',
         array( 'jquery' ),
-        '',
+        ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
         false
       );
+      wp_script_add_data( 'flexslider', 'defer', true );
     }
 
     if ( has_post_format( 'audio' ) ) {
@@ -1124,7 +1126,7 @@ if ( ! function_exists( 'hu_scripts' ) ) {
         'jplayer',
         get_template_directory_uri() . '/assets/front/js/libs/jquery.jplayer.min.js',
         array( 'jquery' ),
-        '',
+        ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER,
         true
       );
     }
@@ -1249,6 +1251,13 @@ if ( ! function_exists( 'hu_scripts' ) ) {
                   ( defined('WP_DEBUG') && true === WP_DEBUG ) ? '' : '.min',
                   ( defined('WP_DEBUG') && true === WP_DEBUG ) ? time() : HUEMAN_VER
                 ),
+                'flexSliderNeeded' => hu_front_needs_flexslider(),
+                'flexSliderOptions' => array(
+                    'is_rtl' => is_rtl(),
+                    'has_touch_support' => apply_filters('hu_flexslider_touch_support' , true),
+                    'is_slideshow' => hu_is_checked('featured-slideshow'),
+                    'slideshow_speed' => hu_get_option('featured-slideshow-speed', 5000)
+                )
             )
         )//end of filter
        );//wp_localize_script()

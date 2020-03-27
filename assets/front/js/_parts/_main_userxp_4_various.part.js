@@ -536,6 +536,87 @@ var czrapp = czrapp || {};
                         document.getElementsByTagName('head')[0].appendChild(link);
                     }
               });
+        },
+        // can be fired for for featured posts on home and for gallery post formats
+        // March 2020 introduced for https://github.com/presscustomizr/hueman/issues/869
+        maybeFireFlexSlider : function() {
+              if ( !HUParams.flexSliderNeeded )
+                return;
+              var _fireWhenFlexReady = function() {
+                    // Check if first slider image is loaded, and load flexslider on document ready
+
+                    // FEATURED POSTS ON HOME
+                    var $flexForFeaturedPosts = $('#flexslider-featured');
+                    if ( $flexForFeaturedPosts.length > 0 ) {
+                          var $_firstImage = $flexForFeaturedPosts.find('img').filter(':first'),
+                          checkforloaded = setInterval(function() {
+                                if ( $_firstImage.length < 1 )
+                                  return;
+                                var image = $_firstImage.get(0);
+                                if ( image.complete || image.readyState == 'complete' || image.readyState == 4 ) {
+                                      clearInterval(checkforloaded);
+
+                                      $.when( $flexForFeaturedPosts.flexslider({
+                                            animation: "slide",
+                                            useCSS: false, // Fix iPad flickering issue
+                                            directionNav: true,
+                                            controlNav: true,
+                                            pauseOnHover: true,
+                                            animationSpeed: 400,
+                                            smoothHeight: true,
+                                            rtl: HUParams.flexSliderOptions.is_rtl,
+                                            touch: HUParams.flexSliderOptions.has_touch_support,
+                                            slideshow: HUParams.flexSliderOptions.is_slideshow,
+                                            slideshowSpeed: HUParams.flexSliderOptions.slideshow_speed
+                                      }) ).done( function() {
+                                            var $_self = $(this);
+                                                _trigger = function( $_self ) {
+                                              $_self.trigger('featured-slider-ready');
+                                            };
+                                            _trigger = _.debounce( _trigger, 100 );
+                                            _trigger( $_self );
+                                      });
+                                }
+                          }, 20);
+                    }
+
+                    // GALLERY POST FORMAT
+                    var $flexForGalleryPostFormat = $('[id*="flexslider-for-gallery-post-format-"]');
+                    var $firstImage = $flexForGalleryPostFormat.find('img').filter(':first'),
+                        _checkforloaded = setInterval(function() {
+                              if ( $firstImage.length < 1 )
+                                return;
+
+                              var image = $firstImage.get(0);
+                              if ( image.complete || image.readyState == 'complete' || image.readyState == 4 ) {
+                                clearInterval(_checkforloaded);
+                                $flexForGalleryPostFormat.flexslider({
+                                      animation: HUParams.isWPMobile ? 'slide' : 'fade',
+                                      rtl: HUParams.flexSliderOptions.is_rtl,
+                                      slideshow: true,
+                                      directionNav: true,
+                                      controlNav: true,
+                                      pauseOnHover: true,
+                                      slideshowSpeed: 7000,
+                                      animationSpeed: 600,
+                                      smoothHeight: true,
+                                      touch: HUParams.flexSliderOptions.has_touch_support
+                                });
+                              }
+                    }, 20);
+
+              };//_fireWhenFlexReady
+
+
+              // jquery.flexslider.js is loaded "defer", so let's make sure it's ready before firing it
+              // jQuery('body').trigger('hu-flexslider-parsed'); is hardcoded at the bottom of jquery.flexslider.js
+              jQuery(function($){
+                    if ( 'function' === typeof $.fn.flexslider ) {
+                          _fireWhenFlexReady();
+                    } else {
+                          czrapp.$_window.on('hu-flexslider-parsed', _fireWhenFlexReady );
+                    }
+              });//jQuery(function($){})
         }
 
   };//_methods{}
