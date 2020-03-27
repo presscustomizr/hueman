@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.4
-Stable tag: 3.5.2
+Stable tag: 3.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,14 @@ The Hueman theme loads fast and is 100% mobile-friendly according to Google. One
 
 == Changelog ==
 https://github.com/presscustomizr/hueman/releases
+= 3.5.3 March 27th, 2020 =
+* fixed : [mobile menu] clicking on an anchor link that has child submenu should unfold the submenu. fixes #857
+* improved : [Header] banner image => make it easier to adjust width automatically. fixes #852
+* improved : [performance] load flexslider.js with defer. fixes #869
+* improved : [performance] removed smoothscroll option and script
+* updated : [javascript] flexslider.js to v2.7.2
+* updated : [javascript] mobile-detect.js to v2.8.34
+
 = 3.5.2 March 19th, 2020 =
 * fixed : [standard grid] left padding broken on mobile devices. fixes #871
 * improved : [performance] lazyloading threshold set to 0 instead of 200px by default

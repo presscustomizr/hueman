@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman v3.5.2\n"
+"Project-Id-Version: Hueman v3.5.3\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2020-03-17 17:21:01+00:00\n"
+"POT-Creation-Date: 2020-03-27 17:18:34+00:00\n"
 "PO-Revision-Date: 2016-08-31 16:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: Press Customizr\n"
@@ -34,7 +34,7 @@ msgstr "1 Respon"
 msgid "% Responses"
 msgstr "% Respon"
 
-#: comments.php:10 functions/class-utils-settings-map.php:1868
+#: comments.php:10 functions/class-utils-settings-map.php:1869
 msgid "Comments"
 msgstr "Komentar"
 
@@ -264,7 +264,7 @@ msgid "Read the latest release notes"
 msgstr "Bada catatan rilis terbaru"
 
 #: functions/admin/class-admin-update-notification.php:113
-#: functions/class-utils-settings-map.php:1921
+#: functions/class-utils-settings-map.php:1923
 msgid "Upgrade to Hueman Pro"
 msgstr ""
 
@@ -346,7 +346,7 @@ msgid "Display a logo in the header"
 msgstr "Tampilkan widget di header Anda"
 
 #: functions/class-utils-settings-map.php:194
-#: functions/class-utils-settings-map.php:686
+#: functions/class-utils-settings-map.php:687
 #: functions/czr-modules/body-background/body_bg_module.php:136
 msgid "here"
 msgstr ""
@@ -364,7 +364,7 @@ msgid "Logo for mobiles"
 msgstr ""
 
 #: functions/class-utils-settings-map.php:217
-#: functions/class-utils-settings-map.php:1605
+#: functions/class-utils-settings-map.php:1606
 #: functions/czr/class-czr-init.php:111
 msgid ""
 "Upload your custom logo image. Supported formats : .jpg, .png, .gif, svg, "
@@ -372,10 +372,10 @@ msgid ""
 msgstr "Unggah gambar logo kustom Anda. Format : .jpg, .png, .gif, .svg, .svgz"
 
 #: functions/class-utils-settings-map.php:224
-#: functions/class-utils-settings-map.php:763
 #: functions/class-utils-settings-map.php:764
-#: functions/class-utils-settings-map.php:781
-#: functions/class-utils-settings-map.php:1496
+#: functions/class-utils-settings-map.php:765
+#: functions/class-utils-settings-map.php:782
+#: functions/class-utils-settings-map.php:1497
 #, fuzzy
 msgid "Desktop devices"
 msgstr "Perangkat hp"
@@ -517,19 +517,11 @@ msgstr "Komentar Laman"
 msgid "Comments on pages"
 msgstr "Komentar pada laman"
 
-#: functions/class-utils-settings-map.php:447
-msgid "Enable Smooth Scrolling"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:450
-msgid "This option enables a smoother page scroll."
-msgstr ""
-
-#: functions/class-utils-settings-map.php:465
+#: functions/class-utils-settings-map.php:466
 msgid "Enable the Mobile Friendly (or Responsive) layout"
 msgstr "Nyalakan Mobile Friendly (atau responsive) layout"
 
-#: functions/class-utils-settings-map.php:468
+#: functions/class-utils-settings-map.php:469
 msgid ""
 "Hueman is a mobile friendly WordPress theme out of the box. This means that "
 "it will adapt and render nicely on any devices : desktops, laptops, tablets, "
@@ -543,28 +535,28 @@ msgstr ""
 "Pada beberapa kasus yang ada, rekomendasi kami sebaiknya Anda nyalakan opsi "
 "ini."
 
-#: functions/class-utils-settings-map.php:473
+#: functions/class-utils-settings-map.php:474
 msgid ""
 "Make font sizes flexible. Enable this option to achieve scalable headlines "
 "that fill the width of a parent element."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:476
+#: functions/class-utils-settings-map.php:477
 msgid ""
 "This option is good if you want to display a perfect font-size for your "
 "headings on any mobile devices. Note : it might override the css rules "
 "previously set in your custom stylesheet."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:489
+#: functions/class-utils-settings-map.php:490
 msgid "Include images in search results"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:504
+#: functions/class-utils-settings-map.php:505
 msgid "Use a minified stylesheet"
 msgstr "Gunakan minified stylesheet"
 
-#: functions/class-utils-settings-map.php:507
+#: functions/class-utils-settings-map.php:508
 msgid ""
 "Unchecking this option is not recommended. Minifying css stylesheets "
 "improves performance for your website overall by decreasing the load time."
@@ -573,11 +565,11 @@ msgstr ""
 "mengimprof performa untuk website Anda keseluruhan dengan menurunkan waktu "
 "loading."
 
-#: functions/class-utils-settings-map.php:512
+#: functions/class-utils-settings-map.php:513
 msgid "Use Structured Data Markup for your posts"
 msgstr "Gunakan Structured Data Markup untuk post Anda"
 
-#: functions/class-utils-settings-map.php:515
+#: functions/class-utils-settings-map.php:516
 msgid ""
 "\"Structured data markup\" is a standard way to annotate your content so "
 "machines can understand it. Implementing it will help your website rank "
@@ -587,11 +579,11 @@ msgstr ""
 "sehingga dapat dipahami mesin pencari. Mengimplementasikan ini akan membantu "
 "ranking website Anda meningkat di mesin pencari."
 
-#: functions/class-utils-settings-map.php:520
+#: functions/class-utils-settings-map.php:521
 msgid "Load images on scroll"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:523
+#: functions/class-utils-settings-map.php:524
 msgid ""
 "Check this option to delay the loading of non visible images. Images below "
 "the viewport will be loaded dynamically on scroll. This can really boost "
@@ -599,31 +591,31 @@ msgid ""
 "images."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:528
+#: functions/class-utils-settings-map.php:529
 #, fuzzy
 msgid "Mobile device detection"
 msgstr "Perangkat hp"
 
-#: functions/class-utils-settings-map.php:531
+#: functions/class-utils-settings-map.php:532
 msgid ""
 "When checked, this option loads a small javascript file ( 30 kb ) to detect "
 "if your site is being displayed by a mobile device like a phone or a tablet. "
 "It is recommended to check this option if you are using a cache plugin."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:538
+#: functions/class-utils-settings-map.php:539
 msgid "Defer loading javascript files to avoid render blocking issues"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:545
+#: functions/class-utils-settings-map.php:546
 msgid "Defer loading Font Awesome icons"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:562
+#: functions/class-utils-settings-map.php:563
 msgid "Display the \"About Hueman\" page in the \"Appearance\" admin menu"
 msgstr "Tampilkan laman \"Tentang Hueman\" di menu \"Tampilan\" admin"
 
-#: functions/class-utils-settings-map.php:565
+#: functions/class-utils-settings-map.php:566
 #, fuzzy
 msgid ""
 "This page is intended to provide information about the Hueman theme : "
@@ -635,65 +627,65 @@ msgstr ""
 "pemasangan terbaru Anda yang dapat berguna jika Anda ingin melaporkan "
 "masalah."
 
-#: functions/class-utils-settings-map.php:570
+#: functions/class-utils-settings-map.php:571
 msgid "Display a Help button in the admin bar"
 msgstr "Tampilkan tombol Bantuan di admin bar"
 
-#: functions/class-utils-settings-map.php:573
+#: functions/class-utils-settings-map.php:574
 msgid "This button links to the \"About Hueman\" page."
 msgstr "Link tombol ini menuju laman \"Tentang Hueman\"."
 
-#: functions/class-utils-settings-map.php:593
+#: functions/class-utils-settings-map.php:594
 msgid "Display your site's description (tagline)"
 msgstr "Tampilkan website deskripsi Anda (tagline)"
 
-#: functions/class-utils-settings-map.php:596
+#: functions/class-utils-settings-map.php:597
 msgid "The description that appears next to your logo"
 msgstr "Deskripsi muncul setelah logo Anda"
 
-#: functions/class-utils-settings-map.php:605
+#: functions/class-utils-settings-map.php:606
 msgid ""
 "Apply your custom background colors in priority for the topbar and the "
 "mobile menu"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:609
+#: functions/class-utils-settings-map.php:610
 msgid ""
 "This can be used to ensure your background colors are applied when designing "
 "a header with a background image in %1$s"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:611
+#: functions/class-utils-settings-map.php:612
 #, fuzzy
 msgid "Hueman Pro"
 msgstr "Hueman Post"
 
-#: functions/class-utils-settings-map.php:618
+#: functions/class-utils-settings-map.php:619
 msgid "Topbar Background"
 msgstr "Background Bar Atas"
 
-#: functions/class-utils-settings-map.php:628
+#: functions/class-utils-settings-map.php:629
 msgid "Header Background"
 msgstr "Background Header"
 
-#: functions/class-utils-settings-map.php:638
+#: functions/class-utils-settings-map.php:639
 msgid "Header Menu Background"
 msgstr "Background Menu Header"
 
-#: functions/class-utils-settings-map.php:648
+#: functions/class-utils-settings-map.php:649
 #, fuzzy
 msgid "Mobile Menu Background"
 msgstr "Background Menu Header"
 
-#: functions/class-utils-settings-map.php:658
+#: functions/class-utils-settings-map.php:659
 msgid "Apply a semi-transparent filter to the topbar and mobile menu on scroll"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:673
+#: functions/class-utils-settings-map.php:674
 msgid "Use a header banner image"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:676
+#: functions/class-utils-settings-map.php:677
 msgid ""
 "Upload a header image (supported formats : .jpg, .png, .gif, svg, svgz). "
 "This will disable header title/logo, site description, header ads widget"
@@ -701,19 +693,19 @@ msgstr ""
 "Unggah gambar header (format : .jpg, .png, .gif, .svg, .svgz). Ini akan "
 "menutup judul/logo header, deskripsi situs, widget iklan header"
 
-#: functions/class-utils-settings-map.php:681
+#: functions/class-utils-settings-map.php:682
 msgid "Display your logo or site title, and tagline on top of the header image"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:687
+#: functions/class-utils-settings-map.php:688
 msgid "Set your logo, title and tagline"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:701
+#: functions/class-utils-settings-map.php:702
 msgid "Display a widget in your header"
 msgstr "Tampilkan widget di header Anda"
 
-#: functions/class-utils-settings-map.php:704
+#: functions/class-utils-settings-map.php:705
 msgid ""
 "Header widget area, perfect to insert advertisements. Note : this feature is "
 "not available when a header image is being displayed."
@@ -721,196 +713,196 @@ msgstr ""
 "area widget header, cocok untuk memasukkan iklan. Catatan : fitur ini tidak "
 "tersedia ketika gambar header ditampilkan."
 
-#: functions/class-utils-settings-map.php:709
+#: functions/class-utils-settings-map.php:710
 #, fuzzy
 msgid "Display the header widget zone on desktop devices"
 msgstr "Tampilkan widget di header Anda"
 
-#: functions/class-utils-settings-map.php:712
+#: functions/class-utils-settings-map.php:713
 msgid ""
 "This will display your widget zone on devices with a width greater than 720 "
 "pixels : laptops and desktops."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:717
+#: functions/class-utils-settings-map.php:718
 #, fuzzy
 msgid "Display the header widget zone on mobile devices"
 msgstr "Tampilkan widget di header Anda"
 
-#: functions/class-utils-settings-map.php:720
+#: functions/class-utils-settings-map.php:721
 msgid ""
 "This will display your widget zone on devices with a width smaller than 720 "
 "pixels : tablets, smartphones."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:731
-#: functions/class-utils-settings-map.php:1549
+#: functions/class-utils-settings-map.php:732
+#: functions/class-utils-settings-map.php:1550
 #, fuzzy
 msgid "You can create menus and set their locations %s."
 msgstr "Anda dapat membuat menu baru dan edit konten menu %s."
 
-#: functions/class-utils-settings-map.php:741
-#: functions/class-utils-settings-map.php:1559
+#: functions/class-utils-settings-map.php:742
+#: functions/class-utils-settings-map.php:1560
 msgid "in the menu panel"
 msgstr "di panel menu"
 
-#: functions/class-utils-settings-map.php:742
-#: functions/class-utils-settings-map.php:1560
+#: functions/class-utils-settings-map.php:743
+#: functions/class-utils-settings-map.php:1561
 msgid "create/edit menus"
 msgstr "buat/edit menu"
 
-#: functions/class-utils-settings-map.php:746
+#: functions/class-utils-settings-map.php:747
 msgid "The Hueman theme supports up to two menu locations in your header."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:751
+#: functions/class-utils-settings-map.php:752
 msgid "Topbar menu"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:751
-#: functions/class-utils-settings-map.php:1575
+#: functions/class-utils-settings-map.php:752
+#: functions/class-utils-settings-map.php:1576
 msgid "Use a default page menu if no menu has been assigned."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:763
-#: functions/class-utils-settings-map.php:797
+#: functions/class-utils-settings-map.php:764
+#: functions/class-utils-settings-map.php:798
 msgid "Menus settings for"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:764
-#: functions/class-utils-settings-map.php:820
+#: functions/class-utils-settings-map.php:765
+#: functions/class-utils-settings-map.php:821
 msgid "top menu visibility on scroll"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:768
-#: functions/class-utils-settings-map.php:824
-msgid "Not visible when scrolling the page"
 msgstr ""
 
 #: functions/class-utils-settings-map.php:769
 #: functions/class-utils-settings-map.php:825
-msgid "Reveal on scroll up"
+msgid "Not visible when scrolling the page"
 msgstr ""
 
 #: functions/class-utils-settings-map.php:770
 #: functions/class-utils-settings-map.php:826
+msgid "Reveal on scroll up"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:771
+#: functions/class-utils-settings-map.php:827
 msgid "Always visible"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:781
-#: functions/class-utils-settings-map.php:862
+#: functions/class-utils-settings-map.php:782
+#: functions/class-utils-settings-map.php:863
 msgid "display a search field"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:785
+#: functions/class-utils-settings-map.php:786
 msgid "No search field"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:786
+#: functions/class-utils-settings-map.php:787
 msgid "Display a search field in the top menu"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:787
+#: functions/class-utils-settings-map.php:788
 #, fuzzy
 msgid "Display a search field in the header menu"
 msgstr "Tampilkan widget di header Anda"
 
-#: functions/class-utils-settings-map.php:797
-#: functions/class-utils-settings-map.php:820
-#: functions/class-utils-settings-map.php:851
-#: functions/class-utils-settings-map.php:862
-#: functions/class-utils-settings-map.php:1504
+#: functions/class-utils-settings-map.php:798
+#: functions/class-utils-settings-map.php:821
+#: functions/class-utils-settings-map.php:852
+#: functions/class-utils-settings-map.php:863
+#: functions/class-utils-settings-map.php:1505
 msgid "Mobile devices"
 msgstr "Perangkat hp"
 
-#: functions/class-utils-settings-map.php:798
+#: functions/class-utils-settings-map.php:799
 msgid "Select the menu(s) to use for mobile devices"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:802
+#: functions/class-utils-settings-map.php:803
 #, fuzzy
 msgid "Header Menu"
 msgstr "Header"
 
-#: functions/class-utils-settings-map.php:803
+#: functions/class-utils-settings-map.php:804
 msgid "Topbar Menu"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:804
+#: functions/class-utils-settings-map.php:805
 msgid "Specific Mobile Menu"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:805
+#: functions/class-utils-settings-map.php:806
 msgid "Topbar and header menus, logo centered"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:808
+#: functions/class-utils-settings-map.php:809
 msgid ""
 "When your visitors are using a smartphone or a tablet, the header becomes a "
 "thin bar on top, where the menu is revealed when clicking on the hamburger "
 "button. This option let you choose which menu will be displayed."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:809
+#: functions/class-utils-settings-map.php:810
 msgid ""
 "If the selected menu location has no menu assigned, the theme will try to "
 "assign another menu in this order : topbar, mobile, header."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:836
+#: functions/class-utils-settings-map.php:837
 msgid "Style of the mobile menu button"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:840
+#: functions/class-utils-settings-map.php:841
 msgid "Animated"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:841
+#: functions/class-utils-settings-map.php:842
 msgid "Simple"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:851
+#: functions/class-utils-settings-map.php:852
 #, fuzzy
 msgid "Expand submenus on click"
 msgstr "Buka Sidebar"
 
-#: functions/class-utils-settings-map.php:901
+#: functions/class-utils-settings-map.php:902
 msgid "Columns layout for"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:906
+#: functions/class-utils-settings-map.php:907
 msgid "Global Layout"
 msgstr "Layout Umum"
 
-#: functions/class-utils-settings-map.php:910
+#: functions/class-utils-settings-map.php:911
 msgid "Other layouts will override this option if they are set"
 msgstr "Layout lain akan menimpa opsi ini jika mereka diatur"
 
-#: functions/class-utils-settings-map.php:915
+#: functions/class-utils-settings-map.php:916
 #, fuzzy
 msgid "Force the global layout"
 msgstr "Layout Umum Inherit"
 
-#: functions/class-utils-settings-map.php:918
+#: functions/class-utils-settings-map.php:919
 msgid ""
 "The global layout will be applied on every pages, even when a specific "
 "layout is set."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:923 functions/init-front.php:1670
+#: functions/class-utils-settings-map.php:924 functions/init-front.php:1681
 #: functions/init-sidebars-widgets.php:132
 msgid "Home"
 msgstr "Beranda"
 
-#: functions/class-utils-settings-map.php:927
+#: functions/class-utils-settings-map.php:928
 msgid "[ <strong>is_home</strong> ] Posts homepage layout"
 msgstr "[ <strong>is_home</strong> ] Layout post beranda"
 
-#: functions/class-utils-settings-map.php:936
+#: functions/class-utils-settings-map.php:937
 msgid "Single"
 msgstr "Tunggal"
 
-#: functions/class-utils-settings-map.php:940
+#: functions/class-utils-settings-map.php:941
 msgid ""
 "[ <strong>is_single</strong> ] Single post layout - If a post has a set "
 "layout, it will override this."
@@ -918,46 +910,46 @@ msgstr ""
 "[ <strong>is_single</strong> ] Layout post tunggal - Jika memiliki "
 "pengaturan layout khusus, akan mengabaikan ini."
 
-#: functions/class-utils-settings-map.php:949
+#: functions/class-utils-settings-map.php:950
 msgid "Archive"
 msgstr "Arsip"
 
-#: functions/class-utils-settings-map.php:953
+#: functions/class-utils-settings-map.php:954
 msgid ""
 "[ <strong>is_archive</strong> ] Category, date, tag and author archive layout"
 msgstr ""
 "[ <strong>is_archive</strong> ] Layout kategori, tanggal, tag dan arsip "
 "penulis"
 
-#: functions/class-utils-settings-map.php:958
+#: functions/class-utils-settings-map.php:959
 msgid "Archive - Category"
 msgstr "Arsip - Kategori"
 
-#: functions/class-utils-settings-map.php:962
+#: functions/class-utils-settings-map.php:963
 msgid "[ <strong>is_category</strong> ] Category archive layout"
 msgstr "[ <strong>is_category</strong> ] Layout kategori arsip"
 
-#: functions/class-utils-settings-map.php:967
+#: functions/class-utils-settings-map.php:968
 msgid "Search"
 msgstr "Cari"
 
-#: functions/class-utils-settings-map.php:971
+#: functions/class-utils-settings-map.php:972
 msgid "[ <strong>is_search</strong> ] Search page layout"
 msgstr "[ <strong>is_search</strong> ] Layout laman pencarian"
 
-#: functions/class-utils-settings-map.php:976
+#: functions/class-utils-settings-map.php:977
 msgid "Error 404"
 msgstr "Error 404"
 
-#: functions/class-utils-settings-map.php:980
+#: functions/class-utils-settings-map.php:981
 msgid "[ <strong>is_404</strong> ] Error 404 page layout"
 msgstr "[ <strong>is_404</strong> ] Layout laman error 404"
 
-#: functions/class-utils-settings-map.php:985
+#: functions/class-utils-settings-map.php:986
 msgid "Default Page"
 msgstr "Laman Default"
 
-#: functions/class-utils-settings-map.php:989
+#: functions/class-utils-settings-map.php:990
 msgid ""
 "[ <strong>is_page</strong> ] Default page layout - If a page has a set "
 "layout, it will override this."
@@ -965,16 +957,16 @@ msgstr ""
 "[ <strong>is_page</strong> ] Layout laman default - Jika laman memiliki "
 "pengaturan khusu, akan mengabaikan ini."
 
-#: functions/class-utils-settings-map.php:1003
-#: functions/class-utils-settings-map.php:1017
+#: functions/class-utils-settings-map.php:1004
+#: functions/class-utils-settings-map.php:1018
 msgid "Blog Heading"
 msgstr "Blog Heading"
 
-#: functions/class-utils-settings-map.php:1004
+#: functions/class-utils-settings-map.php:1005
 msgid "Display a custom heading for your blog."
 msgstr "Tampilkan heading kustom untuk blog Anda"
 
-#: functions/class-utils-settings-map.php:1020
+#: functions/class-utils-settings-map.php:1021
 msgid ""
 "Your blog heading. Html is allowed. Note : write a blank space to hide the "
 "default content."
@@ -982,15 +974,15 @@ msgstr ""
 "Heading blog Anda. HTML diperbolehkan. Catatan : kosongkan untuk "
 "menyembunyikan konten default."
 
-#: functions/class-utils-settings-map.php:1030 functions/init-front.php:656
+#: functions/class-utils-settings-map.php:1031 functions/init-front.php:658
 msgid "Blog"
 msgstr "Blog"
 
-#: functions/class-utils-settings-map.php:1032
+#: functions/class-utils-settings-map.php:1033
 msgid "Blog Sub-Heading"
 msgstr "Blog Sub-Heading"
 
-#: functions/class-utils-settings-map.php:1035
+#: functions/class-utils-settings-map.php:1036
 msgid ""
 "Your blog sub-heading. Html is allowed. Note : write a blank space to hide "
 "the default content."
@@ -998,41 +990,41 @@ msgstr ""
 "Sub-heading blog Anda. HTML diperbolehkan. Catatan : Kosongkan untuk "
 "menyembunyikan konten default."
 
-#: functions/class-utils-settings-map.php:1047
+#: functions/class-utils-settings-map.php:1048
 msgid "Apply a category filter to your home / blog posts"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1052
+#: functions/class-utils-settings-map.php:1053
 msgid ""
 "Click inside the above field and pick post categories you want to display. "
 "No filter will be applied when empty."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1054
+#: functions/class-utils-settings-map.php:1055
 msgid "Learn more about post categories in WordPress"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1056
+#: functions/class-utils-settings-map.php:1057
 msgid "Note for Pro users:"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1057
+#: functions/class-utils-settings-map.php:1058
 msgid ""
 "The category filter will not be applied when using the <strong>Classic grid</"
 "strong> post list design if the <strong>infinite scroll</strong> option is "
 "active."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1068
+#: functions/class-utils-settings-map.php:1069
 msgid "Post List Design"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1069
+#: functions/class-utils-settings-map.php:1070
 #, fuzzy
 msgid "Display your blog posts as a standard list."
 msgstr "Tampilkan post blog Anda sebagai daftar standar."
 
-#: functions/class-utils-settings-map.php:1072
+#: functions/class-utils-settings-map.php:1073
 msgid ""
 "While the default blog design is a grid of posts, you can check this option "
 "and display one post per row, whith the thumbnail beside the text."
@@ -1040,67 +1032,67 @@ msgstr ""
 "Ketika desain default blog merupakan grid, Anda dapat centang kotak ini dan "
 "menampilkan satu post perbaris, dengan thumbnail disamping tulisan."
 
-#: functions/class-utils-settings-map.php:1084
+#: functions/class-utils-settings-map.php:1085
 #, fuzzy
 msgid "Display your blog posts in full content"
 msgstr "Tampilkan post blog Anda sebagai daftar standar."
 
-#: functions/class-utils-settings-map.php:1097
+#: functions/class-utils-settings-map.php:1098
 #, fuzzy
 msgid "Display the post thumbnail"
 msgstr "Tampilkan jumlah komentar di thumbnail"
 
-#: functions/class-utils-settings-map.php:1111
+#: functions/class-utils-settings-map.php:1112
 #, fuzzy
 msgid "Display featured images in their original dimensions in post lists"
 msgstr "Tampilkan featured post juga di daftar post"
 
-#: functions/class-utils-settings-map.php:1114
+#: functions/class-utils-settings-map.php:1115
 msgid ""
 "When checked, the post featured image are displayed in their original size, "
 "instead of the optimized image sizes of the theme. Make sure your original "
 "images are not too large, it could slow down your website."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1125
+#: functions/class-utils-settings-map.php:1126
 msgid "Post Summary"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1127
+#: functions/class-utils-settings-map.php:1128
 msgid "Excerpt Length"
 msgstr "Panjang Kutipan"
 
-#: functions/class-utils-settings-map.php:1133
+#: functions/class-utils-settings-map.php:1134
 msgid ""
 "The WordPress Excerpt is the summary or description of a post. By default, "
 "it will be the first words of a post, but you can write a %s if you want. "
 "You can set the number of words you want to display with this option."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1134
+#: functions/class-utils-settings-map.php:1135
 #, fuzzy
 msgid "custom excerpt"
 msgstr "customizer"
 
-#: functions/class-utils-settings-map.php:1146
+#: functions/class-utils-settings-map.php:1147
 msgid "Display the archive type and an icon next to the archive headings"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1149
+#: functions/class-utils-settings-map.php:1150
 msgid ""
 "In WordPress, archives are the pages listing posts by category, tag, author "
 "and date."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1155
+#: functions/class-utils-settings-map.php:1156
 msgid "Featured posts"
 msgstr "Featured posts"
 
-#: functions/class-utils-settings-map.php:1157
+#: functions/class-utils-settings-map.php:1158
 msgid "Feature posts on top of your blog"
 msgstr "Fiturkan post teratas di blog Anda"
 
-#: functions/class-utils-settings-map.php:1160
+#: functions/class-utils-settings-map.php:1161
 msgid ""
 "Check this box to display a selection of posts with a slideshow, on top of "
 "your blog."
@@ -1108,11 +1100,11 @@ msgstr ""
 "Centang kotak ini untuk menampilkan post pilihan dengan slideshow, teratas "
 "di blog Anda."
 
-#: functions/class-utils-settings-map.php:1171
+#: functions/class-utils-settings-map.php:1172
 msgid "Select a category to feature"
 msgstr "Pilih kategori yang ingin di fiturkan"
 
-#: functions/class-utils-settings-map.php:1175
+#: functions/class-utils-settings-map.php:1176
 msgid ""
 "If no specific category is selected, the featured posts block will display "
 "your latest post(s) from all categories."
@@ -1120,11 +1112,11 @@ msgstr ""
 "Jika tidak ada kategori ditentukan, blok featured post akan menampilkan post "
 "terakhir Anda dari semua kategori."
 
-#: functions/class-utils-settings-map.php:1187
+#: functions/class-utils-settings-map.php:1188
 msgid "Featured Post Count"
 msgstr "Jumlah Featured Post"
 
-#: functions/class-utils-settings-map.php:1193
+#: functions/class-utils-settings-map.php:1194
 msgid ""
 "Max number of featured posts to display. <br /><i>Set to 1 and it will show "
 "it without any slider script</i><br /><i>Set it to 0 to disable</i>"
@@ -1132,11 +1124,11 @@ msgstr ""
 "Jumlah maks featured post yang ditampilkan.<br/><i>Atur ke 1 dan akan "
 "menampilkan tanpa slideshow</i><br/><i>Atur ke 0 untuk meniadakan</i>"
 
-#: functions/class-utils-settings-map.php:1204
+#: functions/class-utils-settings-map.php:1205
 msgid "Display the full post content"
 msgstr "Tampilkan konten post penuh"
 
-#: functions/class-utils-settings-map.php:1207
+#: functions/class-utils-settings-map.php:1208
 msgid ""
 "By default, your featured posts display the first words of their content "
 "( the \"excerpt\"). Check this box to display the full content."
@@ -1144,27 +1136,27 @@ msgstr ""
 "Secara defaultnya, featured post Anda menampilkan kata pertama pada konten "
 "tersebut (\"kutipan\"). Centang kotak ini untuk menampilkan full konten."
 
-#: functions/class-utils-settings-map.php:1218
+#: functions/class-utils-settings-map.php:1219
 msgid "Animate your featured posts with a slideshow"
 msgstr "Animasikan featured post Anda dengan slideshow"
 
-#: functions/class-utils-settings-map.php:1221
+#: functions/class-utils-settings-map.php:1222
 msgid "Enables the automatic animation of the featured posts carousel."
 msgstr "Nyalakan animasi carosel otomatis featured post."
 
-#: functions/class-utils-settings-map.php:1233
+#: functions/class-utils-settings-map.php:1234
 msgid "Featured Slideshow Speed"
 msgstr "Kecepatan Featured Slideshow"
 
-#: functions/class-utils-settings-map.php:1239
+#: functions/class-utils-settings-map.php:1240
 msgid "Speed of the automatic slideshow animation"
 msgstr "Atur kecepatan animasi slideshow otomatis"
 
-#: functions/class-utils-settings-map.php:1250
+#: functions/class-utils-settings-map.php:1251
 msgid "Display the featured posts also in the list of posts"
 msgstr "Tampilkan featured post juga di daftar post"
 
-#: functions/class-utils-settings-map.php:1253
+#: functions/class-utils-settings-map.php:1254
 msgid ""
 "If this box is checked, your featured posts will be displayed both in the "
 "featured slider and in the post list below. Usually not recommended because "
@@ -1174,236 +1166,236 @@ msgstr ""
 "dan di daftar post dibawah. Biasanya tidak disarankan karena post tersebut "
 "mungkin muncul 2x di laman yang sama."
 
-#: functions/class-utils-settings-map.php:1264
-#: functions/class-utils-settings-map.php:1367
+#: functions/class-utils-settings-map.php:1265
+#: functions/class-utils-settings-map.php:1368
 #, fuzzy
 msgid "Post Metas"
 msgstr "Kirim Komentar"
 
-#: functions/class-utils-settings-map.php:1265
+#: functions/class-utils-settings-map.php:1266
 #, fuzzy
 msgid "Display categories"
 msgstr "Terkait berdasarkan kategori"
 
-#: functions/class-utils-settings-map.php:1273
+#: functions/class-utils-settings-map.php:1274
 #, fuzzy
 msgid "Display post date"
 msgstr "Tampilkan post dari kategori"
 
-#: functions/class-utils-settings-map.php:1291
+#: functions/class-utils-settings-map.php:1292
 msgid "Single - Author Bio"
 msgstr "Tunggal - Bio Penulis"
 
-#: functions/class-utils-settings-map.php:1295
+#: functions/class-utils-settings-map.php:1296
 msgid "Display post author description, if it exists"
 msgstr "Tampilkan deskripsi penulis post, jika ada"
 
-#: functions/class-utils-settings-map.php:1301
-#: functions/class-utils-settings-map.php:1396
+#: functions/class-utils-settings-map.php:1302
+#: functions/class-utils-settings-map.php:1397
 #, fuzzy
 msgid "Featured image"
 msgstr "Featured posts"
 
-#: functions/class-utils-settings-map.php:1305
+#: functions/class-utils-settings-map.php:1306
 msgid ""
 "Display the post's featured image when it is set. Note that audio and image "
 "post formats automatically display the featured image."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1311
-#: functions/class-utils-settings-map.php:1404
+#: functions/class-utils-settings-map.php:1312
+#: functions/class-utils-settings-map.php:1405
 msgid "Used cropped image (720x340 pixels on desktops)"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1320
+#: functions/class-utils-settings-map.php:1321
 #, fuzzy
 msgid "Related posts"
 msgstr "Featured posts"
 
-#: functions/class-utils-settings-map.php:1321
+#: functions/class-utils-settings-map.php:1322
 msgid "Single - Related Posts"
 msgstr "Tunggal - Post Terkait"
 
-#: functions/class-utils-settings-map.php:1326
-#: functions/class-utils-settings-map.php:1342
-#: functions/class-utils-settings-map.php:2014
+#: functions/class-utils-settings-map.php:1327
+#: functions/class-utils-settings-map.php:1343
+#: functions/class-utils-settings-map.php:2016
 msgid "Disable"
 msgstr "Tiadakan"
 
-#: functions/class-utils-settings-map.php:1327
+#: functions/class-utils-settings-map.php:1328
 msgid "Related by categories"
 msgstr "Terkait berdasarkan kategori"
 
-#: functions/class-utils-settings-map.php:1328
+#: functions/class-utils-settings-map.php:1329
 msgid "Related by tags"
 msgstr "Terkait berdasarkan tag"
 
-#: functions/class-utils-settings-map.php:1330
+#: functions/class-utils-settings-map.php:1331
 msgid "Display randomized related articles below the post"
 msgstr "Tampilkan secara acak artikel terkait dibawah post"
 
-#: functions/class-utils-settings-map.php:1336
+#: functions/class-utils-settings-map.php:1337
 #, fuzzy
 msgid "Post navigation"
 msgstr "Tunggal - Navigasi Post"
 
-#: functions/class-utils-settings-map.php:1337
+#: functions/class-utils-settings-map.php:1338
 msgid "Post navigation in single posts"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1343
+#: functions/class-utils-settings-map.php:1344
 #: option-tree/includes/ot-functions-admin.php:3060
 msgid "Left Sidebar"
 msgstr "Sidebar Kiri"
 
-#: functions/class-utils-settings-map.php:1344
+#: functions/class-utils-settings-map.php:1345
 #: option-tree/includes/ot-functions-admin.php:3065
 msgid "Right Sidebar"
 msgstr "Sidebar Kanan"
 
-#: functions/class-utils-settings-map.php:1345
+#: functions/class-utils-settings-map.php:1346
 msgid "Below content"
 msgstr "Dibawah Konten"
 
-#: functions/class-utils-settings-map.php:1347
+#: functions/class-utils-settings-map.php:1348
 msgid "Display links to the next and previous article"
 msgstr "Tampilkan link ke artikel sebelum dan selanjutnya"
 
-#: functions/class-utils-settings-map.php:1357
+#: functions/class-utils-settings-map.php:1358
 #, fuzzy
 msgid "Post Tags"
 msgstr "Tag"
 
-#: functions/class-utils-settings-map.php:1358
+#: functions/class-utils-settings-map.php:1359
 #, fuzzy
 msgid "Post tags"
 msgstr "Tag"
 
-#: functions/class-utils-settings-map.php:1361
+#: functions/class-utils-settings-map.php:1362
 #, fuzzy
 msgid "Display the post tags after the post content."
 msgstr "Tampilkan konten post penuh"
 
-#: functions/class-utils-settings-map.php:1368
+#: functions/class-utils-settings-map.php:1369
 msgid "Post author name"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1371
+#: functions/class-utils-settings-map.php:1372
 #, fuzzy
 msgid "Display the author name below the post title."
 msgstr "Tampilkan featured post juga di daftar post"
 
-#: functions/class-utils-settings-map.php:1377
+#: functions/class-utils-settings-map.php:1378
 #, fuzzy
 msgid "Post date"
 msgstr "Tag"
 
-#: functions/class-utils-settings-map.php:1380
+#: functions/class-utils-settings-map.php:1381
 #, fuzzy
 msgid "Display the date below the post title."
 msgstr "Tampilkan featured post juga di daftar post"
 
-#: functions/class-utils-settings-map.php:1399
+#: functions/class-utils-settings-map.php:1400
 #, fuzzy
 msgid "Display the page's featured image when it is set"
 msgstr ""
 "Tampilkan placeholder featured image jika featured image tidak ada yang "
 "diatur"
 
-#: functions/class-utils-settings-map.php:1421
+#: functions/class-utils-settings-map.php:1422
 msgid "Thumbnail Placeholder"
 msgstr "Thumbnail Placeholder"
 
-#: functions/class-utils-settings-map.php:1424
+#: functions/class-utils-settings-map.php:1425
 msgid "Display featured image placeholders if no featured image is set"
 msgstr ""
 "Tampilkan placeholder featured image jika featured image tidak ada yang "
 "diatur"
 
-#: functions/class-utils-settings-map.php:1429
+#: functions/class-utils-settings-map.php:1430
 msgid "Thumbnail Comment Count"
 msgstr "Thumbnail Jumlah Komentar"
 
-#: functions/class-utils-settings-map.php:1432
+#: functions/class-utils-settings-map.php:1433
 msgid "Display comment count on thumbnails"
 msgstr "Tampilkan jumlah komentar di thumbnail"
 
-#: functions/class-utils-settings-map.php:1457
+#: functions/class-utils-settings-map.php:1458
 #: functions/init-plugins-compat.php:442
 msgid "Sidebar Top Boxes"
 msgstr "Kotak Atas Sidebar"
 
-#: functions/class-utils-settings-map.php:1460
+#: functions/class-utils-settings-map.php:1461
 msgid "Display boxes at the top of the sidebars"
 msgstr "Tampilkan kotak di atas dari sidebar"
 
-#: functions/class-utils-settings-map.php:1465
+#: functions/class-utils-settings-map.php:1466
 msgid "Follow:"
 msgstr "Ikuti"
 
-#: functions/class-utils-settings-map.php:1466
+#: functions/class-utils-settings-map.php:1467
 #, fuzzy
 msgid "Primary sidebar title"
 msgstr "Sembunyikan sidebar utama"
 
-#: functions/class-utils-settings-map.php:1471
-#: functions/class-utils-settings-map.php:1481
+#: functions/class-utils-settings-map.php:1472
+#: functions/class-utils-settings-map.php:1482
 #, fuzzy
 msgid "Html is allowed."
 msgstr "Catatan : HTML diperbolehkan."
 
-#: functions/class-utils-settings-map.php:1475
+#: functions/class-utils-settings-map.php:1476
 msgid "More"
 msgstr "Lain - Lain"
 
-#: functions/class-utils-settings-map.php:1476
+#: functions/class-utils-settings-map.php:1477
 #, fuzzy
 msgid "Secondary sidebar title"
 msgstr "Sembunyikan sidebar kedua"
 
-#: functions/class-utils-settings-map.php:1486
+#: functions/class-utils-settings-map.php:1487
 #, fuzzy
 msgid "Sidebars background color"
 msgstr "Atur warna background website"
 
-#: functions/class-utils-settings-map.php:1496
-#: functions/class-utils-settings-map.php:1504
+#: functions/class-utils-settings-map.php:1497
+#: functions/class-utils-settings-map.php:1505
 msgid "make sidebars sticky on scroll"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1499
+#: functions/class-utils-settings-map.php:1500
 msgid ""
 "Glues your website's sidebars on top of the page, making them permanently "
 "visible when scrolling up and down. Useful when a sidebar is too tall or too "
 "short compared to the rest of the content."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1507
+#: functions/class-utils-settings-map.php:1508
 msgid ""
 "Decide if your sidebars should be sticky on tablets and smartphones devices."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1512
+#: functions/class-utils-settings-map.php:1513
 msgid "Mobile Sidebar Content"
 msgstr "Konten Mobile Sidebar"
 
-#: functions/class-utils-settings-map.php:1517
+#: functions/class-utils-settings-map.php:1518
 msgid "Display both sidebars"
 msgstr "Tampilkan kedua sidebar"
 
-#: functions/class-utils-settings-map.php:1518
+#: functions/class-utils-settings-map.php:1519
 msgid "Hide primary sidebar"
 msgstr "Sembunyikan sidebar utama"
 
-#: functions/class-utils-settings-map.php:1519
+#: functions/class-utils-settings-map.php:1520
 msgid "Hide secondary sidebar"
 msgstr "Sembunyikan sidebar kedua"
 
-#: functions/class-utils-settings-map.php:1520
+#: functions/class-utils-settings-map.php:1521
 msgid "Hide both sidebars"
 msgstr "Sembunyikan kedua sidebar"
 
-#: functions/class-utils-settings-map.php:1522
+#: functions/class-utils-settings-map.php:1523
 #, fuzzy
 msgid ""
 "Control how the sidebar content is displayed on smartphone mobile devices "
@@ -1412,254 +1404,250 @@ msgstr ""
 "Atur bagaimana sidebar ditampilkan di perangkat mobile (320px). Catatan : "
 "pada hp sidebar akan ditampilkan dibawah konten."
 
-#: functions/class-utils-settings-map.php:1531
+#: functions/class-utils-settings-map.php:1532
 msgid ""
 "Display the primary sidebar above the content column on smartphone mobile "
 "devices (480px)."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1567
+#: functions/class-utils-settings-map.php:1568
 msgid "Display a full width widget area in your footer"
 msgstr "Tampilkan lebar penuh widget di footer"
 
-#: functions/class-utils-settings-map.php:1570
+#: functions/class-utils-settings-map.php:1571
 msgid ""
 "This zone is located before the other footer widgets and takes 100% of the "
 "width. Very appropriate to display a Google Map or an advertisement banner."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1584
+#: functions/class-utils-settings-map.php:1585
 msgid "Select columns to enable footer widgets"
 msgstr "Pilih kolom untuk mengadakan widget footer"
 
-#: functions/class-utils-settings-map.php:1589
+#: functions/class-utils-settings-map.php:1590
 msgid "Recommended number of columns : 3"
 msgstr "Disarankan : 3 kolom"
 
-#: functions/class-utils-settings-map.php:1593
+#: functions/class-utils-settings-map.php:1594
 msgid "Upload your custom logo image"
 msgstr "Unggah gambar logo kustom Anda"
 
-#: functions/class-utils-settings-map.php:1610
+#: functions/class-utils-settings-map.php:1611
 msgid "Footer Background"
 msgstr "Background Footer"
 
-#: functions/class-utils-settings-map.php:1620
+#: functions/class-utils-settings-map.php:1621
 #: functions/czr/czr-resources.php:38
 msgid "All Rights Reserved."
 msgstr "Hak Cipta Terdaftar."
 
-#: functions/class-utils-settings-map.php:1621
+#: functions/class-utils-settings-map.php:1622
 msgid "Replace the footer copyright text"
 msgstr "Timpa tulisan copyright footer"
 
-#: functions/class-utils-settings-map.php:1626
+#: functions/class-utils-settings-map.php:1627
 msgid ""
 "Note : Html is allowed. The following template tags can be used : {{year}}, "
 "{{site_title}}, {{home_url}}."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1631
+#: functions/class-utils-settings-map.php:1632
 msgid "Footer credit text"
 msgstr "Tulisan kredit footer"
 
-#: functions/class-utils-settings-map.php:1663
+#: functions/class-utils-settings-map.php:1664
 msgid "Web Page Design"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1664
+#: functions/class-utils-settings-map.php:1665
 msgid "Title, Logo, Fonts, Colors, Background, Socials, Links"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1665
+#: functions/class-utils-settings-map.php:1666
 msgid "General settings for the Hueman theme : design, comments, mobile, ..."
 msgstr "Pengaturan umum untuk tema Hueman : desain, komentar, mobile, ..."
 
-#: functions/class-utils-settings-map.php:1671
+#: functions/class-utils-settings-map.php:1672
 #, fuzzy
 msgid "Header Design"
 msgstr "Gambar Header"
 
-#: functions/class-utils-settings-map.php:1672
+#: functions/class-utils-settings-map.php:1673
 #, fuzzy
 msgid "Header Image, Menu, Widget"
 msgstr "Maks Tinggi Gambar Logo Header"
 
-#: functions/class-utils-settings-map.php:1673
+#: functions/class-utils-settings-map.php:1674
 msgid "Header settings for the Hueman theme."
 msgstr "Pengaturan header untuk tema Hueman."
 
-#: functions/class-utils-settings-map.php:1679
+#: functions/class-utils-settings-map.php:1680
 msgid "Main Body Design"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1680
+#: functions/class-utils-settings-map.php:1681
 msgid "Layout, Sidebars, Blog Posts, Thumbnails"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1681
+#: functions/class-utils-settings-map.php:1682
 msgid "Content settings for the Hueman theme."
 msgstr "Pengaturan konten untuk tema Hueman."
 
-#: functions/class-utils-settings-map.php:1693
+#: functions/class-utils-settings-map.php:1694
 #, fuzzy
 msgid "Footer Design"
 msgstr "Footer 1"
 
-#: functions/class-utils-settings-map.php:1694
+#: functions/class-utils-settings-map.php:1695
 msgid "Logo, Layout, Menu"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1695
+#: functions/class-utils-settings-map.php:1696
 msgid "Footer settings for the Hueman theme."
 msgstr "Pengaturan footer untuk tema Hueman."
 
-#: functions/class-utils-settings-map.php:1701
+#: functions/class-utils-settings-map.php:1702
 msgid "Advanced options"
 msgstr "Pengaturan lanjutan"
 
-#: functions/class-utils-settings-map.php:1702
+#: functions/class-utils-settings-map.php:1703
 #, fuzzy
 msgid "Performances, SEO, CSS, Scroll"
 msgstr "Performa dan SEO"
 
-#: functions/class-utils-settings-map.php:1703
+#: functions/class-utils-settings-map.php:1704
 msgid "Advanced settings for the Hueman theme."
 msgstr "Pengaturan lanjutan untuk tema Hueman."
 
-#: functions/class-utils-settings-map.php:1785
+#: functions/class-utils-settings-map.php:1786
 #, fuzzy
 msgid "Site Identity : Logo, Title, Tagline and Site Icon"
 msgstr "Identitas Situs : Judul, Tagline dan Ikon Situs"
 
-#: functions/class-utils-settings-map.php:1795
+#: functions/class-utils-settings-map.php:1796
 msgid "General Design Options : Font, Colors, ..."
 msgstr "Opsi Desain Umum : Font, Warna, ..."
 
-#: functions/class-utils-settings-map.php:1812
+#: functions/class-utils-settings-map.php:1813
 #, fuzzy
 msgid "Header Design : colors and others"
 msgstr "Desain Header : logo, background, ..."
 
-#: functions/class-utils-settings-map.php:1817
+#: functions/class-utils-settings-map.php:1818
 msgid "Header Image"
 msgstr "Gambar Header"
 
-#: functions/class-utils-settings-map.php:1822
+#: functions/class-utils-settings-map.php:1823
 msgid "Header Advertisement Widget"
 msgstr "Widget Iklan Header"
 
-#: functions/class-utils-settings-map.php:1827
+#: functions/class-utils-settings-map.php:1828
 msgid "Header Menus : mobile settings, scroll behaviour, search button"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1836
+#: functions/class-utils-settings-map.php:1837
 #, fuzzy
 msgid "Column layout for the main content"
 msgstr "Opsi layout untuk konten utama"
 
-#: functions/class-utils-settings-map.php:1841
+#: functions/class-utils-settings-map.php:1842
 msgid "Sidebars : Design and Mobile Settings"
 msgstr "Sidebar : Desain dan Pengaturan Mobile"
 
-#: functions/class-utils-settings-map.php:1846
+#: functions/class-utils-settings-map.php:1847
 msgid "Post Lists Design and Content : Blog, Archives, Search Results"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1852
+#: functions/class-utils-settings-map.php:1853
 #, fuzzy
 msgid "Single Pages Settings"
 msgstr "Pengaturan Post Tunggal"
 
-#: functions/class-utils-settings-map.php:1857
+#: functions/class-utils-settings-map.php:1858
 msgid "Single Posts Settings"
 msgstr "Pengaturan Post Tunggal"
 
-#: functions/class-utils-settings-map.php:1863
+#: functions/class-utils-settings-map.php:1864
 msgid "Thumbnails Settings"
 msgstr "Pengaturan Thumbnail"
 
-#: functions/class-utils-settings-map.php:1878
+#: functions/class-utils-settings-map.php:1879
 msgid "Footer Design : Logo, layout, ..."
 msgstr "Desain Footer : Logo, Layout, ..."
 
-#: functions/class-utils-settings-map.php:1889
-msgid "Smooth Scroll"
-msgstr ""
-
-#: functions/class-utils-settings-map.php:1894
+#: functions/class-utils-settings-map.php:1896
 #, fuzzy
 msgid "Mobile Devices"
 msgstr "Perangkat hp"
 
-#: functions/class-utils-settings-map.php:1899
+#: functions/class-utils-settings-map.php:1901
 #: functions/init-sidebars-widgets.php:138
 msgid "Search Results"
 msgstr "Hasil Pencarian"
 
-#: functions/class-utils-settings-map.php:1904
+#: functions/class-utils-settings-map.php:1906
 msgid "Performances and SEO"
 msgstr "Performa dan SEO"
 
-#: functions/class-utils-settings-map.php:1909
+#: functions/class-utils-settings-map.php:1911
 msgid "Hueman Admin Settings"
 msgstr "Pengaturan Admin Hueman"
 
-#: functions/class-utils-settings-map.php:1922
+#: functions/class-utils-settings-map.php:1924
 msgid "Go Pro"
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1949
+#: functions/class-utils-settings-map.php:1951
 msgid "Choose one "
 msgstr "Pilih"
 
-#: functions/class-utils-settings-map.php:1968
-#: functions/class-utils-settings-map.php:2018
+#: functions/class-utils-settings-map.php:1970
+#: functions/class-utils-settings-map.php:2020
 msgid "1 Column"
 msgstr "1 Kolom"
 
-#: functions/class-utils-settings-map.php:1972
+#: functions/class-utils-settings-map.php:1974
 msgid "2 Columns - Content Left"
 msgstr "2 Kolom - Konten Kiri"
 
-#: functions/class-utils-settings-map.php:1976
+#: functions/class-utils-settings-map.php:1978
 msgid "2 Columns - Content Right"
 msgstr "2 Kolom - Konten Kanan"
 
-#: functions/class-utils-settings-map.php:1980
+#: functions/class-utils-settings-map.php:1982
 msgid "3 Columns - Content Middle"
 msgstr "3 Kolom - Konten Tengah"
 
-#: functions/class-utils-settings-map.php:1984
+#: functions/class-utils-settings-map.php:1986
 msgid "3 Columns - Content Left"
 msgstr "3 Kolom - Konten Kiri"
 
-#: functions/class-utils-settings-map.php:1988
+#: functions/class-utils-settings-map.php:1990
 msgid "3 Columns - Content Right"
 msgstr "3 Kolom - Konten Kanan"
 
-#: functions/class-utils-settings-map.php:1996
+#: functions/class-utils-settings-map.php:1998
 msgid "Inherit Global Layout"
 msgstr "Layout Umum Inherit"
 
-#: functions/class-utils-settings-map.php:2022
+#: functions/class-utils-settings-map.php:2024
 msgid "2 Columns"
 msgstr "2 Kolom"
 
-#: functions/class-utils-settings-map.php:2026
+#: functions/class-utils-settings-map.php:2028
 msgid "3 Columns"
 msgstr "3 Kolom"
 
-#: functions/class-utils-settings-map.php:2030
+#: functions/class-utils-settings-map.php:2032
 msgid "4 Columns"
 msgstr "4 Kolom"
 
-#: functions/class-utils-settings-map.php:2055
+#: functions/class-utils-settings-map.php:2057
 #: option-tree/includes/ot-functions-option-types.php:2147
 msgid "No Sidebars"
 msgstr "Tanpa Sidebar"
 
-#: functions/class-utils-settings-map.php:2060
+#: functions/class-utils-settings-map.php:2062
 #: option-tree/includes/ot-functions-option-types.php:2142
 msgid "Choose Sidebar"
 msgstr "Pilih Sidebar"
@@ -2517,100 +2505,100 @@ msgstr ""
 msgid "Add widgets to the zone :"
 msgstr "Tambahkan widget ke zona :"
 
-#: functions/init-front.php:485 functions/init-front.php:491
+#: functions/init-front.php:487 functions/init-front.php:493
 #, fuzzy
 msgid "Home page"
 msgstr "Komentar pada laman"
 
-#: functions/init-front.php:543
+#: functions/init-front.php:545
 msgid "Search result"
 msgstr "Hasil pencarian"
 
-#: functions/init-front.php:545
+#: functions/init-front.php:547
 msgid "Search results"
 msgstr "Hasil pencarian"
 
-#: functions/init-front.php:556
+#: functions/init-front.php:558
 msgid "Error 404."
 msgstr "Error 404."
 
-#: functions/init-front.php:557
+#: functions/init-front.php:559
 msgid "Page not found!"
 msgstr "Laman tidak ditemukan"
 
-#: functions/init-front.php:572
+#: functions/init-front.php:574
 msgid "Author:"
 msgstr "Penulis:"
 
-#: functions/init-front.php:590
+#: functions/init-front.php:592
 msgid "Category:"
 msgstr "Kategori"
 
-#: functions/init-front.php:599
+#: functions/init-front.php:601
 msgid "Tagged:"
 msgstr "Di tag:"
 
-#: functions/init-front.php:618
+#: functions/init-front.php:620
 msgid "Daily Archive:"
 msgstr "Arsip Harian:"
 
-#: functions/init-front.php:628
+#: functions/init-front.php:630
 msgid "Monthly Archive:"
 msgstr "Arsip Bulanan:"
 
-#: functions/init-front.php:638
+#: functions/init-front.php:640
 msgid "Yearly Archive:"
 msgstr "ARsip Tahunan:"
 
-#: functions/init-front.php:1239
+#: functions/init-front.php:1243
 #, fuzzy
 msgid "Expand"
 msgstr "Buka Sidebar"
 
-#: functions/init-front.php:1240
+#: functions/init-front.php:1244
 msgid "Collapse"
 msgstr ""
 
-#: functions/init-front.php:1718 functions/init-sidebars-widgets.php:134
+#: functions/init-front.php:1729 functions/init-sidebars-widgets.php:134
 msgid "Pages"
 msgstr "Laman"
 
-#: functions/init-front.php:1994
+#: functions/init-front.php:2005
 #, fuzzy
 msgid "Welcome in the Hueman theme"
 msgstr "Ulas tema Hueman"
 
-#: functions/init-front.php:1997
+#: functions/init-front.php:2008
 msgid "The theme offers a wide range"
 msgstr ""
 
-#: functions/init-front.php:1999
+#: functions/init-front.php:2010
 msgid "of customization options"
 msgstr ""
 
-#: functions/init-front.php:2000
+#: functions/init-front.php:2011
 msgid "to let you create the best possible websites."
 msgstr ""
 
-#: functions/init-front.php:2003
+#: functions/init-front.php:2014
 msgid "If you need inspiration, you can visit our online demos"
 msgstr ""
 
-#: functions/init-front.php:2005
+#: functions/init-front.php:2016
 #, fuzzy
 msgid "Hueman Demo 1"
 msgstr "Hueman Video"
 
-#: functions/init-front.php:2007
+#: functions/init-front.php:2018
 #, fuzzy
 msgid "Hueman Demo 2"
 msgstr "Hueman Video"
 
-#: functions/init-front.php:2010
+#: functions/init-front.php:2021
 msgid "To help you getting started with Hueman, we have published"
 msgstr ""
 
-#: functions/init-front.php:2012
+#: functions/init-front.php:2023
 msgid "a short guide here."
 msgstr ""
 

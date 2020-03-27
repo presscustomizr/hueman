@@ -736,6 +736,7 @@ span.czr-panel-subtitle {
 
 /* GOPRO SECTION STYLE */
 /* for both hueman and customizr */
+
 #customize-controls .control-section-czr-customize-section-pro .accordion-section-title:hover,
 #customize-controls .control-section-czr-customize-section-pro .accordion-section-title:focus {
   background-color: #fff;
@@ -745,6 +746,11 @@ span.czr-panel-subtitle {
 }
 #accordion-section-go_pro_sec .accordion-section-title{
   margin: 0 0 15px;
+}
+.control-section-czr-customize-section-pro .accordion-section-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .control-section-czr-customize-section-pro .accordion-section-title .button {
   font-size: 15px;

@@ -1193,6 +1193,10 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 .site-description { font-size: 1em; font-style: italic; color: #fff; color: rgba(255,255,255,0.5); float: left; margin-left: 20px; line-height: 60px; padding: 10px 0; }
 .site-image { display: block; margin: 0 auto; max-height: 400px; width: auto;}
 
+/* new-site-image + #header-image-wrap height introduced March 2020 for https://github.com/presscustomizr/hueman/issues/852 */
+#header-image-wrap { max-height: 400px;}
+.new-site-image { display: block; margin: 0 auto; width: 100%;}
+
 /* Header Widget Zone Common */
 #header-widgets{ display: none;}
 /*#header-widgets h3 { display: none; }*/
