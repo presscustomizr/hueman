@@ -97,7 +97,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
           'hu_site_identity_sec',
           'hu_general_design_sec',
           'hu_comments_sec',
-          'hu_smoothscroll_sec',
+          //'hu_smoothscroll_sec',//<=Removed in march 2020
           'hu_mobiles_sec',
           'hu_search_sec',
           'hu_social_links_sec',
@@ -439,19 +439,20 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     /*-----------------------------------------------------------------------------------------------------
                                    SMOOTH SCROLL SECTION
     ------------------------------------------------------------------------------------------------------*/
-    function hu_smoothscroll_sec() {
-      return array(
-          'smoothscroll' => array(
-                'default'   => 1,
-                'control'   => 'HU_controls',
-                'label'     => __('Enable Smooth Scrolling', 'hueman'),
-                'section'   => 'smoothscroll_sec',
-                'type'      => 'nimblecheck',
-                'notice'    => __( "This option enables a smoother page scroll." , 'hueman' )
+    // Removed in march 2020
+    // function hu_smoothscroll_sec() {
+    //   return array(
+    //       'smoothscroll' => array(
+    //             'default'   => 1,
+    //             'control'   => 'HU_controls',
+    //             'label'     => __('Enable Smooth Scrolling', 'hueman'),
+    //             'section'   => 'smoothscroll_sec',
+    //             'type'      => 'nimblecheck',
+    //             'notice'    => __( "This option enables a smoother page scroll." , 'hueman' )
 
-          )
-      );
-    }
+    //       )
+    //   );
+    // }
 
 
     /*-----------------------------------------------------------------------------------------------------
@@ -1885,11 +1886,12 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 /*---------------------------------------------------------------------------------------------
         -> PANEL : ADVANCED
         ----------------------------------------------------------------------------------------------*/
-        'smoothscroll_sec'         => array(
-              'title'    => __( 'Smooth Scroll', 'hueman' ),
-              'priority' => 10,
-              'panel'   => 'hu-advanced-panel'
-        ),
+        // Removed in march 2020
+        // 'smoothscroll_sec'         => array(
+        //       'title'    => __( 'Smooth Scroll', 'hueman' ),
+        //       'priority' => 10,
+        //       'panel'   => 'hu-advanced-panel'
+        // ),
         'mobiles_sec'         => array(
               'title'    => __( 'Mobile Devices', 'hueman' ),
               'priority' => 20,

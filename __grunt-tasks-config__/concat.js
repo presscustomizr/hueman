@@ -71,10 +71,10 @@ module.exports = {
       '<%= paths.front_js %>libs/jquery-plugins/jqueryParallax.js',
       '<%= paths.front_js %>libs/requestAnimationFramePolyfill.js',
       '<%= paths.front_js %>libs/matchMediaPolyfill.js',
-      '<%= paths.front_js %>libs/smoothScroll.js',
+      //'<%= paths.front_js %>libs/smoothScroll.js',
       '<%= paths.front_js %>libs/outline.js',
       '<%= paths.front_js %>libs/jquery.waypoints.js',
-      '<%= paths.front_js %>libs/vivus.min.js',
+      //'<%= paths.front_js %>libs/vivus.min.js',
       '<%= paths.front_js %>libs/jquery.fittext.js',
       '<%= paths.front_js %>_parts/main.js'
     ],

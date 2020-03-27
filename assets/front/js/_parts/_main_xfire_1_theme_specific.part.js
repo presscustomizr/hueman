@@ -35,7 +35,7 @@ var czrapp = czrapp || {};
                             'fittext',
                             'stickify',
                             'outline',
-                            'smoothScroll',
+                            //'smoothScroll',// <=Removed in march 2020
                             'headerSearchToLife',
                             'scrollToTop',
                             'widgetTabs',

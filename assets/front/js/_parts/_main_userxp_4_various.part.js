@@ -66,11 +66,12 @@ var czrapp = czrapp || {};
               tcOutline();
         },
 
-        //SMOOTH SCROLL
-        smoothScroll: function() {
-              if ( HUParams.SmoothScroll && HUParams.SmoothScroll.Enabled )
-                smoothScroll( HUParams.SmoothScroll.Options );
-        },
+        // Removed in march 2020
+        // //SMOOTH SCROLL
+        // smoothScroll: function() {
+        //       if ( HUParams.SmoothScroll && HUParams.SmoothScroll.Enabled )
+        //         smoothScroll( HUParams.SmoothScroll.Options );
+        // },
 
 
         /*  Toggle topnav expand
