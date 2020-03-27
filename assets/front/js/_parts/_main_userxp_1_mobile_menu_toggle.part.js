@@ -158,7 +158,11 @@ var czrapp = czrapp || {};
                     $(  mobMenu.container )
                           .on( 'mouseup', '.menu-item a', function(evt) {
                                 if ( ! czrapp.userXP._isMobileScreenSize() )
-                                      return;
+                                  return;
+                                // Hack to fix the issue => [mobile menu] clicking on an anchor link that has child submenu should unfold the submenu
+                                // see https://github.com/presscustomizr/hueman/issues/857
+                                if ( '#' === $(this).attr('href') )
+                                  return;
                                 evt.preventDefault();
                                 evt.stopPropagation();
                                 mobMenu( 'collapsed');
@@ -252,7 +256,7 @@ var czrapp = czrapp || {};
                         //when clicking on a menu item whose href is just a "#", let's emulate a click on the caret dropdown
                         .on( Event.CLICK, 'a[href="#"]', function(evt) {
                               if ( ! czrapp.userXP._isMobileScreenSize() )
-                                    return;
+                                return;
 
                               evt.preventDefault();
                               evt.stopPropagation();
