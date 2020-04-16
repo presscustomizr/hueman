@@ -208,6 +208,21 @@ z-index:2;
 .related-posts li:nth-child(3) article { border-right-color: transparent; }
 .related-posts .related-inner { padding: 0 20px 0 0; }
 .single .related-posts .post-title { margin-bottom: 10px; font-size: 1.0625em; font-weight: 300; line-height: 1.5em; letter-spacing: 0; display: block; }
+.related-posts .post .post-thumbnail {
+  max-height: 245px;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center; /* align horizontal */
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  width: 100%;
+}
+.related-posts .post .post-thumbnail .hu-rel-post-thumb { width: 100%}
 
 /*  single : post-nav
 /* ------------------------------------ */

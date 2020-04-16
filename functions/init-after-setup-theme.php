@@ -95,12 +95,12 @@ if ( ! function_exists( 'hu_setup' ) ) {
     add_theme_support( 'html5', array( 'search-form' ) );
 
     // Thumbnail sizes
-    add_image_size( 'thumb-small', 160, 160, true );
-    add_image_size( 'thumb-standard', 320, 320, true );
-    add_image_size( 'thumb-medium', 520, 245, true );
-    add_image_size( 'thumb-large', 720, 340, true );
-    add_image_size( 'thumb-xlarge', 980, 450, true );
-    add_image_size( 'thumb-xxlarge', 1320, 500, true );
+    add_image_size( 'thumb-small', 160, 160, true );//used for Hueman Dynamic Tabs widget
+    add_image_size( 'thumb-standard', 320, 320, true );//used for standard post list / and for related posts
+    add_image_size( 'thumb-medium', 520, 245, true );//used for classic post grid / and for related posts
+    add_image_size( 'thumb-large', 720, 340, true );// used in singular to display the featured image ( when cropped option checked ) / used in image and audio post formats
+    add_image_size( 'thumb-xlarge', 980, 450, true );// used in featured content on blog page
+    add_image_size( 'thumb-xxlarge', 1320, 500, true );// used in featured content on blog page
 
     // Custom menu areas
     register_nav_menus( array(

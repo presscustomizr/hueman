@@ -1,7 +1,21 @@
 <?php $related = hu_get_related_posts(); ?>
 
 <?php if ( $related->have_posts() ): ?>
+<?php
+//Let's determine which image size would be the best for the current user layout
+//added april 2020 for https://github.com/presscustomizr/hueman/issues/866
+$map = array(
+      'col-1c'  => 'thumb-medium',
+      'col-2cl' => 'thumb-standard',
+      'col-2cr' => 'thumb-standard',
+      'col-3cm' => 'thumb-standard',
+      'col-3cl' => 'thumb-standard',
+      'col-3cr' => 'thumb-standard'
+);
+$sb_layout = hu_get_layout_class();
+$related_img_size = array_key_exists( $sb_layout, $map ) ? $map[ $sb_layout ] : null;
 
+?>
 <h4 class="heading">
 	<i class="far fa-hand-point-right"></i><?php _e('You may also like...','hueman'); ?>
 </h4>
@@ -13,8 +27,8 @@
 		<article <?php post_class(); ?>>
 
 			<div class="post-thumbnail">
-				<a href="<?php the_permalink(); ?>">
-					<?php hu_the_post_thumbnail('thumb-medium'); ?>
+				<a href="<?php the_permalink(); ?>" class="hu-rel-post-thumb">
+					<?php hu_the_post_thumbnail( $related_img_size ); ?>
 					<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fas fa-play"></i></span>'; ?>
 					<?php if ( has_post_format('audio') && !is_sticky() ) echo'<span class="thumb-icon small"><i class="fas fa-volume-up"></i></span>'; ?>
 					<?php if ( is_sticky() ) echo'<span class="thumb-icon small"><i class="fas fa-star"></i></span>'; ?>
