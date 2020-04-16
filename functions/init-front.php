@@ -818,6 +818,7 @@ if ( ! function_exists( 'hu_print_placeholder_thumb' ) ) {
 /* ------------------------------------ */
 if ( ! function_exists( 'hu_body_class' ) ) {
   function hu_body_class( $classes ) {
+    $classes = is_array( $classes ) ? $classes : array();
     $classes[] = hu_get_layout_class();
     $classes[] = hu_is_checked( 'boxed' ) ? 'boxed' : 'full-width';
     if ( hu_has_nav_menu('topbar') ) { $classes[] = 'topbar-enabled'; }
@@ -842,6 +843,14 @@ if ( ! function_exists( 'hu_body_class' ) ) {
 
     //Note : no stickyness implemented when 2 menus ( 'both_menus') are displayed on mobiles ( => like it was historically in the earliest version in Hueman )
     if ( 'no_stick' != $mobile_sticky && 'both_menus' != hu_get_option( 'header_mobile_menu_layout' ) ) { $classes[] = 'header-mobile-sticky'; }
+
+    // april 2020 : https://github.com/presscustomizr/hueman/issues/877
+    if ( !hu_is_checked( 'header-img-full-width' ) ) {
+        $classes[] = 'hu-header-img-full-width';
+    }
+    if ( hu_is_checked( 'header-img-natural-height' ) ) {
+        $classes[] = 'hu-header-img-natural-height';
+    }
 
     return $classes;
   }

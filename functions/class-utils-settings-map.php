@@ -676,6 +676,32 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'type'      => 'nimblecheck',
                 'notice'    => __('Upload a header image (supported formats : .jpg, .png, .gif, svg, svgz). This will disable header title/logo, site description, header ads widget' , 'hueman')
           ),
+
+          // april 2020 : 2 options added for https://github.com/presscustomizr/hueman/issues/877
+          'header-img-full-width' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __( 'Image fills 100% of the width' , 'hueman' ),
+                'section'   => 'header_image_sec',
+                'type'      => 'nimblecheck'
+          ),
+          'header-img-natural-height' => array(
+                'default'   => 0,
+                'control'   => 'HU_controls',
+                'label'     => __( 'Use the original image height' , 'hueman' ),
+                'section'   => 'header_image_sec',
+                'type'      => 'nimblecheck'
+          ),
+          // 'header-img-height' => array(
+          //       'default'   => 400,
+          //       'control'   => 'HU_controls',
+          //       'label'     => __( 'Set image\'s max height' , 'hueman' ),
+          //       'section'   => 'header_image_sec',
+          //       'sanitize_callback' => array( $this , 'hu_sanitize_number' ),
+          //       'type'      => 'number' ,
+          //       'step'      => 1,
+          //       'min'       => 0,
+          // ),
           'logo-title-on-header-image' => array(
                 'default'   => 0,
                 'control'   => 'HU_controls',

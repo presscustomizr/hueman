@@ -13,9 +13,13 @@
 .site-description { font-size: 1em; font-style: italic; color: #fff; color: rgba(255,255,255,0.5); float: left; margin-left: 20px; line-height: 60px; padding: 10px 0; }
 .site-image { display: block; margin: 0 auto; max-height: 400px; width: auto;}
 
-/* new-site-image + #header-image-wrap height introduced March 2020 for https://github.com/presscustomizr/hueman/issues/852 */
+/* new-site-image + #header-image-wrap height introduced March 2020 for https://github.com/presscustomizr/hueman/issues/852
+ april 2020 : .header-img-natural-height and .hu-header-img-full-width added for https://github.com/presscustomizr/hueman/issues/877
+*/
 #header-image-wrap { max-height: 400px;}
+.hu-header-img-natural-height #header-image-wrap { max-height: none;}
 .new-site-image { display: block; margin: 0 auto; width: 100%;}
+.hu-header-img-full-width .new-site-image { width:auto; }
 
 /* Header Widget Zone Common */
 #header-widgets{ display: none;}
