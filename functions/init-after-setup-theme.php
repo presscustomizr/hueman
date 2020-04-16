@@ -95,7 +95,7 @@ if ( ! function_exists( 'hu_setup' ) ) {
     add_theme_support( 'html5', array( 'search-form' ) );
 
     // Thumbnail sizes
-    add_image_size( 'thumb-small', 160, 160, true );//used for Hueman Dynamic Tabs widget
+    add_image_size( 'thumb-small', 80, 80, true );//used for Hueman Dynamic Tabs widget <= april 2020 changed from 160x160 to 80x80 for https://github.com/presscustomizr/hueman/issues/866
     add_image_size( 'thumb-standard', 320, 320, true );//used for standard post list / and for related posts
     add_image_size( 'thumb-medium', 520, 245, true );//used for classic post grid / and for related posts
     add_image_size( 'thumb-large', 720, 340, true );// used in singular to display the featured image ( when cropped option checked ) / used in image and audio post formats
