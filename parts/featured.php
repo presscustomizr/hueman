@@ -12,7 +12,6 @@ $featured = new WP_Query(
 );
 ?>
 
-<?php do_action( '__before_featured' ); ?>
 <?php if ( is_home() && !is_paged() && ( hu_get_option('featured-posts-count') =='1') && $featured->have_posts() ): // No slider if 1 post is featured ?>
 
 	<div class="featured">
@@ -35,4 +34,3 @@ $featured = new WP_Query(
 
 <?php endif; ?>
 <?php wp_reset_postdata(); ?>
-<?php do_action( '__after_featured' ); ?>
