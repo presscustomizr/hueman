@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.4
-Stable tag: 3.5.3
+Stable tag: 3.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,14 @@ The Hueman theme loads fast and is 100% mobile-friendly according to Google. One
 
 == Changelog ==
 https://github.com/presscustomizr/hueman/releases
+= 3.5.4 April 18th, 2020 =
+* fixed : [Header][banner image] add options to handle height and width of the image. fixes #877
+* fixed : [header image][sticky header] header height might not be set to the correct value on page load. fixes #883
+* fixed : [Lazy load] images are not lazy loaded when dynamic content is inserted in the DOM ( example with TablePress plugin ). fixes #880
+* fixed : [Nimble Builder compatibility] on home, Nimble Builder sections inserted on hooks __before_featured and __after_featured are not rendered when featured posts are disabled
+* improved : [performance][related posts] adapt image size of related posts depending on the current column layout.
+* improved : [performance][Dynamic Tabs widget] reduce image size of Dynamic Tabs widget
+
 = 3.5.3 March 27th, 2020 =
 * fixed : [mobile menu] clicking on an anchor link that has child submenu should unfold the submenu. fixes #857
 * improved : [Header] banner image => make it easier to adjust width automatically. fixes #852
@@ -39,14 +47,6 @@ https://github.com/presscustomizr/hueman/releases
 * added : [post lists] introduce a new option to allow hide the post thumbnails in post lists
 * added : [performance] new option to load main script with defer mode. for #863
 * added : [performance] new option to defer loading of FontAwesome to avoid blocking rendering issues. for #863
-
-= 3.4.39 February 8th, 2020 =
-* fixed : [html] element div not allowed as child of element button
-* fixed : [html] Bad value for attribute datetime on element time as per HTML specs : the literal did not satisfy the time-datetime format.
-* fixed : adapt social links for Viber link type.
-* fixed : style for .entry h2 span not compliant with accessibility standards. fixes #850
-* fixed : featured image can be stretched when displayed in featured posts. fixes #851
-* added : new options to control the visibility of post metas ( date and categories ) in post lists. fixes #849
 
 == Resources ==
 * Font Awesome Font : http://fontawesome.io, licensed SIL OFL 1.1, MIT License

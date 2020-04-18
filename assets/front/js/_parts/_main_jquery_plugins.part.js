@@ -36,7 +36,7 @@ var czrapp = czrapp || {};
           // Observer Mutations off the DOM to detect images
           // <=> of previous $(document).bind( 'DOMNodeInserted', fn );
           // implemented to fix https://github.com/presscustomizr/hueman/issues/880
-          this.observeMutationOnSelector('body', 'img', _.debounce( function(element) {
+          this.observeAddedNodesOnDom('body', 'img', _.debounce( function(element) {
                 _doLazyLoad();
           }, 50 ));
 

@@ -1059,6 +1059,28 @@ var czrapp = czrapp || {};
                   });
                   return to_return;
             },
+            // Observer Mutations of the DOM for a given element selector
+            // <=> of previous $(document).bind( 'DOMNodeInserted', fn );
+            // implemented to fix https://github.com/presscustomizr/hueman/issues/880
+            // see https://stackoverflow.com/questions/10415400/jquery-detecting-div-of-certain-class-has-been-added-to-dom#10415599
+            observeAddedNodesOnDom : function(containerSelector, elementSelector, callback) {
+                var onMutationsObserved = function(mutations) {
+                        mutations.forEach(function(mutation) {
+                            if (mutation.addedNodes.length) {
+                                var elements = $(mutation.addedNodes).find(elementSelector);
+                                for (var i = 0, len = elements.length; i < len; i++) {
+                                    callback(elements[i]);
+                                }
+                            }
+                        });
+                    },
+                    target = $(containerSelector)[0],
+                    config = { childList: true, subtree: true },
+                    MutationObserver = window.MutationObserver || window.WebKitMutationObserver,
+                    observer = new MutationObserver(onMutationsObserved);
+
+                observer.observe(target, config);
+          }
       };//_methods{}
 
       czrapp.methods.Base = czrapp.methods.Base || {};
@@ -1103,15 +1125,33 @@ var czrapp = czrapp || {};
           var smartLoadEnabled = 1 == HUParams.imgSmartLoadEnabled,
               //Default selectors for where are : $( '.article-container, .__before_main_wrapper, .widget-front' ).find('img');
               _where           = HUParams.imgSmartLoadOpts.parentSelectors.join();
+              _params = _.size( HUParams.imgSmartLoadOpts.opts ) > 0 ? HUParams.imgSmartLoadOpts.opts : {};
 
           //Smart-Load images
           //imgSmartLoad plugin will trigger the smartload event when the img will be loaded
           //the centerImages plugin will react to this event centering them
-          if (  smartLoadEnabled ) {
-                $( _where ).imgSmartLoad(
-                  _.size( HUParams.imgSmartLoadOpts.opts ) > 0 ? HUParams.imgSmartLoadOpts.opts : {}
-                );
-          }
+          var _doLazyLoad = function() {
+                if ( !smartLoadEnabled )
+                  return;
+
+                $(_where).each( function() {
+                    // if the element already has an instance of LazyLoad, simply trigger an event
+                      if ( !$(this).data('smartLoadDone') ) {
+                            $(this).imgSmartLoad(_params);
+                      } else {
+                            $(this).trigger('trigger-smartload');
+                      }
+                });
+              //$(_where).imgSmartLoad(_params);
+          };
+          _doLazyLoad();
+
+          // Observer Mutations off the DOM to detect images
+          // <=> of previous $(document).bind( 'DOMNodeInserted', fn );
+          // implemented to fix https://github.com/presscustomizr/hueman/issues/880
+          this.observeAddedNodesOnDom('body', 'img', _.debounce( function(element) {
+                _doLazyLoad();
+          }, 50 ));
 
           //If the centerAllImg is on we have to ensure imgs will be centered when simple loaded,
           //for this purpose we have to trigger the simple-load on:
@@ -1724,26 +1764,32 @@ var czrapp = czrapp || {};
                                 //=> will prevent any wrong value being assigned if menu is expanded before scrolling
                                 //If the header has an image, defer setting the height when the .site-image is loaded
                                 //=> otherwise the header height might be wrong because based on an empty img
-                                var $_header_image = $('#header-image-wrap').find('.site-image');
-                                if ( 1 == $_header_image.length ) {
+                                var $_header_image = $('#header-image-wrap').find('img');
+                                if ( 0 < $_header_image.length ) {
+                                      var _observeMutationOnHeaderImg = function(elementSelector, callback) {
+                                            var onMutationsObserved = function(mutations) {
+                                                    mutations.forEach(function(mutation) {
+                                                        if ('attributes' === mutation.type ) {
+                                                            callback();
+                                                        }
+                                                    });
+                                                },
+                                                target = $(elementSelector)[0],
+                                                config = { attributes:true },
+                                                MutationObserver = window.MutationObserver || window.WebKitMutationObserver,
+                                                observer = new MutationObserver(onMutationsObserved);
 
-                                      //We introduce a custom event here
-                                      //=> because we need to handle the case when the image is already loaded. This way we don't need to fire the load() function twice.
-                                      //=> This fixes : https://wordpress.org/support/topic/navbar-not-full-width-until-scroll/
-                                      // reported here : https://github.com/presscustomizr/hueman/issues/508
-                                      $_header_image.bind( 'header-image-loaded', function() {
-                                            czrapp.$_header.css( { 'height' : czrapp.$_header.height() }).addClass( 'fixed-header-on' );
-                                      });
+                                            observer.observe(target, config);
+                                      };
 
-                                      //If the image status is "complete", then trigger the custom event right away, else bind the "load" event
-                                      //http://stackoverflow.com/questions/1948672/how-to-tell-if-an-image-is-loaded-or-cached-in-jquery
-                                      if ( $_header_image[0].complete ) {
-                                            $_header_image.trigger('header-image-loaded');
-                                      } else {
-                                        $_header_image.load( function( img ) {
-                                              $_header_image.trigger('header-image-loaded');
-                                        } );
-                                      }
+                                      // Observe mutations on the header image to make sure we set height to the correct value
+                                      // example => the banner image is lazy loaded by a third party plugin
+                                      // <=> of previous $(document).bind( 'DOMNodeInserted', fn );
+                                      // implemented to fix https://github.com/presscustomizr/hueman/issues/880
+                                      _observeMutationOnHeaderImg('#header-image-wrap img', _.debounce( function(element) {
+                                            czrapp.$_header.css( 'height' , '' );
+                                            czrapp.$_header.css( 'height' , czrapp.$_header.height() ).addClass( 'fixed-header-on' );
+                                      }, 100 ) );
                                 } else {
                                       czrapp.$_header.css( { 'height' : czrapp.$_header.height() }).addClass( 'fixed-header-on' );
                                 }
@@ -1767,8 +1813,9 @@ var czrapp = czrapp || {};
 
               //czrapp.bind( 'page-scrolled-top', _mayBeresetTopPosition );
               var _maybeResetTop = function() {
-                    if ( 'up' == self.scrollDirection() )
+                    if ( 'up' == self.scrollDirection() ) {
                         self._mayBeresetTopPosition();
+                    }
               };
               czrapp.bind( 'scrolling-finished', _maybeResetTop );//react on scrolling finished <=> after the timer
               czrapp.bind( 'topbar-collapsed', _maybeResetTop );//react on topbar collapsed, @see topNavToLife
