@@ -12,15 +12,33 @@ var czrapp = czrapp || {};
           var smartLoadEnabled = 1 == HUParams.imgSmartLoadEnabled,
               //Default selectors for where are : $( '.article-container, .__before_main_wrapper, .widget-front' ).find('img');
               _where           = HUParams.imgSmartLoadOpts.parentSelectors.join();
+              _params = _.size( HUParams.imgSmartLoadOpts.opts ) > 0 ? HUParams.imgSmartLoadOpts.opts : {};
 
           //Smart-Load images
           //imgSmartLoad plugin will trigger the smartload event when the img will be loaded
           //the centerImages plugin will react to this event centering them
-          if (  smartLoadEnabled ) {
-                $( _where ).imgSmartLoad(
-                  _.size( HUParams.imgSmartLoadOpts.opts ) > 0 ? HUParams.imgSmartLoadOpts.opts : {}
-                );
-          }
+          var _doLazyLoad = function() {
+                if ( !smartLoadEnabled )
+                  return;
+
+                $(_where).each( function() {
+                    // if the element already has an instance of LazyLoad, simply trigger an event
+                      if ( !$(this).data('smartLoadDone') ) {
+                            $(this).imgSmartLoad(_params);
+                      } else {
+                            $(this).trigger('trigger-smartload');
+                      }
+                });
+              //$(_where).imgSmartLoad(_params);
+          };
+          _doLazyLoad();
+
+          // Observer Mutations off the DOM to detect images
+          // <=> of previous $(document).bind( 'DOMNodeInserted', fn );
+          // implemented to fix https://github.com/presscustomizr/hueman/issues/880
+          this.observeMutationOnSelector('body', 'img', _.debounce( function(element) {
+                _doLazyLoad();
+          }, 50 ));
 
           //If the centerAllImg is on we have to ensure imgs will be centered when simple loaded,
           //for this purpose we have to trigger the simple-load on:

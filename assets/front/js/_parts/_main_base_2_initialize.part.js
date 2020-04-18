@@ -141,6 +141,28 @@ var czrapp = czrapp || {};
                   });
                   return to_return;
             },
+            // Observer Mutations off the DOM for a given element selector
+            // <=> of previous $(document).bind( 'DOMNodeInserted', fn );
+            // implemented to fix https://github.com/presscustomizr/hueman/issues/880
+            // see https://stackoverflow.com/questions/10415400/jquery-detecting-div-of-certain-class-has-been-added-to-dom#10415599
+            observeMutationOnSelector : function(containerSelector, elementSelector, callback) {
+                var onMutationsObserved = function(mutations) {
+                        mutations.forEach(function(mutation) {
+                            if (mutation.addedNodes.length) {
+                                var elements = $(mutation.addedNodes).find(elementSelector);
+                                for (var i = 0, len = elements.length; i < len; i++) {
+                                    callback(elements[i]);
+                                }
+                            }
+                        });
+                    },
+                    target = $(containerSelector)[0],
+                    config = { childList: true, subtree: true },
+                    MutationObserver = window.MutationObserver || window.WebKitMutationObserver,
+                    observer = new MutationObserver(onMutationsObserved);
+
+                observer.observe(target, config);
+          }
       };//_methods{}
 
       czrapp.methods.Base = czrapp.methods.Base || {};
