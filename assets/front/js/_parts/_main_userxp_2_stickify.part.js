@@ -53,26 +53,32 @@ var czrapp = czrapp || {};
                                 //=> will prevent any wrong value being assigned if menu is expanded before scrolling
                                 //If the header has an image, defer setting the height when the .site-image is loaded
                                 //=> otherwise the header height might be wrong because based on an empty img
-                                var $_header_image = $('#header-image-wrap').find('.site-image');
-                                if ( 1 == $_header_image.length ) {
+                                var $_header_image = $('#header-image-wrap').find('img');
+                                if ( 0 < $_header_image.length ) {
+                                      var _observeMutationOnHeaderImg = function(elementSelector, callback) {
+                                            var onMutationsObserved = function(mutations) {
+                                                    mutations.forEach(function(mutation) {
+                                                        if ('attributes' === mutation.type ) {
+                                                            callback();
+                                                        }
+                                                    });
+                                                },
+                                                target = $(elementSelector)[0],
+                                                config = { attributes:true },
+                                                MutationObserver = window.MutationObserver || window.WebKitMutationObserver,
+                                                observer = new MutationObserver(onMutationsObserved);
 
-                                      //We introduce a custom event here
-                                      //=> because we need to handle the case when the image is already loaded. This way we don't need to fire the load() function twice.
-                                      //=> This fixes : https://wordpress.org/support/topic/navbar-not-full-width-until-scroll/
-                                      // reported here : https://github.com/presscustomizr/hueman/issues/508
-                                      $_header_image.bind( 'header-image-loaded', function() {
-                                            czrapp.$_header.css( { 'height' : czrapp.$_header.height() }).addClass( 'fixed-header-on' );
-                                      });
+                                            observer.observe(target, config);
+                                      };
 
-                                      //If the image status is "complete", then trigger the custom event right away, else bind the "load" event
-                                      //http://stackoverflow.com/questions/1948672/how-to-tell-if-an-image-is-loaded-or-cached-in-jquery
-                                      if ( $_header_image[0].complete ) {
-                                            $_header_image.trigger('header-image-loaded');
-                                      } else {
-                                        $_header_image.load( function( img ) {
-                                              $_header_image.trigger('header-image-loaded');
-                                        } );
-                                      }
+                                      // Observe mutations on the header image to make sure we set height to the correct value
+                                      // example => the banner image is lazy loaded by a third party plugin
+                                      // <=> of previous $(document).bind( 'DOMNodeInserted', fn );
+                                      // implemented to fix https://github.com/presscustomizr/hueman/issues/880
+                                      _observeMutationOnHeaderImg('#header-image-wrap img', _.debounce( function(element) {
+                                            czrapp.$_header.css( 'height' , '' );
+                                            czrapp.$_header.css( 'height' , czrapp.$_header.height() ).addClass( 'fixed-header-on' );
+                                      }, 100 ) );
                                 } else {
                                       czrapp.$_header.css( { 'height' : czrapp.$_header.height() }).addClass( 'fixed-header-on' );
                                 }
@@ -96,8 +102,9 @@ var czrapp = czrapp || {};
 
               //czrapp.bind( 'page-scrolled-top', _mayBeresetTopPosition );
               var _maybeResetTop = function() {
-                    if ( 'up' == self.scrollDirection() )
+                    if ( 'up' == self.scrollDirection() ) {
                         self._mayBeresetTopPosition();
+                    }
               };
               czrapp.bind( 'scrolling-finished', _maybeResetTop );//react on scrolling finished <=> after the timer
               czrapp.bind( 'topbar-collapsed', _maybeResetTop );//react on topbar collapsed, @see topNavToLife
