@@ -3541,11 +3541,14 @@ var czrapp = czrapp || {};
                                 var image = $_firstImage.get(0);
                                 if ( image.complete || image.readyState == 'complete' || image.readyState == 4 ) {
                                       clearInterval(checkforloaded);
-
+                                      // params documented https://woocommerce.com/flexslider/
                                       $.when( $flexForFeaturedPosts.flexslider({
                                             animation: "slide",
-                                            useCSS: false, // Fix iPad flickering issue
-                                            directionNav: true,
+                                            // april 2020 : useCSS was set to false for "Fix iPad flickering issue"
+                                            // now set to true otherwise breaks the RTL mode
+                                            // fixes : added for https://github.com/presscustomizr/hueman/issues/884
+                                            useCSS: true,
+                                            //directionNav: true,
                                             controlNav: true,
                                             pauseOnHover: true,
                                             animationSpeed: 400,

@@ -3744,11 +3744,9 @@ var czrapp = czrapp || {};
                                 var image = $_firstImage.get(0);
                                 if ( image.complete || image.readyState == 'complete' || image.readyState == 4 ) {
                                       clearInterval(checkforloaded);
-
                                       $.when( $flexForFeaturedPosts.flexslider({
                                             animation: "slide",
-                                            useCSS: false, // Fix iPad flickering issue
-                                            directionNav: true,
+                                            useCSS: true,
                                             controlNav: true,
                                             pauseOnHover: true,
                                             animationSpeed: 400,
