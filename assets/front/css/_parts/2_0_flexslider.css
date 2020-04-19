@@ -28,6 +28,13 @@ html[xmlns] .flexslider .slides { display: block; }
 * html .flexslider .slides { height: 1%;}
 .no-js .flexslider .slides > li:first-child { display: block; }
 
+/* RTL
+added for https://github.com/presscustomizr/hueman/issues/884
+*/
+[dir="rtl"] .flexslider {
+  direction:rtl;
+}
+
 /*  flexslider : default theme
 /* ------------------------------------ */
 .flexslider { margin: 0 0 60px; position: relative; zoom: 1; }
