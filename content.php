@@ -1,3 +1,14 @@
+<?php
+if( !function_exists('hu_limit_srcset_img_width_for_thumb_large') ) {
+    // do not allow the browser to pick a size larger than 'thumb-large'
+    function hu_limit_srcset_img_width_for_thumb_large() { return '720'; }
+}
+// april 2020 : added for https://github.com/presscustomizr/hueman/issues/866
+// filter has to be set in article tmpl (instead of before and after the wp query) to be taken into account when using infinite scroll
+if ( !has_filter( 'max_srcset_image_width', 'hu_limit_srcset_img_width_for_thumb_large' ) ) {
+  add_filter( 'max_srcset_image_width', 'hu_limit_srcset_img_width_for_thumb_large' );
+}
+?>
 <article id="post-<?php the_ID(); ?>" <?php post_class( array('group', 'grid-item') ); ?>>
 	<div class="post-inner post-hover">
     <?php if ( hu_is_checked('blog-standard-show-thumb') ) : ?>
@@ -36,3 +47,8 @@
 
 	</div><!--/.post-inner-->
 </article><!--/.post-->
+<?php
+if ( has_filter( 'max_srcset_image_width', 'hu_limit_srcset_img_width_for_thumb_large' ) ) {
+  remove_filter( 'max_srcset_image_width', 'hu_limit_srcset_img_width_for_thumb_large' );
+}
+?>
