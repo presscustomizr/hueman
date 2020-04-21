@@ -1635,6 +1635,9 @@ function hu_is_widget_zone_allowed_in_context( $_contexts, $_map_conditionals ) 
 }
 
 
+/* ------------------------------------------------------------------------- *
+ *  Templates
+/* ------------------------------------------------------------------------- */
 //@return void
 //A utility to override the default tmpl from a plugin
 //falls back on get_template_part( $path )
@@ -1652,7 +1655,9 @@ function hu_get_template_part( $path ) {
 
 
 
-
+/* ------------------------------------------------------------------------- *
+ *  Grid image sizes
+/* ------------------------------------------------------------------------- */
 add_filter( 'hu_masonry_grid_thumb_size',  'hu_maybe_replace_blog_thumb_size_with_full' );
 add_filter( 'hu_grid_featured_thumb_size', 'hu_maybe_replace_blog_thumb_size_with_full' );
 add_filter( 'hu_grid_standard_thumb_size', 'hu_maybe_replace_blog_thumb_size_with_full' );
@@ -1665,6 +1670,8 @@ add_filter( 'hu_grid_thumb_size',          'hu_maybe_replace_blog_thumb_size_wit
 function hu_maybe_replace_blog_thumb_size_with_full( $thumb_size ) {
   return hu_is_checked( 'blog-use-original-image-size' ) ? 'full' : $thumb_size;
 }
+
+
 
 /* ------------------------------------------------------------------------- *
  *  Page Menu
