@@ -79,6 +79,14 @@ class AlxPosts extends WP_Widget {
 	?>
 
 	<ul class="alx-posts group <?php if($instance['posts_thumb']) { echo 'thumbs-enabled'; } ?>">
+    <?php
+    // do not allow the browser to pick a size larger than 'thumb-medium'
+    if( !function_exists('hu_limit_srcset_img_width_for_thumb_medium') ) {
+        function hu_limit_srcset_img_width_for_thumb_medium() { return '520'; }
+    }
+    // april 2020 : added for https://github.com/presscustomizr/hueman/issues/866
+    add_filter( 'max_srcset_image_width', 'hu_limit_srcset_img_width_for_thumb_medium' );
+    ?>
 		<?php while ($posts->have_posts()): $posts->the_post(); ?>
 		<li>
 
@@ -102,6 +110,7 @@ class AlxPosts extends WP_Widget {
 		</li>
 		<?php endwhile; ?>
 		<?php wp_reset_postdata(); ?>
+    <?php remove_filter( 'max_srcset_image_width', 'hu_limit_srcset_img_width_for_thumb_medium' ); ?>
 	</ul><!--/.alx-posts-->
 
 <?php

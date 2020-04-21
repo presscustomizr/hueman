@@ -11,7 +11,17 @@
             <div class="image-container">
               <?php if ( has_post_thumbnail() ) {
                 $image_size = hu_is_checked( 'singular-post-cropped-feat-img' ) ? 'thumb-large' : 'full';
+                 if( 'thumb-large' === $image_size && !function_exists('hu_limit_srcset_img_width_for_thumb_large') ) {
+                    // do not allow the browser to pick a size larger than 'thumb-large'
+                    function hu_limit_srcset_img_width_for_thumb_large() { return '720'; }
+                    // documented in wp-includes/media.php
+                    // april 2020 : added for https://github.com/presscustomizr/hueman/issues/866
+                    add_filter( 'max_srcset_image_width', 'hu_limit_srcset_img_width_for_thumb_large' );
+                }
                 hu_the_post_thumbnail( $image_size, '', false);//no attr, no placeholder
+                if( 'thumb-large' === $image_size ) {
+                    remove_filter( 'max_srcset_image_width', 'hu_limit_srcset_img_width_for_thumb_large' );
+                }
                 $caption = get_post(get_post_thumbnail_id())->post_excerpt;
                 if ( isset($caption) && $caption ) echo '<div class="image-caption">'.$caption.'</div>';
               } ?>

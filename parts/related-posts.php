@@ -5,8 +5,8 @@
 //Let's determine which image size would be the best for the current user layout
 //added april 2020 for https://github.com/presscustomizr/hueman/issues/866
 $map = array(
-      'col-1c'  => 'thumb-medium',
-      'col-2cl' => 'thumb-standard',
+      'col-1c'  => 'thumb-medium',//520w
+      'col-2cl' => 'thumb-standard',//320w
       'col-2cr' => 'thumb-standard',
       'col-3cm' => 'thumb-standard',
       'col-3cl' => 'thumb-standard',
@@ -21,7 +21,14 @@ $related_img_size = array_key_exists( $sb_layout, $map ) ? $map[ $sb_layout ] : 
 </h4>
 
 <ul class="related-posts group">
-
+  <?php
+    // do not allow the browser to pick a size larger than 'thumb-medium'
+    if( !function_exists('hu_limit_srcset_img_width_for_rel_post_thumb') ) {
+        function hu_limit_srcset_img_width_for_rel_post_thumb() { return '520'; }
+    }
+    // april 2020 : added for https://github.com/presscustomizr/hueman/issues/866
+    add_filter( 'max_srcset_image_width', 'hu_limit_srcset_img_width_for_rel_post_thumb' );
+  ?>
 	<?php while ( $related->have_posts() ) : $related->the_post(); ?>
 	<li class="related post-hover">
 		<article <?php post_class(); ?>>
@@ -54,6 +61,7 @@ $related_img_size = array_key_exists( $sb_layout, $map ) ? $map[ $sb_layout ] : 
 	</li><!--/.related-->
 	<?php endwhile; ?>
 	<?php wp_reset_postdata(); ?>
+  <?php remove_filter( 'max_srcset_image_width', 'hu_limit_srcset_img_width_for_rel_post_thumb' ); ?>
 
 </ul><!--/.post-related-->
 <?php endif; ?>

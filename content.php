@@ -3,7 +3,8 @@
     <?php if ( hu_is_checked('blog-standard-show-thumb') ) : ?>
   		<div class="post-thumbnail">
   			<a href="<?php the_permalink(); ?>">
-  				<?php hu_the_post_thumbnail( apply_filters( 'hu_grid_thumb_size', 'thumb-medium' ), '', $placeholder = true, $placeholder_size = apply_filters( 'hu_grid_placeholder_size', 'thumb-medium' ) ); ?>
+          <?php // note that the image size is full when user checked hu_is_checked( 'blog-use-original-image-size' ) ? 'full' : $thumb_size; ?>
+  				<?php hu_the_post_thumbnail( apply_filters( 'hu_grid_thumb_size', 'thumb-large' ), '', $placeholder = true, $placeholder_size = apply_filters( 'hu_grid_placeholder_size', 'thumb-medium' ) ); ?>
   				<?php if ( has_post_format('video') && !is_sticky() ) echo'<span class="thumb-icon"><i class="fas fa-play"></i></span>'; ?>
   				<?php if ( has_post_format('audio') && !is_sticky() ) echo'<span class="thumb-icon"><i class="fas fa-volume-up"></i></span>'; ?>
   				<?php if ( is_sticky() ) echo'<span class="thumb-icon"><i class="fas fa-star"></i></span>'; ?>
