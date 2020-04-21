@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Hueman\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2020-04-18 20:18:21+00:00\n"
+"POT-Creation-Date: 2020-04-21 10:51:37+00:00\n"
 "PO-Revision-Date: 2016-11-04 13:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -35,10 +35,10 @@ msgstr "Reacties"
 msgid "Pingbacks"
 msgstr ""
 
-#: content-featured.php:42 content-standard.php:36 content.php:27
-#: functions/widgets/alx-posts.php:98 functions/widgets/alx-tabs.php:157
-#: functions/widgets/alx-tabs.php:194 functions/widgets/alx-tabs.php:205
-#: parts/related-posts.php:44
+#: content-featured.php:42 content-standard.php:37 content.php:28
+#: functions/widgets/alx-posts.php:106 functions/widgets/alx-tabs.php:165
+#: functions/widgets/alx-tabs.php:210 functions/widgets/alx-tabs.php:221
+#: parts/related-posts.php:51
 msgid "Permalink to "
 msgstr ""
 
@@ -2741,7 +2741,7 @@ msgstr "Recente reacties"
 msgid "Tags"
 msgstr "Tags"
 
-#: functions/widgets/alx-tabs.php:235
+#: functions/widgets/alx-tabs.php:252
 msgid "says:"
 msgstr "zegt:"
 
@@ -3828,7 +3828,7 @@ msgid "No Taxonomies Found"
 msgstr ""
 
 #: page-templates/child-menu.php:28 tmpl/page-tmpl.php:15
-#: tmpl/single-tmpl.php:33
+#: tmpl/single-tmpl.php:43
 msgid "Pages:"
 msgstr "Pagina&#39;s:"
 
@@ -3889,7 +3889,7 @@ msgstr ""
 msgid "Please try another search:"
 msgstr "Probeer een andere zoekterm:"
 
-#: tmpl/single-tmpl.php:51
+#: tmpl/single-tmpl.php:61
 msgid "Tags:"
 msgstr "Tags: "
 
