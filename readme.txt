@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.4
-Stable tag: 3.5.6-alpha
+Stable tag: 3.5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,8 +14,9 @@ The Hueman theme loads fast and is 100% mobile-friendly according to Google. One
 
 == Changelog ==
 https://github.com/presscustomizr/hueman/releases
-= 3.5.6 April 21st, 2020 =
+= 3.5.6 April 27th, 2020 =
 * fixed : [performance][srcset attribute] => limit browsers choice for srcset on high resolution device. fixes #866
+* improved : [post grids] adapt grid max size for srcset according to user options for image and pro grid columns
 
 = 3.5.5 April 19th, 2020 =
 * fixed : [Flexslider][RTL] flexslider broken in RTL mode since updated to flexslider v2.7.2
