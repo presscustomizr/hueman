@@ -1333,9 +1333,9 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'skoped' => false// implemented initally not skopable in jan-2020, see ctx_get_excluded_settings()
           ),
           'singular-post-cropped-feat-img' => array(
-                'default'   => 1,
+                'default'   => 0,
                 'control'   => 'HU_controls',
-                'label'     => __( 'Used cropped image (720x340 pixels on desktops)', 'hueman' ),
+                'label'     => __( 'Used cropped image ( max 1320x500 on desktops)', 'hueman' ),
                 'section'   => 'content_single_sec',
                 'type'      => 'nimblecheck',
                 'priority'  => 10,
@@ -1426,9 +1426,9 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'notice'    => __( 'Display the page\'s featured image when it is set' , 'hueman')
           ),
           'singular-page-cropped-feat-img' => array(
-                'default'   => 1,
+                'default'   => 0,
                 'control'   => 'HU_controls',
-                'label'     => __( 'Used cropped image (720x340 pixels on desktops)', 'hueman' ),
+                'label'     => __( 'Used cropped image (max 1320x500 on desktops)', 'hueman' ),
                 'section'   => 'content_page_sec',
                 'type'      => 'nimblecheck'
           ),
