@@ -6,11 +6,11 @@
 //added april 2020 for https://github.com/presscustomizr/hueman/issues/866
 $map = array(
       'col-1c'  => 'thumb-medium',//520w
-      'col-2cl' => 'thumb-standard',//320w
-      'col-2cr' => 'thumb-standard',
-      'col-3cm' => 'thumb-standard',
-      'col-3cl' => 'thumb-standard',
-      'col-3cr' => 'thumb-standard'
+      'col-2cl' => 'thumb-medium',
+      'col-2cr' => 'thumb-medium',
+      'col-3cm' => 'thumb-medium',
+      'col-3cl' => 'thumb-medium',
+      'col-3cr' => 'thumb-medium'
 );
 $sb_layout = hu_get_layout_class();
 $related_img_size = array_key_exists( $sb_layout, $map ) ? $map[ $sb_layout ] : null;
