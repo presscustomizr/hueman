@@ -2084,6 +2084,8 @@ var czrapp = czrapp || {};
 (function($, czrapp) {
   var _methods =  {
     addBrowserClassToBody : function() {
+          if ( !$.browser )
+            return;
           if ( $.browser.chrome )
               czrapp.$_body.addClass("chrome");
           else if ( $.browser.webkit )
@@ -2142,7 +2144,7 @@ var czrapp = czrapp || {};
     extLinks : function() {
           if ( ! HUParams.extLinksStyle && ! HUParams.extLinksTargetExt )
             return;
-          $('a' , '.post-inner .entry').extLinks({
+          $('a' , '.post-inner .entry p, .type-page .entry p').extLinks({
                 addIcon : HUParams.extLinksStyle,
                 iconClassName : 'hu-external',
                 newTab : HUParams.extLinksTargetExt,

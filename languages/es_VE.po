@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman v3.5.6\n"
+"Project-Id-Version: Hueman v3.5.7\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2020-04-27 07:25:21+00:00\n"
+"POT-Creation-Date: 2020-05-04 16:00:38+00:00\n"
 "PO-Revision-Date: 2016-05-30 08:46+0200\n"
 "Last-Translator: José Subero | @arawako and Ernesto Chapon <jose.Language-"
 "Team: Press Customizr>\n"
@@ -1120,8 +1120,7 @@ msgid ""
 msgstr ""
 
 #: functions/class-utils-settings-map.php:1338
-#: functions/class-utils-settings-map.php:1431
-msgid "Used cropped image (720x340 pixels on desktops)"
+msgid "Used cropped image ( max 1320x500 on desktops)"
 msgstr ""
 
 #: functions/class-utils-settings-map.php:1347
@@ -1210,6 +1209,10 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:1426
 msgid "Display the page's featured image when it is set"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1431
+msgid "Used cropped image (max 1320x500 on desktops)"
 msgstr ""
 
 #: functions/class-utils-settings-map.php:1448

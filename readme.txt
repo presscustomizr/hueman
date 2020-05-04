@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.4
-Stable tag: 3.5.6
+Stable tag: 3.5.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,11 @@ The Hueman theme loads fast and is 100% mobile-friendly according to Google. One
 
 == Changelog ==
 https://github.com/presscustomizr/hueman/releases
+= 3.5.7 May 4th, 2020 =
+* fixed : [javascript] External link icon not displayed on pages. fixes #885
+* fixed : [related posts] image dimensions are not consistent accross column layout. fixes #888
+* improved : increased max size of singular featured images
+
 = 3.5.6 April 27th, 2020 =
 * fixed : [performance][srcset attribute] => limit browsers choice for srcset on high resolution device. fixes #866
 * improved : [post grids] adapt grid max size for srcset according to user options for image and pro grid columns

@@ -15,7 +15,7 @@ $czr_base_fmk_namespace = __NAMESPACE__ . '\\';
 do_action( 'nimble_base_fmk_loaded' );
 ////////////////////////////////////////////////////////////////
 // CZR_Fmk_Base
-if ( ! class_exists( 'CZR_Fmk_Base_Construct' ) ) :
+if ( !class_exists( 'CZR_Fmk_Base_Construct' ) ) :
     class CZR_Fmk_Base_Construct {
         static $instance;
 
@@ -30,7 +30,7 @@ if ( ! class_exists( 'CZR_Fmk_Base_Construct' ) ) :
         public $current_module_params_when_ajaxing;// store the params when ajaxing and allows us to access the currently requested module params at any point of the ajax action
 
         public static function czr_fmk_get_instance( $params ) {
-            if ( ! isset( self::$instance ) && ! ( self::$instance instanceof CZR_Fmk_Base ) ) {
+            if ( !isset( self::$instance ) && !( self::$instance instanceof CZR_Fmk_Base ) ) {
               self::$instance = new CZR_Fmk_Base( $params );
             }
             return self::$instance;
@@ -40,7 +40,7 @@ if ( ! class_exists( 'CZR_Fmk_Base_Construct' ) ) :
         //  'base_url' => '' <= path to root class folder
         //)
         function __construct( $params = array() ) {
-            if ( ! is_array( $params ) || empty( $params ) ) {
+            if ( !is_array( $params ) || empty( $params ) ) {
                 error_log( 'CZR_Fmk_Base => constructor => missing params');
                 return;
             }
@@ -50,8 +50,8 @@ if ( ! class_exists( 'CZR_Fmk_Base_Construct' ) ) :
             }
 
             // DEFINITIONS
-            if ( ! defined( 'NIMBLE_FMK_BASE_URL' ) ) { define( 'NIMBLE_FMK_BASE_URL' , $params['base_url'] ); }
-            if ( ! defined( 'NIMBLE_FMK_BASE_VERSION' ) ) { define( 'NIMBLE_FMK_BASE_VERSION' , isset( $params['version'] ) ? $params['version'] : '1.0.0' ); }
+            if ( !defined( 'NIMBLE_FMK_BASE_URL' ) ) { define( 'NIMBLE_FMK_BASE_URL' , $params['base_url'] ); }
+            if ( !defined( 'NIMBLE_FMK_BASE_VERSION' ) ) { define( 'NIMBLE_FMK_BASE_VERSION' , isset( $params['version'] ) ? $params['version'] : '1.0.0' ); }
 
             // Cache the css attr used in the tmpl builder and in the localized params
             $this -> czr_css_attr = $this -> czr_fmk_get_customizer_controls_css_attr();
@@ -171,7 +171,7 @@ endif;
 ?><?php
 ////////////////////////////////////////////////////////////////
 // CZR_Fmk_Base
-if ( ! class_exists( 'CZR_Fmk_Base_Load_Resources' ) ) :
+if ( !class_exists( 'CZR_Fmk_Base_Load_Resources' ) ) :
     class CZR_Fmk_Base_Load_Resources extends CZR_Fmk_Base_Construct {
 
         // fired in the constructor
@@ -381,7 +381,7 @@ if ( ! class_exists( 'CZR_Fmk_Base_Load_Resources' ) ) :
                     </div>
                   </div>
                 <?php // case when an url is provided ?>
-                <# } else if ( ! _.isEmpty( data.fromUrl ) ) { #>
+                <# } else if ( !_.isEmpty( data.fromUrl ) ) { #>
                   <div class="attachment-media-view">
                     <div class="thumbnail thumbnail-thumb">
                         <img class="attachment-thumb" src="{{ data.fromUrl }}" draggable="false" alt="" />
@@ -417,7 +417,7 @@ endif;
 ?><?php
 ////////////////////////////////////////////////////////////////
 // CZR_Fmk_Base
-if ( ! class_exists( 'CZR_Fmk_Base_Ajax_Filter' ) ) :
+if ( !class_exists( 'CZR_Fmk_Base_Ajax_Filter' ) ) :
     class CZR_Fmk_Base_Ajax_Filter extends CZR_Fmk_Base_Load_Resources {
 
         // fired in the constructor
@@ -433,31 +433,31 @@ if ( ! class_exists( 'CZR_Fmk_Base_Ajax_Filter' ) ) :
 
         // hook : 'wp_ajax_ac_get_template'
         function ac_set_ajax_czr_tmpl() {
-            if ( ! is_user_logged_in() ) {
+            if ( !is_user_logged_in() ) {
                 wp_send_json_error( 'ac_set_ajax_czr_tmpl => unauthenticated' );
             }
-            if ( ! current_user_can( 'edit_theme_options' ) ) {
+            if ( !current_user_can( 'edit_theme_options' ) ) {
               wp_send_json_error('ac_set_ajax_czr_tmpl => user_cant_edit_theme_options');
             }
-            if ( ! current_user_can( 'customize' ) ) {
+            if ( !current_user_can( 'customize' ) ) {
                 status_header( 403 );
                 wp_send_json_error( 'ac_set_ajax_czr_tmpl => customize_not_allowed' );
-            } else if ( ! isset( $_SERVER['REQUEST_METHOD'] ) || 'POST' !== $_SERVER['REQUEST_METHOD'] ) {
+            } else if ( !isset( $_SERVER['REQUEST_METHOD'] ) || 'POST' !== $_SERVER['REQUEST_METHOD'] ) {
                 status_header( 405 );
                 wp_send_json_error( 'ac_set_ajax_czr_tmpl => bad_method' );
             }
             $action = 'save-customize_' . get_stylesheet();
-            if ( ! check_ajax_referer( $action, 'nonce', false ) ) {
+            if ( !check_ajax_referer( $action, 'nonce', false ) ) {
                  wp_send_json_error( array(
                   'code' => 'invalid_nonce',
                   'message' => __( 'ac_set_ajax_czr_tmpl => Security check failed.', 'hueman' ),
                 ) );
             }
 
-            if ( ! isset( $_POST['module_type'] ) || empty( $_POST['module_type'] ) ) {
+            if ( !isset( $_POST['module_type'] ) || empty( $_POST['module_type'] ) ) {
                 wp_send_json_error( 'ac_set_ajax_czr_tmpl => missing module_type property in posted data' );
             }
-            if ( ! isset( $_POST['tmpl'] ) || empty( $_POST['tmpl'] ) ) {
+            if ( !isset( $_POST['tmpl'] ) || empty( $_POST['tmpl'] ) ) {
                 wp_send_json_error( 'ac_set_ajax_czr_tmpl => missing tmpl property in posted data' );
             }
             $tmpl = $_POST['tmpl'];
@@ -575,7 +575,7 @@ if ( ! class_exists( 'CZR_Fmk_Base_Ajax_Filter' ) ) :
                           </div>
                         </div>
                       <?php // case when an url is provided ?>
-                      <# } else if ( ! _.isEmpty( data.fromUrl ) ) { #>
+                      <# } else if ( !_.isEmpty( data.fromUrl ) ) { #>
                         <div class="attachment-media-view">
                           <div class="thumbnail thumbnail-thumb">
                               <img class="attachment-thumb" src="{{ data.fromUrl }}" draggable="false" alt="" />
@@ -619,7 +619,7 @@ endif;
 ?><?php
 ////////////////////////////////////////////////////////////////
 // CZR_Fmk_Base
-if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
+if ( !class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
     class CZR_Fmk_Base_Tmpl_Builder extends CZR_Fmk_Base_Ajax_Filter {
         /*********************************************************
         ** TMPL BUILDER
@@ -683,17 +683,17 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                 'section_collection' => array()
             );
             foreach( $tmpl_map as $input_id => $input_data ) {
-                if ( ! is_string( $input_id ) || empty( $input_id ) ) {
+                if ( !is_string( $input_id ) || empty( $input_id ) ) {
                     wp_send_json_error( __FUNCTION__ . ' => wrong input id' );
                     break;
                 }
-                if ( ! is_array( $input_data ) ) {
+                if ( !is_array( $input_data ) ) {
                     wp_send_json_error( __FUNCTION__ . ' => wrong var type for the input_data of input id : ' . $input_id );
                     break;
                 }
                 // check that we have no unknown entries in the provided input_data
                 $maybe_diff = array_diff_key( $input_data, $default_input_entries );
-                if ( ! empty( $maybe_diff ) ) {
+                if ( !empty( $maybe_diff ) ) {
                     error_log('<' . __FUNCTION__ . '>');
                     error_log( '=> at least one unknown param in the registered input params for input id : ' . $input_id );
                     error_log( print_r( $maybe_diff, true ) );
@@ -706,7 +706,7 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                 $input_data = wp_parse_args( $input_data, $default_input_entries );
 
                 // Do we have a specific template provided ?
-                if ( ! empty( $input_data[ 'tmpl_callback' ] ) && function_exists( $input_data[ 'tmpl_callback' ] ) ) {
+                if ( !empty( $input_data[ 'tmpl_callback' ] ) && function_exists( $input_data[ 'tmpl_callback' ] ) ) {
                     $html .= call_user_func_array( $input_data[ 'tmpl_callback' ], array( $input_data ) );
                 } else {
                     $html .= $this -> ac_get_default_input_tmpl( $input_id, $input_data );
@@ -720,7 +720,7 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
 
         // Fired in ac_generate_czr_tmpl_from_map
         function ac_get_default_input_tmpl( $input_id, $input_data ) {
-            if ( ! array_key_exists( 'input_type', $input_data ) || empty( $input_data[ 'input_type' ] ) ) {
+            if ( !array_key_exists( 'input_type', $input_data ) || empty( $input_data[ 'input_type' ] ) ) {
                  wp_send_json_error( 'ac_get_input_tmpl => missing input type for input id : ' . $input_id );
             }
             $input_type = $input_data[ 'input_type' ];
@@ -740,31 +740,31 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                 $is_width_100 ? 'width-100' : '',
                 'hidden' === $input_type ? 'hidden' : '',
                 $input_type,
-                ! empty( $input_data['transport'] ) ? 'data-transport="'. $input_data['transport'] .'"' : ''
+                !empty( $input_data['transport'] ) ? 'data-transport="'. $input_data['transport'] .'"' : ''
             );
             ?>
-            <?php if ( ! empty( $input_data['html_before'] ) ) : ?>
+            <?php if ( !empty( $input_data['html_before'] ) ) : ?>
                 <div class="czr-html-before"><?php echo $input_data['html_before']; ?></div>
             <?php endif; ?>
 
-            <?php if ( ! empty( $input_data['notice_before_title'] ) ) : ?>
+            <?php if ( !empty( $input_data['notice_before_title'] ) ) : ?>
                 <span class="czr-notice"><?php echo $input_data['notice_before_title']; ?></span><br/>
             <?php endif; ?>
 
             <?php
             // no need to print a title for an hidden input
             if ( $input_type !== 'hidden' ) {
-                printf( '<div class="customize-control-title %1$s">%2$s</div>', ! empty( $input_data['title_width'] ) ? $input_data['title_width'] : '', $input_data['title'] );
+                printf( '<div class="customize-control-title %1$s">%2$s</div>', !empty( $input_data['title_width'] ) ? $input_data['title_width'] : '', $input_data['title'] );
             }
             ?>
-            <?php if ( ! empty( $input_data['notice_before'] ) ) : ?>
+            <?php if ( !empty( $input_data['notice_before'] ) ) : ?>
                 <span class="czr-notice"><?php echo $input_data['notice_before']; ?></span>
             <?php endif; ?>
 
-            <?php printf( '<div class="czr-input %1$s">', ! empty( $input_data['input_width'] ) ? $input_data['input_width'] : '' ); ?>
+            <?php printf( '<div class="czr-input %1$s">', !empty( $input_data['input_width'] ) ? $input_data['input_width'] : '' ); ?>
 
             <?php
-            if ( ! empty( $input_data['input_template'] ) && is_string( $input_data['input_template'] ) ) {
+            if ( !empty( $input_data['input_template'] ) && is_string( $input_data['input_template'] ) ) {
                 echo $input_data['input_template'];
             } else {
                 // THIS IS WHERE THE ACTUAL INPUT CONTENT IS SET
@@ -772,11 +772,11 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
             }
             ?>
               </div><?php // class="czr-input" ?>
-              <?php if ( ! empty( $input_data['notice_after'] ) ) : ?>
+              <?php if ( !empty( $input_data['notice_after'] ) ) : ?>
                   <span class="czr-notice"><?php echo $input_data['notice_after']; ?></span>
               <?php endif; ?>
 
-              <?php if ( ! empty( $input_data['html_after'] ) ) : ?>
+              <?php if ( !empty( $input_data['html_after'] ) ) : ?>
                 <div class="czr-html-after"><?php echo $input_data['html_after']; ?></div>
               <?php endif; ?>
 
@@ -809,7 +809,7 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
               do_action( 'czr_set_input_tmpl_content', $input_type, $input_id, $input_data );
             $input_tmpl_content = ob_get_clean();
 
-            if ( ! empty( $input_tmpl_content ) ) {
+            if ( !empty( $input_tmpl_content ) ) {
                 echo $input_tmpl_content;
             } else {
                 // Then, if we have no content yet, let's go thought the default input cases
@@ -857,9 +857,9 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                       ?>
                         <?php
                         printf( '<input data-czrtype="%4$s" type="number" %1$s %2$s %3$s value="{{ data[\'%4$s\'] }}" />',
-                          ! empty( $input_data['step'] ) ? 'step="'. $input_data['step'] .'"' : '',
-                          ! empty( $input_data['min'] ) ? 'min="'. $input_data['min'] .'"' : '',
-                          ! empty( $input_data['max'] ) ? 'max="'. $input_data['max'] .'"' : '',
+                          !empty( $input_data['step'] ) ? 'step="'. $input_data['step'] .'"' : '',
+                          !empty( $input_data['min'] ) ? 'min="'. $input_data['min'] .'"' : '',
+                          !empty( $input_data['max'] ) ? 'max="'. $input_data['max'] .'"' : '',
                           $input_id
                         );
                         ?>
@@ -954,10 +954,10 @@ if ( ! class_exists( 'CZR_Fmk_Base_Tmpl_Builder' ) ) :
                         <?php //<# //console.log( 'IN php::ac_get_default_input_tmpl() => data range_slide => ', data ); #> ?>
                         <?php
                         printf( '<input data-czrtype="%5$s" type="range" %1$s %2$s %3$s %4$s value="{{ data[\'%5$s\'] }}" />',
-                          ! empty( $input_data['orientation'] ) ? 'data-orientation="'. $input_data['orientation'] .'"' : '',
-                          ! empty( $input_data['unit'] ) ? 'data-unit="'. $input_data['unit'] .'"' : '',
-                          ! empty( $input_data['min'] ) ? 'min="'. $input_data['min'] .'"' : '',
-                          ! empty( $input_data['max'] ) ? 'max="'. $input_data['max'] .'"' : '',
+                          !empty( $input_data['orientation'] ) ? 'data-orientation="'. $input_data['orientation'] .'"' : '',
+                          !empty( $input_data['unit'] ) ? 'data-unit="'. $input_data['unit'] .'"' : '',
+                          !empty( $input_data['min'] ) ? 'min="'. $input_data['min'] .'"' : '',
+                          !empty( $input_data['max'] ) ? 'max="'. $input_data['max'] .'"' : '',
                           $input_id
                         );
                         ?>
@@ -994,7 +994,7 @@ endif;
 ?><?php
 ////////////////////////////////////////////////////////////////
 // CZR_Fmk_Base
-if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
+if ( !class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
     class CZR_Fmk_Dyn_Setting_Registration extends CZR_Fmk_Base_Tmpl_Builder {
 
         //fired in the constructor
@@ -1044,11 +1044,11 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
         //     )
         // )
         function czr_pre_register_dynamic_setting( $setting_params ) {
-            if ( ! is_array( $setting_params ) || empty( $setting_params ) ) {
+            if ( !is_array( $setting_params ) || empty( $setting_params ) ) {
                 error_log( 'czr_pre_register_dynamic_setting => empty $setting_params submitted' );
                 return;
             }
-            if ( ! array_key_exists( 'setting_id', $setting_params ) || empty( $setting_params['setting_id'] ) ) {
+            if ( !array_key_exists( 'setting_id', $setting_params ) || empty( $setting_params['setting_id'] ) ) {
                 error_log( 'czr_pre_register_dynamic_setting => missing setting id' );
                 return;
             }
@@ -1085,7 +1085,7 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
         function czr_setup_customizer_dynamic_setting_args( $setting_args, $setting_id ) {
             //sek_error_log( __CLASS__ . '::' . __FUNCTION__ ,  $this->registered_settings );
 
-            if ( ! is_array( $this->registered_settings ) || empty( $this->registered_settings ) )
+            if ( !is_array( $this->registered_settings ) || empty( $this->registered_settings ) )
               return $setting_args;
 
             // let's initialize the args to the provided param
@@ -1117,8 +1117,8 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
                     'type'                 => empty( $setting_args[ 'type' ] ) ? 'option' : $setting_args[ 'type' ],
                     'default'              => array(),
                     'transport'            => $setting_args[ 'transport' ],
-                    'sanitize_callback'    => ( ! empty( $setting_args[ 'sanitize_callback' ] ) && function_exists( $setting_args[ 'sanitize_callback' ] ) ) ? $setting_args[ 'sanitize_callback' ] : '',
-                    'validate_callback'    => ( ! empty( $setting_args[ 'validate_callback' ] ) && function_exists( $setting_args[ 'validate_callback' ] ) ) ? $setting_args[ 'validate_callback' ] : ''
+                    'sanitize_callback'    => ( !empty( $setting_args[ 'sanitize_callback' ] ) && function_exists( $setting_args[ 'sanitize_callback' ] ) ) ? $setting_args[ 'sanitize_callback' ] : '',
+                    'validate_callback'    => ( !empty( $setting_args[ 'validate_callback' ] ) && function_exists( $setting_args[ 'validate_callback' ] ) ) ? $setting_args[ 'validate_callback' ] : ''
                 );
 
                 // if this is a module setting, it can have specific sanitize and validate callback set for the module
@@ -1141,7 +1141,7 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
 
         // hook : 'customize_dynamic_setting_class'
         function czr_setup_customizer_dynamic_setting_class( $class, $setting_id, $args ) {
-            if ( ! is_array( $this->registered_settings ) || empty( $this->registered_settings ) )
+            if ( !is_array( $this->registered_settings ) || empty( $this->registered_settings ) )
               return $class;
 
 
@@ -1162,7 +1162,7 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
                 if ( is_array( $setting_args ) && array_key_exists( 'setting_class', $setting_args ) ) {
                     // provide new setting class if exists and not yet loaded
                     if ( is_array( $setting_args[ 'setting_class' ] ) && array_key_exists( 'name', $setting_args[ 'setting_class' ] ) && array_key_exists( 'path', $setting_args[ 'setting_class' ] ) ) {
-                        if ( ! class_exists( $setting_args[ 'setting_class' ][ 'name' ] ) && file_exists( $setting_args[ 'setting_class' ]['path'] ) ) {
+                        if ( !class_exists( $setting_args[ 'setting_class' ][ 'name' ] ) && file_exists( $setting_args[ 'setting_class' ]['path'] ) ) {
                             require_once(  $setting_args[ 'setting_class' ]['path'] );
                         }
                         if ( class_exists( $setting_args[ 'setting_class' ][ 'name' ] ) ) {
@@ -1185,9 +1185,9 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
             // error_log( '<REGISTERED SETTINGS>' );
             // error_log( print_r( $this->registered_settings, true ) );
             // error_log( '</REGISTERED SETTINGS>' );
-            if ( ! is_array( $this->registered_settings ) || empty( $this->registered_settings ) )
+            if ( !is_array( $this->registered_settings ) || empty( $this->registered_settings ) )
               return $js_params;
-            $js_params = ! is_array( $js_params ) ? array() : $js_params;
+            $js_params = !is_array( $js_params ) ? array() : $js_params;
 
             //  'localized_control_js' => array(
             //     'deps' => 'czr-customizer-fmk',
@@ -1208,7 +1208,7 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
             foreach ( $this->registered_settings as $registerered_setting_id => $params ) {
                 $params = wp_parse_args( $params, $this -> default_dynamic_setting_params );
                 // We need the 'option_value' entry, even if empty
-                if ( ! array_key_exists( 'option_value', $params ) || ! is_array( $params['option_value'] ) )
+                if ( !array_key_exists( 'option_value', $params ) || !is_array( $params['option_value'] ) )
                   continue;
                 // Check if not already setup
                 if ( array_key_exists( $registerered_setting_id, $params ) ) {
@@ -1273,7 +1273,7 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
             // error_log(print_r( $this->registered_settings, true ));
             // error_log('</MODULE REGISTRATION>');
 
-            if ( ! is_array( $this->registered_settings ) || empty( $this->registered_settings ) )
+            if ( !is_array( $this->registered_settings ) || empty( $this->registered_settings ) )
               return;
 
             // loop on each registered modules
@@ -1289,7 +1289,7 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
                 if ( is_array( $setting_args ) && array_key_exists( 'setting_class', $setting_args ) ) {
                     // provide new setting class if exists and not yet loaded
                     if ( is_array( $setting_args[ 'setting_class' ] ) && array_key_exists( 'name', $setting_args[ 'setting_class' ] ) && array_key_exists( 'path', $setting_args[ 'setting_class' ] ) ) {
-                        if ( ! class_exists( $setting_args[ 'setting_class' ][ 'name' ] ) && file_exists( $setting_args[ 'setting_class' ]['path'] ) ) {
+                        if ( !class_exists( $setting_args[ 'setting_class' ][ 'name' ] ) && file_exists( $setting_args[ 'setting_class' ]['path'] ) ) {
                             require_once(  $setting_args[ 'setting_class' ]['path'] );
                         }
                         if ( class_exists( $setting_args[ 'setting_class' ][ 'name' ] ) ) {
@@ -1311,7 +1311,7 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Setting_Registration' ) ) :
                 if ( is_array( $control_args ) && array_key_exists( 'control_class', $control_args ) ) {
                     // provide new setting class if exists and not yet loaded
                     if ( is_array( $control_args[ 'control_class' ] ) && array_key_exists( 'name', $control_args[ 'control_class' ] ) && array_key_exists( 'path', $control_args[ 'control_class' ] ) ) {
-                        if ( ! class_exists( $control_args[ 'control_class' ][ 'name' ] ) && file_exists( $control_args[ 'control_class' ]['path'] ) ) {
+                        if ( !class_exists( $control_args[ 'control_class' ][ 'name' ] ) && file_exists( $control_args[ 'control_class' ]['path'] ) ) {
                             require_once(  $control_args[ 'control_class' ]['path'] );
                         }
                         if ( class_exists( $control_args[ 'control_class' ][ 'name' ] ) ) {
@@ -1336,7 +1336,7 @@ endif;
 ?><?php
 ////////////////////////////////////////////////////////////////
 // CZR_Fmk_Base
-if ( ! class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
+if ( !class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
     class CZR_Fmk_Dyn_Module_Registration extends CZR_Fmk_Dyn_Setting_Registration {
 
         //fired in the constructor
@@ -1368,11 +1368,11 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
             // error_log( print_r( $module_params, true ) );
             // error_log( '</czr_pre_register_dynamic_module>' );
 
-            if ( ! is_array( $module_params ) || empty( $module_params ) ) {
+            if ( !is_array( $module_params ) || empty( $module_params ) ) {
                 error_log( 'czr_pre_register_dynamic_module => empty $module_params submitted' );
                 return;
             }
-            if ( ! array_key_exists( 'module_type', $module_params ) || empty( $module_params['module_type'] ) ) {
+            if ( !array_key_exists( 'module_type', $module_params ) || empty( $module_params['module_type'] ) ) {
                 error_log( 'czr_pre_register_dynamic_module => missing module_type' );
                 return;
             }
@@ -1399,7 +1399,7 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
         // @return boolean or array of module params
         function czr_get_registered_dynamic_module( $module_type = '' ) {
             $registered = $this->registered_modules;
-            if ( empty( $module_type ) || ! is_array( $registered ) || empty( $registered ) )
+            if ( empty( $module_type ) || !is_array( $registered ) || empty( $registered ) )
               return;
             return array_key_exists( $module_type , $registered ) ? $registered[ $module_type ] : false;
         }
@@ -1407,7 +1407,7 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
         // @return bool
         function czr_is_module_registered( $module_type = '' ) {
             $registered = $this->registered_modules;
-            if ( empty( $module_type ) || ! is_array( $registered ) || empty( $registered ) )
+            if ( empty( $module_type ) || !is_array( $registered ) || empty( $registered ) )
               return;
             return array_key_exists( $module_type , $registered );
         }
@@ -1444,7 +1444,7 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
         //     )
         // ),
         function czr_register_dynamic_modules_customizer_control_assets() {
-            if ( ! is_array( $this->registered_modules ) || empty( $this->registered_modules ) )
+            if ( !is_array( $this->registered_modules ) || empty( $this->registered_modules ) )
               return;
 
             $wp_scripts = wp_scripts();
@@ -1455,9 +1455,9 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
                 //error_log( print_r( $params, true ) );
                 $control_js_params = $params[ 'customizer_assets' ][ 'control_js' ];
                 // Enqueue the list of registered scripts
-                if ( ! empty( $control_js_params ) ) {
+                if ( !empty( $control_js_params ) ) {
                     foreach ( $control_js_params as $handle => $script_args ) {
-                        if ( ! isset( $wp_scripts->registered[$handle] ) ) {
+                        if ( !isset( $wp_scripts->registered[$handle] ) ) {
                             wp_enqueue_script(
                                 $handle,
                                 array_key_exists( 'src', $script_args ) ? $script_args['src'] : null,
@@ -1486,7 +1486,7 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
                 if ( array_key_exists( 'localized_control_js', $params[ 'customizer_assets' ] ) ) {
                     $localized_control_js_params = is_array( $params[ 'customizer_assets' ][ 'localized_control_js' ] ) ? $params[ 'customizer_assets' ][ 'localized_control_js' ] : array();
 
-                    if ( is_array( $localized_control_js_params ) && ! empty( $localized_control_js_params ) ) {
+                    if ( is_array( $localized_control_js_params ) && !empty( $localized_control_js_params ) ) {
                         wp_localize_script(
                             array_key_exists( 'deps', $localized_control_js_params ) ? $localized_control_js_params['deps'] : '',
                             array_key_exists( 'global_var_name', $localized_control_js_params ) ? $localized_control_js_params['global_var_name'] : '',
@@ -1503,12 +1503,12 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
         // AJAX TEMPLATE FILTERS
         // hook : init
         function czr_schedule_ajax_tmpl() {
-            if ( ! is_array( $this->registered_modules ) || empty( $this->registered_modules ) )
+            if ( !is_array( $this->registered_modules ) || empty( $this->registered_modules ) )
               return;
 
             foreach ( $this->registered_modules as $module_type => $params ) {
                 $params = wp_parse_args( $params, $this -> default_dynamic_module_params );
-                if ( ! empty( $params['tmpl'] ) ) {
+                if ( !empty( $params['tmpl'] ) ) {
                     $module_type = $params['module_type'];
                     // filter declared with $html = apply_filters( "ac_set_ajax_czr_tmpl___{$module_type}", '', $tmpl, $_POST );
                     add_filter( "ac_set_ajax_czr_tmpl___{$module_type}", array( $this, 'ac_get_ajax_module_tmpl'), 10, 3 );
@@ -1538,20 +1538,20 @@ if ( ! class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
             // error_log( print_r( $posted_params, true ) );
             // error_log( '</GET AJAX MODULE TMPL>' );
             // the module type is sent in the $posted_params
-            if ( ! is_array( $posted_params ) || empty( $posted_params ) ) {
+            if ( !is_array( $posted_params ) || empty( $posted_params ) ) {
                 wp_send_json_error( 'ac_get_ajax_module_tmpl => empty posted_params' );
             }
-            if ( ! array_key_exists( 'module_type', $posted_params  ) || empty( $posted_params['module_type'] ) ) {
+            if ( !array_key_exists( 'module_type', $posted_params  ) || empty( $posted_params['module_type'] ) ) {
                 wp_send_json_error( 'ac_get_ajax_module_tmpl => missing module_type' );
             }
-            // if ( ! array_key_exists( 'control_id', $posted_params  ) || empty( $posted_params['control_id'] ) ) {
+            // if ( !array_key_exists( 'control_id', $posted_params  ) || empty( $posted_params['control_id'] ) ) {
             //    wp_send_json_error( 'ac_get_ajax_module_tmpl => missing control_id' );
             // }
 
             // find the requested module_id in the list of registered modules
             $registered_modules = $this->registered_modules;
             $module_type = $posted_params['module_type'];
-            if ( ! array_key_exists( $module_type, $registered_modules  ) || empty( $registered_modules[ $module_type ] ) ) {
+            if ( !array_key_exists( $module_type, $registered_modules  ) || empty( $registered_modules[ $module_type ] ) ) {
                 return;
             }
 
@@ -1643,7 +1643,7 @@ endif;
 *
 */
 // CZR_Fmk_Base
-if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
+if ( !class_exists( 'CZR_Fmk_Base' ) ) :
     class CZR_Fmk_Base extends CZR_Fmk_Dyn_Module_Registration {
 
       //fired in the constructor
@@ -1695,21 +1695,21 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
        */
       public function ajax_load_available_items() {
             $action = 'save-customize_' . get_stylesheet();
-            if ( ! check_ajax_referer( $action, 'nonce', false ) ) {
+            if ( !check_ajax_referer( $action, 'nonce', false ) ) {
                  wp_send_json_error( array(
                   'code' => 'invalid_nonce',
                   'message' => __( 'ajax_load_available_items => Security check failed.', 'hueman' ),
                 ) );
             }
 
-            if ( ! current_user_can( 'edit_theme_options' ) ) {
+            if ( !current_user_can( 'edit_theme_options' ) ) {
                 wp_send_json_error('ajax_load_available_items => user_cant_edit_theme_options');
             }
-            if ( ! isset( $_POST['wp_object_types'] ) || empty( $_POST['wp_object_types'] ) ) {
+            if ( !isset( $_POST['wp_object_types'] ) || empty( $_POST['wp_object_types'] ) ) {
                 wp_send_json_error( 'czr_ajax_content_picker_missing_type_or_object_parameter' );
             }
 
-            if ( ! isset( $_POST['page'] ) ) {
+            if ( !isset( $_POST['page'] ) ) {
                 wp_send_json_error( 'czr_ajax_content_picker_missing_pagination_param' );
             }
 
@@ -1730,7 +1730,7 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
             //      post : [ 'page', 'cpt1', ...]
             //      taxonomy : '_none_'//<= don't load or search taxonomies
             //)
-            if ( ! is_array( $wp_object_types ) || empty( $wp_object_types ) ) {
+            if ( !is_array( $wp_object_types ) || empty( $wp_object_types ) ) {
               wp_send_json_error( 'czr_ajax_content_picker_missing_object_types' );
             }
             $page = empty( $_POST['page'] ) ? 0 : absint( $_POST['page'] );
@@ -1798,12 +1798,12 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
             $items = array();
             if ( 'post' === $type ) {
                   //What are the post types we need to fetch ?
-                  if ( '_all_' == $object_types || ! is_array( $object_types ) || ( is_array( $object_types ) && empty( $object_types ) ) ) {
+                  if ( '_all_' == $object_types || !is_array( $object_types ) || ( is_array( $object_types ) && empty( $object_types ) ) ) {
                       $post_types = get_post_types( array( 'public' => true ) );
                   } else {
                       $post_types = $object_types;
                   }
-                  if ( ! $post_types || ! is_array( $post_types ) || empty( $post_types ) ) {
+                  if ( !$post_types || !is_array( $post_types ) || empty( $post_types ) ) {
                       return new \WP_Error( 'czr_contents_invalid_post_type' );
                   }
 
@@ -1833,12 +1833,12 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
 
             } elseif ( 'taxonomy' === $type ) {
                   //What are the taxonomy types we need to fetch ?
-                  if ( '_all_' == $object_types || ! is_array( $object_types ) || ( is_array( $object_types ) && empty( $object_types ) ) ) {
+                  if ( '_all_' == $object_types || !is_array( $object_types ) || ( is_array( $object_types ) && empty( $object_types ) ) ) {
                       $taxonomies = get_taxonomies( array( 'show_in_nav_menus' => true ), 'names' );
                   } else {
                       $taxonomies = $object_types;
                   }
-                  if ( ! $taxonomies || ! is_array( $taxonomies ) || empty( $taxonomies ) ) {
+                  if ( !$taxonomies || !is_array( $taxonomies ) || empty( $taxonomies ) ) {
                       return new \WP_Error( 'czr_contents_invalid_post_type' );
                   }
                   $terms = get_terms( $taxonomies, array(
@@ -1895,17 +1895,17 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
        */
       public function ajax_search_available_items() {
             $action = 'save-customize_' . get_stylesheet();
-            if ( ! check_ajax_referer( $action, 'nonce', false ) ) {
+            if ( !check_ajax_referer( $action, 'nonce', false ) ) {
                 wp_send_json_error( array(
                     'code' => 'invalid_nonce',
                     'message' => __( 'ajax_load_available_items => Security check failed.', 'hueman' ),
                 ) );
             }
 
-            if ( ! current_user_can( 'edit_theme_options' ) ) {
+            if ( !current_user_can( 'edit_theme_options' ) ) {
                 wp_send_json_error('ajax_load_available_items => user_cant_edit_theme_options');
             }
-            if ( ! isset( $_POST['wp_object_types'] ) || empty( $_POST['wp_object_types'] ) ) {
+            if ( !isset( $_POST['wp_object_types'] ) || empty( $_POST['wp_object_types'] ) ) {
                 wp_send_json_error( 'czr_ajax_content_picker_missing_type_or_object_parameter' );
             }
             if ( empty( $_POST['search'] ) ) {
@@ -1933,7 +1933,7 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
             //      post : [ 'page', 'cpt1', ...]
             //      taxonomy : '_none_'//<= don't load or search taxonomies
             //)
-            if ( ! is_array( $wp_object_types ) || empty( $wp_object_types ) ) {
+            if ( !is_array( $wp_object_types ) || empty( $wp_object_types ) ) {
               wp_send_json_error( 'czr_ajax_content_picker_missing_object_types' );
             }
 
@@ -1996,12 +1996,12 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
             $items = array();
             if ( 'post' === $args['type'] ) {
                   //What are the post types we need to fetch ?
-                  if ( '_all_' == $object_types || ! is_array( $object_types ) || ( is_array( $object_types ) && empty( $object_types ) ) ) {
+                  if ( '_all_' == $object_types || !is_array( $object_types ) || ( is_array( $object_types ) && empty( $object_types ) ) ) {
                       $post_types = get_post_types( array( 'public' => true ) );
                   } else {
                       $post_types = $object_types;
                   }
-                  if ( ! $post_types || empty( $post_types ) ) {
+                  if ( !$post_types || empty( $post_types ) ) {
                       return new \WP_Error( 'czr_contents_invalid_post_type' );
                   }
 
@@ -2042,12 +2042,12 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
                   }
             } elseif ( 'taxonomy' === $args['type'] ) {
                   //What are the taxonomy types we need to fetch ?
-                  if ( '_all_' == $object_types || ! is_array( $object_types ) || ( is_array( $object_types ) && empty( $object_types ) ) ) {
+                  if ( '_all_' == $object_types || !is_array( $object_types ) || ( is_array( $object_types ) && empty( $object_types ) ) ) {
                       $taxonomies = get_taxonomies( array( 'show_in_nav_menus' => true ), 'names' );
                   } else {
                       $taxonomies = $object_types;
                   }
-                  if ( ! $taxonomies || ! is_array( $taxonomies ) || empty( $taxonomies ) ) {
+                  if ( !$taxonomies || !is_array( $taxonomies ) || empty( $taxonomies ) ) {
                       return new \WP_Error( 'czr_contents_invalid_post_type' );
                   }
                   $terms = get_terms( $taxonomies, array(
@@ -2057,7 +2057,7 @@ if ( ! class_exists( 'CZR_Fmk_Base' ) ) :
                   ) );
 
                   // Check if any taxonomies were found.
-                  if ( ! empty( $terms ) ) {
+                  if ( !empty( $terms ) ) {
                         foreach ( $terms as $term ) {
                               $items[] = array(
                                   'title'      => html_entity_decode( $term->name, ENT_QUOTES, get_bloginfo( 'charset' ) ),
