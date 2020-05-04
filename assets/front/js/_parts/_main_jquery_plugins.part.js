@@ -73,7 +73,7 @@ var czrapp = czrapp || {};
     extLinks : function() {
           if ( ! HUParams.extLinksStyle && ! HUParams.extLinksTargetExt )
             return;
-          $('a' , '.post-inner .entry').extLinks({
+          $('a' , '.post-inner .entry p, .type-page .entry p').extLinks({
                 addIcon : HUParams.extLinksStyle,
                 iconClassName : 'hu-external',
                 newTab : HUParams.extLinksTargetExt,
