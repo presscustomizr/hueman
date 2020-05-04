@@ -4,6 +4,9 @@
 (function($, czrapp) {
   var _methods =  {
     addBrowserClassToBody : function() {
+          // $.browser property was removed in jQuery 1.9 and is available only through the jQuery.migrate plugin
+          if ( !$.browser )
+            return;
           // Chrome is Webkit, but Webkit is also Safari. If browser = ie + strips out the .0 suffix
           if ( $.browser.chrome )
               czrapp.$_body.addClass("chrome");
