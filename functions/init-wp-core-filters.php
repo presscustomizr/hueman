@@ -51,11 +51,15 @@ if ( ! function_exists( 'hu_embed_html' ) ) {
     if ( ! $provider || false === $data = $wp_oembed->fetch( $provider, $url, $args ) ) {
       return $html;
     }
-    $type = $data -> type;
-    switch( $type ) {
-        case 'video' :
-          $html = sprintf('<div class="video-container">%1$s</div>', $html );
-        break;
+    // Check that we have a valid $data object
+    // for https://wordpress.org/support/topic/error-in-theme-6/
+    if ( is_object($data) && isset($data->type) ) {
+        $type = $data->type;
+        switch( $type ) {
+            case 'video' :
+              $html = sprintf('<div class="video-container">%1$s</div>', $html );
+            break;
+        }
     }
     return $html;
   }
