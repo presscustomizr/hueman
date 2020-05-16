@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.4
-Stable tag: 3.5.7
+Stable tag: 3.5.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,11 @@ The Hueman theme loads fast and is 100% mobile-friendly according to Google. One
 
 == Changelog ==
 https://github.com/presscustomizr/hueman/releases
+= 3.5.8 May 16th, 2020 =
+* fixed : [option tree] possible PHP error in admin. fixes #893
+* improved : [TRT] added min PHP version required and WP version tested up to
+* added : [social links] new options to control the visibility of the social links in sidebar and footer. fixes #892
+
 = 3.5.7 May 4th, 2020 =
 * fixed : [javascript] External link icon not displayed on pages. fixes #885
 * fixed : [related posts] image dimensions are not consistent accross column layout. fixes #888
