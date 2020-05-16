@@ -33,8 +33,11 @@
                   <?php printf('<p>&nbsp;</p>'); ?>
               <?php endif; ?>
           <?php endif; ?>
-
-          <?php hu_print_social_links() ; ?>
+          <?php
+            if ( hu_is_checked('sl-in-sidebar') ) {
+                hu_print_social_links() ;
+            }
+          ?>
   			</div>
 			<?php endif; ?>
 

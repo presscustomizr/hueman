@@ -1556,7 +1556,15 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                   'type'      => 'nimblecheck',
                   'priority'  => 110,
                   'notice'     => __( 'Display the primary sidebar above the content column on smartphone mobile devices (480px).', 'hueman' ),
-            )
+            ),
+            'sl-in-sidebar' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __('Display social links in the primary sidebar', 'hueman'),
+                'section'   => 'sidebars_design_sec',
+                'type'      => 'nimblecheck',
+                'priority'  => 120,
+            ),
 
       );
     }
@@ -1660,6 +1668,14 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'footer_design_sec',
                 'priority'  => 40,
                 'transport' => 'postMessage'
+          ),
+          'sl-in-footer' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __('Display social links in the footer', 'hueman'),
+                'section'   => 'footer_design_sec',
+                'type'      => 'nimblecheck',
+                'priority'  => 50
           ),
       );
     }
