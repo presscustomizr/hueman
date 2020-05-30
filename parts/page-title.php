@@ -1,16 +1,24 @@
+<?php
+if ( is_single() ) {
+  $post_type = get_post_type();
+}
+?>
 <?php if ( ! hu_is_home_empty() ) : ?>
     <div class="page-title hu-pad group">
       <?php //prints the relevant metas (cat, tag, author, date, ...) for a given context : home, single post, page, 404, search, archive...  ?>
     	<?php if ( is_home() && hu_is_checked('blog-heading-enabled') ) : ?>
     		<h2><?php echo hu_blog_title(); ?></h2>
-    	<?php elseif ( is_single() ): ?>
+      <?php // For a regular post, we display the category and comments ?>
+      <?php elseif ( is_single() && 'post' === $post_type ): ?>
     		<ul class="meta-single group">
     			<li class="category"><?php the_category(' <span>/</span> '); ?></li>
     			<?php if ( comments_open() && ( hu_is_checked( 'comment-count' ) ) ): ?>
     			<li class="comments"><a href="<?php comments_link(); ?>"><i class="far fa-comments"></i><?php comments_number( '0', '1', '%' ); ?></a></li>
     			<?php endif; ?>
     		</ul>
-
+      <?php // For a CPT, we display the post title ?>
+      <?php elseif ( is_single() && 'post' !== $post_type ): ?>
+        <h1><?php echo hu_get_page_title(); ?></h1>
     	<?php elseif ( is_page() ): ?>
     		<h1><?php echo hu_get_page_title(); ?></h1>
     	<?php elseif ( is_search() ): ?>
