@@ -533,7 +533,9 @@ var czrapp = czrapp || {};
                         link.setAttribute('id', 'hu-font-awesome');
                         link.setAttribute('rel', 'stylesheet' );
                         link.setAttribute('as', 'style');
-                        document.getElementsByTagName('head')[0].appendChild(link);
+                        _.delay( function() {
+                            document.getElementsByTagName('head')[0].appendChild(link);
+                        }, 200 );
                     }
               });
         },

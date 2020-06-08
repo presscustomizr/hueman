@@ -541,7 +541,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'type'        => 'nimblecheck'
           ),
           'defer_font_awesome'  =>  array(
-                'default'       => 0,
+                'default'       => 1,
                 'control'     =>  'HU_controls',
                 'label'       => __( 'Defer loading Font Awesome icons' , 'hueman' ),
                 'section'     => 'performance_sec',
