@@ -289,7 +289,7 @@ function hu_get_primary_color_style() {
 
       $_primary_color_color_prop_selectors = array(
           'a',
-          'a+span.hu-external::after',
+          'a>span.hu-external::after',
           '.themeform label .required',
           '#flexslider-featured .flex-direction-nav .flex-next:hover',
           '#flexslider-featured .flex-direction-nav .flex-prev:hover',

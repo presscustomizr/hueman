@@ -274,7 +274,7 @@ transition: all 0.2s ease-out; }
 .content .post-nav li a:hover i { color: #16cfc1; }
 
 /* External Links style */
-a + span.hu-external:after {
+a > span.hu-external:after {
   content: '\f35d';
   color: #16cfc1;
   font-size: 0.8em;
