@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: OptionTree
+ * Plugin Name: HuemanOptionTree
  * Plugin URI:  https://github.com/valendesigns/option-tree/
  * Description: Theme Options UI Builder for WordPress. A simple way to create & save Theme Options and Meta Boxes for free or premium themes.
  * Version:     2.7.3
@@ -85,8 +85,9 @@ if ( ! class_exists( 'OT_Loader' ) && defined( 'ABSPATH' ) ) {
 
 			/**
 			 * Current Version number.
+       * June 2020 : was 2.7.3, changed to 4.0.0 for https://secure.helpscout.net/conversation/1180630434/221581/
 			 */
-			define( 'OT_VERSION', '2.7.3' );
+			define( 'OT_VERSION', '4.0.0' );
 
 			/**
 			 * For developers: Theme mode.
