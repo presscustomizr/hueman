@@ -1302,6 +1302,14 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
             'type'      => 'nimblecheck',
             'priority'  => 71,
           ),
+          'post-list-meta-author' => array(
+            'default'   => 0,
+            'control'   => 'HU_controls',
+            'label'     => __('Display author', 'hueman'),
+            'section'   => 'content_blog_sec',
+            'type'      => 'nimblecheck',
+            'priority'  => 72,
+          ),
       );
     }
 
