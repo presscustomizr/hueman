@@ -1369,11 +1369,11 @@ if ( !class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
             // error_log( '</czr_pre_register_dynamic_module>' );
 
             if ( !is_array( $module_params ) || empty( $module_params ) ) {
-                error_log( 'czr_pre_register_dynamic_module => empty $module_params submitted' );
+                sek_error_log( 'czr_pre_register_dynamic_module => empty $module_params submitted' );
                 return;
             }
             if ( !array_key_exists( 'module_type', $module_params ) || empty( $module_params['module_type'] ) ) {
-                error_log( 'czr_pre_register_dynamic_module => missing module_type' );
+                sek_error_log( 'czr_pre_register_dynamic_module => missing module_type' );
                 return;
             }
 
@@ -1386,7 +1386,7 @@ if ( !class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
             // A module type can be registered only once.
             // Already registered ?
             if ( array_key_exists( $module_type_candidate, $registered ) ) {
-                error_log( 'czr_pre_register_dynamic_module => module type already registered => ' . $module_type_candidate );
+                sek_error_log( 'czr_pre_register_dynamic_module => module type already registered => ' . $module_type_candidate );
                 return;
             }
             $registered[ $module_type_candidate ] = $module_params;

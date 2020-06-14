@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.4
-Stable tag: 3.5.8
+Stable tag: 3.5.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,17 @@ The Hueman theme loads fast and is 100% mobile-friendly according to Google. One
 
 == Changelog ==
 https://github.com/presscustomizr/hueman/releases
+= 3.5.9 June 14th, 2020 =
+* fixed : [CPT] single CPT page missed a title. Reported for Sensei LMS plugin
+* fixed : [Font awesome][performance] consider enabling defer_font_awesome by default. fixes #898
+* fixed : [external links icons] icones should be inside the a tag to be clickable. fixes #895
+* fixed : [featured image][single page] option to control featured image in single page is broken when using page-templates/child-menu.php. fixes #894
+* fixed : [SVG upload] removed support for svg upload as per new TRT rules. for #904
+* fixed : [favicon] removed retro compatibility for old favicon as per new TRT rules. for #904
+* fixed : [admin] removed loading of remote cloudfare CDN js script as per new TRT rules. + removed unused js scripts for #904    
+* improved : [performance] better defer loading of Font Awesome. fixes #905
+* added : [metas][post grids] add an option to display authors in post grids. fixes #897
+
 = 3.5.8 May 16th, 2020 =
 * fixed : [option tree] possible PHP error in admin. fixes #893
 * improved : [TRT] added min PHP version required and WP version tested up to
@@ -38,29 +49,3 @@ https://github.com/presscustomizr/hueman/releases
 * fixed : [Nimble Builder compatibility] on home, Nimble Builder sections inserted on hooks __before_featured and __after_featured are not rendered when featured posts are disabled
 * improved : [performance][related posts] adapt image size of related posts depending on the current column layout.
 * improved : [performance][Dynamic Tabs widget] reduce image size of Dynamic Tabs widget
-
-= 3.5.3 March 27th, 2020 =
-* fixed : [mobile menu] clicking on an anchor link that has child submenu should unfold the submenu. fixes #857
-* improved : [Header] banner image => make it easier to adjust width automatically. fixes #852
-* improved : [performance] load flexslider.js with defer. fixes #869
-* improved : [performance] removed smoothscroll option and script
-* updated : [javascript] flexslider.js to v2.7.2
-* updated : [javascript] mobile-detect.js to v2.8.34
-
-= 3.5.2 March 19th, 2020 =
-* fixed : [standard grid] left padding broken on mobile devices. fixes #871
-* improved : [performance] lazyloading threshold set to 0 instead of 200px by default
-
-= 3.5.1 March 16th, 2020 =
-* fixed : Use the child-theme version when enqueueing its style. fixes #868
-* fixed : remaining .pad classes to be turned into .hu-pad
-
-= 3.5.0 March 15th, 2020 =
-* fixed : [performance] flexslider.js can be loaded on blog page even when featured posts are disabled. fixes #856
-* fixed : [CSS] prefix .pad class more specifically to avoid potential conflict with plugins. fixes #862
-* fixed : Use the child-theme version when enqueueing its style. fixes #860
-* improved : [asset] update fontawesome to latest version ( current is 5.5.0 ). fixes #853
-* added : [post lists] introduce a new option to allow full post content to be displayed when using "standard" grid. fixes #859
-* added : [post lists] introduce a new option to allow hide the post thumbnails in post lists
-* added : [performance] new option to load main script with defer mode. for #863
-* added : [performance] new option to defer loading of FontAwesome to avoid blocking rendering issues. for #863

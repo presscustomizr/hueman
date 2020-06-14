@@ -346,7 +346,7 @@ if (!Array.from) {
         return;
       }
       if ( this.options.addIcon && 0 === $_external_icon.length ) {
-        this.$_el.after('<span class="' + self.options.iconClassName + '">');
+        this.$_el.append('<span class="' + self.options.iconClassName + '">');
       }
       if ( this.options.newTab && '_blank' != this.$_el.attr('target') )
         this.$_el.attr('target' , '_blank');
@@ -3729,7 +3729,10 @@ var czrapp = czrapp || {};
                         link.setAttribute('id', 'hu-font-awesome');
                         link.setAttribute('rel', 'stylesheet' );
                         link.setAttribute('as', 'style');
-                        document.getElementsByTagName('head')[0].appendChild(link);
+                        _.delay( function() {
+                            document.getElementsByTagName('head')[0].appendChild(link);
+                            $('body').removeClass('hu-fa-not-loaded');
+                        }, 200 );
                     }
               });
         },
