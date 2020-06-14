@@ -64,9 +64,3 @@ https://github.com/presscustomizr/hueman/releases
 * added : [post lists] introduce a new option to allow hide the post thumbnails in post lists
 * added : [performance] new option to load main script with defer mode. for #863
 * added : [performance] new option to defer loading of FontAwesome to avoid blocking rendering issues. for #863
-
-== Resources ==
-* Font Awesome Font : http://fontawesome.io, licensed SIL OFL 1.1, MIT License
-* Titillium Font : Licensed SIL OFL 1.1
-* Theme screenshot images : CC0-licensed (GPL-compatible) images from http://pixabay.com/ and http://unsplash.com/
-* Other resources licenses : see headers of assets files for further details.

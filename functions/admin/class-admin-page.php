@@ -304,7 +304,7 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
 <textarea readonly="readonly" onclick="this.focus();this.select()" id="system-info-textarea" name="tc-sysinfo" title="<?php _e( 'To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C (Mac).', 'hueman' ); ?>" style="width: 800px;min-height: 800px;font-family: Menlo,Monaco,monospace;background: 0 0;white-space: pre;overflow: auto;display:block;">
 <?php do_action( '__system_config_before' ); ?>
 # SITE_URL:               <?php echo site_url() . "\n"; ?>
-# HOME_URL:               <?php echo home_url() . "\n"; ?>
+# HOME_URL:               <?php echo esc_url( home_url() ) . "\n"; ?>
 # IS MULTISITE :          <?php echo is_multisite() ? 'Yes' . "\n" : 'No' . "\n" ?>
 
 # ACTIVE THEME :          <?php echo $theme . "\n"; ?>

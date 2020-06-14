@@ -29,7 +29,7 @@
               <?php if(in_array('oga',$formats)) { echo 'oga: "'.$meta['_audio_ogg_url'][0].'",'."\n"; } ?>
             });
           },
-          swfPath: "<?php echo get_template_directory_uri() ?>/js",
+          swfPath: "<?php echo esc_url( get_template_directory_uri() ); ?>/js",
           cssSelectorAncestor: "#jp-interface-<?php the_ID(); ?>",
           supplied: "<?php echo implode(',',$formats); ?>"
         });

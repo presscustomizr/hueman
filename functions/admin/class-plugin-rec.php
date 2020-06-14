@@ -76,7 +76,7 @@ function hu_print_l_rec_notice( $button_text, $button_link ) {
   <div class="notice updated is-dismissible czr-nimble-rec-notice" id="<?php echo esc_attr( $notice_id ); ?>">
     <div class="czr-nimble-rec-notice-inner">
       <div class="czr-rec-text-block">
-        <h3><span class="czr-nimble-rec-notice-icon"><img src="<?php echo get_template_directory_uri() . '/assets/admin/img/nimble_icon.svg'; ?>" alt="Nimble Builder Logo" /></span><span class="czr-nimble-rec-notice-title"><?php echo $heading; ?></span></h3>
+        <h3><span class="czr-nimble-rec-notice-icon"><img src="<?php echo esc_url( get_template_directory_uri() ) . '/assets/admin/img/nimble_icon.svg'; ?>" alt="Nimble Builder Logo" /></span><span class="czr-nimble-rec-notice-title"><?php echo $heading; ?></span></h3>
         <p><?php echo $message; ?></p>
         <span class="czr-rec-button"><a class="button button-primary button-hero activate-now" href="<?php echo esc_attr( $button_link ); ?>" data-name="Nimble Builder" data-slug="nimble-builder"><?php echo $button_text; ?></a></span>
       </div>
@@ -111,7 +111,7 @@ function hu_print_s_rec_notice( $button_text, $button_link ) {
   <div class="notice updated is-dismissible czr-nimble-rec-notice" id="<?php echo esc_attr( $notice_id ); ?>">
     <div class="czr-nimble-rec-notice-inner">
       <div class="">
-        <h3><span class="czr-nimble-rec-notice-icon"><img src="<?php echo get_template_directory_uri() . '/assets/admin/img/nimble_icon.svg'; ?>" alt="Nimble Builder Logo" /></span><span class="czr-nimble-rec-notice-title"><?php echo $heading; ?></span>
+        <h3><span class="czr-nimble-rec-notice-icon"><img src="<?php echo esc_url( get_template_directory_uri() ) . '/assets/admin/img/nimble_icon.svg'; ?>" alt="Nimble Builder Logo" /></span><span class="czr-nimble-rec-notice-title"><?php echo $heading; ?></span>
           <span class=""><a class="button button-primary activate-now" href="<?php echo esc_attr( $button_link ); ?>" data-name="Nimble Builder" data-slug="nimble-builder"><?php echo $button_text; ?></a></span>
         </h3>
 
