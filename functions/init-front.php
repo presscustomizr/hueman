@@ -851,7 +851,10 @@ if ( ! function_exists( 'hu_body_class' ) ) {
     if ( hu_is_checked( 'header-img-natural-height' ) ) {
         $classes[] = 'hu-header-img-natural-height';
     }
-
+    // June 2020 : this class is removed once Font Awesome icons are loaded
+    if ( hu_is_checked( 'defer_font_awesome') ) {
+        $classes[] = 'hu-fa-not-loaded';
+    }
     return $classes;
   }
 }

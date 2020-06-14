@@ -178,6 +178,9 @@ padding: 0;
 .sidebar[data-position="left"] .sidebar-toggle-arrows:before,
 .sidebar[data-position="middle-left"] .sidebar-toggle-arrows:before {content: "\f101";}
 
+/* June 2020 for https://github.com/presscustomizr/hueman/issues/905 */
+.hu-fa-not-loaded .sidebar[data-position] .sidebar-toggle-arrows:before { content: "\00a0";}
+
 .sidebar[data-position="right"].collapsed .hovering .sidebar-toggle-arrows,
 .sidebar[data-position="middle-right"].collapsed .hovering .sidebar-toggle-arrows,
 .sidebar[data-position="left"].expanded .hovering .sidebar-toggle-arrows,

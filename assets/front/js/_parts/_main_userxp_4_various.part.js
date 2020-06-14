@@ -533,8 +533,11 @@ var czrapp = czrapp || {};
                         link.setAttribute('id', 'hu-font-awesome');
                         link.setAttribute('rel', 'stylesheet' );
                         link.setAttribute('as', 'style');
+                        // June 2020 => increased delay for https://github.com/presscustomizr/hueman/issues/905
+                        // + introduced a CSS class to display empty content in pseudo elements :before and :after used by font awesome while loading the icons
                         _.delay( function() {
                             document.getElementsByTagName('head')[0].appendChild(link);
+                            $('body').removeClass('hu-fa-not-loaded');
                         }, 200 );
                     }
               });

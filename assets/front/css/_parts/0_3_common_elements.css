@@ -290,6 +290,15 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
   .nav { font-size: 0em; position: relative; }
   .nav li a { color: #ccc; display: block; line-height: 1.25rem; }
   /* dropdown arrows */
+
+/* June 2020 for https://github.com/presscustomizr/hueman/issues/905 */
+  .hu-fa-not-loaded .nav li > a:after,
+  .hu-fa-not-loaded .nav > li > a:after {
+    content:"\00a0";
+  }
+
+  .hu-fa-not-loaded .fa:before, .hu-fa-not-loaded .far:before, .hu-fa-not-loaded .fas:before { content: "\00a0"}
+
   .nav li > a:after { content: "\f0da"; float: right; opacity: 0.5; }
   .nav > li > a:after {content: "\f0d7"; float: none; margin-left: 6px; font-size: 0.875em; line-height: 1.2em; }
   .nav li > a:only-child:after {content: ""; margin: 0; }

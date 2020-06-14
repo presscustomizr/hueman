@@ -540,6 +540,14 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                 'section'     => 'performance_sec',
                 'type'        => 'nimblecheck'
           ),
+          // To be implemented for https://github.com/presscustomizr/hueman/issues/881
+          // 'use_fa_icons'  =>  array(
+          //       'default'       => 1,
+          //       'control'     =>  'HU_controls',
+          //       'label'       => __( 'Use Font Awesome icons' , 'hueman' ),
+          //       'section'     => 'performance_sec',
+          //       'type'        => 'nimblecheck'
+          // ),
           'defer_font_awesome'  =>  array(
                 'default'       => 1,
                 'control'     =>  'HU_controls',
