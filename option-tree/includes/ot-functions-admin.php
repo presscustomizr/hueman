@@ -916,9 +916,6 @@ if ( ! function_exists( 'ot_admin_scripts' ) ) {
 		// Load WP colorpicker.
 		wp_enqueue_script( 'wp-color-picker' );
 
-		// Load Ace Editor for CSS Editing.
-		wp_enqueue_script( 'ace-editor', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js', null, '1.1.3', false );
-
 		// Load jQuery UI timepicker addon.
 		// wp_enqueue_script( 'jquery-ui-timepicker', OT_URL . 'assets/js/vendor/jquery/jquery-ui-timepicker.js', array( 'jquery', 'jquery-ui-slider', 'jquery-ui-datepicker' ), '1.4.3', false );
 
@@ -937,10 +934,9 @@ if ( ! function_exists( 'ot_admin_scripts' ) ) {
 		wp_enqueue_script( 'ot-admin-js', OT_URL . 'assets/js/ot-admin.js', array(
 			'jquery',
 			'jquery-ui-tabs',
-			'jquery-ui-sortable',
-			'jquery-ui-slider',
+			// 'jquery-ui-sortable',
+			// 'jquery-ui-slider',
 			'wp-color-picker',
-			'ace-editor',
 			// 'jquery-ui-datepicker',
 			// 'jquery-ui-timepicker'
 		), OT_VERSION, false );
