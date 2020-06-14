@@ -862,28 +862,6 @@ add_filter( 'body_class', 'hu_body_class' );
 
 
 
-/*  Custom favicon
-/* ------------------------------------ */
-if ( ! function_exists( 'hu_favicon' ) ) {
-
-  function hu_favicon() {
-    // fixes https://github.com/presscustomizr/hueman/issues/619
-    if ( has_site_icon() )
-      return;
-    // retro compat if favicon has been set before implementation of built-in WP one
-    $favicon_url = hu_get_option('favicon');
-    if ( is_string($favicon_url) && !empty($favicon_url) ) {
-      // replace http by https if needed
-      if ( is_ssl() && is_string($favicon_url) && stripos($favicon_url, 'http://') === 0 ) {
-          $favicon_url = 'https' . substr($favicon_url, 4);
-      }
-      echo '<link rel="shortcut icon" href="'.$favicon_url.'" />'."\n";
-    }
-  }
-}
-add_filter( 'wp_head', 'hu_favicon' );
-
-
 /*  Custom logo
 /* ------------------------------------ */
 //the purpose of this filter is to handle the retro-compatibility for the WP custom logo introduced in wp 4.5 and implemented in Hueman v3.2.4+
