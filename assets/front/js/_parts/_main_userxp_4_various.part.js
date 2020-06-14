@@ -526,19 +526,32 @@ var czrapp = czrapp || {};
                     var $candidates = $('[class*=fa-]');
                     if ( $candidates.length < 1 )
                       return;
+                    var hasPreloadSupport = function( browser ) {
+                        var link = document.createElement('link');
+                        var relList = link.relList;
+                        if (!relList || !relList.supports)
+                          return false;
+                        return relList.supports('preload');
+                    };
+
                     // assets/shared/fonts/fa/css/fontawesome-all.min.css?
                     if ( $('head').find( '[href*="font-awesome.min.css"]' ).length < 1 ) {
                         var link = document.createElement('link');
+
+                        link.onload = function() {
+                            this.onload=null;
+                            // June 2020 => increased delay for https://github.com/presscustomizr/hueman/issues/905
+                            // + introduced a CSS class to display empty content in pseudo elements :before and :after used by font awesome while loading the icons
+                            _.delay( function() {
+                                link.setAttribute('rel', 'stylesheet');
+                                $('body').removeClass('hu-fa-not-loaded');
+                            }, 500 );
+                        };
                         link.setAttribute('href', HUParams.fontAwesomeUrl );
                         link.setAttribute('id', 'hu-font-awesome');
-                        link.setAttribute('rel', 'stylesheet' );
+                        link.setAttribute('rel', hasPreloadSupport() ? 'preload' : 'stylesheet' );
                         link.setAttribute('as', 'style');
-                        // June 2020 => increased delay for https://github.com/presscustomizr/hueman/issues/905
-                        // + introduced a CSS class to display empty content in pseudo elements :before and :after used by font awesome while loading the icons
-                        _.delay( function() {
-                            document.getElementsByTagName('head')[0].appendChild(link);
-                            $('body').removeClass('hu-fa-not-loaded');
-                        }, 200 );
+                        document.getElementsByTagName('head')[0].appendChild(link);
                     }
               });
         },
