@@ -144,7 +144,7 @@ load_template( get_template_directory() . '/functions/init-plugins-compat.php' )
 
 
 /* ------------------------------------------------------------------------- *
- *   WP Core Filters : upload_mimes, embeds, image_resize_dimensions, widget_text
+ *   WP Core Filters : embeds, image_resize_dimensions, widget_text
 /* ------------------------------------------------------------------------- */
 load_template( get_template_directory() . '/functions/init-wp-core-filters.php' );
 
