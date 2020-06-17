@@ -3718,8 +3718,11 @@ var czrapp = czrapp || {};
         },
         mayBeLoadFontAwesome : function() {
               jQuery( function() {
-                    if ( ! HUParams.deferFontAwesome )
-                      return;
+                    if ( !HUParams.deferFontAwesome ) {
+                        $('body').removeClass('hu-fa-not-loaded');
+                        return;
+                    }
+
                     var $candidates = $('[class*=fa-]');
                     if ( $candidates.length < 1 )
                       return;
@@ -3745,7 +3748,12 @@ var czrapp = czrapp || {};
                         link.setAttribute('rel', hasPreloadSupport() ? 'preload' : 'stylesheet' );
                         link.setAttribute('as', 'style');
                         document.getElementsByTagName('head')[0].appendChild(link);
+                    } else {
+                        $('body').removeClass('hu-fa-not-loaded');
                     }
+                    _.delay( function() {
+                        $('body').removeClass('hu-fa-not-loaded');
+                    }, 1000 );
               });
         },
         maybeFireFlexSlider : function() {

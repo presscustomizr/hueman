@@ -3510,8 +3510,12 @@ var czrapp = czrapp || {};
         },
         mayBeLoadFontAwesome : function() {
               jQuery( function() {
-                    if ( ! HUParams.deferFontAwesome )
-                      return;
+                    if ( !HUParams.deferFontAwesome ) {
+                        // the class should not have been added if deferFontAwesome not true, but let's make sure it is removed in any case
+                        $('body').removeClass('hu-fa-not-loaded');
+                        return;
+                    }
+
                     var $candidates = $('[class*=fa-]');
                     if ( $candidates.length < 1 )
                       return;
@@ -3541,7 +3545,16 @@ var czrapp = czrapp || {};
                         link.setAttribute('rel', hasPreloadSupport() ? 'preload' : 'stylesheet' );
                         link.setAttribute('as', 'style');
                         document.getElementsByTagName('head')[0].appendChild(link);
+                    } else {
+                        // this is the case when font-awesome.min.css has been loaded by a third party plugin
+                        $('body').removeClass('hu-fa-not-loaded');
                     }
+
+                    // June 2020 for https://github.com/presscustomizr/hueman/issues/907
+                    // remove class after 1 second in any case
+                    _.delay( function() {
+                        $('body').removeClass('hu-fa-not-loaded');
+                    }, 1000 );
               });
         },
         // can be fired for for featured posts on home and for gallery post formats

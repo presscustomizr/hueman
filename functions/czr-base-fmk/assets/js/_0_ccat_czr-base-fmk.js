@@ -5656,9 +5656,16 @@ $.extend( CZRBaseModuleControlMths, {
                     throw new Error('Module type ' + module.module_type + ' is not listed in the module map api.czrModuleMap.' );
               }
 
-              var _mthds = api.czrModuleMap[ module.module_type ].mthds,
+              var _mthds = api.czrModuleMap[ module.module_type ].mthds || {},
                   _is_crud = api.czrModuleMap[ module.module_type ].crud,
                   _base_constructor = _is_crud ? api.CZRDynModule : api.CZRModule;
+
+              // June 2020 : introduced for https://github.com/presscustomizr/nimble-builder-pro/issues/6
+              // so we can remotely extend the module constructor
+              api.trigger('czr_setup_module_contructor', {
+                    module_type : module.module_type,
+                    methods : _mthds
+              });
 
               constructor = _base_constructor.extend( _mthds );
 
