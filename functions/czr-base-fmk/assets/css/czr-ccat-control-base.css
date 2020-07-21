@@ -430,9 +430,12 @@ span.czr-notice {
 }
 
 .czr-html-before hr, .czr-html-after hr {
-    border-top: 1px solid #c5c5c5;
-    border-bottom: 1px solid #fafafa;
-    margin: 25px 0;
+  border-top: 1px solid #c5c5c5;
+  border-bottom: 1px solid #fafafa;
+  margin: 25px 0;
+}
+.czr-html-after {
+  float: left;
 }
 
 .czr-customizer-separator-invisible {

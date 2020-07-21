@@ -224,7 +224,7 @@ input[type="submit"],
   /*outline: none; <= Commented in august 2019 for https://github.com/presscustomizr/hueman/issues/819*/
   padding: 7px 8px;
 }
-
+.themeform select {padding: 0;}
 .search-form input[type="search"]:focus,/* added for https://github.com/presscustomizr/hueman/issues/842 */
 .themeform input[type="text"]:focus,
 .themeform input[type="password"]:focus,
@@ -370,6 +370,10 @@ input[type="submit"]:hover,
 .entry table tr.alt { background: #f1f1f1; }
 .entry table td { border-bottom: 1px solid #f1f1f1; text-align: center; padding: 5px; vertical-align: middle; }
 .entry table th { font-weight: 600; text-align: center; border-top: 1px solid #f1f1f1; border-bottom: 1px solid #f1f1f1; padding: 10px 5px; }
+/* Gutenberg Compat @see https://github.com/presscustomizr/hueman/issues/910 */
+.wp-block-table .has-text-align-center {text-align: center;}
+.wp-block-table .has-text-align-right {text-align: right;}
+.wp-block-table .has-text-align-left {text-align: left;}
 
 /* default gallery */
 .entry .gallery { clear: both; overflow: hidden; width: 100%; margin: 15px 0!important; }

@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.4
-Stable tag: 3.5.11
+Stable tag: 3.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,12 @@ The Hueman theme loads fast and is 100% mobile-friendly according to Google. One
 
 == Changelog ==
 https://github.com/presscustomizr/hueman/releases
+= 3.6.0 July 21st, 2020 =
+* Hueman has been successfully tested with WordPress 5.5
+* fixed : [forms] padding in select input breaks text readability. fixes #908
+* fixed :  [Gutenberg] CSS rules for table alignment not specific enough. fixes #910
+* fixed : [compatibility with WP5.5] adapt customizer color-picker script with latest version of WP 5.5
+
 = 3.5.11 June 18th, 2020 =
 * fixed : [performance] Defer loading Font Awesome icons is disabled by default to prevent issues ( with broken javascript and/or third party plugins )
 
