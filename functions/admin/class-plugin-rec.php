@@ -80,7 +80,7 @@ function hu_print_l_rec_notice( $button_text, $button_link ) {
         <p><?php echo $message; ?></p>
         <span class="czr-rec-button"><a class="button button-primary button-hero activate-now" href="<?php echo esc_attr( $button_link ); ?>" data-name="Nimble Builder" data-slug="nimble-builder"><?php echo $button_text; ?></a></span>
       </div>
-      <div class="czr-tgmpa-img-block"><img src="https://api.nimblebuilder.com/wp-content/uploads/2020/06/nimble_customizr_145.gif" alt="Nimble Builder" title="Nimble Builder" class="czr-nimble-img"></div>
+      <div class="czr-tgmpa-img-block"><img src="https://api.nimblebuilder.com/wp-content/uploads/2020/07/nimble_and_hueman_145.gif" alt="Nimble Builder" title="Nimble Builder" class="czr-nimble-img"></div>
     </div>
   </div>
   <?php
@@ -92,7 +92,7 @@ function hu_print_s_rec_notice( $button_text, $button_link ) {
           wp_nonce_url( 'plugin-install.php?tab=plugin-information&amp;plugin=nimble-builder&amp;TB_iframe=true&amp;width=640&amp;height=500'),
           __('Nimble Builder', 'hueman')
       ),
-      sprintf('<a href="https://nimblebuilder.com/landing-page-one/" target="_blank" rel="noreferrer nofollow">%1$s</a>',
+      sprintf('<a href="https://nimblebuilder.com/landing-page-one/" target="_blank" rel="noreferrer noopener">%1$s</a>',
           __('like this', 'hueman')
       )
   );
