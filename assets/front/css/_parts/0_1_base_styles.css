@@ -145,7 +145,7 @@ input[type="submit"],
   /*outline: none; <= Commented in august 2019 for https://github.com/presscustomizr/hueman/issues/819*/
   padding: 7px 8px;
 }
-
+.themeform select {padding: 0;}
 .search-form input[type="search"]:focus,/* added for https://github.com/presscustomizr/hueman/issues/842 */
 .themeform input[type="text"]:focus,
 .themeform input[type="password"]:focus,
