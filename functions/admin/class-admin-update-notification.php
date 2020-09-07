@@ -81,11 +81,11 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
             //always display in dev mode
             //$show_new_notice = ( defined( 'CZR_DEV' ) && CZR_DEV ) ? true : $show_new_notice;
 
-            if ( ! $show_new_notice )
-              return;
-            //prefixed HU_Plugin_Activation because of the possible issue : https://github.com/presscustomizr/customizr/issues/1603
-            if ( ! hu_is_plugin_active('nimble-builder/nimble-builder.php') && class_exists('HU_Plugin_Activation') && ! HU_Plugin_Activation::get_instance()->hu_is_notice_dismissed() )
-              return;
+            // if ( ! $show_new_notice )
+            //   return;
+            // //prefixed HU_Plugin_Activation because of the possible issue : https://github.com/presscustomizr/customizr/issues/1603
+            // if ( ! hu_is_plugin_active('nimble-builder/nimble-builder.php') && class_exists('HU_Plugin_Activation') && ! HU_Plugin_Activation::get_instance()->hu_is_notice_dismissed() )
+            //   return;
 
             ob_start();
               ?>
@@ -104,14 +104,14 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
                 <?php
                   echo apply_filters(
                     'hu_update_notice',
-                    sprintf( '<h4>%1$s <a class="" href="%2$s" title="%3$s" target="_blank">%3$s &raquo;</a></h4>%4$s',
+                    sprintf( '<h4>%1$s <a class="" href="%2$s" title="%3$s" target="_blank">%3$s &raquo;</a></h4>',
                       __( "We'd like to introduce the new features we've been working on.", "hueman"),
                       HU_WEBSITE . "/category/hueman-releases/",
-                      __( "Read the latest release notes" , "hueman" ),
-                      ! HU_IS_PRO ? sprintf( '<p style="position: absolute;right: 7px;top: 4px;"><a class="button button-primary upgrade-to-pro" href="%1$s" title="%2$s" target="_blank">%2$s &raquo;</a></p>',
-                        esc_url('presscustomizr.com/hueman-pro?ref=a&utm_source=usersite&utm_medium=link&utm_campaign=hueman-update-notice'),
-                        __( "Upgrade to Hueman Pro", "hueman" )
-                      ) : ''
+                      __( "Read the latest release notes" , "hueman" )
+                      // ! HU_IS_PRO ? sprintf( '<p style="position: absolute;right: 7px;top: 4px;"><a class="button button-primary upgrade-to-pro" href="%1$s" title="%2$s" target="_blank">%2$s &raquo;</a></p>',
+                      //   esc_url('presscustomizr.com/hueman-pro?ref=a&utm_source=usersite&utm_medium=link&utm_campaign=hueman-update-notice'),
+                      //   __( "Upgrade to Hueman Pro", "hueman" )
+                      // ) : ''
                     )
                   );
                 ?>

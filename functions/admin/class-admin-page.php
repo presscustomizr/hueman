@@ -199,25 +199,6 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
                   </div><!-- .feature-section col three-col -->
 
               </div><!-- .changelog -->
-
-              <div id="extend" class="changelog">
-                <h3 style="text-align:left;font-size:1.3em;"><?php _e("Go Hueman Pro" ,'hueman') ?></h3>
-
-                <div class="feature-section two-col images-stagger-right">
-                  <div class="col" style="float:right">
-                    <a class="" title="Go Pro" href="<?php echo esc_url( HU_WEBSITE . '/hueman-pro?ref=a&utm_source=usersite&utm_medium=link&utm_campaign=hueman-admin-page' ); ?>" target="_blank"><img style="border:none;width:auto;" alt="Hueman Pro" src="<?php echo HU_BASE_URL .'assets/admin/img/screenshot-300x225.png' ?>" class=""></a>
-                  </div>
-                  <div class="col" style="float:left">
-                    <h4 style="text-align: left;max-width:inherit"><?php _e('Easily take your web design one step further' ,'hueman') ?></h4></br>
-
-                    <p style="text-align: left;"><?php _e("The Hueman Pro WordPress theme allows anyone to create a beautiful, professional and mobile friendly website in a few minutes. In the Pro version, you'll get all features included in the free version plus many conversion oriented ones, to help you attract and retain more visitors on your websites." , 'hueman') ?>
-                    </p>
-                    <p style="text-align:left;">
-                        <a class="button-primary review-hueman hu-go-pro-btn" title="<?php _e("Discover Hueman Pro",'hueman') ?>" href="<?php echo esc_url( HU_WEBSITE . '/hueman-pro?ref=a&utm_source=usersite&utm_medium=link&utm_campaign=hueman-admin-page' ); ?>" target="_blank"><?php _e("Discover Hueman Pro",'hueman') ?> &raquo;</a>
-                    </p>
-                  </div>
-                </div>
-              </div>
           <?php endif; //end if ! is_pro ?>
 
         <?php do_action( '__after_welcome_panel' ); ?>
