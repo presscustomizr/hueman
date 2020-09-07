@@ -2,9 +2,9 @@
 # This file is distributed under the GNU General Public License v3.0.=!>
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman 3.6.1\n"
+"Project-Id-Version: Hueman 3.6.2\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2020-08-26 17:36:30+00:00\n"
+"POT-Creation-Date: 2020-09-07 15:39:15+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -133,7 +133,7 @@ msgid "read the latest release notes"
 msgstr ""
 
 #: functions/admin/class-admin-page.php:148
-#: functions/admin/class-admin-page.php:277
+#: functions/admin/class-admin-page.php:258
 msgid "Changelog"
 msgstr ""
 
@@ -169,44 +169,23 @@ msgstr ""
 msgid "Follow us"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:204
-msgid "Go Hueman Pro"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:211
-msgid "Easily take your web design one step further"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:213
-msgid ""
-"The Hueman Pro WordPress theme allows anyone to create a beautiful, "
-"professional and mobile friendly website in a few minutes. In the Pro "
-"version, you'll get all features included in the free version plus many "
-"conversion oriented ones, to help you attract and retain more visitors on "
-"your websites."
-msgstr ""
-
-#: functions/admin/class-admin-page.php:216
-msgid "Discover Hueman Pro"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:227
+#: functions/admin/class-admin-page.php:208
 msgid "Go to Dashboard &rarr; Home"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:227
+#: functions/admin/class-admin-page.php:208
 msgid "Go to Dashboard"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:302
+#: functions/admin/class-admin-page.php:283
 msgid "System Information"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:303
+#: functions/admin/class-admin-page.php:284
 msgid "Please include the following information when posting support requests"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:304
+#: functions/admin/class-admin-page.php:285
 msgid ""
 "To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C "
 "(Mac)."
@@ -228,12 +207,7 @@ msgstr ""
 msgid "Read the latest release notes"
 msgstr ""
 
-#: functions/admin/class-admin-update-notification.php:113
-#: functions/class-utils-settings-map.php:1981
-msgid "Upgrade to Hueman Pro"
-msgstr ""
-
-#: functions/admin/class-admin-update-notification.php:120
+#: functions/admin/class-admin-update-notification.php:117
 msgid "close"
 msgstr ""
 
@@ -1495,6 +1469,10 @@ msgstr ""
 
 #: functions/class-utils-settings-map.php:1969
 msgid "Hueman Admin Settings"
+msgstr ""
+
+#: functions/class-utils-settings-map.php:1981
+msgid "Upgrade to Hueman Pro"
 msgstr ""
 
 #: functions/class-utils-settings-map.php:1982
