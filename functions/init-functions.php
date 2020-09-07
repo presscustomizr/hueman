@@ -14,7 +14,7 @@ function hu_get_id()  {
     } else {
         global $post;
         $queried_object   = get_queried_object();
-        $_id            = ( ! empty ( $post ) && isset($post -> ID) ) ? $post -> ID : null;
+        $_id            = ( !empty ( $post ) && isset($post -> ID) ) ? $post -> ID : null;
         $_id            = ( isset ($queried_object -> ID) ) ? $queried_object -> ID : $_id;
     }
     return ( is_404() || is_search() || is_archive() ) ? null : $_id;
@@ -31,14 +31,14 @@ function hu_isprevdem() {
         $_is_first_preview    = false !== strpos( $_preview_index ,'-0' );
         $_doing_ajax_partial  = array_key_exists( 'wp_customize_render_partials', $_POST );
         //There might be cases when the unsanitized post values contains old widgets infos on initial preview load, giving a wrong dirtyness information
-        $is_dirty             = ( ! empty( $real_cust ) && ! $_is_first_preview ) || $_doing_ajax_partial;
+        $is_dirty             = ( !empty( $real_cust ) && !$_is_first_preview ) || $_doing_ajax_partial;
     }
-    return apply_filters( 'hu_isprevdem', ! $is_dirty && hu_get_raw_option( 'template', null, false ) != get_stylesheet() && ! is_child_theme() && ! HU_IS_PRO  );
+    return apply_filters( 'hu_isprevdem', !$is_dirty && hu_get_raw_option( 'template', null, false ) != get_stylesheet() && !is_child_theme() && !HU_IS_PRO  );
 }
 
 //@return bool
 function hu_is_pro_section_on() {
-   return ! HU_IS_PRO && class_exists( 'HU_Customize_Section_Pro' ) && ! hu_isprevdem();
+   return !HU_IS_PRO && class_exists( 'HU_Customize_Section_Pro' ) && !hu_isprevdem();
 }
 
 
@@ -46,7 +46,7 @@ function hu_is_pro_section_on() {
 //=> is used in the front js app to populate the collection
 //the css # id could not be used because historically not unique in the theme
 function hu_get_menu_id( $location = 'menu' ) {
-      if ( ! isset( $GLOBALS['menu_id'] ) )
+      if ( !isset( $GLOBALS['menu_id'] ) )
         $GLOBALS['menu_id'] = 0;
 
       $GLOBALS['menu_id'] = $GLOBALS['menu_id'] + 1;
@@ -71,7 +71,7 @@ function hu_get_sidebar_position( $sidebar = 's1' ) {
               'col-3cl' => 'middle-right',
           )
       );
-      if ( ! array_key_exists( $sidebar, $position_map ) )
+      if ( !array_key_exists( $sidebar, $position_map ) )
         return 'left';
       return array_key_exists( $layout, $position_map[ $sidebar ] ) ? $position_map[ $sidebar ][ $layout ] : 'left';
 }
@@ -93,7 +93,7 @@ function hu_is_customize_left_panel() {
 * @since  3.3+
 */
 function hu_is_customize_preview_frame() {
-    return is_customize_preview() || ( ! is_admin() && isset($_REQUEST['customize_messenger_channel']) );
+    return is_customize_preview() || ( !is_admin() && isset($_REQUEST['customize_messenger_channel']) );
 }
 
 
@@ -131,7 +131,7 @@ function hu_is_customizing() {
       ||
       ( isset( $_REQUEST['wp_customize'] ) && 'on' == $_REQUEST['wp_customize'] )
       ||
-      ( ! empty( $_GET['customize_changeset_uuid'] ) || ! empty( $_POST['customize_changeset_uuid'] ) )
+      ( !empty( $_GET['customize_changeset_uuid'] ) || !empty( $_POST['customize_changeset_uuid'] ) )
     );
     $is_customize_admin_page_two = is_admin() && isset( $pagenow ) && 'customize.php' == $pagenow;
 
@@ -142,7 +142,7 @@ function hu_is_customizing() {
 //@return boolean
 //Is used to check if we can display specific notes including deep links to the customizer
 function hu_user_can_see_customize_notices_on_front() {
-    return ! hu_is_customizing() && is_user_logged_in() && current_user_can( 'edit_theme_options' ) && is_super_admin();
+    return !hu_is_customizing() && is_user_logged_in() && current_user_can( 'edit_theme_options' ) && is_super_admin();
 }
 
 
@@ -164,7 +164,7 @@ function hu_is_checked( $opt_name = '') {
 }
 
 function hu_booleanize_checkbox_val( $val ) {
-    if ( ! $val )
+    if ( !$val )
       return false;
     if ( is_bool( $val ) && $val )
       return true;
@@ -198,16 +198,16 @@ function hu_checked( $val ) {
 function hu_user_started_before_version( $_ver, $_pro_ver = null ) {
     $_trans = HU_IS_PRO ? 'started_using_hueman_pro' : 'started_using_hueman';
     //the transient is set in HU_utils::hu_init_properties()
-    if ( ! get_transient( $_trans ) )
+    if ( !get_transient( $_trans ) )
       return false;
 
     $_ver   = HU_IS_PRO ? $_pro_ver : $_ver;
-    if ( ! is_string( $_ver ) )
+    if ( !is_string( $_ver ) )
       return false;
 
     $_start_version_infos = explode( '|', esc_attr( get_transient( $_trans ) ) );
 
-    if ( ! is_array( $_start_version_infos ) || count( $_start_version_infos ) < 2 )
+    if ( !is_array( $_start_version_infos ) || count( $_start_version_infos ) < 2 )
       return false;
 
     switch ( $_start_version_infos[0] ) {
@@ -234,13 +234,13 @@ function hu_user_started_with_current_version() {
 
     $_trans = 'started_using_hueman';
     //the transient is set in HU_utils::hu_init_properties()
-    if ( ! get_transient( $_trans ) )
+    if ( !get_transient( $_trans ) )
       return false;
 
     $_start_version_infos = explode( '|', esc_attr( get_transient( $_trans ) ) );
 
     //make sure we're good at this point
-    if ( ! is_string( HUEMAN_VER ) || ! is_array( $_start_version_infos ) || count( $_start_version_infos ) < 2 )
+    if ( !is_string( HUEMAN_VER ) || !is_array( $_start_version_infos ) || count( $_start_version_infos ) < 2 )
       return false;
 
     return 'with' == $_start_version_infos[0] && version_compare( $_start_version_infos[1] , HUEMAN_VER, '==' );
@@ -255,7 +255,7 @@ function hu_user_started_with_current_version() {
 */
 function hu_has_nav_menu( $_location ) {
     $bool = false;
-    if ( has_nav_menu( $_location ) || ! in_array( $_location, array( 'topbar', 'footer') ) ) {
+    if ( has_nav_menu( $_location ) || !in_array( $_location, array( 'topbar', 'footer') ) ) {
       $bool = has_nav_menu( $_location );
     } else {
       switch ($_location) {
@@ -283,15 +283,15 @@ function hu_get_raw_option( $opt_name = null, $opt_group = null, $from_cache = t
     //prevent issue https://github.com/presscustomizr/hueman/issues/492
     //prevent issue https://github.com/presscustomizr/hueman/issues/571
     if ( $report_error ) {
-        if ( ! is_array( $alloptions ) || empty( $alloptions ) ) {
+        if ( !is_array( $alloptions ) || empty( $alloptions ) ) {
             return new WP_Error( 'wp_options_not_cached', '' );
         }
     }
 
-    $alloptions = ! is_array( $alloptions ) ? array() : $alloptions;//prevent issue https://github.com/presscustomizr/hueman/issues/492
+    $alloptions = !is_array( $alloptions ) ? array() : $alloptions;//prevent issue https://github.com/presscustomizr/hueman/issues/492
 
     //is there any option group requested ?
-    if ( ! is_null( $opt_group ) && array_key_exists( $opt_group, $alloptions ) ) {
+    if ( !is_null( $opt_group ) && array_key_exists( $opt_group, $alloptions ) ) {
       $alloptions = maybe_unserialize( $alloptions[ $opt_group ] );
     }
     //shall we return a specific option ?
@@ -301,7 +301,7 @@ function hu_get_raw_option( $opt_name = null, $opt_group = null, $from_cache = t
         $opt_value = array_key_exists( $opt_name, $alloptions ) ? maybe_unserialize( $alloptions[ $opt_name ] ) : false;//fallback on cache option val
         //do we need to get the db value instead of the cached one ? <= might be safer with some user installs not properly handling the wp cache
         //=> typically used to checked the template name for hu_isprevdem()
-        if ( ! $from_cache ) {
+        if ( !$from_cache ) {
             global $wpdb;
             //@see wp-includes/option.php : get_option()
             $row = $wpdb->get_row( $wpdb->prepare( "SELECT option_value FROM $wpdb->options WHERE option_name = %s LIMIT 1", $opt_name ) );
@@ -337,7 +337,7 @@ function hu_is_home() {
 * Check if we are really on home, all cases covered
 * @return  bool
 */
-if ( ! function_exists( 'hu_is_real_home') ) {
+if ( !function_exists( 'hu_is_real_home') ) {
     function hu_is_real_home() {
         // Warning : when show_on_front is a page, but no page_on_front has been picked yet, is_home() is true
         // beware of https://github.com/presscustomizr/nimble-builder/issues/349
@@ -363,7 +363,7 @@ function hu_is_home_empty() {
 * @return  bool
 */
 function hu_is_blogpage() {
-    return is_home() && ! is_front_page();
+    return is_home() && !is_front_page();
 }
 
 /**
@@ -375,10 +375,10 @@ function hu_is_post_list() {
     global $wp_query;
 
     return apply_filters( 'hu_is_post_list',
-      ( ! is_singular()
-      && ! is_404()
+      ( !is_singular()
+      && !is_404()
       && ( is_search() && 0 != $wp_query -> post_count )
-      && ! hu_is_home_empty() )
+      && !hu_is_home_empty() )
       || hu_is_blogpage() || is_home() || is_search() || is_archive()
     );
 }
@@ -419,14 +419,14 @@ function hu_is_singular() {
 */
 function hu_has_social_links() {
     $_raw_socials = hu_get_option('social-links');
-    if ( ! is_array( $_raw_socials ) )
+    if ( !is_array( $_raw_socials ) )
       return;
     //get the social mod opts and the items
     foreach( $_raw_socials as $key => $item ) {
-      if ( ! array_key_exists( 'is_mod_opt', $item ) )
+      if ( !array_key_exists( 'is_mod_opt', $item ) )
           $_social_items[] =  $item;
     }
-    return ! empty( $_social_items );
+    return !empty( $_social_items );
 }
 
 /**
@@ -445,7 +445,7 @@ function hu_is_ajax() {
     * https://core.trac.wordpress.org/ticket/25669#comment:19
     * http://stackoverflow.com/questions/18260537/how-to-check-if-the-request-is-an-ajax-request-with-php
     */
-    $_is_ajax      = $wp_doing_ajax || ( ! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+    $_is_ajax      = $wp_doing_ajax || ( !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
 
     return apply_filters( 'hu_is_ajax', $_is_ajax );
 }
@@ -455,7 +455,7 @@ function hu_is_ajax() {
 * @return img src string
 */
 function hu_get_img_src( $img ) {
-    if ( ! $img )
+    if ( !$img )
       return;
 
     $_image_src     = '';
@@ -487,7 +487,7 @@ function hu_get_img_src( $img ) {
 * @return (false|array) returns an array (url, width, height), or false, if no image is available.
 */
 function hu_get_img_source( $img ) {
-    if ( ! $img )
+    if ( !$img )
       return;
 
     $_image_src     = '';
@@ -524,7 +524,7 @@ function hu_get_img_source( $img ) {
 */
 function hu_get_img_src_from_option( $option_name ) {
     $_img_option    = esc_attr( hu_get_option( $option_name ) );
-    if ( ! $_img_option )
+    if ( !$_img_option )
       $_src = false;
 
     $_src      = hu_get_img_src( $_img_option );
@@ -539,7 +539,7 @@ function hu_get_img_src_from_option( $option_name ) {
 */
 function hu_get_img_source_from_option( $option_name ) {
     $_img_option    = esc_attr( hu_get_option( $option_name ) );
-    if ( ! $_img_option )
+    if ( !$_img_option )
       $_source = false;
 
     $_source      = hu_get_img_source( $_img_option );
@@ -563,7 +563,7 @@ function hu_the_post_thumbnail( $size = 'post-thumbnail', $attr = '', $placehold
     $placeholder_size = is_null( $placeholder_size ) ? $size : $placeholder_size;
 
     $is_attachment = is_object( $post ) && isset( $post -> post_type ) && 'attachment' == $post -> post_type;
-    if ( ! $post || ( ! $is_attachment && ! has_post_thumbnail() ) ) {
+    if ( !$post || ( !$is_attachment && !has_post_thumbnail() ) ) {
         if ( hu_is_checked('placeholder') && (bool)$placeholder ) {
             $html = hu_print_placeholder_thumb( $size );
         }
@@ -581,15 +581,15 @@ function hu_the_post_thumbnail( $size = 'post-thumbnail', $attr = '', $placehold
 //WHEN DO WE DISPLAY THE REGULAR TOP NAV ?
 //=> when there's a topbar menu assigned or when the default page menu option "default-menu-header" is checked ( not for multisite @see issue on github )
 function hu_is_topbar_displayed() {
-  $top_nav_fb = apply_filters( 'hu_topbar_menu_fallback_cb', ( ! is_multisite() && hu_is_checked( "default-menu-header" ) ) ? 'hu_page_menu' : '' );
-  return hu_has_nav_menu( 'topbar' ) || ! empty( $top_nav_fb );
+  $top_nav_fb = apply_filters( 'hu_topbar_menu_fallback_cb', ( !is_multisite() && hu_is_checked( "default-menu-header" ) ) ? 'hu_page_menu' : '' );
+  return hu_has_nav_menu( 'topbar' ) || !empty( $top_nav_fb );
 }
 
 //WHEN DO WE DISPLAY THE HEADER NAV ?
 // => when there's a header menu assigned or when the fallback callback function is set ( with a filter, used in prevdem scenario typically )
 function hu_is_header_nav_displayed() {
   $header_nav_fb = apply_filters( 'hu_header_menu_fallback_cb', '' );
-  return hu_has_nav_menu( 'header' ) || ! empty( $header_nav_fb );
+  return hu_has_nav_menu( 'header' ) || !empty( $header_nav_fb );
 }
 
 
@@ -601,7 +601,7 @@ function hu_is_comment_icon_displayed_on_grid_item_thumbnails() {
     // the comment icon is displayed only if comment are enabled for this type of post
     // 'comment-count' option => Display comment count on thumbnails
     global $post;
-    if ( empty ( $post ) || ! isset( $post -> ID ) )
+    if ( empty ( $post ) || !isset( $post -> ID ) )
       return;
     $are_comments_contextually_enabled = false;
     if ( 'page' == $post -> post_type && hu_is_checked( 'page-comments' ) ) {
@@ -692,5 +692,5 @@ function hu_front_needs_flexslider() {
   if ( !apply_filters( 'hu_front_needs_flexslider', true ) )
     return false;
 
-  return has_post_format( 'gallery' ) || ( is_home() && ! is_paged() && ( hu_is_checked('featured-posts-enabled') && hu_get_option('featured-posts-count') != '0' ) );
+  return has_post_format( 'gallery' ) || ( is_home() && !is_paged() && ( hu_is_checked('featured-posts-enabled') && hu_get_option('featured-posts-count') != '0' ) );
 }

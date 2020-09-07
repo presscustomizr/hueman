@@ -15,38 +15,38 @@ $hu_base_data['authoruri']    = $hu_theme -> {'Author URI'};
 
 
 //HUEMAN_VER is the Version
-if( ! defined( 'HUEMAN_VER' ) )      define( 'HUEMAN_VER' , $hu_base_data['version'] );
+if( !defined( 'HUEMAN_VER' ) )      define( 'HUEMAN_VER' , $hu_base_data['version'] );
 //HU_BASE is the root server path of the parent theme
-if( ! defined( 'HU_BASE' ) )            define( 'HU_BASE' , get_template_directory().'/' );
+if( !defined( 'HU_BASE' ) )            define( 'HU_BASE' , get_template_directory().'/' );
 //HU_BASE_CHILD is the root server path of the child theme
-if( ! defined( 'HU_BASE_CHILD' ) )      define( 'HU_BASE_CHILD' , get_stylesheet_directory().'/' );
+if( !defined( 'HU_BASE_CHILD' ) )      define( 'HU_BASE_CHILD' , get_stylesheet_directory().'/' );
 //HU_BASE_URL http url of the loaded parent theme
-if( ! defined( 'HU_BASE_URL' ) )        define( 'HU_BASE_URL' , get_template_directory_uri() . '/' );
+if( !defined( 'HU_BASE_URL' ) )        define( 'HU_BASE_URL' , get_template_directory_uri() . '/' );
 //HU_BASE_URL_CHILD http url of the loaded child theme
-if( ! defined( 'HU_BASE_URL_CHILD' ) )  define( 'HU_BASE_URL_CHILD' , get_stylesheet_directory_uri() . '/' );
+if( !defined( 'HU_BASE_URL_CHILD' ) )  define( 'HU_BASE_URL_CHILD' , get_stylesheet_directory_uri() . '/' );
 //THEMENAME contains the Name of the currently loaded theme. Will always be the parent theme name is a child theme is activated.
-if( ! defined( 'THEMENAME' ) )       define( 'THEMENAME' , $hu_base_data['title'] );
+if( !defined( 'THEMENAME' ) )       define( 'THEMENAME' , $hu_base_data['title'] );
 //HU_OPTION_GROUP contains the Name of the hueman theme options in wp_options
 //=> was previously option tree default name
-if( ! defined( 'HU_THEME_OPTIONS' ) ) define( 'HU_THEME_OPTIONS' , apply_filters( 'hu_theme_options', 'hu_theme_options' ) );
+if( !defined( 'HU_THEME_OPTIONS' ) ) define( 'HU_THEME_OPTIONS' , apply_filters( 'hu_theme_options', 'hu_theme_options' ) );
 
-if( ! defined( 'HU_OPT_AJAX_ACTION' ) ) define( 'HU_OPT_AJAX_ACTION' , 'hu_get_option' );
+if( !defined( 'HU_OPT_AJAX_ACTION' ) ) define( 'HU_OPT_AJAX_ACTION' , 'hu_get_option' );
 
 //HU_IS_PRO
-if( ! defined( 'HU_IS_PRO' ) ) define( 'HU_IS_PRO' , file_exists( HU_BASE . 'addons/init-hueman-pro.php' ) && "hueman-pro" == sanitize_file_name( strtolower($hu_theme -> name) ) );
+if( !defined( 'HU_IS_PRO' ) ) define( 'HU_IS_PRO' , file_exists( HU_BASE . 'addons/init-hueman-pro.php' ) && "hueman-pro" == sanitize_file_name( strtolower($hu_theme -> name) ) );
 //HU_IS_PRO_ADDONS
-if( ! defined( 'HU_IS_PRO_ADDONS' ) ) define( 'HU_IS_PRO_ADDONS' , false );
+if( !defined( 'HU_IS_PRO_ADDONS' ) ) define( 'HU_IS_PRO_ADDONS' , false );
 
 //TEXT DOMAIN FOR TRANSLATIONS
-if( ! defined( 'HU_THEME_TEXT_DOM' ) )       define( 'HU_THEME_TEXT_DOM' , HU_IS_PRO ? 'hueman-pro' : 'hueman' );
+if( !defined( 'HU_THEME_TEXT_DOM' ) )       define( 'HU_THEME_TEXT_DOM' , HU_IS_PRO ? 'hueman-pro' : 'hueman' );
 
 //HU_WEBSITE is the home website of Hueman
-if( ! defined( 'HU_WEBSITE' ) )         define( 'HU_WEBSITE' , $hu_base_data['authoruri'] );
+if( !defined( 'HU_WEBSITE' ) )         define( 'HU_WEBSITE' , $hu_base_data['authoruri'] );
 
 //define useful constants
-if( ! defined( 'HU_DYN_WIDGETS_SECTION' ) )      define( 'HU_DYN_WIDGETS_SECTION' , 'dyn_widgets_section' );
-if( ! defined( 'PREV_REC_NOTICE_ID' ) )  define( 'PREV_REC_NOTICE_ID' , 'rec-notice-hueman-1119' );
-if( ! defined( 'REC_NOTICE_ID' ) )  define( 'REC_NOTICE_ID' , 'rec-notice-hueman-0620' );
+if( !defined( 'HU_DYN_WIDGETS_SECTION' ) )      define( 'HU_DYN_WIDGETS_SECTION' , 'dyn_widgets_section' );
+if( !defined( 'PREV_REC_NOTICE_ID' ) )  define( 'PREV_REC_NOTICE_ID' , 'rec-notice-hueman-1119' );
+if( !defined( 'REC_NOTICE_ID' ) )  define( 'REC_NOTICE_ID' , 'rec-notice-hueman-0620' );
 
 /* ------------------------------------------------------------------------- *
  *  Loads Pluggable Functions
@@ -267,10 +267,10 @@ function hu_get_fonts( $args = array() ) {
     $font_id = empty( $args['font_id'] ) ? '___' : $args['font_id'];
 
     //make sure the request is possible : 'title', 'src' or 'family'
-    if ( ! in_array( $_key_to_return, array( 'title', 'src', 'family' ) ) )
+    if ( !in_array( $_key_to_return, array( 'title', 'src', 'family' ) ) )
       return;
     //bail if no font id provided and request is not for all fonts
-    if ( false == $args['all'] && ! is_string( $args['font_id'] ) )
+    if ( false == $args['all'] && !is_string( $args['font_id'] ) )
       return;
 
     $_fonts_map = apply_filters(
@@ -399,7 +399,7 @@ function hu_get_fonts( $args = array() ) {
     if ( true == $args['all'] ) {
         $_return = array();
         foreach ( $_fonts_map as $id => $data ) {
-            if ( ! array_key_exists( $_key_to_return, $data ) )
+            if ( !array_key_exists( $_key_to_return, $data ) )
               continue;
             $_return[$id] = $data[$_key_to_return];
         }

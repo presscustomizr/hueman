@@ -5,7 +5,7 @@
 
 /*  Post formats script
 /* ------------------------------------ */
-if ( ! function_exists( 'hu_post_formats_script' ) ) {
+if ( !function_exists( 'hu_post_formats_script' ) ) {
 
   function hu_post_formats_script( $hook ) {
     // Only load on posts, pages
@@ -29,8 +29,8 @@ add_action( 'admin_enqueue_scripts', 'hu_post_formats_script');
 /* ------------------------------------------------------------------------- *
  *  Loads and instanciates admin pages related classes
 /* ------------------------------------------------------------------------- */
-if ( is_admin() && ! hu_is_customizing() ) {
-    if ( ! defined( 'HU_IS_PRO' ) || ! HU_IS_PRO ) {
+if ( is_admin() && !hu_is_customizing() ) {
+    if ( !defined( 'HU_IS_PRO' ) || !HU_IS_PRO ) {
         //Update notice
         load_template( get_template_directory() . '/functions/admin/class-admin-update-notification.php' );
         new HU_admin_update_notification;
@@ -56,7 +56,7 @@ function hu_admin_style() {
 /* ------------------------------------------------------------------------- *
  *  Loads functions for plugin recommendation
 /* ------------------------------------------------------------------------- */
-if ( is_admin() && ! hu_is_customizing() && ! hu_is_plugin_active('nimble-builder/nimble-builder.php') ) {
+if ( is_admin() && !hu_is_customizing() && !hu_is_plugin_active('nimble-builder/nimble-builder.php') ) {
     load_template( get_template_directory() . '/functions/admin/class-plugin-rec.php' );
 }
 
@@ -348,7 +348,7 @@ function hu_custom_meta_boxes() {
 }
 
 
-if ( is_admin() && ! hu_is_customizing() ) {
+if ( is_admin() && !hu_is_customizing() ) {
     add_action( 'init' , 'hu_add_editor_style' );
     //@return void()
     //hook : init
@@ -395,7 +395,7 @@ if ( is_admin() && ! hu_is_customizing() ) {
       $user_font     = hu_get_option( 'font' );
       $gfamily       = hu_get_fonts( array( 'font_id' => $user_font, 'request' => 'src' ) );//'Source+Sans+Pro:400,300italic,300,400italic,600&subset=latin,latin-ext',
       //bail here if self hosted font (titilium) of web font
-      if ( ( empty( $gfamily ) || ! is_string( $gfamily ) ) )
+      if ( ( empty( $gfamily ) || !is_string( $gfamily ) ) )
         return;
 
       //Commas in a URL need to be encoded before the string can be passed to add_editor_style.
@@ -420,7 +420,7 @@ add_filter( 'tiny_mce_before_init'  , 'hu_user_defined_tinymce_css' );
 *
 */
 function hu_user_defined_tinymce_css( $init ) {
-  if ( ! apply_filters( 'hu_add_custom_fonts_to_editor' , true ) )
+  if ( !apply_filters( 'hu_add_custom_fonts_to_editor' , true ) )
     return $init;
 
   if ( 'tinymce' != wp_default_editor() )
@@ -428,7 +428,7 @@ function hu_user_defined_tinymce_css( $init ) {
 
   //some plugins fire tiny mce editor in the customizer
   //in this case, the CZR_resource class has to be loaded
-  // if ( ! class_exists('CZR_resources') || ! is_object(CZR_resources::$instance) ) {
+  // if ( !class_exists('CZR_resources') || !is_object(CZR_resources::$instance) ) {
   //   CZR___::$instance -> czr_fn_req_once( 'inc/czr-init.php' );
   //   new CZR_resources();
   // }
@@ -436,7 +436,7 @@ function hu_user_defined_tinymce_css( $init ) {
   // google / web fonts style
   $user_font    = hu_get_option( 'font' );
   $family       = hu_get_fonts( array( 'font_id' => $user_font, 'request' => 'family' ) );//'"Raleway", Arial, sans-serif'
-  $family       = ( empty( $family ) || ! is_string( $family ) ) ? "'Titillium Web', Arial, sans-serif" : $family;
+  $family       = ( empty( $family ) || !is_string( $family ) ) ? "'Titillium Web', Arial, sans-serif" : $family;
 
   //maybe add rtl class
   $_mce_body_context = is_rtl() ? 'mce-content-body.rtl' : 'mce-content-body';

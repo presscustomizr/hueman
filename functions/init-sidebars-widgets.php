@@ -99,9 +99,9 @@ function hu_get_registered_widgets_option_names() {
   global $wp_registered_widgets;
   $opt_names = array();
   foreach ($wp_registered_widgets as $id => $data ) {
-    if ( ! isset($data['callback']) || ! isset($data['callback'][0]) || ! isset($data['callback'][0] -> option_name ) )
+    if ( !isset($data['callback']) || !isset($data['callback'][0]) || !isset($data['callback'][0] -> option_name ) )
       continue;
-    if ( ! in_array( $data['callback'][0] -> option_name, $opt_names ) )
+    if ( !in_array( $data['callback'][0] -> option_name, $opt_names ) )
       array_push( $opt_names, $data['callback'][0] -> option_name );
   }
   return $opt_names;
@@ -157,7 +157,7 @@ function hu_get_builtin_widget_zones_location() {
 }
 
 
-if ( ! function_exists( 'hu_maybe_register_builtin_widget_zones' ) ) :
+if ( !function_exists( 'hu_maybe_register_builtin_widget_zones' ) ) :
   function hu_maybe_register_builtin_widget_zones() {
     $_map = hu_get_default_widget_zones();
     foreach ( $_map as $zone_id => $data ) {
@@ -172,7 +172,7 @@ add_action( 'widgets_init', 'hu_maybe_register_builtin_widget_zones' );
 
 /*  Register custom sidebars
 /* ------------------------------------ */
-if ( ! function_exists( 'hu_maybe_register_custom_widget_zones' ) ) :
+if ( !function_exists( 'hu_maybe_register_custom_widget_zones' ) ) :
   function hu_maybe_register_custom_widget_zones() {
     $customized = array();
 
@@ -189,7 +189,7 @@ if ( ! function_exists( 'hu_maybe_register_custom_widget_zones' ) ) :
     }
 
     //at this point we need smthg really clean
-    if ( ! is_array($sidebars) || empty( $sidebars ) )
+    if ( !is_array($sidebars) || empty( $sidebars ) )
        return;
 
     $default_args = array(
@@ -201,7 +201,7 @@ if ( ! function_exists( 'hu_maybe_register_custom_widget_zones' ) ) :
     $default_zones = hu_get_default_widget_zones();
 
     foreach( $sidebars as $sb ) {
-      if ( ! isset($sb['id']) || empty($sb['id']) )
+      if ( !isset($sb['id']) || empty($sb['id']) )
         return;
 
       //is it a built-in one?

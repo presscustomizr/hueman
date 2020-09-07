@@ -9,7 +9,7 @@
 * @link         http://presscustomizr.com/hueman
 * @license      http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
-if ( ! class_exists( 'HU_utils' ) ) :
+if ( !class_exists( 'HU_utils' ) ) :
   class HU_utils {
     //Access any method or var of the class with classname::$instance -> var or method():
     static $inst;
@@ -25,7 +25,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
 
         //init properties
         //when is_admin, the after_setup_theme is fired too late
-        if ( is_admin() && ! hu_is_customizing() ) {
+        if ( is_admin() && !hu_is_customizing() ) {
           $this -> hu_init_properties();
         } else {
           add_action( 'after_setup_theme'       , array( $this , 'hu_init_properties') );
@@ -67,8 +67,8 @@ if ( ! class_exists( 'HU_utils' ) ) :
         //What was the theme version when the user started to use Hueman?
         //new install = no options yet
         //very high duration transient, this transient could actually be an option but as per the wordpress.org themes guidelines, only one option is allowed for the theme settings
-        if ( ! hu_isprevdem() ) {
-              if ( ! get_transient( $_trans ) ) {
+        if ( !hu_isprevdem() ) {
+              if ( !get_transient( $_trans ) ) {
                   set_transient(
                       $_trans,
                       sprintf('%s|%s' , count( $this -> db_options ) >= 1 ? 'before' : 'with' , HUEMAN_VER ),
@@ -77,7 +77,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
               }
               // Commented since https://github.com/presscustomizr/hueman/issues/775
               // was not used anyway since the removal of the welcome note
-              // if ( ! get_transient( 'hu_start_date' ) && class_exists( 'DateTime' ) ) {
+              // if ( !get_transient( 'hu_start_date' ) && class_exists( 'DateTime' ) ) {
               //     set_transient(
               //         'hu_start_date',
               //         new DateTime("now"),
@@ -97,7 +97,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
     //Fired in __construct()
     //Note : the 'sidebar-areas' setting is not listed in that list because registered specifically
     function hu_cache_theme_setting_list() {
-        if ( is_array(self::$_theme_setting_list) && ! empty( self::$_theme_setting_list ) )
+        if ( is_array(self::$_theme_setting_list) && !empty( self::$_theme_setting_list ) )
           return;
         $_settings_map = HU_utils_settings_map::$instance -> hu_get_customizer_map( null, 'add_setting_control' );
         $_settings = array();
@@ -116,7 +116,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
     * hook : wp_head
     */
     function hu_wp_filters() {
-        if ( apply_filters( 'hu_img_smart_load_enabled', ! hu_is_ajax() && hu_is_checked('smart_load_img') ) ) {
+        if ( apply_filters( 'hu_img_smart_load_enabled', !hu_is_ajax() && hu_is_checked('smart_load_img') ) ) {
             add_filter( 'the_content'                       , array( $this , 'hu_parse_imgs' ), PHP_INT_MAX );
             add_filter( 'hu_post_thumbnail_html'            , array( $this , 'hu_parse_imgs' ) );
         }
@@ -150,7 +150,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
             'svgz'
         ) );
 
-        if ( empty( $allowed_image_extentions ) || ! is_array( $allowed_image_extentions ) ) {
+        if ( empty( $allowed_image_extentions ) || !is_array( $allowed_image_extentions ) ) {
           return $_html;
         }
 
@@ -237,7 +237,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
         //Don't update if default options are not empty + customizing context
         //customizing out ? => we can assume that the user has at least refresh the default once (because logged in, see conditions below) before accessing the customizer
         //customizing => takes into account if user has set a filter or added a new customizer setting
-        if ( ! empty($def_options) && $this -> is_customizing )
+        if ( !empty($def_options) && $this -> is_customizing )
           return apply_filters( 'hu_default_options', $def_options );
 
         //Never update the defaults when wp_installing()
@@ -247,8 +247,8 @@ if ( ! class_exists( 'HU_utils' ) ) :
         // 2) they are not defined
         // 3) theme version not defined
         // 4) versions are different
-        if ( ! wp_installing() ) {
-            if ( current_user_can('edit_theme_options') || empty($def_options) || ! isset($def_options['ver']) || 0 != version_compare( $def_options['ver'] , HUEMAN_VER ) ) {
+        if ( !wp_installing() ) {
+            if ( current_user_can('edit_theme_options') || empty($def_options) || !isset($def_options['ver']) || 0 != version_compare( $def_options['ver'] , HUEMAN_VER ) ) {
                 $def_options          = $this -> hu_generate_default_options( HU_utils_settings_map::$instance -> hu_get_customizer_map( $get_default_option = 'true' ) , HU_THEME_OPTIONS );
                 //Adds the version in default
                 $def_options['ver']   =  HUEMAN_VER;
@@ -425,7 +425,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
         if ( defined( 'WP_SETUP_CONFIG' ) )
             return false;
 
-        if ( ! wp_installing() ) {
+        if ( !wp_installing() ) {
             // prevent non-existent options from triggering multiple queries
             $notoptions = wp_cache_get( 'notoptions', 'options' );
             if ( isset( $notoptions[ $option ] ) ) {
@@ -447,7 +447,7 @@ if ( ! class_exists( 'HU_utils' ) ) :
                         $value = $row->option_value;
                         wp_cache_add( $option, $value, 'options' );
                     } else { // option does not exist, so we must cache its non-existence
-                        if ( ! is_array( $notoptions ) ) {
+                        if ( !is_array( $notoptions ) ) {
                              $notoptions = array();
                         }
                         $notoptions[$option] = true;

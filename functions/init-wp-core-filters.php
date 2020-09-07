@@ -4,7 +4,7 @@
 /* ------------------------------------------------------------------------- */
 /*  Add wmode transparent to media embeds
 /* ------------------------------------ */
-if ( ! function_exists( 'hu_embed_wmode_transparent' ) ) {
+if ( !function_exists( 'hu_embed_wmode_transparent' ) ) {
 
   function hu_embed_wmode_transparent( $html, $url, $attr ) {
     if ( strpos( $html, "<embed src=" ) !== false )
@@ -21,14 +21,14 @@ add_filter( 'embed_oembed_html', 'hu_embed_wmode_transparent', 10, 3 );
 
 /*  Add responsive container to embeds
 /* ------------------------------------ */
-if ( ! function_exists( 'hu_embed_html' ) ) {
+if ( !function_exists( 'hu_embed_html' ) ) {
   function hu_embed_html( $html, $url ) {
     if ( !file_exists( ABSPATH . WPINC . '/class-wp-oembed.php' ))
       return $html;
     require_once( ABSPATH . WPINC . '/class-wp-oembed.php' );
     $wp_oembed = _wp_oembed_get_object();
     $provider = $wp_oembed -> get_provider( $url, $args = '' );
-    if ( ! $provider || false === $data = $wp_oembed->fetch( $provider, $url, $args ) ) {
+    if ( !$provider || false === $data = $wp_oembed->fetch( $provider, $url, $args ) ) {
       return $html;
     }
     // Check that we have a valid $data object
@@ -49,7 +49,7 @@ add_filter( 'embed_oembed_html', 'hu_embed_html', 10, 3 );
 
 /*  Add responsive container to jetpack embeds
 /* ------------------------------------ */
-if ( ! function_exists( 'hu_embed_html_jp' ) ) {
+if ( !function_exists( 'hu_embed_html_jp' ) ) {
 
   function hu_embed_html_jp( $html ) {
     return '<div class="video-container">' . $html . '</div>';
@@ -63,7 +63,7 @@ add_filter( 'video_embed_html', 'hu_embed_html_jp' );
 /* ------------------------------------ */
 add_action( 'after_setup_theme', 'hu_widget_text_do_shortcode' );
 function hu_widget_text_do_shortcode() {
-    if ( ! has_filter( 'widget_text', 'do_shortcode' ) ) {
+    if ( !has_filter( 'widget_text', 'do_shortcode' ) ) {
         add_filter( 'widget_text', 'do_shortcode' );
     }
 }

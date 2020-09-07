@@ -22,13 +22,13 @@ function hu_maybe_render_rec_notice() {
   $is_nimble_installed = isset( $installed_plugins[ $plugin ] );
 
   if ( $is_nimble_installed ) {
-    if ( ! current_user_can( 'activate_plugins' ) ) {
+    if ( !current_user_can( 'activate_plugins' ) ) {
       return;
     }
     $button_text = __( 'Activate Nimble Builder Now', 'hueman' );
     $button_link = wp_nonce_url( 'plugins.php?action=activate&amp;plugin=' . $plugin . '&amp;plugin_status=all&amp;paged=1&amp;s', 'activate-plugin_' . $plugin );
   } else {
-    if ( ! current_user_can( 'install_plugins' ) ) {
+    if ( !current_user_can( 'install_plugins' ) ) {
       return;
     }
     $button_text = __( 'Install Nimble Builder Now', 'hueman' );

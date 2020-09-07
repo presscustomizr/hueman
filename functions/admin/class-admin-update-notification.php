@@ -2,7 +2,7 @@
 /**
 * Update notifications system in WP admin
 */
-if ( ! class_exists( 'HU_admin_update_notification' ) ) :
+if ( !class_exists( 'HU_admin_update_notification' ) ) :
     class HU_admin_update_notification {
         static $instance;
 
@@ -10,7 +10,7 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
             self::$instance =& $this;
 
             //UPDATE NOTICE
-            if( ! defined( 'DISPLAY_UPDATE_NOTIFICATION' ) ) { define( 'DISPLAY_UPDATE_NOTIFICATION', HUEMAN_VER !== '1.1.23' ); }
+            if( !defined( 'DISPLAY_UPDATE_NOTIFICATION' ) ) { define( 'DISPLAY_UPDATE_NOTIFICATION', HUEMAN_VER !== '1.1.23' ); }
             add_action( 'admin_notices'         , array( $this, 'hu_may_be_display_update_notice') );
             //always add the ajax action
             add_action( 'wp_ajax_dismiss_hueman_update_notice'    , array( $this , 'hu_dismiss_update_notice_action' ) );
@@ -36,7 +36,7 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
         * hook : admin_notices
         */
         function hu_may_be_display_update_notice() {
-            if ( ! defined('DISPLAY_UPDATE_NOTIFICATION') || ! DISPLAY_UPDATE_NOTIFICATION )
+            if ( !defined('DISPLAY_UPDATE_NOTIFICATION') || !DISPLAY_UPDATE_NOTIFICATION )
               return;
 
             $opt_name                   = 'last_update_notice';
@@ -44,7 +44,7 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
             $show_new_notice = false;
             $display_ct = 50;
 
-            if ( ! $last_update_notice_values || ! is_array($last_update_notice_values) ) {
+            if ( !$last_update_notice_values || !is_array($last_update_notice_values) ) {
                 //first time user of the theme, the option does not exist
                 // 1) initialize it => set it to the current Hueman version, displayed 0 times.
                 // 2) update in db
@@ -81,10 +81,10 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
             //always display in dev mode
             //$show_new_notice = ( defined( 'CZR_DEV' ) && CZR_DEV ) ? true : $show_new_notice;
 
-            // if ( ! $show_new_notice )
+            // if ( !$show_new_notice )
             //   return;
             // //prefixed HU_Plugin_Activation because of the possible issue : https://github.com/presscustomizr/customizr/issues/1603
-            // if ( ! hu_is_plugin_active('nimble-builder/nimble-builder.php') && class_exists('HU_Plugin_Activation') && ! HU_Plugin_Activation::get_instance()->hu_is_notice_dismissed() )
+            // if ( !hu_is_plugin_active('nimble-builder/nimble-builder.php') && class_exists('HU_Plugin_Activation') && !HU_Plugin_Activation::get_instance()->hu_is_notice_dismissed() )
             //   return;
 
             ob_start();
@@ -108,7 +108,7 @@ if ( ! class_exists( 'HU_admin_update_notification' ) ) :
                       __( "We'd like to introduce the new features we've been working on.", "hueman"),
                       HU_WEBSITE . "/category/hueman-releases/",
                       __( "Read the latest release notes" , "hueman" )
-                      // ! HU_IS_PRO ? sprintf( '<p style="position: absolute;right: 7px;top: 4px;"><a class="button button-primary upgrade-to-pro" href="%1$s" title="%2$s" target="_blank">%2$s &raquo;</a></p>',
+                      // !HU_IS_PRO ? sprintf( '<p style="position: absolute;right: 7px;top: 4px;"><a class="button button-primary upgrade-to-pro" href="%1$s" title="%2$s" target="_blank">%2$s &raquo;</a></p>',
                       //   esc_url('presscustomizr.com/hueman-pro?ref=a&utm_source=usersite&utm_medium=link&utm_campaign=hueman-update-notice'),
                       //   __( "Upgrade to Hueman Pro", "hueman" )
                       // ) : ''

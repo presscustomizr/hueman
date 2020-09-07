@@ -10,7 +10,7 @@ add_action( 'after_switch_theme',  'hu_backup_sidebars', 0 );
 function hu_backup_sidebars() {
     $sidebars_widgets = get_theme_mod( 'sidebars_widgets' );
     $data = isset($sidebars_widgets['data']) ? $sidebars_widgets['data'] : array();
-    if ( ! get_transient( '_hu_sidebar_backup' ) )
+    if ( !get_transient( '_hu_sidebar_backup' ) )
       set_transient( '_hu_sidebar_backup', $data, 24 * 3600 * 365 * 20 );
 }
 
@@ -52,7 +52,7 @@ function hu_filter_add_new_sidebar_options( $__options ) {
     $_old_custom_zone_opt = isset( $__options['sidebar-areas'] ) ? $__options['sidebar-areas'] : array();
     $custom_zones = array();
 
-    if ( ! empty($_old_custom_zone_opt) ) {
+    if ( !empty($_old_custom_zone_opt) ) {
       //array( 'title' => string, 'id' => string )
       foreach ( $_old_custom_zone_opt as $_zone ) {
         if ( !isset($_zone['id']) )
@@ -159,7 +159,7 @@ function hu_get_old_locations( $_zone_id, $__options) {
 
   foreach ($_old_sd_options as $opt_name) {
     //does the option exists ?
-    if( ! array_key_exists($opt_name, $__options) )
+    if( !array_key_exists($opt_name, $__options) )
       continue;
 
     //if exists, grab its value
@@ -170,7 +170,7 @@ function hu_get_old_locations( $_zone_id, $__options) {
 
     //we have a match, extract the location if not already there
     $loc = substr($opt_name, 0, 2);
-    if ( ! in_array($loc, $locations) )
+    if ( !in_array($loc, $locations) )
       $locations[] = $loc;
   }
 
@@ -228,7 +228,7 @@ function hu_get_old_contexts( $_zone_id, $__options) {
 
   foreach ($_old_sd_options as $opt_name) {
     //does the option exists ?
-    if( ! array_key_exists($opt_name, $__options) )
+    if( !array_key_exists($opt_name, $__options) )
       continue;
     //if exists, grab its value
     $value = $__options[$opt_name];
@@ -238,7 +238,7 @@ function hu_get_old_contexts( $_zone_id, $__options) {
 
     //we have a match, extract the context if not already there
     $con = substr($opt_name, 3);
-    if ( ! in_array($con, $contexts) )
+    if ( !in_array($con, $contexts) )
       $contexts[] = $con;
   }
 
@@ -294,7 +294,7 @@ function hu_clean_old_sidebar_options( $_new_sb_opts, $__options ) {
   foreach ($_old_sd_options as $opt_name) {
 
     //is the option defined ?
-    if( ! array_key_exists($opt_name, $__options) )
+    if( !array_key_exists($opt_name, $__options) )
       continue;
 
     //get previous settings
@@ -303,7 +303,7 @@ function hu_clean_old_sidebar_options( $_new_sb_opts, $__options ) {
     $_user_zone_id = $__options[$opt_name];
 
     //if no zone was assigned to this location-context, then continue
-    if ( empty($_user_zone_id ) || ! $_user_zone_id )
+    if ( empty($_user_zone_id ) || !$_user_zone_id )
       continue;
 
     //is the zone different than the default one?
@@ -347,7 +347,7 @@ function hu_maybe_transfer_option_tree_to_customizer( $_options ) {
   $copy_option_tree = isset( $_GET['copy_option_tree'] );
 
   //have the option already been copied ?
-  if ( isset($_options['has_been_copied']) && true === $_options['has_been_copied'] && ! $copy_option_tree )
+  if ( isset($_options['has_been_copied']) && true === $_options['has_been_copied'] && !$copy_option_tree )
     return;
 
   $_old_options = get_option( 'option_tree' );
@@ -377,10 +377,10 @@ function hu_maybe_transfer_option_tree_to_customizer( $_options ) {
 //=> display-header-logo set to false
 function hu_maybe_copy_logo_to_theme_mod( $_options ) {
     //keep using the old logo if WP version < 4.5
-    if ( ! function_exists( 'the_custom_logo' ) )
+    if ( !function_exists( 'the_custom_logo' ) )
       return;
 
-    $_old_custom_logo_exists = isset($_options['custom-logo']) && false != $_options['custom-logo'] && ! empty($_options['custom-logo']);
+    $_old_custom_logo_exists = isset($_options['custom-logo']) && false != $_options['custom-logo'] && !empty($_options['custom-logo']);
     if ( $_old_custom_logo_exists ) {
         set_theme_mod( 'custom_logo', $_options['custom-logo'] );
         $_options['display-header-logo'] = 1;
@@ -409,72 +409,72 @@ add_action( 'hu_init_options_done', 'hu_update_option_backward_compat' );
 
 
 /* Backward compatibility. Typically useful for users of child themes using old function names. */
-if ( ! function_exists('alx_layout_class') ) {
+if ( !function_exists('alx_layout_class') ) {
   function alx_layout_class() {
     return hu_get_layout_class();
   }
 }
 
-if ( ! function_exists('alx_social_links') ) {
+if ( !function_exists('alx_social_links') ) {
   function alx_social_links() {
     return hu_print_social_links();
   }
 }
 
-if ( ! function_exists('alx_site_title') ) {
+if ( !function_exists('alx_site_title') ) {
   function alx_site_title() {
     return hu_site_title();
   }
 }
 
-if ( ! function_exists('alx_blog_title') ) {
+if ( !function_exists('alx_blog_title') ) {
   function alx_blog_title() {
     return hu_blog_title();
   }
 }
 
-if ( ! function_exists('alx_page_title') ) {
+if ( !function_exists('alx_page_title') ) {
   function alx_page_title() {
     return hu_get_page_title();
   }
 }
 
-if ( ! function_exists('alx_post_images') ) {
+if ( !function_exists('alx_post_images') ) {
   function alx_post_images() {
     return hu_post_images();
   }
 }
 
-if ( ! function_exists('alx_related_posts') ) {
+if ( !function_exists('alx_related_posts') ) {
   function alx_related_posts() {
     return hu_get_related_posts();
   }
 }
-if ( ! function_exists('hu_related_posts')) {
+if ( !function_exists('hu_related_posts')) {
     function hu_related_posts() {
       return hu_get_related_posts();
     }
 }
 
-if ( ! function_exists('alx_sidebar_secondary') ) {
+if ( !function_exists('alx_sidebar_secondary') ) {
   function alx_sidebar_secondary() {
     return 'secondary';
   }
 }
 
-if ( ! function_exists('alx_sidebar_primary') ) {
+if ( !function_exists('alx_sidebar_primary') ) {
   function alx_sidebar_primary() {
     return 'primary';
   }
 }
 
-if ( ! function_exists('alx_sidebar_primary') ) {
+if ( !function_exists('alx_sidebar_primary') ) {
   function alx_sidebar_primary() {
     return 'primary';
   }
 }
 
-if ( ! function_exists( 'hu_get_placeholder_thumb' ) ) {
+if ( !function_exists( 'hu_get_placeholder_thumb' ) ) {
   function hu_get_placeholder_thumb( $_requested_size = 'thumb-medium' ) {
     return hu_print_placeholder_thumb( $_requested_size );
   }

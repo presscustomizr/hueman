@@ -11,7 +11,7 @@
 * @link         http://presscustomizr.com/hueman
 * @license      http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
-if ( ! class_exists( 'HU_utils_settings_map' ) ) :
+if ( !class_exists( 'HU_utils_settings_map' ) ) :
   class HU_utils_settings_map {
     static $instance;
     private $is_wp_version_before_4_0;
@@ -21,7 +21,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
       self::$instance =& $this;
       //declare a private property to check wp version >= 4.0
       global $wp_version;
-      $this -> is_wp_version_before_4_0 = ( ! version_compare( $wp_version, '4.0', '>=' ) ) ? true : false;
+      $this -> is_wp_version_before_4_0 = ( !version_compare( $wp_version, '4.0', '>=' ) ) ? true : false;
     }//end of construct
 
 
@@ -34,7 +34,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     * @since Hueman 3.0
     */
     public function hu_get_customizer_map( $get_default = null, $what = null ) {
-      if ( ! empty( $this -> customizer_map ) ) {
+      if ( !empty( $this -> customizer_map ) ) {
         $_customizr_map = $this -> customizer_map;
       }
       else {
@@ -124,7 +124,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
       );
 
       foreach ( $_settings_sections as $_section_cb ) {
-          if ( ! method_exists( $this , $_section_cb ) )
+          if ( !method_exists( $this , $_section_cb ) )
             continue;
           //applies a filter to each section settings map => allows plugins (hueman addons for ex.) to add/remove settings
           //each section map takes one boolean param : $get_default
@@ -133,7 +133,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
             call_user_func_array( array( $this, $_section_cb ), array( $get_default ) )
           );
 
-          if ( ! is_array( $_section_map) )
+          if ( !is_array( $_section_map) )
             continue;
 
           $_new_map = array_merge( $_new_map, $_section_map );
@@ -1800,7 +1800,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
       //=> because once the preview is ready, a postMessage is sent to the panel frame to refresh the sections and panels
       //Do nothing if WP version under 4.2
       global $wp_version;
-      if ( ! version_compare( $wp_version, '4.2', '>=') )
+      if ( !version_compare( $wp_version, '4.2', '>=') )
         return $_sections;
 
       if ( isset($_GET['theme']) && is_array($_sections) ) {
@@ -1817,7 +1817,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
         }
       }
 
-      if (  ! is_array($_sections) || $_theme_switcher_requested )
+      if (  !is_array($_sections) || $_theme_switcher_requested )
         return $_sections;
 
       array_push( $_sections, 'themes');
@@ -2111,7 +2111,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
       $_to_return = array();
 
       //return no sidebars if empty
-      if ( ! count( $sidebars ) ) {
+      if ( !count( $sidebars ) ) {
         $_to_return['no-sidebars'] = '-- ' . __( 'No Sidebars', 'hueman' )  . ' --';
         return $_to_return;
       }
@@ -2159,7 +2159,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
      * @since Hueman 3.3.0
      */
     function hu_sanitize_number( $value) {
-      if ( ! $value || is_null($value) )
+      if ( !$value || is_null($value) )
         return $value;
       $value = esc_attr( $value); // clean input
       $value = (int) $value; // Force the value into integer type.
@@ -2193,7 +2193,7 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
     * @return  bool
     */
     function hu_pro_section_active_cb() {
-        return ! hu_isprevdem();
+        return !hu_isprevdem();
     }
 
 

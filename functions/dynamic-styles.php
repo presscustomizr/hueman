@@ -5,7 +5,7 @@
 
 /*  Convert hexadecimal to rgb
 /* ------------------------------------ */
-if ( ! function_exists( 'hu_hex2rgb' ) ) {
+if ( !function_exists( 'hu_hex2rgb' ) ) {
 
   function hu_hex2rgb( $hex, $array = false ) {
     // skip if already rgb
@@ -38,14 +38,14 @@ function hu_is_rgb_color( $color = '' ) {
 
 /*  Google fonts
 /* ------------------------------------ */
-if ( ! function_exists( 'hu_print_gfont_head_link' ) ) {
+if ( !function_exists( 'hu_print_gfont_head_link' ) ) {
   //@return void()
   //hook : 'wp_head'
   function hu_print_gfont_head_link () {
     $user_font     = hu_get_option( 'font' );
     $gfamily       = hu_get_fonts( array( 'font_id' => $user_font, 'request' => 'src' ) );//'Source+Sans+Pro:400,300italic,300,400italic,600&subset=latin,latin-ext',
     //bail here if self hosted font (titilium) of web font
-    if ( ( empty( $gfamily ) || ! is_string( $gfamily ) ) )
+    if ( ( empty( $gfamily ) || !is_string( $gfamily ) ) )
       return;
 
     printf( '<link id="hu-user-gfont" href="//fonts.googleapis.com/css?family=%1$s" rel="stylesheet" type="text/css">', $gfamily );
@@ -62,7 +62,7 @@ add_filter( 'ha_user_options_style', 'hu_get_user_defined_inline_css_rules');
 
 /*  Dynamic css output
 /* ------------------------------------ */
-if ( ! function_exists( 'hu_get_user_defined_inline_css_rules' ) ) {
+if ( !function_exists( 'hu_get_user_defined_inline_css_rules' ) ) {
   //@return string
   //hook : ha_user_options_style
   function hu_get_user_defined_inline_css_rules() {
@@ -83,7 +83,7 @@ if ( ! function_exists( 'hu_get_user_defined_inline_css_rules' ) ) {
       $remsize      = $user_font_size / 16;
       $remsize      = number_format( (float)$remsize, 2, '.', '');
       $family       = hu_get_fonts( array( 'font_id' => $user_font, 'request' => 'family' ) );//'"Raleway", Arial, sans-serif'
-      if ( ! empty( $family ) && is_string( $family ) ) {
+      if ( !empty( $family ) && is_string( $family ) ) {
           $styles[]     = sprintf('body { font-family:%1$s;font-size:%2$srem }', $family, $remsize );
       } else {
           $styles[]     = sprintf('body { font-size:%1$srem; }', $remsize );
@@ -148,7 +148,7 @@ if ( ! function_exists( 'hu_get_user_defined_inline_css_rules' ) ) {
       $is_transparent = hu_is_checked( 'transparent-fixed-topnav' );
 
       //$def_tb_col = hu_user_started_before_version( '3.3.8' ) ? '#26272b' : '#121d30';
-      if ( $tb_color != '#121d30' || ! $is_transparent ) {
+      if ( $tb_color != '#121d30' || !$is_transparent ) {
           if ( $tb_color != '#121d30' ) {
               $styles[] = '.search-expand,
               #nav-topbar.nav-container { background-color: '.$tb_color.$header_bg_colors_important.'}';
@@ -236,7 +236,7 @@ if ( ! function_exists( 'hu_get_user_defined_inline_css_rules' ) ) {
 
       // body background (@fromfull) => keep on wp.org
       $body_bg = hu_get_option('body-background');
-      if ( ! empty( $body_bg ) ) {
+      if ( !empty( $body_bg ) ) {
         //for users of wp.org version prior to 3.0+, this option is an hex color string.
         if ( is_string($body_bg) ) {
           $styles[] = 'body { background-color: ' . $body_bg . '; }';

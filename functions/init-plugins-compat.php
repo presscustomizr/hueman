@@ -122,13 +122,13 @@ function hu_set_buddypress_compat() {
 function hu_set_uris_compat() {
   add_filter ( 'hu_img_smart_load_options', 'hu_uris_disable_img_smartload' ) ;
   function hu_uris_disable_img_smartload( $options ){
-    if ( ! is_array( $options ) )
+    if ( !is_array( $options ) )
       $options = array();
 
-    if ( ! is_array( $options['opts'] ) )
+    if ( !is_array( $options['opts'] ) )
       $options['opts'] = array();
 
-    if ( ! is_array( $options['opts']['excludeImg'] ) )
+    if ( !is_array( $options['opts']['excludeImg'] ) )
       $options['opts']['excludeImg'] = array();
 
     $options['opts']['excludeImg'][] = '.sp-image';
@@ -145,7 +145,7 @@ function hu_set_the_events_calendar_compat() {
   /*
   * Are we in the Events list context?
   */
-  if ( ! ( function_exists( 'hu_is_tec_events_list' ) ) ) {
+  if ( !( function_exists( 'hu_is_tec_events_list' ) ) ) {
     function hu_is_tec_events_list() {
       return function_exists( 'tribe_is_event_query' ) && tribe_is_event_query() && is_post_type_archive();
     }
@@ -153,7 +153,7 @@ function hu_set_the_events_calendar_compat() {
   /*
   * Are we in single Event context?
   */
-  if ( ! ( function_exists( 'hu_is_tec_single_event' ) ) ) {
+  if ( !( function_exists( 'hu_is_tec_single_event' ) ) ) {
     function hu_is_tec_single_event() {
       return function_exists( 'tribe_is_event_query' ) && tribe_is_event_query() && is_single();
     }
@@ -185,7 +185,7 @@ function hu_set_woocommerce_compat() {
 
   //show hu custom single post meta boxes in product post type
   add_filter( 'hu_custom_meta_boxes_post_options_in', 'hu_add_woocommerce_custom_meta_boxes_in_product');
-  if ( ! function_exists('hu_add_woocommerce_custom_meta_boxes_in_product') ) {
+  if ( !function_exists('hu_add_woocommerce_custom_meta_boxes_in_product') ) {
     function hu_add_woocommerce_custom_meta_boxes_in_product( $array ) {
       if ( is_array( $array ) && post_type_exists( 'product' ) )
         array_push( $array, 'product' );
@@ -204,7 +204,7 @@ function hu_set_woocommerce_compat() {
   add_filter( 'woocommerce_show_page_title', '__return_false' );
 
   add_filter( 'hu_in_wrapper_page_title', 'hu_print_woocommerce_page_title' );
-  if ( ! function_exists('hu_print_woocommerce_page_title') ) {
+  if ( !function_exists('hu_print_woocommerce_page_title') ) {
     function hu_print_woocommerce_page_title( $title ) {
       if ( function_exists('is_woocommerce') && is_woocommerce() && function_exists('woocommerce_page_title') ) {
       ?>
@@ -212,7 +212,7 @@ function hu_set_woocommerce_compat() {
           <?php if ( is_single() ):
                   global $product;
                   if ( isset($product) ) :
-                    $product        = ! ( is_object ($product ) && ( $product instanceof WC_Product ) ) ? wc_get_product( get_the_ID() ) : $product;
+                    $product        = !( is_object ($product ) && ( $product instanceof WC_Product ) ) ? wc_get_product( get_the_ID() ) : $product;
                     $review_enabled = get_option( 'woocommerce_enable_review_rating' ) !== 'no';
                     $review_count   = $review_enabled ? $product->get_review_count() : '';
                     $product_id     = method_exists( $product, 'get_id' ) ? $product->get_id() : $product->id;
@@ -235,7 +235,7 @@ function hu_set_woocommerce_compat() {
   }
 
   add_filter( 'hu_in_wrapper_container_class', 'hu_add_woocommerce_context' );
-  if ( ! function_exists( 'hu_add_woocommerce_context' ) ) {
+  if ( !function_exists( 'hu_add_woocommerce_context' ) ) {
     function hu_add_woocommerce_context( $classes ) {
       if ( function_exists('is_woocommerce') && is_woocommerce() ) {
         array_push( $classes, 'woocommerce' );
@@ -249,17 +249,17 @@ function hu_set_woocommerce_compat() {
     add_filter("woocommerce_product_{$filter_key}_tab_title", "hu_wc_{$filter_key}_tab_title" );
   }
 
-  if ( ! function_exists( 'hu_wc_description_tab_title' ) ) {
+  if ( !function_exists( 'hu_wc_description_tab_title' ) ) {
     function hu_wc_description_tab_title( $title ){
       return '<i class="fas fa-pencil-alt"></i>' . $title;
     }
   }
-  if ( ! function_exists( 'hu_wc_additional_information_tab_title' ) ) {
+  if ( !function_exists( 'hu_wc_additional_information_tab_title' ) ) {
     function hu_wc_additional_information_tab_title( $title ){
       return '<i class="fas fa-info"></i>' . $title;
     }
   }
-  if ( ! function_exists( 'hu_wc_reviews_tab_title' ) ) {
+  if ( !function_exists( 'hu_wc_reviews_tab_title' ) ) {
     function hu_wc_reviews_tab_title( $title ) {
       if ( apply_filters( 'hu_wc_experimental_reviews_tab_title', true ) ) {
         global $product;
@@ -285,7 +285,7 @@ function hu_set_woocommerce_compat() {
     add_filter( "hu_dynamic_{$filter_key}_prop_selectors", "hu_wc_{$filter_key}_prop_selectors" );
   }
 
-  if ( ! function_exists( 'hu_wc_primary_color_color_prop_selectors' ) ) {
+  if ( !function_exists( 'hu_wc_primary_color_color_prop_selectors' ) ) {
     /*
     * @param array $selectors
     * return array $selectors
@@ -296,7 +296,7 @@ function hu_set_woocommerce_compat() {
     }
   }
 
-  if ( ! function_exists( 'hu_wc_primary_color_background_color_prop_selectors' ) ) {
+  if ( !function_exists( 'hu_wc_primary_color_background_color_prop_selectors' ) ) {
     /*
     * @param array $selectors
     * return array $selectors
@@ -312,7 +312,7 @@ function hu_set_woocommerce_compat() {
     }
   }
 
-  if ( ! function_exists( 'hu_wc_primary_color_border_bottom_color_prop_selectors' ) ) {
+  if ( !function_exists( 'hu_wc_primary_color_border_bottom_color_prop_selectors' ) ) {
     /*
     * @param array $selectors
     * return array $selectors
@@ -323,7 +323,7 @@ function hu_set_woocommerce_compat() {
     }
   }
 
-  if ( ! function_exists( 'hu_wc_secondary_color_background_color_prop_selectors' ) ) {
+  if ( !function_exists( 'hu_wc_secondary_color_background_color_prop_selectors' ) ) {
     /*
     * @param array $selectors
     * return array $selectors
@@ -348,7 +348,7 @@ function hu_set_woocommerce_compat() {
 function hu_set_wp_pagenavi_compat() {
   /*  WP-PageNavi support - @devinsays (via GitHub)
   /* ------------------------------------ */
-  if ( ! function_exists( 'hu_deregister_wp_pagenavi_style' ) ) {
+  if ( !function_exists( 'hu_deregister_wp_pagenavi_style' ) ) {
     function hu_deregister_wp_pagenavi_style() {
       wp_deregister_style( 'wp-pagenavi' );
     }
@@ -381,7 +381,7 @@ function hu_is_plugin_active( $plugin ) {
 * @return bool True, if active for the network, otherwise false.
 */
 function hu_is_plugin_active_for_network( $plugin ) {
-  if ( ! is_multisite() )
+  if ( !is_multisite() )
     return false;
 
   $plugins = get_site_option( 'active_sitewide_plugins');
@@ -512,7 +512,7 @@ function hu_set_polylang_compat() {
     * @param array of term ids
     */
     function hu_pll_translate_tax( $term_ids ){
-      if ( ! ( is_array( $term_ids ) && ! empty( $term_ids ) ) || ! function_exists( 'pll_get_term' ) )
+      if ( !( is_array( $term_ids ) && !empty( $term_ids ) ) || !function_exists( 'pll_get_term' ) )
         return $term_ids;
 
       $translated_terms = array();
@@ -522,7 +522,7 @@ function hu_set_polylang_compat() {
       }
       return array_unique( $translated_terms );
     }
-    if ( ! is_admin() ) {
+    if ( !is_admin() ) {
       //Translate category ids for the filtered posts in home/blog
       add_filter('hu_opt_blog-restrict-by-cat', 'hu_pll_translate_tax');
     }
@@ -549,12 +549,12 @@ function hu_set_wpml_compat() {
     * @param array of term ids
     */
     function hu_wpml_translate_cat( $cat_ids ){
-      if ( ! ( is_array( $cat_ids ) && ! empty( $cat_ids ) ) )
+      if ( !( is_array( $cat_ids ) && !empty( $cat_ids ) ) )
         return $cat_ids;
       return array_unique( hu_fn_wpml_object_id( $cat_ids, 'category' ) );
     }
 
-    if ( ! is_admin() ) {
+    if ( !is_admin() ) {
       //Translate category ids for the filtered posts in home/blog
       add_filter('hu_opt_blog-restrict-by-cat', 'hu_wpml_translate_cat');
     }

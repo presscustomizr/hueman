@@ -9,7 +9,7 @@ if ( !isset( $content_width ) ) { $content_width = 720; }
 
 /*  Theme setup
 /* ------------------------------------ */
-if ( ! function_exists( 'hu_setup' ) ) {
+if ( !function_exists( 'hu_setup' ) ) {
 
   function hu_setup() {
      // Load theme languages
@@ -20,7 +20,7 @@ if ( ! function_exists( 'hu_setup' ) ) {
     // get_theme_mod( 'header_image', get_theme_support( 'custom-header', 'default-image' ) );
     // Backward compat : if a header-image was previously set by the user, then it becomes the default image, otherwise we fall back on the asset's default.
     $_old_header_image_val = hu_get_option('header-image');
-    $did_user_set_an_image = false != $_old_header_image_val && ! empty($_old_header_image_val);
+    $did_user_set_an_image = false != $_old_header_image_val && !empty($_old_header_image_val);
     $headers = apply_filters( 'hu_default_header_img' , array(
             'default-header' => array(
               'url'           => '%s/assets/front/img/header/default-header-280.jpg',
@@ -80,7 +80,7 @@ if ( ! function_exists( 'hu_setup' ) ) {
     // Add theme support for selective refresh for widgets.
     // Only add if the link manager is not enabled
     // cf WP core ticket #39451
-    if ( ! get_option( 'link_manager_enabled' ) ) {
+    if ( !get_option( 'link_manager_enabled' ) ) {
       add_theme_support( 'customize-selective-refresh-widgets' );
     }
 
@@ -117,7 +117,7 @@ add_action( 'after_setup_theme', 'hu_setup' );
 add_action( 'after_setup_theme', 'hu_fn_load_czr_base_fmk', 15 );
 function hu_fn_load_czr_base_fmk() {
     // load the czr-base-fmk
-    if ( ! isset( $GLOBALS['czr_base_fmk_namespace'] ) ) {
+    if ( !isset( $GLOBALS['czr_base_fmk_namespace'] ) ) {
         require_once(  dirname( __FILE__ ) . '/czr-base-fmk/czr-base-fmk.php' );
         if ( function_exists('\hu_czr_fmk\CZR_Fmk_Base') ) {
             \hu_czr_fmk\CZR_Fmk_Base( array(
@@ -180,7 +180,7 @@ function hu_load_social_links_module() {
 add_action( 'after_setup_theme', 'hu_maybe_load_body_bg_module', 100 );
 function hu_maybe_load_body_bg_module() {
     // deactivated when the contextualizer is on
-    if ( ! apply_filters( 'hu_maybe_load_body_bg_module', true ) )
+    if ( !apply_filters( 'hu_maybe_load_body_bg_module', true ) )
       return;
     // load the social links module
     require_once( HU_BASE . 'functions/czr-modules/body-background/body_bg_module.php' );
