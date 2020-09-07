@@ -104,14 +104,11 @@ if ( !class_exists( 'HU_admin_update_notification' ) ) :
                 <?php
                   echo apply_filters(
                     'hu_update_notice',
-                    sprintf( '<h4>%1$s <a class="" href="%2$s" title="%3$s" target="_blank">%3$s &raquo;</a></h4>',
+                    sprintf( '<h4>%1$s <a class="" href="%2$s" title="%3$s" target="_blank">%3$s &raquo;</a></h4>%4$s',
                       __( "We'd like to introduce the new features we've been working on.", "hueman"),
                       HU_WEBSITE . "/category/hueman-releases/",
-                      __( "Read the latest release notes" , "hueman" )
-                      // !HU_IS_PRO ? sprintf( '<p style="position: absolute;right: 7px;top: 4px;"><a class="button button-primary upgrade-to-pro" href="%1$s" title="%2$s" target="_blank">%2$s &raquo;</a></p>',
-                      //   esc_url('presscustomizr.com/hueman-pro?ref=a&utm_source=usersite&utm_medium=link&utm_campaign=hueman-update-notice'),
-                      //   __( "Upgrade to Hueman Pro", "hueman" )
-                      // ) : ''
+                      __( "Read the latest release notes" , "hueman" ),
+                      apply_filters( 'hu_update_notice_after', '' )
                     )
                   );
                 ?>
