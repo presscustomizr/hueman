@@ -436,6 +436,7 @@ span.czr-notice {
 }
 .czr-html-after {
   float: left;
+  width: 100%;
 }
 
 .czr-customizer-separator-invisible {
