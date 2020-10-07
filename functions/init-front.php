@@ -857,6 +857,12 @@ if ( !function_exists( 'hu_body_class' ) ) {
     if ( hu_is_checked( 'defer_font_awesome') ) {
         $classes[] = 'hu-fa-not-loaded';
     }
+    // Oct 2020 : theme version
+    $ver = str_replace('.', '-', HUEMAN_VER );
+    $prefix = (defined('HU_IS_PRO' ) && HU_IS_PRO) ? 'hueman-pro-' : 'hueman-';
+    $theme_class = $prefix . $ver;
+    $classes[] = get_template_directory() === get_stylesheet_directory() ? $theme_class : $theme_class.'-with-child-theme';
+
     return $classes;
   }
 }
