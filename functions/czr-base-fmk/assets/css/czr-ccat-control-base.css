@@ -384,6 +384,10 @@ input:-ms-input-placeholder {
   height: 24px;
 }
 
+/* Sept 2020 => fix alpha color picker style broken */
+.wp-picker-container .iris-alpha-slider {
+  margin-left:5px!important;
+}
 
 
 

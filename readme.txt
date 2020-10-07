@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.5
-Stable tag: 3.6.4
+Stable tag: 3.6.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,8 +14,12 @@ The Hueman theme loads fast and is 100% mobile-friendly according to Google. One
 
 == Changelog ==
 https://github.com/presscustomizr/hueman/releases
+= 3.6.5 October 7th, 2020 =
+* fixed : [CSS][plugin compatibility] Code Syntax Block style broken. fixes #926
+* added : [CSS] add current theme version as CSS class to body tag. fixes #930
+
 = 3.6.4 September 18, 2020 =
-* fixed : [admin] potential security issue 
+* fixed : [admin] potential security issue
 
 = 3.6.3 September 8, 2020 =
 * fixed : [admin] update notification not dismissed. Introduced in v3.6.2.
