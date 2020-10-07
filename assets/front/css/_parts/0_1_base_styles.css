@@ -254,9 +254,12 @@ input[type="submit"]:hover,
 .hu-fa-not-loaded .comment blockquote:before, .hu-fa-not-loaded .entry blockquote:before { content:"\00a0";}
 
 .comment blockquote.twitter-tweet:before, .entry blockquote.twitter-tweet:before { content: "\f099"; }
-.comment code, .entry code, .entry pre { font-family: Monaco, "Courier New", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", monospace; font-size: 0.6875em; }
-.comment pre, .entry pre { background: url(../img/pre.png) repeat top; padding: 18px 20px; margin: 30px 0; border: 1px solid #ddd; line-height: 19px; white-space: pre-wrap; word-wrap: break-word; overflow-x: auto; overflow-y: hidden; }
-.comment code, .entry code { background: #eee; padding: 0 3px; }
+.comment code, .entry code, .entry pre:not(.wp-block-code) {
+  font-family: Monaco, "Courier New", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", monospace;
+  font-size: 0.875em;
+}
+.comment pre:not(.wp-block-code), .entry pre:not(.wp-block-code) { background: url(../img/pre.png) repeat top; padding: 18px 20px; margin: 30px 0; border: 1px solid #ddd; line-height: 19px; white-space: pre-wrap; word-wrap: break-word; overflow-x: auto; overflow-y: hidden; }
+.comment code:not([lang]), .entry code:not([lang]) { background: #eee; padding: 0 3px; }
 .entry ins { background: #fff486; }
 .entry sub,
 .entry sup { font-size: 62.5%; }
