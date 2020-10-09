@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Hueman\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2020-10-07 13:03:57+00:00\n"
+"POT-Creation-Date: 2020-10-09 16:06:02+00:00\n"
 "PO-Revision-Date: 2016-11-04 13:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -837,7 +837,7 @@ msgid ""
 "layout is set."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:958 functions/init-front.php:1686
+#: functions/class-utils-settings-map.php:958 functions/init-front.php:1703
 #: functions/init-sidebars-widgets.php:132
 msgid "Home"
 msgstr "Huis"
@@ -2511,46 +2511,46 @@ msgstr "Sidebar uitbreiden"
 msgid "Collapse"
 msgstr ""
 
-#: functions/init-front.php:1734 functions/init-sidebars-widgets.php:134
+#: functions/init-front.php:1751 functions/init-sidebars-widgets.php:134
 msgid "Pages"
 msgstr "Pagina’s"
 
-#: functions/init-front.php:2010
+#: functions/init-front.php:2027
 #, fuzzy
 msgid "Welcome in the Hueman theme"
 msgstr "Uitgebreide opties voor het Hueman thema."
 
-#: functions/init-front.php:2013
+#: functions/init-front.php:2030
 msgid "The theme offers a wide range"
 msgstr ""
 
-#: functions/init-front.php:2015
+#: functions/init-front.php:2032
 msgid "of customization options"
 msgstr ""
 
-#: functions/init-front.php:2016
+#: functions/init-front.php:2033
 msgid "to let you create the best possible websites."
 msgstr ""
 
-#: functions/init-front.php:2019
+#: functions/init-front.php:2036
 msgid "If you need inspiration, you can visit our online demos"
 msgstr ""
 
-#: functions/init-front.php:2021
+#: functions/init-front.php:2038
 #, fuzzy
 msgid "Hueman Demo 1"
 msgstr "Hueman"
 
-#: functions/init-front.php:2023
+#: functions/init-front.php:2040
 #, fuzzy
 msgid "Hueman Demo 2"
 msgstr "Hueman"
 
-#: functions/init-front.php:2026
+#: functions/init-front.php:2043
 msgid "To help you getting started with Hueman, we have published"
 msgstr ""
 
-#: functions/init-front.php:2028
+#: functions/init-front.php:2045
 msgid "a short guide here."
 msgstr ""
 
