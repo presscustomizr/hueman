@@ -555,6 +555,8 @@ var czrapp = czrapp || {};
                         link.setAttribute('id', 'hu-font-awesome');
                         link.setAttribute('rel', hasPreloadSupport() ? 'preload' : 'stylesheet' );
                         link.setAttribute('as', 'style');
+                        link.setAttribute('type', 'text/css');
+                        link.setAttribute('media', 'all');
                         document.getElementsByTagName('head')[0].appendChild(link);
                     } else {
                         // this is the case when font-awesome.min.css has been loaded by a third party plugin
