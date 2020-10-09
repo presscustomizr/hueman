@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Hueman v3.6.6\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2020-10-09 16:06:02+00:00\n"
+"POT-Creation-Date: 2020-10-09 17:14:40+00:00\n"
 "PO-Revision-Date: 2016-08-31 16:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: Press Customizr\n"
@@ -884,7 +884,7 @@ msgid ""
 "layout is set."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:958 functions/init-front.php:1703
+#: functions/class-utils-settings-map.php:958 functions/init-front.php:1775
 #: functions/init-sidebars-widgets.php:132
 msgid "Home"
 msgstr "Beranda"
@@ -2601,46 +2601,46 @@ msgstr "Buka Sidebar"
 msgid "Collapse"
 msgstr ""
 
-#: functions/init-front.php:1751 functions/init-sidebars-widgets.php:134
+#: functions/init-front.php:1823 functions/init-sidebars-widgets.php:134
 msgid "Pages"
 msgstr "Laman"
 
-#: functions/init-front.php:2027
+#: functions/init-front.php:2099
 #, fuzzy
 msgid "Welcome in the Hueman theme"
 msgstr "Ulas tema Hueman"
 
-#: functions/init-front.php:2030
+#: functions/init-front.php:2102
 msgid "The theme offers a wide range"
 msgstr ""
 
-#: functions/init-front.php:2032
+#: functions/init-front.php:2104
 msgid "of customization options"
 msgstr ""
 
-#: functions/init-front.php:2033
+#: functions/init-front.php:2105
 msgid "to let you create the best possible websites."
 msgstr ""
 
-#: functions/init-front.php:2036
+#: functions/init-front.php:2108
 msgid "If you need inspiration, you can visit our online demos"
 msgstr ""
 
-#: functions/init-front.php:2038
+#: functions/init-front.php:2110
 #, fuzzy
 msgid "Hueman Demo 1"
 msgstr "Hueman Video"
 
-#: functions/init-front.php:2040
+#: functions/init-front.php:2112
 #, fuzzy
 msgid "Hueman Demo 2"
 msgstr "Hueman Video"
 
-#: functions/init-front.php:2043
+#: functions/init-front.php:2115
 msgid "To help you getting started with Hueman, we have published"
 msgstr ""
 
-#: functions/init-front.php:2045
+#: functions/init-front.php:2117
 msgid "a short guide here."
 msgstr ""
 

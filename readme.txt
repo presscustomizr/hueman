@@ -16,6 +16,8 @@ The Hueman theme loads fast and is 100% mobile-friendly according to Google. One
 https://github.com/presscustomizr/hueman/releases
 = 3.6.6 October 9th, 2020 =
 * improved : [performance] implement preload for Font Awesome icons
+* improved : [performance] preload Titillium self hosted font when used
+* improved : [performance] set Titillium self hosted font as default font
 
 = 3.6.5 October 7th, 2020 =
 * fixed : [CSS][plugin compatibility] Code Syntax Block style broken. fixes #926
