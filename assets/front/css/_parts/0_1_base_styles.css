@@ -41,60 +41,6 @@ strong { font-weight: 600; }
 /* ------------------------------------ */
 .far, .fab, .fas { width: 1em; text-align: center; }
 
-/*  base : fonts
-/* ------------------------------------ */
-body { font-family: "Titillium", Arial, sans-serif; }
-
-@font-face {
-  font-family: 'Titillium';
-  src: url('../fonts/titillium-light-webfont.eot');
-  src: url('../fonts/titillium-light-webfont.svg#titillium-light-webfont') format('svg'),
-     url('../fonts/titillium-light-webfont.eot?#iefix') format('embedded-opentype'),
-     url('../fonts/titillium-light-webfont.woff') format('woff'),
-     url('../fonts/titillium-light-webfont.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Titillium';
-  src: url('../fonts/titillium-lightitalic-webfont.eot');
-  src: url('../fonts/titillium-lightitalic-webfont.svg#titillium-lightitalic-webfont') format('svg'),
-     url('../fonts/titillium-lightitalic-webfont.eot?#iefix') format('embedded-opentype'),
-     url('../fonts/titillium-lightitalic-webfont.woff') format('woff'),
-     url('../fonts/titillium-lightitalic-webfont.ttf') format('truetype');
-  font-weight: 300;
-  font-style: italic;
-}
-@font-face {
-  font-family: 'Titillium';
-  src: url('../fonts/titillium-regular-webfont.eot');
-  src: url('../fonts/titillium-regular-webfont.svg#titillium-regular-webfont') format('svg'),
-     url('../fonts/titillium-regular-webfont.eot?#iefix') format('embedded-opentype'),
-     url('../fonts/titillium-regular-webfont.woff') format('woff'),
-     url('../fonts/titillium-regular-webfont.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Titillium';
-  src: url('../fonts/titillium-regularitalic-webfont.eot');
-  src: url('../fonts/titillium-regularitalic-webfont.svg#titillium-regular-webfont') format('svg'),
-     url('../fonts/titillium-regularitalic-webfont.eot?#iefix') format('embedded-opentype'),
-     url('../fonts/titillium-regularitalic-webfont.woff') format('woff'),
-     url('../fonts/titillium-regularitalic-webfont.ttf') format('truetype');
-  font-weight: 400;
-  font-style: italic;
-}
-@font-face {
-    font-family: 'Titillium';
-    src: url('../fonts/titillium-semibold-webfont.eot');
-    src: url('../fonts/titillium-semibold-webfont.svg#titillium-semibold-webfont') format('svg'),
-         url('../fonts/titillium-semibold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/titillium-semibold-webfont.woff') format('woff'),
-         url('../fonts/titillium-semibold-webfont.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-}
 
 /*  base : forms
 /* ------------------------------------ */

@@ -250,7 +250,7 @@ if ( !class_exists( 'HU_utils_settings_map' ) ) :
     function hu_general_design_sec( $get_default = null ) {
       return array(
           'font' => array(
-                'default'   => 'source-sans-pro',
+                'default'   => 'titillium-web',
                 'control'   => 'HU_controls',
                 'label'     => __('Font', 'hueman'),
                 'section'   => 'general_design_sec',
