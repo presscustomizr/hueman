@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.5
-Stable tag: 3.6.6
+Stable tag: 3.6.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,10 @@ The Hueman theme loads fast and is 100% mobile-friendly according to Google. One
 
 == Changelog ==
 https://github.com/presscustomizr/hueman/releases
+= 3.6.7 November 3rd 2020 =
+* tested : [WordPress] Hueman v3.6.7 is 100% compatible with WP 5.5.3
+* fixed : [Header banner] Added a new option to disable header image linking to home when no site title/description. fixes #931
+
 = 3.6.6 October 9th, 2020 =
 * improved : [performance] implement preload for Font Awesome icons
 * improved : [performance] preload Titillium self hosted font when used
