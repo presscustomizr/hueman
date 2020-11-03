@@ -398,11 +398,14 @@ if ( !function_exists( 'hu_render_header_image' ) ) {
     if ( $_header_img_src ) {
       $attr['src'] = $_header_img_src;
     }
-
-    printf('<a href="%1$s" rel="home">%2$s</a>',
-        home_url('/'),
-        get_header_image_tag( $attr )
-    );
+    if ( hu_is_checked( 'header-img-link-home' ) ) {
+        printf('<a href="%1$s" rel="home">%2$s</a>',
+            home_url('/'),
+            get_header_image_tag( $attr )
+        );
+    } else {
+        echo get_header_image_tag( $attr );
+    }
   }
 }
 

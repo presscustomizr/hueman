@@ -700,6 +700,14 @@ if ( !class_exists( 'HU_utils_settings_map' ) ) :
                 'section'   => 'header_image_sec',
                 'type'      => 'nimblecheck'
           ),
+          // nov 2020 :  https://github.com/presscustomizr/hueman/issues/931
+          'header-img-link-home' => array(
+                'default'   => 1,
+                'control'   => 'HU_controls',
+                'label'     => __( 'Link the banner image to your home page' , 'hueman' ),
+                'section'   => 'header_image_sec',
+                'type'      => 'nimblecheck'
+          ),
           // 'header-img-height' => array(
           //       'default'   => 400,
           //       'control'   => 'HU_controls',
