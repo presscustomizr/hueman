@@ -2,8 +2,8 @@
 Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
-Tested up to: 5.5
-Stable tag: 3.6.7
+Tested up to: 5.6
+Stable tag: 3.6.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,11 @@ The Hueman theme loads fast and is 100% mobile-friendly according to Google. One
 
 == Changelog ==
 https://github.com/presscustomizr/hueman/releases
+= 3.6.8 November 17th 2020 =
+* fixed : [TRT requirement][accessibility] Links within content must be underlined. fixes #936
+* improved :  [WP 5.6][jQuery] adapt to WP jQuery updated version. Prepare removal of jQuery Migrate in future WP 5.7
+* fixed : [Nimble Builder compatibility] lazy loading broken for post thumbnails in post lists when using NB header
+
 = 3.6.7 November 3rd 2020 =
 * tested : [WordPress] Hueman v3.6.7 is 100% compatible with WP 5.5.3
 * fixed : [Header banner] Added a new option to disable header image linking to home when no site title/description. fixes #931

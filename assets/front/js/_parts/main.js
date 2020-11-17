@@ -998,11 +998,11 @@ var czrapp = czrapp || {};
                     return;
 
                   $_imgs.map( function( _ind, _img ) {
-                    $(_img).load( function () {
+                    $(_img).on('load', function () {
                       $(_img).trigger('simple_load');
                     });//end load
                     if ( $(_img)[0] && $(_img)[0].complete )
-                      $(_img).load();
+                      $(_img).trigger('load');
                   } );//end map
             },//end of fn
 
@@ -1281,8 +1281,8 @@ var czrapp = czrapp || {};
 
             //BROWSER LAYER : RESIZE AND SCROLL
             //listen to user DOM actions
-            czrapp.$_window.resize( _.throttle( function( ev ) { self.windowWidth( czrapp.$_window.width() ); }, 10 ) );
-            czrapp.$_window.scroll( _.throttle( function() {
+            czrapp.$_window.on('resize', _.throttle( function( ev ) { self.windowWidth( czrapp.$_window.width() ); }, 10 ) );
+            czrapp.$_window.on('scroll', _.throttle( function() {
                   self.isScrolling( true );
                   //self.previousScrollPosition = self.scrollPosition() || czrapp.$_window.scrollTop();
                   self.scrollPosition( czrapp.$_window.scrollTop() );
@@ -2216,7 +2216,7 @@ var czrapp = czrapp || {};
               /// BROWSER EVENTS REACT
               /// SCROLL
               //Set the stickyness state on scroll
-              czrapp.$_window.scroll( _.throttle( function() {
+              czrapp.$_window.on('scroll', _.throttle( function() {
                     //this check is added here because the _isStickyOptionOn() relies on a asynchronous ajax check for isMobileUserAgent()
                     if ( ! self._isStickyOptionOn() )
                       return;
@@ -2231,7 +2231,7 @@ var czrapp = czrapp || {};
               //SLOW THROTTLED SCROLL LISTENER TO SET THE MAX COLUMS HEIGHT AND STICKIFY WHEN EXPANDED
               //Whithout this listener, the max column height might not be refreshed on time ( )
               //=> Adresses the potential problems of
-              czrapp.$_window.scroll( _.throttle( function() {
+              czrapp.$_window.on('scroll', _.throttle( function() {
                     czrapp.userXP.maxColumnHeight( czrapp.userXP._getMaxColumnHeight() );
 
                     //always refresh live when expanded
@@ -3184,7 +3184,7 @@ var czrapp = czrapp || {};
                                       duration : 250,
                                       complete : function() {
                                             if ( exp ) {
-                                                  $('.search-expand input', '#header').focus();
+                                                  $('.search-expand input', '#header').trigger('focus');
                                             } else {
                                                   $topbar.css( { overflow : '' } );
                                                   if ( ! czrapp.userXP.topNavExpanded() ) {
@@ -3235,7 +3235,7 @@ var czrapp = czrapp || {};
         /*  Scroll to top
         /* ------------------------------------ */
         scrollToTop : function() {
-              $('a#back-to-top').click(function() {
+              $('a#back-to-top').on('click', function() {
                     $('html, body').animate({scrollTop:0},'slow');
                     return false;
               });
@@ -3276,7 +3276,7 @@ var czrapp = czrapp || {};
         /*  Comments / pingbacks tabs
         /* ------------------------------------ */
         commentTabs : function() {
-            $(".comment-tabs li").click(function() {
+            $(".comment-tabs li").on('click', function() {
                 $(".comment-tabs li").removeClass('active');
                 $(this).addClass("active");
                 $(".comment-tab").hide();
@@ -3308,8 +3308,7 @@ var czrapp = czrapp || {};
               //let's expand the topnav if not already manually expanded by the user.
               //As long as we are hovering, it won't collapse.
               //After 1 second without hovering in, it will collapse
-              $('#nav-topbar.desktop-sticky').hover(
-                    function() {
+              $('#nav-topbar.desktop-sticky').on('mouseenter', function() {
                           if ( czrapp.userXP.topNavExpanded() || czrapp.userXP._isMobileScreenSize() )
                             return;
                           _isHoveringInTopBar = true;
@@ -3317,8 +3316,7 @@ var czrapp = czrapp || {};
                                 overflow : 'visible',
                                 height : 1 == $topbar.find('.nav-wrap').length ? $topbar.find('.nav-wrap').height() : 'auto'
                           });
-                    },
-                    function() {
+                    }).on('mouseleave', function() {
                           if ( czrapp.userXP.topNavExpanded() || czrapp.userXP._isMobileScreenSize() )
                             return;
                           _isHoveringInTopBar = false;
@@ -3333,11 +3331,9 @@ var czrapp = czrapp || {};
                                       }, 400 );
                                 }
                           }, 1000 );
-                    }
-              );
+                    });
               //$('.nav ul.sub-menu').hide();
-              $('.nav li').hover(
-                    function() {
+              $('.nav li').on('mouseenter', function() {
                           if ( czrapp.userXP._isMobileScreenSize() )
                             return;
                           $(this).children('ul.sub-menu').hide().stop().slideDown({
@@ -3345,16 +3341,14 @@ var czrapp = czrapp || {};
                                   complete : czrapp.userXP.onSlidingCompleteResetCSS
                           })
                           .css( 'opacity', 1 );
-                    },
-                    function() {
+                    }).on('mouseleave', function() {
                           if ( czrapp.userXP._isMobileScreenSize() )
                             return;
                           $(this).children('ul.sub-menu').stop().css( 'opacity', '' ).slideUp( {
                                   duration : 'fast',
                                   complete : czrapp.userXP.onSlidingCompleteResetCSS
                           });
-                    }
-              );
+                    });
 
               // Allow Tab navigation
               // @fixes https://github.com/presscustomizr/hueman/issues/819
@@ -3488,7 +3482,7 @@ var czrapp = czrapp || {};
                     if ( $logoImg[0].complete ) {
                           czrapp.$_window.trigger('resize');
                     } else {
-                      $logoImg.load( function( img ) {
+                      $logoImg.on('load', function( img ) {
                             czrapp.$_window.trigger('resize');
                       });
                     }

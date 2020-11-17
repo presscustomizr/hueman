@@ -174,7 +174,7 @@ if ( !class_exists( 'HU_admin_update_notification' ) ) :
 
                 //on load
                 $( function($) {
-                  $('.tc-dismiss-update-notice').click( function( e ) {
+                  $('.tc-dismiss-update-notice').on('click', function( e ) {
                     e.preventDefault();
                     _ajax_action( $(this) );
                   } );

@@ -103,6 +103,12 @@ a img {
 -moz-transition: opacity 0.2s ease;
 -o-transition: opacity 0.2s ease;
 transition: opacity 0.2s ease; }
+
+/* Nov 2020 for https://github.com/presscustomizr/hueman/issues/936 */
+article .entry a, .comment-body a, .widget_text a {
+  text-decoration:underline;
+}
+
 address,cite,em { font-style: italic; }
 strong { font-weight: 600; }
 .left,.alignleft { float: left; }
