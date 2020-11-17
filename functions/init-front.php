@@ -1204,6 +1204,7 @@ if ( !function_exists( 'hu_scripts' ) ) {
                 'imgSmartLoadOpts'    => apply_filters( 'hu_img_smart_load_options' , array(
                       'parentSelectors' => array(
                           '.container .content',
+                          '.post-row',//<= needed when header is replaced by Nimble Builder
                           '.container .sidebar',
                           '#footer',
                           '#header-widgets'
