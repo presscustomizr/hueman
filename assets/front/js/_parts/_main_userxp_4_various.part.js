@@ -195,7 +195,7 @@ var czrapp = czrapp || {};
                                       duration : 250,
                                       complete : function() {
                                             if ( exp ) {
-                                                  $('.search-expand input', '#header').focus();
+                                                  $('.search-expand input', '#header').trigger('focus');
                                             } else {
                                                   $topbar.css( { overflow : '' } );
                                                   if ( ! czrapp.userXP.topNavExpanded() ) {
@@ -246,7 +246,7 @@ var czrapp = czrapp || {};
         /*  Scroll to top
         /* ------------------------------------ */
         scrollToTop : function() {
-              $('a#back-to-top').click(function() {
+              $('a#back-to-top').on('click', function() {
                     $('html, body').animate({scrollTop:0},'slow');
                     return false;
               });
@@ -287,7 +287,7 @@ var czrapp = czrapp || {};
         /*  Comments / pingbacks tabs
         /* ------------------------------------ */
         commentTabs : function() {
-            $(".comment-tabs li").click(function() {
+            $(".comment-tabs li").on('click', function() {
                 $(".comment-tabs li").removeClass('active');
                 $(this).addClass("active");
                 $(".comment-tab").hide();
@@ -319,8 +319,7 @@ var czrapp = czrapp || {};
               //let's expand the topnav if not already manually expanded by the user.
               //As long as we are hovering, it won't collapse.
               //After 1 second without hovering in, it will collapse
-              $('#nav-topbar.desktop-sticky').hover(
-                    function() {
+              $('#nav-topbar.desktop-sticky').on('mouseenter', function() {
                           if ( czrapp.userXP.topNavExpanded() || czrapp.userXP._isMobileScreenSize() )
                             return;
                           _isHoveringInTopBar = true;
@@ -328,8 +327,7 @@ var czrapp = czrapp || {};
                                 overflow : 'visible',
                                 height : 1 == $topbar.find('.nav-wrap').length ? $topbar.find('.nav-wrap').height() : 'auto'
                           });
-                    },
-                    function() {
+                    }).on('mouseleave', function() {
                           if ( czrapp.userXP.topNavExpanded() || czrapp.userXP._isMobileScreenSize() )
                             return;
                           _isHoveringInTopBar = false;
@@ -344,11 +342,9 @@ var czrapp = czrapp || {};
                                       }, 400 );
                                 }
                           }, 1000 );
-                    }
-              );
+                    });
               //$('.nav ul.sub-menu').hide();
-              $('.nav li').hover(
-                    function() {
+              $('.nav li').on('mouseenter', function() {
                           if ( czrapp.userXP._isMobileScreenSize() )
                             return;
                           $(this).children('ul.sub-menu').hide().stop().slideDown({
@@ -356,16 +352,14 @@ var czrapp = czrapp || {};
                                   complete : czrapp.userXP.onSlidingCompleteResetCSS
                           })
                           .css( 'opacity', 1 );
-                    },
-                    function() {
+                    }).on('mouseleave', function() {
                           if ( czrapp.userXP._isMobileScreenSize() )
                             return;
                           $(this).children('ul.sub-menu').stop().css( 'opacity', '' ).slideUp( {
                                   duration : 'fast',
                                   complete : czrapp.userXP.onSlidingCompleteResetCSS
                           });
-                    }
-              );
+                    });
 
               // Allow Tab navigation
               // @fixes https://github.com/presscustomizr/hueman/issues/819
@@ -499,7 +493,7 @@ var czrapp = czrapp || {};
                     if ( $logoImg[0].complete ) {
                           czrapp.$_window.trigger('resize');
                     } else {
-                      $logoImg.load( function( img ) {
+                      $logoImg.on('load', function( img ) {
                             czrapp.$_window.trigger('resize');
                       });
                     }

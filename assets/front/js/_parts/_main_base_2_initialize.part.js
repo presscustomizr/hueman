@@ -80,11 +80,11 @@ var czrapp = czrapp || {};
                     return;
 
                   $_imgs.map( function( _ind, _img ) {
-                    $(_img).load( function () {
+                    $(_img).on('load', function () {
                       $(_img).trigger('simple_load');
                     });//end load
                     if ( $(_img)[0] && $(_img)[0].complete )
-                      $(_img).load();
+                      $(_img).trigger('load');
                   } );//end map
             },//end of fn
 

@@ -73,8 +73,8 @@ var czrapp = czrapp || {};
 
             //BROWSER LAYER : RESIZE AND SCROLL
             //listen to user DOM actions
-            czrapp.$_window.resize( _.throttle( function( ev ) { self.windowWidth( czrapp.$_window.width() ); }, 10 ) );
-            czrapp.$_window.scroll( _.throttle( function() {
+            czrapp.$_window.on('resize', _.throttle( function( ev ) { self.windowWidth( czrapp.$_window.width() ); }, 10 ) );
+            czrapp.$_window.on('scroll', _.throttle( function() {
                   self.isScrolling( true );
                   //self.previousScrollPosition = self.scrollPosition() || czrapp.$_window.scrollTop();
                   self.scrollPosition( czrapp.$_window.scrollTop() );

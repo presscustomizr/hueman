@@ -775,7 +775,7 @@ if ( !class_exists( 'HU_utils_settings_map' ) ) :
           sprintf( '%1$s<strong><a class="jump-to-menu-panel" href="#" title="%3$s">%2$s</a><strong>',
               sprintf( '<script type="text/javascript">%1$s</script>',
                   "jQuery( function($) {
-                      $('.jump-to-menu-panel').click( function() {
+                      $('.jump-to-menu-panel').on('click', function() {
                           wp.customize.section('menu_locations').expanded( false );
                           wp.customize.panel('nav_menus').focus();
                       });
@@ -1609,7 +1609,7 @@ if ( !class_exists( 'HU_utils_settings_map' ) ) :
           sprintf( '%1$s<strong><a class="jump-to-menu-panel" href="#" title="%3$s">%2$s</a><strong>',
               sprintf( '<script type="text/javascript">%1$s</script>',
                   "jQuery( function($) {
-                      $('.jump-to-menu-panel').click( function() {
+                      $('.jump-to-menu-panel').on('click', function() {
                           wp.customize.section('menu_locations').expanded( false );
                           wp.customize.panel('nav_menus').focus();
                       });

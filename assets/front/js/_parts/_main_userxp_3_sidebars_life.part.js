@@ -108,7 +108,7 @@ var czrapp = czrapp || {};
               /// BROWSER EVENTS REACT
               /// SCROLL
               //Set the stickyness state on scroll
-              czrapp.$_window.scroll( _.throttle( function() {
+              czrapp.$_window.on('scroll', _.throttle( function() {
                     //this check is added here because the _isStickyOptionOn() relies on a asynchronous ajax check for isMobileUserAgent()
                     if ( ! self._isStickyOptionOn() )
                       return;
@@ -123,7 +123,7 @@ var czrapp = czrapp || {};
               //SLOW THROTTLED SCROLL LISTENER TO SET THE MAX COLUMS HEIGHT AND STICKIFY WHEN EXPANDED
               //Whithout this listener, the max column height might not be refreshed on time ( )
               //=> Adresses the potential problems of
-              czrapp.$_window.scroll( _.throttle( function() {
+              czrapp.$_window.on('scroll', _.throttle( function() {
                     czrapp.userXP.maxColumnHeight( czrapp.userXP._getMaxColumnHeight() );
 
                     //always refresh live when expanded
