@@ -357,6 +357,13 @@ if ( !class_exists( 'HU_utils_settings_map' ) ) :
                 //'transport'     => 'postMessage',
                 'notice'        => __('Give your thumbnails and layout images rounded corners', 'hueman')
           ),
+          'links_underlined'  =>  array(
+                'default'       => 1,
+                'control'       => 'HU_controls' ,
+                'label'         => __( "Links underlined within content" , "hueman" ),
+                'section'       => 'general_design_sec' ,
+                'type'          => 'nimblecheck'
+          ),
           'ext_link_style'  =>  array(
                 'default'       => 0,
                 'control'       => 'HU_controls' ,

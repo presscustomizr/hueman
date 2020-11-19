@@ -866,6 +866,11 @@ if ( !function_exists( 'hu_body_class' ) ) {
     $theme_class = $prefix . $ver;
     $classes[] = get_template_directory() === get_stylesheet_directory() ? $theme_class : $theme_class.'-with-child-theme';
 
+    // Nov 2020 : opt-out underline on links
+    if ( !hu_is_checked( 'links_underlined') ) {
+        $classes[] = 'hu-links-not-underlined';
+    }
+
     return $classes;
   }
 }

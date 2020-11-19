@@ -29,6 +29,9 @@ transition: opacity 0.2s ease; }
 article .entry a, .comment-body a, .widget_text a {
   text-decoration:underline;
 }
+.hu-links-not-underlined article .entry a, .hu-links-not-underlined .comment-body a, .hu-links-not-underlined .widget_text a {
+  text-decoration:none;
+}
 
 address,cite,em { font-style: italic; }
 strong { font-weight: 600; }
