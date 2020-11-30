@@ -2,9 +2,9 @@
 # This file is distributed under the GNU General Public License v3.0.=!>
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman 3.6.9\n"
+"Project-Id-Version: Hueman 3.6.10\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2020-11-19 18:36:27+00:00\n"
+"POT-Creation-Date: 2020-11-30 18:00:38+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1596,7 +1596,7 @@ msgstr ""
 
 #: functions/czr/controls/class-color-alpha-control.php:26
 #: functions/czr-base-fmk/czr-base-fmk.php:211
-#: functions/czr-base-fmk/czr-base-fmk.php:273
+#: functions/czr-base-fmk/czr-base-fmk.php:281
 msgid "Default"
 msgstr ""
 
@@ -1606,8 +1606,8 @@ msgid "Upload"
 msgstr ""
 
 #: functions/czr/controls/class-upload-control.php:68
-#: functions/czr-base-fmk/czr-base-fmk.php:272
-#: functions/czr-base-fmk/czr-base-fmk.php:561
+#: functions/czr-base-fmk/czr-base-fmk.php:280
+#: functions/czr-base-fmk/czr-base-fmk.php:570
 msgid "Remove"
 msgstr ""
 
@@ -1630,8 +1630,8 @@ msgid "Header Panel"
 msgstr ""
 
 #: functions/czr/czr-resources.php:163
-#: functions/czr-base-fmk/czr-base-fmk.php:260
-#: functions/czr-base-fmk/czr-base-fmk.php:561
+#: functions/czr-base-fmk/czr-base-fmk.php:268
+#: functions/czr-base-fmk/czr-base-fmk.php:570
 #: functions/czr-modules/widget-zones/widget_zones_module.php:227
 #: option-tree/includes/ot-functions-admin.php:2839
 #: option-tree/includes/ot-functions-admin.php:2948
@@ -1648,7 +1648,7 @@ msgid "Edit"
 msgstr ""
 
 #: functions/czr/czr-resources.php:164
-#: functions/czr-base-fmk/czr-base-fmk.php:261
+#: functions/czr-base-fmk/czr-base-fmk.php:269
 #: option-tree/includes/ot-functions-admin.php:961
 msgid "Close"
 msgstr ""
@@ -1674,7 +1674,7 @@ msgid "Context(s)"
 msgstr ""
 
 #: functions/czr/czr-resources.php:168
-#: functions/czr-base-fmk/czr-base-fmk.php:262
+#: functions/czr-base-fmk/czr-base-fmk.php:270
 #: functions/czr-modules/widget-zones/widget_zones_module.php:88
 msgid "Not set"
 msgstr ""
@@ -1695,7 +1695,7 @@ msgid "Follow us on"
 msgstr ""
 
 #: functions/czr/czr-resources.php:172
-#: functions/czr-base-fmk/czr-base-fmk.php:263
+#: functions/czr-base-fmk/czr-base-fmk.php:271
 #: functions/czr-modules/social-links/social_links_module.php:80
 msgid "Done !"
 msgstr ""
@@ -1718,12 +1718,12 @@ msgid "Select position property"
 msgstr ""
 
 #: functions/czr/czr-resources.php:185
-#: functions/czr-base-fmk/czr-base-fmk.php:265
+#: functions/czr-base-fmk/czr-base-fmk.php:273
 msgid "Learn more about this in the documentation"
 msgstr ""
 
 #: functions/czr/czr-resources.php:186
-#: functions/czr-base-fmk/czr-base-fmk.php:266
+#: functions/czr-base-fmk/czr-base-fmk.php:274
 #: option-tree/includes/ot-functions-admin.php:125
 #: option-tree/includes/ot-functions-admin.php:126
 #: option-tree/includes/ot-functions-admin.php:162
@@ -1733,7 +1733,7 @@ msgid "Settings"
 msgstr ""
 
 #: functions/czr/czr-resources.php:187
-#: functions/czr-base-fmk/czr-base-fmk.php:267
+#: functions/czr-base-fmk/czr-base-fmk.php:275
 msgid "Options for"
 msgstr ""
 
@@ -1985,74 +1985,74 @@ msgstr ""
 msgid "Color value"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:270
-#: functions/czr-base-fmk/czr-base-fmk.php:275
+#: functions/czr-base-fmk/czr-base-fmk.php:278
+#: functions/czr-base-fmk/czr-base-fmk.php:283
 msgid "Select Image"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:271
+#: functions/czr-base-fmk/czr-base-fmk.php:279
 msgid "Change Image"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:274
+#: functions/czr-base-fmk/czr-base-fmk.php:282
 msgid "No image selected"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:276
+#: functions/czr-base-fmk/czr-base-fmk.php:284
 msgid "Choose Image"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:278
+#: functions/czr-base-fmk/czr-base-fmk.php:286
 msgid "Customizing"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:471
+#: functions/czr-base-fmk/czr-base-fmk.php:480
 msgid "ac_set_ajax_czr_tmpl => Security check failed."
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:543
+#: functions/czr-base-fmk/czr-base-fmk.php:552
 #: option-tree/includes/ot-functions-option-types.php:1452
 #: option-tree/includes/ot-functions-option-types.php:2215
 #: option-tree/includes/ot-functions-option-types.php:2380
 msgid "Add New"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:548
+#: functions/czr-base-fmk/czr-base-fmk.php:557
 msgid "Cancel"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:548
+#: functions/czr-base-fmk/czr-base-fmk.php:557
 msgid "Add it"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:569
+#: functions/czr-base-fmk/czr-base-fmk.php:578
 msgid "Are you sure you want to remove : <strong>{{ data.title }} ?</strong>"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:570
+#: functions/czr-base-fmk/czr-base-fmk.php:579
 msgid "Yes"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:570
+#: functions/czr-base-fmk/czr-base-fmk.php:579
 msgid "No"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1685
+#: functions/czr-base-fmk/czr-base-fmk.php:1694
 msgid "Set a custom url"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1719
-#: functions/czr-base-fmk/czr-base-fmk.php:1919
+#: functions/czr-base-fmk/czr-base-fmk.php:1728
+#: functions/czr-base-fmk/czr-base-fmk.php:1928
 msgid "ajax_load_available_items => Security check failed."
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1840
-#: functions/czr-base-fmk/czr-base-fmk.php:2049
+#: functions/czr-base-fmk/czr-base-fmk.php:1849
+#: functions/czr-base-fmk/czr-base-fmk.php:2058
 #. translators: %d: ID of a post
 msgid "#%d (no title)"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1983
+#: functions/czr-base-fmk/czr-base-fmk.php:1992
 msgid "No results found."
 msgstr ""
 

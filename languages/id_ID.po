@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman v3.6.9\n"
+"Project-Id-Version: Hueman v3.6.10\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2020-11-19 18:36:27+00:00\n"
+"POT-Creation-Date: 2020-11-30 18:00:38+00:00\n"
 "PO-Revision-Date: 2016-08-31 16:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: Press Customizr\n"
@@ -1735,7 +1735,7 @@ msgstr "Sidebar dan Widget Dinamis"
 
 #: functions/czr/controls/class-color-alpha-control.php:26
 #: functions/czr-base-fmk/czr-base-fmk.php:211
-#: functions/czr-base-fmk/czr-base-fmk.php:273
+#: functions/czr-base-fmk/czr-base-fmk.php:281
 msgid "Default"
 msgstr ""
 
@@ -1745,8 +1745,8 @@ msgid "Upload"
 msgstr "Unggah"
 
 #: functions/czr/controls/class-upload-control.php:68
-#: functions/czr-base-fmk/czr-base-fmk.php:272
-#: functions/czr-base-fmk/czr-base-fmk.php:561
+#: functions/czr-base-fmk/czr-base-fmk.php:280
+#: functions/czr-base-fmk/czr-base-fmk.php:570
 msgid "Remove"
 msgstr "Singkirkan"
 
@@ -1771,8 +1771,8 @@ msgid "Header Panel"
 msgstr "Gambar Header"
 
 #: functions/czr/czr-resources.php:163
-#: functions/czr-base-fmk/czr-base-fmk.php:260
-#: functions/czr-base-fmk/czr-base-fmk.php:561
+#: functions/czr-base-fmk/czr-base-fmk.php:268
+#: functions/czr-base-fmk/czr-base-fmk.php:570
 #: functions/czr-modules/widget-zones/widget_zones_module.php:227
 #: option-tree/includes/ot-functions-admin.php:2839
 #: option-tree/includes/ot-functions-admin.php:2948
@@ -1789,7 +1789,7 @@ msgid "Edit"
 msgstr "Edit"
 
 #: functions/czr/czr-resources.php:164
-#: functions/czr-base-fmk/czr-base-fmk.php:261
+#: functions/czr-base-fmk/czr-base-fmk.php:269
 #: option-tree/includes/ot-functions-admin.php:961
 msgid "Close"
 msgstr "Tutup"
@@ -1818,7 +1818,7 @@ msgid "Context(s)"
 msgstr "Konteks"
 
 #: functions/czr/czr-resources.php:168
-#: functions/czr-base-fmk/czr-base-fmk.php:262
+#: functions/czr-base-fmk/czr-base-fmk.php:270
 #: functions/czr-modules/widget-zones/widget_zones_module.php:88
 msgid "Not set"
 msgstr "Tidak di Atur"
@@ -1839,7 +1839,7 @@ msgid "Follow us on"
 msgstr "Ikuti kami di"
 
 #: functions/czr/czr-resources.php:172
-#: functions/czr-base-fmk/czr-base-fmk.php:263
+#: functions/czr-base-fmk/czr-base-fmk.php:271
 #: functions/czr-modules/social-links/social_links_module.php:80
 msgid "Done !"
 msgstr "Selesai !"
@@ -1862,12 +1862,12 @@ msgid "Select position property"
 msgstr ""
 
 #: functions/czr/czr-resources.php:185
-#: functions/czr-base-fmk/czr-base-fmk.php:265
+#: functions/czr-base-fmk/czr-base-fmk.php:273
 msgid "Learn more about this in the documentation"
 msgstr "Pelajari tentang ini di dokumentasi"
 
 #: functions/czr/czr-resources.php:186
-#: functions/czr-base-fmk/czr-base-fmk.php:266
+#: functions/czr-base-fmk/czr-base-fmk.php:274
 #: option-tree/includes/ot-functions-admin.php:125
 #: option-tree/includes/ot-functions-admin.php:126
 #: option-tree/includes/ot-functions-admin.php:162
@@ -1878,7 +1878,7 @@ msgid "Settings"
 msgstr "Pengaturan umum"
 
 #: functions/czr/czr-resources.php:187
-#: functions/czr-base-fmk/czr-base-fmk.php:267
+#: functions/czr-base-fmk/czr-base-fmk.php:275
 msgid "Options for"
 msgstr ""
 
@@ -2140,76 +2140,76 @@ msgstr "Warna Kedua"
 msgid "Color value"
 msgstr "Warna"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:270
-#: functions/czr-base-fmk/czr-base-fmk.php:275
+#: functions/czr-base-fmk/czr-base-fmk.php:278
+#: functions/czr-base-fmk/czr-base-fmk.php:283
 msgid "Select Image"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:271
+#: functions/czr-base-fmk/czr-base-fmk.php:279
 msgid "Change Image"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:274
+#: functions/czr-base-fmk/czr-base-fmk.php:282
 msgid "No image selected"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:276
+#: functions/czr-base-fmk/czr-base-fmk.php:284
 msgid "Choose Image"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:278
+#: functions/czr-base-fmk/czr-base-fmk.php:286
 #, fuzzy
 msgid "Customizing"
 msgstr "customizer"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:471
+#: functions/czr-base-fmk/czr-base-fmk.php:480
 msgid "ac_set_ajax_czr_tmpl => Security check failed."
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:543
+#: functions/czr-base-fmk/czr-base-fmk.php:552
 #: option-tree/includes/ot-functions-option-types.php:1452
 #: option-tree/includes/ot-functions-option-types.php:2215
 #: option-tree/includes/ot-functions-option-types.php:2380
 msgid "Add New"
 msgstr "Tambah Baru"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:548
+#: functions/czr-base-fmk/czr-base-fmk.php:557
 msgid "Cancel"
 msgstr "Batal"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:548
+#: functions/czr-base-fmk/czr-base-fmk.php:557
 msgid "Add it"
 msgstr "Tambahkan"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:569
+#: functions/czr-base-fmk/czr-base-fmk.php:578
 msgid "Are you sure you want to remove : <strong>{{ data.title }} ?</strong>"
 msgstr ""
 "Apakah Anda yakin ingin menyingkirkan : <strong>{{ data.title }} ?</strong>"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:570
+#: functions/czr-base-fmk/czr-base-fmk.php:579
 msgid "Yes"
 msgstr "Ya"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:570
+#: functions/czr-base-fmk/czr-base-fmk.php:579
 msgid "No"
 msgstr "Tidak"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1685
+#: functions/czr-base-fmk/czr-base-fmk.php:1694
 msgid "Set a custom url"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1719
-#: functions/czr-base-fmk/czr-base-fmk.php:1919
+#: functions/czr-base-fmk/czr-base-fmk.php:1728
+#: functions/czr-base-fmk/czr-base-fmk.php:1928
 msgid "ajax_load_available_items => Security check failed."
 msgstr ""
 
 #. translators: %d: ID of a post
-#: functions/czr-base-fmk/czr-base-fmk.php:1840
-#: functions/czr-base-fmk/czr-base-fmk.php:2049
+#: functions/czr-base-fmk/czr-base-fmk.php:1849
+#: functions/czr-base-fmk/czr-base-fmk.php:2058
 msgid "#%d (no title)"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1983
+#: functions/czr-base-fmk/czr-base-fmk.php:1992
 msgid "No results found."
 msgstr ""
 

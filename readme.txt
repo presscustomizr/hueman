@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.6
-Stable tag: 3.6.9
+Stable tag: 3.6.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,9 @@ The Hueman theme loads fast and is 100% mobile-friendly according to Google. One
 
 == Changelog ==
 https://github.com/presscustomizr/hueman/releases
+= 3.6.10 November 30th, 2020 =
+* fixed : [WP5.7][jquery-migrate] fixed wrong usage $.fn.css() method
+
 = 3.6.9 November 19th, 2020 =
 * added : [CSS][links] added a new option to opt-out underline on links. Option located in customizer > web page design > General design options
 
