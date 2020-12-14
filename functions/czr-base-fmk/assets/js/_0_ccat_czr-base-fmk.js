@@ -3835,7 +3835,7 @@ $.extend( CZRModuleMths, {
                         // Nov 2020 => in WP 5.6, this setup was made too late
                         // That's why we need to introduce an event + a property informing Nimble that we're ready
                         // @see Nimble ::scheduleModuleAccordion
-                        _control_.module_ready_on_custom_control_event_is_setup = true;
+                        _control_.container.data('module_ready_on_custom_control_event_is_setup',true);
                         _control_.container.trigger('module_ready_on_custom_control_event_is_setup');
                   });
             }
