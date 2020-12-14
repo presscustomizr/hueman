@@ -1604,7 +1604,7 @@ add_filter('hu_eligible_widget_zones', 'hu_get_widget_zones_in_context', 3, 20);
 // 'footer-3'    => array( 'footer-3' => __('Footer 3', 'hueman') ),
 // 'footer-4'    => array( 'footer-4' => __('Footer 4', 'hueman') )
 //hook : hu_eligible_widget_zones : 10
-function hu_get_widget_zones_in_location( $_eligible_zones = array() , $location , $_user_option = null) {
+function hu_get_widget_zones_in_location( $_eligible_zones = array(), $location = '', $_user_option = null) {
   //what are the zones assigned by the user to this location ?
   if ( empty( $_user_option ) )
     return $_eligible_zones;
@@ -1634,7 +1634,7 @@ function hu_get_widget_zones_in_location( $_eligible_zones = array() , $location
 
 
 //hook : hu_eligible_widget_zones : 20
-function hu_get_widget_zones_in_context( $_eligible_zones = array(), $location, $_user_option = null ) {
+function hu_get_widget_zones_in_context( $_eligible_zones = array(), $location = '', $_user_option = null ) {
   $_contextualized = array();
   //context => callback
   $_map_conditionals = array(
