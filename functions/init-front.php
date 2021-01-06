@@ -453,7 +453,7 @@ if ( !function_exists( 'hu_print_logo_or_title' ) ) {
     function hu_print_logo_or_title( $echo = true, $is_mobile_menu = false ) {
         // June 2020 => never write the mobile site-title in a h1 heading to avoid multiple h1 detected by SEO analyzers
         // @see https://github.com/presscustomizr/hueman/issues/906
-        $wrap_in_h_one = !$is_mobile_menu && hu_booleanize_checkbox_val( hu_get_option('wrap_in_h_one') );
+        $wrap_in_h_one = is_home() && !$is_mobile_menu && hu_booleanize_checkbox_val( hu_get_option('wrap_in_h_one') );
         $logo_or_title = hu_get_logo_title( $is_mobile_menu );
         // => If no logo is set and  !hu_is_checked( 'display-header-title' ), the logo title is empty.
         ob_start();

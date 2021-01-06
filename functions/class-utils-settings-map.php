@@ -230,9 +230,9 @@ if ( !class_exists( 'HU_utils_settings_map' ) ) :
           ),
           // added january 2020 for https://github.com/presscustomizr/hueman/issues/844
           'wrap_in_h_one' => array(
-                'default'   => 0,
+                'default'   => 1,
                 'control'   => 'HU_controls',
-                'label'     => __('Wrap the site title or logo in an H1 tag', 'hueman'),
+                'label'     => __('On home page wrap the site title or logo in an H1 tag', 'hueman'),
                 'section'   => 'title_tagline',
                 'type'      => 'nimblecheck',
                 'notice'    => __( 'For best SEO results, make sure your pages always include at least one H1 tag.' , 'hueman' ),
