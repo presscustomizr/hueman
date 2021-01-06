@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.6
-Stable tag: 3.7.0
+Stable tag: 3.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,10 @@ The Hueman theme loads fast and is 100% mobile-friendly according to Google. One
 
 == Changelog ==
 https://github.com/presscustomizr/hueman/releases
+= 3.7.1 January 6th, 2021 =
+* fixed : [WP nav menu widget] menu items icon not displayed if menu encapsulated in custom wrapper. fixes #944
+* fixed : [SEO] For best SEO results, ensure that home page includes only one H1 tag. fixes #943
+
 = 3.7.0 December 14th, 2020 =
 * fixed : [PHP 8] Fix deprecation notices for optional function parameters declared before required parameter
 
