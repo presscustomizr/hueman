@@ -253,79 +253,8 @@ if ( ! class_exists( 'OT_Meta_Box' ) ) {
 
 				// There is data to validate.
 				if ( isset( $post_global[ $field['id'] ] ) ) {
-
-					// Slider and list item.
-					if ( in_array( $field['type'], array( 'list-item', 'slider' ), true ) ) {
-
-						// Required title setting.
-						$required_setting = array(
-							array(
-								'id'        => 'title',
-								'label'     => __( 'Title', 'hueman' ),
-								'desc'      => '',
-								'std'       => '',
-								'type'      => 'text',
-								'rows'      => '',
-								'class'     => 'option-tree-setting-title',
-								'post_type' => '',
-								'choices'   => array(),
-							),
-						);
-
-						// Convert the settings to an array.
-						$settings = isset( $post_global[ $field['id'] . '_settings_array' ] ) ? ot_decode( $post_global[ $field['id'] . '_settings_array' ] ) : array();
-
-						// Settings are empty for some odd reason get the defaults.
-						if ( empty( $settings ) ) {
-							$settings = ( 'slider' === $field['type'] ) ? ot_slider_settings( $field['id'] ) : ot_list_item_settings( $field['id'] );
-						}
-
-						// Merge the two settings array.
-						$settings = array_merge( $required_setting, $settings );
-
-						foreach ( $post_global[ $field['id'] ] as $k => $setting_array ) {
-
-							foreach ( $settings as $sub_setting ) {
-
-								// Verify sub setting has a type & value.
-								if ( isset( $sub_setting['type'] ) && isset( $post_global[ $field['id'] ][ $k ][ $sub_setting['id'] ] ) ) {
-
-									$post_global[ $field['id'] ][ $k ][ $sub_setting['id'] ] = ot_validate_setting( $post_global[ $field['id'] ][ $k ][ $sub_setting['id'] ], $sub_setting['type'], $sub_setting['id'] );
-								}
-							}
-						}
-
-						// Set up new data with validated data.
-						$new = $post_global[ $field['id'] ];
-
-					} elseif ( 'social-links' === $field['type'] ) {
-
-						// Convert the settings to an array.
-						$settings = isset( $post_global[ $field['id'] . '_settings_array' ] ) ? ot_decode( $post_global[ $field['id'] . '_settings_array' ] ) : array();
-
-						// Settings are empty get the defaults.
-						if ( empty( $settings ) ) {
-							$settings = ot_social_links_settings( $field['id'] );
-						}
-
-						foreach ( $post_global[ $field['id'] ] as $k => $setting_array ) {
-
-							foreach ( $settings as $sub_setting ) {
-
-								// Verify sub setting has a type & value.
-								if ( isset( $sub_setting['type'] ) && isset( $post_global[ $field['id'] ][ $k ][ $sub_setting['id'] ] ) ) {
-									$post_global[ $field['id'] ][ $k ][ $sub_setting['id'] ] = ot_validate_setting( $post_global[ $field['id'] ][ $k ][ $sub_setting['id'] ], $sub_setting['type'], $sub_setting['id'] );
-								}
-							}
-						}
-
-						// Set up new data with validated data.
-						$new = $post_global[ $field['id'] ];
-					} else {
-
-						// Run through validation.
-						$new = ot_validate_setting( $post_global[ $field['id'] ], $field['type'], $field['id'] );
-					}
+					// Run through validation.
+					$new = ot_validate_setting( $post_global[ $field['id'] ], $field['type'], $field['id'] );
 
 					// Insert CSS.
 					if ( 'css' === $field['type'] ) {

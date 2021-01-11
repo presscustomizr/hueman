@@ -405,9 +405,6 @@ if ( ! class_exists( 'OT_Loader' ) && defined( 'ABSPATH' ) ) {
 			if ( is_admin() ) {
 				// Save settings.
 				add_action( 'admin_init', 'ot_save_settings', 6 );
-
-				// Save layouts.
-				add_action( 'admin_init', 'ot_modify_layouts', 7 );
 			}
 			// Google Fonts front-end CSS.
 			add_action( 'wp_enqueue_scripts', 'ot_load_google_fonts_css', 1 );
@@ -588,39 +585,6 @@ if ( ! class_exists( 'OT_Loader' ) && defined( 'ABSPATH' ) ) {
 			wp_die();
 		}
 
-		/**
-		 * AJAX utility function for adding a new list item.
-		 */
-		public function add_list_item() {
-			check_ajax_referer( 'option_tree', 'nonce' );
-
-			$name       = isset( $_REQUEST['name'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['name'] ) ) : '';
-			$count      = isset( $_REQUEST['count'] ) ? absint( $_REQUEST['count'] ) : 0;
-			$post_id    = isset( $_REQUEST['post_id'] ) ? absint( $_REQUEST['post_id'] ) : 0;
-			$get_option = isset( $_REQUEST['get_option'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['get_option'] ) ) : '';
-			$type       = isset( $_REQUEST['type'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['type'] ) ) : '';
-			$settings   = isset( $_REQUEST['settings'] ) ? ot_decode( sanitize_text_field( wp_unslash( $_REQUEST['settings'] ) ) ) : array();
-
-			ot_list_item_view( $name, $count, array(), $post_id, $get_option, $settings, $type );
-			wp_die();
-		}
-
-		/**
-		 * AJAX utility function for adding a new social link.
-		 */
-		public function add_social_links() {
-			check_ajax_referer( 'option_tree', 'nonce' );
-
-			$name       = isset( $_REQUEST['name'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['name'] ) ) : '';
-			$count      = isset( $_REQUEST['count'] ) ? absint( $_REQUEST['count'] ) : 0;
-			$post_id    = isset( $_REQUEST['post_id'] ) ? absint( $_REQUEST['post_id'] ) : 0;
-			$get_option = isset( $_REQUEST['get_option'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['get_option'] ) ) : '';
-			$type       = isset( $_REQUEST['type'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['type'] ) ) : '';
-			$settings   = isset( $_REQUEST['settings'] ) ? ot_decode( sanitize_text_field( wp_unslash( $_REQUEST['settings'] ) ) ) : array();
-
-			ot_social_links_view( $name, $count, array(), $post_id, $get_option, $settings, $type );
-			wp_die();
-		}
 
 		/**
 		 * Fake the gallery shortcode.
