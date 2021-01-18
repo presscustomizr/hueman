@@ -95,6 +95,7 @@ $.extend( CZRSocialModuleMths, {
                 //'linkedin-square', //<-  removed in fa5
                 'linkedin-in', //<- added in fa5
                 'linux',
+                'mastodon',
                 'maxcdn',
                 //'meanpath', <- removed in fa5
                 'meetup',
