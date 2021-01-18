@@ -7,7 +7,11 @@ if ( is_single() ) {
     <div class="page-title hu-pad group">
       <?php //prints the relevant metas (cat, tag, author, date, ...) for a given context : home, single post, page, 404, search, archive...  ?>
     	<?php if ( is_home() && hu_is_checked('blog-heading-enabled') ) : ?>
-    		<h2><?php echo hu_blog_title(); ?></h2>
+			<?php if ( ( hu_is_real_home() && hu_booleanize_checkbox_val( hu_get_option('wrap_in_h_one') ) ) || !hu_is_real_home() ) : ?>
+    			<h2><?php echo hu_blog_title(); ?></h2>
+			<?php elseif ( hu_is_real_home() && !hu_booleanize_checkbox_val( hu_get_option('wrap_in_h_one') ) ) : ?>
+				<h1><?php echo hu_blog_title(); ?></h1>
+			<?php endif; ?>
       <?php // For a regular post, we display the category and comments ?>
       <?php elseif ( is_single() && 'post' === $post_type ): ?>
     		<ul class="meta-single group">
