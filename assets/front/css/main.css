@@ -1813,7 +1813,7 @@ z-index:2;
 .post-title a { color: #444; }
 .post-title a:hover { color: #16cfc1; }
 
-.entry.excerpt { font-size: 1em; color: #aaa; }
+.entry.excerpt { font-size: 1em; color: #767676; }
 .entry.excerpt p { margin-bottom: 0; }
 
 /*  post : standard loop
