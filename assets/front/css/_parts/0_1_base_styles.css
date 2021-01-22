@@ -29,6 +29,11 @@ transition: opacity 0.2s ease; }
 article .entry a, .comment-body a, .widget_text a {
   text-decoration:underline;
 }
+/* Gutenberg compat */
+article .entry a.wp-block-button__link {
+  text-decoration: none;
+}
+
 .hu-links-not-underlined article .entry a, .hu-links-not-underlined .comment-body a, .hu-links-not-underlined .widget_text a {
   text-decoration:none;
 }
