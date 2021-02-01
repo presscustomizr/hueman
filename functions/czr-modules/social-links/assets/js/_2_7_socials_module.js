@@ -153,6 +153,7 @@ $.extend( CZRSocialModuleMths, {
                 'strava',
                 'telegram',
                 'tencent-weibo',
+                'tiktok',
                 'trello',
                 'tripadvisor',
                 'tumblr',
