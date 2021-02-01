@@ -1376,16 +1376,16 @@ add_action( 'wp_enqueue_scripts', 'hu_styles' );
 // see here https://stackoverflow.com/questions/49268352/preload-font-awesome
 // FA fonts can be preloaded. The crossorigin param has to be added
 // => this removes Google Speed tests message "preload key requests"
-// important => the url of the font must be exactly the same as in font awesome stylesheet, including the query param at the end fa-brands-400.woff2?v=5.12.1
+// important => the url of the font must be exactly the same as in font awesome stylesheet, including the query param at the end fa-brands-400.woff2?v=5.15.2
 // note that we could preload all other types available ( eot, woff, ttf, svg )
 // but we focus on preloading woff2 which is the type used by most recent browsers
 // see https://css-tricks.com/snippets/css/using-font-face/
 add_action( 'wp_head', 'hu_preload_fa_fonts');
 function hu_preload_fa_fonts() {
   ?>
-    <link rel="preload" as="font" type="font/woff2" href="<?php echo HU_BASE_URL .'assets/front/webfonts/fa-brands-400.woff2?v=5.12.1'; ?>" crossorigin="anonymous"/>
-    <link rel="preload" as="font" type="font/woff2" href="<?php echo HU_BASE_URL .'assets/front/webfonts/fa-regular-400.woff2?v=5.12.1'; ?>" crossorigin="anonymous"/>
-    <link rel="preload" as="font" type="font/woff2" href="<?php echo HU_BASE_URL .'assets/front/webfonts/fa-solid-900.woff2?v=5.12.1'; ?>" crossorigin="anonymous"/>
+    <link rel="preload" as="font" type="font/woff2" href="<?php echo HU_BASE_URL .'assets/front/webfonts/fa-brands-400.woff2?v=5.15.2'; ?>" crossorigin="anonymous"/>
+    <link rel="preload" as="font" type="font/woff2" href="<?php echo HU_BASE_URL .'assets/front/webfonts/fa-regular-400.woff2?v=5.15.2'; ?>" crossorigin="anonymous"/>
+    <link rel="preload" as="font" type="font/woff2" href="<?php echo HU_BASE_URL .'assets/front/webfonts/fa-solid-900.woff2?v=5.15.2'; ?>" crossorigin="anonymous"/>
   <?php
 }
 
