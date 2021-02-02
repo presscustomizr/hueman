@@ -329,6 +329,11 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
   .nav ul ul { position: absolute; top: -10px; left: 180px; }
 
 }
+
+
+
+
+
 @media only screen and (max-width: 719px) {
   #header .nav-container .nav, #footer .nav-container .nav {display: none;}
   #footer .nav-container .nav.expanded, #header .nav-container .nav.expanded {display: block;}
@@ -375,6 +380,14 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
 
   .nav ul li { font-size: 0.85rem; font-weight: 300; }
   .nav ul li a { padding-top: 6px; padding-bottom: 6px; }
+
+
+
+
+
+
+
+
 
   /*
   * Mobile dropdown on click
@@ -459,4 +472,4 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
     transform: rotate(-180deg);
   }
   /* \test */
-}
+}/*@media only screen and (max-width: 719px)*/
