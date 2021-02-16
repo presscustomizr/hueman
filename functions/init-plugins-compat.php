@@ -2,6 +2,7 @@
 //add various plugins compatibilty (Jetpack, Bbpress, Qtranslate, Woocommerce, The Event Calendar ...)
 add_action ('after_setup_theme'  , 'hu_set_plugins_supported', 20 );
 add_action ('after_setup_theme'  , 'hu_plugins_compatibility', 30 );
+add_action( 'wp', 'hu_amp_compat', 30 );
 
 /**
 * Set plugins supported ( before the plugin compat function is fired )
@@ -22,6 +23,7 @@ function hu_set_plugins_supported() {
   add_theme_support( 'wp-pagenavi' );///WP PageNavi
   add_theme_support( 'polylang' );
   add_theme_support( 'wpml' );
+  add_theme_support( 'amp' );
 }
 
 
@@ -559,4 +561,36 @@ function hu_set_wpml_compat() {
       add_filter('hu_opt_blog-restrict-by-cat', 'hu_wpml_translate_cat');
     }
     /*end tax filtering*/
+}
+
+/**
+ * Adds AMP Compatibility.
+ */
+function hu_amp_compat() {
+	if ( current_theme_supports( 'amp' ) && hu_is_plugin_active( 'amp/amp.php' ) && function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+		// Remove scripts.
+		remove_action( 'wp_head', 'hu_html_js_class', 1 );
+		add_action( 'wp_enqueue_scripts', 'hu_amp_override_scripts_and_styles', 11 );
+	}
+}
+
+/**
+ * Remove Scripts and override styles
+ */
+function hu_amp_override_scripts_and_styles() {
+	wp_dequeue_script( 'hu-front-scripts' );
+	wp_dequeue_script( 'flexslider' );
+	wp_dequeue_script( 'underscore' );
+}
+
+//add_filter( 'wp_nav_menu', 'hu_menu_filter', 10, 2 );
+
+function hu_menu_filter( $nav_menu, $args ) {
+	
+	error_log( var_export( $args->theme_location, true ) );
+	error_log( '---------------------------------' );
+	if ( ! empty( $args->theme_location ) && 'topbar' === $args->theme_location ) {
+		$nav_menu = str_replace( '' , $replace, $nav_menu);
+	}
+	return $nav_menu;
 }

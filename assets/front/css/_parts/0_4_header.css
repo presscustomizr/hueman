@@ -65,7 +65,7 @@ border: none;
 .search-expand-inner { background: rgba(0,0,0,0.15); padding: 15px; }
 .search-expand .themeform input { width: 100%; border: 2px solid #e2e2e2; border-radius: 0; }
 .search-expand .themeform input:focus {  }
-
+.search-expand.active{ display: block; }
 
 /* Search in header nav */
 #main-header-search .toggle-search {
@@ -318,6 +318,11 @@ border: none;
     height: 50px;
     overflow: hidden;
   }
+
+  html[amp] #nav-topbar.desktop-sticky {
+      overflow: visible;
+  }
+
   .nav ul.sub-menu {
     opacity: 0.5;
     display: none;
@@ -325,6 +330,11 @@ border: none;
     -moz-transition: opacity 0.3s ease-in-out;
     -o-transition: opacity 0.3s ease-in-out;
     transition: opacity 0.3s ease-in-out;
+  }
+
+  html[amp] ul.nav li:hover>ul.sub-menu {
+      display: block;
+      opacity: 1;
   }
 
   /* HEADER WIDGET ZONE*/

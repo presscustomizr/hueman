@@ -69,17 +69,30 @@ if ( !function_exists( 'hu_print_sek') ) {
 /*  Mobile Button
 /* ------------------------------------ */
 if ( !function_exists( 'hu_print_mobile_btn' ) ) {
-    function hu_print_mobile_btn() {
+    function hu_print_mobile_btn( $theme_location ) {
+		$amp_attr            = '';
+		$amp_unique_state_id = 'huAmp' . $theme_location . 'Expanded';
+		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+			echo '<amp-state id="' . esc_attr( $amp_unique_state_id ) . '">';
+			echo '<script type="application/json">false</script>';
+			echo '</amp-state>';
+			$amp_attr  = ' on="tap:AMP.setState( { ' . $amp_unique_state_id . ': ! ' . $amp_unique_state_id . ' } )" ';
+			$amp_attr .= ' role="button" ';
+			$amp_attr .= ' tabindex="0" ';
+			$amp_attr .= ' aria-expanded="false" ';
+			$amp_attr .= ' [aria-expanded]="' . $amp_unique_state_id . ' ? \'true\' : \'false\'" ';
+			$amp_attr .= ' data-amp-bind-class="' . $amp_unique_state_id . ' ? \'ham__navbar-toggler-two active\' : \'ham__navbar-toggler-two collapsed\'"';
+		}
       ?>
       <?php if ( apply_filters( 'hu_is_simple_mobile_menu_btn', 'simple' == hu_get_option( 'header_mobile_btn' ) ) ) : ?>
-        <div class="nav-toggle"><i class="fas fa-bars"></i></div>
+        <div class="nav-toggle" <?php echo $amp_attr; ?>><i class="fas fa-bars"></i></div>
       <?php else : ?>
         <!-- <div class="ham__navbar-toggler collapsed" aria-expanded="false">
           <div class="ham__navbar-span-wrapper">
             <span class="ham-toggler-menu__span"></span>
           </div>
         </div> -->
-        <button class="ham__navbar-toggler-two collapsed" title="Menu" aria-expanded="false">
+        <button class="ham__navbar-toggler-two collapsed" title="Menu" aria-expanded="false" <?php echo $amp_attr; ?>>
           <span class="ham__navbar-span-wrapper">
             <span class="line line-1"></span>
             <span class="line line-2"></span>

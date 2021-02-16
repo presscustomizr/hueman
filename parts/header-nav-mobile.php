@@ -52,6 +52,16 @@ $mobile_menu_classes = array(
 
 $we_have_a_menu = has_nav_menu( $mobile_menu_location ) || ! empty( $fallback_cb );
 
+$amp_container_attr       = '';
+$amp_container_inner_attr = '';
+$amp_navigation_attr      = '';
+
+if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+	$amp_menu_toggle_id        = 'huAmp' . $mobile_menu_location . 'Expanded';
+	$amp_container_attr       .= ' data-amp-bind-class="' . $amp_menu_toggle_id . ' ? \'nav-wrap container expanded\' : \'nav-wrap container\'"';
+	$amp_container_inner_attr .= ' data-amp-bind-class="' . $amp_menu_toggle_id . ' ? \'nav container-inner group mobile-search expanded\' : \'nav container-inner group mobile-search\'"';
+	$amp_navigation_attr      .= ' data-amp-bind-class="' . $amp_menu_toggle_id . ' ? \'nav container-inner group expanded\' : \'nav container-inner group\'"';
+}
 ?>
 <nav class="<?php echo implode(' ', $mobile_menu_classes ); ?>" id="nav-mobile" data-menu-id="<?php echo hu_get_menu_id( 'header'); ?>">
   <div class="mobile-title-logo-in-header"><?php hu_print_logo_or_title( true, true );//gets the logo or the site title ?></div>
@@ -59,12 +69,12 @@ $we_have_a_menu = has_nav_menu( $mobile_menu_location ) || ! empty( $fallback_cb
     <?php //hu_print_mobile_btn(); ?>
   <?php //endif; ?>
 
-      <?php hu_print_mobile_btn(); ?>
+      <?php hu_print_mobile_btn( $mobile_menu_location ); ?>
 
       <div class="nav-text"><?php apply_filters( 'hu_mobile_menu_text', '' );//put your mobile menu text here ?></div>
-      <div class="nav-wrap container">
+      <div class="nav-wrap container" <?php echo $amp_container_attr; ?>>
         <?php if ( hu_is_checked( 'mobile-search' ) ) : ?>
-          <ul class="nav container-inner group mobile-search">
+          <ul class="nav container-inner group mobile-search" <?php echo $amp_container_inner_attr; ?>>
             <?php if ( ! $we_have_a_menu && hu_user_can_see_customize_notices_on_front() ) : ?>
                 <li>
                   <?php
@@ -90,7 +100,8 @@ $we_have_a_menu = has_nav_menu( $mobile_menu_location ) || ! empty( $fallback_cb
                     'menu_class'=>'nav container-inner group',
                     'container'=>'',
                     'menu_id' => '',
-                    'fallback_cb'=> $fallback_cb
+                    'fallback_cb'=> $fallback_cb,
+					'items_wrap' => '<ul id="%1$s" ' . $amp_navigation_attr . ' class="%2$s">%3$s</ul>',
                 )
               );
           }

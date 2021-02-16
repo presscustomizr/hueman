@@ -319,6 +319,7 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
   .nav li.current-post-parent > a { color: #fff; }
   /* level 2 & 3 */
   .nav li:hover > ul { display: block; }
+  html[amp] .nav li:hover > ul { opacity: 1 }
   .nav ul { display: none; background: #777; position: absolute; left: 0; top: 50px; width: 180px; padding: 10px 0; z-index: 2; -webkit-transform: translateZ(0);
   -webkit-box-shadow: 0 2px 2px rgba(0,0,0,0.15);
   box-shadow: 0 2px 2px rgba(0,0,0,0.15); }

@@ -74,12 +74,21 @@
         </section><!--/.container-->
 
     <?php endif; //$is_widget_wrapper_on ?>
+	<?php
+	$amp_container_attr  = '';
+	$amp_navigation_attr = '';
 
+	if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+		$amp_menu_toggle_id   = 'huAmpfooterExpanded';
+		$amp_container_attr  .= ' data-amp-bind-class="' . $amp_menu_toggle_id . ' ? \'nav-wrap expanded\' : \'nav-wrap \'"';
+		$amp_navigation_attr .= ' data-amp-bind-class="' . $amp_menu_toggle_id . ' ? \'nav container-inner group expanded\' : \'nav container-inner group\'"';
+	}
+	?>
     <?php if ( hu_has_nav_menu( 'footer' ) ): ?>
       <nav class="nav-container group" id="nav-footer" data-menu-id="<?php echo hu_get_menu_id( 'footer'); ?>" data-menu-scrollable="false">
-        <?php hu_print_mobile_btn(); ?>
+        <?php hu_print_mobile_btn( 'footer' ); ?>
         <div class="nav-text"><?php apply_filters( 'hu_mobile_menu_text', '' );//put your mobile menu text here ?></div>
-        <div class="nav-wrap">
+        <div class="nav-wrap" <?php echo $amp_container_attr; ?>>
           <?php
             wp_nav_menu(
                 array(
@@ -87,7 +96,8 @@
                   'menu_class'=>'nav container group',
                   'container'=>'',
                   'menu_id'=>'',
-                  'fallback_cb'=> 'hu_page_menu'
+                  'fallback_cb'=> 'hu_page_menu',
+				  'items_wrap' => '<ul id="%1$s" ' . $amp_navigation_attr . ' class="%2$s">%3$s</ul>',
               )
             );
           ?>

@@ -14,15 +14,25 @@ if ( is_multisite() ) {
 }
 $fallback_cb = apply_filters( 'hu_topbar_menu_fallback_cb', $fallback_cb );//set to 'hu_page_menu' on prevdem
 $display_search = ( 'topbar' == hu_get_option( 'desktop-search' ) ) &&  ( hu_has_nav_menu( 'topbar' ) || ! empty( $fallback_cb ) );
+
+$amp_container_attr  = '';
+$amp_navigation_attr = '';
+
+if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+	$amp_menu_toggle_id   = 'huAmptopbarExpanded';
+	$amp_container_attr  .= ' data-amp-bind-class="' . $amp_menu_toggle_id . ' ? \'nav-wrap container expanded\' : \'nav-wrap container\'"';
+	$amp_navigation_attr .= ' data-amp-bind-class="' . $amp_menu_toggle_id . ' ? \'nav container-inner group expanded\' : \'nav container-inner group\'"';
+}
+
 ?>
 <nav class="<?php echo implode(' ', $topnav_classes ); ?>" id="nav-topbar" data-menu-id="<?php echo hu_get_menu_id( 'header'); ?>">
-  <?php if ( 'both_menus' == $mobile_menu_opt ) { hu_print_mobile_btn(); } ?>
+  <?php if ( 'both_menus' == $mobile_menu_opt ) { hu_print_mobile_btn( 'topbar' ); } ?>
   <div class="nav-text"><?php apply_filters( 'hu_mobile_menu_text', '' );//put your mobile menu text here ?></div>
   <div class="topbar-toggle-down">
     <i class="fas fa-angle-double-down" aria-hidden="true" data-toggle="down" title="<?php _e('Expand menu', 'hueman' ); ?>"></i>
     <i class="fas fa-angle-double-up" aria-hidden="true" data-toggle="up" title="<?php _e('Collapse menu', 'hueman' ); ?>"></i>
   </div>
-  <div class="nav-wrap container">
+  <div class="nav-wrap container" <?php echo $amp_container_attr; ?>>
     <?php
       wp_nav_menu(
         array(
@@ -30,7 +40,8 @@ $display_search = ( 'topbar' == hu_get_option( 'desktop-search' ) ) &&  ( hu_has
             'menu_class'      => 'nav container-inner group',
             'container'       => '',
             'menu_id'         => '',
-            'fallback_cb'     => $fallback_cb
+            'fallback_cb'     => $fallback_cb,
+			'items_wrap' => '<ul id="%1$s" ' . $amp_navigation_attr . ' class="%2$s">%3$s</ul>',
         )
       );
     ?>
@@ -38,8 +49,11 @@ $display_search = ( 'topbar' == hu_get_option( 'desktop-search' ) ) &&  ( hu_has
   <?php if ( $display_search ) : ?>
     <div id="topbar-header-search" class="container">
       <div class="container-inner">
-        <button class="toggle-search"><i class="fas fa-search"></i></button>
-        <div class="search-expand">
+		  <amp-state id="huAmpSearchExpanded">
+			  <script type="application/json">false</script>
+		  </amp-state>
+		  <button class="toggle-search" on="tap:AMP.setState( { huAmpSearchExpanded: ! huAmpSearchExpanded } )" role="button" tabindex="0" data-amp-bind-class="huAmpSearchExpanded ? 'toggle-search active' : 'toggle-search'"><i class="fas fa-search"></i></button>
+        <div class="search-expand" data-amp-bind-class="huAmpSearchExpanded ? 'search-expand active' : 'search-expand'">
           <div class="search-expand-inner"><?php get_search_form(); ?></div>
         </div>
       </div><!--/.container-inner-->
