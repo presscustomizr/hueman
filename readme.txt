@@ -2,8 +2,8 @@
 Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
-Tested up to: 5.6
-Stable tag: 3.7.4
+Tested up to: 5.7
+Stable tag: 3.7.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,10 @@ The Hueman theme loads fast and is 100% mobile-friendly according to Google. One
 
 == Changelog ==
 https://github.com/presscustomizr/hueman/releases
+= 3.7.5 March 2nd, 2021 =
+* successfully tested with WP 5.7 scheduled for March 9th
+* fixed : [Post Nav] "Next story" printed in the post title on Google news tab. fixes #953
+
 = 3.7.4 February 2nd, 2021 =
 * updated : Font Awesome icons to latest version (v5.15.2)
 * added : [social links] added Tiktok icon
