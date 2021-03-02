@@ -231,10 +231,18 @@ z-index:2;
 
 /*  single : post-nav
 /* ------------------------------------ */
-.post-nav li { width: 100%; display: inline; float: left; text-align: center; }
-.post-nav li a { position: relative; min-height: 4.56em; display: block; padding: 1em 40px 1.5em; }
+.post-nav li { width: 100%; display: inline; float: left; text-align: center;min-height: 4.56em;}
+.post-nav li a { position: relative; display: block; padding:0.3em 40px 0.3em; }
 .post-nav li i { color: #ccc; font-size: 1.125em; position: absolute; top: 50%; margin-top: -10px; }
-.post-nav li a strong { display: block; font-size: 0.75em; color: #aaa; letter-spacing: 0.5px; font-weight: normal; text-transform: uppercase; }
+.post-nav li > strong { 
+    display: block;
+    font-size: .75em;
+    color: #aaa;
+    letter-spacing: .5px;
+    font-weight: 400;
+    text-transform: uppercase;
+    padding-top: 1em;
+}
 .post-nav li a span { font-size: 0.9375em; color: #666; }
 .post-nav li a:hover span { color: #444; }
 .post-nav li.previous i { left: 10px; }
