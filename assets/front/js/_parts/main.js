@@ -3359,13 +3359,14 @@ var czrapp = czrapp || {};
                         // clean
                         $('.nav li').not($menu_item).removeClass('hu-children-item-opened');
 
+                        $menu_item.children('ul.sub-menu').css( 'opacity', 1 );
                         if ( $menu_item.hasClass('menu-item-has-children') && !$menu_item.hasClass('hu-children-item-opened') ) {
                               evt.preventDefault();
                               $menu_item.addClass('hu-children-item-opened');
                               $menu_item.children('ul.sub-menu').hide().stop().slideDown({
                                     duration : 'fast',
                                     complete : czrapp.userXP.onSlidingCompleteResetCSS
-                              }).css( 'opacity', 1 );
+                              });
                         }
                   });
 
