@@ -3552,7 +3552,7 @@ var czrapp = czrapp || {};
               var self = this,
                   $topbar = $('#nav-topbar.desktop-sticky'),
                   _isHoveringInTopBar = false;
-              $('#nav-topbar.desktop-sticky').on('mouseenter', function() {
+              $topbar.on('mouseenter', function() {
                           if ( czrapp.userXP.topNavExpanded() || czrapp.userXP._isMobileScreenSize() )
                             return;
                           _isHoveringInTopBar = true;
@@ -3575,27 +3575,49 @@ var czrapp = czrapp || {};
                                 }
                           }, 1000 );
                     });
-              $('.nav li').on('mouseenter', function() {
-                          if ( czrapp.userXP._isMobileScreenSize() )
-                            return;
-                          $(this).children('ul.sub-menu').hide().stop().slideDown({
-                                  duration : 'fast',
-                                  complete : czrapp.userXP.onSlidingCompleteResetCSS
-                          })
-                          .css( 'opacity', 1 );
-                    }).on('mouseleave', function() {
-                          if ( czrapp.userXP._isMobileScreenSize() )
-                            return;
-                          $(this).children('ul.sub-menu').stop().css( 'opacity', '' ).slideUp( {
-                                  duration : 'fast',
-                                  complete : czrapp.userXP.onSlidingCompleteResetCSS
-                          });
-                    });
+                  czrapp.$_body.on('touchstart', function() {
+                        if ( !$(this).hasClass('is-touch-device') ) {
+                              $(this).addClass('is-touch-device');
+                        }
+                  });
+                  var isTouchDeviceWithHorizontalMenu = function() {
+                         return !czrapp.userXP._isMobileScreenSize() && czrapp.$_body.hasClass('is-touch-device');
+                  };
+                  $('.nav li').on('click', 'a', function( evt ) {
+                        if ( czrapp.userXP._isMobileScreenSize() || !isTouchDeviceWithHorizontalMenu() )
+                              return;
+
+                        var $menu_item = $(this).closest('.menu-item');
+                        $('.nav li').not($menu_item).removeClass('hu-children-item-opened');
+
+                        if ( $menu_item.hasClass('menu-item-has-children') && !$menu_item.hasClass('hu-children-item-opened') ) {
+                              evt.preventDefault();
+                              $menu_item.addClass('hu-children-item-opened');
+                              $menu_item.children('ul.sub-menu').hide().stop().slideDown({
+                                    duration : 'fast',
+                                    complete : czrapp.userXP.onSlidingCompleteResetCSS
+                              }).css( 'opacity', 1 );
+                        }
+                  });
+                  $('.nav li').on('mouseenter', function() {
+                        if ( czrapp.userXP._isMobileScreenSize() || isTouchDeviceWithHorizontalMenu() )
+                              return;
+                        $(this).children('ul.sub-menu').hide().stop().slideDown({
+                              duration : 'fast',
+                              complete : czrapp.userXP.onSlidingCompleteResetCSS
+                        })
+                        .css( 'opacity', 1 );
+                  }).on('mouseleave', function() {
+                        if ( czrapp.userXP._isMobileScreenSize() || isTouchDeviceWithHorizontalMenu() )
+                              return;
+                        $(this).children('ul.sub-menu').stop().css( 'opacity', '' ).slideUp( {
+                              duration : 'fast',
+                              complete : czrapp.userXP.onSlidingCompleteResetCSS
+                        });
+                  });
               $('.nav li').on('focusin', 'a', function() {
-
-                    if ( czrapp.userXP._isMobileScreenSize() )
+                    if ( czrapp.userXP._isMobileScreenSize() || isTouchDeviceWithHorizontalMenu() )
                       return;
-
                     $(this).addClass('hu-focused');
                     $(this).closest('.nav li').children('ul.sub-menu').hide().stop().slideDown({
                             duration : 'fast'
@@ -3607,7 +3629,7 @@ var czrapp = czrapp || {};
                     var $el = $(this);
                     _.delay( function() {
                         $el.removeClass('hu-focused');
-                        if ( czrapp.userXP._isMobileScreenSize() )
+                        if ( czrapp.userXP._isMobileScreenSize() || isTouchDeviceWithHorizontalMenu() )
                           return;
                         if ( $('.nav li').find('.hu-focused').length < 1 ) {
                               $('.nav li').each( function() {

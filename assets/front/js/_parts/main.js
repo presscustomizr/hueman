@@ -3304,11 +3304,13 @@ var czrapp = czrapp || {};
                   $topbar = $('#nav-topbar.desktop-sticky'),
                   _isHoveringInTopBar = false;
 
+
+            
               //When the topnav is collapsed, some menu items may be hidden because of the fixed height and overflow hidden
               //let's expand the topnav if not already manually expanded by the user.
               //As long as we are hovering, it won't collapse.
               //After 1 second without hovering in, it will collapse
-              $('#nav-topbar.desktop-sticky').on('mouseenter', function() {
+              $topbar.on('mouseenter', function() {
                           if ( czrapp.userXP.topNavExpanded() || czrapp.userXP._isMobileScreenSize() )
                             return;
                           _isHoveringInTopBar = true;
@@ -3332,32 +3334,65 @@ var czrapp = czrapp || {};
                                 }
                           }, 1000 );
                     });
-              //$('.nav ul.sub-menu').hide();
-              $('.nav li').on('mouseenter', function() {
-                          if ( czrapp.userXP._isMobileScreenSize() )
-                            return;
-                          $(this).children('ul.sub-menu').hide().stop().slideDown({
-                                  duration : 'fast',
-                                  complete : czrapp.userXP.onSlidingCompleteResetCSS
-                          })
-                          .css( 'opacity', 1 );
-                    }).on('mouseleave', function() {
-                          if ( czrapp.userXP._isMobileScreenSize() )
-                            return;
-                          $(this).children('ul.sub-menu').stop().css( 'opacity', '' ).slideUp( {
-                                  duration : 'fast',
-                                  complete : czrapp.userXP.onSlidingCompleteResetCSS
-                          });
-                    });
 
+                  // added for #956
+                  czrapp.$_body.on('touchstart', function() {
+                        if ( !$(this).hasClass('is-touch-device') ) {
+                              $(this).addClass('is-touch-device');
+                        }
+                  });
+
+                  // added for #956
+                  // czrapp.userXP._isMobileScreenSize() === 'only screen and (max-width: 720px)'
+                  var isTouchDeviceWithHorizontalMenu = function() {
+                         return !czrapp.userXP._isMobileScreenSize() && czrapp.$_body.hasClass('is-touch-device');
+                  };
+
+                  // March 2021
+                  // If the menu has children and the children submenu is not opened yet, we don't want to open the link of this menu item
+                  // fixes #956
+                  $('.nav li').on('click', 'a', function( evt ) {
+                        if ( czrapp.userXP._isMobileScreenSize() || !isTouchDeviceWithHorizontalMenu() )
+                              return;
+
+                        var $menu_item = $(this).closest('.menu-item');
+                        // clean
+                        $('.nav li').not($menu_item).removeClass('hu-children-item-opened');
+
+                        if ( $menu_item.hasClass('menu-item-has-children') && !$menu_item.hasClass('hu-children-item-opened') ) {
+                              evt.preventDefault();
+                              $menu_item.addClass('hu-children-item-opened');
+                              $menu_item.children('ul.sub-menu').hide().stop().slideDown({
+                                    duration : 'fast',
+                                    complete : czrapp.userXP.onSlidingCompleteResetCSS
+                              }).css( 'opacity', 1 );
+                        }
+                  });
+
+                  //$('.nav ul.sub-menu').hide();
+                  $('.nav li').on('mouseenter', function() {
+                        if ( czrapp.userXP._isMobileScreenSize() || isTouchDeviceWithHorizontalMenu() )
+                              return;
+                        $(this).children('ul.sub-menu').hide().stop().slideDown({
+                              duration : 'fast',
+                              complete : czrapp.userXP.onSlidingCompleteResetCSS
+                        })
+                        .css( 'opacity', 1 );
+                  }).on('mouseleave', function() {
+                        if ( czrapp.userXP._isMobileScreenSize() || isTouchDeviceWithHorizontalMenu() )
+                              return;
+                        $(this).children('ul.sub-menu').stop().css( 'opacity', '' ).slideUp( {
+                              duration : 'fast',
+                              complete : czrapp.userXP.onSlidingCompleteResetCSS
+                        });
+                  });
+            
               // Allow Tab navigation
               // @fixes https://github.com/presscustomizr/hueman/issues/819
               // Trick => the focusout event is delayed so it occurs after the next focusin
               $('.nav li').on('focusin', 'a', function() {
-
-                    if ( czrapp.userXP._isMobileScreenSize() )
+                    if ( czrapp.userXP._isMobileScreenSize() || isTouchDeviceWithHorizontalMenu() )
                       return;
-
                     $(this).addClass('hu-focused');
                     $(this).closest('.nav li').children('ul.sub-menu').hide().stop().slideDown({
                             duration : 'fast'
@@ -3369,9 +3404,8 @@ var czrapp = czrapp || {};
                     var $el = $(this);
                     _.delay( function() {
                         $el.removeClass('hu-focused');
-                        if ( czrapp.userXP._isMobileScreenSize() )
+                        if ( czrapp.userXP._isMobileScreenSize() || isTouchDeviceWithHorizontalMenu() )
                           return;
-
                         // Clean => collapse any menu in which no item is currently focused
                         if ( $('.nav li').find('.hu-focused').length < 1 ) {
                               $('.nav li').each( function() {

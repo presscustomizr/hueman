@@ -564,7 +564,7 @@ if ( 'function' != typeof(jQuery.fn.stepper) ) {
                   // @see core customize-preview.js
                   // This is how NB can :
                   // - dynamically register settings server side in PHP customize manager while doing ajax actions
-                  // - get the customized sektion collection. @see sek_get_skoped_seks() and Nimble_Customizer_Setting::filter_previewed_sek_get_skoped_seks
+                  // - get the customized sektion collection. @see sek_get_skoped_seks() and Nimble_Collection_Setting::filter_previewed_sek_get_skoped_seks
                   setting.previewer.send( 'setting', [ setting.id, setting() ] );
 
                   dfd.resolve( arguments );

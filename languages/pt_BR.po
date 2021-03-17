@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman v3.7.5\n"
+"Project-Id-Version: Hueman v3.7.6\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2021-01-18 13:41:31+00:00\n"
+"POT-Creation-Date: 2021-03-17 12:42:41+00:00\n"
 "PO-Revision-Date: 2016-05-30 08:47+0200\n"
 "Last-Translator: Elvis Henrique Pereira <elvishp2006@gmail.com>\n"
 "Language-Team: Press Customizr\n"
@@ -271,17 +271,17 @@ msgid ""
 "Hueman and any WordPress theme."
 msgstr ""
 
-#: functions/admin/class-plugin-rec.php:90
+#: functions/admin/class-plugin-rec.php:92
 msgid ""
 "Hueman theme recommends the simple and smart %1$s companion ( free 😍 ) to "
 "help you build pages %2$s."
 msgstr ""
 
-#: functions/admin/class-plugin-rec.php:93
+#: functions/admin/class-plugin-rec.php:95
 msgid "Nimble Builder"
 msgstr ""
 
-#: functions/admin/class-plugin-rec.php:96
+#: functions/admin/class-plugin-rec.php:98
 msgid "like this"
 msgstr ""
 
