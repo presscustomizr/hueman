@@ -319,17 +319,14 @@ border: none;
     overflow: hidden;
   }
   .nav ul.sub-menu {
-    opacity: 0.5;
     display: none;
-    -webkit-transition: opacity 0.3s ease-in-out;
-    -moz-transition: opacity 0.3s ease-in-out;
-    -o-transition: opacity 0.3s ease-in-out;
-    transition: opacity 0.3s ease-in-out;
+    
   }
 
   /* HEADER WIDGET ZONE*/
   .header-ads-desktop #header-widgets { float: right; display: block; }
 }
+
 
 /* TOP NAV */
 @media only screen and (max-width: 719px) {
