@@ -65,12 +65,14 @@ function hu_print_l_rec_notice( $button_text, $button_link ) {
   ?>
   <script>
     jQuery( function( $ ) {
-    $( <?php echo wp_json_encode( "#$notice_id" ); ?> ).on( 'click', '.notice-dismiss', function() {
-      $.post( ajaxurl, {
-        pointer: <?php echo wp_json_encode( $notice_id ); ?>,
-        action: 'dismiss-wp-pointer'
+       // .notice-dismiss button markup is added by WP
+      $( <?php echo wp_json_encode( "#$notice_id" ); ?> ).on( 'click', '.notice-dismiss', function() {
+        $(this).closest('.is-dismissible').slideUp('fast');//<= this line is not mandatory since WP has its own way to remove the is-dismissible block
+        $.post( ajaxurl, {
+          pointer: <?php echo wp_json_encode( $notice_id ); ?>,
+          action: 'dismiss-wp-pointer'
+        } );
       } );
-    } );
   } );
   </script>
   <div class="notice updated is-dismissible czr-nimble-rec-notice" id="<?php echo esc_attr( $notice_id ); ?>">
