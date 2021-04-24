@@ -33,26 +33,38 @@ body .wp-block[data-align="full"] {
     }
 }
 
+.wp-block-cover:not(.alignwide):not(.alignfull),
+.wp-block-cover-image:not(.alignwide):not(.alignfull) {
+	clear: both;
+}
 
+.wp-block-columns:not(.alignwide):not(.alignfull) {
+	clear: both;
+}
+
+.wp-block[data-align=full],
+.wp-block.alignfull {
+	max-width: none;
+}
 /* Content Width */
-.wp-block:not(.wp-block-button) {
+.wp-block:not(.wp-block-button):not([data-align="full"]):not([data-align="wide"]) {
     width: calc(100vw - (2 * 1rem));
     max-width: 100%;
 }
 
 @media only screen and (min-width: 768px) {
-    .wp-block:not(.wp-block-button) {
+    .wp-block:not(.wp-block-button):not([data-align="full"]):not([data-align="wide"]) {
         width: calc(8 * (100vw / 12));
     }
 }
 
 @media only screen and (min-width: 1168px) {
-    .wp-block:not(.wp-block-button) {
+    .wp-block:not(.wp-block-button):not([data-align="full"]):not([data-align="wide"]) {
         width: calc(6 * (100vw / 12 ));
     }
 }
 
-.wp-block .wp-block:not(.wp-block-button) {
+.wp-block .wp-block:not(.wp-block-button):not([data-align="full"]):not([data-align="wide"]) {
     width: 100%;
 }
 
