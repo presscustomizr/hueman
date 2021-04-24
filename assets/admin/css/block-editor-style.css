@@ -35,24 +35,24 @@ body .wp-block[data-align="full"] {
 
 
 /* Content Width */
-.wp-block {
+.wp-block:not(.wp-block-button) {
     width: calc(100vw - (2 * 1rem));
     max-width: 100%;
 }
 
 @media only screen and (min-width: 768px) {
-    .wp-block {
+    .wp-block:not(.wp-block-button) {
         width: calc(8 * (100vw / 12));
     }
 }
 
 @media only screen and (min-width: 1168px) {
-    .wp-block {
+    .wp-block:not(.wp-block-button) {
         width: calc(6 * (100vw / 12 ));
     }
 }
 
-.wp-block .wp-block {
+.wp-block .wp-block:not(.wp-block-button) {
     width: 100%;
 }
 
