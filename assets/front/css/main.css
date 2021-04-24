@@ -2066,8 +2066,8 @@ but posts created with the former cover-image block will still use the wp-block-
 /* only reset the .hu-pad container horizontal padding*/
 .themeform .alignfull[class*=wp-block-],
 .themeform .alignwide[class*=wp-block-] {
-    margin-right: -30px;
-    margin-left: -30px;
+    margin-right: -15px;
+    margin-left: -15px;
     clear: both;
     width: auto;
     max-width: 100vw;
@@ -2286,6 +2286,15 @@ box-shadow: inset 0 1px 0 rgba(255,255,255,0.25); }
 .widget_recent_comments ul li,
 .widget_recent_entries ul li { color: #999; }
 .widget_recent_entries .post-date { display: block; }
+
+/*  widget : categories
+/* ------------------------------------ */
+.widget_categories ul.children { padding-left: 15px; }
+.rtl .widget_categories ul.children { padding-right: 15px; }
+
+.widget_categories ul.children > li {
+  border-bottom: none;
+}
 
 /*  widget : pages / custom menu
 /* ------------------------------------ */
@@ -2688,6 +2697,7 @@ list-style: none;
 /* ------------------------------------ */
 .flexslider { margin: 0; padding: 0; }
 /* August 2020 : remove display:none for https://github.com/presscustomizr/hueman/issues/916 */
+.rtl .flexslider .slides > li { display: none; -webkit-backface-visibility: hidden;} /* Hide the slides before the JS is loaded. Avoids image jumping */
 .flexslider .slides > li { -webkit-backface-visibility: hidden;}
 /* Hide the slides before the JS is loaded. Avoids image jumping */
 

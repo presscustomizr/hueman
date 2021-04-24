@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.7
-Stable tag: 3.7.6
+Stable tag: 3.7.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,13 @@ The Hueman theme loads fast and is 100% mobile-friendly according to Google. One
 
 == Changelog ==
 https://github.com/presscustomizr/hueman/releases
+= 3.7.7 April 24th, 2021 =
+* fixed : [post slider][rtl] regression introduced in #916 : featured posts slider hidden on rtl websites. fixes #949
+* fixed : [Gutenberg] buttons block in line style broken. fixes #947
+* fixed : [widget][category] when displaying category hierarchy, children categories the categories should have an horizontal padding. fixes #955
+* fixed : [gutenberg] CSS bug on mobile view when image added with gutenberg and set to full width. fixes #954
+* fixed : [gutenberg] editor style for alignfull alignwide
+
 = 3.7.6 March 17th, 2021 =
 * fixed : [menu] dropdown Menus not staying down when selected in mobile landscape mode. fixes #956
 

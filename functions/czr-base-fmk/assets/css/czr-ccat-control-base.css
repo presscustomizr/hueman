@@ -431,6 +431,7 @@ span.czr-notice {
 	clear: both;
 	display: block;
 	line-height: 18px;
+  padding: 5px 0;
 }
 
 .czr-html-before hr, .czr-html-after hr {
