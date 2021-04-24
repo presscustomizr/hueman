@@ -102,6 +102,15 @@
 .widget_recent_entries ul li { color: #999; }
 .widget_recent_entries .post-date { display: block; }
 
+/*  widget : categories
+/* ------------------------------------ */
+.widget_categories ul.children { padding-left: 15px; }
+.rtl .widget_categories ul.children { padding-right: 15px; }
+
+.widget_categories ul.children > li {
+  border-bottom: none;
+}
+
 /*  widget : pages / custom menu
 /* ------------------------------------ */
 .widget_pages ul li a,
