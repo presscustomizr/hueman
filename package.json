@@ -29,6 +29,6 @@
     "load-grunt-config": "^0.19.2"
   },
   "dependencies": {
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.21"
   }
 }
