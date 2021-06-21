@@ -120,7 +120,7 @@ if ( !class_exists( 'HU_utils' ) ) :
             add_filter( 'the_content'                       , array( $this , 'hu_parse_imgs' ), PHP_INT_MAX );
             add_filter( 'hu_post_thumbnail_html'            , array( $this , 'hu_parse_imgs' ) );
         }
-        add_filter( 'wp_title'                            , array( $this , 'hu_wp_title' ), 10, 2 );
+        add_filter( 'wp_title'                            , array( $this , 'hu_wp_filter_title' ), 10, 2 );
     }
 
 
@@ -193,7 +193,7 @@ if ( !class_exists( 'HU_utils' ) ) :
     * Hook : wp_title
     *
     */
-    function hu_wp_title( $title, $sep ) {
+    function hu_wp_filter_title( $title, $sep ) {
         if ( function_exists( '_wp_render_title_tag' ) )
           return $title;
 
