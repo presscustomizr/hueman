@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman v3.7.7\n"
+"Project-Id-Version: Hueman v3.7.8\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2021-03-17 12:42:41+00:00\n"
+"POT-Creation-Date: 2021-06-21 12:27:57+00:00\n"
 "PO-Revision-Date: 2016-08-31 16:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: Press Customizr\n"
@@ -1746,7 +1746,7 @@ msgstr "Unggah"
 
 #: functions/czr/controls/class-upload-control.php:68
 #: functions/czr-base-fmk/czr-base-fmk.php:280
-#: functions/czr-base-fmk/czr-base-fmk.php:570
+#: functions/czr-base-fmk/czr-base-fmk.php:567
 msgid "Remove"
 msgstr "Singkirkan"
 
@@ -1772,7 +1772,7 @@ msgstr "Gambar Header"
 
 #: functions/czr/czr-resources.php:163
 #: functions/czr-base-fmk/czr-base-fmk.php:268
-#: functions/czr-base-fmk/czr-base-fmk.php:570
+#: functions/czr-base-fmk/czr-base-fmk.php:567
 #: functions/czr-modules/widget-zones/widget_zones_module.php:227
 #: option-tree/includes/ot-functions-admin.php:2695
 #: option-tree/includes/ot-functions-admin.php:2804
@@ -2158,51 +2158,51 @@ msgstr ""
 msgid "Customizing"
 msgstr "customizer"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:480
+#: functions/czr-base-fmk/czr-base-fmk.php:477
 msgid "ac_set_ajax_czr_tmpl => Security check failed."
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:552
+#: functions/czr-base-fmk/czr-base-fmk.php:549
 msgid "Add New"
 msgstr "Tambah Baru"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:557
+#: functions/czr-base-fmk/czr-base-fmk.php:554
 msgid "Cancel"
 msgstr "Batal"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:557
+#: functions/czr-base-fmk/czr-base-fmk.php:554
 msgid "Add it"
 msgstr "Tambahkan"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:578
+#: functions/czr-base-fmk/czr-base-fmk.php:575
 msgid "Are you sure you want to remove : <strong>{{ data.title }} ?</strong>"
 msgstr ""
 "Apakah Anda yakin ingin menyingkirkan : <strong>{{ data.title }} ?</strong>"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:579
+#: functions/czr-base-fmk/czr-base-fmk.php:576
 msgid "Yes"
 msgstr "Ya"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:579
+#: functions/czr-base-fmk/czr-base-fmk.php:576
 msgid "No"
 msgstr "Tidak"
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1694
+#: functions/czr-base-fmk/czr-base-fmk.php:1691
 msgid "Set a custom url"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1728
-#: functions/czr-base-fmk/czr-base-fmk.php:1928
+#: functions/czr-base-fmk/czr-base-fmk.php:1725
+#: functions/czr-base-fmk/czr-base-fmk.php:1925
 msgid "ajax_load_available_items => Security check failed."
 msgstr ""
 
 #. translators: %d: ID of a post
-#: functions/czr-base-fmk/czr-base-fmk.php:1849
-#: functions/czr-base-fmk/czr-base-fmk.php:2058
+#: functions/czr-base-fmk/czr-base-fmk.php:1846
+#: functions/czr-base-fmk/czr-base-fmk.php:2055
 msgid "#%d (no title)"
 msgstr ""
 
-#: functions/czr-base-fmk/czr-base-fmk.php:1992
+#: functions/czr-base-fmk/czr-base-fmk.php:1989
 msgid "No results found."
 msgstr ""
 

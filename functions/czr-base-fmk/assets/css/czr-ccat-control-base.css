@@ -2585,9 +2585,16 @@ input[type="range"]:focus + .rangeslider .rangeslider__handle {
   display: inline-block;
   float: right;
 }
+.nimblecheck-wrap .nimblecheck-input:focus + label {
+  box-shadow: 0 0 0 1px #33b3db;
+}
 /* Hide the checkbox input (only needed for `:checked` property) */
 .nimblecheck-wrap .nimblecheck-input {
-  display: none;
+  /* display: none; <= May 2021 : display none breaks accessibility*/
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 /* Switch */
 .nimblecheck-wrap .nimblecheck-label {
