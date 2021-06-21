@@ -92,7 +92,7 @@ if ( !function_exists( 'hu_setup' ) ) {
     add_theme_support( 'editor-styles' );
     // Implemented for https://github.com/presscustomizr/hueman/issues/842
     // documented : https://codex.wordpress.org/Theme_Markup
-    add_theme_support( 'html5', array( 'search-form' ) );
+    add_theme_support( 'html5', array( 'search-form', 'script', 'style' ) );
 
     // Thumbnail sizes
     add_image_size( 'thumb-small', 80, 80, true );//used for Hueman Dynamic Tabs widget <= april 2020 changed from 160x160 to 80x80 for https://github.com/presscustomizr/hueman/issues/866
