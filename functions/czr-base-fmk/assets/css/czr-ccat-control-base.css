@@ -228,9 +228,10 @@ li#customize-control-custom_css textarea {
 	color: #00a0d2;
 }
 .customize-control-title {
-	line-height: 19px;
+	line-height: 1.5em;
+  /* font-size: 13px; */
   font-family: Roboto;
-    font-weight: normal;
+  font-weight: normal;
 }
 .customize-control span.customize-control-title:first-child {
   position: relative;

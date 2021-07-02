@@ -2614,6 +2614,26 @@ $.extend( CZRItemMths , {
                         name      : 'edit_view',
                         actions   : [ 'setViewVisibility' ]
                   },
+                  //clone view
+                  {
+                        trigger   : 'click keydown',
+                        selector  : '.czr-clone-item',
+                        name      : 'clone_view',
+                        actions   : function( args ) {
+                              args = args || {};
+                              var _cloned_item_model = $.extend( {}, true, item() );
+                              _cloned_item_model.id = '';
+                              this.module.addItem( args, _cloned_item_model ).done( function() {
+                                    // Nimble Builder => make sure the dynamic stylesheet is refreshed
+                                    if ( window.sektionsLocalizedData && api.czr_skopeBase ) {
+                                          api.previewer.trigger( 'sek-refresh-stylesheet', {
+                                                local_skope_id : api.czr_skopeBase.getSkopeProperty( 'skope_id' ),
+                                                location_skope_id : sektionsLocalizedData.globalSkopeId
+                                          });
+                                    }
+                              });
+                        }
+                  },
                   //tabs navigation
                   {
                         trigger   : 'click keydown',
@@ -2922,7 +2942,8 @@ $.extend( CZRItemMths , {
                         if ( 1 > $( '#tmpl-' + _template_selector ).length ) {
                             dfd.reject( 'Missing template for item ' + item.id + '. The provided template script has no been found : #tmpl-' + _template_selector );
                         }
-                        appendAndResolve( wp.template( _template_selector )( $.extend( item_model_for_template_injection, { is_sortable : module.sortable } ) ) );
+                        var items_are_clonable = api.czrModuleMap[module.module_type] && api.czrModuleMap[module.module_type].items_are_clonable;
+                        appendAndResolve( wp.template( _template_selector )( $.extend( item_model_for_template_injection, { is_sortable : module.sortable, items_are_clonable : items_are_clonable } ) ) );
                   } else {
 
                         // allow plugin to alter the ajax params before fetching
@@ -5123,7 +5144,8 @@ $.extend( CZRDynModuleMths, {
       //the item is manually added.
       //@return a promise() with the item_id as param
       //@param params : { dom_el : {}, dom_event : {}, event : {}, model {} }
-      addItem : function( params ) {
+      //@param _cloned_item_model = { id : '', title : '', ... }
+      addItem : function( params, _cloned_item_model ) {
             var dfd = $.Deferred();
             if ( ! this.itemCanBeInstantiated() ) {
                   return dfd.reject().promise();
@@ -5134,7 +5156,10 @@ $.extend( CZRDynModuleMths, {
                       module.preItemExpanded.set( false );
                       //module.toggleSuccessMessage('off');
                 };
-
+            // June 2021 => introduction of clone item
+            if ( _cloned_item_model && _.has( _cloned_item_model, 'id' ) ) {
+                  item_candidate = _cloned_item_model;
+            }
             if ( _.isEmpty( item_candidate ) || ! _.isObject( item_candidate ) ) {
                   api.errorLog( 'addItem : an item_candidate should be an object and not empty. In : ' + module.id +'. Aborted.' );
                   return dfd.reject().promise();
