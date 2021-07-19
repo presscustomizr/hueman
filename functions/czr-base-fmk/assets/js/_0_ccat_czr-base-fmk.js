@@ -2721,6 +2721,11 @@ $.extend( CZRItemMths , {
       //Fired if the item has been instantiated
       //The item.callbacks are declared.
       ready : function() {
+            // July 2021 introduced so we can remotely add visibility functions
+            api.trigger('czr_module_item_is_ready', {
+                  module_type : this.module.module_type,
+                  item : this
+            });
             this.isReady.resolve();
       },
 
