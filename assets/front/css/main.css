@@ -273,6 +273,14 @@ input[type="submit"]:hover,
 .entry li { margin: 0; }
 .entry ul li,
 .entry ol ul li { list-style: square; }
+/* Gutenberg compatibility, see: https://github.com/presscustomizr/hueman/issues/969 */
+body .wp-block-post-template, body .wp-block-query-loop {
+  margin: 0;
+}
+body .wp-block-post-template li, body .wp-block-query-loop li {
+  list-style: none;
+}
+
 /* woocommerce */
 .woocommerce .entry #reviews #comments ol.commentlist li,
 .entry .woocommerce ul li { list-style: none; }

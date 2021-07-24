@@ -1410,7 +1410,7 @@ if ( !class_exists( 'CZR_Fmk_Dyn_Module_Registration' ) ) :
             // A module type can be registered only once.
             // Already registered ?
             if ( array_key_exists( $module_type_candidate, $registered ) ) {
-                sek_error_log( 'czr_pre_register_dynamic_module => module type already registered => ' . $module_type_candidate );
+                //sek_error_log( 'czr_pre_register_dynamic_module => module type already registered => ' . $module_type_candidate );
                 return;
             }
             $registered[ $module_type_candidate ] = $module_params;
