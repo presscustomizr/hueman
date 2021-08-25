@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman v3.7.11\n"
+"Project-Id-Version: Hueman v3.7.12\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2021-06-21 12:27:57+00:00\n"
+"POT-Creation-Date: 2021-08-25 20:27:18+00:00\n"
 "PO-Revision-Date: 2016-05-30 08:47+0200\n"
 "Last-Translator: Elvis Henrique Pereira <elvishp2006@gmail.com>\n"
 "Language-Team: Press Customizr\n"
@@ -69,11 +69,11 @@ msgstr ""
 msgid "Hueman theme"
 msgstr ""
 
-#: footer.php:140 functions/init-front.php:277 sidebar.php:27
+#: footer.php:139 functions/init-front.php:277 sidebar.php:27
 msgid "You can set your social links here from the live customizer"
 msgstr ""
 
-#: footer.php:142 parts/header-nav-mobile.php:74 sidebar.php:29
+#: footer.php:141 parts/header-nav-mobile.php:74 sidebar.php:29
 msgid "Customize now"
 msgstr ""
 
@@ -121,81 +121,81 @@ msgstr ""
 msgid "Get help in the free support forum"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:143
+#: functions/admin/class-admin-page.php:142
 msgid "Thank you for using the %s theme for your website."
 msgstr ""
 
-#: functions/admin/class-admin-page.php:144
+#: functions/admin/class-admin-page.php:143
 msgid ""
 "%s %s has more features, is safer and more stable than ever to help you "
 "designing an awesome webdesign."
 msgstr ""
 
-#: functions/admin/class-admin-page.php:145
+#: functions/admin/class-admin-page.php:144
 msgid ""
 "For more information about this new version of the theme, %s or check the "
 "changelog below"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:146
+#: functions/admin/class-admin-page.php:145
 msgid "read the latest release notes"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:148
-#: functions/admin/class-admin-page.php:258
+#: functions/admin/class-admin-page.php:147
+#: functions/admin/class-admin-page.php:257
 msgid "Changelog"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:152
+#: functions/admin/class-admin-page.php:151
 msgid "The best way to start with %s is to read the %s and visit the %s."
 msgstr ""
 
-#: functions/admin/class-admin-page.php:154
+#: functions/admin/class-admin-page.php:153
 msgid "getting started guide"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:155
+#: functions/admin/class-admin-page.php:154
 msgid "demo website"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:169
+#: functions/admin/class-admin-page.php:168
 msgid ""
 "You are using a child theme of Hueman %1$s : always check the %2$s after "
 "upgrading to see if a function or a template has been deprecated."
 msgstr ""
 
-#: functions/admin/class-admin-page.php:188
+#: functions/admin/class-admin-page.php:187
 msgid "Happy user of Hueman?"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:189
+#: functions/admin/class-admin-page.php:188
 msgid ""
 "If you are happy with the theme, say it on wordpress.org and give Hueman a "
 "nice review!"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:194
+#: functions/admin/class-admin-page.php:193
 #, fuzzy
 msgid "Follow us"
 msgstr "Siga:"
 
-#: functions/admin/class-admin-page.php:208
+#: functions/admin/class-admin-page.php:207
 msgid "Go to Dashboard &rarr; Home"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:208
+#: functions/admin/class-admin-page.php:207
 msgid "Go to Dashboard"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:283
+#: functions/admin/class-admin-page.php:282
 msgid "System Information"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:284
+#: functions/admin/class-admin-page.php:283
 msgid "Please include the following information when posting support requests"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:285
+#: functions/admin/class-admin-page.php:284
 msgid ""
 "To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C "
 "(Mac)."
@@ -830,7 +830,7 @@ msgid ""
 "layout is set."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:973 functions/init-front.php:1786
+#: functions/class-utils-settings-map.php:973 functions/init-front.php:1785
 #: functions/init-sidebars-widgets.php:132
 msgid "Home"
 msgstr ""
@@ -907,7 +907,7 @@ msgid ""
 "default content."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:1080 functions/init-front.php:665
+#: functions/class-utils-settings-map.php:1080 functions/init-front.php:664
 msgid "Blog"
 msgstr ""
 
@@ -2385,96 +2385,96 @@ msgstr ""
 msgid "Add widgets to the zone :"
 msgstr ""
 
-#: functions/init-front.php:494 functions/init-front.php:500
+#: functions/init-front.php:493 functions/init-front.php:499
 msgid "Home page"
 msgstr ""
 
-#: functions/init-front.php:552
+#: functions/init-front.php:551
 msgid "Search result"
 msgstr "Resultado de busca"
 
-#: functions/init-front.php:554
+#: functions/init-front.php:553
 msgid "Search results"
 msgstr "Resultados de busca"
 
-#: functions/init-front.php:565
+#: functions/init-front.php:564
 msgid "Error 404."
 msgstr "Erro 404."
 
-#: functions/init-front.php:566
+#: functions/init-front.php:565
 msgid "Page not found!"
 msgstr "Página não encontrada!"
 
-#: functions/init-front.php:581
+#: functions/init-front.php:580
 msgid "Author:"
 msgstr "Autor:"
 
-#: functions/init-front.php:599
+#: functions/init-front.php:598
 msgid "Category:"
 msgstr "Categoria:"
 
-#: functions/init-front.php:608
+#: functions/init-front.php:607
 msgid "Tagged:"
 msgstr "Tag:"
 
-#: functions/init-front.php:627
+#: functions/init-front.php:626
 msgid "Daily Archive:"
 msgstr "Arquivo diário:"
 
-#: functions/init-front.php:637
+#: functions/init-front.php:636
 msgid "Monthly Archive:"
 msgstr "Arquivo Mensal:"
 
-#: functions/init-front.php:647
+#: functions/init-front.php:646
 msgid "Yearly Archive:"
 msgstr "Arquivo Anual:"
 
-#: functions/init-front.php:1252
+#: functions/init-front.php:1251
 #, fuzzy
 msgid "Expand"
 msgstr "Expandir Sidebar"
 
-#: functions/init-front.php:1253
+#: functions/init-front.php:1252
 msgid "Collapse"
 msgstr ""
 
-#: functions/init-front.php:1834 functions/init-sidebars-widgets.php:134
+#: functions/init-front.php:1833 functions/init-sidebars-widgets.php:134
 msgid "Pages"
 msgstr ""
 
-#: functions/init-front.php:2110
+#: functions/init-front.php:2109
 msgid "Welcome in the Hueman theme"
 msgstr ""
 
-#: functions/init-front.php:2113
+#: functions/init-front.php:2112
 msgid "The theme offers a wide range"
 msgstr ""
 
-#: functions/init-front.php:2115
+#: functions/init-front.php:2114
 msgid "of customization options"
 msgstr ""
 
-#: functions/init-front.php:2116
+#: functions/init-front.php:2115
 msgid "to let you create the best possible websites."
 msgstr ""
 
-#: functions/init-front.php:2119
+#: functions/init-front.php:2118
 msgid "If you need inspiration, you can visit our online demos"
 msgstr ""
 
-#: functions/init-front.php:2121
+#: functions/init-front.php:2120
 msgid "Hueman Demo 1"
 msgstr ""
 
-#: functions/init-front.php:2123
+#: functions/init-front.php:2122
 msgid "Hueman Demo 2"
 msgstr ""
 
-#: functions/init-front.php:2126
+#: functions/init-front.php:2125
 msgid "To help you getting started with Hueman, we have published"
 msgstr ""
 
-#: functions/init-front.php:2128
+#: functions/init-front.php:2127
 msgid "a short guide here."
 msgstr ""
 
