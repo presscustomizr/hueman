@@ -120,8 +120,7 @@ if ( !class_exists( 'HU_admin_update_notification' ) ) :
                 </p>
               </div>
               <?php
-            $_html = ob_get_contents();
-            if ($_html) ob_end_clean();
+            $_html = ob_get_clean();
             echo $_html;
         }
 

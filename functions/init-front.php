@@ -33,12 +33,12 @@ if ( !function_exists( 'hu_get_content') ) {
         </section><!--/.content-->
       <?php do_action( '__after_content_section', $tmpl ); ?>
     <?php
-    $html = ob_get_contents();
-    if ($html) ob_end_clean();
-    if ( $print )
+    $html = ob_get_clean();
+    if ( $print ) {
       echo $html;
-    else
+    } else {
       return $html;
+    }
   }
 }
 
@@ -469,8 +469,7 @@ if ( !function_exists( 'hu_print_logo_or_title' ) ) {
                 echo $wrap_in_h_one ? '</h1>' : '</p>';
             }
             do_action( '__after_logo_or_site_title', $logo_or_title );
-        $html = ob_get_contents();
-        if ($html) ob_end_clean();
+        $html = ob_get_clean();
         if ( $echo )
           echo apply_filters('hu_logo_title', $html );
         else
@@ -2132,8 +2131,7 @@ function hu_get_welcome_note_content() {
           </div>
         </div>
       <?php
-    $html = ob_get_contents();
-    if ($html) ob_end_clean();
+    $html = ob_get_clean();
     return apply_filters('hu_front_welcome_note_html', $html );
 }
 

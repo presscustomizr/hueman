@@ -129,8 +129,7 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
                     <?php endif; ?>
                   </div><!-- .two-col -->
               <?php
-                $html = ob_get_contents();
-                if ($html) ob_end_clean();
+                $html = ob_get_clean();
                 echo apply_filters( 'hu_display_doc_support_content', $html );
               ?>
             </div><!-- .changelog -->

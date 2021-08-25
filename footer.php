@@ -9,9 +9,9 @@
       <?php
         ob_start();
         hu_print_widgets_in_location( 'footer-ads' );
-        $full_width_widget_html = ob_get_contents();
+        $full_width_widget_html = ob_get_clean();
       ?>
-      <?php if ( ! empty($full_width_widget_html) ) : ob_end_clean(); ?>
+      <?php if ( ! empty($full_width_widget_html) ) : ?>
         <section class="container" id="footer-full-width-widget">
           <div class="container-inner">
             <?php hu_print_widgets_in_location( 'footer-ads' ); ?>
@@ -121,8 +121,7 @@
                     <p><?php _e('Powered by','hueman'); ?>&nbsp;<a class="fab fa-wordpress" title="<?php _e( 'Powered by WordPress', 'hueman' ) ?>" href="<?php echo esc_url( __( 'https://wordpress.org/', 'hueman' ) ); ?>" target="_blank" rel="noopener noreferrer"></a> - <?php _e('Designed with the','hueman'); ?>&nbsp;<a href="<?php echo $hu_theme -> get('ThemeURI'); ?>" title="<?php _e('Hueman theme','hueman'); ?>"><?php _e('Hueman theme','hueman'); ?></a></p>
                   </div><!--/#credit-->
               <?php
-                $credits_html = ob_get_contents();
-                if ($credits_html) ob_end_clean();
+                $credits_html = ob_get_clean();
                 echo apply_filters( 'hu_credits_html', $credits_html );
               ?>
             <?php endif; ?>
