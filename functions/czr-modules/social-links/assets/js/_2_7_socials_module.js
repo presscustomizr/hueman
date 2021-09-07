@@ -141,6 +141,7 @@ $.extend( CZRSocialModuleMths, {
                 'skype',
                 'slack',
                 'slideshare',
+                'sms',
                 'snapchat',
                 'soundcloud',
                 'spotify',
@@ -189,6 +190,7 @@ $.extend( CZRSocialModuleMths, {
               this.fa_solid_icons = [
                 'fa-envelope',
                 'fa-envelope-square',
+                'fa-map-marker',
                 'fa-mobile',
                 'fa-mobile-alt',
                 'fa-phone',
@@ -196,7 +198,8 @@ $.extend( CZRSocialModuleMths, {
                 'fa-rss',
                 'fa-rss-square',
                 'fa-share-alt',
-                'fa-share-alt-square'
+                'fa-share-alt-square',
+                  'fa-sms'
               ];
 
               this.fa_icons_replacement = {

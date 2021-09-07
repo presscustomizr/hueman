@@ -287,16 +287,18 @@ if ( !function_exists( 'hu_print_social_links' ) ) {
     //FA5 backward compatibility with FA4
     //see https://github.com/presscustomizr/customizr/issues/1364
     $_fa_solid_icons = array(
-        'fa-envelope',
-        'fa-envelope-square',
-        'fa-mobile',
-        'fa-mobile-alt',
-        'fa-phone',
-        'fa-phone-square',
-        'fa-rss',
-        'fa-rss-square',
-        'fa-share-alt',
-        'fa-share-alt-square'
+      'fa-envelope',
+      'fa-envelope-square',
+      'fa-map-marker',
+      'fa-mobile',
+      'fa-mobile-alt',
+      'fa-phone',
+      'fa-phone-square',
+      'fa-rss',
+      'fa-rss-square',
+      'fa-share-alt',
+      'fa-share-alt-square',
+      'fa-sms'
     );
     $_fa_icon_replacements = array(
         'fa-bitbucket-square'     => 'fa-bitbucket',
