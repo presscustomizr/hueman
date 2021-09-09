@@ -134,11 +134,11 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
       <div id="hueman-changelog" class="changelog">
         <h3><?php printf( __( 'Changelog' , 'hueman' ) , HUEMAN_VER ); ?></h3>
         <p><?php echo $html ?></p>
-        <p><strong><?php printf('<a href="%1$s" title="%2$s" target="_blank" rel="noopener noreferrer">%2$s %3$s</a></strong>',
+        <p><strong><?php printf('<a href="%1$s" title="%2$s" target="_blank" rel="noopener noreferrer">%2$s %3$s</a>',
                     HU_WEBSITE . "/category/hueman-releases/",
                     __( "Read the latest release notes" , "hueman" ),
                     is_rtl() ? '&laquo;' : '&raquo;'
-          ); ?>
+          ); ?></strong></p>
       </div>
       <?php
     }
