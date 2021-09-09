@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Hueman\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2021-09-09 09:54:21+00:00\n"
+"POT-Creation-Date: 2021-09-09 19:33:12+00:00\n"
 "PO-Revision-Date: 2016-11-04 13:55+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -81,14 +81,12 @@ msgid "Thank you for using"
 msgstr ""
 
 #: functions/admin/class-admin-page.php:65
-#: functions/admin/class-admin-update-notification.php:109
 msgid ""
 "If you enjoy using the Hueman theme for your website, please consider %s. "
 "Your support allows us to keep the theme at the highest level. Thank you!"
 msgstr ""
 
 #: functions/admin/class-admin-page.php:66
-#: functions/admin/class-admin-update-notification.php:110
 msgid "upgrading to the pro version"
 msgstr ""
 
@@ -123,18 +121,22 @@ msgstr ""
 msgid "Changelog"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:160
+#: functions/admin/class-admin-page.php:139
+msgid "Read the latest release notes"
+msgstr "Read the latest release notes"
+
+#: functions/admin/class-admin-page.php:165
 #, fuzzy
 msgid "System Information"
 msgstr "System Informations"
 
-#: functions/admin/class-admin-page.php:161
+#: functions/admin/class-admin-page.php:166
 #, fuzzy
 msgid "Please include the following information when posting support requests"
 msgstr ""
 "Please include the following informations when posting support requests"
 
-#: functions/admin/class-admin-page.php:162
+#: functions/admin/class-admin-page.php:167
 msgid ""
 "To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C "
 "(Mac)."
@@ -152,10 +154,11 @@ msgid "version"
 msgstr "version"
 
 #: functions/admin/class-admin-update-notification.php:101
-msgid "Read the latest release notes"
-msgstr "Read the latest release notes"
+#, fuzzy
+msgid "Changelog here"
+msgstr "Changelog in version %1$s"
 
-#: functions/admin/class-admin-update-notification.php:118
+#: functions/admin/class-admin-update-notification.php:108
 msgid "close"
 msgstr "Close"
 
@@ -4128,9 +4131,6 @@ msgstr ""
 #~ "Your theme supports %s menu. Select which menu you would like to use."
 #~ msgstr[1] ""
 #~ "Your theme supports %s menus. Select which menu appears in each location."
-
-#~ msgid "Changelog in version %1$s"
-#~ msgstr "Changelog in version %1$s"
 
 #~ msgid "Welcome to"
 #~ msgstr "Welcome to"

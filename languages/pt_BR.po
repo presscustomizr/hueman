@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman v3.7.13\n"
+"Project-Id-Version: Hueman v3.7.14\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2021-09-09 09:54:21+00:00\n"
+"POT-Creation-Date: 2021-09-09 19:33:12+00:00\n"
 "PO-Revision-Date: 2016-05-30 08:47+0200\n"
 "Last-Translator: Elvis Henrique Pereira <elvishp2006@gmail.com>\n"
 "Language-Team: Press Customizr\n"
@@ -86,14 +86,12 @@ msgid "Thank you for using"
 msgstr ""
 
 #: functions/admin/class-admin-page.php:65
-#: functions/admin/class-admin-update-notification.php:109
 msgid ""
 "If you enjoy using the Hueman theme for your website, please consider %s. "
 "Your support allows us to keep the theme at the highest level. Thank you!"
 msgstr ""
 
 #: functions/admin/class-admin-page.php:66
-#: functions/admin/class-admin-update-notification.php:110
 msgid "upgrading to the pro version"
 msgstr ""
 
@@ -127,15 +125,19 @@ msgstr ""
 msgid "Changelog"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:160
+#: functions/admin/class-admin-page.php:139
+msgid "Read the latest release notes"
+msgstr ""
+
+#: functions/admin/class-admin-page.php:165
 msgid "System Information"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:161
+#: functions/admin/class-admin-page.php:166
 msgid "Please include the following information when posting support requests"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:162
+#: functions/admin/class-admin-page.php:167
 msgid ""
 "To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C "
 "(Mac)."
@@ -150,10 +152,10 @@ msgid "version"
 msgstr ""
 
 #: functions/admin/class-admin-update-notification.php:101
-msgid "Read the latest release notes"
+msgid "Changelog here"
 msgstr ""
 
-#: functions/admin/class-admin-update-notification.php:118
+#: functions/admin/class-admin-update-notification.php:108
 msgid "close"
 msgstr ""
 
