@@ -92,26 +92,16 @@ if ( !class_exists( 'HU_admin_update_notification' ) ) :
               <?php
                 echo apply_filters(
                   'hu_update_notice',
-                  sprintf('<h3>%1$s %2$s %3$s %4$s. <a class="" href="%5$s" title="%6$s" target="_blank">%6$s &raquo;</a></h3>',
+                  sprintf('<h3>%1$s %2$s %3$s %4$s. <a class="" href="%5$s" title="%6$s">%6$s %7$s</a></h3>',
                     __( "✅ You have recently updated to", "hueman"),
                     HU_IS_PRO ? 'Hueman Pro' : 'Hueman',
                     __( "version", "hueman"),
                     HUEMAN_VER,
-                    HU_WEBSITE . "/category/hueman-releases/",
-                    __( "Read the latest release notes" , "hueman" )
+                    admin_url() .'themes.php?page=welcome.php',
+                    __( "Changelog here" , "hueman" ),
+                    is_rtl() ? '&laquo;' : '&raquo;'
                   )
                 );
-              ?>
-              <?php
-                if ( !HU_IS_PRO && hu_user_started_before_version('3.7.5') ) {
-                  echo apply_filters( 'hu_update_notice',
-                    sprintf( '<h4><strong>%1$s 🙏</strong></h4>',
-                      sprintf( __( "If you enjoy using the Hueman theme for your website, please consider %s. Your support allows us to keep the theme at the highest level. Thank you!", "hueman"),
-                        sprintf( '<a href="%1$s" title="%2$s" target="_blank">%2$s</a>', 'https://presscustomizr.com/hueman-pro/', __("upgrading to the pro version", "hueman") )
-                      )
-                    )
-                  );
-                }
               ?>
                 <p style="text-align:right;position: absolute;font-size: 1.1em;<?php echo is_rtl()? 'left' : 'right';?>: 7px;bottom: -6px;">
                 <?php printf('<a href="#" title="%1$s" class="tc-dismiss-update-notice"> ( %1$s <strong>X</strong> ) </a>',
@@ -167,8 +157,6 @@ if ( !class_exists( 'HU_admin_update_notification' ) ) :
                       // Check for cheaters.
                       if ( '-1' === response )
                         return;
-
-                      $_el.closest('.updated').slideToggle('fast');
                     });
                 };//end of fn
 
@@ -176,6 +164,7 @@ if ( !class_exists( 'HU_admin_update_notification' ) ) :
                 $( function($) {
                   $('.tc-dismiss-update-notice').on('click', function( e ) {
                     e.preventDefault();
+                    $(this).closest('.updated').slideToggle('fast');
                     _ajax_action( $(this) );
                   } );
                 } );

@@ -61,7 +61,7 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
 
           <?php
             if ( !HU_IS_PRO ) {
-              printf( '<h4>%1$s 🙏</h4>',
+              printf( '<h3>%1$s 🙏</h3>',
                 sprintf( __( "If you enjoy using the Hueman theme for your website, please consider %s. Your support allows us to keep the theme at the highest level. Thank you!", "hueman"),
                   sprintf( '<a href="%1$s" title="%2$s" target="_blank">%2$s</a>', 'https://presscustomizr.com/hueman-pro/', __("upgrading to the pro version", "hueman") )
                 )
@@ -133,7 +133,12 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
 
       <div id="hueman-changelog" class="changelog">
         <h3><?php printf( __( 'Changelog' , 'hueman' ) , HUEMAN_VER ); ?></h3>
-          <p><?php echo $html ?></p>
+        <p><?php echo $html ?></p>
+        <p><strong><?php printf('<a href="%1$s" title="%2$s" target="_blank" rel="noopener noreferrer">%2$s %3$s</a></strong>',
+                    HU_WEBSITE . "/category/hueman-releases/",
+                    __( "Read the latest release notes" , "hueman" ),
+                    is_rtl() ? '&laquo;' : '&raquo;'
+          ); ?>
       </div>
       <?php
     }
