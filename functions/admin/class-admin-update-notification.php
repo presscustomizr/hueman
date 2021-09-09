@@ -42,7 +42,7 @@ if ( !class_exists( 'HU_admin_update_notification' ) ) :
             $opt_name                   = 'last_update_notice';
             $last_update_notice_values  = hu_get_option($opt_name);
             $show_new_notice = false;
-            $display_ct = 50;
+            $display_ct = 10;
 
             if ( !$last_update_notice_values || !is_array($last_update_notice_values) ) {
                 //first time user of the theme, the option does not exist
@@ -79,8 +79,7 @@ if ( !class_exists( 'HU_admin_update_notification' ) ) :
             }//end if
 
             //always display in dev mode
-            //$show_new_notice = ( defined( 'CZR_DEV' ) && CZR_DEV ) ? true : $show_new_notice;
-
+            $show_new_notice = ( defined('CZR_DEV') && CZR_DEV ) || $show_new_notice;
             if ( !$show_new_notice )
               return;
             //prefixed HU_Plugin_Activation because of the possible issue : https://github.com/presscustomizr/customizr/issues/1603
@@ -90,28 +89,30 @@ if ( !class_exists( 'HU_admin_update_notification' ) ) :
             ob_start();
               ?>
               <div class="updated czr-update-notice" style="position:relative;">
-                <?php
-                  echo apply_filters(
-                    'hu_update_notice',
-                    sprintf('<h3>%1$s %2$s %3$s %4$s :D</h3>',
-                      __( "Good, you've recently upgraded to", "hueman"),
-                      'Hueman',
-                      __( "version", "hueman"),
-                      HUEMAN_VER
+              <?php
+                echo apply_filters(
+                  'hu_update_notice',
+                  sprintf('<h3>%1$s %2$s %3$s %4$s. <a class="" href="%5$s" title="%6$s" target="_blank">%6$s &raquo;</a></h3>',
+                    __( "✅ You have recently updated to", "hueman"),
+                    HU_IS_PRO ? 'Hueman Pro' : 'Hueman',
+                    __( "version", "hueman"),
+                    HUEMAN_VER,
+                    HU_WEBSITE . "/category/hueman-releases/",
+                    __( "Read the latest release notes" , "hueman" )
+                  )
+                );
+              ?>
+              <?php
+                if ( !HU_IS_PRO && hu_user_started_before_version('3.7.5') ) {
+                  echo apply_filters( 'hu_update_notice',
+                    sprintf( '<h4><strong>%1$s 🙏</strong></h4>',
+                      sprintf( __( "If you enjoy using the Hueman theme for your website, please consider %s. Your support allows us to keep the theme at the highest level. Thank you!", "hueman"),
+                        sprintf( '<a href="%1$s" title="%2$s" target="_blank">%2$s</a>', 'https://presscustomizr.com/hueman-pro/', __("upgrading to the pro version", "hueman") )
+                      )
                     )
                   );
-                ?>
-                <?php
-                  echo apply_filters(
-                    'hu_update_notice',
-                    sprintf( '<h4>%1$s <a class="" href="%2$s" title="%3$s" target="_blank">%3$s &raquo;</a></h4>%4$s',
-                      __( "We'd like to introduce the new features we've been working on.", "hueman"),
-                      HU_WEBSITE . "/category/hueman-releases/",
-                      __( "Read the latest release notes" , "hueman" ),
-                      apply_filters( 'hu_update_notice_after', '' )
-                    )
-                  );
-                ?>
+                }
+              ?>
                 <p style="text-align:right;position: absolute;font-size: 1.1em;<?php echo is_rtl()? 'left' : 'right';?>: 7px;bottom: -6px;">
                 <?php printf('<a href="#" title="%1$s" class="tc-dismiss-update-notice"> ( %1$s <strong>X</strong> ) </a>',
                     __('close' , 'hueman')

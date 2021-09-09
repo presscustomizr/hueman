@@ -1,142 +1,50 @@
-@font-face {
-  font-family: 'Font Awesome\ 5 Free';
-  font-style: normal;
-  font-weight: 400;
-  src: url("../../front/webfonts/fa-regular-400.eot");
-  src: url("../../front/webfonts/fa-regular-400.eot?#iefix") format("embedded-opentype"),
-       url("../../front/webfonts/fa-regular-400.woff2") format("woff2"),
-       url("../../front/webfonts/fa-regular-400.woff") format("woff"),
-       url("../../front/webfonts/fa-regular-400.ttf") format("truetype"),
-       url("../../front/webfonts/fa-regular-400.svg#fontawesome") format("svg");
-}
-.hu-config-info { clear: both;}
-.about-wrap h3 {
-  line-height: 26px;
-}
-#hueman-admin-panel.about-wrap .feature-section {
-    margin-top: 0px;
-    padding: 0;
-}
-.about-wrap .feature-section div {
-  text-align: center;
+/* WELCOME PANEL
+    -------------------------------------------------- */
+.hueman-admin-panel {
+  border-radius: 4px;
+  font-size: 15px;
+  display: flex;  
+  flex-flow: row wrap;
+  margin: 10px 15px 2px;
 }
 
-.about-text.tc-welcome {
-  margin: 1em 0;
+.hueman-admin-panel > * {
+  flex: 1 100%;
+  padding: 35px;
+  background-color: #fff;
+    box-shadow: 0 0 0 1px rgb(200 215 225 / 50%), 0 1px 2px #ddd;
+  margin-top: 10px;
+  margin-bottom: 0;
 }
-
-.about-wrap .feature-section.three-col img.tc-donate {
-  background: none;
-  border: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  max-width: none;
-  float: none;
+.hueman-admin-panel h3 {
+  line-height:1.5em;
 }
-
-
-.images-stagger-right img {
-  float: right;
-  padding-left: 20px;
-}
-
-.images-stagger-left img {
-  float: left;
-  padding-right: 20px;
-}
-
-.tc-follow {
-  margin-bottom: 11px;
-}
-
 .button-primary.review-hueman {
   margin-top: 9px;
 }
 
-.tc-upgrade-notice {
-  background-color: #FFFFE0;
-  border: 1px solid #E6DB55;
-  padding: 0px;
-  margin: 5px 0px;
-  text-align: center;
-}
-
-.tc-upgrade-notice p {
-  line-height: 1em;
-}
-
-
-/* ADMIN BAR
-    -------------------------------------------------- */
-h1.need-help-title:before,
-#wp-admin-bar-tc-hueman-help .ab-item:before, li#wp-admin-bar-tc-hueman-help a:before {
-  font-family: 'Font Awesome\ 5 Free';
-  speak: none;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  font-style: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  position: relative;
-  content: "\f1cd";
-}
-
-#wp-admin-bar-tc-hueman-help .ab-item:before, li#wp-admin-bar-tc-hueman-help a:before {
-  padding-right: 0px;
-  margin-right: 0;
-  top: 2px;
-  color: #FFF;
-}
-
-li#wp-admin-bar-tc-hueman-help a {
-  color: #FFF;
-  text-decoration: none;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #8DA65A;
-  background-image: -moz-linear-gradient(top, #008ec2,#006799);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#008ec2), to(#006799));
-  background-image: -webkit-linear-gradient(top, #008ec2,#006799);
-  background-image: -o-linear-gradient(top, #008ec2,#006799);
-  background-image: linear-gradient(to bottom,#008ec2,#006799);
-  background-repeat: repeat-x;
-  border-color: #006799;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-}
-h1.need-help-title {
+h1.czr-welcome-title {
   line-height: 1.5em;
-  font-size: 2.2em;
-}
-h1.need-help-title:before {
-  padding-right: 17px;
-  top: 1px;
-  font-size: 1.2em;
-  color:#008ec2;
+  font-size: 30px;
 }
 
-#hueman-admin-panel .button-secondary.hueman-help {
-  line-height: 25px;
-  padding-top: 11px;
-  height: 51px;
-  font-size: 20px;
-  font-family: 'georgia';
-  width: 95%;
-  white-space: normal;
+.czr-col-50 {
+  flex: 0 0 calc(50% - 75px);
+  max-width: calc(50% - 75px);
+}
+.czr-col-50.first-col {
+  margin-right: 10px;
+}
+@media all and (max-width: 800px) {
+  .czr-col-50 {
+    flex: 0 0 calc(100% - 70px);
+    max-width: calc(100% - 70px);
+  }
 }
 
-.about-wrap .feature-section .tc-follow img {
-  background: none;
-  max-width: none;
-  float: none;
-}
 
-.about-wrap #showcase .feature-section img {
-  border: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
+
+
 
 
 
