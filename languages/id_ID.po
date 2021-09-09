@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Hueman v3.7.12\n"
+"Project-Id-Version: Hueman v3.7.13\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2021-08-25 20:27:18+00:00\n"
+"POT-Creation-Date: 2021-09-09 09:54:21+00:00\n"
 "PO-Revision-Date: 2016-08-31 16:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: Press Customizr\n"
@@ -80,143 +80,68 @@ msgstr ""
 msgid "Customize now"
 msgstr "customizer"
 
-#: functions/admin/class-admin-page.php:37
-msgid ""
-"<h2>As per the WordPress themes guidelines (%1$s), all the Hueman theme "
-"options have been moved to the %2$s.</h2>"
-msgstr ""
-"<h2>Sesuai panduan tema Wordpress (%1$s), seluruh pengaturan tema Hueman "
-"sudah dipindahkan ke %2$s.</h2>"
-
-#: functions/admin/class-admin-page.php:38
-#, fuzzy
-msgid "more information here"
-msgstr "informasi lebih lanjut disini"
-
-#: functions/admin/class-admin-page.php:39
-msgid "customizer"
-msgstr "customizer"
-
-#: functions/admin/class-admin-page.php:42
-msgid ""
-"All your previous options have been kept and are available in the customizer "
-"options panel."
-msgstr ""
-"Semua pengaturan Anda sebelumnya sudah diingat dan tersedia di panel opsi "
-"kustomisasi."
-
-#: functions/admin/class-admin-page.php:55
+#: functions/admin/class-admin-page.php:29
 msgid "About Hueman"
 msgstr "Tentang Hueman"
 
-#: functions/admin/class-admin-page.php:83
-msgid "Thank you for using %s %s :)"
+#: functions/admin/class-admin-page.php:55
+msgid "Thank you for using"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:99
-msgid "The best way to start is to read the %s."
-msgstr "Cara tepat untuk memulai adalah membaca %s."
-
-#: functions/admin/class-admin-page.php:100
-msgid "knowledge base"
+#: functions/admin/class-admin-page.php:65
+#: functions/admin/class-admin-update-notification.php:109
+msgid ""
+"If you enjoy using the Hueman theme for your website, please consider %s. "
+"Your support allows us to keep the theme at the highest level. Thank you!"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:121
-msgid "Read the documentation"
+#: functions/admin/class-admin-page.php:66
+#: functions/admin/class-admin-update-notification.php:110
+msgid "upgrading to the pro version"
+msgstr ""
+
+#: functions/admin/class-admin-page.php:77
+msgid "Knowledge base"
+msgstr ""
+
+#: functions/admin/class-admin-page.php:78
+msgid "We have prepared a complete online documentation of the theme."
+msgstr ""
+
+#: functions/admin/class-admin-page.php:79
+#, fuzzy
+msgid "Hueman Documentation"
 msgstr "Baca dokumentasi"
 
-#: functions/admin/class-admin-page.php:126
-#, fuzzy
-msgid "Get help in the free support forum"
-msgstr "Dapatkan bantuan di forum bantuan"
-
-#: functions/admin/class-admin-page.php:142
-#, fuzzy
-msgid "Thank you for using the %s theme for your website."
-msgstr ""
-"Terimakasih telah menggunakan tema Wordpress Hueman untuk website Anda."
-
-#: functions/admin/class-admin-page.php:143
-#, fuzzy
-msgid ""
-"%s %s has more features, is safer and more stable than ever to help you "
-"designing an awesome webdesign."
-msgstr ""
-"%s Hueman memiliki banyak fitur, lebih aman dan stabil maka dapat membantu "
-"Anda mendesain web dengan luar biasa."
-
-#: functions/admin/class-admin-page.php:144
-#, fuzzy
-msgid ""
-"For more information about this new version of the theme, %s or check the "
-"changelog below"
-msgstr ""
-"Untuk infromasi lebih lanjut tentang versi terbaru tema ini, %s atau cek "
-"catatan perubahan dibawah"
-
-#: functions/admin/class-admin-page.php:145
-msgid "read the latest release notes"
-msgstr "baca catatan rilis terbaru"
-
-#: functions/admin/class-admin-page.php:147
-#: functions/admin/class-admin-page.php:257
-msgid "Changelog"
+#: functions/admin/class-admin-page.php:84
+msgid "Share your feedback"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:151
-msgid "The best way to start with %s is to read the %s and visit the %s."
-msgstr "Cara tepat untuk memulai %s adalah membaca %s dan kunjungi %s."
-
-#: functions/admin/class-admin-page.php:153
-msgid "getting started guide"
-msgstr "dapatkan panduan permulaan"
-
-#: functions/admin/class-admin-page.php:154
-msgid "demo website"
-msgstr "demo website"
-
-#: functions/admin/class-admin-page.php:168
-msgid ""
-"You are using a child theme of Hueman %1$s : always check the %2$s after "
-"upgrading to see if a function or a template has been deprecated."
-msgstr ""
-"Anda menggunakan anak tema dari Hueman %1$s : selalu cek %2$s setelah "
-"upgrade untuk melihat jika saja function atau template sudah usang."
-
-#: functions/admin/class-admin-page.php:187
-msgid "Happy user of Hueman?"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:188
+#: functions/admin/class-admin-page.php:85
 msgid ""
 "If you are happy with the theme, say it on wordpress.org and give Hueman a "
 "nice review!"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:193
-#, fuzzy
-msgid "Follow us"
-msgstr "Ikuti kami di"
+#: functions/admin/class-admin-page.php:86
+msgid "Share a review"
+msgstr ""
 
-#: functions/admin/class-admin-page.php:207
-msgid "Go to Dashboard &rarr; Home"
-msgstr "Pergi ke Dasbor &rarr; Beranda"
+#: functions/admin/class-admin-page.php:135
+msgid "Changelog"
+msgstr ""
 
-#: functions/admin/class-admin-page.php:207
-msgid "Go to Dashboard"
-msgstr "Pergi ke Dasbor"
-
-#: functions/admin/class-admin-page.php:282
+#: functions/admin/class-admin-page.php:160
 #, fuzzy
 msgid "System Information"
 msgstr "Informasi Sistem"
 
-#: functions/admin/class-admin-page.php:283
+#: functions/admin/class-admin-page.php:161
 #, fuzzy
 msgid "Please include the following information when posting support requests"
 msgstr "Harap masukkan infromasi ini ketika membuat post permintaan bantuan"
 
-#: functions/admin/class-admin-page.php:284
+#: functions/admin/class-admin-page.php:162
 msgid ""
 "To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C "
 "(Mac)."
@@ -224,24 +149,20 @@ msgstr ""
 "Untuk menyalin informasi sistem, klik dibawah ini kemudian tekan Ctrl + C "
 "(PC) atau Cmd + C (Mac)."
 
-#: functions/admin/class-admin-update-notification.php:97
+#: functions/admin/class-admin-update-notification.php:96
 #, fuzzy
-msgid "Good, you've recently upgraded to"
+msgid "✅ You have recently updated to"
 msgstr "Bagus, Anda baru saja upgrade ke"
 
-#: functions/admin/class-admin-update-notification.php:99
+#: functions/admin/class-admin-update-notification.php:98
 msgid "version"
 msgstr "versi"
 
-#: functions/admin/class-admin-update-notification.php:108
-msgid "We'd like to introduce the new features we've been working on."
-msgstr "Kami ingin memperkenalkan fitur baru yang telah kami selesaikan."
-
-#: functions/admin/class-admin-update-notification.php:110
+#: functions/admin/class-admin-update-notification.php:101
 msgid "Read the latest release notes"
 msgstr "Bada catatan rilis terbaru"
 
-#: functions/admin/class-admin-update-notification.php:117
+#: functions/admin/class-admin-update-notification.php:118
 msgid "close"
 msgstr "tutup"
 
@@ -892,7 +813,7 @@ msgid ""
 "layout is set."
 msgstr ""
 
-#: functions/class-utils-settings-map.php:973 functions/init-front.php:1785
+#: functions/class-utils-settings-map.php:973 functions/init-front.php:1787
 #: functions/init-sidebars-widgets.php:132
 msgid "Home"
 msgstr "Beranda"
@@ -977,7 +898,7 @@ msgstr ""
 "Heading blog Anda. HTML diperbolehkan. Catatan : kosongkan untuk "
 "menyembunyikan konten default."
 
-#: functions/class-utils-settings-map.php:1080 functions/init-front.php:664
+#: functions/class-utils-settings-map.php:1080 functions/init-front.php:666
 msgid "Blog"
 msgstr "Blog"
 
@@ -2546,100 +2467,100 @@ msgstr ""
 msgid "Add widgets to the zone :"
 msgstr "Tambahkan widget ke zona :"
 
-#: functions/init-front.php:493 functions/init-front.php:499
+#: functions/init-front.php:495 functions/init-front.php:501
 #, fuzzy
 msgid "Home page"
 msgstr "Komentar pada laman"
 
-#: functions/init-front.php:551
+#: functions/init-front.php:553
 msgid "Search result"
 msgstr "Hasil pencarian"
 
-#: functions/init-front.php:553
+#: functions/init-front.php:555
 msgid "Search results"
 msgstr "Hasil pencarian"
 
-#: functions/init-front.php:564
+#: functions/init-front.php:566
 msgid "Error 404."
 msgstr "Error 404."
 
-#: functions/init-front.php:565
+#: functions/init-front.php:567
 msgid "Page not found!"
 msgstr "Laman tidak ditemukan"
 
-#: functions/init-front.php:580
+#: functions/init-front.php:582
 msgid "Author:"
 msgstr "Penulis:"
 
-#: functions/init-front.php:598
+#: functions/init-front.php:600
 msgid "Category:"
 msgstr "Kategori"
 
-#: functions/init-front.php:607
+#: functions/init-front.php:609
 msgid "Tagged:"
 msgstr "Di tag:"
 
-#: functions/init-front.php:626
+#: functions/init-front.php:628
 msgid "Daily Archive:"
 msgstr "Arsip Harian:"
 
-#: functions/init-front.php:636
+#: functions/init-front.php:638
 msgid "Monthly Archive:"
 msgstr "Arsip Bulanan:"
 
-#: functions/init-front.php:646
+#: functions/init-front.php:648
 msgid "Yearly Archive:"
 msgstr "ARsip Tahunan:"
 
-#: functions/init-front.php:1251
+#: functions/init-front.php:1253
 #, fuzzy
 msgid "Expand"
 msgstr "Buka Sidebar"
 
-#: functions/init-front.php:1252
+#: functions/init-front.php:1254
 msgid "Collapse"
 msgstr ""
 
-#: functions/init-front.php:1833 functions/init-sidebars-widgets.php:134
+#: functions/init-front.php:1835 functions/init-sidebars-widgets.php:134
 msgid "Pages"
 msgstr "Laman"
 
-#: functions/init-front.php:2109
+#: functions/init-front.php:2111
 #, fuzzy
 msgid "Welcome in the Hueman theme"
 msgstr "Ulas tema Hueman"
 
-#: functions/init-front.php:2112
+#: functions/init-front.php:2114
 msgid "The theme offers a wide range"
 msgstr ""
 
-#: functions/init-front.php:2114
+#: functions/init-front.php:2116
 msgid "of customization options"
 msgstr ""
 
-#: functions/init-front.php:2115
+#: functions/init-front.php:2117
 msgid "to let you create the best possible websites."
 msgstr ""
 
-#: functions/init-front.php:2118
+#: functions/init-front.php:2120
 msgid "If you need inspiration, you can visit our online demos"
 msgstr ""
 
-#: functions/init-front.php:2120
+#: functions/init-front.php:2122
 #, fuzzy
 msgid "Hueman Demo 1"
 msgstr "Hueman Video"
 
-#: functions/init-front.php:2122
+#: functions/init-front.php:2124
 #, fuzzy
 msgid "Hueman Demo 2"
 msgstr "Hueman Video"
 
-#: functions/init-front.php:2125
+#: functions/init-front.php:2127
 msgid "To help you getting started with Hueman, we have published"
 msgstr ""
 
-#: functions/init-front.php:2127
+#: functions/init-front.php:2129
 msgid "a short guide here."
 msgstr ""
 
@@ -3983,6 +3904,90 @@ msgstr "Kunjungi demo"
 msgctxt "color picker"
 msgid "Focus"
 msgstr ""
+
+#~ msgid ""
+#~ "<h2>As per the WordPress themes guidelines (%1$s), all the Hueman theme "
+#~ "options have been moved to the %2$s.</h2>"
+#~ msgstr ""
+#~ "<h2>Sesuai panduan tema Wordpress (%1$s), seluruh pengaturan tema Hueman "
+#~ "sudah dipindahkan ke %2$s.</h2>"
+
+#, fuzzy
+#~ msgid "more information here"
+#~ msgstr "informasi lebih lanjut disini"
+
+#~ msgid "customizer"
+#~ msgstr "customizer"
+
+#~ msgid ""
+#~ "All your previous options have been kept and are available in the "
+#~ "customizer options panel."
+#~ msgstr ""
+#~ "Semua pengaturan Anda sebelumnya sudah diingat dan tersedia di panel opsi "
+#~ "kustomisasi."
+
+#~ msgid "The best way to start is to read the %s."
+#~ msgstr "Cara tepat untuk memulai adalah membaca %s."
+
+#~ msgid "Read the documentation"
+#~ msgstr "Baca dokumentasi"
+
+#, fuzzy
+#~ msgid "Get help in the free support forum"
+#~ msgstr "Dapatkan bantuan di forum bantuan"
+
+#, fuzzy
+#~ msgid "Thank you for using the %s theme for your website."
+#~ msgstr ""
+#~ "Terimakasih telah menggunakan tema Wordpress Hueman untuk website Anda."
+
+#, fuzzy
+#~ msgid ""
+#~ "%s %s has more features, is safer and more stable than ever to help you "
+#~ "designing an awesome webdesign."
+#~ msgstr ""
+#~ "%s Hueman memiliki banyak fitur, lebih aman dan stabil maka dapat "
+#~ "membantu Anda mendesain web dengan luar biasa."
+
+#, fuzzy
+#~ msgid ""
+#~ "For more information about this new version of the theme, %s or check the "
+#~ "changelog below"
+#~ msgstr ""
+#~ "Untuk infromasi lebih lanjut tentang versi terbaru tema ini, %s atau cek "
+#~ "catatan perubahan dibawah"
+
+#~ msgid "read the latest release notes"
+#~ msgstr "baca catatan rilis terbaru"
+
+#~ msgid "The best way to start with %s is to read the %s and visit the %s."
+#~ msgstr "Cara tepat untuk memulai %s adalah membaca %s dan kunjungi %s."
+
+#~ msgid "getting started guide"
+#~ msgstr "dapatkan panduan permulaan"
+
+#~ msgid "demo website"
+#~ msgstr "demo website"
+
+#~ msgid ""
+#~ "You are using a child theme of Hueman %1$s : always check the %2$s after "
+#~ "upgrading to see if a function or a template has been deprecated."
+#~ msgstr ""
+#~ "Anda menggunakan anak tema dari Hueman %1$s : selalu cek %2$s setelah "
+#~ "upgrade untuk melihat jika saja function atau template sudah usang."
+
+#, fuzzy
+#~ msgid "Follow us"
+#~ msgstr "Ikuti kami di"
+
+#~ msgid "Go to Dashboard &rarr; Home"
+#~ msgstr "Pergi ke Dasbor &rarr; Beranda"
+
+#~ msgid "Go to Dashboard"
+#~ msgstr "Pergi ke Dasbor"
+
+#~ msgid "We'd like to introduce the new features we've been working on."
+#~ msgstr "Kami ingin memperkenalkan fitur baru yang telah kami selesaikan."
 
 #, fuzzy
 #~ msgid "Go Hueman Pro"
