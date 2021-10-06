@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Hueman\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2021-09-09 19:33:12+00:00\n"
+"POT-Creation-Date: 2021-10-06 19:27:14+00:00\n"
 "PO-Revision-Date: 2016-11-04 13:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -33,13 +33,6 @@ msgstr "Reacties"
 
 #: comments.php:11
 msgid "Pingbacks"
-msgstr ""
-
-#: content-featured.php:42 content-standard.php:47 content.php:67
-#: functions/widgets/alx-posts.php:106 functions/widgets/alx-tabs.php:165
-#: functions/widgets/alx-tabs.php:210 functions/widgets/alx-tabs.php:221
-#: parts/related-posts.php:51
-msgid "Permalink to "
 msgstr ""
 
 #: footer.php:121
@@ -81,79 +74,93 @@ msgid "Thank you for using"
 msgstr ""
 
 #: functions/admin/class-admin-page.php:65
-msgid ""
-"If you enjoy using the Hueman theme for your website, please consider %s. "
-"Your support allows us to keep the theme at the highest level. Thank you!"
+msgid "If you enjoy using the Hueman theme for your website, you will love %s"
 msgstr ""
 
 #: functions/admin/class-admin-page.php:66
-msgid "upgrading to the pro version"
+#: functions/class-utils-settings-map.php:627
+#, fuzzy
+msgid "Hueman Pro"
+msgstr "Hueman"
+
+#: functions/admin/class-admin-page.php:68
+msgid ""
+"With Hueman Pro, you get premium features like infinite scrolling, footer "
+"and header customization, font customizer and many more. In addition, our "
+"premium support will be there to help you resolve any issue you may have "
+"with the theme. When installing Hueman Pro, all your previous options used "
+"in Hueman free are kept."
 msgstr ""
 
-#: functions/admin/class-admin-page.php:77
-msgid "Knowledge base"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:78
-msgid "We have prepared a complete online documentation of the theme."
+#: functions/admin/class-admin-page.php:69
+msgid ""
+"And of course your support allows us to keep the theme at the highest level "
+"for your website. Thank you!"
 msgstr ""
 
 #: functions/admin/class-admin-page.php:79
+msgid "Knowledge base"
+msgstr ""
+
+#: functions/admin/class-admin-page.php:80
+msgid "We have prepared a complete online documentation of the theme."
+msgstr ""
+
+#: functions/admin/class-admin-page.php:81
 #, fuzzy
 msgid "Hueman Documentation"
 msgstr "documentatie"
 
-#: functions/admin/class-admin-page.php:84
+#: functions/admin/class-admin-page.php:86
 msgid "Share your feedback"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:85
+#: functions/admin/class-admin-page.php:87
 msgid ""
 "If you are happy with the theme, say it on wordpress.org and give Hueman a "
 "nice review!"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:86
+#: functions/admin/class-admin-page.php:88
 msgid "Share a review"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:135
+#: functions/admin/class-admin-page.php:137
 #, fuzzy
 msgid "Changelog"
 msgstr "Aanpassen afbeelding"
 
-#: functions/admin/class-admin-page.php:139
+#: functions/admin/class-admin-page.php:141
 msgid "Read the latest release notes"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:165
+#: functions/admin/class-admin-page.php:167
 msgid "System Information"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:166
+#: functions/admin/class-admin-page.php:168
 msgid "Please include the following information when posting support requests"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:167
+#: functions/admin/class-admin-page.php:169
 msgid ""
 "To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C "
 "(Mac)."
 msgstr ""
 
-#: functions/admin/class-admin-update-notification.php:96
-msgid "✅ You have recently updated to"
+#: functions/admin/class-admin-update-notification.php:99
+msgid "You have recently updated to"
 msgstr ""
 
-#: functions/admin/class-admin-update-notification.php:98
+#: functions/admin/class-admin-update-notification.php:101
 msgid "version"
 msgstr "versie"
 
-#: functions/admin/class-admin-update-notification.php:101
-#, fuzzy
-msgid "Changelog here"
-msgstr "Aanpassen afbeelding"
+#: functions/admin/class-admin-update-notification.php:104
+msgid "Make sure to read the changelog"
+msgstr ""
 
-#: functions/admin/class-admin-update-notification.php:108
+#: functions/admin/class-admin-update-notification.php:111
 msgid "close"
 msgstr "sluit"
 
@@ -546,11 +553,6 @@ msgid ""
 "This can be used to ensure your background colors are applied when designing "
 "a header with a background image in %1$s"
 msgstr ""
-
-#: functions/class-utils-settings-map.php:627
-#, fuzzy
-msgid "Hueman Pro"
-msgstr "Hueman"
 
 #: functions/class-utils-settings-map.php:634
 msgid "Topbar Background"
@@ -3829,6 +3831,10 @@ msgstr ""
 msgctxt "color picker"
 msgid "Focus"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Changelog here"
+#~ msgstr "Aanpassen afbeelding"
 
 #, fuzzy
 #~ msgid "Follow us"
