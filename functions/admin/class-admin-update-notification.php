@@ -38,6 +38,9 @@ if ( !class_exists( 'HU_admin_update_notification' ) ) :
         function hu_may_be_display_update_notice() {
             if ( !defined('HU_SHOW_UPDATE_NOTIFICATION') || !HU_SHOW_UPDATE_NOTIFICATION )
               return;
+            $screen = get_current_screen();
+            if ( is_object($screen) && 'appearance_page_welcome' === $screen-> id )
+              return;
 
             $opt_name                   = 'last_update_notice';
             $last_update_notice_values  = hu_get_option($opt_name);
@@ -88,17 +91,17 @@ if ( !class_exists( 'HU_admin_update_notification' ) ) :
 
             ob_start();
               ?>
-              <div class="updated czr-update-notice" style="position:relative;">
+              <div class="notice notice-info czr-update-notice" style="position:relative;">
               <?php
                 echo apply_filters(
                   'hu_update_notice',
-                  sprintf('<h3>%1$s %2$s %3$s %4$s. <a class="" href="%5$s" title="%6$s">%6$s %7$s</a></h3>',
-                    __( "✅ You have recently updated to", "hueman"),
+                  sprintf('<h3>➡️ %1$s %2$s %3$s %4$s. <strong><a href="%5$s" title="%6$s">%6$s %7$s</a></strong></h3>',
+                    __( "You have recently updated to", "hueman"),
                     HU_IS_PRO ? 'Hueman Pro' : 'Hueman',
                     __( "version", "hueman"),
                     HUEMAN_VER,
                     admin_url() .'themes.php?page=welcome.php',
-                    __( "Changelog here" , "hueman" ),
+                    __( "Make sure to read the changelog" , "hueman" ),
                     is_rtl() ? '&laquo;' : '&raquo;'
                   )
                 );
@@ -164,7 +167,7 @@ if ( !class_exists( 'HU_admin_update_notification' ) ) :
                 $( function($) {
                   $('.tc-dismiss-update-notice').on('click', function( e ) {
                     e.preventDefault();
-                    $(this).closest('.updated').slideToggle('fast');
+                    $(this).closest('.czr-update-notice').slideToggle('fast');
                     _ajax_action( $(this) );
                   } );
                 } );
