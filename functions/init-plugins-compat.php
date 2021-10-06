@@ -395,7 +395,7 @@ function hu_is_plugin_active_for_network( $plugin ) {
 /*  Theme's wrappers (used by WooCommerce e.g.)
 /* ------------------------------------ */
 function hu_theme_wrapper_start() {
-  echo '<section class="content" id="content">';
+  echo '<main class="content" id="content">';
   if ( $page_title = apply_filters( 'hu_in_wrapper_page_title', '' ) )
     echo $page_title;
   echo '<div class="hu-pad themeform">';
@@ -405,7 +405,7 @@ function hu_theme_wrapper_start() {
 function hu_theme_wrapper_end() {
   echo '</div>';
   echo '</div>';
-  echo '</section>';
+  echo '</main>';
 }
 
 

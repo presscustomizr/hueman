@@ -18,7 +18,7 @@ if ( !function_exists( 'hu_get_content') ) {
     ob_start();
     ?>
       <?php do_action( '__before_content_section', $tmpl ); ?>
-        <section class="content" id="content">
+        <main class="content" id="content">
           <?php hu_get_template_part('parts/page-title'); ?>
           <div class="hu-pad group">
             <?php
@@ -30,7 +30,7 @@ if ( !function_exists( 'hu_get_content') ) {
               }
             ?>
           </div><!--/.hu-pad-->
-        </section><!--/.content-->
+            </main><!--/.content-->
       <?php do_action( '__after_content_section', $tmpl ); ?>
     <?php
     $html = ob_get_clean();
