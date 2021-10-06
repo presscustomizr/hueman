@@ -5,7 +5,7 @@ Template Name: Child Menu
 ?>
 <?php get_header(); ?>
 
-<section class="content" id="content">
+<main class="content" id="content">
 
 	<?php hu_get_template_part('parts/page-title'); ?>
 
@@ -39,7 +39,7 @@ Template Name: Child Menu
 
 	</div><!--/.hu-pad-->
 
-</section><!--/.content-->
+</main><!--/.content-->
 
 <?php get_sidebar(); ?>
 
