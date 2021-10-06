@@ -44,7 +44,7 @@ if ( !has_filter( 'max_srcset_image_width', 'hu_limit_srcset_img_width_for_thumb
   			</div><!--/.post-meta-->
       <?php endif; ?>
 			<h2 class="post-title entry-title">
-				<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute( array( 'before' => __( 'Permalink to ', 'hueman' ) ) ); ?>"><?php the_title(); ?></a>
+				<a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a>
 			</h2><!--/.post-title-->
       <?php if ( hu_is_checked('blog-standard-full-content') ) { ?>
       <div class="entry entry-summary">

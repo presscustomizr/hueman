@@ -48,7 +48,7 @@ $related_img_size = array_key_exists( $sb_layout, $map ) ? $map[ $sb_layout ] : 
 			<div class="related-inner">
 
 				<h4 class="post-title entry-title">
-					<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute( array( 'before' => __( 'Permalink to ', 'hueman' ) ) ); ?>"><?php the_title(); ?></a>
+					<a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a>
 				</h4><!--/.post-title-->
 
 				<div class="post-meta group">
