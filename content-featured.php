@@ -39,7 +39,7 @@ $featured_img_size = array_key_exists( $sb_layout, $map ) ? $map[ $sb_layout ] :
     <?php endif ?>
 
 		<h2 class="post-title entry-title">
-			<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute( array( 'before' => __( 'Permalink to ', 'hueman' ) ) ); ?>"><?php the_title(); ?></a>
+			<a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a>
 		</h2><!--/.post-title-->
 
 		<?php if ( ! hu_is_checked('featured-posts-full-content') ) : ?>
