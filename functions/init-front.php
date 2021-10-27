@@ -1403,7 +1403,7 @@ function hu_maybe_preload_selfhosted_font() {
 <link rel="preload" as="font" type="font/woff" href="<?php echo HU_BASE_URL .'assets/front/fonts/titillium-regular-webfont.woff'; ?>" crossorigin="anonymous"/>
 <link rel="preload" as="font" type="font/woff" href="<?php echo HU_BASE_URL .'assets/front/fonts/titillium-regularitalic-webfont.woff'; ?>" crossorigin="anonymous"/>
 <link rel="preload" as="font" type="font/woff" href="<?php echo HU_BASE_URL .'assets/front/fonts/titillium-semibold-webfont.woff'; ?>" crossorigin="anonymous"/>
-<style type="text/css">
+<style>
   /*  base : fonts
 /* ------------------------------------ */
 body { font-family: "Titillium", Arial, sans-serif; }

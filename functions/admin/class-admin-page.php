@@ -285,7 +285,7 @@ $mysql_ver =  ( ! empty( $wpdb->use_mysqli ) && $wpdb->use_mysqli ) ? @mysqli_ge
       if ( ! is_object( $screen ) || 'appearance_page_welcome' != $screen-> id )
         return;
       ?>
-        <style type="text/css" id="tc-fix-wp-footer-position">
+        <style id="tc-fix-wp-footer-position">
           .wp-admin #wpfooter {bottom: inherit;}
         </style>
       <?php
