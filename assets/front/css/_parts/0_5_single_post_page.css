@@ -85,7 +85,6 @@ box-shadow: 0 1px 1px rgba(0,0,0,0.1); }
 .post-hover:hover .thumb-icon { background: #fff; color: #111; }
 /* Maybe avoid flickering on post hover */
 .post-hover, .post-hover .post-thumbnail {
-  webkit-backface-visibility : hidden;
   backface-visibility: hidden;
   transform-style: preserve-3d;
 }

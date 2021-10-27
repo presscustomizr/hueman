@@ -230,7 +230,6 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
   -moz-transition: all ease 0.35s;
   -o-transition: all ease 0.35s;
   transition: all ease 0.35s;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 #footer .ham__navbar-toggler-two .line { background: #444;}
@@ -457,7 +456,6 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
     -webkit-transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;
     transform-style: preserve-3d;
-    -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     backface-visibility: hidden;
     width: 100%;
