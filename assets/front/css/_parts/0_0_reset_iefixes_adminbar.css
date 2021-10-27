@@ -68,10 +68,10 @@ li#wp-admin-bar-tc-hueman-help a {
   text-decoration: none;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   background-color: #8DA65A;
-  background-image: -moz-linear-gradient(top, #008ec2,#006799);
+  background-image: -moz-linear-gradient(to top, #008ec2,#006799);
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#008ec2), to(#006799));
-  background-image: -webkit-linear-gradient(top, #008ec2,#006799);
-  background-image: -o-linear-gradient(top, #008ec2,#006799);
+  background-image: -webkit-linear-gradient(to top, #008ec2,#006799);
+  background-image: -o-linear-gradient(to top, #008ec2,#006799);
   background-image: linear-gradient(to bottom,#008ec2,#006799);
   background-repeat: repeat-x;
   border-color: #006799;
