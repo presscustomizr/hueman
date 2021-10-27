@@ -150,7 +150,7 @@ function hu_schedule_preview_script_printing() {
 
 function hu_print_widget_module_script() {
     ?>
-    <script type="text/javascript" id="hu-widget-zones-module">
+    <script id="hu-widget-zones-module">
         //global _wpWidgetCustomizerPreviewSettings
         ( function( api, $, _ ) {
               api.bind( 'preview-ready', function() {

@@ -138,7 +138,7 @@ if ( !class_exists( 'HU_admin_update_notification' ) ) :
         */
         function hu_write_ajax_dismis_script() {
             ?>
-            <script type="text/javascript" id="tc-dismiss-update-notice">
+            <script id="tc-dismiss-update-notice">
               ( function($){
                 var _ajax_action = function( $_el ) {
                     var AjaxUrl = "<?php echo admin_url( 'admin-ajax.php' ); ?>",

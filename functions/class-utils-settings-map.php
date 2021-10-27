@@ -780,7 +780,7 @@ if ( !class_exists( 'HU_utils_settings_map' ) ) :
     function hu_header_menus_sec() {
       $nav_section_desc = "<br/>" . sprintf( __("You can create menus and set their locations %s." , "hueman"),
           sprintf( '%1$s<strong><a class="jump-to-menu-panel" href="#" title="%3$s">%2$s</a><strong>',
-              sprintf( '<script type="text/javascript">%1$s</script>',
+              sprintf( '<script>%1$s</script>',
                   "jQuery( function($) {
                       $('.jump-to-menu-panel').on('click', function() {
                           wp.customize.section('menu_locations').expanded( false );
@@ -1614,7 +1614,7 @@ if ( !class_exists( 'HU_utils_settings_map' ) ) :
       global $wp_version;
       $nav_section_desc = "<br/>" . sprintf( __("You can create menus and set their locations %s." , "hueman"),
           sprintf( '%1$s<strong><a class="jump-to-menu-panel" href="#" title="%3$s">%2$s</a><strong>',
-              sprintf( '<script type="text/javascript">%1$s</script>',
+              sprintf( '<script>%1$s</script>',
                   "jQuery( function($) {
                       $('.jump-to-menu-panel').on('click', function() {
                           wp.customize.section('menu_locations').expanded( false );

@@ -146,7 +146,7 @@ function hu_add_customize_preview_data() {
     $_wp_query_infos = apply_filters( 'czr-preview-query-data', $_wp_query_infos );
 
     ?>
-      <script type="text/javascript" id="czr-customizer-data">
+      <script id="czr-customizer-data">
         (function ( _export ){
           _export.czr_wpQueryInfos = <?php echo wp_json_encode( $_wp_query_infos ) ?>;
           _export.availableWidgetLocations = <?php echo wp_json_encode( $_available_locations ) ?>;

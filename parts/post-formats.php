@@ -18,7 +18,7 @@
     ?>
 
     <?php if ( !empty($formats) ): ?>
-    <script type="text/javascript">
+    <script>
     jQuery(document).ready(function(){
       if(jQuery().jPlayer) {
         jQuery("#jquery-jplayer-<?php the_ID(); ?>").jPlayer({
