@@ -68,10 +68,10 @@ li#wp-admin-bar-tc-hueman-help a {
   text-decoration: none;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   background-color: #8DA65A;
-  background-image: -moz-linear-gradient(top, #008ec2,#006799);
+  background-image: -moz-linear-gradient(to top, #008ec2,#006799);
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#008ec2), to(#006799));
-  background-image: -webkit-linear-gradient(top, #008ec2,#006799);
-  background-image: -o-linear-gradient(top, #008ec2,#006799);
+  background-image: -webkit-linear-gradient(to top, #008ec2,#006799);
+  background-image: -o-linear-gradient(to top, #008ec2,#006799);
   background-image: linear-gradient(to bottom,#008ec2,#006799);
   background-repeat: repeat-x;
   border-color: #006799;
@@ -941,7 +941,6 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
   -moz-transition: all ease 0.35s;
   -o-transition: all ease 0.35s;
   transition: all ease 0.35s;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 #footer .ham__navbar-toggler-two .line { background: #444;}
@@ -1168,7 +1167,6 @@ box-shadow: 0 0 2px rgba(255,255,255,0.4);
     -webkit-transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;
     transform-style: preserve-3d;
-    -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     backface-visibility: hidden;
     width: 100%;
@@ -1805,7 +1803,6 @@ box-shadow: 0 1px 1px rgba(0,0,0,0.1); }
 .post-hover:hover .thumb-icon { background: #fff; color: #111; }
 /* Maybe avoid flickering on post hover */
 .post-hover, .post-hover .post-thumbnail {
-  webkit-backface-visibility : hidden;
   backface-visibility: hidden;
   transform-style: preserve-3d;
 }
@@ -2705,8 +2702,8 @@ list-style: none;
 /* ------------------------------------ */
 .flexslider { margin: 0; padding: 0; }
 /* August 2020 : remove display:none for https://github.com/presscustomizr/hueman/issues/916 */
-.rtl .flexslider .slides > li { display: none; -webkit-backface-visibility: hidden;} /* Hide the slides before the JS is loaded. Avoids image jumping */
-.flexslider .slides > li { -webkit-backface-visibility: hidden;}
+.rtl .flexslider .slides > li { display: none; backface-visibility: hidden;} /* Hide the slides before the JS is loaded. Avoids image jumping */
+.flexslider .slides > li { backface-visibility: hidden;}
 /* Hide the slides before the JS is loaded. Avoids image jumping */
 
 .flexslider .slides > li > img, .flexslider .post-thumbnail img { width: 100%; height: auto; display: block; margin: 0 auto; }
