@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.8
-Stable tag: 3.7.17
+Stable tag: 3.7.18
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,9 @@ The Hueman theme loads fast and is 100% mobile-friendly according to Google. One
 
 == Changelog ==
 https://github.com/presscustomizr/hueman/releases
+= 3.7.18 November 12th 2021 =
+* fixed : [javascript] log a message when an issue is detected with JQuery. fixes #973
+
 = 3.7.17 October 27th 2021 =
 * fixed : [HTML] removed type attribute for script elements
 * fixed : [HTML] removed type attribute for style elements
