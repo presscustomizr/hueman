@@ -3,7 +3,7 @@ Contributors: nikeo, alxmedia, d4z_c0nf
 Tags: one-column, two-columns, three-columns, right-sidebar, left-sidebar, custom-colors, custom-menu, featured-images, flexible-header, full-width-template, post-formats, sticky-post, theme-options, threaded-comments, translation-ready
 Requires at least: 4.6
 Tested up to: 5.8
-Stable tag: 3.7.18
+Stable tag: 3.7.19
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,10 @@ The Hueman theme loads fast and is 100% mobile-friendly according to Google. One
 
 == Changelog ==
 https://github.com/presscustomizr/hueman/releases
+= 3.7.19 December 2nd 2021 =
+* checked : [WP 5.9] preliminary successfull tests with upcoming version of WordPress.
+* fixed : [PHP] possible php notice in rare cases when getting img source.
+
 = 3.7.18 November 12th 2021 =
 * fixed : [javascript] log a message when an issue is detected with JQuery. fixes #973
 
