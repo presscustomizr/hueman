@@ -467,7 +467,7 @@ function hu_get_img_src( $img ) {
     if ( is_numeric( $img ) ) {
         $_attachment_id     = $img;
         $_attachment_data   = apply_filters( "hu_attachment_img" , wp_get_attachment_image_src( $_attachment_id, 'full' ), $_attachment_id );
-        $_img_src           = $_attachment_data[0];
+        $_img_src           = is_array($_attachment_data) ? $_attachment_data[0] : '';
         $_width             = ( isset($_attachment_data[1]) && $_attachment_data[1] > 1 ) ? $_attachment_data[1] : $_width;
         $_height            = ( isset($_attachment_data[2]) && $_attachment_data[2] > 1 ) ? $_attachment_data[2] : $_height;
     } else { //old treatment
