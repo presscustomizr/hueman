@@ -213,3 +213,21 @@ span.czr-rec-button a {
 a.czr-rating-link:hover {
     color: #eea236;
 }
+
+.hu-pro-link-in-dashboard {
+  color: #f07829;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 16px;
+  min-width: 80px;
+  /* font-size: 19px; */
+}
+.hu-pro-link-in-dashboard:hover {
+  text-decoration: underline;
+  color: #f07829;
+}
+.hu-pro-link-in-dashboard .dashicons {
+  font-size: 20px;
+  bottom: 3px;
+  position: relative;
+}

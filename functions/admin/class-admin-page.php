@@ -61,12 +61,13 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
 
           <?php
             if ( !HU_IS_PRO ) {
-              printf( '<h3>%1$s ❤️.</h3><h4>%2$s</h4><h4 style="font-weight:bold">%3$s 🙏</h4>',
+              printf( '<h3>%1$s ❤️.</h3><h4>%2$s</h4><h4>%3$s 🙏</h4><h4 style="font-weight:bold">%4$s</h4>',
                 sprintf( __( "If you enjoy using the Hueman theme for your website, you will love %s", "hueman"),
-                  sprintf( '<a style="color:#d87f00" href="%1$s" title="%2$s" target="_blank">%2$s</a>', 'https://presscustomizr.com/hueman-pro/', __("Hueman Pro", "hueman") )
+                  sprintf( '<a style="color:#d87f00" href="%1$s" title="%2$s" target="_blank" rel="noopener noreferrer">%2$s</a>', 'https://presscustomizr.com/hueman-pro/', __("Hueman Pro", "hueman") )
                 ),
                 __("With Hueman Pro, you get premium features like infinite scrolling, footer and header customization, font customizer and many more. In addition, our premium support will be there to help you resolve any issue you may have with the theme. When installing Hueman Pro, all your previous options used in Hueman free are kept.", 'hueman'),
-                __('And of course your support allows us to keep the theme at the highest level for your website. Thank you!', 'hueman')
+                __('And of course your support allows us to keep the theme at the highest level for your website. Thank you!', 'hueman'),
+                'Limited offer : get 25% off with code EOY2021 at checkout.' . ' <a class="hu-pro-link-in-dashboard" href="https://presscustomizr.com/hueman-pro/" rel="noopener noreferrer" title="Go Pro" target="_blank">Go Pro</a> <span style="color: #f07829;" class="dashicons dashicons-external"></span>'
               );
             }
           ?>
