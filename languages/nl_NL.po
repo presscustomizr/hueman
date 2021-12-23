@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Themes - Hueman\n"
 "Report-Msgid-Bugs-To: https://presscustomizr.com/contact/\n"
-"POT-Creation-Date: 2021-12-02 17:37:03+00:00\n"
+"POT-Creation-Date: 2021-12-23 12:59:27+00:00\n"
 "PO-Revision-Date: 2016-11-04 13:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -65,25 +65,48 @@ msgstr ""
 msgid "Customize now"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:29
+#: functions/admin/class-admin-page.php:62
+#, fuzzy
+msgid "Changelog"
+msgstr "Aanpassen afbeelding"
+
+#: functions/admin/class-admin-page.php:66
+msgid "Read the latest release notes"
+msgstr ""
+
+#: functions/admin/class-admin-page.php:92
+msgid "System Information"
+msgstr ""
+
+#: functions/admin/class-admin-page.php:93
+msgid "Please include the following information when posting support requests"
+msgstr ""
+
+#: functions/admin/class-admin-page.php:94
+msgid ""
+"To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C "
+"(Mac)."
+msgstr ""
+
+#: functions/admin/class-admin-page.php:227
 msgid "About Hueman"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:55
+#: functions/admin/class-admin-page.php:253
 msgid "Thank you for using"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:65
+#: functions/admin/class-admin-page.php:263
 msgid "If you enjoy using the Hueman theme for your website, you will love %s"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:66
+#: functions/admin/class-admin-page.php:264
 #: functions/class-utils-settings-map.php:627
 #, fuzzy
 msgid "Hueman Pro"
 msgstr "Hueman"
 
-#: functions/admin/class-admin-page.php:68
+#: functions/admin/class-admin-page.php:266
 msgid ""
 "With Hueman Pro, you get premium features like infinite scrolling, footer "
 "and header customization, font customizer and many more. In addition, our "
@@ -92,60 +115,37 @@ msgid ""
 "in Hueman free are kept."
 msgstr ""
 
-#: functions/admin/class-admin-page.php:69
+#: functions/admin/class-admin-page.php:267
 msgid ""
 "And of course your support allows us to keep the theme at the highest level "
 "for your website. Thank you!"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:80
+#: functions/admin/class-admin-page.php:278
 msgid "Knowledge base"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:81
+#: functions/admin/class-admin-page.php:279
 msgid "We have prepared a complete online documentation of the theme."
 msgstr ""
 
-#: functions/admin/class-admin-page.php:82
+#: functions/admin/class-admin-page.php:280
 #, fuzzy
 msgid "Hueman Documentation"
 msgstr "documentatie"
 
-#: functions/admin/class-admin-page.php:87
+#: functions/admin/class-admin-page.php:285
 msgid "Share your feedback"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:88
+#: functions/admin/class-admin-page.php:286
 msgid ""
 "If you are happy with the theme, say it on wordpress.org and give Hueman a "
 "nice review!"
 msgstr ""
 
-#: functions/admin/class-admin-page.php:89
+#: functions/admin/class-admin-page.php:287
 msgid "Share a review"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:138
-#, fuzzy
-msgid "Changelog"
-msgstr "Aanpassen afbeelding"
-
-#: functions/admin/class-admin-page.php:142
-msgid "Read the latest release notes"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:168
-msgid "System Information"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:169
-msgid "Please include the following information when posting support requests"
-msgstr ""
-
-#: functions/admin/class-admin-page.php:170
-msgid ""
-"To copy the system infos, click below then press Ctrl + C (PC) or Cmd + C "
-"(Mac)."
 msgstr ""
 
 #: functions/admin/class-admin-update-notification.php:99

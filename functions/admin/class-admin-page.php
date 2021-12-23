@@ -10,91 +10,15 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
 
     function __construct () {
       self::$instance =& $this;
-      //add welcome page in menu
-      add_action( 'admin_menu'             , array( $this , 'hu_add_welcome_page' ));
-
       //build the support url
       //build the support url
       $this -> support_url = HU_IS_PRO ? esc_url( sprintf( '%ssupport' , 'presscustomizr.com/' ) ) : esc_url('wordpress.org/support/theme/hueman');
       //fix #wpfooter absolute positioning in the welcome and about pages
       add_action( 'admin_print_styles'      , array( $this, 'hu_fix_wp_footer_link_style') );
+
+      //add welcome page in menu
+      add_action( 'admin_menu'             , array( $this , 'hu_add_welcome_page' ));
     }
-
-   /**
-   * Add fallback admin page.
-   * @package Hueman
-   * @since Hueman 1.1
-   */
-    function hu_add_welcome_page() {
-        $_name = __( 'About Hueman' , 'hueman' );
-        $_name = HU_IS_PRO ? sprintf( '%s Pro', $_name ) : $_name;
-
-        $theme_page = add_theme_page(
-            $_name,   // Name of page
-            $_name,   // Label in menu
-            'edit_theme_options' ,          // Capability required
-            'welcome.php' ,             // Menu slug, used to uniquely identify the page
-            array( $this , 'hu_welcome_panel' )         //function to be called to output the content of this page
-        );
-    }
-
-
-     /**
-     * Render welcome admin page.
-     * @package Hueman
-     * @since Hueman 3.0.4
-     */
-    function hu_welcome_panel() {
-      $_theme_name    = HU_IS_PRO ? 'Hueman Pro' : 'Hueman';
-
-      ?>
-      <div class="hueman-admin-panel">
-        <div class="about-text tc-welcome">
-          <?php
-            $title = sprintf( '<h1 class="czr-welcome-title">%1$s %2$s %3$s :)</h1>',
-              __( "Thank you for using", "hueman" ),
-              $_theme_name,
-              HUEMAN_VER
-            );
-            echo convert_smilies( $title );
-          ?>
-
-          <?php
-            if ( !HU_IS_PRO ) {
-              printf( '<h3>%1$s ❤️.</h3><h4>%2$s</h4><h4>%3$s 🙏</h4><h4 style="font-weight:bold">%4$s</h4>',
-                sprintf( __( "If you enjoy using the Hueman theme for your website, you will love %s", "hueman"),
-                  sprintf( '<a style="color:#d87f00" href="%1$s" title="%2$s" target="_blank" rel="noopener noreferrer">%2$s</a>', 'https://presscustomizr.com/hueman-pro/', __("Hueman Pro", "hueman") )
-                ),
-                __("With Hueman Pro, you get premium features like infinite scrolling, footer and header customization, font customizer and many more. In addition, our premium support will be there to help you resolve any issue you may have with the theme. When installing Hueman Pro, all your previous options used in Hueman free are kept.", 'hueman'),
-                __('And of course your support allows us to keep the theme at the highest level for your website. Thank you!', 'hueman'),
-                'Limited offer : get 25% off with code EOY2021 at checkout.' . ' <a class="hu-pro-link-in-dashboard" href="https://presscustomizr.com/hueman-pro/" rel="noopener noreferrer" title="Go Pro" target="_blank">Go Pro</a> <span style="color: #f07829;" class="dashicons dashicons-external"></span>'
-              );
-            }
-          ?>
-        </div>
-          
-        <?php echo $this->hu_print_changelog(); ?>
-
-        
-        <div class="czr-col-50 first-col">
-          <h3 style="font-size:1.3em;"><?php _e( 'Knowledge base','hueman' ); ?></h3>
-          <p><?php _e( "We have prepared a complete online documentation of the theme.",'hueman' ) ?></br>
-          <a class="button-primary review-hueman" href="<?php echo 'https://docs.presscustomizr.com/' ?>" target="_blank"><?php _e('Hueman Documentation','hueman'); ?></a></p>
-          <!-- Place this tag where you want the widget to render. -->
-        </div>
-        
-        <div class="czr-col-50">
-          <h3 style="font-size:1.3em;"><?php _e( 'Share your feedback','hueman' ); ?></h3>
-          <p><?php _e( 'If you are happy with the theme, say it on wordpress.org and give Hueman a nice review!','hueman' ) ?></br>
-          <a class="button-primary review-hueman" href="<?php echo esc_url('wordpress.org/support/view/theme-reviews/hueman') ?>" target="_blank"><?php _e('Share a review','hueman'); ?></a></p>
-        </div>
-
-      <?php echo $this->hu_config_infos() ?>
-    </div><!-- //#hueman-admin-panel -->
-    <?php
-  }
-     
-
 
 
     /**
@@ -292,5 +216,81 @@ $mysql_ver =  ( ! empty( $wpdb->use_mysqli ) && $wpdb->use_mysqli ) ? @mysqli_ge
       <?php
     }
 
+
+
+   /**
+   * Add fallback admin page.
+   * @package Hueman
+   * @since Hueman 1.1
+   */
+    function hu_add_welcome_page() {
+      $_name = __( 'About Hueman' , 'hueman' );
+      $_name = HU_IS_PRO ? sprintf( '%s Pro', $_name ) : $_name;
+
+      $theme_page = add_theme_page(
+          $_name,   // Name of page
+          $_name,   // Label in menu
+          'edit_theme_options' ,          // Capability required
+          'welcome.php' ,             // Menu slug, used to uniquely identify the page
+          array( $this , 'hu_welcome_panel' )         //function to be called to output the content of this page
+      );
+  }
+
+
+  /**
+   * Render welcome admin page.
+   * @package Hueman
+   * @since Hueman 3.0.4
+   */
+  function hu_welcome_panel() {
+    $_theme_name    = HU_IS_PRO ? 'Hueman Pro' : 'Hueman';
+
+    ?>
+    <div class="hueman-admin-panel">
+      <div class="about-text tc-welcome">
+        <?php
+          $title = sprintf( '<h1 class="czr-welcome-title">%1$s %2$s %3$s :)</h1>',
+            __( "Thank you for using", "hueman" ),
+            $_theme_name,
+            HUEMAN_VER
+          );
+          echo convert_smilies( $title );
+        ?>
+
+        <?php
+          if ( !HU_IS_PRO ) {
+            printf( '<h4>%1$s ❤️.</h4><h4>%2$s</h4><h4>%3$s 🙏</h4><h3 style="font-weight:bold">%4$s</h3>',
+              sprintf( __( "If you enjoy using the Hueman theme for your website, you will love %s", "hueman"),
+                sprintf( '<a style="color:#d87f00" href="%1$s" title="%2$s" target="_blank" rel="noopener noreferrer">%2$s</a>', 'https://presscustomizr.com/hueman-pro/', __("Hueman Pro", "hueman") )
+              ),
+              __("With Hueman Pro, you get premium features like infinite scrolling, footer and header customization, font customizer and many more. In addition, our premium support will be there to help you resolve any issue you may have with the theme. When installing Hueman Pro, all your previous options used in Hueman free are kept.", 'hueman'),
+              __('And of course your support allows us to keep the theme at the highest level for your website. Thank you!', 'hueman'),
+              'Limited offer : get 25% off with code HELLO2022.' . ' <a class="hu-pro-link-in-dashboard" href="https://presscustomizr.com/hueman-pro/" rel="noopener noreferrer" title="Go Pro" target="_blank">Go Pro</a> <span style="color: #f07829;font-size: 26px;" class="dashicons dashicons-external"></span>'
+            );
+          }
+        ?>
+      </div>
+        
+      <?php echo $this->hu_print_changelog(); ?>
+
+      
+      <div class="czr-col-50 first-col">
+        <h3 style="font-size:1.3em;"><?php _e( 'Knowledge base','hueman' ); ?></h3>
+        <p><?php _e( "We have prepared a complete online documentation of the theme.",'hueman' ) ?></br>
+        <a class="button-primary review-hueman" href="<?php echo 'https://docs.presscustomizr.com/' ?>" target="_blank"><?php _e('Hueman Documentation','hueman'); ?></a></p>
+        <!-- Place this tag where you want the widget to render. -->
+      </div>
+      
+      <div class="czr-col-50">
+        <h3 style="font-size:1.3em;"><?php _e( 'Share your feedback','hueman' ); ?></h3>
+        <p><?php _e( 'If you are happy with the theme, say it on wordpress.org and give Hueman a nice review!','hueman' ) ?></br>
+        <a class="button-primary review-hueman" href="<?php echo esc_url('wordpress.org/support/view/theme-reviews/hueman') ?>" target="_blank"><?php _e('Share a review','hueman'); ?></a></p>
+      </div>
+
+    <?php echo $this->hu_config_infos() ?>
+  </div><!-- //#hueman-admin-panel -->
+  <?php
+  }
+  
   }//end of class
 endif;

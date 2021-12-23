@@ -1,4 +1,4 @@
-# Hueman v3.7.19
+# Hueman v3.7.20
 ![Hueman - Free Wordpress Theme](/screenshot.png)
 
 > The Hueman theme helps you increase your traffic and engage your visitors. It loads fast and is 100% mobile-friendly according to Google. Best rated theme for blogs and magazines on WordPress.org. Powering 70K+ websites around the world.
