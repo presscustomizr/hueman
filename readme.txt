@@ -51,8 +51,8 @@ https://github.com/presscustomizr/hueman/releases
 
 = 3.7.10 July 24th 2021 =
 * fixed : [block editor] query loop block style broken.
-* 100% compatible with WordPress 5.8
-* fixed : [WP 5.8] removed call to deprecated filter 'block_editor_preload_paths'
+* 100% compatible with WordPress 5.9
+* fixed : [WP 5.9] removed call to deprecated filter 'block_editor_preload_paths'
 
 = 3.7.9 July 1st, 2021 =
 * fixed : option for external links (icon + open in new tab) not working for links inside lists
