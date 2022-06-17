@@ -3789,7 +3789,7 @@ var czrapp = czrapp || {};
                                 if ( $_firstImage.length < 1 )
                                   return;
                                 var image = $_firstImage.get(0);
-                                if ( image.complete || image.readyState == 'complete' || image.readyState == 4 ) {
+                                if ( image ) {
                                       clearInterval(checkforloaded);
                                       $.when( $flexForFeaturedPosts.flexslider({
                                             animation: "slide",
@@ -3820,7 +3820,7 @@ var czrapp = czrapp || {};
                                 return;
 
                               var image = $firstImage.get(0);
-                              if ( image.complete || image.readyState == 'complete' || image.readyState == 4 ) {
+                              if ( image ) {
                                 clearInterval(_checkforloaded);
                                 $flexForGalleryPostFormat.flexslider({
                                       animation: HUParams.isWPMobile ? 'slide' : 'fade',
