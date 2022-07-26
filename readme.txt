@@ -15,11 +15,11 @@ The Hueman theme loads fast and is 100% mobile-friendly according to Google. One
 == Changelog ==
 https://github.com/presscustomizr/hueman/releases
 
-= 3.7.22 July 26th 2021 =
+= 3.7.22 July 26th 2022 =
 * fixed : fix pagination issue.
 * fixed : fix date formate issue with the widgets.
 
-= 3.7.21 June 20th 2021 =
+= 3.7.21 June 20th 2022 =
 * fixed : post featured slider in safari browser
 
 = 3.7.20 December 23rd 2021 =
