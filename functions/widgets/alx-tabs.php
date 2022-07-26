@@ -163,7 +163,7 @@ class AlxTabs extends WP_Widget {
 					<div class="tab-item-inner group">
 						<?php if($instance['tabs_category']) { ?><p class="tab-item-category"><?php the_category(' / '); ?></p><?php } ?>
 						<p class="tab-item-title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></p>
-						<?php if($instance['tabs_date']) { ?><p class="tab-item-date"><?php the_time('j M, Y'); ?></p><?php } ?>
+						<?php if($instance['tabs_date']) { ?><p class="tab-item-date"><?php echo get_the_date(); ?></p><?php } ?>
 					</div>
 
 				</li>
@@ -219,7 +219,7 @@ class AlxTabs extends WP_Widget {
 					<div class="tab-item-inner group">
 						<?php if($instance['tabs_category']) { ?><p class="tab-item-category"><?php the_category(' / '); ?></p><?php } ?>
 						<p class="tab-item-title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></p>
-						<?php if($instance['tabs_date']) { ?><p class="tab-item-date"><?php the_time('j M, Y'); ?></p><?php } ?>
+						<?php if($instance['tabs_date']) { ?><p class="tab-item-date"><?php echo get_the_date(); ?></p><?php } ?>
 					</div>
 
 				</li>
