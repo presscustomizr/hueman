@@ -249,6 +249,18 @@ if ( !class_exists( 'HU_utils_settings_map' ) ) :
     ------------------------------------------------------------------------------------------------------*/
     function hu_general_design_sec( $get_default = null ) {
       return array(
+          'disable_google_fonts' =>  array(
+                'default'       => 0,
+                'label'       => __( 'Disable Loading Google Fonts?' , 'hueman' ),
+                'control'   =>  'HU_controls' ,
+                'section'     => 'general_design_sec',
+                'type'        => 'nimblecheck' ,
+                'priority'       => 5,
+                'ubq_section'   => array(
+                                    'section' => 'general_design_sec',
+                                    'priority' => '2'
+                                 )
+          ),
           'font' => array(
                 'default'   => 'titillium-web',
                 'control'   => 'HU_controls',

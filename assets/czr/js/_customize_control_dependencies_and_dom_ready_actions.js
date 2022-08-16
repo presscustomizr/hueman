@@ -24,6 +24,20 @@
       api.CZR_ctrlDependencies.prototype.dominiDeps = _.extend(
             api.CZR_ctrlDependencies.prototype.dominiDeps,
             [
+                  {
+                      dominus : 'disable_google_fonts',
+                      servi   : ['font'],
+                      visibility : function( to, servusShortId ){
+                            if( to ){
+                                $('.wp-customizer').addClass('remove_google_fonts');
+                                api( api.CZR_Helpers.build_setId( servusShortId ) ).set('arial');
+                                var font_title = $('select[data-customize-setting-link="hu_theme_options[font]"] option:selected').text();
+                                $('select[data-customize-setting-link="hu_theme_options[font]"]').next('.selecter').find('.selecter-selected').html( font_title );
+                            }else{
+                                $('.wp-customizer').removeClass('remove_google_fonts');
+                            }
+                      },
+                  },
                 {
                         dominus : 'show_on_front',
                         servi : ['show_on_front', 'page_for_posts' ],

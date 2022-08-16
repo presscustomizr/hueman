@@ -230,3 +230,14 @@ a.czr-rating-link:hover {
   bottom: 3px;
   position: relative;
 }
+
+.remove_google_fonts select[data-customize-setting-link="hu_theme_options[font]"] + .selecter .selecter-item {
+    display: none;
+}
+
+.remove_google_fonts select[data-customize-setting-link="hu_theme_options[font]"] + .selecter .selecter-item[data-value="arial"], 
+.remove_google_fonts select[data-customize-setting-link="hu_theme_options[font]"] + .selecter .selecter-item[data-value="georgia"], 
+.remove_google_fonts select[data-customize-setting-link="hu_theme_options[font]"] + .selecter .selecter-item[data-value="verdana"], 
+.remove_google_fonts select[data-customize-setting-link="hu_theme_options[font]"] + .selecter .selecter-item[data-value="tahoma"] {
+    display: block;
+}
