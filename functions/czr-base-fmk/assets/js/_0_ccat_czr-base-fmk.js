@@ -4418,9 +4418,9 @@ $.extend( CZRModuleMths, {
       generateItemId : function( prefix, key, i ) {
               //prevent a potential infinite loop
               i = i || 1;
-              if ( i > 100 ) {
+              /* if ( i > 100 ) {
                     throw new Error( 'Infinite loop when generating of a module id.' );
-              }
+              } */
               var module = this;
               key = key || module._getNextItemKeyInCollection();
               var id_candidate = prefix + '_' + key;

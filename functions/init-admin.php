@@ -35,7 +35,7 @@ if ( is_admin() && !hu_is_customizing() ) {
         load_template( get_template_directory() . '/functions/admin/class-admin-update-notification.php' );
         new HU_admin_update_notification;
     }
-    if ( hu_is_checked('about-page') ) {
+    if ( hu_is_checked('about-page') || hu_is_checked('help-button') ) {
       load_template( get_template_directory() . '/functions/admin/class-admin-page.php' );
       new HU_admin_page;
     }

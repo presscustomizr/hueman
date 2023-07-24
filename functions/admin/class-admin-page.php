@@ -14,10 +14,11 @@ if ( ! class_exists( 'HU_admin_page' ) ) :
       //build the support url
       $this -> support_url = HU_IS_PRO ? esc_url( sprintf( '%ssupport' , 'presscustomizr.com/' ) ) : esc_url('wordpress.org/support/theme/hueman');
       //fix #wpfooter absolute positioning in the welcome and about pages
-      add_action( 'admin_print_styles'      , array( $this, 'hu_fix_wp_footer_link_style') );
+      add_action( 'admin_print_styles', array( $this, 'hu_fix_wp_footer_link_style') );
 
       //add welcome page in menu
-      add_action( 'admin_menu'             , array( $this , 'hu_add_welcome_page' ));
+      add_action( 'admin_menu', array( $this , 'hu_add_welcome_page' ));
+      add_action( 'admin_bar_menu', array( $this , 'hu_add_help_support_link' ) , 999 );
     }
 
 
@@ -224,6 +225,7 @@ $mysql_ver =  ( ! empty( $wpdb->use_mysqli ) && $wpdb->use_mysqli ) ? @mysqli_ge
    * @since Hueman 1.1
    */
     function hu_add_welcome_page() {
+      if ( hu_is_checked('about-page') ) {
       $_name = __( 'About Hueman' , 'hueman' );
       $_name = HU_IS_PRO ? sprintf( '%s Pro', $_name ) : $_name;
 
@@ -234,8 +236,29 @@ $mysql_ver =  ( ! empty( $wpdb->use_mysqli ) && $wpdb->use_mysqli ) ? @mysqli_ge
           'welcome.php' ,             // Menu slug, used to uniquely identify the page
           array( $this , 'hu_welcome_panel' )         //function to be called to output the content of this page
       );
+    }
   }
 
+  /**
+   * Add support link in admin toolbar.
+   * @package Hueman
+   * @since Hueman 1.1
+   */
+  function hu_add_help_support_link($wp_admin_bar) {
+    if ( hu_is_checked('about-page') && hu_is_checked('help-button') ) {
+      $args = array(
+        'id' => 'wpbeginner',
+        'title' => 'Help', 
+        'target' => 'blank',
+        'href' => 'https://wordpress.com/support/', 
+        'meta' => array(
+            'class' => 'wpbeginner', 
+            'title' => 'Search WPBeginner Tutorials'
+            )
+      );
+      $wp_admin_bar->add_node($args);
+    }
+  }
 
   /**
    * Render welcome admin page.
